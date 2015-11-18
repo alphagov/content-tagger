@@ -10,7 +10,7 @@ require "sprockets/railtie"
 
 Bundler.require(*Rails.groups)
 
-module LinksEditor
+module ContentTagger
   class Application < Rails::Application
     config.active_record.raise_in_transactional_callbacks = true
   end

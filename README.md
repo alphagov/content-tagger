@@ -1,12 +1,6 @@
-# Linkseditor
+# Content Tagger
 
-One paragraph description and purpose.
-
-## Screenshots (if there's a client-facing aspect of it)
-
-## Live examples (if available)
-
-- [gov.uk/thing](https://www.gov.uk/thing)
+App for tagging content on GOV.UK.
 
 ## Nomenclature
 
@@ -14,16 +8,13 @@ One paragraph description and purpose.
 
 ## Technical documentation
 
-Write a single paragraph including a general technical overview of the app.
-Example:
-
-This is a Ruby on Rails application that maps RESTful URLs onto a persistence
-layer. It's only presented as an internal API and doesn't face public users.
+This is a Ruby on Rails application that works with the publishing-api to manage
+the "links hash" for content on GOV.UK.
 
 ### Dependencies
 
-- [alphagov/other-repo]() - provides some downstream service
-- [redis]() - provides a backing service for work queues
+- [alphagov/content-store](https://github.com/alphagov/content-store) - provides access to content on GOV.UK
+- [alphagov/publishing-api](https://github.com/alphagov/publishing-api) - used to publish links
 
 ### Running the application
 
