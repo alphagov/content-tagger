@@ -6,6 +6,8 @@ gem 'logstasher', '0.6.2'
 gem 'pg'
 
 gem 'plek', '~> 1.10'
+gem 'gds-sso', '~> 11.1'
+
 gem 'airbrake', '~> 4.3.1'
 
 gem 'sass-rails', '~> 5.0'
