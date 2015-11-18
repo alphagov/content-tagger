@@ -7,6 +7,7 @@ gem 'pg'
 
 gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
+gem 'govuk_admin_template', github: 'alphagov/govuk_admin_template'
 
 gem 'airbrake', '~> 4.3.1'
 
@@ -14,6 +15,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
+  gem 'quiet_assets'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.3'
   gem 'simplecov', '0.10.0', require: false
