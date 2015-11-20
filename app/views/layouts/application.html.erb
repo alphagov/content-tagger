@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>LinksEditor</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag 'application' %>
+<% end %>
 
-<%= yield %>
-
-</body>
-</html>
+<%= render template: 'layouts/govuk_admin_template' %>
