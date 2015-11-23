@@ -85,6 +85,7 @@ GEM
       rails (>= 3.0.0)
       warden (~> 1.2)
       warden-oauth2 (~> 0.0.1)
+    generic_form_builder (0.13.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hashdiff (0.2.3)
@@ -247,6 +248,7 @@ DEPENDENCIES
   airbrake (~> 4.3.1)
   capybara
   gds-sso (~> 11.1)
+  generic_form_builder (~> 0.13.0)
   govuk_admin_template!
   logstasher (= 0.6.2)
   pg

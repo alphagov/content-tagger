@@ -8,6 +8,7 @@ gem 'pg'
 gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
 gem 'govuk_admin_template', github: 'alphagov/govuk_admin_template'
+gem 'generic_form_builder', '~> 0.13.0'
 
 gem 'airbrake', '~> 4.3.1'
 
