@@ -1,1 +1,13 @@
+/*
+ *= require_tree .
+ *= require_self
+ *= require select2
+ *= require select2-bootstrap
+ */
+
 @import 'govuk_admin_template';
+
+.select2 {
+  width: 100%;
+}
+
