@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  add_flash_types :success, :info, :warning, :danger
+
   include GDS::SSO::ControllerMethods
   before_filter :require_signin_permission!
 
