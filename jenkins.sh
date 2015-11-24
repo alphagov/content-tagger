@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GH_STATUS_REPO_NAME=${INITIATING_REPO_NAME:-"content-tagger"}
+GH_STATUS_REPO_NAME=${INITIATING_REPO_NAME:-"alphagov/content-tagger"}
 CONTEXT_MESSAGE=${CONTEXT_MESSAGE:-"default"}
 GH_STATUS_GIT_COMMIT=${INITIATING_GIT_COMMIT:-${GIT_COMMIT}}
 
@@ -38,8 +38,9 @@ git merge --no-commit origin/master || git merge --abort
 export RAILS_ENV=test
 bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment --without development
 
-# Uncomment if this app uses a database
-# bundle exec rake db:drop db:create db:schema:load
+bundle exec govuk-lint-ruby
+
+bundle exec rake db:drop db:create db:schema:load
 
 if bundle exec rake ${TEST_TASK:-"default"}; then
   github_status success "succeeded on Jenkins"

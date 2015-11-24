@@ -8,11 +8,14 @@ gem 'pg'
 gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
 gem 'govuk_admin_template', github: 'alphagov/govuk_admin_template'
+gem 'generic_form_builder', '~> 0.13.0'
+gem 'govuk-lint', '~> 0.5'
 
 gem 'airbrake', '~> 4.3.1'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'select2-rails', '~> 3.5.9'
 
 group :development, :test do
   gem 'quiet_assets'
@@ -24,4 +27,9 @@ end
 
 group :development do
   gem 'web-console', '~> 2.0'
+end
+
+group :test do
+  gem 'webmock', '~> 1.22'
+  gem 'capybara'
 end
