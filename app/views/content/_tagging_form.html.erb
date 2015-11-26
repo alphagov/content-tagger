@@ -1,0 +1,11 @@
+<%= form_for @tagging_update, url: content_update_links_path do |f| %>
+  <%= f.hidden_field :content_id %>
+  <%= f.hidden_field :previous_version %>
+
+  <% @tagging_update.allowed_tag_types.each do |tag_type| %>
+    <%= render "form_for_#{tag_type}", f: f %>
+  <% end %>
+
+  <hr/>
+  <input type='submit' value='Update taggings' class='btn btn-primary btn-lg' />
+<% end %>

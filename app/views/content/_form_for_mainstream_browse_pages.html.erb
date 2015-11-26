@@ -1,0 +1,6 @@
+<h3>Mainstream browse pages</h3>
+
+<%= f.select :mainstream_browse_pages,
+    options_for_select(TagFetcher.new.tags_of_type('mainstream_browse_page'), @tagging_update.mainstream_browse_pages),
+    {},
+    { multiple: true, class: "select2", data: { placeholder: "Choose mainstream_browse_pages..." } } %>

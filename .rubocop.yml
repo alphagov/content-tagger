@@ -5,8 +5,7 @@ AllCops:
 # Add project-specific rubocop rules here
 
 LineLength:
-  Enabled: true
-  Max: 120
+  Enabled: false
 
 # Complexity metrics are disabled in govuk-lint
 
