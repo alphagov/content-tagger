@@ -1,15 +1,7 @@
-GIT
-  remote: git://github.com/alphagov/govuk_admin_template.git
-  revision: 8084350116b51b4aac31af6814db9639c3e5cc4b
-  specs:
-    govuk_admin_template (3.3.2)
-      bootstrap-sass (~> 3.3.3)
-      jquery-rails (~> 3.1.3)
-      rails (>= 3.2.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
+    PriorityQueue (0.1.2)
     actionmailer (4.2.5)
       actionpack (= 4.2.5)
       actionview (= 4.2.5)
@@ -46,21 +38,21 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.8)
-    airbrake (4.3.3)
+    airbrake (4.3.4)
       builder
       multi_json
     arel (6.0.3)
     ast (2.1.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
-    autoprefixer-rails (6.1.0.1)
+    autoprefixer-rails (6.1.1)
       execjs
       json
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.3.5.1)
+    bootstrap-sass (3.3.5)
       autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.3.0)
+      sass (>= 3.2.19)
     builder (3.2.2)
     byebug (8.2.0)
     capybara (2.5.0)
@@ -75,10 +67,19 @@ GEM
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    domain_name (0.5.25)
+      unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.6.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    gds-api-adapters (25.3.0)
+      link_header
+      lrucache (~> 0.1.1)
+      null_logger
+      plek
+      rack-cache
+      rest-client (~> 1.8.0)
     gds-sso (11.1.0)
       multi_json (~> 1.0)
       oauth2 (~> 1.0)
@@ -93,8 +94,14 @@ GEM
       activesupport (>= 4.1.0)
     govuk-lint (0.5.0)
       rubocop (~> 0.32)
+    govuk_admin_template (3.4.0)
+      bootstrap-sass (= 3.3.5)
+      jquery-rails (~> 3.1.3)
+      rails (>= 3.2.0)
     hashdiff (0.2.3)
     hashie (3.4.3)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
     i18n (0.7.0)
     jquery-rails (3.1.4)
       railties (>= 3.0, < 5.0)
@@ -102,12 +109,15 @@ GEM
     json (1.8.3)
     jwt (1.5.2)
     kgio (2.10.0)
+    link_header (0.0.8)
     logstash-event (1.1.5)
     logstasher (0.6.2)
       logstash-event (~> 1.1.0)
       request_store
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    lrucache (0.1.4)
+      PriorityQueue (~> 0.1.2)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
@@ -117,8 +127,10 @@ GEM
     multi_json (1.11.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    netrc (0.11.0)
     nokogiri (1.6.6.4)
       mini_portile (~> 0.6.0)
+    null_logger (0.0.1)
     oauth2 (1.0.0)
       faraday (>= 0.8, < 0.10)
       jwt (~> 1.0)
@@ -151,6 +163,8 @@ GEM
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
+    rack-cache (1.5.1)
+      rack (>= 0.4)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.5)
@@ -181,6 +195,10 @@ GEM
     raindrops (0.15.0)
     rake (10.4.2)
     request_store (1.2.1)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rspec-core (3.4.1)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -239,6 +257,9 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
     unicorn (5.0.1)
       kgio (~> 2.6)
       rack
@@ -265,10 +286,11 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 4.3.1)
   capybara
+  gds-api-adapters (~> 25.3)
   gds-sso (~> 11.1)
   generic_form_builder (~> 0.13.0)
   govuk-lint (~> 0.5)
-  govuk_admin_template!
+  govuk_admin_template (~> 3.4)
   logstasher (= 0.6.2)
   pg
   plek (~> 1.10)

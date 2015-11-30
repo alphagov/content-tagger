@@ -1,0 +1,16 @@
+<%= display_header title: @content_item.title, breadcrumbs: [:taggings, @content_item] %>
+
+Format: <strong><%= @content_item.format %></strong><br/>
+View on site: <%= link_to @content_item.base_path, Plek.new.website_root + @content_item.base_path, target: "_blank" %>
+
+<hr/>
+
+<% if @tagging_update.allowed_tag_types.any? %>
+  <%= render 'tagging_form' %>
+<% else %>
+  <div class="callout callout-info">
+    <div class="callout-body">
+      This item can't be tagged in this application yet.
+    </div>
+  </div>
+<% end %>

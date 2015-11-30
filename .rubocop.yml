@@ -5,8 +5,7 @@ AllCops:
 # Add project-specific rubocop rules here
 
 LineLength:
-  Enabled: true
-  Max: 120
+  Enabled: false
 
 # Complexity metrics are disabled in govuk-lint
 
@@ -58,9 +57,11 @@ Validation:
 
 # other-style.yml
 
+# Follow GDS styleguide.
 AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
   Enabled: true
+  EnforcedStyle: outdent
 
 AccessorMethodName:
   Description: Check the naming of accessor methods for get_/set_.
