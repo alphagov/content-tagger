@@ -3,7 +3,7 @@ class AllowedTagsFor
 
   def self.allowed_tag_types(content_item)
     if content_item.publishing_app.in?(MIGRATED_APPS)
-      %w(topics organisations mainstream_browse_pages)
+      %w(topics organisations mainstream_browse_pages parent)
     else
       []
     end

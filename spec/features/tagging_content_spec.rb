@@ -117,6 +117,7 @@ RSpec.describe "Tagging content" do
         topics: ["ID-OF-FIRST-TAG", "ID-OF-ALREADY-TAGGED"],
         mainstream_browse_pages: [],
         organisations: [],
+        parent: [],
       },
       previous_version: 54_321,
     }
