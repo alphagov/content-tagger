@@ -30,6 +30,12 @@ RSpec.describe "Tagging content" do
     then_i_see_my_form_with_a_not_found_error
   end
 
+  scenario "User inputs a correct basepath directly in the URL" do
+    given_there_is_a_content_item_with_tags
+    when_i_type_its_basepath_in_the_url_directly
+    then_i_am_on_the_page_for_the_item
+  end
+
   before do
     setup_tags_for_select_boxes
   end
@@ -38,6 +44,10 @@ RSpec.describe "Tagging content" do
 
   def when_i_visit_the_homepage
     visit root_path
+  end
+
+  def when_i_type_its_basepath_in_the_url_directly
+    visit "/lookup/my-content-item"
   end
 
   def and_i_am_on_the_page_for_the_item
@@ -85,6 +95,7 @@ RSpec.describe "Tagging content" do
   def then_i_am_on_the_page_for_an_item
     expect(page).to have_content 'This Is A Content Item'
   end
+  alias_method :then_i_am_on_the_page_for_the_item, :then_i_am_on_the_page_for_an_item
 
   def then_i_see_my_form_with_a_not_found_error
     expect(page).to have_content 'No page found with this path'
