@@ -22,4 +22,13 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
+
+  # Authenticate a test user for controllers.
+  config.before(:each, type: :controller) do
+    request.env['warden'] = double(
+      authenticate!: true,
+      authenticated?: true,
+      user: User.new(permissions: ["signin"])
+    )
+  end
 end

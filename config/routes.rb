@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'lookup#new'
 
   controller :lookup do
-    get '/lookup', action: :new, as: :taggings
+    get '/lookup', action: :new, as: :lookup
     get '/lookup/:slug', action: :find_by_slug
     post '/lookup', action: :find_by_slug, as: :find_by_slug
   end

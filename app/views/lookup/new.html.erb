@@ -1,8 +1,14 @@
-<%= display_header title: "Look up content item", breadcrumbs: ['Taggings'] %>
+<%= display_header title: "Tag content", breadcrumbs: ["Tag content"] %>
 
 <%= form_for @lookup, url: find_by_slug_path do |f| %>
   <div class="form-group">
-    <%= f.text_field :base_path, class: 'form-control', label: "Path or URL of content-item (eg. /book-driving-test)" %>
+    <%= f.text_field :base_path,
+      class: 'form-control',
+      label: "Path or URL of a page on GOV.UK (eg. /book-driving-test)" %>
+
+    For example: <% ['/pay-vat', '/benefit-cap-calculator', '/bank-holidays'].each do |example| %>
+      <%= link_to example, "/lookup#{example}" %>
+    <% end %>
   </div>
 
   <input type='submit' value='Show content item' class='btn btn-primary btn-md' />

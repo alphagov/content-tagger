@@ -1,0 +1,13 @@
+<div class="callout callout-info">
+  <div class="callout-title">
+    Tagging not possible
+  </div>
+  <div class="callout-body">
+    <% if @content_item.tagging_app %>
+      We haven't migrated the tagging for this item yet. You can try to take a look in
+      <%= link_to @content_item.tagging_app.underscore.titleize, Plek.new.find(@content_item.tagging_app) %>.
+    <% else %>
+      This page can't be tagged.
+    <% end %>
+  </div>
+</div>
