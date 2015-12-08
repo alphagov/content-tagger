@@ -2,6 +2,10 @@ AllCops:
   Exclude:
     - db/**/*
 
+SignalException:
+  Enabled: true
+  EnforcedStyle: only_raise
+
 # Add project-specific rubocop rules here
 
 LineLength:
@@ -367,10 +371,6 @@ SelfAssignment:
 
 Semicolon:
   Description: "Don't use semicolons to terminate expressions."
-  Enabled: true
-
-SignalException:
-  Description: 'Checks for proper usage of fail and raise.'
   Enabled: true
 
 SingleLineBlockParams:

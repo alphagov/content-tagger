@@ -12,4 +12,8 @@ class ContentItem
   def self.find!(content_id)
     new Services.publishing_api.get_content(content_id).to_h
   end
+
+  def link_set
+    @link_set ||= LinkSet.find(content_id)
+  end
 end

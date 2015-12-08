@@ -6,7 +6,7 @@ class TaggingUpdateForm
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
   def self.init_with_content_item(content_item)
-    link_set = Services.publishing_api.get_links(content_item.content_id)
+    link_set = content_item.link_set
 
     new(
       content_item: content_item,

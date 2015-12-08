@@ -29,7 +29,7 @@ module AlphaTaxonomy
       if desired_columns.all? { |column_name| columns_in_data.include? column_name }
         tsv_data.values_at(*desired_columns)
       else
-        fail ArgumentError, "Column names did not match expected values #{desired_columns}"
+        raise ArgumentError, "Column names did not match expected values #{desired_columns}"
       end
     end
 
