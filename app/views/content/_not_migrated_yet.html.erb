@@ -3,9 +3,9 @@
     Tagging not possible
   </div>
   <div class="callout-body">
-    <% if @content_item.tagging_app %>
+    <% if @content_item.app_responsible_for_tagging %>
       We haven't migrated the tagging for this item yet. You can try to take a look in
-      <%= link_to @content_item.tagging_app.underscore.titleize, Plek.new.find(@content_item.tagging_app) %>.
+      <%= link_to @content_item.app_responsible_for_tagging.underscore.titleize, Plek.new.find(@content_item.app_responsible_for_tagging) %>.
     <% else %>
       This page can't be tagged.
     <% end %>
