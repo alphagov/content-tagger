@@ -11,7 +11,7 @@ class ContentItem
 
   def self.find!(content_id)
     content_item = Services.publishing_api.get_content(content_id)
-    raise ItemNotFound unless content_item
+    raise ItemNotFoundError unless content_item
     new(content_item.to_h)
   end
 
@@ -24,6 +24,6 @@ class ContentItem
     @tagging_apps[publishing_app]
   end
 
-  class ItemNotFound < Exception
+  class ItemNotFoundError < StandardError
   end
 end

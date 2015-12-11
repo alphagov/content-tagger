@@ -2,7 +2,7 @@ class ContentController < ApplicationController
   def show
     @content_item = ContentItem.find!(params[:content_id])
     @tagging_update = TaggingUpdateForm.init_with_content_item(@content_item)
-  rescue ContentItem::ItemNotFound
+  rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
   end
 
