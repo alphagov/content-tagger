@@ -14,7 +14,7 @@ RSpec.describe "Tagging content" do
   end
 
   scenario "User looks up an untaggable page" do
-    given_there_is_a_untaggable_page
+    given_there_is_an_untaggable_page
     and_i_am_on_the_page_for_the_item
     then_i_see_that_the_page_is_untaggable
   end
@@ -60,7 +60,7 @@ RSpec.describe "Tagging content" do
     visit "/content/MY-CONTENT-ID"
   end
 
-  def given_there_is_a_untaggable_page
+  def given_there_is_an_untaggable_page
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         publishing_app: "non-migrated-app",
