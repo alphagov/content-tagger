@@ -1,9 +1,7 @@
 class AllowedTagsFor
-  MIGRATED_APPS = %(smartanswers a-migrated-app)
-
   def self.allowed_tag_types(content_item)
-    if content_item.publishing_app.in?(MIGRATED_APPS)
-      %w(topics organisations mainstream_browse_pages parent)
+    if content_item.app_responsible_for_tagging == "content-tagger"
+      %w(mainstream_browse_pages parent topics organisations)
     else
       []
     end

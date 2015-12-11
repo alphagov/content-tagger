@@ -1,16 +1,13 @@
-<%= display_header title: @content_item.title, breadcrumbs: [:taggings, @content_item] %>
+<%= display_header title: @content_item.title, breadcrumbs: [link_to("Tag content", lookup_path), @content_item] %>
 
-Format: <strong><%= @content_item.format %></strong><br/>
-View on site: <%= link_to @content_item.base_path, Plek.new.website_root + @content_item.base_path, target: "_blank" %>
+<div class='view-on-site'>
+  View on site: <%= link_to @content_item.base_path, Plek.new.website_root + @content_item.base_path, target: "_blank" %>
+</div>
 
 <hr/>
 
 <% if @tagging_update.allowed_tag_types.any? %>
   <%= render 'tagging_form' %>
 <% else %>
-  <div class="callout callout-info">
-    <div class="callout-body">
-      This item can't be tagged in this application yet.
-    </div>
-  </div>
+  <%= render 'not_migrated_yet' %>
 <% end %>

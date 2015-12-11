@@ -1,0 +1,35 @@
+# Below is the list of distinct `publishing_app`s in the content-store, with
+# the app that is (mostly) responsible for tagging its content.
+#
+# Leave an app empty to disable tagging for it.
+#
+a-migrated-app: content-tagger # for testing puposes
+businesssupportfinder: panopticon
+calculators: panopticon
+calendars: panopticon
+collections-publisher: collections-publisher
+contacts: panopticon
+contacts-admin:
+design-principles:
+email-campaign-frontend:
+external-link-tracker:
+feedback:
+frontend:
+govuk_content_api:
+hmrc-manuals-api:
+info-frontend:
+licencefinder: panopticon
+manuals-frontend:
+performanceplatform-big-screen-view:
+policy-publisher:
+publisher: publisher
+rummager:
+service-manual-publisher:
+short-url-manager:
+smartanswers: content-tagger
+specialist-publisher: specialist-publisher
+spotlight:
+static:
+tariff:
+travel-advice-publisher:
+whitehall: whitehall

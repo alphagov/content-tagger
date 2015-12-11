@@ -3,9 +3,11 @@
   <%= f.hidden_field :previous_version %>
 
   <% @tagging_update.allowed_tag_types.each do |tag_type| %>
-    <%= render "form_for_#{tag_type}", f: f %>
+    <div class='tag-section'>
+      <%= render "form_for_#{tag_type}", f: f %>
+    </div>
   <% end %>
 
   <hr/>
-  <input type='submit' value='Update taggings' class='btn btn-primary btn-lg' />
+  <input type='submit' value='Update tags' class='btn btn-primary btn-lg' />
 <% end %>

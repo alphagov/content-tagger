@@ -1,6 +1,12 @@
-<h3>Parent</h3>
+<h3>Primary mainstream browse page</h3>
 
 <%= f.select :parent,
     options_for_select(TagFetcher.new.tags_of_type('mainstream_browse_page'), @tagging_update.parent),
     { include_blank: true },
-    { multiple: false, class: "select2", data: { placeholder: "Choose a parent (topic)..." } } %>
+    { multiple: false, class: "select2", data: { placeholder: "Choose a primary mainstream browse page..." } } %>
+
+<p class='explain'>
+  If the page has a breadcrumb, it will be this browse page. For example
+  <a href="https://www.gov.uk/benefit-cap-calculator">the breadcrumb on this page</a>.
+  You can only choose one.
+</p>

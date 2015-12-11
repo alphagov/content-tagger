@@ -18,3 +18,35 @@ form label {
     color: $state-danger-text;
   }
 }
+
+.view-on-site {
+  font-size: 20px;
+
+  a:after {
+    content: "\A0\A0\A0";
+    background: url("external-link.png") no-repeat right top;
+    display: inline-block;
+    line-height: 12px;
+    margin-left: 5px;
+  }
+
+  a:hover:after {
+    background-position: right -388px;
+  }
+}
+
+.explain {
+  color: $gray;
+}
+
+.tag-section {
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f1f1;
+
+  // TODO: our current form-builder doesn't allow the labels to be removed.
+  // Remove this once we've migrated to using `simple_form`.
+  label {
+    display: none;
+  }
+}

@@ -13,6 +13,12 @@ RSpec.describe "Tagging content" do
     then_the_new_links_are_sent_to_the_publishing_api
   end
 
+  scenario "User looks up an untaggable page" do
+    given_there_is_an_untaggable_page
+    and_i_am_on_the_page_for_the_item
+    then_i_see_that_the_page_is_untaggable
+  end
+
   scenario "User makes a conflicting change" do
     given_there_is_a_content_item_with_tags
     and_i_am_on_the_page_for_the_item
@@ -27,7 +33,7 @@ RSpec.describe "Tagging content" do
   scenario "User inputs a URL that is not on GOV.UK" do
     when_i_visit_the_homepage
     and_i_fill_a_unknown_base_path_to_my_content_item
-    then_i_see_my_form_with_a_not_found_error
+    then_i_see_that_the_path_was_not_found
   end
 
   scenario "User inputs a correct basepath directly in the URL" do
@@ -52,6 +58,20 @@ RSpec.describe "Tagging content" do
 
   def and_i_am_on_the_page_for_the_item
     visit "/content/MY-CONTENT-ID"
+  end
+
+  def given_there_is_an_untaggable_page
+    stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
+      .to_return(body: {
+        publishing_app: "non-migrated-app",
+        content_id: "MY-CONTENT-ID",
+        base_path: '/my-content-item',
+        format: 'mainstream_browse_page',
+        title: 'This Is A Content Item',
+      }.to_json)
+
+    stub_request(:get, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+      .to_return(body: {}.to_json)
   end
 
   def given_there_is_a_content_item_with_tags
@@ -79,6 +99,10 @@ RSpec.describe "Tagging content" do
       }.to_json)
   end
 
+  def then_i_see_that_the_page_is_untaggable
+    expect(page).to have_content "This page can't be tagged."
+  end
+
   def and_i_submit_the_url_of_the_content_item
     fill_in 'content_lookup_form_base_path', with: '/my-content-item'
     click_on 'Show content item'
@@ -97,9 +121,8 @@ RSpec.describe "Tagging content" do
   end
   alias_method :then_i_am_on_the_page_for_the_item, :then_i_am_on_the_page_for_an_item
 
-  def then_i_see_my_form_with_a_not_found_error
+  def then_i_see_that_the_path_was_not_found
     expect(page).to have_content 'No page found with this path'
-    expect(page).to have_content 'Path or URL of content-item'
   end
 
   def when_i_add_an_additional_tag
@@ -119,7 +142,7 @@ RSpec.describe "Tagging content" do
   end
 
   def and_i_submit_the_form
-    click_on 'Update taggings'
+    click_on 'Update tags'
   end
 
   def then_the_new_links_are_sent_to_the_publishing_api
