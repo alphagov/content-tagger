@@ -5,7 +5,7 @@ module AlphaTaxonomy
     def initialize(title:)
       @title = title
       validate_title
-      @slug  = title.parameterize
+      @slug = title.parameterize
     end
 
     def present
@@ -27,15 +27,14 @@ module AlphaTaxonomy
     # switch to using /taxons, but the naming below emphasises that these are
     # temporary and subject to change.
     def base_path
-      @slug.gsub!(/^\/{1,}/, '') # remove any leading slashes
+      @slug.gsub!(%r(^\/{1,}), '') # remove any leading slashes
       "/alpha-taxonomy/#{@slug}"
     end
 
   private
+
     def validate_title
-      if @title.blank?
-        raise ArgumentError, "Title cannot be blank"
-      end
+      raise ArgumentError, "Title cannot be blank" if @title.blank?
     end
   end
 end

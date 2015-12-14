@@ -6,10 +6,6 @@ module AlphaTaxonomy
 
     def run!
       check_import_file_is_present
-
-      import_file_titles = mappings_from_import_file.map { |mapping| mapping.fetch("taxon_title") }
-      import_file_titles.uniq!
-
       import_file_titles.each do |taxon_title|
         taxon_presenter = TaxonPresenter.new(title: taxon_title)
         existing = existing_taxons.find do |existing_taxon|
@@ -21,17 +17,20 @@ module AlphaTaxonomy
       end
     end
 
-private
+  private
+
     def check_import_file_is_present
-      unless File.exist? AlphaTaxonomy::SheetDownloader.cache_location
-        raise MissingImportFileError
-      end
+      raise MissingImportFileError unless File.exist? AlphaTaxonomy::SheetDownloader.cache_location
     end
 
     def mappings_from_import_file
       CSV.read(
         AlphaTaxonomy::SheetDownloader.cache_location, col_sep: "\t", headers: true
       )
+    end
+
+    def import_file_titles
+      @import_file_titles ||= mappings_from_import_file.map { |mapping| mapping.fetch("taxon_title") }.uniq
     end
 
     def existing_taxons

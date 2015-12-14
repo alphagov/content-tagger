@@ -36,7 +36,7 @@ RSpec.describe AlphaTaxonomy::CreateTaxons do
       end
 
       context "none of the taxons in the input TSV exist yet" do
-        before { stub_taxon_fetch(result: [{"base_path" => "/alpha-taxonomy/unrelated-taxon"}]) }
+        before { stub_taxon_fetch(result: [{ "base_path" => "/alpha-taxonomy/unrelated-taxon" }]) }
 
         it "creates each taxon" do
           expect(Services.publishing_api).to receive(:put_content)
@@ -48,7 +48,7 @@ RSpec.describe AlphaTaxonomy::CreateTaxons do
       end
 
       context "a taxon appears twice" do
-        before { stub_taxon_fetch(result: [{"base_path" => "/alpha-taxonomy/unrelated-taxon"}]) }
+        before { stub_taxon_fetch(result: [{ "base_path" => "/alpha-taxonomy/unrelated-taxon" }]) }
         before do
           File.open(@temp_tsv.path, "ab") do |file|
             file.write("Foo Taxon\tfoo-link/\n")
@@ -65,7 +65,7 @@ RSpec.describe AlphaTaxonomy::CreateTaxons do
       end
 
       context "one taxon already exists" do
-        before { stub_taxon_fetch(result: [{"base_path" => "/alpha-taxonomy/foo-taxon"}]) }
+        before { stub_taxon_fetch(result: [{ "base_path" => "/alpha-taxonomy/foo-taxon" }]) }
 
         it "does not create that taxon" do
           expect(Services.publishing_api).to receive(:put_content)

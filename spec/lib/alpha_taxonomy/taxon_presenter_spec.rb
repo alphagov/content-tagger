@@ -20,16 +20,14 @@ RSpec.describe AlphaTaxonomy::TaxonPresenter do
     it "presents a taxon payload" do
       allow(DateTime).to receive(:current).and_return(DateTime.new(0))
       expect(AlphaTaxonomy::TaxonPresenter.new(title: "Foobar Taxon").present).to eq(
-        {
-          :base_path => "/alpha-taxonomy/foobar-taxon",
-          :format => "taxon",
-          :locale => "en",
-          :public_updated_at => DateTime.new(0).to_s,
-          :publishing_app => "content-tagger",
-          :rendering_app => "collections",
-          :routes => [{:path=>"/alpha-taxonomy/foobar-taxon", :type=>"exact"}],
-          :title => "Foobar Taxon",
-        }
+        base_path: "/alpha-taxonomy/foobar-taxon",
+        format: "taxon",
+        locale: "en",
+        public_updated_at: DateTime.new(0).to_s,
+        publishing_app: "content-tagger",
+        rendering_app: "collections",
+        routes: [path: "/alpha-taxonomy/foobar-taxon", type: "exact"],
+        title: "Foobar Taxon",
       )
     end
   end

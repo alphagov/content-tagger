@@ -24,7 +24,7 @@ module AlphaTaxonomy
     end
 
     def download
-      FileUtils.mkdir_p Rails.root + "lib/data/"
+      make_default_directory
       File.open(self.class.cache_location, "wb") do |file|
         write_headers_to(file)
         SHEETS.each do |sheet_info|
@@ -42,6 +42,11 @@ module AlphaTaxonomy
     end
 
   private
+
+    def make_default_directory
+      FileUtils.mkdir_p Rails.root + "lib/data/"
+    end
+
     def write_headers_to(file)
       file.write("taxon_title\ttaxon_slug\tlink\n")
     end
