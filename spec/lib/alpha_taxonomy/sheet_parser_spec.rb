@@ -16,9 +16,9 @@ RSpec.describe AlphaTaxonomy::SheetParser do
 
       test_output.rewind
       expect(test_output.read.split("\n")).to eq([
-        "Foo-Taxon\tfoo-taxon\tthe-foo-link",
-        "Bar (Br)\tbar-br\tthe-bar-or-baz-link",
-        "Baz (Bz)\tbaz-bz\tthe-bar-or-baz-link"
+        "Foo-Taxon\tthe-foo-link",
+        "Bar (Br)\tthe-bar-or-baz-link",
+        "Baz (Bz)\tthe-bar-or-baz-link"
       ])
     end
 

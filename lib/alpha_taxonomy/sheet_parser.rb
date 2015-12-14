@@ -22,8 +22,7 @@ module AlphaTaxonomy
         else
           taxon_titles = stripped_array_of(mapped_to)
           taxon_titles.each do |taxon_title|
-            slug = taxon_title.parameterize
-            file.write("#{taxon_title}\t#{slug}\t#{link}\n")
+            file.write("#{taxon_title}\t#{link}\n")
           end
         end
       end
@@ -47,12 +46,6 @@ module AlphaTaxonomy
     # Return an array of whitespace-stripped taxon titles.
     def stripped_array_of(taxon_titles)
       taxon_titles.split('|').map(&:strip)
-    end
-
-    # Call the ActiveSupport method #parameterize on each taxon title,
-    # returning an array of slugs.
-    def parameterize_all(taxon_titles)
-      taxon_titles.split('|').map(&:parameterize)
     end
   end
 end
