@@ -15,7 +15,7 @@ module AlphaTaxonomy
         title: @title,
         publishing_app: 'content-tagger',
         rendering_app: 'collections',
-        public_updated_at: DateTime.current.to_s,
+        public_updated_at: DateTime.current.iso8601,
         locale: "en",
         routes: [
           { path: base_path, type: "exact" },
