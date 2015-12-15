@@ -26,4 +26,9 @@ RSpec.configure do |config|
   config.before :suite do
     User.create!
   end
+
+  config.after :suite do
+    require "govuk/lint/cli"
+    Govuk::Lint::CLI.new.run([])
+  end
 end
