@@ -2,7 +2,7 @@ require "csv"
 
 module AlphaTaxonomy
   class SheetParser
-    class BlankMappingField < StandardError; end
+    class BlankMappingFieldError < StandardError; end
 
     def initialize(taxonomy_data_stream)
       @taxonomy_data_stream = taxonomy_data_stream
@@ -14,7 +14,7 @@ module AlphaTaxonomy
         link = row[1]
 
         if mapped_to.blank? || link.blank?
-          raise BlankMappingField, "Missing value in taxonomy spreadsheet"
+          raise BlankMappingFieldError, "Missing value in taxonomy spreadsheet"
         end
 
         if mapped_to[0..2] == "n/a"

@@ -38,7 +38,7 @@ RSpec.describe AlphaTaxonomy::SheetParser do
       ].join("\n")
 
       expect { AlphaTaxonomy::SheetParser.new(taxonomy_tsv_data).write_to(test_output) }.to raise_error(
-        AlphaTaxonomy::SheetParser::BlankMappingField
+        AlphaTaxonomy::SheetParser::BlankMappingFieldError
       )
     end
   end
