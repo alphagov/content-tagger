@@ -42,6 +42,9 @@ RSpec.describe AlphaTaxonomy::CreateTaxons do
           expect(Services.publishing_api).to receive(:put_content)
             .with(@valid_uuid, be_valid_against_schema('taxon'))
             .twice
+          expect(Services.publishing_api).to receive(:publish)
+            .with(@valid_uuid, "major")
+            .twice
 
           AlphaTaxonomy::CreateTaxons.new.run!
         end
@@ -59,6 +62,9 @@ RSpec.describe AlphaTaxonomy::CreateTaxons do
           expect(Services.publishing_api).to receive(:put_content)
             .with(@valid_uuid, be_valid_against_schema('taxon'))
             .twice
+          expect(Services.publishing_api).to receive(:publish)
+            .with(@valid_uuid, "major")
+            .twice
 
           AlphaTaxonomy::CreateTaxons.new.run!
         end
@@ -70,6 +76,9 @@ RSpec.describe AlphaTaxonomy::CreateTaxons do
         it "does not create that taxon" do
           expect(Services.publishing_api).to receive(:put_content)
             .with(@valid_uuid, be_valid_against_schema('taxon'))
+            .once
+          expect(Services.publishing_api).to receive(:publish)
+            .with(@valid_uuid, "major")
             .once
 
           AlphaTaxonomy::CreateTaxons.new.run!

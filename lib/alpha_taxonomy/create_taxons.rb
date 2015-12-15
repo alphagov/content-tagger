@@ -42,10 +42,8 @@ module AlphaTaxonomy
 
     def create_new_taxon(presented_payload:)
       content_id = SecureRandom.uuid
-      Services.publishing_api.put_content(
-        content_id,
-        presented_payload
-      )
+      Services.publishing_api.put_content(content_id, presented_payload)
+      Services.publishing_api.publish(content_id, "major")
     end
   end
 end
