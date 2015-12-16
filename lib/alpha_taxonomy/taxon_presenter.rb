@@ -13,7 +13,12 @@ module AlphaTaxonomy
         base_path: base_path,
         format: "taxon",
         title: @title,
-        publishing_app: 'content-tagger',
+        # FIXME: We're stating that the publishing app is collections-publisher as
+        # that's where taxons are currently being edited. That functionality
+        # and the bulk import/mapping logic contained in this app will be merged
+        # at some point once we figure out the best place for everything taxonomy-
+        # related. Once that happens, the publishing_app for taxons may change.
+        publishing_app: 'collections-publisher',
         rendering_app: 'collections',
         public_updated_at: DateTime.current.iso8601,
         locale: "en",
