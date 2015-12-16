@@ -24,7 +24,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.3'
   gem 'simplecov', '0.10.0', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
-  gem 'govuk-content-schema-test-helpers'
+  gem 'govuk-content-schema-test-helpers', '~> 1.4'
 end
 
 group :development do
