@@ -9,8 +9,9 @@ module AlphaTaxonomy
 
     class_attribute :cache_location
     self.cache_location = begin
-      default = Rails.root + "lib/data/alpha_taxonomy_import.csv"
-      ENV["TAXON_IMPORT_FILE"] || default
+      return ENV["TAXON_IMPORT_FILE"] if ENV["TAXON_IMPORT_FILE"]
+      FileUtils.mkdir_p Rails.root + "lib/data/"
+      "#{Rails.root}" + "/lib/data/alpha_taxonomy_import.csv"
     end
 
     SHEETS = [
@@ -23,8 +24,9 @@ module AlphaTaxonomy
     end
 
     def download
-      FileUtils.mkdir_p Rails.root + "lib/data/"
+      make_default_directory
       File.open(self.class.cache_location, "wb") do |file|
+        write_headers_to(file)
         SHEETS.each do |sheet_info|
           AlphaTaxonomy::SheetParser.new(remote_taxonomy_data(sheet_info)).write_to(file)
           @log.info "Finished copying #{sheet_info[:name]}"
@@ -32,14 +34,22 @@ module AlphaTaxonomy
       end
     rescue => e
       log_failure(e)
-      cleanup
+      clean_up
     end
 
-    def cleanup
+    def clean_up
       File.delete self.class.cache_location if File.exist? self.class.cache_location
     end
 
   private
+
+    def make_default_directory
+      FileUtils.mkdir_p Rails.root + "lib/data/"
+    end
+
+    def write_headers_to(file)
+      file.write("taxon_title\ttaxon_slug\tlink\n")
+    end
 
     def remote_taxonomy_data(sheet_info)
       sheet_url = spreadsheet_url(key: sheet_info[:key], gid: sheet_info[:gid])

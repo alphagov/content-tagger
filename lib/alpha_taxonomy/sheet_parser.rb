@@ -2,27 +2,36 @@ require "csv"
 
 module AlphaTaxonomy
   class SheetParser
-    def initialize(taxonomy_data)
-      @taxonomy_data = taxonomy_data
+    class BlankMappingFieldError < StandardError; end
+
+    def initialize(taxonomy_data_stream)
+      @taxonomy_data_stream = taxonomy_data_stream
     end
 
     def write_to(file)
-      relevant_columns_in(@taxonomy_data).each do |row|
+      relevant_columns_in(@taxonomy_data_stream).each do |row|
         mapped_to = row[0]
         link = row[1]
+
+        if mapped_to.blank? || link.blank?
+          raise BlankMappingFieldError, "Missing value in taxonomy spreadsheet"
+        end
+
         if mapped_to[0..2] == "n/a"
           next
         else
-          taxon_name = clean_up(mapped_to)
-          file.write("#{taxon_name}\t#{link}\n")
+          taxon_titles = stripped_array_of(mapped_to)
+          taxon_titles.each do |taxon_title|
+            file.write("#{taxon_title}\t#{link}\n")
+          end
         end
       end
     end
 
   private
 
-    def relevant_columns_in(remote_taxonomy_data)
-      tsv_data = CSV.parse(remote_taxonomy_data, col_sep: "\t", headers: true)
+    def relevant_columns_in(taxonomy_data_stream)
+      tsv_data = CSV.parse(taxonomy_data_stream, col_sep: "\t", headers: true)
       desired_columns = ["mapped to", "link"]
       columns_in_data = tsv_data.headers.map(&:downcase)
 
@@ -33,9 +42,10 @@ module AlphaTaxonomy
       end
     end
 
-    # Remove extraneous whitespace and return a pipe-seperated list of taxons
-    def clean_up(taxonomy_label)
-      taxonomy_label.split('|').map(&:strip).join('|')
+    # We expect taxonomy_labels to be a pipe-separated list.
+    # Return an array of whitespace-stripped taxon titles.
+    def stripped_array_of(taxon_titles)
+      taxon_titles.split('|').map(&:strip)
     end
   end
 end
