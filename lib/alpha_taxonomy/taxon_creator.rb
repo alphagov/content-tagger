@@ -1,7 +1,7 @@
 require 'csv'
 
 module AlphaTaxonomy
-  class CreateTaxons
+  class TaxonCreator
     class MissingImportFileError < StandardError; end
 
     def run!
@@ -20,12 +20,12 @@ module AlphaTaxonomy
   private
 
     def check_import_file_is_present
-      raise MissingImportFileError unless File.exist? AlphaTaxonomy::SheetDownloader.cache_location
+      raise MissingImportFileError unless File.exist? AlphaTaxonomy::ImportFile.location
     end
 
     def mappings_from_import_file
       CSV.read(
-        AlphaTaxonomy::SheetDownloader.cache_location, col_sep: "\t", headers: true
+        AlphaTaxonomy::ImportFile.location, col_sep: "\t", headers: true
       )
     end
 
