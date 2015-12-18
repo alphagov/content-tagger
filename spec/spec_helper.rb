@@ -28,7 +28,9 @@ RSpec.configure do |config|
   end
 
   config.after :suite do
-    require "govuk/lint/cli"
-    Govuk::Lint::CLI.new.run([])
+    unless ENV["SKIP_LINT_IN_SPECS"]
+      require "govuk/lint/cli"
+      Govuk::Lint::CLI.new.run([])
+    end
   end
 end
