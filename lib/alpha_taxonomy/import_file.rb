@@ -8,7 +8,7 @@ module AlphaTaxonomy
     self.location = begin
       return ENV["TAXON_IMPORT_FILE"] if ENV["TAXON_IMPORT_FILE"]
       FileUtils.mkdir_p Rails.root + "lib/data/"
-      "#{Rails.root}" + "/lib/data/alpha_taxonomy_import.csv"
+      "#{Rails.root}" + "/lib/data/alpha_taxonomy_import.tsv"
     end
 
     def initialize(logger: Logger.new(STDOUT))
@@ -34,15 +34,15 @@ module AlphaTaxonomy
   private
 
     def write_headers
-      @file.write("taxon_title\tlink\n")
+      @file.write("taxon_title\tbase_path\n")
     end
 
     def write(taxonomy_data)
       relevant_columns_in(taxonomy_data).each do |row|
         mapped_to = row[0]
-        link = row[1]
+        base_path = row[1]
 
-        if mapped_to.blank? || link.blank?
+        if mapped_to.blank? || base_path.blank?
           raise BlankMappingFieldError, "Missing value in downloaded taxonomy spreadsheet"
         end
 
@@ -51,7 +51,7 @@ module AlphaTaxonomy
         else
           taxon_titles = stripped_array_of(mapped_to)
           taxon_titles.each do |taxon_title|
-            @file.write("#{taxon_title}\t#{link}\n")
+            @file.write("#{taxon_title}\t#{base_path}\n")
           end
         end
       end
