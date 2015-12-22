@@ -1,17 +1,18 @@
 require "rails_helper"
 
 RSpec.describe AlphaTaxonomy::ImportFile do
-  describe ".populate" do
-    let(:test_output_path) { Rails.root + "tmp/import_file_spec.csv" }
+  describe "#populate" do
+    let(:test_tsv_file_path) { Rails.root + "tmp/import_file_spec.tsv" }
     let(:sheet_downloader) { AlphaTaxonomy::SheetDownloader.new }
 
     before do
-      allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(test_output_path)
+      allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(test_tsv_file_path)
       allow(AlphaTaxonomy::SheetDownloader).to receive(:new).and_return(sheet_downloader)
     end
 
     after do
-      File.delete(test_output_path) if File.exist?(test_output_path)
+      File.delete(test_tsv_file_path) if File.exist?(test_tsv_file_path)
+    end
     end
 
     it "parses and writes the required data to a file" do
@@ -25,7 +26,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
 
       AlphaTaxonomy::ImportFile.new.populate
 
-      populated_file = File.open(test_output_path)
+      populated_file = File.open(test_tsv_file_path)
       expect(populated_file.read.split("\n")).to eq([
         "taxon_title\tlink",
         "Foo-Taxon\tthe-foo-link",
@@ -46,7 +47,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
 
       log_output.rewind
       expect(log_output.read).to match(/Column names in downloaded taxonomy data did not match expected values/)
-      expect(File.exist?(test_output_path)).to be false
+      expect(File.exist?(test_tsv_file_path)).to be false
     end
 
     it "reports an error and removes the file if the required values aren't present" do
@@ -61,7 +62,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
 
       log_output.rewind
       expect(log_output.read).to match(/Missing value in downloaded taxonomy spreadsheet/)
-      expect(File.exist?(test_output_path)).to be false
+      expect(File.exist?(test_tsv_file_path)).to be false
     end
   end
 end
