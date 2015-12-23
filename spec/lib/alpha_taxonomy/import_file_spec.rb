@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe AlphaTaxonomy::ImportFile do
-  let(:test_tsv_file_path) { Rails.root + "tmp/import_file_spec.tsv" }
+  let(:test_tsv_file_path) { "/tmp/import_file_spec.tsv" }
   let(:sheet_downloader) { AlphaTaxonomy::SheetDownloader.new }
 
   before do
