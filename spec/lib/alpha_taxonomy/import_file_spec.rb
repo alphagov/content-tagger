@@ -84,10 +84,8 @@ RSpec.describe AlphaTaxonomy::ImportFile do
 
       it "returns lists of taxons grouped by base_path" do
         expect(AlphaTaxonomy::ImportFile.new.grouped_mappings).to eq(
-          {
-            "/foo-content-item-path" => ["Foo-Taxon"],
-            "/bar-or-baz-content-item-path"=> ["Bar (Br)", "Baz (Bz)"]
-          }
+          "/foo-content-item-path" => ["Foo-Taxon"],
+          "/bar-or-baz-content-item-path" => ["Bar (Br)", "Baz (Bz)"]
         )
       end
     end

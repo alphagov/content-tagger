@@ -47,9 +47,7 @@ module AlphaTaxonomy
   private
 
     def check_import_file_is_present
-      unless File.exist? self.class.location
-        raise MissingImportFileError, "Run #populate to create import file"
-      end
+      raise MissingImportFileError, "Run #populate to create import file" unless File.exist? self.class.location
     end
 
     def write_headers
