@@ -3,6 +3,7 @@ require "csv"
 module AlphaTaxonomy
   class ImportFile
     class BlankMappingFieldError < StandardError; end
+    class MissingImportFileError < StandardError; end
 
     class_attribute :location
     self.location = begin
@@ -13,10 +14,10 @@ module AlphaTaxonomy
 
     def initialize(logger: Logger.new(STDOUT))
       @log = logger
-      @file = File.new(self.class.location, "wb")
     end
 
     def populate
+      @file = File.new(self.class.location, "wb")
       write_headers
       SheetDownloader.new.each_sheet do |taxonomy_data|
         write(taxonomy_data)
@@ -31,7 +32,25 @@ module AlphaTaxonomy
       File.delete(@file.path) if File.exist?(@file.path)
     end
 
+    def grouped_mappings
+      check_import_file_is_present
+      mappings = CSV.read(self.class.location, col_sep: "\t", headers: true)
+      mappings.each_with_object({}) do |row, hash|
+        base_path = row["base_path"]
+        taxon_title = row["taxon_title"]
+
+        hash[base_path] = [] unless hash[base_path].present?
+        hash[base_path] << taxon_title
+      end
+    end
+
   private
+
+    def check_import_file_is_present
+      unless File.exist? self.class.location
+        raise MissingImportFileError, "Run #populate to create import file"
+      end
+    end
 
     def write_headers
       @file.write("taxon_title\tbase_path\n")
