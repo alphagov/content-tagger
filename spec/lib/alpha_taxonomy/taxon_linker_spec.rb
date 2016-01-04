@@ -74,7 +74,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         log_output = StringIO.new
         AlphaTaxonomy::TaxonLinker.new(logger: Logger.new(log_output)).run!
         log_output.rewind
-        expect(log_output.read).to match(/something went wrong/)
+        expect(log_output.read).to match(%r{Error fetching content id for /invalid-content-item: something went wrong})
       end
     end
   end

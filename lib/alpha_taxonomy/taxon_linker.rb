@@ -54,7 +54,7 @@ module AlphaTaxonomy
     def fetch_content_item_id_with(base_path)
       lookup = ContentLookupForm.new(base_path: base_path)
       return lookup.content_id if lookup.valid?
-      report_error(lookup.errors[:base_path])
+      report_error("Error fetching content id for #{base_path}: #{lookup.errors[:base_path]}")
       nil
     end
   end
