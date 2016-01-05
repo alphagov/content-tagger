@@ -19,7 +19,8 @@ module AlphaTaxonomy
     def populate
       @file = File.new(self.class.location, "wb")
       write_headers
-      SheetDownloader.new.each_sheet do |taxonomy_data|
+
+      SheetDownloader.new(logger: @log).each_sheet do |taxonomy_data|
         write(taxonomy_data)
       end
       @file.close
