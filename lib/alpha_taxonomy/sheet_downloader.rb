@@ -5,9 +5,12 @@ module AlphaTaxonomy
     # a) it is stored on Google drive.
     # b) it is 'published' as a single sheet (not the entire document/workbook),
     #    with tab-seperated values.
-    # c) its key and gid are populated in the SHEETS constant.
+    # c) its key and gid are populated in the sheets class attribute.
 
-    SHEETS = [
+    # TODO: change this so that sheets can be specified as an ENV variable - saves
+    # us having to deploy in order to support additional sheets.
+    class_attribute :sheets
+    self.sheets = [
       { name: "early_years", key: "1zjRy7XKrcroscX4cEqc4gM9Eq0DuVWEm_5wATsolRJY", gid: "1025053831" },
       { name: "curriculum_content_mapping", key: "1rViQioxz5iu3hGYFldNOJift0PqjX0fYd8LZz07ljd4", gid: "678558707" },
     ]
@@ -17,7 +20,7 @@ module AlphaTaxonomy
     end
 
     def each_sheet
-      SHEETS.each do |sheet_credentials|
+      self.class.sheets.each do |sheet_credentials|
         yield remote_taxonomy_data(sheet_credentials)
       end
     end
