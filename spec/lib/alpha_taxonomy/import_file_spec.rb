@@ -2,7 +2,10 @@ require "rails_helper"
 
 RSpec.describe AlphaTaxonomy::ImportFile do
   describe ".populate" do
-    let(:test_output_path) { Rails.root + "tmp/import_file_spec.csv" }
+    let(:test_output_path) do
+      FileUtils.mkdir_p Rails.root + "tmp"
+      Rails.root + "tmp/import_file_spec.csv"
+    end
     let(:sheet_downloader) { AlphaTaxonomy::SheetDownloader.new }
 
     before do
