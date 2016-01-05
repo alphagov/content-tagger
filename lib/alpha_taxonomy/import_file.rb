@@ -7,9 +7,12 @@ module AlphaTaxonomy
 
     class_attribute :location
     self.location = begin
-      return ENV["TAXON_IMPORT_FILE"] if ENV["TAXON_IMPORT_FILE"]
-      FileUtils.mkdir_p Rails.root + "lib/data/"
-      "#{Rails.root}" + "/lib/data/alpha_taxonomy_import.tsv"
+      if ENV["TAXON_IMPORT_FILE"].present?
+        ENV["TAXON_IMPORT_FILE"]
+      else
+        FileUtils.mkdir_p Rails.root + "lib/data/"
+        Rails.root + "lib/data/alpha_taxonomy_import.tsv"
+      end
     end
 
     def initialize(logger: Logger.new(STDOUT))
