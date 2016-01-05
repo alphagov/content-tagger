@@ -4,9 +4,9 @@
 # Leave an app empty to disable tagging for it.
 #
 a-migrated-app: content-tagger # for testing puposes
-businesssupportfinder: panopticon
-calculators: panopticon
-calendars: panopticon
+businesssupportfinder: content-tagger
+calculators: content-tagger
+calendars: content-tagger
 collections-publisher: collections-publisher
 contacts: panopticon
 contacts-admin:
@@ -18,7 +18,7 @@ frontend:
 govuk_content_api:
 hmrc-manuals-api:
 info-frontend:
-licencefinder: panopticon
+licencefinder: content-tagger
 manuals-frontend:
 performanceplatform-big-screen-view:
 policy-publisher:
