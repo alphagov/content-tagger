@@ -14,6 +14,9 @@ require 'rspec/rails'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
+PUBLISHING_API = "https://publishing-api.test.gov.uk"
+DRAFT_CONTENT_STORE = "https://draft-content-store.test.gov.uk"
+
 require 'capybara/rails'
 
 ActiveRecord::Migration.maintain_test_schema!

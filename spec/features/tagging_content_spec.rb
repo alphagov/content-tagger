@@ -46,8 +46,6 @@ RSpec.describe "Tagging content" do
     setup_tags_for_select_boxes
   end
 
-  PUBLISHING_API = "https://publishing-api.test.gov.uk"
-
   def when_i_visit_the_homepage
     visit root_path
   end
