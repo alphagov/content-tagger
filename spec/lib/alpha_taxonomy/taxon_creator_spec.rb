@@ -2,13 +2,18 @@ require "rails_helper"
 
 RSpec.describe AlphaTaxonomy::TaxonCreator do
   describe "#run!" do
+    def run_the_taxon_creator!
+      # Instantiate with a dummy logger to keep stdout noise-free
+      AlphaTaxonomy::TaxonCreator.new(logger: Logger.new(StringIO.new)).run!
+    end
+
     context "an import file is not present" do
       before do
         allow(File).to receive(:exist?).with(AlphaTaxonomy::ImportFile.location).and_return(false)
       end
 
       it "errors out" do
-        expect { AlphaTaxonomy::TaxonCreator.new.run! }.to raise_error(
+        expect { run_the_taxon_creator! }.to raise_error(
           AlphaTaxonomy::TaxonCreator::MissingImportFileError
         )
       end
@@ -16,6 +21,7 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
 
     context "an import file is present" do
       before do
+        # Create a temporary TSV file containing test data
         @temp_tsv = Tempfile.new("taxon_creator_spec.tsv")
         @temp_tsv.write("taxon_title\tlink\n")
         @temp_tsv.write("Foo Taxon\tfoo-link/\n")
@@ -23,12 +29,18 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
         @temp_tsv.close
         allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(@temp_tsv.path)
 
+        # Make uuid generation deterministic
         @valid_uuid = "7d92d517-fb06-489b-84fe-4f6dfb439980"
         allow(SecureRandom).to receive(:uuid).and_return(@valid_uuid)
+
+        # We log the response code from the publishing API, stub out the returned value
+        allow(Services.publishing_api).to receive(:put_content).and_return(double(code: 200))
+        allow(Services.publishing_api).to receive(:publish).and_return(double(code: 200))
       end
 
-      def stub_taxon_fetch(result:)
-        allow(Services.publishing_api).to receive(:get_content_items).and_return(result)
+      def stub_taxon_fetch(results:)
+        mock_response = double(to_a: results)
+        allow(Services.publishing_api).to receive(:get_content_items).and_return(mock_response)
       end
 
       after do
@@ -36,7 +48,7 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
       end
 
       context "none of the taxons in the input TSV exist yet" do
-        before { stub_taxon_fetch(result: [{ "base_path" => "/alpha-taxonomy/unrelated-taxon" }]) }
+        before { stub_taxon_fetch(results: [{ "base_path" => "/alpha-taxonomy/unrelated-taxon" }]) }
 
         it "creates each taxon" do
           expect(Services.publishing_api).to receive(:put_content)
@@ -46,12 +58,12 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
             .with(@valid_uuid, "major")
             .twice
 
-          AlphaTaxonomy::TaxonCreator.new.run!
+          run_the_taxon_creator!
         end
       end
 
       context "a taxon appears twice" do
-        before { stub_taxon_fetch(result: [{ "base_path" => "/alpha-taxonomy/unrelated-taxon" }]) }
+        before { stub_taxon_fetch(results: [{ "base_path" => "/alpha-taxonomy/unrelated-taxon" }]) }
         before do
           File.open(@temp_tsv.path, "ab") do |file|
             file.write("Foo Taxon\tfoo-link/\n")
@@ -66,12 +78,12 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
             .with(@valid_uuid, "major")
             .twice
 
-          AlphaTaxonomy::TaxonCreator.new.run!
+          run_the_taxon_creator!
         end
       end
 
       context "one taxon already exists" do
-        before { stub_taxon_fetch(result: [{ "base_path" => "/alpha-taxonomy/foo-taxon" }]) }
+        before { stub_taxon_fetch(results: [{ "base_path" => "/alpha-taxonomy/foo-taxon" }]) }
 
         it "does not create that taxon" do
           expect(Services.publishing_api).to receive(:put_content)
@@ -81,7 +93,7 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
             .with(@valid_uuid, "major")
             .once
 
-          AlphaTaxonomy::TaxonCreator.new.run!
+          run_the_taxon_creator!
         end
       end
     end
