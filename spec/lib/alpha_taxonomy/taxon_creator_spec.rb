@@ -14,7 +14,7 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
 
       it "errors out" do
         expect { run_the_taxon_creator! }.to raise_error(
-          AlphaTaxonomy::TaxonCreator::MissingImportFileError
+          AlphaTaxonomy::SharedExceptions::MissingImportFileError
         )
       end
     end

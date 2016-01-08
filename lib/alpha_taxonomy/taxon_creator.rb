@@ -2,7 +2,7 @@ require 'csv'
 
 module AlphaTaxonomy
   class TaxonCreator
-    class MissingImportFileError < StandardError; end
+    include AlphaTaxonomy::Helpers::ImportFileHelper
 
     def initialize(logger: Logger.new(STDOUT))
       @log = logger
@@ -32,10 +32,6 @@ module AlphaTaxonomy
     end
 
   private
-
-    def check_import_file_is_present
-      raise MissingImportFileError unless File.exist? AlphaTaxonomy::ImportFile.location
-    end
 
     def mappings_from_import_file
       CSV.read(
