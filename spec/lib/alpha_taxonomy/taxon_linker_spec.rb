@@ -2,6 +2,10 @@ require "rails_helper"
 
 RSpec.describe AlphaTaxonomy::TaxonLinker do
   describe "#run!" do
+    def run_the_taxon_linker!
+      AlphaTaxonomy::TaxonLinker.new(logger: Logger.new(StringIO.new)).run!
+    end
+
     def stub_taxons_fetch(returned_taxon_collection)
       allow(Services.publishing_api).to receive(:get_content_items).with(
         content_format: 'taxon', fields: %i(title base_path content_id)
@@ -18,6 +22,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       import_file = AlphaTaxonomy::ImportFile.new
       allow(import_file).to receive(:grouped_mappings).and_return(returned_mappings)
       allow(AlphaTaxonomy::ImportFile).to receive(:new).and_return(import_file)
+    end
+
+    before do
+      # We log the response code from the publishing API, stub out the returned value
+      allow(Services.publishing_api).to receive(:put_links).and_return(double(code: 200))
     end
 
     it "creates taxon links based on the grouped mappings" do
@@ -41,7 +50,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         links: { alpha_taxons: ["foo-taxon-uuid", "bar-taxon-uuid"] }
       ).once
 
-      AlphaTaxonomy::TaxonLinker.new.run!
+      run_the_taxon_linker!
     end
 
     context "when the grouped mappings contain a taxon not present in the content store" do
@@ -49,7 +58,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"])
         stub_taxons_fetch([{ title: "Other taxon", content_id: "irrelevant" }])
 
-        expect { AlphaTaxonomy::TaxonLinker.new.run! }.to raise_error(
+        expect { run_the_taxon_linker! }.to raise_error(
           AlphaTaxonomy::TaxonLinker::TaxonNotInContentStoreError
         )
       end
@@ -60,7 +69,6 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"], "/invalid-content-item" => ["Foo Taxon"])
         stub_taxons_fetch([{ title: "Foo Taxon", content_id: "foo-taxon-uuid" }])
         stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
-
         invalid_lookup = double(valid?: false, errors: { base_path: "something went wrong" })
         allow(ContentLookupForm).to receive(:new).with(base_path: "/invalid-content-item").and_return(invalid_lookup)
       end

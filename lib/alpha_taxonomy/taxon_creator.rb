@@ -2,26 +2,36 @@ require 'csv'
 
 module AlphaTaxonomy
   class TaxonCreator
-    class MissingImportFileError < StandardError; end
+    include AlphaTaxonomy::Helpers::ImportFileHelper
+
+    def initialize(logger: Logger.new(STDOUT))
+      @log = logger
+    end
 
     def run!
       check_import_file_is_present
       import_file_titles.each do |taxon_title|
-        taxon_presenter = TaxonPresenter.new(title: taxon_title)
-        existing = existing_taxons.find do |existing_taxon|
-          existing_taxon["base_path"] == taxon_presenter.base_path
-        end
+        @log.info "BEGIN processing taxon: #{taxon_title}"
+        find_or_create_taxon(title: taxon_title)
+        @log.info "=============================================="
+        @log.info ""
+      end
+    end
 
-        next if existing.present?
+    def find_or_create_taxon(title:)
+      taxon_presenter = TaxonPresenter.new(title: title)
+      existing = existing_taxons.find do |existing_taxon|
+        existing_taxon["base_path"] == taxon_presenter.base_path
+      end
+
+      if existing.present?
+        @log.info "Taxon already exists!"
+      else
         create_new_taxon(presented_payload: taxon_presenter.present)
       end
     end
 
   private
-
-    def check_import_file_is_present
-      raise MissingImportFileError unless File.exist? AlphaTaxonomy::ImportFile.location
-    end
 
     def mappings_from_import_file
       CSV.read(
@@ -37,13 +47,15 @@ module AlphaTaxonomy
       @existing_taxons ||= Services.publishing_api.get_content_items(
         content_format: 'taxon',
         fields: %i(title base_path content_id details)
-      )
+      ).to_a
     end
 
     def create_new_taxon(presented_payload:)
       content_id = SecureRandom.uuid
-      Services.publishing_api.put_content(content_id, presented_payload)
-      Services.publishing_api.publish(content_id, "major")
+      put_response = Services.publishing_api.put_content(content_id, presented_payload)
+      @log.info "Publishing API 'put' complete, content_id: #{content_id}, response code: #{put_response.code}"
+      publish_response = Services.publishing_api.publish(content_id, "major")
+      @log.info "Publishing API 'publish' complete, response code: #{publish_response.code}"
     end
   end
 end

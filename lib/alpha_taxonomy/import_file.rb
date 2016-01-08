@@ -2,8 +2,8 @@ require "csv"
 
 module AlphaTaxonomy
   class ImportFile
+    include AlphaTaxonomy::Helpers::ImportFileHelper
     class BlankMappingFieldError < StandardError; end
-    class MissingImportFileError < StandardError; end
 
     class_attribute :location
     self.location = begin
@@ -49,10 +49,6 @@ module AlphaTaxonomy
     end
 
   private
-
-    def check_import_file_is_present
-      raise MissingImportFileError, "Run #populate to create import file" unless File.exist? self.class.location
-    end
 
     def write_headers
       @file.write("taxon_title\tbase_path\n")

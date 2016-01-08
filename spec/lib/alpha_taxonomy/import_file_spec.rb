@@ -98,7 +98,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
         allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return("/some-crazy-non-existing-path")
 
         expect { AlphaTaxonomy::ImportFile.new.grouped_mappings }.to raise_error(
-          AlphaTaxonomy::ImportFile::MissingImportFileError
+          AlphaTaxonomy::SharedExceptions::MissingImportFileError
         )
       end
     end

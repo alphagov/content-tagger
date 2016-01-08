@@ -71,7 +71,7 @@ RSpec.feature "Bulk taxon import" do
 
     stub_publishing_api_calls(fake_uuid)
 
-    AlphaTaxonomy::TaxonCreator.new.run!
+    AlphaTaxonomy::TaxonCreator.new(logger: @dummy_logger).run!
   end
 
   def stub_publishing_api_calls(fake_uuid)

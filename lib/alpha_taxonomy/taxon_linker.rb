@@ -10,22 +10,33 @@ module AlphaTaxonomy
     end
 
     def run!
-      grouped_mappings = ImportFile.new.grouped_mappings
-
-      grouped_mappings.each do |base_path, taxon_titles|
+      ImportFile.new.grouped_mappings.each do |base_path, taxon_titles|
+        @log.info "BEGIN mapping for #{base_path}"
         taxon_content_ids = find_content_ids_for(taxon_titles)
-        target_content_item_id = fetch_content_item_id_with(base_path)
+        @log.info "Content IDs are: #{taxon_content_ids}"
+        content_item_id = fetch_content_item_id_with(base_path)
+        attempt_content_item_update(content_item_id, taxon_content_ids)
+        @log.info "=============================================="
+        @log.info ""
+      end
 
-        next unless target_content_item_id.present?
-        Services.publishing_api.put_links(
-          target_content_item_id,
+      @errors.each { |err| @log.error err } if @errors.present?
+    end
+
+    def attempt_content_item_update(content_item_id, taxon_content_ids)
+      if content_item_id.blank?
+        @log.info "No content ID found!"
+      else
+        @log.info "Content ID is #{content_item_id}"
+        put_links_response = Services.publishing_api.put_links(
+          content_item_id,
           links: {
             alpha_taxons: taxon_content_ids
           }
         )
-      end
 
-      @errors.each { |err| @log.error err } if @errors.present?
+        @log.info "Publishing API 'put' complete, response code: #{put_links_response.code}"
+      end
     end
 
   private
@@ -41,6 +52,7 @@ module AlphaTaxonomy
     end
 
     def find_content_ids_for(taxon_titles)
+      @log.info "Determining content IDs for taxons..."
       taxon_titles.map do |taxon_title|
         taxon_content_item = all_taxons.find { |taxon| taxon["title"] == taxon_title }
         if taxon_content_item
@@ -52,6 +64,7 @@ module AlphaTaxonomy
     end
 
     def fetch_content_item_id_with(base_path)
+      @log.info "Fetching content ID for base path above..."
       lookup = ContentLookupForm.new(base_path: base_path)
       return lookup.content_id if lookup.valid?
       report_error("Error fetching content id for #{base_path}: #{lookup.errors[:base_path]}")
