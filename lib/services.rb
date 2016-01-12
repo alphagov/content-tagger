@@ -5,7 +5,8 @@ module Services
   def self.publishing_api
     @publishing_api ||= GdsApi::PublishingApiV2.new(
       Plek.new.find('publishing-api'),
-      disable_cache: true
+      disable_cache: true,
+      bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
     )
   end
 
