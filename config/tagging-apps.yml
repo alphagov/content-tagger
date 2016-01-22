@@ -16,7 +16,7 @@ external-link-tracker:
 feedback:
 frontend:
 govuk_content_api:
-hmrc-manuals-api:
+hmrc-manuals-api: content-tagger
 info-frontend:
 licencefinder: content-tagger
 manuals-frontend:
