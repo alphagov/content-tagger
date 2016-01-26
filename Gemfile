@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.5.1'
 gem 'unicorn', '~> 5.0.0'
 gem 'logstasher', '0.6.2'
 gem 'pg'
 
 gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
-gem 'govuk_admin_template', '~> 3.4'
+gem 'govuk_admin_template', '~> 4.1.1'
 gem 'generic_form_builder', '~> 0.13.0'
 gem 'govuk-lint', '~> 0.5'
 gem 'gds-api-adapters', '~> 25.3'
