@@ -21,7 +21,7 @@ info-frontend:
 licencefinder: content-tagger
 manuals-frontend:
 performanceplatform-big-screen-view:
-policy-publisher:
+policy-publisher: content-tagger
 publisher: publisher
 rummager:
 service-manual-publisher:
