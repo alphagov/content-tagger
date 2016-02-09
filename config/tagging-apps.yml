@@ -7,7 +7,7 @@ a-migrated-app: content-tagger # for testing puposes
 businesssupportfinder: content-tagger
 calculators: content-tagger
 calendars: content-tagger
-collections-publisher: collections-publisher
+collections-publisher: content-tagger
 contacts: panopticon
 contacts-admin:
 design-principles:
