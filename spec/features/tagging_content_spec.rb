@@ -150,6 +150,7 @@ RSpec.describe "Tagging content" do
         mainstream_browse_pages: [],
         organisations: [],
         parent: [],
+        alpha_taxons: [],
       },
       previous_version: 54_321,
     }
@@ -171,13 +172,9 @@ RSpec.describe "Tagging content" do
       }
     ]
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/content?content_format=topic&fields%5B%5D=content_id&fields%5B%5D=title&fields%5B%5D=details")
-      .to_return(body: content.to_json)
-
-    stub_request(:get, "#{PUBLISHING_API}/v2/content?content_format=organisation&fields%5B%5D=content_id&fields%5B%5D=title&fields%5B%5D=details")
-      .to_return(body: content.to_json)
-
-    stub_request(:get, "#{PUBLISHING_API}/v2/content?content_format=mainstream_browse_page&fields%5B%5D=content_id&fields%5B%5D=title&fields%5B%5D=details")
-      .to_return(body: content.to_json)
+    %w(topic organisation mainstream_browse_page taxon).each do |content_format|
+      stub_request(:get, "#{PUBLISHING_API}/v2/content?content_format=#{content_format}&fields%5B%5D=content_id&fields%5B%5D=title&fields%5B%5D=details")
+        .to_return(body: content.to_json)
+    end
   end
 end
