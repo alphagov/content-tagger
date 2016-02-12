@@ -1,4 +1,6 @@
 class ContentItem
+  TAG_TYPES = %w(mainstream_browse_pages parent topics organisations)
+
   attr_reader :content_id, :title, :format, :base_path, :publishing_app
 
   def initialize(data)
@@ -17,6 +19,10 @@ class ContentItem
 
   def link_set
     @link_set ||= LinkSet.find(content_id)
+  end
+
+  def tagging_allowed?
+    app_responsible_for_tagging == "content-tagger"
   end
 
   def app_responsible_for_tagging

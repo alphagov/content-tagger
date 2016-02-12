@@ -35,10 +35,6 @@ class TaggingUpdateForm
     )
   end
 
-  def allowed_tag_types
-    AllowedTagsFor.allowed_tag_types(content_item)
-  end
-
   def topics=(topic_ids)
     @topics = Array(topic_ids).select(&:present?)
   end
