@@ -1,7 +1,7 @@
 class TaggingUpdateForm
   include ActiveModel::Model
   attr_accessor :content_item, :content_id, :previous_version
-  attr_reader :topics, :organisations, :mainstream_browse_pages, :parent
+  attr_reader :topics, :organisations, :mainstream_browse_pages, :parent, :alpha_taxons
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
@@ -15,6 +15,7 @@ class TaggingUpdateForm
       organisations: link_set.links['organisations'],
       mainstream_browse_pages: link_set.links['mainstream_browse_pages'],
       parent: link_set.links['parent'],
+      alpha_taxons: link_set.links['alpha_taxons'],
     )
   end
 
@@ -30,13 +31,10 @@ class TaggingUpdateForm
         mainstream_browse_pages: mainstream_browse_pages,
         organisations: organisations,
         parent: parent,
+        alpha_taxons: alpha_taxons,
       },
       previous_version: previous_version.to_i,
     )
-  end
-
-  def allowed_tag_types
-    AllowedTagsFor.allowed_tag_types(content_item)
   end
 
   def topics=(topic_ids)
@@ -53,5 +51,9 @@ class TaggingUpdateForm
 
   def parent=(parent_id)
     @parent = Array(parent_id).select(&:present?)
+  end
+
+  def alpha_taxons=(taxon_id)
+    @alpha_taxons = Array(taxon_id).select(&:present?)
   end
 end
