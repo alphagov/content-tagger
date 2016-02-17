@@ -41,9 +41,9 @@ RSpec.describe AlphaTaxonomy::ImportFile do
       populated_file = File.open(test_tsv_file_path)
       expect(populated_file.read).to eq(
         expected_tsv_content([
-          "Foo-Taxon\t/foo-content-item-path",
-          "Bar (Br)\t/bar-or-baz-content-item-path",
-          "Baz (Bz)\t/bar-or-baz-content-item-path"
+          "foo-taxon\t/foo-content-item-path",
+          "bar (br)\t/bar-or-baz-content-item-path",
+          "baz (bz)\t/bar-or-baz-content-item-path"
         ])
       )
     end
@@ -79,16 +79,16 @@ RSpec.describe AlphaTaxonomy::ImportFile do
     context "if the import file is present" do
       before do
         stub_downloaded_sheet_data([
-          "Foo-Taxon\t" + "/foo-content-item-path",
-          "Bar (Br)| Baz (Bz)\t" + "/bar-or-baz-content-item-path",
+          "foo-taxon\t" + "/foo-content-item-path",
+          "bar (br)| baz (bz)\t" + "/bar-or-baz-content-item-path",
         ])
         AlphaTaxonomy::ImportFile.new.populate
       end
 
       it "returns lists of taxons grouped by base_path" do
         expect(AlphaTaxonomy::ImportFile.new.grouped_mappings).to eq(
-          "/foo-content-item-path" => ["Foo-Taxon"],
-          "/bar-or-baz-content-item-path" => ["Bar (Br)", "Baz (Bz)"]
+          "/foo-content-item-path" => ["foo-taxon"],
+          "/bar-or-baz-content-item-path" => ["bar (br)", "baz (bz)"]
         )
       end
     end

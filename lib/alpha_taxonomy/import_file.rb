@@ -66,7 +66,7 @@ module AlphaTaxonomy
         if mapped_to[0..2] == "n/a"
           next
         else
-          taxon_titles = stripped_array_of(mapped_to)
+          taxon_titles = derive_taxon_array_from(mapped_to)
           taxon_titles.each do |taxon_title|
             @file.write("#{taxon_title}\t#{base_path}\n")
           end
@@ -92,11 +92,11 @@ module AlphaTaxonomy
       @log.error "#{exception.backtrace.join("\n")}"
     end
 
-    # We expect taxonomy_labels to be a pipe-separated list.
-    # Return an array of whitespace-stripped taxon titles, removing any blank
-    # strings in the process.
-    def stripped_array_of(taxon_titles)
-      taxon_titles.split('|').map(&:strip).reject(&:blank?)
+    # We expect to receive a pipe-separated list.
+    # Return an array of whitespace-stripped, downcased taxon titles, removing
+    # any blank strings in the process.
+    def derive_taxon_array_from(taxon_titles)
+      taxon_titles.split('|').map(&:strip).reject(&:blank?).map(&:downcase)
     end
   end
 end
