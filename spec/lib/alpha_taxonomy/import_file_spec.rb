@@ -32,7 +32,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
     it "parses and writes the required data to a file" do
       stub_downloaded_sheet_data([
         "Foo-Taxon\t" + "/foo-content-item-path",
-        "Bar (Br)| Baz (Bz)\t" + "/bar-or-baz-content-item-path",
+        "Bar (Br)| Baz (Bz) | \t" + "/bar-or-baz-content-item-path",
         "n/a - not applicable\t" + "/n/a-content-item-path",
       ])
 

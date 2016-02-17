@@ -93,9 +93,10 @@ module AlphaTaxonomy
     end
 
     # We expect taxonomy_labels to be a pipe-separated list.
-    # Return an array of whitespace-stripped taxon titles.
+    # Return an array of whitespace-stripped taxon titles, removing any blank
+    # strings in the process.
     def stripped_array_of(taxon_titles)
-      taxon_titles.split('|').map(&:strip)
+      taxon_titles.split('|').map(&:strip).reject(&:blank?)
     end
   end
 end
