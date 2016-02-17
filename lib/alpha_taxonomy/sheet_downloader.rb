@@ -13,6 +13,7 @@ module AlphaTaxonomy
     self.sheets = [
       { name: "early_years", key: "1zjRy7XKrcroscX4cEqc4gM9Eq0DuVWEm_5wATsolRJY", gid: "1025053831" },
       { name: "curriculum_content_mapping", key: "1rViQioxz5iu3hGYFldNOJift0PqjX0fYd8LZz07ljd4", gid: "678558707" },
+      { name: "driving", key: "19GhkAQ9VEmsiPeoHbrz9Q-nTnbtLxC2kkD6szoGGam0", gid: "1102496302" },
     ]
 
     def initialize(logger: Logger.new(STDOUT))
