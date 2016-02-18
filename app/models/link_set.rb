@@ -8,6 +8,8 @@ class LinkSet
 
   def initialize(data)
     @links = data['links'] || {}
-    @version = data['version'] || 0
+    # TODO: Remove check for `version` once the rename of the
+    # field has been deployed.
+    @version = data['lock_version'] || data['version'] || 0
   end
 end
