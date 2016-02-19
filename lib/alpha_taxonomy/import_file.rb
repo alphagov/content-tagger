@@ -36,6 +36,11 @@ module AlphaTaxonomy
       File.delete(@file.path) if File.exist?(@file.path)
     end
 
+    # Return a hash in the following form
+    # {
+    #   '/content-base-path-1' => [ 'taxon-title-1', 'taxon-title-2' ],
+    #   '/content-base-path-2' => [ 'taxon-title-2', 'taxon-title-3' ],
+    # }
     def grouped_mappings
       check_import_file_is_present
       mappings = CSV.read(self.class.location, col_sep: "\t", headers: true)
