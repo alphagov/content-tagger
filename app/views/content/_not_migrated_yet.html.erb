@@ -5,7 +5,7 @@
   <div class="callout-body">
     <% if @content_item.app_responsible_for_tagging %>
       We haven't migrated the tagging for this item yet. You can try to take a look in
-      <%= link_to @content_item.app_responsible_for_tagging.underscore.titleize, Plek.new.find(@content_item.app_responsible_for_tagging) %>.
+      <%= link_to @content_item.app_responsible_for_tagging.underscore.titleize, @content_item.external_tagging_url %>.
     <% else %>
       This page can't be tagged.
     <% end %>
