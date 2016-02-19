@@ -30,6 +30,14 @@ class ContentItem
     @tagging_apps[publishing_app]
   end
 
+  def external_tagging_url
+    if app_responsible_for_tagging == 'whitehall'
+      Plek.new.find('whitehall-admin')
+    else
+      Plek.new.find(app_responsible_for_tagging)
+    end
+  end
+
   class ItemNotFoundError < StandardError
   end
 end
