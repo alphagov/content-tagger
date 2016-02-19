@@ -82,6 +82,28 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       end
     end
 
+    context "when a duplicate mapping exists" do
+      before do
+        stub_import_file_mappings(
+          "/a-foo-content-item" => ["Foo Taxon", "Foo Taxon"],
+        )
+      end
+
+      it "does not duplicate content IDs in the put_links payload" do
+        stub_taxons_fetch([
+          { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
+        ])
+        stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
+
+        expect(Services.publishing_api).to receive(:put_links).with(
+          "foo-item-uuid",
+          links: { alpha_taxons: ["foo-taxon-uuid"] }
+        ).once
+
+        run_the_taxon_linker!
+      end
+    end
+
     context "when the grouped mappings contain a taxon not present in the content store" do
       it "raises an error" do
         stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"])

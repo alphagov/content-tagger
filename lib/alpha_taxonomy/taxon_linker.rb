@@ -53,7 +53,7 @@ module AlphaTaxonomy
 
     def find_content_ids_for(taxon_titles)
       @log.info "Determining content IDs for taxons..."
-      taxon_titles.map do |taxon_title|
+      content_id_list = taxon_titles.map do |taxon_title|
         # Find existing taxon by a base path derived from the taxon title
         taxon_content_item = all_taxons.find do |taxon|
           taxon.fetch("base_path") == TaxonPresenter.new(title: taxon_title).base_path
@@ -65,6 +65,10 @@ module AlphaTaxonomy
           raise TaxonNotInContentStoreError, "Use TaxonCreator#run! to ensure all taxons have been created"
         end
       end
+
+      # Ensure the list is unique, in case we had any duplicate mappings in
+      # the import file
+      content_id_list.uniq
     end
 
     def fetch_content_item_id_with(base_path)
