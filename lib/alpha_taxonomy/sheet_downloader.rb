@@ -26,7 +26,7 @@ module AlphaTaxonomy
       environment_values = ENV.fetch("TAXON_SHEETS")
       environment_values = environment_values.split(',')
       if environment_values.count % 3 != 0
-        raise ArgumentError, "TAXON_SHEETS should be a sequence of comma-separated tuples, like so: name1,key1,gid1,name2,key2,gid2"
+        raise ArgumentError, "TAXON_SHEETS should be a sequence of three comma-separated values, like so: name1,key1,gid1,name2,key2,gid2"
       end
 
       environment_values.each_slice(3).map do |triplet|
