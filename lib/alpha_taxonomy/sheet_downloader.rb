@@ -5,24 +5,32 @@ module AlphaTaxonomy
     # a) it is stored on Google drive.
     # b) it is 'published' as a single sheet (not the entire document/workbook),
     #    with tab-seperated values.
-    # c) its key and gid are populated in the sheets class attribute.
+    # c) an environment variable called TAXON_SHEETS, containing the name, key
+    #    and gid (in that order) is specified at the point this class is used by
+    #    any client code.
 
-    # TODO: change this so that sheets can be specified as an ENV variable - saves
-    # us having to deploy in order to support additional sheets.
-    class_attribute :sheets
-    self.sheets = [
-      { name: "early_years", key: "1zjRy7XKrcroscX4cEqc4gM9Eq0DuVWEm_5wATsolRJY", gid: "1025053831" },
-      { name: "curriculum_content_mapping", key: "1rViQioxz5iu3hGYFldNOJift0PqjX0fYd8LZz07ljd4", gid: "678558707" },
-      { name: "driving", key: "19GhkAQ9VEmsiPeoHbrz9Q-nTnbtLxC2kkD6szoGGam0", gid: "1102496302" },
-    ]
+    # Example credentials set in environment variable:
+    # TAXON_SHEETS=early_years,1zjRy7XKrcroscX4cEqc4gM9Eq0DuVWEm_5wATsolRJY,1025053831
 
     def initialize(logger: Logger.new(STDOUT))
       @log = logger
     end
 
     def each_sheet
-      self.class.sheets.each do |sheet_credentials|
+      sheet_credential_tuples.each do |sheet_credentials|
         yield remote_taxonomy_data(sheet_credentials)
+      end
+    end
+
+    def sheet_credential_tuples
+      environment_values = ENV.fetch("TAXON_SHEETS")
+      environment_values = environment_values.split(',')
+      if environment_values.count % 3 != 0
+        raise ArgumentError, "TAXON_SHEETS should be a sequence of comma-separated tuples, like so: name1,key1,gid1,name2,key2,gid2"
+      end
+
+      environment_values.each_slice(3).map do |triplet|
+        { name: triplet[0], key: triplet[1], gid: triplet[2] }
       end
     end
 
