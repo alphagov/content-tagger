@@ -25,7 +25,7 @@ module AlphaTaxonomy
       end
 
       if existing.present?
-        @log.info "Taxon already exists!"
+        @log.info "Taxon with base path #{taxon_presenter.base_path} already exists!"
       else
         create_new_taxon(presented_payload: taxon_presenter.present)
       end
@@ -44,7 +44,7 @@ module AlphaTaxonomy
     end
 
     def existing_taxons
-      @existing_taxons ||= Services.publishing_api.get_content_items(
+      Services.publishing_api.get_content_items(
         content_format: 'taxon',
         fields: %i(title base_path content_id details)
       ).to_a

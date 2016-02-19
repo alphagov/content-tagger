@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe AlphaTaxonomy::ImportFile do
   let(:test_tsv_file_path) do
     FileUtils.mkdir_p Rails.root + "tmp"
-    Rails.root + "tmp/import_file_spec.csv"
+    Rails.root + "tmp/import_file_spec.tsv"
   end
   let(:sheet_downloader) { AlphaTaxonomy::SheetDownloader.new }
 
@@ -41,9 +41,9 @@ RSpec.describe AlphaTaxonomy::ImportFile do
       populated_file = File.open(test_tsv_file_path)
       expect(populated_file.read).to eq(
         expected_tsv_content([
-          "foo-taxon\t/foo-content-item-path",
-          "bar (br)\t/bar-or-baz-content-item-path",
-          "baz (bz)\t/bar-or-baz-content-item-path"
+          "Foo-Taxon\t/foo-content-item-path",
+          "Bar (Br)\t/bar-or-baz-content-item-path",
+          "Baz (Bz)\t/bar-or-baz-content-item-path"
         ])
       )
     end

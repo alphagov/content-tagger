@@ -36,6 +36,11 @@ module AlphaTaxonomy
       File.delete(@file.path) if File.exist?(@file.path)
     end
 
+    # Return a hash in the following form
+    # {
+    #   '/content-base-path-1' => [ 'taxon-title-1', 'taxon-title-2' ],
+    #   '/content-base-path-2' => [ 'taxon-title-2', 'taxon-title-3' ],
+    # }
     def grouped_mappings
       check_import_file_is_present
       mappings = CSV.read(self.class.location, col_sep: "\t", headers: true)
@@ -77,10 +82,10 @@ module AlphaTaxonomy
     def relevant_columns_in(taxonomy_data)
       tsv_data = CSV.parse(taxonomy_data, col_sep: "\t", headers: true)
       desired_columns = ["mapped to", "link"]
-      columns_in_data = tsv_data.headers.map(&:downcase)
+      columns_in_data = tsv_data.headers.select { |header| header.downcase.in? desired_columns }
 
-      if desired_columns.all? { |column_name| columns_in_data.include? column_name }
-        tsv_data.values_at(*desired_columns)
+      if columns_in_data.count == desired_columns.count
+        tsv_data.values_at(*columns_in_data)
       else
         raise ArgumentError, "Column names in downloaded taxonomy data did not match expected values: #{desired_columns}"
       end
@@ -93,10 +98,10 @@ module AlphaTaxonomy
     end
 
     # We expect to receive a pipe-separated list.
-    # Return an array of whitespace-stripped, downcased taxon titles, removing
+    # Return an array of whitespace-stripped taxon titles, removing
     # any blank strings in the process.
     def derive_taxon_array_from(taxon_titles)
-      taxon_titles.split('|').map(&:strip).reject(&:blank?).map(&:downcase)
+      taxon_titles.split('|').map(&:strip).reject(&:blank?)
     end
   end
 end

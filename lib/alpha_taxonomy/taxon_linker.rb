@@ -54,7 +54,11 @@ module AlphaTaxonomy
     def find_content_ids_for(taxon_titles)
       @log.info "Determining content IDs for taxons..."
       taxon_titles.map do |taxon_title|
-        taxon_content_item = all_taxons.find { |taxon| taxon["title"] == taxon_title }
+        # Find existing taxon by a base path derived from the taxon title
+        taxon_content_item = all_taxons.find do |taxon|
+          taxon.fetch("base_path") == TaxonPresenter.new(title: taxon_title).base_path
+        end
+
         if taxon_content_item
           taxon_content_item["content_id"]
         else
