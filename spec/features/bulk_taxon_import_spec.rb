@@ -36,8 +36,8 @@ RSpec.feature "Bulk taxon import" do
   end
 
   def given_taxonomy_data_is_available_from_a_remote_location
-    allow(AlphaTaxonomy::SheetDownloader).to receive(:sheets).and_return(
-      [{ name: "test-spreadsheet", key: "the-key", gid: "the-gid" }]
+    allow(ENV).to receive(:fetch).with("TAXON_SHEETS").and_return(
+      "test-spreadsheet,the-key,the-gid"
     )
     stub_request(
       :get, "https://docs.google.com/spreadsheets/d/the-key/pub?gid=the-gid&single=true&output=tsv"
