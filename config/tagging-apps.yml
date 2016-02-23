@@ -8,8 +8,8 @@ businesssupportfinder: content-tagger
 calculators: content-tagger
 calendars: content-tagger
 collections-publisher: content-tagger
-contacts: panopticon
-contacts-admin:
+contacts: content-tagger
+contacts-admin: content-tagger
 design-principles:
 email-campaign-frontend:
 external-link-tracker:
