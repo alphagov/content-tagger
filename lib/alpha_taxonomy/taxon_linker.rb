@@ -76,6 +76,7 @@ module AlphaTaxonomy
       content_item = Services.live_content_store.content_item(base_path)
       return content_item.content_id if content_item.present?
       report_error("No content item found at #{base_path}")
+      nil
     rescue
       report_error("Error fetching content id for #{base_path}: #{e}, Backtrace: #{e.backtrace.join("\n")}")
     end
