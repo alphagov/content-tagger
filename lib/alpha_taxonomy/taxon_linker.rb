@@ -73,10 +73,11 @@ module AlphaTaxonomy
 
     def fetch_content_item_id_with(base_path)
       @log.info "Fetching content ID for base path above..."
-      lookup = ContentLookupForm.new(base_path: base_path)
-      return lookup.content_id if lookup.valid?
-      report_error("Error fetching content id for #{base_path}: #{lookup.errors[:base_path]}")
-      nil
+      content_item = Services.live_content_store.content_item(base_path)
+      return content_item.content_id if content_item.present?
+      report_error("No content item found at #{base_path}")
+    rescue
+      report_error("Error fetching content id for #{base_path}: #{e}, Backtrace: #{e.backtrace.join("\n")}")
     end
   end
 end

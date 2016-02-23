@@ -26,7 +26,7 @@ module AlphaTaxonomy
     end
 
     def determine_update_state_of(path)
-      content_item = Services.content_store.content_item(path)
+      content_item = Services.live_content_store.content_item(path)
 
       if content_item.blank?
         @no_content_item << { path: path }

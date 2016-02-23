@@ -1,4 +1,5 @@
 require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe AlphaTaxonomy::TaxonLinker do
   describe "#run!" do
@@ -13,9 +14,10 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
     end
 
     def stub_content_item_lookup(base_path:, content_id:)
-      lookup = double(valid?: true)
-      allow(lookup).to receive(:content_id).and_return(content_id)
-      allow(ContentLookupForm).to receive(:new).with(base_path: base_path).and_return(lookup)
+      return_value = content_id.present? ? OpenStruct.new(content_id: content_id) : nil
+      allow(Services.live_content_store).to receive(:content_item)
+        .with(base_path)
+        .and_return(return_value)
     end
 
     def stub_import_file_mappings(returned_mappings)
@@ -120,8 +122,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"], "/invalid-content-item" => ["Foo Taxon"])
         stub_taxons_fetch([{ content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" }])
         stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
-        invalid_lookup = double(valid?: false, errors: { base_path: "something went wrong" })
-        allow(ContentLookupForm).to receive(:new).with(base_path: "/invalid-content-item").and_return(invalid_lookup)
+        stub_content_item_lookup(base_path: "/invalid-content-item", content_id: nil)
       end
 
       it "does not create a link and reports the error" do
@@ -133,7 +134,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         log_output = StringIO.new
         AlphaTaxonomy::TaxonLinker.new(logger: Logger.new(log_output)).run!
         log_output.rewind
-        expect(log_output.read).to match(%r{Error fetching content id for /invalid-content-item: something went wrong})
+        expect(log_output.read).to match(%r{No content item found at /invalid-content-item})
       end
     end
   end

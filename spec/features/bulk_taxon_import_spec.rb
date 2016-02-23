@@ -101,8 +101,8 @@ RSpec.feature "Bulk taxon import" do
 
   def when_i_run_the_taxon_linker
     # Assume that valid content items exist at the test-paths
-    stub_request(:get, "#{DRAFT_CONTENT_STORE}/content/test-path-1").to_return(body: { content_id: "uuid-1" }.to_json)
-    stub_request(:get, "#{DRAFT_CONTENT_STORE}/content/test-path-2").to_return(body: { content_id: "uuid-2" }.to_json)
+    stub_request(:get, "#{LIVE_CONTENT_STORE}/content/test-path-1").to_return(body: { content_id: "uuid-1" }.to_json)
+    stub_request(:get, "#{LIVE_CONTENT_STORE}/content/test-path-2").to_return(body: { content_id: "uuid-2" }.to_json)
 
     @update_links_1 = stub_publishing_api_put_links("uuid-1", links: { alpha_taxons: ["foo-uuid"] })
     @update_links_2 = stub_publishing_api_put_links("uuid-2", links: { alpha_taxons: ["bar-uuid"] })
