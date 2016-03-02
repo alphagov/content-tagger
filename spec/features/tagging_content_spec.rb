@@ -76,6 +76,7 @@ RSpec.describe "Tagging content" do
     stub_request(:get, "https://draft-content-store.test.gov.uk/content/my-content-item")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
+        format: "placeholder",
       }.to_json)
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
