@@ -25,16 +25,25 @@ RSpec.describe ContentLookupForm do
 
     it "is valid when the path is an absolute_path found on GOV.UK" do
       stub_request(:get, "https://draft-content-store.test.gov.uk/content/browse")
-        .to_return(body: {}.to_json)
+        .to_return(body: { format: 'placeholder' }.to_json)
 
       form = ContentLookupForm.new(base_path: '/browse')
 
       expect(form).to be_valid
     end
 
+    it "is invalid when the path is not renderable" do
+      stub_request(:get, "https://draft-content-store.test.gov.uk/content/browse")
+        .to_return(body: { format: 'redirect' }.to_json)
+
+      form = ContentLookupForm.new(base_path: '/browse')
+
+      expect(form).not_to be_valid
+    end
+
     it "treats paths and URLs the same" do
       stub_request(:get, "https://draft-content-store.test.gov.uk/content/browse")
-        .to_return(body: {}.to_json)
+        .to_return(body: { format: 'placeholder' }.to_json)
 
       form = ContentLookupForm.new(base_path: 'http://gov.uk/browse')
 

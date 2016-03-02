@@ -15,12 +15,21 @@ private
 
   def base_path_should_be_a_content_item
     return if errors.any?
-    strip_host && content_item_should_have_been_found!
+
+    strip_host &&
+      content_item_should_have_been_found! &&
+      content_item_should_be_taggable!
   end
 
   def content_item_should_have_been_found!
     return true if content_item
     errors[:base_path] << "No page found with this path"
+    false
+  end
+
+  def content_item_should_be_taggable!
+    return unless content_item['format'].in?(%(redirect gone))
+    errors[:base_path] << "This is not a valid page on GOV.UK"
     false
   end
 
