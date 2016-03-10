@@ -162,20 +162,19 @@ RSpec.describe "Tagging content" do
   def setup_tags_for_select_boxes
     content = [
       {
-        "content_id" => "ID-OF-FIRST-TAG",
-        "title" => "Some Tag",
-        "details" => {},
+        content_id: "ID-OF-FIRST-TAG",
+        title: "Some Tag",
+        publication_state: "published",
       },
       {
-        "content_id" => "ID-OF-ALREADY-TAGGED",
-        "title" => "Something Else",
-        "details" => {},
+        content_id: "ID-OF-ALREADY-TAGGED",
+        title: "Something Else",
+        publication_state: "published",
       }
     ]
 
-    %w(topic organisation mainstream_browse_page taxon).each do |content_format|
-      stub_request(:get, "#{PUBLISHING_API}/v2/content?content_format=#{content_format}&fields%5B%5D=content_id&fields%5B%5D=title&fields%5B%5D=details")
-        .to_return(body: content.to_json)
+    %w(topic organisation mainstream_browse_page taxon).each do |document_type|
+      publishing_api_has_linkables(content, document_type: document_type)
     end
   end
 end
