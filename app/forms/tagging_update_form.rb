@@ -24,15 +24,19 @@ class TaggingUpdateForm
   end
 
   def publish!
+    links_payload = {
+      topics: topics,
+      mainstream_browse_pages: mainstream_browse_pages,
+      organisations: organisations,
+      alpha_taxons: alpha_taxons,
+    }
+
+    # Because 'parent' might be a blacklisted field switched off in the form
+    links_payload.merge!(parent: parent) unless parent.nil?
+
     Services.publishing_api.patch_links(
       content_id,
-      links: {
-        topics: topics,
-        mainstream_browse_pages: mainstream_browse_pages,
-        organisations: organisations,
-        parent: parent,
-        alpha_taxons: alpha_taxons,
-      },
+      links: links_payload,
       previous_version: previous_version.to_i,
     )
   end

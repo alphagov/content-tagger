@@ -7,7 +7,7 @@
 <hr/>
 
 <% if @content_item.tagging_allowed? %>
-  <%= render 'tagging_form' %>
+  <%= render partial: 'tagging_form', locals: { tagging_update: @tagging_update, tag_types: @tag_types }  %>
 <% else %>
   <%= render 'not_migrated_yet' %>
 <% end %>

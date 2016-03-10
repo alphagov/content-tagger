@@ -1,8 +1,8 @@
-<%= form_for @tagging_update, url: content_update_links_path do |f| %>
+<%= form_for tagging_update, url: content_update_links_path do |f| %>
   <%= f.hidden_field :content_id %>
   <%= f.hidden_field :previous_version %>
 
-  <% ContentItem::TAG_TYPES.each do |tag_type| %>
+  <% tag_types.each do |tag_type| %>
     <div class='tag-section'>
       <%= render "form_for_#{tag_type}", f: f %>
     </div>
