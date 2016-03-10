@@ -24,7 +24,7 @@ class TaggingUpdateForm
   end
 
   def publish!
-    Services.publishing_api.put_links(
+    Services.publishing_api.patch_links(
       content_id,
       links: {
         topics: topics,

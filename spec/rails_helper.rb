@@ -19,10 +19,13 @@ DRAFT_CONTENT_STORE = "https://draft-content-store.test.gov.uk"
 LIVE_CONTENT_STORE = "https://content-store.test.gov.uk"
 
 require 'capybara/rails'
+require 'gds_api/test_helpers/publishing_api_v2'
 
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.include GdsApi::TestHelpers::PublishingApiV2
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!

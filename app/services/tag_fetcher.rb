@@ -9,34 +9,25 @@ class TagFetcher
 
 private
 
-  def fetch_items_for_format(content_format)
-    Services.publishing_api.get_content_items(
-      content_format: content_format,
-      fields: %i(title content_id details)
-    )
+  def fetch_items_for_format(document_type)
+    @cache ||= {}
+    @cache[document_type] ||= Services.publishing_api.get_linkables(document_type: document_type)
   end
 
   def present_items_for_select(items)
-    items.map { |tag| TagItem.new(tag).to_select }.sort_by(&:first)
+    items.map do |tag|
+      [tag_name_with_publication_state(tag), tag.fetch('content_id')]
+    end
   end
 
-  class TagItem
-    attr_accessor :content_id, :title, :publication_state, :details
-    include ActiveModel::Model
+  def tag_name_with_publication_state(item)
+    name = item['internal_name'] || item.fetch('title')
+    publication_state = item.fetch('publication_state')
 
-    def to_select
-      [tag_name_with_publication_state, content_id]
-    end
-
-  private
-
-    def tag_name_with_publication_state
-      name = details.to_h.fetch('internal_name', title)
-      if publication_state == 'draft'
-        "#{name} (#{publication_state})"
-      else
-        name
-      end
+    if publication_state == 'draft'
+      "#{name} (#{publication_state})"
+    else
+      name
     end
   end
 end

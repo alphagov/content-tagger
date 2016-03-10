@@ -28,7 +28,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
     before do
       # We log the response code from the publishing API, stub out the returned value
-      allow(Services.publishing_api).to receive(:put_links).and_return(double(code: 200))
+      allow(Services.publishing_api).to receive(:patch_links).and_return(double(code: 200))
     end
 
     it "creates taxon links based on the grouped mappings" do
@@ -43,11 +43,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
       stub_content_item_lookup(base_path: "/a-foo-bar-content-item", content_id: "foo-bar-item-uuid")
 
-      expect(Services.publishing_api).to receive(:put_links).with(
+      expect(Services.publishing_api).to receive(:patch_links).with(
         "foo-item-uuid",
         links: { alpha_taxons: ["foo-taxon-uuid"] }
       ).once
-      expect(Services.publishing_api).to receive(:put_links).with(
+      expect(Services.publishing_api).to receive(:patch_links).with(
         "foo-bar-item-uuid",
         links: { alpha_taxons: ["foo-taxon-uuid", "bar-taxon-uuid"] }
       ).once
@@ -71,11 +71,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
         stub_content_item_lookup(base_path: "/a-foo-bar-content-item", content_id: "foo-bar-item-uuid")
 
-        expect(Services.publishing_api).to receive(:put_links).with(
+        expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
           links: { alpha_taxons: ["foo-taxon-uuid"] }
         ).once
-        expect(Services.publishing_api).to receive(:put_links).with(
+        expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-bar-item-uuid",
           links: { alpha_taxons: ["foo-taxon-uuid"] }
         ).once
@@ -91,13 +91,13 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         )
       end
 
-      it "does not duplicate content IDs in the put_links payload" do
+      it "does not duplicate content IDs in the patch_links payload" do
         stub_taxons_fetch([
           { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
         ])
         stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
 
-        expect(Services.publishing_api).to receive(:put_links).with(
+        expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
           links: { alpha_taxons: ["foo-taxon-uuid"] }
         ).once
@@ -126,7 +126,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       end
 
       it "does not create a link and reports the error" do
-        expect(Services.publishing_api).to receive(:put_links).with(
+        expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
           links: { alpha_taxons: ["foo-taxon-uuid"] }
         ).once

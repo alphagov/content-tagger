@@ -28,14 +28,14 @@ module AlphaTaxonomy
         @log.info "No content ID found!"
       else
         @log.info "Content ID is #{content_item_id}"
-        put_links_response = Services.publishing_api.put_links(
+        patch_links_response = Services.publishing_api.patch_links(
           content_item_id,
           links: {
             alpha_taxons: taxon_content_ids
           }
         )
 
-        @log.info "Publishing API 'put' complete, response code: #{put_links_response.code}"
+        @log.info "Publishing API 'put' complete, response code: #{patch_links_response.code}"
       end
     end
 
