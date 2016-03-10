@@ -125,14 +125,14 @@ RSpec.describe "Tagging content" do
   end
 
   def when_i_add_an_additional_tag
-    @tagging_request = stub_request(:put, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
     select "Some Tag", from: "Topics"
   end
 
   def and_somebody_else_makes_a_change
-    @tagging_request = stub_request(:put, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 409)
   end
 
