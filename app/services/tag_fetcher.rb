@@ -10,7 +10,8 @@ class TagFetcher
 private
 
   def fetch_items_for_format(document_type)
-    Services.publishing_api.get_linkables(document_type: document_type)
+    @cache ||= {}
+    @cache[document_type] ||= Services.publishing_api.get_linkables(document_type: document_type)
   end
 
   def present_items_for_select(items)
