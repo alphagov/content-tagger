@@ -1,7 +1,7 @@
 class TaggingUpdateForm
   include ActiveModel::Model
   attr_accessor :content_item, :content_id, :previous_version
-  attr_reader :topics, :organisations, :mainstream_browse_pages, :parent, :alpha_taxons
+  attr_accessor :topics, :organisations, :mainstream_browse_pages, :parent, :alpha_taxons
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
@@ -26,34 +26,28 @@ class TaggingUpdateForm
   def publish!
     Services.publishing_api.patch_links(
       content_id,
-      links: {
-        topics: topics,
-        mainstream_browse_pages: mainstream_browse_pages,
-        organisations: organisations,
-        parent: parent,
-        alpha_taxons: alpha_taxons,
-      },
+      links: links_payload,
       previous_version: previous_version.to_i,
     )
   end
 
-  def topics=(topic_ids)
-    @topics = Array(topic_ids).select(&:present?)
+  def links_payload
+    payload = {
+      topics: clean_content_ids(topics),
+      mainstream_browse_pages: clean_content_ids(mainstream_browse_pages),
+      organisations: clean_content_ids(organisations),
+      alpha_taxons: clean_content_ids(alpha_taxons),
+    }
+
+    # Because 'parent' might be a blacklisted field switched off in the form
+    payload.merge!(parent: clean_content_ids(parent)) unless parent.nil?
+
+    payload
   end
 
-  def organisations=(organisation_ids)
-    @organisations = Array(organisation_ids).select(&:present?)
-  end
+private
 
-  def mainstream_browse_pages=(mainstream_browse_page_ids)
-    @mainstream_browse_pages = Array(mainstream_browse_page_ids).select(&:present?)
-  end
-
-  def parent=(parent_id)
-    @parent = Array(parent_id).select(&:present?)
-  end
-
-  def alpha_taxons=(taxon_id)
-    @alpha_taxons = Array(taxon_id).select(&:present?)
+  def clean_content_ids(select_form_input)
+    Array(select_form_input).select(&:present?)
   end
 end
