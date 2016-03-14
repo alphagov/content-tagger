@@ -40,7 +40,7 @@ RSpec.describe AlphaTaxonomy::TaxonCreator do
 
       def stub_taxon_fetch(results:)
         mock_response = double(to_a: results)
-        allow(Services.publishing_api).to receive(:get_content_items).and_return(mock_response)
+        allow(Services.publishing_api).to receive(:get_linkables).and_return(mock_response)
       end
 
       after do

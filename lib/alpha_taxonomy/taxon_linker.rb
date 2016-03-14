@@ -46,8 +46,8 @@ module AlphaTaxonomy
     end
 
     def all_taxons
-      @all_taxons ||= Services.publishing_api.get_content_items(
-        content_format: 'taxon', fields: %i(title base_path content_id)
+      @all_taxons ||= Services.publishing_api.get_linkables(
+        document_type: 'taxon'
       ).sort_by { |taxon| taxon["title"] }
     end
 
