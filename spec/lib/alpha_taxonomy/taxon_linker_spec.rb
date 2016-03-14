@@ -8,8 +8,8 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
     end
 
     def stub_taxons_fetch(returned_taxon_collection)
-      allow(Services.publishing_api).to receive(:get_content_items).with(
-        content_format: 'taxon', fields: %i(title base_path content_id)
+      allow(Services.publishing_api).to receive(:get_linkables).with(
+        document_type: 'taxon'
       ).and_return(returned_taxon_collection.map(&:stringify_keys))
     end
 

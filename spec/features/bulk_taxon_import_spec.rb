@@ -59,7 +59,7 @@ RSpec.feature "Bulk taxon import" do
       { title: "bar-taxon", base_path: "/alpha-taxonomy/bar-taxon" }
     ]
     stub_request(
-      :get, "#{PUBLISHING_API}/v2/content?content_format=taxon&fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=details&fields%5B%5D=title"
+      :get, "#{PUBLISHING_API}/v2/linkables?document_type=taxon"
     ).to_return(body: publishing_api_response.to_json)
   end
 
@@ -95,7 +95,7 @@ RSpec.feature "Bulk taxon import" do
       { title: "bar-taxon", base_path: "/alpha-taxonomy/bar-taxon", content_id: "bar-uuid" }
     ]
     stub_request(
-      :get, "#{PUBLISHING_API}/v2/content?content_format=taxon&fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=title"
+      :get, "#{PUBLISHING_API}/v2/linkables?document_type=taxon"
     ).to_return(body: publishing_api_response.to_json)
   end
 

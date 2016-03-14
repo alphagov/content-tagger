@@ -44,9 +44,8 @@ module AlphaTaxonomy
     end
 
     def existing_taxons
-      Services.publishing_api.get_content_items(
-        content_format: 'taxon',
-        fields: %i(title base_path content_id details)
+      Services.publishing_api.get_linkables(
+        document_type: 'taxon',
       ).to_a
     end
 
