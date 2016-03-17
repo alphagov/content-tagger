@@ -30,9 +30,10 @@ taxons in `mapped to`.
    The `19Ghka...` part is the `key` and the param at the end is the `gid`.
 0. In the environment in which you're running the import, set an environment
    variable `TAXON_SHEETS` with values in the form
-   `name-of-sheet,the-key,the-gid,name-of-some-other-sheet,its-key,its-gid`.
+   `description,the-key,the-gid,description-of-some-other-sheet,its-key,its-gid`.
    You can set as many sets of credentials as you need as long as the values
-   are comma-delimited and provided in this order.
+   are comma-delimited and provided in this order. The 'description' can be any
+   value - its sole use is clearer log output.
 0. Run `AlphaTaxonomy::ImportFile.new.populate`.
 0. This should pull down each sheet defined in the environment variable and
    write the contents into a single import file. A default location for the

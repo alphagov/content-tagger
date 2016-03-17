@@ -1,17 +1,5 @@
 module AlphaTaxonomy
   class SheetDownloader
-    # This class downloads taxonomy data from a specified set of spreadsheets.
-    # It assumes the following about each sheet it imports:
-    # a) it is stored on Google drive.
-    # b) it is 'published' as a single sheet (not the entire document/workbook),
-    #    with tab-seperated values.
-    # c) an environment variable called TAXON_SHEETS, containing the name, key
-    #    and gid (in that order) is specified at the point this class is used by
-    #    any client code.
-
-    # Example credentials set in environment variable:
-    # TAXON_SHEETS=early_years,1zjRy7XKrcroscX4cEqc4gM9Eq0DuVWEm_5wATsolRJY,1025053831
-
     def initialize(logger: Logger.new(STDOUT))
       @log = logger
     end
