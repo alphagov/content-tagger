@@ -26,8 +26,8 @@ namespace :taxonomy do
     # Note that this task is simply a wrapper for the discrete stages of the bulk
     # import process. It makes no effort to clear pre-existing taxon links that
     # no longer appear in the import file.
-    Rake::Task["import_file"].invoke
-    Rake::Task["create_taxons"].invoke
-    Rake::Task["link_taxons"].invoke
+    Rake::Task["taxonomy:import_file"].invoke
+    Rake::Task["taxonomy:create_taxons"].invoke
+    Rake::Task["taxonomy:link_taxons"].invoke
   end
 end
