@@ -7,25 +7,23 @@ module AlphaTaxonomy
 
     class_attribute :location
     self.location = begin
-      if ENV["TAXON_IMPORT_FILE"].present?
-        ENV["TAXON_IMPORT_FILE"]
-      else
-        FileUtils.mkdir_p Rails.root + "lib/data/"
-        Rails.root + "lib/data/alpha_taxonomy_import.tsv"
-      end
+      FileUtils.mkdir_p Rails.root + "lib/data/"
+      Rails.root + "lib/data/alpha_taxonomy_import.tsv"
     end
 
-    def initialize(logger: Logger.new(STDOUT))
+    def initialize(logger: Logger.new(STDOUT), sheet_identifiers:)
       @log = logger
+      @sheet_identifiers = sheet_identifiers
     end
 
     def populate
       @file = File.new(self.class.location, "wb")
       write_headers
 
-      SheetDownloader.new(logger: @log).each_sheet do |taxonomy_data|
+      SheetDownloader.new(logger: @log, sheet_identifiers: @sheet_identifiers).each_sheet do |taxonomy_data|
         write(taxonomy_data)
       end
+
       @file.close
     rescue => e
       log_failure(e)
@@ -34,23 +32,6 @@ module AlphaTaxonomy
 
     def clean_up
       File.delete(@file.path) if File.exist?(@file.path)
-    end
-
-    # Return a hash in the following form
-    # {
-    #   '/content-base-path-1' => [ 'taxon-title-1', 'taxon-title-2' ],
-    #   '/content-base-path-2' => [ 'taxon-title-2', 'taxon-title-3' ],
-    # }
-    def grouped_mappings
-      check_import_file_is_present
-      mappings = CSV.read(self.class.location, col_sep: "\t", headers: true)
-      mappings.each_with_object({}) do |row, hash|
-        base_path = row["base_path"]
-        taxon_title = row["taxon_title"]
-
-        hash[base_path] = [] unless hash[base_path].present?
-        hash[base_path] << taxon_title
-      end
     end
 
   private

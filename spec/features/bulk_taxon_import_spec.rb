@@ -36,17 +36,16 @@ RSpec.feature "Bulk taxon import" do
   end
 
   def given_taxonomy_data_is_available_from_a_remote_location
-    allow(ENV).to receive(:fetch).with("TAXON_SHEETS").and_return(
-      "test-spreadsheet,the-key,the-gid"
-    )
+    @the_key = 'the-key'
+    @the_gid = 'the-gid'
     stub_request(
-      :get, "https://docs.google.com/spreadsheets/d/the-key/pub?gid=the-gid&single=true&output=tsv"
+      :get, "https://docs.google.com/spreadsheets/d/#{@the_key}/pub?gid=#{@the_gid}&single=true&output=tsv"
     ).to_return(body: "mapped to\tlink\n" + "foo-taxon\t/test-path-1\n" + "bar-taxon\t/test-path-2\n")
   end
 
   def and_i_have_populated_a_local_import_file
     allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(test_import_file_location)
-    AlphaTaxonomy::ImportFile.new(logger: @dummy_logger).populate
+    AlphaTaxonomy::ImportFile.new(logger: @dummy_logger, sheet_identifiers: ['test-sheet', @the_key, @the_gid]).populate
 
     expect(File.exist? test_import_file_location).to be true
     expect(IO.readlines(test_import_file_location)).to include("foo-taxon\t/test-path-1\n")
