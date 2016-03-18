@@ -73,11 +73,9 @@ RSpec.describe "Tagging content" do
   end
 
   def given_there_is_a_content_item_with_tags
-    stub_request(:get, "https://draft-content-store.test.gov.uk/content/my-content-item")
-      .to_return(body: {
-        content_id: "MY-CONTENT-ID",
-        format: "placeholder",
-      }.to_json)
+    publishing_api_has_lookups(
+      '/my-content-item' => 'MY-CONTENT-ID'
+    )
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
@@ -108,8 +106,8 @@ RSpec.describe "Tagging content" do
   end
 
   def and_i_fill_a_unknown_base_path_to_my_content_item
-    stub_request(:get, "https://draft-content-store.test.gov.uk/content/an-unknown-content-item")
-      .to_return(status: 404)
+    # Publishing API returns nothing if the content item doesn't exist.
+    publishing_api_has_lookups({})
 
     fill_in 'content_lookup_form_base_path', with: '/an-unknown-content-item'
     click_on 'Show content item'

@@ -10,13 +10,6 @@ module Services
     )
   end
 
-  def self.content_store
-    @content_store ||= GdsApi::ContentStore.new(
-      Plek.new.find('draft-content-store'),
-      disable_cache: true
-    )
-  end
-
   def self.live_content_store
     @live_content_store ||= GdsApi::ContentStore.new(
       Plek.new.find('content-store'),
