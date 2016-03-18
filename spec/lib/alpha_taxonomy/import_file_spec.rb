@@ -5,11 +5,16 @@ RSpec.describe AlphaTaxonomy::ImportFile do
     FileUtils.mkdir_p Rails.root + "tmp"
     Rails.root + "tmp/import_file_spec.tsv"
   end
-  let(:sheet_downloader) { AlphaTaxonomy::SheetDownloader.new }
+  let(:log_output) { StringIO.new }
+  let(:test_logger) { Logger.new(log_output) }
+  let(:dummy_identifiers) { %w('foo', 'bar', 'baz') }
+  let(:sheet_downloader) { AlphaTaxonomy::SheetDownloader.new(logger: test_logger, sheet_identifiers: dummy_identifiers) }
 
   before do
     allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(test_tsv_file_path)
-    allow(AlphaTaxonomy::SheetDownloader).to receive(:new).and_return(sheet_downloader)
+    allow(AlphaTaxonomy::SheetDownloader).to receive(:new)
+      .with(logger: test_logger, sheet_identifiers: dummy_identifiers)
+      .and_return(sheet_downloader)
   end
 
   after do
@@ -36,7 +41,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
         "n/a - not applicable\t" + "/n/a-content-item-path",
       ])
 
-      AlphaTaxonomy::ImportFile.new.populate
+      AlphaTaxonomy::ImportFile.new(logger: test_logger, sheet_identifiers: dummy_identifiers).populate
 
       populated_file = File.open(test_tsv_file_path)
       expect(populated_file.read).to eq(
@@ -51,8 +56,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
     it "reports an error and removes the file if the required values aren't present" do
       stub_downloaded_sheet_data(["\t" + "the-foo-slug"])
 
-      log_output = StringIO.new
-      AlphaTaxonomy::ImportFile.new(logger: Logger.new(log_output)).populate
+      AlphaTaxonomy::ImportFile.new(logger: test_logger, sheet_identifiers: dummy_identifiers).populate
 
       log_output.rewind
       expect(log_output.read).to match(/Missing value in downloaded taxonomy spreadsheet/)
@@ -66,8 +70,7 @@ RSpec.describe AlphaTaxonomy::ImportFile do
       ].join("\n")
       allow(sheet_downloader).to receive(:each_sheet).and_yield(test_tsv_data)
 
-      log_output = StringIO.new
-      AlphaTaxonomy::ImportFile.new(logger: Logger.new(log_output)).populate
+      AlphaTaxonomy::ImportFile.new(logger: test_logger, sheet_identifiers: dummy_identifiers).populate
 
       log_output.rewind
       expect(log_output.read).to match(/Column names in downloaded taxonomy data did not match expected values/)

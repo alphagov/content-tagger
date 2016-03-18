@@ -7,25 +7,23 @@ module AlphaTaxonomy
 
     class_attribute :location
     self.location = begin
-      if ENV["TAXON_IMPORT_FILE"].present?
-        ENV["TAXON_IMPORT_FILE"]
-      else
-        FileUtils.mkdir_p Rails.root + "lib/data/"
-        Rails.root + "lib/data/alpha_taxonomy_import.tsv"
-      end
+      FileUtils.mkdir_p Rails.root + "lib/data/"
+      Rails.root + "lib/data/alpha_taxonomy_import.tsv"
     end
 
-    def initialize(logger: Logger.new(STDOUT))
+    def initialize(logger: Logger.new(STDOUT), sheet_identifiers:)
       @log = logger
+      @sheet_identifiers = sheet_identifiers
     end
 
     def populate
       @file = File.new(self.class.location, "wb")
       write_headers
 
-      SheetDownloader.new(logger: @log).each_sheet do |taxonomy_data|
+      SheetDownloader.new(logger: @log, sheet_identifiers: @sheet_identifiers).each_sheet do |taxonomy_data|
         write(taxonomy_data)
       end
+
       @file.close
     rescue => e
       log_failure(e)

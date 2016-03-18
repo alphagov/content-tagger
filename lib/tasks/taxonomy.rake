@@ -7,7 +7,8 @@ namespace :taxonomy do
 
   desc "Generate the import file from the taxonomy sheets specified in the environment"
   task import_file: :environment do
-    AlphaTaxonomy::ImportFile.new.populate
+    sheet_identifiers = ENV.fetch("TAXON_SHEETS").split(',')
+    AlphaTaxonomy::ImportFile.new(sheet_identifiers: sheet_identifiers).populate
   end
 
   desc "Read the import file and create any new taxons found within"
