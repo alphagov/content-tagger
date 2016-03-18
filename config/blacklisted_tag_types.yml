@@ -1,3 +1,5 @@
+contacts-admin:
+  - parent
 travel-advice-publisher:
   # This is  a temporary workaround for the fact that 'parent' links
   # can sometimes be blobs of JSON (containing a breadcrumb, for example)
