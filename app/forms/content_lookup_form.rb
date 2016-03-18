@@ -5,31 +5,22 @@ class ContentLookupForm
   validates_presence_of :base_path
   validate :base_path_should_be_a_content_item
 
-  delegate :content_id, to: :content_item
+  def content_id
+    @content_id ||= Services.publishing_api.lookup_content_id(base_path: base_path)
+  end
 
 private
-
-  def content_item
-    @content_item ||= Services.content_store.content_item(base_path)
-  end
 
   def base_path_should_be_a_content_item
     return if errors.any?
 
     strip_host &&
-      content_item_should_have_been_found! &&
-      content_item_should_be_taggable!
+      content_item_should_have_been_found!
   end
 
   def content_item_should_have_been_found!
-    return true if content_item
+    return true if content_id
     errors[:base_path] << "No page found with this path"
-    false
-  end
-
-  def content_item_should_be_taggable!
-    return unless content_item['format'].in?(%(redirect gone))
-    errors[:base_path] << "This is not a valid page on GOV.UK"
     false
   end
 

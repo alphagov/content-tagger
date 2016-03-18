@@ -26,6 +26,8 @@ class ContentItem
   end
 
   def app_responsible_for_tagging
+    return if format.in?(%w(redirect gone))
+
     @tagging_apps ||= YAML.load_file("#{Rails.root}/config/tagging-apps.yml")
     @tagging_apps[publishing_app]
   end

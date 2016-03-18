@@ -1,7 +1,9 @@
 require "rails_helper"
-require "gds_api/test_helpers/content_store"
 
 RSpec.describe AlphaTaxonomy::TaxonLinker do
+  require 'gds_api/test_helpers/publishing_api_v2'
+  include GdsApi::TestHelpers::PublishingApiV2
+
   describe "#run!" do
     def run_the_taxon_linker!
       AlphaTaxonomy::TaxonLinker.new(logger: Logger.new(StringIO.new)).run!
@@ -11,13 +13,6 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       allow(Services.publishing_api).to receive(:get_linkables).with(
         document_type: 'taxon'
       ).and_return(returned_taxon_collection.map(&:stringify_keys))
-    end
-
-    def stub_content_item_lookup(base_path:, content_id:)
-      return_value = content_id.present? ? OpenStruct.new(content_id: content_id) : nil
-      allow(Services.live_content_store).to receive(:content_item)
-        .with(base_path)
-        .and_return(return_value)
     end
 
     def stub_import_file_mappings(returned_mappings)
@@ -40,8 +35,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
         { content_id: "bar-taxon-uuid", base_path: "/alpha-taxonomy/bar-taxon" },
       ])
-      stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
-      stub_content_item_lookup(base_path: "/a-foo-bar-content-item", content_id: "foo-bar-item-uuid")
+
+      publishing_api_has_lookups(
+        "/a-foo-content-item" => "foo-item-uuid",
+        "/a-foo-bar-content-item" => "foo-bar-item-uuid",
+      )
 
       expect(Services.publishing_api).to receive(:patch_links).with(
         "foo-item-uuid",
@@ -68,8 +66,10 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
           { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
         ])
 
-        stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
-        stub_content_item_lookup(base_path: "/a-foo-bar-content-item", content_id: "foo-bar-item-uuid")
+        publishing_api_has_lookups(
+          "/a-foo-content-item" => "foo-item-uuid",
+          "/a-foo-bar-content-item" => "foo-bar-item-uuid",
+        )
 
         expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
@@ -95,7 +95,10 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         stub_taxons_fetch([
           { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
         ])
-        stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
+
+        publishing_api_has_lookups(
+          "/a-foo-content-item" => "foo-item-uuid"
+        )
 
         expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
@@ -121,8 +124,10 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       before do
         stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"], "/invalid-content-item" => ["Foo Taxon"])
         stub_taxons_fetch([{ content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" }])
-        stub_content_item_lookup(base_path: "/a-foo-content-item", content_id: "foo-item-uuid")
-        stub_content_item_lookup(base_path: "/invalid-content-item", content_id: nil)
+
+        publishing_api_has_lookups(
+          "/a-foo-content-item" => "foo-item-uuid",
+        )
       end
 
       it "does not create a link and reports the error" do
