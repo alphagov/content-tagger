@@ -41,20 +41,8 @@ class ContentItem
   end
 
   def blacklisted_tag_types
-    # FIXME: This is  a temporary workaround for the fact that 'parent' links
-    # can sometimes be blobs of JSON (containing a breadcrumb, for example)
-    # rather than the array of content IDs content-tagger currently expects. We
-    # need to either improve the editing interface in content tagger to somehow
-    # support this or wait until the publishing API no longer allows writing of
-    # arbitrary JSON to the parent link.
-    #
-    # If we have to do any more of this consider moving it out into a separate
-    # piece of configuration (perhaps something like the tagging-apps.yml).
-    if publishing_app == "travel-advice-publisher"
-      %w(parent)
-    else
-      []
-    end
+    blacklist = YAML.load_file("#{Rails.root}/config/blacklisted_tag_types.yml")
+    Array blacklist[publishing_app]
   end
 
   class ItemNotFoundError < StandardError
