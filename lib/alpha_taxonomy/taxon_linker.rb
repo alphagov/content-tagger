@@ -10,7 +10,7 @@ module AlphaTaxonomy
     end
 
     def run!
-      ImportFile.new.grouped_mappings.each do |base_path, taxon_titles|
+      AlphaTaxonomy::ImportFileGroupings.new.extract.each do |base_path, taxon_titles|
         @log.info "BEGIN mapping for #{base_path}"
         taxon_content_ids = find_content_ids_for(taxon_titles)
         @log.info "Content IDs are: #{taxon_content_ids}"

@@ -15,10 +15,9 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       ).and_return(returned_taxon_collection.map(&:stringify_keys))
     end
 
-    def stub_import_file_mappings(returned_mappings)
-      import_file = AlphaTaxonomy::ImportFile.new
-      allow(import_file).to receive(:grouped_mappings).and_return(returned_mappings)
-      allow(AlphaTaxonomy::ImportFile).to receive(:new).and_return(import_file)
+    def stub_import_file_groupings(returned_groupings)
+      mock_grouping_object = double(AlphaTaxonomy::ImportFileGroupings, extract: returned_groupings)
+      allow(AlphaTaxonomy::ImportFileGroupings).to receive(:new).and_return(mock_grouping_object)
     end
 
     before do
@@ -27,7 +26,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
     end
 
     it "creates taxon links based on the grouped mappings" do
-      stub_import_file_mappings(
+      stub_import_file_groupings(
         "/a-foo-content-item" => ["Foo Taxon"],
         "/a-foo-bar-content-item" => ["foo Taxon", "Bar Taxon"]
       )
@@ -55,7 +54,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
     context "the import file taxons have inconsistent capitalisation" do
       before do
-        stub_import_file_mappings(
+        stub_import_file_groupings(
           "/a-foo-content-item" => ["Foo Taxon"],
           "/a-foo-bar-content-item" => ["foo tAxon"]
         )
@@ -86,7 +85,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
     context "when a duplicate mapping exists" do
       before do
-        stub_import_file_mappings(
+        stub_import_file_groupings(
           "/a-foo-content-item" => ["Foo Taxon", "Foo Taxon"],
         )
       end
@@ -111,7 +110,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
     context "when the grouped mappings contain a taxon not present in the content store" do
       it "raises an error" do
-        stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"])
+        stub_import_file_groupings("/a-foo-content-item" => ["Foo Taxon"])
         stub_taxons_fetch([{ content_id: "irrelevant", base_path: "/alpha-taxonomy/other-taxon" }])
 
         expect { run_the_taxon_linker! }.to raise_error(
@@ -122,7 +121,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
     context "when the target content_item is not found by the lookup" do
       before do
-        stub_import_file_mappings("/a-foo-content-item" => ["Foo Taxon"], "/invalid-content-item" => ["Foo Taxon"])
+        stub_import_file_groupings("/a-foo-content-item" => ["Foo Taxon"], "/invalid-content-item" => ["Foo Taxon"])
         stub_taxons_fetch([{ content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" }])
 
         publishing_api_has_lookups(

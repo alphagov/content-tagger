@@ -77,33 +77,4 @@ RSpec.describe AlphaTaxonomy::ImportFile do
       expect(File.exist?(test_tsv_file_path)).to be false
     end
   end
-
-  describe "#grouped_mappings" do
-    context "if the import file is present" do
-      before do
-        stub_downloaded_sheet_data([
-          "foo-taxon\t" + "/foo-content-item-path",
-          "bar (br)| baz (bz)\t" + "/bar-or-baz-content-item-path",
-        ])
-        AlphaTaxonomy::ImportFile.new.populate
-      end
-
-      it "returns lists of taxons grouped by base_path" do
-        expect(AlphaTaxonomy::ImportFile.new.grouped_mappings).to eq(
-          "/foo-content-item-path" => ["foo-taxon"],
-          "/bar-or-baz-content-item-path" => ["bar (br)", "baz (bz)"]
-        )
-      end
-    end
-
-    context "if the import file is missing" do
-      it "raises an error" do
-        allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return("/some-crazy-non-existing-path")
-
-        expect { AlphaTaxonomy::ImportFile.new.grouped_mappings }.to raise_error(
-          AlphaTaxonomy::SharedExceptions::MissingImportFileError
-        )
-      end
-    end
-  end
 end
