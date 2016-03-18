@@ -15,8 +15,6 @@ require 'rspec/rails'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 PUBLISHING_API = "https://publishing-api.test.gov.uk"
-DRAFT_CONTENT_STORE = "https://draft-content-store.test.gov.uk"
-LIVE_CONTENT_STORE = "https://content-store.test.gov.uk"
 
 require 'capybara/rails'
 require 'gds_api/test_helpers/publishing_api_v2'

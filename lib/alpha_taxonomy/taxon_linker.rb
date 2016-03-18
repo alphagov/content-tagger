@@ -73,8 +73,10 @@ module AlphaTaxonomy
 
     def fetch_content_item_id_with(base_path)
       @log.info "Fetching content ID for base path above..."
-      content_item = Services.live_content_store.content_item(base_path)
-      return content_item.content_id if content_item.present?
+
+      content_id = Services.publishing_api.lookup_content_id(base_path: base_path)
+      return content_id if content_id
+
       report_error("No content item found at #{base_path}")
       nil
     rescue
