@@ -9,7 +9,6 @@ calculators: content-tagger
 calendars: content-tagger
 collections-publisher: content-tagger
 contacts: content-tagger
-contacts-admin: content-tagger
 design-principles:
 email-campaign-frontend:
 external-link-tracker:

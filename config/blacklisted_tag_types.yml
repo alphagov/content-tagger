@@ -1,4 +1,4 @@
-contacts-admin:
+contacts:
   - parent
 travel-advice-publisher:
   # This is  a temporary workaround for the fact that 'parent' links
