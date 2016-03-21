@@ -30,6 +30,6 @@ smartanswers: content-tagger
 specialist-publisher: specialist-publisher
 spotlight:
 static:
-tariff:
+tariff: content-tagger
 travel-advice-publisher: content-tagger
 whitehall: whitehall
