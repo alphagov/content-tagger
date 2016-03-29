@@ -2,39 +2,32 @@
 
 App for tagging content on GOV.UK.
 
-## Nomenclature
+## Screenshots
 
-- **Word**: definition of word, and how it's used in the code
+![Lookup form](docs/screenshot-1.png)
+![Tagging interface](docs/screenshot-2.png)
 
 ## Technical documentation
 
-This is a Ruby on Rails application that works with the publishing-api to manage
-the "links hash" for content on GOV.UK.
+This is a Ruby on Rails application that works with the publishing-api to manage the "links hash" for content on GOV.UK.
 
 ### Dependencies
 
-- [alphagov/content-store](https://github.com/alphagov/content-store) - provides access to content on GOV.UK
 - [alphagov/publishing-api](https://github.com/alphagov/publishing-api) - used to publish links
 
 ### Running the application
 
-`./startup.sh`
+```
+$ bowl content-tagger
+```
 
-Documentation for where the app will appear (default port, vhost, URL etc).
+If you're using the VM, the app should appear on [http://content-tagger.dev.gov.uk/](http://content-tagger.dev.gov.uk/).
 
 ### Running the test suite
 
-`bundle exec rake`
-
-Include any other edge cases, e.g parallel test runner in Whitehall
-
-### Any deviations from idiomatic Rails/Go etc. (optional)
-
-### Example API output (optional)
-
-`one-line-curl-command with JSON response after`
-
-Keep this section limited to core endpoints - if the app is complex link out to `/docs`.
+```
+$ bundle exec rspec
+```
 
 ## Licence
 
