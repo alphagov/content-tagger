@@ -28,8 +28,8 @@ class ContentItem
   def app_responsible_for_tagging
     return if format.in?(%w(redirect gone))
 
-    @tagging_apps ||= YAML.load_file("#{Rails.root}/config/tagging-apps.yml")
-    @tagging_apps[publishing_app]
+    @tagging_apps ||= YAML.load_file("#{Rails.root}/config/blacklisted-apps.yml")
+    @tagging_apps.include?(publishing_app) ? publishing_app : "content-tagger"
   end
 
   def external_tagging_url

@@ -97,7 +97,7 @@ RSpec.describe "Tagging content" do
   end
 
   def then_i_see_that_the_page_is_untaggable
-    expect(page).to have_content "This page can't be tagged."
+    expect(page).to have_content "We haven't migrated the tagging for this item yet."
   end
 
   def and_i_submit_the_url_of_the_content_item
