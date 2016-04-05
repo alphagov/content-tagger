@@ -41,7 +41,7 @@ class ContentItem
   end
 
   def blacklisted_tag_types
-    blacklist = YAML.load_file("#{Rails.root}/config/blacklisted_tag_types.yml")
+    blacklist = YAML.load_file("#{Rails.root}/config/blacklisted-tag-types.yml")
     Array blacklist[publishing_app]
   end
 

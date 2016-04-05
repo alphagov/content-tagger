@@ -20,15 +20,19 @@ RSpec.describe ContentItem do
       end
 
       it "returns the blacklisted fields" do
-        content_item.blacklisted_tag_types == ['parent']
+        expect(content_item.blacklisted_tag_types).to eq ['parent']
       end
     end
 
     context "for apps not in the blacklist" do
-      let(:content_item) { ContentItem.new(content_item_params) }
+      let(:content_item) do
+        ContentItem.new(
+          content_item_params.merge('publishing_app' => 'not-in-the-blacklist')
+        )
+      end
 
       it "returns an empty list" do
-        content_item.blacklisted_tag_types == []
+        expect(content_item.blacklisted_tag_types).to eq []
       end
     end
   end
