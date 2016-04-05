@@ -11,11 +11,12 @@ RSpec.describe 'taxonomy rake task' do
     let(:expected_base_paths) do
       [
         { from: '/alpha-taxonomy/a', to: '/alpha-taxonomy/b' },
+        { from: '/alpha-taxonomy/c', to: '/alpha-taxonomy/d' },
       ]
     end
 
     it 'should receive an array of hashes' do
-      ENV['TAXON_RENAMES'] = '/alpha-taxonomy/a,/alpha-taxonomy/b'
+      ENV['TAXON_RENAMES'] = '/alpha-taxonomy/a,/alpha-taxonomy/b|/alpha-taxonomy/c,/alpha-taxonomy/d'
 
       taxon_renamer_double = double run!: true
 

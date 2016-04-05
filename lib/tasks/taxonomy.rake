@@ -38,18 +38,19 @@ namespace :taxonomy do
   end
 
   def parse_base_paths_string(base_paths)
-    array_of_paths = base_paths.split(',')
+    pair_of_paths = base_paths.split('|')
 
-    unless (array_of_paths.size % 2).zero?
+    unless pair_of_paths.all? { |pair| (pair.split(',').size % 2).zero? }
       raise ArgumentError, base_paths_error_message
     end
 
-    array_of_paths.each_slice(2).map do |tuplet|
-      { from: tuplet.first, to: tuplet.last }
+    pair_of_paths.map do |pair|
+      split_pair = pair.split(',')
+      { from: split_pair.first, to: split_pair.last }
     end
   end
 
   def base_paths_error_message
-    "base_paths is expected to be composed of two comma-separated values, like so: '/path1,/path1-rename,/path2,/path2-rename,...'"
+    "base_paths should be a set of pairs, delimited by a pipe character, like so: '/path1,/path1-rename|/path2,/path2-rename,...'"
   end
 end

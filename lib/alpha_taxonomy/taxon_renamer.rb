@@ -6,16 +6,16 @@ module AlphaTaxonomy
     end
 
     def run!
-      @base_paths.each do |base_path|
-        content_id = lookup_id_by_base_path(base_path)
+      paths_and_content_ids = lookup_content_ids_by_base_paths
 
-        next unless content_id
+      @base_paths.each do |base_path_pair|
+        content_id = paths_and_content_ids[base_path_pair[:from]]
+        title = normalised_title(base_path_pair[:to])
 
-        @log.info "-- Requesting base_path change to #{base_path[:to]}"
-
+        @log.info "-- Requesting base_path change for #{base_path_pair[:from]}"
         send_to_publishing_api(
           content_id,
-          AlphaTaxonomy::TaxonPresenter.new(title: normalised_title(base_path[:to])).present
+          AlphaTaxonomy::TaxonPresenter.new(title: title).present
         )
       end
     end
@@ -31,13 +31,16 @@ module AlphaTaxonomy
       Services.publishing_api.publish(content_id, 'major')
     end
 
-    def lookup_id_by_base_path(base_path)
-      @log.info "Requesting content_id to Publishing API for #{base_path[:from]}"
-      content_id = Services.publishing_api.lookup_content_id(base_path: base_path[:from])
+    def lookup_content_ids_by_base_paths
+      Services.publishing_api.lookup_content_ids(
+        base_paths: extract_from_base_paths(@base_paths)
+      )
+    end
 
-      @log.info "#{base_path[:from]} content_id was not found" unless content_id
-
-      content_id
+    def extract_from_base_paths(base_paths)
+      base_paths.map do |base_path|
+        base_path[:from]
+      end
     end
   end
 end
