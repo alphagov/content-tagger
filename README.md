@@ -4,12 +4,12 @@ App for tagging content on GOV.UK.
 
 ## Screenshots
 
-![Lookup form](docs/screenshot-1.png)
 ![Tagging interface](docs/screenshot-2.png)
+![Lookup form](docs/screenshot-1.png)
 
 ## Technical documentation
 
-This is a Ruby on Rails application that works with the publishing-api to manage the "links hash" for content on GOV.UK.
+This is a Ruby on Rails application that works with the publishing-api to manage the "links hash" for content on GOV.UK. It also contains code for importing the "alpha taxonomy" - a new taxonomy for GOV.UK currently under development. This is done with a [series of rake tasks](lib/tasks/taxonomy.rake).
 
 ### Dependencies
 
