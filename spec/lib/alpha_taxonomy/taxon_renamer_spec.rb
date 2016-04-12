@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe AlphaTaxonomy::TaxonRenamer do
   describe "#run!" do
-    it 'fails when a string is used on base_paths' do
-      expect { AlphaTaxonomy::TaxonRenamer.new(base_paths: '/a,/b').run! }.to raise_error
-    end
-
     let(:base_paths) do
       [
         { from: "/alpha-taxonomy/awesome-taxon", to: "/alpha-taxonomy/renamed-awesome-taxon" },
