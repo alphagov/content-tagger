@@ -1,7 +1,7 @@
 <h3>Primary mainstream browse page</h3>
 
 <%= f.select :parent,
-    options_for_select(TagFetcher.new.tags_of_type('mainstream_browse_page'), @tagging_update.parent),
+    Linkables.mainstream_browse_pages,
     { include_blank: true },
     { multiple: false, class: "select2", data: { placeholder: "Choose a primary mainstream browse page..." } } %>
 
