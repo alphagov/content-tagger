@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Bulk taxon import" do
+RSpec.feature "Bulk taxon import", type: :feature do
   require 'gds_api/test_helpers/publishing_api_v2'
   include GdsApi::TestHelpers::PublishingApiV2
 

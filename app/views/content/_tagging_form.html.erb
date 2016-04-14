@@ -4,7 +4,7 @@
 
   <% tag_types.each do |tag_type| %>
     <div class='tag-section'>
-      <%= render "form_for_#{tag_type}", f: f %>
+      <%= render "form_for_#{tag_type}", {f: f, linkables: linkables} %>
     </div>
   <% end %>
 

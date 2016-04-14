@@ -1,6 +1,35 @@
 require "rails_helper"
 
-RSpec.describe "Tagging content" do
+RSpec.describe "Tagging content", type: :feature do
+  include PublishingApiHelper
+
+  before do
+    publishing_api_has_topics(
+      [
+        "/topic/id-of-already-tagged",
+        "/topic/business-tax/pension-scheme-administration",
+      ]
+    )
+
+    publishing_api_has_taxons(
+      [
+        "/alpha-taxonomy/vehicle-plating",
+      ]
+    )
+
+    publishing_api_has_organisations(
+      [
+        "/government/organisations/student-loans-company",
+      ]
+    )
+
+    publishing_api_has_mainstream_browse_pages(
+      [
+        "/browse/driving/car-tax-discs",
+      ]
+    )
+  end
+
   scenario "User looks up and tags a content item" do
     given_there_is_a_content_item_with_tags
 
@@ -10,6 +39,7 @@ RSpec.describe "Tagging content" do
 
     when_i_add_an_additional_tag
     and_i_submit_the_form
+
     then_the_new_links_are_sent_to_the_publishing_api
   end
 
@@ -40,10 +70,6 @@ RSpec.describe "Tagging content" do
     given_there_is_a_content_item_with_tags
     when_i_type_its_basepath_in_the_url_directly
     then_i_am_on_the_page_for_the_item
-  end
-
-  before do
-    setup_tags_for_select_boxes
   end
 
   def when_i_visit_the_homepage
@@ -126,7 +152,7 @@ RSpec.describe "Tagging content" do
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    select "Some Tag", from: "Topics"
+    select "Business tax / Pension scheme administration", from: "Topics"
   end
 
   def and_somebody_else_makes_a_change
@@ -145,7 +171,7 @@ RSpec.describe "Tagging content" do
   def then_the_new_links_are_sent_to_the_publishing_api
     body = {
       links: {
-        topics: ["ID-OF-FIRST-TAG", "ID-OF-ALREADY-TAGGED"],
+        topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", "ID-OF-ALREADY-TAGGED"],
         mainstream_browse_pages: [],
         organisations: [],
         alpha_taxons: [],
@@ -155,24 +181,5 @@ RSpec.describe "Tagging content" do
     }
 
     expect(@tagging_request.with(body: body.to_json)).to have_been_made
-  end
-
-  def setup_tags_for_select_boxes
-    content = [
-      {
-        content_id: "ID-OF-FIRST-TAG",
-        title: "Some Tag",
-        publication_state: "published",
-      },
-      {
-        content_id: "ID-OF-ALREADY-TAGGED",
-        title: "Something Else",
-        publication_state: "published",
-      }
-    ]
-
-    %w(topic organisation mainstream_browse_page taxon).each do |document_type|
-      publishing_api_has_linkables(content, document_type: document_type)
-    end
   end
 end
