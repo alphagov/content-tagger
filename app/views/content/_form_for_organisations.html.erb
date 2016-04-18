@@ -1,7 +1,7 @@
 <h3>Publishing organisation</h3>
 
 <%= f.select :organisations,
-    options_for_select(TagFetcher.new.tags_of_type('organisation'), @tagging_update.organisations),
+    linkables.organisations,
     {},
     { multiple: true, class: "select2", data: { placeholder: "Choose organisations..." } } %>
 

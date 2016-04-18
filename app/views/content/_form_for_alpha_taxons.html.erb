@@ -1,7 +1,7 @@
 <h3>Alpha taxonomy</h3>
 
 <%= f.select :alpha_taxons,
-    options_for_select(TagFetcher.new.tags_of_type('taxon'), @tagging_update.alpha_taxons),
+    linkables.taxons,
     {},
     { multiple: true, class: "select2", data: { placeholder: "Choose alpha taxons..." } } %>
 

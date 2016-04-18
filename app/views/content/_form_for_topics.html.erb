@@ -1,7 +1,7 @@
 <h3>Topics</h3>
 
 <%= f.select :topics,
-    options_for_select(TagFetcher.new.tags_of_type('topic'), @tagging_update.topics),
+    linkables.topics,
     {},
     { multiple: true, class: "select2", data: { placeholder: "Choose Topics..." } } %>
 
