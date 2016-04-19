@@ -36,17 +36,4 @@ RSpec.describe ContentItem do
       end
     end
   end
-
-  describe '#app_responsible_for_tagging' do
-    it "doesn't have one if the format is unrenderable" do
-      item = ContentItem.new(
-        content_item_params.merge(
-          'format' => 'redirect',
-          'publishing_app' => 'a-migrated-app',
-        )
-      )
-
-      expect(item.app_responsible_for_tagging).to be_nil
-    end
-  end
 end

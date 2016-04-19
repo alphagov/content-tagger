@@ -1,5 +1,6 @@
 contacts:
   - parent
+
 travel-advice-publisher:
   # This is  a temporary workaround for the fact that 'parent' links
   # can sometimes be blobs of JSON (containing a breadcrumb, for example)
@@ -8,6 +9,7 @@ travel-advice-publisher:
   # support this or wait until the publishing API no longer allows writing of
   # arbitrary JSON to the parent link.
   - parent
+
 whitehall:
   # The 'parent' for a Whitehall edition (Editions being the only Whitehall
   # document type we are expecting to tag in content-tagger) is always a

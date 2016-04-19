@@ -43,12 +43,6 @@ RSpec.describe "Tagging content", type: :feature do
     then_the_new_links_are_sent_to_the_publishing_api
   end
 
-  scenario "User looks up an untaggable page" do
-    given_there_is_an_untaggable_page
-    and_i_am_on_the_page_for_the_item
-    then_i_see_that_the_page_is_untaggable
-  end
-
   scenario "User makes a conflicting change" do
     given_there_is_a_content_item_with_tags
     and_i_am_on_the_page_for_the_item
@@ -84,20 +78,6 @@ RSpec.describe "Tagging content", type: :feature do
     visit "/content/MY-CONTENT-ID"
   end
 
-  def given_there_is_an_untaggable_page
-    stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
-      .to_return(body: {
-        publishing_app: "non-migrated-app",
-        content_id: "MY-CONTENT-ID",
-        base_path: '/my-content-item',
-        format: 'mainstream_browse_page',
-        title: 'This Is A Content Item',
-      }.to_json)
-
-    stub_request(:get, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
-      .to_return(body: {}.to_json)
-  end
-
   def given_there_is_a_content_item_with_tags
     publishing_api_has_lookups(
       '/my-content-item' => 'MY-CONTENT-ID'
@@ -120,10 +100,6 @@ RSpec.describe "Tagging content", type: :feature do
         },
         version: 54_321,
       }.to_json)
-  end
-
-  def then_i_see_that_the_page_is_untaggable
-    expect(page).to have_content "We haven't migrated the tagging for this item yet."
   end
 
   def and_i_submit_the_url_of_the_content_item
