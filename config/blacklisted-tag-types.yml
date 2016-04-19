@@ -17,3 +17,30 @@ whitehall:
   # Temporarily blacklisting this field for now until content-tagger supports
   # tagging topics in the parent field.
   - parent
+
+  # Topics are still managed in whitehall itself
+  - topics
+
+  # Organisations are still managed in whitehall itself
+  - organisations
+
+  # Mainstream browse taggings are done in panopticon
+  - mainstream_browse_pages
+
+publisher:
+  # Publisher is not migrated yet. Its browse pages, topics and parent are
+  # set inside publisher.
+  - mainstream_browse_pages
+  - topics
+  - parent
+
+  # Tagging to organisation is done in panopticon
+  - organisations
+
+# specialist-publisher is not migrated yet. Its browse pages, topics and parent are
+# set inside specialist-publisher and panopticon.
+specialist-publisher:
+  - topics
+  - mainstream_browse_pages
+  - organisations
+  - parent
