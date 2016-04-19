@@ -22,7 +22,7 @@ RSpec.describe TaggingUpdateForm do
       )
     end
 
-    it 'does not include parent if parent is not in the form list' do
+    it "does not include a key if it wasn't submitted from the form" do
       form = TaggingUpdateForm.new(
         topics: [],
         organisations: [],
@@ -33,7 +33,6 @@ RSpec.describe TaggingUpdateForm do
 
       expect(links_payload).to eql(
         topics: [],
-        mainstream_browse_pages: [],
         organisations: [],
         alpha_taxons: [],
       )

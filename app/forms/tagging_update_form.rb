@@ -1,7 +1,9 @@
 class TaggingUpdateForm
   include ActiveModel::Model
   attr_accessor :content_item, :content_id, :previous_version
-  attr_accessor :topics, :organisations, :mainstream_browse_pages, :parent, :alpha_taxons
+
+  TAG_TYPES = %i(topics mainstream_browse_pages organisations alpha_taxons parent)
+  attr_accessor(*TAG_TYPES)
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
@@ -32,15 +34,14 @@ class TaggingUpdateForm
   end
 
   def links_payload
-    payload = {
-      topics: clean_content_ids(topics),
-      mainstream_browse_pages: clean_content_ids(mainstream_browse_pages),
-      organisations: clean_content_ids(organisations),
-      alpha_taxons: clean_content_ids(alpha_taxons),
-    }
+    payload = {}
 
-    # Because 'parent' might be a blacklisted field switched off in the form
-    payload.merge!(parent: clean_content_ids(parent)) unless parent.nil?
+    TAG_TYPES.each do |tag_type|
+      content_ids = send(tag_type)
+      # Because the field might be a blacklisted field switched off in the form.
+      next if content_ids.nil?
+      payload.merge!(tag_type => clean_content_ids(content_ids))
+    end
 
     payload
   end
