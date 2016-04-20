@@ -44,3 +44,10 @@ specialist-publisher:
   - mainstream_browse_pages
   - organisations
   - parent
+
+# used in the tests
+test-app-that-can-be-tagged-to-topics-only:
+  - alpha_taxons
+  - mainstream_browse_pages
+  - organisations
+  - parent
