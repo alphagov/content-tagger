@@ -1,6 +1,0 @@
-# The list of `publishing_app`s that should not be taggable in content tagger.
-
-- publisher
-- specialist-publisher
-- whitehall
-- non-migrated-app

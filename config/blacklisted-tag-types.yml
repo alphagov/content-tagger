@@ -1,5 +1,6 @@
 contacts:
   - parent
+
 travel-advice-publisher:
   # This is  a temporary workaround for the fact that 'parent' links
   # can sometimes be blobs of JSON (containing a breadcrumb, for example)
@@ -8,10 +9,45 @@ travel-advice-publisher:
   # support this or wait until the publishing API no longer allows writing of
   # arbitrary JSON to the parent link.
   - parent
+
 whitehall:
   # The 'parent' for a Whitehall edition (Editions being the only Whitehall
   # document type we are expecting to tag in content-tagger) is always a
   # topic (referred to as the 'primary specialist sector' in Whitehall).
   # Temporarily blacklisting this field for now until content-tagger supports
   # tagging topics in the parent field.
+  - parent
+
+  # Topics are still managed in whitehall itself
+  - topics
+
+  # Organisations are still managed in whitehall itself
+  - organisations
+
+  # Mainstream browse taggings are done in panopticon
+  - mainstream_browse_pages
+
+publisher:
+  # Publisher is not migrated yet. Its browse pages, topics and parent are
+  # set inside publisher.
+  - mainstream_browse_pages
+  - topics
+  - parent
+
+  # Tagging to organisation is done in panopticon
+  - organisations
+
+# specialist-publisher is not migrated yet. Its browse pages, topics and parent are
+# set inside specialist-publisher and panopticon.
+specialist-publisher:
+  - topics
+  - mainstream_browse_pages
+  - organisations
+  - parent
+
+# used in the tests
+test-app-that-can-be-tagged-to-topics-only:
+  - alpha_taxons
+  - mainstream_browse_pages
+  - organisations
   - parent
