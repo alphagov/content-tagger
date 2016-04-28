@@ -37,11 +37,9 @@ publisher:
   # Tagging to organisation is done in panopticon
   - organisations
 
-# specialist-publisher is not migrated yet. Its browse pages, topics and parent are
+# specialist-publisher is not migrated yet. Its organisations and parent are
 # set inside specialist-publisher and panopticon.
 specialist-publisher:
-  - topics
-  - mainstream_browse_pages
   - organisations
   - parent
 

@@ -1,13 +1,14 @@
 class ContentItem
   TAG_TYPES = %w(mainstream_browse_pages parent topics organisations alpha_taxons)
 
-  attr_reader :content_id, :title, :base_path, :publishing_app
+  attr_reader :content_id, :title, :base_path, :publishing_app, :format
 
   def initialize(data)
     @content_id = data.fetch('content_id')
     @title = data.fetch('title')
     @base_path = data.fetch('base_path')
     @publishing_app = data.fetch('publishing_app')
+    @format = data.fetch('format')
   end
 
   def self.find!(content_id)
@@ -23,9 +24,15 @@ class ContentItem
 
   def blacklisted_tag_types
     blacklist = YAML.load_file("#{Rails.root}/config/blacklisted-tag-types.yml")
-    Array(blacklist[publishing_app])
+    Array(blacklist[publishing_app]) + additional_temporary_blacklist
   end
 
   class ItemNotFoundError < StandardError
+  end
+
+private
+
+  def additional_temporary_blacklist
+    publishing_app == 'specialist-publisher' && format == 'finder' ? ['topics'] : []
   end
 end

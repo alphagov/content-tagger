@@ -35,5 +35,20 @@ RSpec.describe ContentItem do
         expect(content_item.blacklisted_tag_types).to eq []
       end
     end
+
+    context "for finder blacklisting during specialist-publisher migration" do
+      let(:content_item) do
+        ContentItem.new(
+          content_item_params.merge(
+            'publishing_app' => 'specialist-publisher',
+            'format' => 'finder',
+          )
+        )
+      end
+
+      it "blacklists topics as well as other tag types" do
+        expect(content_item.blacklisted_tag_types).to include 'topics'
+      end
+    end
   end
 end
