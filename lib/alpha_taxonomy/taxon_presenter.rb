@@ -22,6 +22,7 @@ module AlphaTaxonomy
         rendering_app: 'collections',
         public_updated_at: DateTime.current.iso8601,
         locale: "en",
+        details: {},
         routes: [
           { path: base_path, type: "exact" },
         ]

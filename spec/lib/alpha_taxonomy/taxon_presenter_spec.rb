@@ -26,6 +26,7 @@ RSpec.describe AlphaTaxonomy::TaxonPresenter do
         public_updated_at: DateTime.new(0).iso8601,
         publishing_app: "collections-publisher",
         rendering_app: "collections",
+        details: {},
         routes: [path: "/alpha-taxonomy/foobar-taxon", type: "exact"],
         title: "Foobar Taxon",
       )
