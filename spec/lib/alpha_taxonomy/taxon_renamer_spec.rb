@@ -25,6 +25,7 @@ RSpec.describe AlphaTaxonomy::TaxonRenamer do
         rendering_app: 'collections',
         public_updated_at: anything,
         locale: 'en',
+        details: {},
         routes: [
           { path: base_path, type: "exact" },
         ]
