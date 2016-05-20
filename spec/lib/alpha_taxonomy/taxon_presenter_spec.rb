@@ -21,7 +21,8 @@ RSpec.describe AlphaTaxonomy::TaxonPresenter do
       allow(DateTime).to receive(:current).and_return(OpenStruct.new(iso8601: DateTime.new(0).iso8601))
       expect(AlphaTaxonomy::TaxonPresenter.new(title: "Foobar Taxon").present).to eq(
         base_path: "/alpha-taxonomy/foobar-taxon",
-        format: "taxon",
+        document_type: "taxon",
+        schema_name: "taxon",
         locale: "en",
         public_updated_at: DateTime.new(0).iso8601,
         publishing_app: "collections-publisher",

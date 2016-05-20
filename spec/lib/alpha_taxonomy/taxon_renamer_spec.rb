@@ -19,7 +19,8 @@ RSpec.describe AlphaTaxonomy::TaxonRenamer do
     def test_payload(title, base_path)
       {
         base_path: base_path,
-        format: 'taxon',
+        document_type: 'taxon',
+        schema_name: 'taxon',
         title: title,
         publishing_app: 'collections-publisher',
         rendering_app: 'collections',
