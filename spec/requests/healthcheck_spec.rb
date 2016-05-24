@@ -5,6 +5,13 @@ RSpec.describe "GET /healthcheck", type: :request do
     get "/healthcheck"
 
     expect(response.status).to eq(200)
-    expect(response.body).to eq("OK")
+    expect(response.body).to eq({
+      status: 'ok',
+      checks: {
+        database_connectivity: {
+          status: 'ok'
+        }
+      }
+    }.to_json)
   end
 end
