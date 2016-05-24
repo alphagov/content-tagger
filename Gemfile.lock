@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/alphagov/govuk_healthcheck.git
+  revision: 899bad83f1bdf8d35bfcb7702015862ece3986c5
+  branch: first-pass
+  specs:
+    govuk_healthcheck (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -301,6 +308,7 @@ DEPENDENCIES
   govuk-content-schema-test-helpers (~> 1.4)
   govuk-lint (~> 0.5)
   govuk_admin_template (~> 4.1.1)
+  govuk_healthcheck!
   logstasher (= 0.6.2)
   pg
   plek (~> 1.10)

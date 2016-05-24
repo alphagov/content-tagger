@@ -12,7 +12,9 @@ Rails.application.routes.draw do
     post '/content/taggings', action: :update_links, as: :content_update_links
   end
 
-  get '/healthcheck', to: proc { [200, {}, ['OK']] }
+  get '/healthcheck', to: GovukHealthcheck.rack_response(
+    GovukHealthcheck::RailsDatabase,
+  )
 
   mount GovukAdminTemplate::Engine, at: "/style-guide" if Rails.env.development?
 end
