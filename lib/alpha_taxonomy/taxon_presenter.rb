@@ -11,7 +11,8 @@ module AlphaTaxonomy
     def present
       {
         base_path: base_path,
-        format: "taxon",
+        document_type: "taxon",
+        schema_name: "taxon",
         title: @title,
         # FIXME: We're stating that the publishing app is collections-publisher as
         # that's where taxons are currently being edited. That functionality
