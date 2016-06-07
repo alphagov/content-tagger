@@ -56,6 +56,11 @@ specialist-publisher:
   # navigation.
   - parent
 
+service-manual-publisher:
+  # The service-manual-publisher automatically tags everything to the GDS
+  # organisation and overwrites the `organisations` link type on each publish.
+  - organisations
+
 # Used in the tests
 test-app-that-can-be-tagged-to-topics-only:
   - alpha_taxons
