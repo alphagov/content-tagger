@@ -65,7 +65,7 @@ RSpec.describe "Tagging content", type: :feature do
         publishing_app: "a-migrated-app",
         content_id: "MY-CONTENT-ID",
         base_path: '/my-content-item',
-        format: 'mainstream_browse_page',
+        document_type: 'mainstream_browse_page',
         title: 'This Is A Content Item',
       }.to_json)
 

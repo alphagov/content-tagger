@@ -1,20 +1,20 @@
 class ContentItem
   TAG_TYPES = %w(mainstream_browse_pages parent topics organisations alpha_taxons)
 
-  attr_reader :content_id, :title, :base_path, :publishing_app, :format
+  attr_reader :content_id, :title, :base_path, :publishing_app, :document_type
 
   def initialize(data)
     @content_id = data.fetch('content_id')
     @title = data.fetch('title')
     @base_path = data.fetch('base_path')
     @publishing_app = data.fetch('publishing_app')
-    @format = data.fetch('format')
+    @document_type = data.fetch('document_type')
   end
 
   def self.find!(content_id)
     content_item = Services.publishing_api.get_content(content_id)
     raise ItemNotFoundError unless content_item
-    raise ItemNotFoundError if content_item.format.in?(%w(redirect gone))
+    raise ItemNotFoundError if content_item.document_type.in?(%w(redirect gone))
     new(content_item.to_h)
   end
 
@@ -33,6 +33,6 @@ class ContentItem
 private
 
   def additional_temporary_blacklist
-    publishing_app == 'specialist-publisher' && format == 'finder' ? ['topics'] : []
+    publishing_app == 'specialist-publisher' && document_type == 'finder' ? ['topics'] : []
   end
 end
