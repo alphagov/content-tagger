@@ -37,7 +37,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
         publishing_app: "test-app-that-can-be-tagged-to-topics-only",
         content_id: "MY-CONTENT-ID",
         base_path: '/my-content-item',
-        format: 'mainstream_browse_page',
+        document_type: 'mainstream_browse_page',
         title: 'This Is A Content Item',
       }.to_json)
 

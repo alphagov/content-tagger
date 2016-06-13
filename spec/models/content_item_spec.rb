@@ -5,7 +5,7 @@ RSpec.describe ContentItem do
     {
       'content_id'     => 'uuid-88',
       'title'          => 'A content item',
-      'format'         => 'placeholder',
+      'document_type'         => 'placeholder',
       'base_path'      => '/a-content-item',
       'publishing_app' => 'whitehall'
     }
@@ -41,7 +41,7 @@ RSpec.describe ContentItem do
         ContentItem.new(
           content_item_params.merge(
             'publishing_app' => 'specialist-publisher',
-            'format' => 'finder',
+            'document_type' => 'finder',
           )
         )
       end
