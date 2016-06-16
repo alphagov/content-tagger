@@ -28,10 +28,6 @@ whitehall:
   # publishing-api.
   - organisations
 
-  # Mainstream browse taggings are done in panopticon. This will enabled once
-  # Rummager indexes links from the publisher-api.
-  - mainstream_browse_pages
-
 publisher:
   # Publisher is not migrated yet. Its browse pages, topics and parent (breadcrumb)
   # are set inside publisher. This can be enabled once publisher reads & writes
@@ -39,10 +35,6 @@ publisher:
   - mainstream_browse_pages
   - parent
   - topics
-
-  # Tagging to `organisations` is done in panopticon. This can be allowed once
-  # Rummager indexes all links from the publishing-api.
-  - organisations
 
 specialist-publisher:
   # Documents owned by specialist-publisher are automatically tagged to organisations
