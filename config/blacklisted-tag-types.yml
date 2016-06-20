@@ -3,6 +3,8 @@ contacts:
   # have a breadcrumb to the HMRC contact page (https://www.gov.uk/government/organisations/hm-revenue-customs/contact)
   # Allowing to tag to the parent here would be confusing to the user.
   - parent
+  # Organisations are currently set by the contacts-admin application
+  - organisations
 
 travel-advice-publisher:
   # This is  a temporary workaround for the fact that 'parent' links
