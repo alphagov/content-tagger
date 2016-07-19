@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'lookup#new'
 
+  resources :taxons
+
   controller :lookup do
     get '/lookup', action: :new, as: :lookup
     get '/lookup/:slug', action: :find_by_slug
