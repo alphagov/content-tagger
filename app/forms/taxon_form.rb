@@ -2,6 +2,8 @@ class TaxonForm
   attr_accessor :title, :parent_taxons, :content_id, :base_path
   include ActiveModel::Model
 
+  validates_presence_of :title
+
   def self.build(content_id:)
     content_item = Services.publishing_api.get_content(content_id)
     links = Services.publishing_api.get_links(content_id).try(:links)

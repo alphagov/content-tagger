@@ -4,6 +4,14 @@ require 'gds_api/test_helpers/publishing_api_v2'
 RSpec.describe TaxonForm do
   include GdsApi::TestHelpers::PublishingApiV2
 
+  context 'validations' do
+    it 'is not valid without a title' do
+      taxon_form = described_class.new
+      expect(taxon_form).to_not be_valid
+      expect(taxon_form.errors.keys).to include(:title)
+    end
+  end
+
   describe '.build' do
     let(:content_id) { SecureRandom.uuid }
     let(:subject) { described_class.build(content_id: content_id) }
