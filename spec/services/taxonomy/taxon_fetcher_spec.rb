@@ -7,9 +7,9 @@ RSpec.describe Taxonomy::TaxonFetcher do
   describe '#taxons' do
     it 'retrieves content items from publishing api and orders by title' do
       linkables = [
-        {"title" => "foo", "base_path" => "/foo", "content_id" => SecureRandom.uuid},
-        {"title" => "bar", "base_path" => "/bar", "content_id" => SecureRandom.uuid},
-        {"title" => "aha", "base_path" => "/aha", "content_id" => SecureRandom.uuid},
+        { "title" => "foo", "base_path" => "/foo", "content_id" => SecureRandom.uuid },
+        { "title" => "bar", "base_path" => "/bar", "content_id" => SecureRandom.uuid },
+        { "title" => "aha", "base_path" => "/aha", "content_id" => SecureRandom.uuid },
       ]
 
       publishing_api_has_linkables(linkables, document_type: 'taxon')
@@ -28,13 +28,13 @@ RSpec.describe Taxonomy::TaxonFetcher do
       instance_double(TaxonForm, parent_taxons: [taxon_id_1, taxon_id_2])
     end
     let(:link_1) do
-      {"title" => "foo", "base_path" => "/foo", "content_id" => taxon_id_1 }
+      { "title" => "foo", "base_path" => "/foo", "content_id" => taxon_id_1 }
     end
     let(:link_2) do
-      {"title" => "bar", "base_path" => "/bar", "content_id" => taxon_id_2}
+      { "title" => "bar", "base_path" => "/bar", "content_id" => taxon_id_2 }
     end
     let(:link_3) do
-      {"title" => "aha", "base_path" => "/aha", "content_id" => SecureRandom.uuid}
+      { "title" => "aha", "base_path" => "/aha", "content_id" => SecureRandom.uuid }
     end
     let(:linkables) { [link_1, link_2, link_3] }
 

@@ -22,7 +22,8 @@ RSpec.describe TaxonForm do
         links: {
           topics: [],
           parent_taxons: []
-      })
+        }
+      )
     end
 
     it 'assigns the parents to the form' do
@@ -49,7 +50,8 @@ RSpec.describe TaxonForm do
           links: {
             topics: [],
             parent_taxons: parent_taxons
-        })
+          }
+        )
       end
 
       it 'assigns the parents to the form' do

@@ -8,7 +8,7 @@ RSpec.describe Taxonomy::PopulateParentTaxons do
     let(:content_id) { SecureRandom.uuid }
     let(:linkables) do
       [
-        {"title" => "foo", "base_path" => "/foo", "content_id" => content_id},
+        { "title" => "foo", "base_path" => "/foo", "content_id" => content_id },
       ]
     end
 
