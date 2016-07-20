@@ -55,7 +55,7 @@ service-manual-publisher:
 
 # Used in the tests
 test-app-that-can-be-tagged-to-topics-only:
-  - alpha_taxons
+  - taxons
   - mainstream_browse_pages
   - organisations
   - parent

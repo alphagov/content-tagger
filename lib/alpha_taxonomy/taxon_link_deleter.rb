@@ -15,14 +15,14 @@ module AlphaTaxonomy
         end
 
         linked_items = Services.publishing_api.get_linked_items(
-          taxon_content_id, link_type: 'alpha_taxons', fields: %w(content_id base_path)
+          taxon_content_id, link_type: 'taxons', fields: %w(content_id base_path)
         )
 
         linked_items.each do |linked_item|
           @log.info "-- updated #{linked_item.fetch('base_path')}"
           Services.publishing_api.patch_links(
             linked_item.fetch("content_id"),
-            links: { alpha_taxons: [] }
+            links: { taxons: [] }
           )
         end
       end

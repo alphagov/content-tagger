@@ -42,11 +42,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
       expect(Services.publishing_api).to receive(:patch_links).with(
         "foo-item-uuid",
-        links: { alpha_taxons: ["foo-taxon-uuid"] }
+        links: { taxons: ["foo-taxon-uuid"] }
       ).once
       expect(Services.publishing_api).to receive(:patch_links).with(
         "foo-bar-item-uuid",
-        links: { alpha_taxons: ["foo-taxon-uuid", "bar-taxon-uuid"] }
+        links: { taxons: ["foo-taxon-uuid", "bar-taxon-uuid"] }
       ).once
 
       run_the_taxon_linker!
@@ -72,11 +72,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
         expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
-          links: { alpha_taxons: ["foo-taxon-uuid"] }
+          links: { taxons: ["foo-taxon-uuid"] }
         ).once
         expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-bar-item-uuid",
-          links: { alpha_taxons: ["foo-taxon-uuid"] }
+          links: { taxons: ["foo-taxon-uuid"] }
         ).once
 
         run_the_taxon_linker!
@@ -101,7 +101,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
 
         expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
-          links: { alpha_taxons: ["foo-taxon-uuid"] }
+          links: { taxons: ["foo-taxon-uuid"] }
         ).once
 
         run_the_taxon_linker!
@@ -132,7 +132,7 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       it "does not create a link and reports the error" do
         expect(Services.publishing_api).to receive(:patch_links).with(
           "foo-item-uuid",
-          links: { alpha_taxons: ["foo-taxon-uuid"] }
+          links: { taxons: ["foo-taxon-uuid"] }
         ).once
 
         log_output = StringIO.new
