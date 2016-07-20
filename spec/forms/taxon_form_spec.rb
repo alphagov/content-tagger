@@ -50,6 +50,21 @@ RSpec.describe TaxonForm do
       expect(subject.base_path).to eq(content[:base_path])
     end
 
+    context 'without taxon parents' do
+      before do
+        publishing_api_has_links(
+          content_id: content_id,
+          links: {
+            topics: []
+          }
+        )
+      end
+
+      it 'has no taxon parents' do
+        expect(subject.parent_taxons).to be_empty
+      end
+    end
+
     context 'with existing links' do
       let(:parent_taxons) { ["CONTENT-ID-RTI", "CONTENT-ID-VAT"] }
       before do

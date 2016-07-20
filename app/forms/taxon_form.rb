@@ -13,7 +13,7 @@ class TaxonForm
       base_path: content_item.base_path,
     )
 
-    form.parent_taxons = links.parent_taxons if links.present? && links.parent_taxons.any?
+    form.parent_taxons = links.parent_taxons if links.present? && links.parent_taxons.present?
     form
   end
 
