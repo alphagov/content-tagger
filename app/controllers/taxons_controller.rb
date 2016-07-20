@@ -14,8 +14,13 @@ class TaxonsController < ApplicationController
 
   def create
     new_taxon = TaxonForm.new(params[:taxon_form])
-    new_taxon.create!
-    redirect_to taxons_path
+    if new_taxon.valid?
+      new_taxon.create!
+      redirect_to taxons_path
+    else
+      error_messages = new_taxon.errors.full_messages.join('; ')
+      redirect_to new_taxon_path, flash: { error: error_messages }
+    end
   end
 
   def show
