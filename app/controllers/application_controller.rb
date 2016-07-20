@@ -7,4 +7,17 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+private
+
+  helper_method :active_navigation_item, :can_edit_taxonomy?
+
+  def can_edit_taxonomy?
+    current_user.has_permission? "Edit Taxonomy"
+  end
+
+  # Can be overridden to allow controllers to choose the active menu item.
+  def active_navigation_item
+    controller_name
+  end
 end
