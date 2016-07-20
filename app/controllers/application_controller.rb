@@ -10,11 +10,7 @@ class ApplicationController < ActionController::Base
 
 private
 
-  helper_method :active_navigation_item, :can_edit_taxonomy?
-
-  def can_edit_taxonomy?
-    current_user.has_permission? "Edit Taxonomy"
-  end
+  helper_method :active_navigation_item
 
   # Can be overridden to allow controllers to choose the active menu item.
   def active_navigation_item

@@ -2,9 +2,6 @@ require "rails_helper"
 
 RSpec.feature "Managing taxonomies" do
   before do
-    user = User.first
-    user.permissions << 'Edit Taxonomy'
-    user.save!
     @taxon_1 = { title: "I Am A Taxon", content_id: "ID-1", base_path: "/foo" }
     @taxon_2 = { title: "I Am Another Taxon", content_id: "ID-2", base_path: "/bar" }
 

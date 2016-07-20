@@ -1,6 +1,4 @@
 class TaxonsController < ApplicationController
-  before_filter :require_permissions!
-
   def index
     render :index, locals: { taxons: taxon_fetcher.taxons }
   end
@@ -67,9 +65,5 @@ private
       taxon_form.base_path,
       types: ["alpha_taxons"],
     ).alpha_taxons
-  end
-
-  def require_permissions!
-    authorise_user!("Edit Taxonomy")
   end
 end
