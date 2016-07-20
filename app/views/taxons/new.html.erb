@@ -1,4 +1,4 @@
-<%= header "Taxons", breadcrumbs: [:taxons, "New taxon"] %>
+<%= display_header title: "Taxons", breadcrumbs: [:taxons, "New taxon"] %>
 
 <%= form_for taxon_form, url: taxons_path do |f| %>
   <%= f.text_field :title %>
