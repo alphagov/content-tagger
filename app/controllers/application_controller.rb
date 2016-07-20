@@ -10,7 +10,11 @@ class ApplicationController < ActionController::Base
 
 private
 
-  helper_method :active_navigation_item
+  helper_method :active_navigation_item, :website_url
+
+  def website_url(base_path)
+    Plek.new.website_root + base_path
+  end
 
   # Can be overridden to allow controllers to choose the active menu item.
   def active_navigation_item

@@ -8,7 +8,7 @@
 <% parent_taxons.each do |parent_taxon| %>
   <tr>
     <td><%= link_to parent_taxon['title'], taxon_path(parent_taxon['content_id']) %></td>
-    <td><%= link_to parent_taxon['base_path'], "#{Plek.new.find('www') + '/api/content' + parent_taxon['base_path']}" %></td>
+    <td><%= link_to parent_taxon['base_path'], "#{website_url('/api/content' + parent_taxon['base_path'])}" %></td>
   </tr>
 <% end %>
 </table>
@@ -21,7 +21,7 @@
 <% tagged.each do |content_item| %>
   <tr>
     <td><%= content_item["title"] %></td>
-    <% content_item_url = Plek.new.website_root + content_item["base_path"] %>
+    <% content_item_url = website_url(content_item["base_path"]) %>
     <td><%= link_to content_item["base_path"], content_item_url %></td>
   </tr>
 <% end %>
