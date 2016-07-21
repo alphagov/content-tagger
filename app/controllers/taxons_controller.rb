@@ -1,0 +1,69 @@
+class TaxonsController < ApplicationController
+  def index
+    render :index, locals: { taxons: taxon_fetcher.taxons }
+  end
+
+  def new
+    render :new, locals: {
+      taxon_form: TaxonForm.new,
+      taxons_for_select: taxons_for_select,
+    }
+  end
+
+  def create
+    new_taxon = TaxonForm.new(params[:taxon_form])
+    if new_taxon.valid?
+      new_taxon.create!
+      redirect_to taxons_path
+    else
+      error_messages = new_taxon.errors.full_messages.join('; ')
+      redirect_to new_taxon_path, flash: { error: error_messages }
+    end
+  end
+
+  def show
+    render :show, locals: {
+      taxon_form: taxon_form,
+      tagged: tagged,
+      parent_taxons: parent_taxons,
+    }
+  end
+
+  def edit
+    render :edit, locals: {
+      taxon_form: taxon_form,
+      taxons_for_select: taxons_for_select,
+    }
+  end
+
+  def update
+    new_taxon = TaxonForm.new(params[:taxon_form])
+    new_taxon.create!
+    redirect_to taxons_path
+  end
+
+private
+
+  def taxons_for_select
+    taxon_fetcher.taxons_for_select
+  end
+
+  def parent_taxons
+    taxon_fetcher.parents_for_taxon_form(taxon_form)
+  end
+
+  def taxon_fetcher
+    @taxon_fetcher ||= Taxonomy::TaxonFetcher.new
+  end
+
+  def taxon_form
+    TaxonForm.build(content_id: params[:id])
+  end
+
+  def tagged
+    Services.content_store.incoming_links!(
+      taxon_form.base_path,
+      types: ["alpha_taxons"],
+    ).alpha_taxons
+  end
+end
