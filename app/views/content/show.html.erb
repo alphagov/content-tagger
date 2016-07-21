@@ -1,7 +1,7 @@
 <%= display_header title: @content_item.title, breadcrumbs: [link_to("Tag content", lookup_path), @content_item] %>
 
 <div class='view-on-site'>
-  View on site: <%= link_to @content_item.base_path, Plek.new.website_root + @content_item.base_path, target: "_blank" %>
+  View on site: <%= link_to @content_item.base_path, website_url(@content_item.base_path), target: "_blank" %>
 </div>
 
 <hr/>
