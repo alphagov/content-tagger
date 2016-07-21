@@ -63,7 +63,7 @@ private
   def tagged
     Services.content_store.incoming_links!(
       taxon_form.base_path,
-      types: ["alpha_taxons"],
-    ).alpha_taxons
+      types: ["taxons"],
+    ).taxons
   end
 end

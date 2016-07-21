@@ -7,7 +7,7 @@ RSpec.describe TaggingUpdateForm do
         topics: ['', '877a4785-bcec-4e23-98b6-1a3a84e33755'],
         mainstream_browse_pages: [''],
         organisations: [''],
-        alpha_taxons: [''],
+        taxons: [''],
         parent: [''],
       )
 
@@ -17,7 +17,7 @@ RSpec.describe TaggingUpdateForm do
         topics: ['877a4785-bcec-4e23-98b6-1a3a84e33755'],
         mainstream_browse_pages: [],
         organisations: [],
-        alpha_taxons: [],
+        taxons: [],
         parent: [],
       )
     end
@@ -26,7 +26,7 @@ RSpec.describe TaggingUpdateForm do
       form = TaggingUpdateForm.new(
         topics: [],
         organisations: [],
-        alpha_taxons: [],
+        taxons: [],
       )
 
       links_payload = form.links_payload
@@ -34,7 +34,7 @@ RSpec.describe TaggingUpdateForm do
       expect(links_payload).to eql(
         topics: [],
         organisations: [],
-        alpha_taxons: [],
+        taxons: [],
       )
     end
   end

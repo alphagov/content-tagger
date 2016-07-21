@@ -127,7 +127,7 @@ RSpec.describe "Tagging content", type: :feature do
         topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", "ID-OF-ALREADY-TAGGED"],
         mainstream_browse_pages: [],
         organisations: [],
-        alpha_taxons: [],
+        taxons: [],
         parent: [],
       },
       previous_version: 54_321,

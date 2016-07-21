@@ -1,5 +1,5 @@
 class ContentItem
-  TAG_TYPES = %w(mainstream_browse_pages parent topics organisations alpha_taxons)
+  TAG_TYPES = %w(mainstream_browse_pages parent topics organisations taxons)
 
   attr_reader :content_id, :title, :base_path, :publishing_app, :document_type
 

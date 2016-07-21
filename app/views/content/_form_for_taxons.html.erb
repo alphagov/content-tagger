@@ -1,0 +1,10 @@
+<h3>Taxonomy</h3>
+
+<%= f.select :taxons,
+    linkables.taxons,
+    {},
+    { multiple: true, class: "select2", data: { placeholder: "Choose one..." } } %>
+
+<p class"explain">
+  This taxonomy is currently being developed by the Finding Things team.
+</p>

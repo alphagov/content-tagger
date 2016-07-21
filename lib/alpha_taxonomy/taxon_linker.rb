@@ -31,7 +31,7 @@ module AlphaTaxonomy
         patch_links_response = Services.publishing_api.patch_links(
           content_item_id,
           links: {
-            alpha_taxons: taxon_content_ids
+            taxons: taxon_content_ids
           }
         )
 

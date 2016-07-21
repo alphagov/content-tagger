@@ -104,8 +104,8 @@ RSpec.feature "Bulk taxon import", type: :feature do
       '/test-path-2' => 'uuid-2',
     )
 
-    @update_links_1 = stub_publishing_api_patch_links("uuid-1", links: { alpha_taxons: ["foo-uuid"] })
-    @update_links_2 = stub_publishing_api_patch_links("uuid-2", links: { alpha_taxons: ["bar-uuid"] })
+    @update_links_1 = stub_publishing_api_patch_links("uuid-1", links: { taxons: ["foo-uuid"] })
+    @update_links_2 = stub_publishing_api_patch_links("uuid-2", links: { taxons: ["bar-uuid"] })
 
     AlphaTaxonomy::TaxonLinker.new(logger: @dummy_logger).run!
   end
