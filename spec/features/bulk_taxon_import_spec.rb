@@ -47,7 +47,7 @@ RSpec.feature "Bulk taxon import", type: :feature do
     allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(test_import_file_location)
     AlphaTaxonomy::ImportFile.new(logger: @dummy_logger, sheet_identifiers: ['test-sheet', @the_key, @the_gid]).populate
 
-    expect(File.exist? test_import_file_location).to be true
+    expect(File.exist?(test_import_file_location)).to be true
     expect(IO.readlines(test_import_file_location)).to include("foo-taxon\t/test-path-1\n")
     expect(IO.readlines(test_import_file_location)).to include("bar-taxon\t/test-path-2\n")
   end

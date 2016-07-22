@@ -5,7 +5,7 @@ RSpec.describe ContentItem do
     {
       'content_id'     => 'uuid-88',
       'title'          => 'A content item',
-      'document_type'         => 'placeholder',
+      'document_type'  => 'placeholder',
       'base_path'      => '/a-content-item',
       'publishing_app' => 'whitehall'
     }

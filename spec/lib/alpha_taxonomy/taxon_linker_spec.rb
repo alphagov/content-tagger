@@ -30,10 +30,12 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
         "/a-foo-content-item" => ["Foo Taxon"],
         "/a-foo-bar-content-item" => ["foo Taxon", "Bar Taxon"]
       )
-      stub_taxons_fetch([
-        { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
-        { content_id: "bar-taxon-uuid", base_path: "/alpha-taxonomy/bar-taxon" },
-      ])
+      stub_taxons_fetch(
+        [
+          { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
+          { content_id: "bar-taxon-uuid", base_path: "/alpha-taxonomy/bar-taxon" },
+        ]
+      )
 
       publishing_api_has_lookups(
         "/a-foo-content-item" => "foo-item-uuid",
@@ -61,9 +63,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       end
 
       it "gracefully handles this by looking up the content ID with a base_path" do
-        stub_taxons_fetch([
-          { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
-        ])
+        stub_taxons_fetch(
+          [
+            { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
+          ]
+        )
 
         publishing_api_has_lookups(
           "/a-foo-content-item" => "foo-item-uuid",
@@ -91,9 +95,11 @@ RSpec.describe AlphaTaxonomy::TaxonLinker do
       end
 
       it "does not duplicate content IDs in the patch_links payload" do
-        stub_taxons_fetch([
-          { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
-        ])
+        stub_taxons_fetch(
+          [
+            { content_id: "foo-taxon-uuid", base_path: "/alpha-taxonomy/foo-taxon" },
+          ]
+        )
 
         publishing_api_has_lookups(
           "/a-foo-content-item" => "foo-item-uuid"

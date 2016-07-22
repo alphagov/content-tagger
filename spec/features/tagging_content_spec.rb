@@ -137,21 +137,29 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def given_we_can_populate_the_dropdowns_with_content_from_publishing_api
-    publishing_api_has_topics([
-      "/topic/id-of-already-tagged",
-      "/topic/business-tax/pension-scheme-administration",
-    ])
+    publishing_api_has_topics(
+      [
+        "/topic/id-of-already-tagged",
+        "/topic/business-tax/pension-scheme-administration",
+      ]
+    )
 
-    publishing_api_has_taxons([
-      "/alpha-taxonomy/vehicle-plating",
-    ])
+    publishing_api_has_taxons(
+      [
+        "/alpha-taxonomy/vehicle-plating",
+      ]
+    )
 
-    publishing_api_has_organisations([
-      "/government/organisations/student-loans-company",
-    ])
+    publishing_api_has_organisations(
+      [
+        "/government/organisations/student-loans-company",
+      ]
+    )
 
-    publishing_api_has_mainstream_browse_pages([
-      "/browse/driving/car-tax-discs",
-    ])
+    publishing_api_has_mainstream_browse_pages(
+      [
+        "/browse/driving/car-tax-discs",
+      ]
+    )
   end
 end
