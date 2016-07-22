@@ -1,0 +1,43 @@
+<h1>Taggings</h1>
+
+<% if flash[:import_error] %>
+  <div class="alert alert-danger"><%= flash[:import_error] %></div>
+<% end %>
+
+<% if @fetch_errors.present? %>
+  <p>
+    <%= link_to "Fetch from Google again", tagging_spreadsheet_refetch_path(@tagging_spreadsheet), method: :post, class: "btn btn-lg btn-warning" %>
+  </p>
+  <p>
+    This import broke. The following error happened when attempting to read
+    the spreadsheet.
+  </p>
+
+  <div class="well">
+    <%= @fetch_errors.first.inspect %>
+  </div>
+
+<% else %>
+
+  <p>
+    <%= link_to "Create these tags", tagging_spreadsheet_publish_tags_path(@tagging_spreadsheet), method: :post, class: "btn btn-lg btn-success" %>
+    <%= link_to "Fetch from Google again", tagging_spreadsheet_refetch_path(@tagging_spreadsheet), method: :post, class: "btn btn-lg btn-warning" %>
+  </p>
+
+  <table>
+    <tr>
+      <th>Content Base Path</th>
+      <th>Link Title</th>
+      <th>Link Content ID</th>
+      <th>Link Type</th>
+    </tr>
+    <% @tag_mappings.each do |tag| %>
+      <tr>
+        <td><%= tag.content_base_path %></td>
+        <td><%= tag.link_title %></td>
+        <td><%= tag.link_content_id %></td>
+        <td><%= tag.link_type %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

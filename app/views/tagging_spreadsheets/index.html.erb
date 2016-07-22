@@ -1,0 +1,23 @@
+<%= link_to "Add spreadsheet", new_tagging_spreadsheet_path, class: "btn btn-success" %>
+
+<br/>
+<br/>
+
+<table>
+  <tr>
+    <th>Google Sheet URL</th>
+    <th>Date added</th>
+    <th>Actions</th>
+  </tr>
+  <% @tagging_spreadsheets.each do |spreadsheet| %>
+    <tr>
+      <td><%= spreadsheet.url %></td>
+      <td><%= spreadsheet.created_at %></td>
+      <td>
+        <%= link_to "Preview taggings", tagging_spreadsheet_path(spreadsheet), class: "btn btn-primary btn-sm bulkTaggingButton" %>
+        <%= link_to "Delete job", tagging_spreadsheet_path(spreadsheet), method: :delete, class: "btn btn-danger btn-sm" %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
