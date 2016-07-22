@@ -9,7 +9,6 @@ gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
 gem 'govuk_admin_template', '~> 4.1.1'
 gem 'generic_form_builder', '~> 0.13.0'
-gem 'govuk-lint', '~> 0.5'
 gem 'gds-api-adapters', '~> 30.0'
 
 gem 'airbrake', '~> 4.3.1'
@@ -25,6 +24,7 @@ group :development, :test do
   gem 'simplecov', '0.10.0', require: false
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'govuk-content-schema-test-helpers', '~> 1.4'
+  gem 'govuk-lint'
 end
 
 group :development do

@@ -1,4 +1,5 @@
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     - db/**/*
 
@@ -31,10 +32,6 @@ Metrics/PerceivedComplexity:
 
 ActionFilter:
   Description: 'Enforces consistent use of action filter methods.'
-  Enabled: true
-
-DefaultScope:
-  Description: 'Checks if the argument passed to default_scope is a block.'
   Enabled: true
 
 Delegate:
@@ -383,13 +380,13 @@ SingleLineMethods:
   Description: 'Avoid single-line methods.'
   Enabled: true
 
-SingleSpaceBeforeFirstArg:
+SpaceBeforeFirstArg:
   Description: >-
     Checks that exactly one space is used between a method name
     and the first argument for method calls without parentheses.
   Enabled: true
 
-SpaceAfterControlKeyword:
+SpaceAroundKeyword:
   Description: 'Use spaces after if/elsif/unless/while/until/case/when.'
   Enabled: true
 
@@ -410,7 +407,7 @@ SpaceInsideBlockBraces:
     or doesn't have trailing space.
   Enabled: true
 
-SpaceBeforeModifierKeyword:
+SpaceAroundKeyword:
   Description: 'Put a space before the modifier keyword.'
   Enabled: true
 
