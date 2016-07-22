@@ -17,6 +17,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'select2-rails', '~> 3.5.9'
 
+gem 'govuk_sidekiq', '~> 0.0.4'
+
 group :development, :test do
   gem 'quiet_assets'
   gem 'pry-byebug'
