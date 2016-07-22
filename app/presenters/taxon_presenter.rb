@@ -10,7 +10,7 @@ class TaxonPresenter
       document_type: 'taxon',
       schema_name: 'taxon',
       title: title,
-      publishing_app: 'collections-publisher',
+      publishing_app: 'content-tagger',
       rendering_app: 'collections',
       public_updated_at: Time.now.iso8601,
       locale: 'en',
