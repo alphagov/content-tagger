@@ -7,12 +7,15 @@ RSpec.describe AlphaTaxonomy::ImportFileGroupings do
       before do
         @temp_import_file = Tempfile.new('import_file_groupings_spec')
         allow(AlphaTaxonomy::ImportFile).to receive(:location).and_return(@temp_import_file.path)
-        allow(CSV).to receive(:read).with(AlphaTaxonomy::ImportFile.location, col_sep: "\t", headers: true)
-          .and_return([
-            { "base_path" => "/foo-content-item-path", "taxon_title" => "foo-taxon" },
-            { "base_path" => "/bar-or-baz-content-item-path", "taxon_title" => "bar-taxon" },
-            { "base_path" => "/bar-or-baz-content-item-path", "taxon_title" => "baz-taxon" },
-          ])
+        allow(CSV).to receive(:read)
+          .with(AlphaTaxonomy::ImportFile.location, col_sep: "\t", headers: true)
+          .and_return(
+            [
+              { "base_path" => "/foo-content-item-path", "taxon_title" => "foo-taxon" },
+              { "base_path" => "/bar-or-baz-content-item-path", "taxon_title" => "bar-taxon" },
+              { "base_path" => "/bar-or-baz-content-item-path", "taxon_title" => "baz-taxon" },
+            ]
+          )
       end
 
       after do

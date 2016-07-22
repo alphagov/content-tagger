@@ -2,7 +2,7 @@ class TaggingUpdateForm
   include ActiveModel::Model
   attr_accessor :content_item, :content_id, :previous_version
 
-  TAG_TYPES = %i(topics mainstream_browse_pages organisations taxons parent)
+  TAG_TYPES = %i(topics mainstream_browse_pages organisations taxons parent).freeze
   attr_accessor(*TAG_TYPES)
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,

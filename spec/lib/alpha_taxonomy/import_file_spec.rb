@@ -35,21 +35,25 @@ RSpec.describe AlphaTaxonomy::ImportFile do
     end
 
     it "parses and writes the required data to a file" do
-      stub_downloaded_sheet_data([
-        "Foo-Taxon\t" + "/foo-content-item-path",
-        "Bar (Br)| Baz (Bz) | \t" + "/bar-or-baz-content-item-path",
-        "n/a - not applicable\t" + "/n/a-content-item-path",
-      ])
+      stub_downloaded_sheet_data(
+        [
+          "Foo-Taxon\t" + "/foo-content-item-path",
+          "Bar (Br)| Baz (Bz) | \t" + "/bar-or-baz-content-item-path",
+          "n/a - not applicable\t" + "/n/a-content-item-path",
+        ]
+      )
 
       AlphaTaxonomy::ImportFile.new(logger: test_logger, sheet_identifiers: dummy_identifiers).populate
 
       populated_file = File.open(test_tsv_file_path)
       expect(populated_file.read).to eq(
-        expected_tsv_content([
-          "Foo-Taxon\t/foo-content-item-path",
-          "Bar (Br)\t/bar-or-baz-content-item-path",
-          "Baz (Bz)\t/bar-or-baz-content-item-path"
-        ])
+        expected_tsv_content(
+          [
+            "Foo-Taxon\t/foo-content-item-path",
+            "Bar (Br)\t/bar-or-baz-content-item-path",
+            "Baz (Bz)\t/bar-or-baz-content-item-path"
+          ]
+        )
       )
     end
 
