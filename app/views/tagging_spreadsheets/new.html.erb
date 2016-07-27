@@ -1,0 +1,13 @@
+<h1>Bulk Tagging</h1>
+
+<p>
+  <%= link_to "Example spreadsheet",
+      "https://docs.google.com/spreadsheets/d/1BB4mAcaf0pfCUUxrt3pmFvebiPv0yUAkfLEeEJjIT0M/pub?gid=386284585&single=true&output=tsv" %>
+</p>
+
+<%= form_for @tagging_spreadsheet, url: tagging_spreadsheets_path do |form| %>
+  <div class="form-group">
+    <%= form.text_field :url, label: "Spreadsheet URL", class: "form-control" %>
+    <%= form.submit "Import", class: "btn btn-primary btn-md" %>
+  </div>
+<% end %>

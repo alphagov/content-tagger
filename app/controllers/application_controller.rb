@@ -16,7 +16,6 @@ private
     Plek.new.website_root + base_path
   end
 
-  # Can be overridden to allow controllers to choose the active menu item.
   def active_navigation_item
     controller_name
   end

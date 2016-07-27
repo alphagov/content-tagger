@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 2.3
   Exclude:
     - db/**/*
+    - spec/support/google_sheet_helper.rb
 
 SignalException:
   Enabled: true
