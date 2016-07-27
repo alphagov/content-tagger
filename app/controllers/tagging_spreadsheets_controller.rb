@@ -9,6 +9,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def create
     @tagging_spreadsheet = TaggingSpreadsheet.new(tagging_spreadsheet_params)
+    @tagging_spreadsheet.added_by = current_user.uid
     if @tagging_spreadsheet.valid?
       @tagging_spreadsheet.save!
       redirect_to tagging_spreadsheets_path
@@ -35,7 +36,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def publish_tags
     @tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
-    errors = BulkTagging::Publish.new(@tagging_spreadsheet.tag_mappings).run
+    errors = BulkTagging::Publish.new(@tagging_spreadsheet, user: current_user).run
     if errors.present?
       flash[:import_error] = "Failed with the following errors: #{errors}"
     end
