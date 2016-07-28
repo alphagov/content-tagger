@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe BulkTagging::Publish do
-  GoogleSheetHelper
-
   let(:tagging_spreadsheet) { TaggingSpreadsheet.create(url: "https://tagging/spreadsheet/") }
   let(:user) { double(uid: "user-123") }
 
@@ -24,9 +22,7 @@ RSpec.describe BulkTagging::Publish do
         content_base_path: "/content-2", link_title: "Education",
         link_content_id: "education-ID", link_type: "taxons"
       )
-      publishing_api_has_lookups({
-        "/content-1" => "content-1-ID", "/content-2" => "content-2-ID",
-      })
+      publishing_api_has_lookups("/content-1" => "content-1-ID", "/content-2" => "content-2-ID")
       api_response = double(code: 200)
       allow(Time.zone).to receive(:now).and_return(Time.new(0))
 
