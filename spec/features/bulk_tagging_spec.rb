@@ -32,7 +32,7 @@ RSpec.feature "Bulk tagging", type: :feature do
 
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet
-    click_link "Fetch from Google again"
+    click_link "Refresh import"
     click_link "Bulk Tagging"
   end
 
@@ -42,7 +42,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def then_i_see_an_error_summary_instead_of_a_tagging_preview
-    click_link "Preview taggings"
+    click_link "Preview"
     expect(page).to have_content "This import broke."
   end
 
@@ -54,13 +54,13 @@ RSpec.feature "Bulk tagging", type: :feature do
   def when_i_provide_the_public_uri_of_this_spreadsheet
     visit root_path
     click_link "Bulk Tagging"
-    click_link "Add spreadsheet"
+    click_link "Upload spreadsheet"
     fill_in "Spreadsheet URL", with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
     click_button "Import"
   end
 
   def then_i_can_preview_which_taggings_will_be_imported
-    click_link "Preview taggings"
+    click_link "Preview"
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
   end
 
@@ -68,7 +68,6 @@ RSpec.feature "Bulk tagging", type: :feature do
     tag_mappings.each do |tag_mapping|
       expect(page).to have_content tag_mapping.content_base_path
       expect(page).to have_content tag_mapping.link_title
-      expect(page).to have_content tag_mapping.link_content_id
       expect(page).to have_content tag_mapping.link_type
     end
   end
@@ -89,7 +88,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       }
     )
 
-    click_link "Create these tags"
+    click_link "Create tags"
 
     expect(link_update_1).to have_been_requested
     expect(link_update_2).to have_been_requested
@@ -113,7 +112,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def and_refetch_the_tags
-    expect { click_link "Fetch from Google again" }.to change { TagMapping.count }.by(1)
+    expect { click_link "Refresh import" }.to change { TagMapping.count }.by(1)
   end
 
   def then_i_should_see_an_updated_preview

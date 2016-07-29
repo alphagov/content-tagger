@@ -1,13 +1,13 @@
-<h1>Taggings</h1>
+<%= display_header title: 'Preview import', breadcrumbs: [:tagging_spreadsheets, "Preview"] do %>
+  <%= link_to "Create tags", tagging_spreadsheet_publish_tags_path(@tagging_spreadsheet), method: :post, class: "btn btn-md btn-default" %>
+  <%= link_to "Refresh import", tagging_spreadsheet_refetch_path(@tagging_spreadsheet), method: :post, class: "btn btn-md btn-default" %>
+<% end %>
 
 <% if flash[:import_error] %>
   <div class="alert alert-danger"><%= flash[:import_error] %></div>
 <% end %>
 
 <% if @fetch_errors.present? %>
-  <p>
-    <%= link_to "Fetch from Google again", tagging_spreadsheet_refetch_path(@tagging_spreadsheet), method: :post, class: "btn btn-lg btn-warning" %>
-  </p>
   <p>
     This import broke. The following error happened when attempting to read
     the spreadsheet.
@@ -19,24 +19,19 @@
 
 <% else %>
 
-  <p>
-    <%= link_to "Create these tags", tagging_spreadsheet_publish_tags_path(@tagging_spreadsheet), method: :post, class: "btn btn-lg btn-success" %>
-    <%= link_to "Fetch from Google again", tagging_spreadsheet_refetch_path(@tagging_spreadsheet), method: :post, class: "btn btn-lg btn-warning" %>
-  </p>
+  <div class='view-on-site'>
+    View: <%= link_to "inspect spreadsheet", @tagging_spreadsheet.url, target: "_blank" %>
+  </div>
 
   <table>
     <tr>
-      <th>Content Base Path</th>
-      <th>Link Title</th>
-      <th>Link Content ID</th>
-      <th>Link Type</th>
+      <th>Page</th>
+      <th>Will be tagged to</th>
     </tr>
     <% @tag_mappings.each do |tag| %>
       <tr>
-        <td><%= tag.content_base_path %></td>
-        <td><%= tag.link_title %></td>
-        <td><%= tag.link_content_id %></td>
-        <td><%= tag.link_type %></td>
+        <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
+        <td><%= link_to tag.link_title, content_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
       </tr>
     <% end %>
   </table>
