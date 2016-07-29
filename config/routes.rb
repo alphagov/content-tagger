@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     post '/content/taggings', action: :update_links, as: :content_update_links
   end
 
-  resources :tagging_spreadsheets, except: [:update, :edit]  do
+  resources :tagging_spreadsheets, except: [:update, :edit] do
     post 'refetch'
     post 'publish_tags'
   end

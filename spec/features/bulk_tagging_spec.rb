@@ -27,8 +27,8 @@ RSpec.feature "Bulk tagging", type: :feature do
     then_i_can_preview_which_taggings_will_be_imported
   end
 
-  SHEET_KEY = "THE-KEY-123"
-  SHEET_GID = "123456"
+  SHEET_KEY = "THE-KEY-123".freeze
+  SHEET_GID = "123456".freeze
 
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet
