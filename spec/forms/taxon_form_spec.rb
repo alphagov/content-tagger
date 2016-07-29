@@ -12,6 +12,13 @@ RSpec.describe TaxonForm do
     end
   end
 
+  it 'generates unique base paths for the same title' do
+    taxon_form_1 = described_class.new(title: 'A Title')
+    taxon_form_2 = described_class.new(title: 'A Title')
+
+    expect(taxon_form_1.base_path).to_not eq(taxon_form_2.base_path)
+  end
+
   describe '#create!' do
     let(:taxon_form) { described_class.new(title: 'A Title') }
 

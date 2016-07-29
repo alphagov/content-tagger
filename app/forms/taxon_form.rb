@@ -23,11 +23,15 @@ class TaxonForm
     @parent_taxons ||= []
   end
 
-  def create!
-    self.content_id ||= SecureRandom.uuid
-    self.base_path ||= '/alpha-taxonomy/' + title.parameterize
-    presenter = TaxonPresenter.new(base_path: base_path, title: title)
+  def content_id
+    @content_id ||= SecureRandom.uuid
+  end
 
+  def base_path
+    @base_path ||= '/alpha-taxonomy/' + SecureRandom.uuid + '-' + title.parameterize
+  end
+
+  def create!
     publish_taxon(presenter)
   rescue GdsApi::HTTPUnprocessableEntity => e
     Airbrake.notify(e)
@@ -35,6 +39,10 @@ class TaxonForm
   end
 
 private
+
+  def presenter
+    TaxonPresenter.new(base_path: base_path, title: title)
+  end
 
   def publish_taxon(presenter)
     Services.publishing_api.put_content(content_id, presenter.payload)
