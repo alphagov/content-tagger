@@ -1,7 +1,6 @@
-<%= link_to "Add spreadsheet", new_tagging_spreadsheet_path, class: "btn btn-success" %>
-
-<br/>
-<br/>
+<%= display_header title: 'Import', breadcrumbs: ['Import'] do %>
+  <%= link_to 'Upload spreadsheet', new_tagging_spreadsheet_path, class: 'btn btn-lg btn-default' %>
+<% end %>
 
 <table>
   <tr>
@@ -20,4 +19,3 @@
     </tr>
   <% end %>
 </table>
-
