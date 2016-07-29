@@ -19,6 +19,8 @@ class TaxonsController < ApplicationController
       error_messages = new_taxon.errors.full_messages.join('; ')
       redirect_to new_taxon_path, flash: { error: error_messages }
     end
+  rescue TaxonForm::InvalidTaxonError => e
+    redirect_to new_taxon_path, flash: { error: e.message }
   end
 
   def show
