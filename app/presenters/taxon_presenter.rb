@@ -1,7 +1,6 @@
 class TaxonPresenter
-  def initialize(base_path:, title:)
-    @base_path = base_path
-    @title = title
+  def initialize(taxon_form)
+    @taxon_form = taxon_form
   end
 
   def payload
@@ -23,5 +22,6 @@ class TaxonPresenter
 
 private
 
-  attr_reader :base_path, :title
+  attr_reader :taxon_form
+  delegate :base_path, :title, to: :taxon_form
 end

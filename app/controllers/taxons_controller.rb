@@ -13,13 +13,13 @@ class TaxonsController < ApplicationController
   def create
     new_taxon = TaxonForm.new(params[:taxon_form])
     if new_taxon.valid?
-      new_taxon.create!
+      Taxonomy::Publisher.publish(taxon_form: new_taxon)
       redirect_to taxons_path
     else
       error_messages = new_taxon.errors.full_messages.join('; ')
       redirect_to new_taxon_path, flash: { error: error_messages }
     end
-  rescue TaxonForm::InvalidTaxonError => e
+  rescue Taxonomy::Publisher::InvalidTaxonError => e
     redirect_to new_taxon_path, flash: { error: e.message }
   end
 
@@ -40,7 +40,7 @@ class TaxonsController < ApplicationController
 
   def update
     new_taxon = TaxonForm.new(params[:taxon_form])
-    new_taxon.create!
+    Taxonomy::Publisher.publish(taxon_form: new_taxon)
     redirect_to taxons_path
   end
 

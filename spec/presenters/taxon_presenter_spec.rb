@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe TaxonPresenter do
+  let(:taxon_form) do
+    instance_double(TaxonForm, title: 'My Title', base_path: "/taxons/my-taxon")
+  end
+  let(:presenter) { TaxonPresenter.new(taxon_form) }
+
   describe "#payload" do
-    let(:presenter) do
-      TaxonPresenter.new(
-        title: "My Title",
-        base_path: "/taxons/my-taxon"
-      )
-    end
     let(:payload) { presenter.payload }
 
     it "generates a valid payload" do
