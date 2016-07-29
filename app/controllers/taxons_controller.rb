@@ -61,9 +61,10 @@ private
   end
 
   def tagged
-    Services.content_store.incoming_links!(
-      taxon_form.base_path,
-      types: ["taxons"],
-    ).taxons
+    Services.publishing_api.get_linked_items(
+      taxon_form.content_id,
+      link_type: "taxons",
+      fields: %w[title content_id base_path]
+    )
   end
 end
