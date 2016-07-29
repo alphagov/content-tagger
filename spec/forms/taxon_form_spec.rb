@@ -12,6 +12,32 @@ RSpec.describe TaxonForm do
     end
   end
 
+  describe '#create!' do
+    let(:taxon_form) { described_class.new(title: 'A Title') }
+
+    context 'with an unprocessable entity error from the API' do
+      let(:error) do
+        GdsApi::HTTPUnprocessableEntity.new(
+          422,
+          "An internal error message",
+          'error' => { 'message' => 'Some backend error' }
+        )
+      end
+
+      before do
+        allow(Services.publishing_api).to receive(:put_content).and_raise(error)
+      end
+
+      it 'raises an error with a generic message and notifies Airbrake' do
+        expect(Airbrake).to receive(:notify).with(error)
+        expect { taxon_form.create! }.to raise_error(
+          TaxonForm::InvalidTaxonError,
+          /there was a problem with your request/i
+        )
+      end
+    end
+  end
+
   describe '.build' do
     let(:content_id) { SecureRandom.uuid }
     let(:subject) { described_class.build(content_id: content_id) }

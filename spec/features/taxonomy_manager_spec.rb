@@ -23,6 +23,14 @@ RSpec.feature "Managing taxonomies" do
     then_a_taxon_is_created
   end
 
+  scenario "User attempts to create a taxon that isn't semantically valid" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_the_new_taxon_button
+    when_i_submit_the_form_with_a_taxon_with_semantic_issues
+    then_i_can_see_an_error_message
+  end
+
   scenario "User edits a taxon" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
@@ -67,6 +75,19 @@ RSpec.feature "Managing taxonomies" do
     expect(find('select').value).to include(@taxon_2[:content_id])
 
     click_on "Save"
+  end
+
+  def when_i_submit_the_form_with_a_taxon_with_semantic_issues
+    fill_in :taxon_form_title, with: 'My Taxon'
+
+    stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .to_return(status: 422, body: {}.to_json)
+
+    click_on "Save"
+  end
+
+  def then_i_can_see_an_error_message
+    expect(page).to have_selector('.alert', text: /there was a problem with your request/i)
   end
 
   def then_a_taxon_is_created
