@@ -31,6 +31,14 @@ RSpec.feature "Managing taxonomies" do
     then_my_taxon_is_updated
   end
 
+  scenario "Viewing tagged content of a taxon" do
+    given_there_are_taxons
+    and_theres_content_tagged_to_the_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_view_tagged_content
+    then_i_see_tagged_content
+  end
+
   def and_i_click_on_the_edit_taxon_link
     first('a', text: 'Edit taxon').click
   end
@@ -77,5 +85,18 @@ RSpec.feature "Managing taxonomies" do
 
   def then_my_taxon_is_updated
     then_a_taxon_is_created
+  end
+
+  def and_theres_content_tagged_to_the_taxons
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/ID-1?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=title&link_type=taxons").
+      to_return(body: [{ content_id: 'ID', title: 'Tagged Item', base_path: '/my/item' }].to_json)
+  end
+
+  def and_i_click_on_view_tagged_content
+    first('.view-tagged-content').click
+  end
+
+  def then_i_see_tagged_content
+    expect(page).to have_content "Tagged Item"
   end
 end
