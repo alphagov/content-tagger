@@ -11,7 +11,7 @@
 <% taxons.each do |taxon| %>
   <tr>
     <td><%= taxon['title'] %></td>
-    <td><%= link_to 'View tagged', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
+    <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
     <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
   </tr>
 <% end %>
