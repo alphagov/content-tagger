@@ -59,7 +59,7 @@ private
   end
 
   def taxon_form
-    TaxonForm.build(content_id: params[:id])
+    Taxonomy::TaxonFormBuilder.build(content_id: params[:id])
   end
 
   def tagged

@@ -6,19 +6,6 @@ class TaxonForm
 
   validates_presence_of :title
 
-  def self.build(content_id:)
-    content_item = Services.publishing_api.get_content(content_id)
-    links = Services.publishing_api.get_links(content_id).try(:links)
-    form = new(
-      content_id: content_id,
-      title: content_item.title,
-      base_path: content_item.base_path,
-    )
-
-    form.parent_taxons = links.parent_taxons if links.present? && links.parent_taxons.present?
-    form
-  end
-
   def parent_taxons
     @parent_taxons ||= []
   end
