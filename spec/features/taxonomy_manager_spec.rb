@@ -109,8 +109,8 @@ RSpec.feature "Managing taxonomies" do
   end
 
   def and_theres_content_tagged_to_the_taxons
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/ID-1?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=title&link_type=taxons").
-      to_return(body: [{ content_id: 'ID', title: 'Tagged Item', base_path: '/my/item' }].to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/ID-1?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=title&link_type=taxons")
+      .to_return(body: [{ content_id: 'ID', title: 'Tagged Item', base_path: '/my/item' }].to_json)
   end
 
   def and_i_click_on_view_tagged_content
