@@ -6,15 +6,18 @@
   <tr>
     <th>Google Sheet URL</th>
     <th>Date added</th>
-    <th>Actions</th>
+    <th></th>
+    <th></th>
   </tr>
   <% @tagging_spreadsheets.each do |spreadsheet| %>
     <tr>
       <td><%= spreadsheet.url %></td>
       <td><%= spreadsheet.created_at %></td>
       <td>
-        <%= link_to "Preview taggings", tagging_spreadsheet_path(spreadsheet), class: "btn btn-primary btn-sm bulkTaggingButton" %>
-        <%= link_to "Delete job", tagging_spreadsheet_path(spreadsheet), method: :delete, class: "btn btn-danger btn-sm" %>
+        <%= link_to "Preview", tagging_spreadsheet_path(spreadsheet) %>
+      </td>
+      <td>
+        <%= link_to "Delete", tagging_spreadsheet_path(spreadsheet), method: :delete, class: "btn btn-danger btn-sm" %>
       </td>
     </tr>
   <% end %>
