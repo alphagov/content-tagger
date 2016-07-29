@@ -17,6 +17,7 @@ LineLength:
 
 Metrics/AbcSize:
   Enabled: true
+  Max: 20
   Exclude:
     - spec/features/**/*
 
