@@ -1,6 +1,6 @@
 <%= display_header title: taxon_form.title, breadcrumbs: [:taxons, taxon_form] %>
 
-<table class="tags-list">
+<table>
 <tr>
   <th>Parent taxons</th>
   <th>Base path</th>
@@ -13,16 +13,17 @@
 <% end %>
 </table>
 
-<table class="tags-list">
+<table>
 <tr>
   <th>Title</th>
   <th>URL</th>
+  <th>Actions</th>
 </tr>
 <% tagged.each do |content_item| %>
   <tr>
     <td><%= content_item["title"] %></td>
-    <% content_item_url = website_url(content_item["base_path"]) %>
-    <td><%= link_to content_item["base_path"], content_item_url %></td>
+    <td><%= link_to content_item["base_path"], website_url(content_item["base_path"]) %></td>
+    <td><%= link_to 'Update tags', content_url(content_item["content_id"]) %></td>
   </tr>
 <% end %>
 </table>
