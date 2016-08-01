@@ -21,11 +21,11 @@ RSpec.describe Taxonomy::TaxonFetcher do
     end
   end
 
-  describe '#parents_for_taxon_form' do
+  describe '#parents_for_taxon' do
     let(:taxon_id_1) { SecureRandom.uuid }
     let(:taxon_id_2) { SecureRandom.uuid }
-    let(:taxon_form) do
-      instance_double(TaxonForm, parent_taxons: [taxon_id_1, taxon_id_2])
+    let(:taxon) do
+      instance_double(Taxon, parent_taxons: [taxon_id_1, taxon_id_2])
     end
     let(:link_1) do
       { "title" => "foo", "base_path" => "/foo", "content_id" => taxon_id_1 }
@@ -40,7 +40,7 @@ RSpec.describe Taxonomy::TaxonFetcher do
 
     it 'returns the parent taxons for a given taxon' do
       publishing_api_has_linkables(linkables, document_type: 'taxon')
-      result = described_class.new.parents_for_taxon_form(taxon_form)
+      result = described_class.new.parents_for_taxon(taxon)
 
       expect(result.count).to eq(2)
       expect(result).to include(link_1)

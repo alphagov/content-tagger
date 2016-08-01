@@ -5,27 +5,27 @@ class TaxonsController < ApplicationController
 
   def new
     render :new, locals: {
-      taxon_form: TaxonForm.new,
+      taxon: Taxon.new,
       taxons_for_select: taxons_for_select,
     }
   end
 
   def create
-    new_taxon = TaxonForm.new(params[:taxon_form])
+    new_taxon = Taxon.new(params[:taxon])
     if new_taxon.valid?
-      new_taxon.create!
+      Taxonomy::Publisher.publish(taxon: new_taxon)
       redirect_to taxons_path
     else
       error_messages = new_taxon.errors.full_messages.join('; ')
       redirect_to new_taxon_path, flash: { error: error_messages }
     end
-  rescue TaxonForm::InvalidTaxonError => e
+  rescue Taxonomy::Publisher::InvalidTaxonError => e
     redirect_to new_taxon_path, flash: { error: e.message }
   end
 
   def show
     render :show, locals: {
-      taxon_form: taxon_form,
+      taxon: taxon,
       tagged: tagged,
       parent_taxons: parent_taxons,
     }
@@ -33,14 +33,14 @@ class TaxonsController < ApplicationController
 
   def edit
     render :edit, locals: {
-      taxon_form: taxon_form,
+      taxon: taxon,
       taxons_for_select: taxons_for_select,
     }
   end
 
   def update
-    new_taxon = TaxonForm.new(params[:taxon_form])
-    new_taxon.create!
+    new_taxon = Taxon.new(params[:taxon])
+    Taxonomy::Publisher.publish(taxon: new_taxon)
     redirect_to taxons_path
   end
 
@@ -51,20 +51,20 @@ private
   end
 
   def parent_taxons
-    taxon_fetcher.parents_for_taxon_form(taxon_form)
+    taxon_fetcher.parents_for_taxon(taxon)
   end
 
   def taxon_fetcher
     @taxon_fetcher ||= Taxonomy::TaxonFetcher.new
   end
 
-  def taxon_form
-    TaxonForm.build(content_id: params[:id])
+  def taxon
+    Taxonomy::TaxonBuilder.build(content_id: params[:id])
   end
 
   def tagged
     Services.publishing_api.get_linked_items(
-      taxon_form.content_id,
+      taxon.content_id,
       link_type: "taxons",
       fields: %w(title content_id base_path)
     )
