@@ -6,4 +6,10 @@ export GH_STATUS_GIT_COMMIT=${SCHEMA_GIT_COMMIT:-${GIT_COMMIT}}
 
 export SKIP_LINT_IN_SPECS=1
 
-curl https://raw.githubusercontent.com/alphagov/govuk-ci-scripts/master/rails-app.sh | bash
+echo "Cloning govuk-ci-scripts"
+rm -rf tmp/govuk-ci-scripts
+git clone git@github.com:alphagov/govuk-ci-scripts.git tmp/govuk-ci-scripts
+chmod +x tmp/govuk-ci-scripts/rails-app.sh
+
+echo "Running govuk-ci-scripts/rails-app.sh"
+./tmp/govuk-ci-scripts/rails-app.sh
