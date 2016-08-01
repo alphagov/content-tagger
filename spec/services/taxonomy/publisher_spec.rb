@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Taxonomy::Publisher do
-  let(:taxon_form) { TaxonForm.new(title: 'A Title') }
-  let(:publisher) { described_class.new(taxon_form: taxon_form) }
+  let(:taxon) { Taxon.new(title: 'A Title') }
+  let(:publisher) { described_class.new(taxon: taxon) }
 
   describe 'publish' do
     context 'with a valid taxon form' do

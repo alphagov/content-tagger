@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Taxonomy::TaxonFormBuilder do
+RSpec.describe Taxonomy::TaxonBuilder do
   let(:builder) { described_class.new(content_id: content_id) }
 
   describe '#build' do
@@ -12,7 +12,7 @@ RSpec.describe Taxonomy::TaxonFormBuilder do
         base_path: 'A base path'
       }
     end
-    let(:taxon_form) { builder.build }
+    let(:taxon) { builder.build }
 
     before do
       publishing_api_has_item(content)
@@ -25,24 +25,24 @@ RSpec.describe Taxonomy::TaxonFormBuilder do
       )
     end
 
-    it 'builds a taxon form object' do
-      expect(taxon_form).to be_a(TaxonForm)
+    it 'builds a taxon object' do
+      expect(taxon).to be_a(Taxon)
     end
 
-    it 'assigns the parents to the form' do
-      expect(taxon_form.parent_taxons).to be_empty
+    it 'assigns the parents to the taxon' do
+      expect(taxon.parent_taxons).to be_empty
     end
 
     it 'assigns the content id correctly' do
-      expect(taxon_form.content_id).to eq(content_id)
+      expect(taxon.content_id).to eq(content_id)
     end
 
     it 'assigns the title correctly' do
-      expect(taxon_form.title).to eq(content[:title])
+      expect(taxon.title).to eq(content[:title])
     end
 
     it 'assigns the base_path correctly' do
-      expect(taxon_form.base_path).to eq(content[:base_path])
+      expect(taxon.base_path).to eq(content[:base_path])
     end
 
     context 'without taxon parents' do
@@ -56,7 +56,7 @@ RSpec.describe Taxonomy::TaxonFormBuilder do
       end
 
       it 'has no taxon parents' do
-        expect(taxon_form.parent_taxons).to be_empty
+        expect(taxon.parent_taxons).to be_empty
       end
     end
 
@@ -72,8 +72,8 @@ RSpec.describe Taxonomy::TaxonFormBuilder do
         )
       end
 
-      it 'assigns the parents to the form' do
-        expect(taxon_form.parent_taxons).to eq(parent_taxons)
+      it 'assigns the parents to the taxon' do
+        expect(taxon.parent_taxons).to eq(parent_taxons)
       end
     end
   end

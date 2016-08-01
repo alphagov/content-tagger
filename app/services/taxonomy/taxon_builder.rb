@@ -1,5 +1,5 @@
 module Taxonomy
-  class TaxonFormBuilder
+  class TaxonBuilder
     attr_reader :content_id
 
     def initialize(content_id:)
@@ -11,7 +11,7 @@ module Taxonomy
     end
 
     def build
-      TaxonForm.new(
+      Taxon.new(
         content_id: content_id,
         title: content_item.title,
         base_path: content_item.base_path,

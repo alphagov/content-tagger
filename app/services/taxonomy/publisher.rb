@@ -1,16 +1,16 @@
 module Taxonomy
   class Publisher
-    attr_reader :taxon_form
-    delegate :content_id, :parent_taxons, to: :taxon_form
+    attr_reader :taxon
+    delegate :content_id, :parent_taxons, to: :taxon
 
     class InvalidTaxonError < StandardError; end
 
-    def initialize(taxon_form:)
-      @taxon_form = taxon_form
+    def initialize(taxon:)
+      @taxon = taxon
     end
 
-    def self.publish(taxon_form:)
-      new(taxon_form: taxon_form).publish
+    def self.publish(taxon:)
+      new(taxon: taxon).publish
     end
 
     def publish
@@ -28,7 +28,7 @@ module Taxonomy
   private
 
     def presenter
-      TaxonPresenter.new(taxon_form)
+      TaxonPresenter.new(taxon)
     end
   end
 end

@@ -19,7 +19,7 @@ RSpec.feature "Managing taxonomies" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
-    when_i_submit_the_form_with_a_title_and_parents
+    when_i_submit_the_taxon_with_a_title_and_parents
     then_a_taxon_is_created
   end
 
@@ -27,7 +27,7 @@ RSpec.feature "Managing taxonomies" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
-    when_i_submit_the_form_with_a_taxon_with_semantic_issues
+    when_i_submit_the_taxon_with_a_taxon_with_semantic_issues
     then_i_can_see_an_error_message
   end
 
@@ -35,7 +35,7 @@ RSpec.feature "Managing taxonomies" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_edit_taxon_link
-    when_i_submit_the_form_with_a_title_and_parents
+    when_i_submit_the_taxon_with_a_title_and_parents
     then_my_taxon_is_updated
   end
 
@@ -73,8 +73,8 @@ RSpec.feature "Managing taxonomies" do
     click_on "Add a taxon"
   end
 
-  def when_i_submit_the_form_with_a_title_and_parents
-    fill_in :taxon_form_title, with: "My Lovely Taxon"
+  def when_i_submit_the_taxon_with_a_title_and_parents
+    fill_in :taxon_title, with: "My Lovely Taxon"
 
     select @taxon_1[:title]
     expect(find('select').value).to include(@taxon_1[:content_id])
@@ -85,8 +85,8 @@ RSpec.feature "Managing taxonomies" do
     click_on "Save"
   end
 
-  def when_i_submit_the_form_with_a_taxon_with_semantic_issues
-    fill_in :taxon_form_title, with: 'My Taxon'
+  def when_i_submit_the_taxon_with_a_taxon_with_semantic_issues
+    fill_in :taxon_title, with: 'My Taxon'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)

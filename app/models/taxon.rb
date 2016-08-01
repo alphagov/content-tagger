@@ -1,4 +1,4 @@
-class TaxonForm
+class Taxon
   attr_accessor :title, :parent_taxons, :content_id, :base_path
   include ActiveModel::Model
 

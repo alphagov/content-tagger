@@ -1,11 +1,11 @@
-<%= display_header title: taxon_form.title, breadcrumbs: [:taxons, taxon_form] %>
+<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] %>
 
-<%= form_for taxon_form, url: taxon_path(taxon_form.content_id), method: "patch" do |f| %>
+<%= form_for taxon, url: taxon_path(taxon.content_id), method: "patch" do |f| %>
   <%= f.text_field :title %>
-  <%= f.hidden_field :content_id, value: taxon_form.content_id %>
-  <%= f.hidden_field :base_path, value: taxon_form.base_path %>
+  <%= f.hidden_field :content_id, value: taxon.content_id %>
+  <%= f.hidden_field :base_path, value: taxon.base_path %>
   <%= f.select :parent_taxons,
-    options_for_select(taxons_for_select, taxon_form.parent_taxons),
+    options_for_select(taxons_for_select, taxon.parent_taxons),
     { include_blank: true },
     { class: "select2", multiple: true } %>
   <%= f.submit "Save", class: "btn btn-lg btn-primary" %>
