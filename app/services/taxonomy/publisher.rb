@@ -28,7 +28,7 @@ module Taxonomy
   private
 
     def presenter
-      TaxonPresenter.new(taxon)
+      Taxonomy::TaxonPayloadBuilder.new(taxon)
     end
   end
 end
