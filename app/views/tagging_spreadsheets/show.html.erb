@@ -27,11 +27,13 @@
     <tr>
       <th>Page</th>
       <th>Will be tagged to</th>
+      <th>Tag created?</th>
     </tr>
     <% @tag_mappings.each do |tag| %>
       <tr>
         <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
         <td><%= link_to tag.link_title, content_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
+        <td class="tag-mapping-status"><%= tag.publish_confirmed? ? "Yes" : "No" %> </td>
       </tr>
     <% end %>
   </table>

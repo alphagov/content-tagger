@@ -11,6 +11,7 @@ ENV['GOVUK_APP_DOMAIN'] = 'test.gov.uk'
 require File.expand_path('../../config/environment', __FILE__)
 require 'spec_helper'
 require 'rspec/rails'
+require 'govuk_sidekiq/testing'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
