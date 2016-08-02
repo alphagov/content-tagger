@@ -3,10 +3,6 @@
   <%= link_to "Refresh import", tagging_spreadsheet_refetch_path(@tagging_spreadsheet), method: :post, class: "btn btn-md btn-default" %>
 <% end %>
 
-<% if flash[:import_error] %>
-  <div class="alert alert-danger"><%= flash[:import_error] %></div>
-<% end %>
-
 <% if @fetch_errors.present? %>
   <p>
     This import broke. The following error happened when attempting to read
@@ -19,22 +15,36 @@
 
 <% else %>
 
-  <div class='view-on-site'>
-    View: <%= link_to "inspect spreadsheet", @tagging_spreadsheet.url, target: "_blank" %>
-  </div>
+  <div class="import-preview">
+    <div class='view-on-site'>
+      View: <%= link_to "inspect spreadsheet", @tagging_spreadsheet.url, target: "_blank" %>
+    </div>
 
-  <table>
-    <tr>
-      <th>Page</th>
-      <th>Will be tagged to</th>
-      <th>Tag created?</th>
-    </tr>
-    <% @tag_mappings.each do |tag| %>
+    <div class="progress-counter">
+      <p>
+        Create tags progress: <%= @tag_mappings.publish_confirmed.count %> of <%= @tag_mappings.count %>
+      </p>
+    </div>
+
+    <table>
       <tr>
-        <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
-        <td><%= link_to tag.link_title, content_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
-        <td class="tag-mapping-status"><%= tag.publish_confirmed? ? "Yes" : "No" %> </td>
+        <th>Page</th>
+        <th>Will be tagged to</th>
+        <th>Tag created?</th>
       </tr>
-    <% end %>
-  </table>
+      <% @tag_mappings.each do |tag| %>
+        <tr>
+          <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
+          <td><%= link_to tag.link_title, content_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
+          <td class="tag-mapping-status">
+            <% if tag.publish_confirmed? %>
+              <span class="label label-success">Yes</span>
+            <% else %>
+              <span class="label label-default">No</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
 <% end %>
