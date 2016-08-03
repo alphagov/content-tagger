@@ -20,7 +20,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   scenario "The spreadsheet contains bad data" do
-    given_no_tagging_data_was_found
+    given_no_tagging_data_is_available_at_a_spreadsheet_url
     when_i_provide_the_public_uri_of_this_spreadsheet
     then_i_see_an_error_summary_instead_of_a_tagging_preview
     when_i_correct_the_data_and_reimport
@@ -46,7 +46,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(page).to have_content "This import broke."
   end
 
-  def given_no_tagging_data_was_found
+  def given_no_tagging_data_is_available_at_a_spreadsheet_url
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
       .to_return(status: 404)
   end
@@ -62,6 +62,15 @@ RSpec.feature "Bulk tagging", type: :feature do
   def then_i_can_preview_which_taggings_will_be_imported
     click_link "Preview"
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
+    expect_tag_mapping_statuses_to_be("No")
+  end
+
+  def expect_tag_mapping_statuses_to_be(string)
+    tag_mapping_statuses = page.all(".tag-mapping-status")
+    expect(tag_mapping_statuses.count).to eq TagMapping.count
+    tag_mapping_statuses.each do |status|
+      expect(status.text).to include string
+    end
   end
 
   def expect_page_to_contain_details_of(tag_mappings: [])
@@ -88,10 +97,12 @@ RSpec.feature "Bulk tagging", type: :feature do
       }
     )
 
-    click_link "Create tags"
-
-    expect(link_update_1).to have_been_requested
-    expect(link_update_2).to have_been_requested
+    Sidekiq::Testing.inline! do
+      click_link "Create tags"
+      expect(link_update_1).to have_been_requested
+      expect(link_update_2).to have_been_requested
+      expect_tag_mapping_statuses_to_be("Yes")
+    end
   end
 
   def given_some_imported_tags
