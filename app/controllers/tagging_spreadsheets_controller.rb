@@ -21,12 +21,16 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def show
     @tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
-
     if @tagging_spreadsheet.tag_mappings.count.zero?
       @fetch_errors = BulkTagging::FetchRemoteData.new(@tagging_spreadsheet).run
     end
-
     @tag_mappings = @tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
+  end
+
+  def import_progress
+    tagging_spreadsheet = TaggingSpreadsheet.find(params[:tagging_spreadsheet_id])
+    tag_mappings = tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
+    render partial: "import_progress_bar", formats: :html, locals: { tag_mappings: tag_mappings }
   end
 
   def refetch

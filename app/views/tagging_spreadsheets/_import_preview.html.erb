@@ -1,0 +1,28 @@
+<div class="import-preview">
+  <br/>
+
+  <div data-module="import-progress">
+    <%= render partial: "import_progress_bar", locals: { tag_mappings: tag_mappings } %>
+  </div>
+
+  <table>
+    <tr>
+      <th>Page</th>
+      <th>Will be tagged to</th>
+      <th>Tag created?</th>
+    </tr>
+    <% tag_mappings.each do |tag| %>
+      <tr>
+        <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
+        <td><%= link_to tag.link_title, content_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
+        <td class="tag-mapping-status">
+          <% if tag.publish_confirmed? %>
+            <span class="label label-success">Yes</span>
+          <% else %>
+            <span class="label label-default">No</span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
