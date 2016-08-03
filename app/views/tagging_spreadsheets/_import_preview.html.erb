@@ -1,7 +1,9 @@
 <div class="import-preview">
   <br/>
 
-  <%= render partial: "import_progress_bar", locals: { tag_mappings: tag_mappings } %>
+  <div data-module="import-progress">
+    <%= render partial: "import_progress_bar", locals: { tag_mappings: tag_mappings } %>
+  </div>
 
   <table>
     <tr>
