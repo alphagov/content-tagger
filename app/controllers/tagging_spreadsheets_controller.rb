@@ -22,7 +22,7 @@ class TaggingSpreadsheetsController < ApplicationController
   def show
     @tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
     if @tagging_spreadsheet.tag_mappings.count.zero?
-      @fetch_errors = BulkTagging::FetchRemoteData.new(@tagging_spreadsheet).run
+      @fetch_errors = TagImporter::FetchRemoteData.new(@tagging_spreadsheet).run
     end
     @tag_mappings = @tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
   end
@@ -41,7 +41,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def publish_tags
     tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
-    BulkTagging::PublishTags.new(tagging_spreadsheet, user: current_user).run
+    TagImporter::PublishTags.new(tagging_spreadsheet, user: current_user).run
     redirect_to tagging_spreadsheet_path(tagging_spreadsheet)
   end
 

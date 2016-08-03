@@ -1,4 +1,4 @@
-module BulkTagging
+module TagImporter
   class PublishTags
     attr_reader :tagging_spreadsheet
     attr_reader :tag_mappings

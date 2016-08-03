@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BulkTagging::FetchRemoteData do
+RSpec.describe TagImporter::FetchRemoteData do
   include GoogleSheetHelper
 
   describe "#run" do
@@ -14,11 +14,11 @@ RSpec.describe BulkTagging::FetchRemoteData do
     it "retrieves data from the tagging spreadsheet URL" do
       expect(Net::HTTP).to receive(:get).with(url)
 
-      BulkTagging::FetchRemoteData.new(tagging_spreadsheet).run
+      TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
     end
 
     it "creates tag mappings based on the retrieved data" do
-      BulkTagging::FetchRemoteData.new(tagging_spreadsheet).run
+      TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
 
       expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/ /content-1/ /content-2/))
       expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons organisations taxons))

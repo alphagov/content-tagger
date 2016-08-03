@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Bulk tagging", type: :feature do
+RSpec.feature "Tag importer", type: :feature do
   require 'gds_api/test_helpers/publishing_api_v2'
   include GdsApi::TestHelpers::PublishingApiV2
   include GoogleSheetHelper
@@ -33,7 +33,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet
     click_link "Refresh import"
-    click_link "Bulk Tagging"
+    click_link "Tag Importer"
   end
 
   def given_tagging_data_is_present_in_a_google_spreadsheet
@@ -53,10 +53,10 @@ RSpec.feature "Bulk tagging", type: :feature do
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
     visit root_path
-    click_link "Bulk Tagging"
+    click_link "Tag Importer"
     click_link "Upload spreadsheet"
     fill_in "Spreadsheet URL", with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
-    click_button "Import"
+    click_button "Upload"
   end
 
   def then_i_can_preview_which_taggings_will_be_imported
