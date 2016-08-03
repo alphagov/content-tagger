@@ -5,6 +5,7 @@ RSpec.describe PublishLinksWorker do
     before do
       publishing_api_has_lookups("/content-1" => "content-1-ID", "/content-2" => "content-2-ID")
       allow(TagMapping).to receive(:update_publish_completed_at)
+      allow(TagMapping).to receive(:where).and_return(double(count: 1))
     end
 
     def publish_content_1_links!
@@ -51,6 +52,19 @@ RSpec.describe PublishLinksWorker do
       it "doesn't do anything" do
         publishing_api_has_lookups("/content-1" => nil)
 
+        expect(Services.publishing_api).to_not receive(:patch_links)
+        expect(TagMapping).to_not receive(:update_publish_completed_at)
+
+        publish_content_1_links!
+      end
+    end
+
+    context "when no tag mappings are found" do
+      before do
+        allow(TagMapping).to receive(:where).and_return(double(count: 0))
+      end
+
+      it "doesn't do anything" do
         expect(Services.publishing_api).to_not receive(:patch_links)
         expect(TagMapping).to_not receive(:update_publish_completed_at)
 
