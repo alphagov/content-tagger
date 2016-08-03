@@ -1,3 +1,4 @@
+//= require_tree .
 //= require select2
 //= require_self
 

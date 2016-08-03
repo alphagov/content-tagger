@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :tagging_spreadsheets, except: [:update, :edit] do
     post 'refetch'
     post 'publish_tags'
+    get  'import_progress'
   end
 
   get '/healthcheck', to: proc { [200, {}, ['OK']] }
