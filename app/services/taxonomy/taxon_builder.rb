@@ -13,8 +13,8 @@ module Taxonomy
     def build
       Taxon.new(
         content_id: content_id,
-        title: content_item.title,
-        base_path: content_item.base_path,
+        title: content_item["title"],
+        base_path: content_item["base_path"],
         parent_taxons: parent_taxons
       )
     end
@@ -22,8 +22,7 @@ module Taxonomy
   private
 
     def parent_taxons
-      return [] unless links.present? && links.parent_taxons.present?
-      links.parent_taxons
+      links["parent_taxons"] || []
     end
 
     def content_item
@@ -31,7 +30,7 @@ module Taxonomy
     end
 
     def links
-      @links ||= Services.publishing_api.get_links(content_id).try(:links)
+      @links ||= Services.publishing_api.get_links(content_id)['links'].to_h
     end
   end
 end
