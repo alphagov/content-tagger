@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe BulkTagging::PublishTags do
+RSpec.describe TagImporter::PublishTags do
   let(:tagging_spreadsheet) { TaggingSpreadsheet.create(url: "https://tagging/spreadsheet/") }
   let(:user) { double(uid: "user-123") }
 
@@ -39,7 +39,7 @@ RSpec.describe BulkTagging::PublishTags do
       expect(PublishLinksWorker).to receive(:perform_async).with("/content-1", links_payload_1)
       expect(PublishLinksWorker).to receive(:perform_async).with("/content-2", links_payload_2)
 
-      BulkTagging::PublishTags.new(tagging_spreadsheet, user: user).run
+      TagImporter::PublishTags.new(tagging_spreadsheet, user: user).run
 
       expect(tagging_spreadsheet.last_published_by).to eq "user-123"
       expect(tagging_spreadsheet.last_published_at).to eq Time.new(0)

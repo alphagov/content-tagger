@@ -1,4 +1,4 @@
-<%= display_header title: 'Import', breadcrumbs: [:tagging_spreadsheets, "New import"] %>
+<%= display_header title: 'Upload spreadsheet', breadcrumbs: [:tagging_spreadsheets, "Upload"] %>
 
 <%= form_for @tagging_spreadsheet, url: tagging_spreadsheets_path do |form| %>
   <div class="form-group">
@@ -9,6 +9,6 @@
           for the correct format.
     </p>
 
-    <%= form.submit "Import", class: "btn btn-lg btn-primary" %>
+    <%= form.submit "Upload", class: "btn btn-lg btn-primary" %>
   </div>
 <% end %>

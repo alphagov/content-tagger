@@ -1,6 +1,6 @@
 require 'csv'
 
-module BulkTagging
+module TagImporter
   class FetchRemoteData
     attr_reader :tagging_spreadsheet
 
