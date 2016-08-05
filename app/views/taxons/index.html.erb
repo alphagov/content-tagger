@@ -5,12 +5,14 @@
 <table>
 <tr>
   <th>Title</th>
+  <th>Content ID</th>
   <th></th>
   <th></th>
 </tr>
 <% taxons.each do |taxon| %>
   <tr>
     <td><%= taxon['title'] %></td>
+    <td><%= taxon['content_id'] %></td>
     <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
     <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
   </tr>
