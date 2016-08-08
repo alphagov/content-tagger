@@ -1,15 +1,21 @@
 # Content Tagger
 
-App for tagging content on GOV.UK.
-
-## Screenshots
-
-![Tagging interface](docs/screenshot-2.png)
-![Lookup form](docs/screenshot-1.png)
+Its main purpose is to provide an interface that allows content to be tagged and bulk-tagged.
+It also provides an interface for adding and updating taxons.
 
 ## Technical documentation
 
-This is a Ruby on Rails application that works with the publishing-api to manage the "links hash" for content on GOV.UK. It also contains code for importing the "alpha taxonomy" - a new taxonomy for GOV.UK currently under development. This is done with a [series of rake tasks](lib/tasks/taxonomy.rake).
+This is a Ruby on Rails application.
+It interacts with the publishing-api to manage the "links hash" for content on GOV.UK.
+It also allows the creation of new taxons, updating taxons and bulk-tagging.
+
+## Screenshots
+
+![Homepage](docs/screenshot-homepage.png)
+![Tagging Interface](docs/screenshot-edit-tagging.png)
+![Taxons](docs/screenshot-taxons.png)
+![View Taxon](docs/screenshot-taxon.png)
+![Edit Taxon](docs/screenshot-edit-taxon.png)
 
 ### Dependencies
 
