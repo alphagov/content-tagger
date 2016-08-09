@@ -22,5 +22,10 @@ Rails.application.routes.draw do
 
   get '/healthcheck', to: proc { [200, {}, ['OK']] }
 
-  mount GovukAdminTemplate::Engine, at: "/style-guide" if Rails.env.development?
+  if Rails.env.development?
+    mount GovukAdminTemplate::Engine, at: '/style-guide'
+
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
