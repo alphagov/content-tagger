@@ -12,8 +12,12 @@ module TagImporter
 
     def run
       ActiveRecord::Base.transaction do
-        tagging_spreadsheet.update(last_published_at: Time.zone.now)
-        tagging_spreadsheet.update(last_published_by: user.uid)
+        tagging_spreadsheet.update!(
+          last_published_at: Time.zone.now,
+          last_published_by: user.uid,
+          state: "imported"
+        )
+
         tag_mappings.update_all(publish_requested_at: Time.zone.now)
 
         links_grouped_by_base_path.each do |base_path, links_update|
