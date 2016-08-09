@@ -10,8 +10,11 @@ class TaggingSpreadsheetsController < ApplicationController
   def create
     tagging_spreadsheet = TaggingSpreadsheet.new(tagging_spreadsheet_params)
     tagging_spreadsheet.added_by = current_user.uid
+    tagging_spreadsheet.state = "uploaded"
+
     if tagging_spreadsheet.valid?
       tagging_spreadsheet.save!
+      InitialTaggingImport.perform_async(tagging_spreadsheet.id)
       redirect_to tagging_spreadsheets_path
     else
       @tagging_spreadsheet = tagging_spreadsheet
@@ -21,9 +24,6 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def show
     @tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
-    if @tagging_spreadsheet.tag_mappings.count.zero?
-      @fetch_errors = TagImporter::FetchRemoteData.new(@tagging_spreadsheet).run
-    end
     @tag_mappings = @tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
   end
 
@@ -36,6 +36,8 @@ class TaggingSpreadsheetsController < ApplicationController
   def refetch
     tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
     tagging_spreadsheet.tag_mappings.delete_all
+    tagging_spreadsheet.update_attributes!(state: "uploaded")
+    InitialTaggingImport.perform_async(tagging_spreadsheet.id)
     redirect_to tagging_spreadsheet_path(tagging_spreadsheet)
   end
 

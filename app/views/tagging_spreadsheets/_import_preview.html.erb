@@ -2,7 +2,9 @@
   <br/>
 
   <div data-module="import-progress">
-    <%= render partial: "import_progress_bar", locals: { tag_mappings: tag_mappings } %>
+    <% if tag_mappings.any? %>
+      <%= render partial: "import_progress_bar", locals: { tag_mappings: tag_mappings } %>
+    <% end %>
   </div>
 
   <table>

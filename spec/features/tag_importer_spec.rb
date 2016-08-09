@@ -5,6 +5,10 @@ RSpec.feature "Tag importer", type: :feature do
   include GdsApi::TestHelpers::PublishingApiV2
   include GoogleSheetHelper
 
+  before do
+    Sidekiq::Testing.inline!
+  end
+
   scenario "Importing tags" do
     given_tagging_data_is_present_in_a_google_spreadsheet
     when_i_provide_the_public_uri_of_this_spreadsheet
@@ -43,7 +47,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def then_i_see_an_error_summary_instead_of_a_tagging_preview
     click_link "Preview"
-    expect(page).to have_content "This import broke."
+    expect(page).to have_content "An error occured"
   end
 
   def given_no_tagging_data_is_available_at_a_spreadsheet_url
@@ -97,12 +101,10 @@ RSpec.feature "Tag importer", type: :feature do
       }
     )
 
-    Sidekiq::Testing.inline! do
-      click_link "Create tags"
-      expect(link_update_1).to have_been_requested
-      expect(link_update_2).to have_been_requested
-      expect_tag_mapping_statuses_to_be("Yes")
-    end
+    click_link "Create tags"
+    expect(link_update_1).to have_been_requested
+    expect(link_update_2).to have_been_requested
+    expect_tag_mapping_statuses_to_be("Yes")
   end
 
   def given_some_imported_tags
