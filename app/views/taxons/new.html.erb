@@ -1,15 +1,15 @@
 <%= display_header title: "Taxons", breadcrumbs: [:taxons, "New taxon"] %>
 
-<%= form_for taxon, url: taxons_path do |f| %>
+<%= simple_form_for taxon, url: taxons_path do |f| %>
   <% if flash[:error].present? %>
     <div class="alert alert-danger" role="alert">
       <%= flash[:error] %>
     </div>
   <% end %>
-  <%= f.text_field :title %>
-  <%= f.select :parent_taxons,
-    options_for_select(taxons_for_select),
-    { include_blank: true },
-    { class: "select2", multiple: true } %>
+
+  <%= f.input :title %>
+  <%= f.input :parent_taxons, collection: taxons_for_select,
+      input_html: { class: :select2, multiple: true, include_blank: true } %>
+
   <%= f.submit "Save", class: "btn btn-lg btn-primary" %>
 <% end %>

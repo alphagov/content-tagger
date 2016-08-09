@@ -1,9 +1,9 @@
 <h3>Primary mainstream browse page</h3>
 
-<%= f.select :parent,
-    linkables.mainstream_browse_pages,
-    { include_blank: true },
-    { multiple: false, class: "select2", data: { placeholder: "Choose a primary mainstream browse page..." } } %>
+<%= f.input :parent,
+    collection: linkables.mainstream_browse_pages, as: :grouped_select, group_method: :last,
+    placeholder: "Choose a primary mainstream browse page...",
+    input_html: { include_blank: true, multiple: false, class: :select2 } %>
 
 <p class='explain'>
   If the page has a breadcrumb, it will be this browse page. For example

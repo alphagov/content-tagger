@@ -1,4 +1,4 @@
-<%= form_for tagging_update, url: content_update_links_path do |f| %>
+<%= simple_form_for tagging_update, url: content_update_links_path do |f| %>
   <%= f.hidden_field :content_id %>
   <%= f.hidden_field :previous_version %>
 
@@ -9,5 +9,6 @@
   <% end %>
 
   <hr/>
-  <input type='submit' value='Update tags' class='btn btn-primary btn-lg' />
+
+  <%= f.submit "Update tags", class: "btn btn-lg btn-primary" %>
 <% end %>

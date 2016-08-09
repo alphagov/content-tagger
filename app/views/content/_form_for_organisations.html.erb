@@ -1,9 +1,9 @@
 <h3>Publishing organisation</h3>
 
-<%= f.select :organisations,
-    linkables.organisations,
-    {},
-    { multiple: true, class: "select2", data: { placeholder: "Choose organisations..." } } %>
+<%= f.input :organisations,
+    collection: linkables.organisations,
+    placeholder: "Choose organisations...",
+    input_html: { multiple: true, class: :select2 } %>
 
 <p class='explain'>
   Tagging a page to an organisation will make it show up in search.
