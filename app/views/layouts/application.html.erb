@@ -5,7 +5,7 @@
 <% end %>
 
 <% content_for :navbar_items do %>
-  <li class='<%= active_navigation_item == 'lookup' ? 'active' : nil %>'>
+  <li class='<%= ['lookup', 'content'].include?(active_navigation_item) ? 'active' : nil %>'>
     <%= link_to 'Tags', lookup_path %>
   </li>
   <li class='<%= active_navigation_item == 'taxons' ? 'active' : nil %>'>

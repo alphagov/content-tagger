@@ -13,6 +13,7 @@ RSpec.describe "Tagging content", type: :feature do
     when_i_visit_the_homepage
     and_i_submit_the_url_of_the_content_item
     then_i_am_on_the_page_for_an_item
+    and_the_expected_navigation_link_is_highlighted
 
     when_i_add_an_additional_tag
     and_i_submit_the_form
@@ -41,6 +42,7 @@ RSpec.describe "Tagging content", type: :feature do
     given_there_is_a_content_item_with_tags
     when_i_type_its_basepath_in_the_url_directly
     then_i_am_on_the_page_for_the_item
+    and_the_expected_navigation_link_is_highlighted
   end
 
   def when_i_visit_the_homepage
@@ -96,6 +98,12 @@ RSpec.describe "Tagging content", type: :feature do
     expect(page).to have_content 'This Is A Content Item'
   end
   alias_method :then_i_am_on_the_page_for_the_item, :then_i_am_on_the_page_for_an_item
+
+  def and_the_expected_navigation_link_is_highlighted
+    active_nav_link = find('.navbar-nav li.active')
+
+    expect(active_nav_link.text).to match(/tags/i)
+  end
 
   def then_i_see_that_the_path_was_not_found
     expect(page).to have_content 'No page found with this path'
