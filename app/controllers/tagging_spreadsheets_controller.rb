@@ -1,6 +1,6 @@
 class TaggingSpreadsheetsController < ApplicationController
   def index
-    @tagging_spreadsheets = TaggingSpreadsheet.active.newest_first.includes(:added_by)
+    render :index, locals: { tagging_spreadsheets: presented_tagging_spreadsheets }
   end
 
   def new
@@ -54,6 +54,16 @@ class TaggingSpreadsheetsController < ApplicationController
   end
 
 private
+
+  def tagging_spreadsheets
+    TaggingSpreadsheet.active.newest_first.includes(:added_by)
+  end
+
+  def presented_tagging_spreadsheets
+    tagging_spreadsheets.map do |tagging_spreadsheet|
+      TaggingSpreadsheetPresenter.new(tagging_spreadsheet)
+    end
+  end
 
   def tagging_spreadsheet_params
     params.require(:tagging_spreadsheet).permit(:url, :description)

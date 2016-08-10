@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>State</th>
       <th>Google Sheet URL</th>
       <th>Description</th>
       <th>Date added</th>
@@ -14,8 +15,11 @@
     </tr>
   </thead>
   <tbody>
-    <% @tagging_spreadsheets.each do |spreadsheet| %>
+    <% tagging_spreadsheets.each do |spreadsheet| %>
       <tr>
+        <td><%= state_label_for(label_type: spreadsheet.label_type,
+                                title: spreadsheet.state_title,
+                                data_attributes: spreadsheet.data_attributes) %></td>
         <td><%= spreadsheet.url %></td>
         <td><%= spreadsheet.description %></td>
         <td>
