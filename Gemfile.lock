@@ -71,6 +71,11 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
+    factory_girl (4.7.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.7.0)
+      factory_girl (~> 4.7.0)
+      railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     gds-api-adapters (32.3.0)
@@ -323,6 +328,7 @@ PLATFORMS
 DEPENDENCIES
   airbrake (~> 4.3.1)
   capybara
+  factory_girl_rails
   gds-api-adapters (~> 32.3)
   gds-sso (~> 11.1)
   generic_form_builder (~> 0.13.0)
