@@ -31,6 +31,14 @@ RSpec.feature "Tag importer", type: :feature do
     then_i_can_preview_which_taggings_will_be_imported
   end
 
+  scenario "Deleting tagging spreadsheets" do
+    given_tagging_data_is_present_in_a_google_spreadsheet
+    when_i_provide_the_public_uri_of_this_spreadsheet
+    and_i_delete_the_tagging_spreadsheet
+    then_it_is_no_longer_available
+    and_it_has_been_marked_as_deleted
+  end
+
   SHEET_KEY = "THE-KEY-123".freeze
   SHEET_GID = "123456".freeze
 
@@ -130,5 +138,21 @@ RSpec.feature "Tag importer", type: :feature do
 
   def then_i_should_see_an_updated_preview
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
+  end
+
+  def and_i_delete_the_tagging_spreadsheet
+    delete_button = first('table tbody a', text: 'Delete')
+
+    expect { delete_button.click }.to_not change { TaggingSpreadsheet.count }
+  end
+
+  def then_it_is_no_longer_available
+    rows = all('table tbody tr')
+    expect(rows.count).to eq(0)
+  end
+
+  def and_it_has_been_marked_as_deleted
+    tagging_spreadsheet = TaggingSpreadsheet.first
+    expect(tagging_spreadsheet.deleted_at).to_not be_nil
   end
 end

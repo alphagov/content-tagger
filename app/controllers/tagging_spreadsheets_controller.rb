@@ -1,6 +1,6 @@
 class TaggingSpreadsheetsController < ApplicationController
   def index
-    @tagging_spreadsheets = TaggingSpreadsheet.all.newest_first
+    @tagging_spreadsheets = TaggingSpreadsheet.active.newest_first
   end
 
   def new
@@ -49,7 +49,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def destroy
     tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
-    tagging_spreadsheet.destroy!
+    tagging_spreadsheet.mark_as_deleted
     redirect_to tagging_spreadsheets_path
   end
 

@@ -5,4 +5,9 @@ class TaggingSpreadsheet < ActiveRecord::Base
 
   has_many :tag_mappings, dependent: :delete_all
   scope :newest_first, -> { order(created_at: :desc) }
+  scope :active, -> { where(deleted_at: nil) }
+
+  def mark_as_deleted
+    update(deleted_at: DateTime.current)
+  end
 end
