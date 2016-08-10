@@ -8,6 +8,7 @@
       <th>Google Sheet URL</th>
       <th>Description</th>
       <th>Date added</th>
+      <th>Added by</th>
       <th></th>
       <th></th>
     </tr>
@@ -22,6 +23,7 @@
             <%= distance_of_time_in_words_to_now(spreadsheet.created_at) %>
           </time>
         </td>
+        <td><%= spreadsheet.added_by.name %></td>
         <td>
           <%= link_to "Preview", tagging_spreadsheet_path(spreadsheet) %>
         </td>
