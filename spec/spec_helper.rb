@@ -30,11 +30,4 @@ RSpec.configure do |config|
   config.before(:each) do
     WebMock.reset!
   end
-
-  config.after :suite do
-    unless ENV["SKIP_LINT_IN_SPECS"]
-      require "govuk/lint/cli"
-      Govuk::Lint::CLI.new.run([])
-    end
-  end
 end
