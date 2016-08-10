@@ -28,14 +28,6 @@ whitehall:
   # publishing-api.
   - organisations
 
-publisher:
-  # Publisher is not migrated yet. Its browse pages, topics and parent (breadcrumb)
-  # are set inside publisher. This can be enabled once publisher reads & writes
-  # from the publishing-api.
-  - mainstream_browse_pages
-  - parent
-  - topics
-
 specialist-publisher:
   # Documents owned by specialist-publisher are automatically tagged to organisations
   # via a harcoded list per document type. In the specialist-publisher rebuild
