@@ -1,9 +1,9 @@
 <h3>Topics</h3>
 
-<%= f.select :topics,
-    linkables.topics,
-    {},
-    { multiple: true, class: "select2", data: { placeholder: "Choose Topics..." } } %>
+<%= f.input :topics,
+    collection: linkables.topics, as: :grouped_select, group_method: :last,
+    placeholder: "Choose Topics...",
+    input_html: { multiple: true, include_blank: true, class: :select2 } %>
 
 <p class='explain'>
   Topic pages live under <a href="https://www.gov.uk/topic">/topic</a>.

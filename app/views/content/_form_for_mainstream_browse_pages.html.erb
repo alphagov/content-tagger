@@ -1,9 +1,9 @@
 <h3>Mainstream browse pages</h3>
 
-<%= f.select :mainstream_browse_pages,
-    linkables.mainstream_browse_pages,
-    {},
-    { multiple: true, class: "select2", data: { placeholder: "Choose mainstream_browse_pages..." } } %>
+<%= f.input :mainstream_browse_pages,
+    collection: linkables.mainstream_browse_pages, as: :grouped_select, group_method: :last,
+    placeholder: "Choose mainstream_browse_pages...",
+    input_html: { multiple: true, class: :select2 } %>
 
 <p class='explain'>
   Mainstream browse pages live under <a href="https://www.gov.uk/browse">/browse</a>.

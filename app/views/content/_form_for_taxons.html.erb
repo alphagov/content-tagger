@@ -1,9 +1,9 @@
 <h3>Taxonomy</h3>
 
-<%= f.select :taxons,
-    linkables.taxons,
-    {},
-    { multiple: true, class: "select2", data: { placeholder: "Choose one..." } } %>
+<%= f.input :taxons,
+    collection: linkables.topics, as: :grouped_select, group_method: :last,
+    placeholder: "Choose one...",
+    input_html: { multiple: true, class: :select2 } %>
 
 <p class"explain">
   This taxonomy is currently being developed by the Finding Things team.
