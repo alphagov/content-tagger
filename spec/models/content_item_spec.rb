@@ -50,5 +50,19 @@ RSpec.describe ContentItem do
         expect(content_item.blacklisted_tag_types).to include 'topics'
       end
     end
+
+    context 'for the publisher app' do
+      let(:content_item) do
+        ContentItem.new(
+          content_item_params.merge(
+            'publishing_app' => 'publisher',
+          )
+        )
+      end
+
+      it 'does not blacklist any tag types' do
+        expect(content_item.blacklisted_tag_types).to be_empty
+      end
+    end
   end
 end
