@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160810070419) do
     t.string   "added_by"
     t.string   "last_published_by"
     t.datetime "last_published_at"
+    t.string   "description"
     t.string   "state",             null: false
     t.text     "error_message"
     t.datetime "deleted_at"

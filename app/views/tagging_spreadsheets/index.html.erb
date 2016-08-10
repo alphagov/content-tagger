@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Google Sheet URL</th>
+      <th>Description</th>
       <th>Date added</th>
       <th></th>
       <th></th>
@@ -15,6 +16,7 @@
     <% @tagging_spreadsheets.each do |spreadsheet| %>
       <tr>
         <td><%= spreadsheet.url %></td>
+        <td><%= spreadsheet.description %></td>
         <td>
           <time data-toggle="tooltip" data-original-title="<%= spreadsheet.created_at.to_s %>">
             <%= distance_of_time_in_words_to_now(spreadsheet.created_at) %>
@@ -28,5 +30,5 @@
         </td>
       </tr>
     <% end %>
-    </tbody>
+  </tbody>
 </table>

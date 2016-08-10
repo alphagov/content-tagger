@@ -3,10 +3,11 @@
 <%= simple_form_for @tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
   <div class="form-group">
     <%= f.input :url, label: "Spreadsheet URL" %>
+    <%= f.input :description, label: "Spreadsheet URL" %>
     <p class='explain'>
       See the <%= link_to "example spreadsheet",
-          "https://docs.google.com/spreadsheets/d/1BB4mAcaf0pfCUUxrt3pmFvebiPv0yUAkfLEeEJjIT0M/pub?gid=386284585&single=true&output=tsv" %>
-          for the correct format.
+        "https://docs.google.com/spreadsheets/d/1BB4mAcaf0pfCUUxrt3pmFvebiPv0yUAkfLEeEJjIT0M/pub?gid=386284585&single=true&output=tsv" %>
+        for the correct format.
     </p>
 
     <%= f.submit "Upload", class: "btn btn-lg btn-primary" %>

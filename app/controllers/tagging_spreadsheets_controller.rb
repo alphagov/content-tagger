@@ -56,6 +56,6 @@ class TaggingSpreadsheetsController < ApplicationController
 private
 
   def tagging_spreadsheet_params
-    params.require(:tagging_spreadsheet).permit(:url)
+    params.require(:tagging_spreadsheet).permit(:url, :description)
   end
 end
