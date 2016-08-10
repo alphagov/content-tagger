@@ -14,7 +14,7 @@ module Taxonomy
     end
 
     def publish
-      Services.publishing_api.put_content(content_id, presenter.payload)
+      Services.publishing_api.put_content(content_id, payload)
       Services.publishing_api.publish(content_id, "minor")
       Services.publishing_api.patch_links(
         content_id,
@@ -27,8 +27,8 @@ module Taxonomy
 
   private
 
-    def presenter
-      Taxonomy::TaxonPayloadBuilder.new(taxon)
+    def payload
+      Taxonomy::TaxonPayloadBuilder.build(taxon: taxon)
     end
   end
 end

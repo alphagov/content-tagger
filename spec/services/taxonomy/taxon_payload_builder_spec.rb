@@ -4,10 +4,10 @@ RSpec.describe Taxonomy::TaxonPayloadBuilder do
   let(:taxon) do
     instance_double(Taxon, title: 'My Title', base_path: "/taxons/my-taxon")
   end
-  let(:presenter) { described_class.new(taxon) }
+  let(:builder) { described_class.new(taxon) }
 
-  describe "#payload" do
-    let(:payload) { presenter.payload }
+  describe "#build" do
+    let(:payload) { builder.build }
 
     it "generates a valid payload" do
       expect(payload).to be_valid_against_schema('taxon')
