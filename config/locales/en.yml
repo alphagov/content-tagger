@@ -1,3 +1,7 @@
 en:
   errors:
     invalid_taxon: There was a problem with your request and we were notified about it. We will fix this issue as soon as possible
+    invalid_hostname: Is not a Google Docs URL
+    invalid_path: Does not have the expected public path /spreadsheets/d/<id>/pub
+    missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
+    missing_output: Is missing the parameter output as TSV
