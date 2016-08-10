@@ -15,7 +15,11 @@
     <% @tagging_spreadsheets.each do |spreadsheet| %>
       <tr>
         <td><%= spreadsheet.url %></td>
-        <td><%= spreadsheet.created_at %></td>
+        <td>
+          <time data-toggle="tooltip" data-original-title="<%= spreadsheet.created_at.to_s %>">
+            <%= distance_of_time_in_words_to_now(spreadsheet.created_at) %>
+          </time>
+        </td>
         <td>
           <%= link_to "Preview", tagging_spreadsheet_path(spreadsheet) %>
         </td>
