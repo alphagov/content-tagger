@@ -4,7 +4,11 @@ module Taxonomy
       @taxon = taxon
     end
 
-    def payload
+    def self.build(taxon:)
+      new(taxon).build
+    end
+
+    def build
       {
         base_path: base_path,
         document_type: 'taxon',
