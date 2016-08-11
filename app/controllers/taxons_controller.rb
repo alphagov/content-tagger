@@ -14,13 +14,17 @@ class TaxonsController < ApplicationController
     new_taxon = Taxon.new(params[:taxon])
     if new_taxon.valid?
       Taxonomy::Publisher.publish(taxon: new_taxon)
-      redirect_to taxons_path
+      redirect_to(taxons_path)
     else
       error_messages = new_taxon.errors.full_messages.join('; ')
-      redirect_to new_taxon_path, flash: { error: error_messages }
+      locals = {
+        taxon: new_taxon,
+        taxons_for_select: taxons_for_select
+      }
+      render :new, locals: locals, flash: { error: error_messages }
     end
   rescue Taxonomy::Publisher::InvalidTaxonError => e
-    redirect_to new_taxon_path, flash: { error: e.message }
+    redirect_to(new_taxon_path, flash: { error: e.message })
   end
 
   def show
