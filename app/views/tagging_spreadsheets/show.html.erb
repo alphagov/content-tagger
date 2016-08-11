@@ -4,7 +4,7 @@
 <% end %>
 
 <% if @tagging_spreadsheet.state == "errored" %>
-  <p>
+  <p class="alert alert-danger">
     An error occured when attempting to read the spreadsheet:
 
     <%= @tagging_spreadsheet.error_message %>
