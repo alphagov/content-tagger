@@ -1,11 +1,11 @@
-<%= display_header title: "Tag content", breadcrumbs: ["Tag content"] %>
+<%= display_header title: "Tagging", breadcrumbs: ["Tagging"] %>
 
-<%= simple_form_for @lookup, url: find_by_slug_path do |f| %>
+<%= simple_form_for @lookup, url: lookup_taggings_path do |f| %>
   <div class="form-group">
     <%= f.input :base_path, label: "Path or URL of a page on GOV.UK (eg. /book-driving-test)" %>
 
     For example: <% ['/pay-vat', '/benefit-cap-calculator', '/bank-holidays'].each do |example| %>
-      <%= link_to example, "/lookup#{example}" %>
+      <%= link_to example, "/taggings/lookup#{example}" %>
     <% end %>
   </div>
 

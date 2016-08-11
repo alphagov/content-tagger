@@ -51,11 +51,11 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def when_i_type_its_basepath_in_the_url_directly
-    visit "/lookup/my-content-item"
+    visit "/taggings/lookup/my-content-item"
   end
 
   def and_i_am_on_the_page_for_the_item
-    visit "/content/MY-CONTENT-ID"
+    visit "/taggings/MY-CONTENT-ID"
   end
 
   def given_there_is_a_content_item_with_tags
@@ -103,7 +103,7 @@ RSpec.describe "Tagging content", type: :feature do
   def and_the_expected_navigation_link_is_highlighted
     active_nav_link = find('.navbar-nav li.active')
 
-    expect(active_nav_link.text).to match(/tags/i)
+    expect(active_nav_link.text).to match(/Tagging/i)
   end
 
   def and_i_see_the_taxon_form

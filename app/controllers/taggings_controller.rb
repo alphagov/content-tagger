@@ -1,4 +1,19 @@
-class ContentController < ApplicationController
+class TaggingsController < ApplicationController
+  def lookup
+    @lookup = ContentLookupForm.new
+  end
+
+  def find_by_slug
+    content_lookup = ContentLookupForm.new(lookup_params)
+
+    if content_lookup.valid?
+      redirect_to tagging_path(content_lookup.content_id)
+    else
+      @lookup = content_lookup
+      render 'lookup'
+    end
+  end
+
   def show
     @content_item = ContentItem.find!(params[:content_id])
     @tagging_update = TaggingUpdateForm.init_with_content_item(@content_item)
@@ -8,10 +23,16 @@ class ContentController < ApplicationController
     render "item_not_found", status: 404
   end
 
-  def update_links
+  def update
     TaggingUpdateForm.new(params[:tagging_update_form]).publish!
     redirect_to :back, success: "Tags have been updated!"
   rescue GdsApi::HTTPConflict
     redirect_to :back, danger: "Somebody changed the tags before you could. Your changes have not been saved."
+  end
+
+private
+
+  def lookup_params
+    params[:content_lookup_form] || { base_path: "/#{params[:slug]}" }
   end
 end

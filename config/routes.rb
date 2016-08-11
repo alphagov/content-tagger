@@ -1,20 +1,18 @@
 Rails.application.routes.draw do
-  root to: 'lookup#new'
+  root to: 'taggings#lookup'
 
   resources :taxons
 
-  controller :lookup do
-    get '/lookup', action: :new, as: :lookup
-    get '/lookup/:slug', action: :find_by_slug
-    post '/lookup', action: :find_by_slug, as: :find_by_slug
+  resources :taggings, only: %i(show update), param: :content_id do
+    get '/lookup', action: 'lookup', on: :collection
+    get '/lookup/:slug', action: 'find_by_slug', on: :collection
+    post '/lookup', action: 'find_by_slug', on: :collection
   end
 
-  controller :content do
-    get '/content/:content_id', action: :show, as: :content
-    post '/content/taggings', action: :update_links, as: :content_update_links
-  end
+  get '/content/:content_id', to: redirect { |params, _| "/taggings/#{params[:content_id]}" }
+  get '/lookup', to: redirect("/taggings/lookup")
 
-  resources :tagging_spreadsheets, except: [:update, :edit], path: '/tag-importer' do
+  resources :tagging_spreadsheets, except: %i(update edit), path: '/tag-importer' do
     post 'refetch'
     post 'publish_tags'
     get  'import_progress'
