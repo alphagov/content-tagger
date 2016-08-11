@@ -23,7 +23,7 @@
   <tr>
     <td><%= content_item["title"] %></td>
     <td><%= link_to content_item["base_path"], website_url(content_item["base_path"]) %></td>
-    <td><%= link_to 'Update tags', content_url(content_item["content_id"]) %></td>
+    <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
   </tr>
 <% end %>
 </table>

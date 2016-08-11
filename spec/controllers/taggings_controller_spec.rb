@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ContentController, type: :controller do
+RSpec.describe TaggingsController, type: :controller do
   describe "#show" do
     it "renders 404 for unknown content items" do
       stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/does-not-exist")

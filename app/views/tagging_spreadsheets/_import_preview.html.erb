@@ -16,7 +16,7 @@
     <% tag_mappings.each do |tag| %>
       <tr>
         <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
-        <td><%= link_to tag.link_title, content_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
+        <td><%= link_to tag.link_title, tagging_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
         <td class="tag-mapping-status">
           <% if tag.publish_confirmed? %>
             <span class="label label-success">Yes</span>

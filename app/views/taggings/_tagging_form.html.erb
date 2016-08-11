@@ -1,4 +1,4 @@
-<%= simple_form_for tagging_update, url: content_update_links_path do |f| %>
+<%= simple_form_for tagging_update, url: tagging_path, method: 'put' do |f| %>
   <%= f.hidden_field :content_id %>
   <%= f.hidden_field :previous_version %>
 
