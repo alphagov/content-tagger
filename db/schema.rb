@@ -11,21 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160810153418) do
+ActiveRecord::Schema.define(version: 20160811160752) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tag_mappings", force: :cascade do |t|
-    t.integer  "tagging_spreadsheet_id"
-    t.string   "content_base_path"
+    t.integer  "tagging_spreadsheet_id", null: false
+    t.string   "content_base_path",      null: false
     t.string   "link_title"
-    t.string   "link_content_id"
-    t.string   "link_type"
+    t.string   "link_content_id",        null: false
+    t.string   "link_type",              null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
+    t.string   "state"
   end
 
   add_index "tag_mappings", ["tagging_spreadsheet_id"], name: "index_tag_mappings_on_tagging_spreadsheet_id", using: :btree
@@ -34,12 +35,12 @@ ActiveRecord::Schema.define(version: 20160810153418) do
     t.string   "url",               null: false
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.string   "user_uid"
+    t.string   "user_uid",          null: false
     t.string   "last_published_by"
     t.datetime "last_published_at"
-    t.string   "description"
     t.string   "state",             null: false
     t.text     "error_message"
+    t.string   "description"
     t.datetime "deleted_at"
   end
 

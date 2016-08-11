@@ -4,8 +4,8 @@ RSpec.describe TagImporter::FetchRemoteData do
   include GoogleSheetHelper
 
   describe "#run" do
-    let(:url) { URI("https://remote-data/path") }
-    let(:tagging_spreadsheet) { TaggingSpreadsheet.new(url: url) }
+    let(:url) { URI(tagging_spreadsheet.url) }
+    let(:tagging_spreadsheet) { create(:tagging_spreadsheet) }
 
     context 'with a valid response' do
       before do
