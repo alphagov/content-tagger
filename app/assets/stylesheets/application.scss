@@ -6,18 +6,7 @@
 
 @import 'govuk_admin_template';
 @import 'import-preview';
-
-.select2 {
-  width: 100%;
-}
-
-form label {
-  display: block;
-
-  .error {
-    color: $state-danger-text;
-  }
-}
+@import 'forms';
 
 .view-on-site {
   font-size: 20px;
@@ -79,8 +68,4 @@ table {
     @extend .btn;
     @extend .btn-default;
   }
-}
-
-input[type='text'] {
-  @extend .form-control;
 }
