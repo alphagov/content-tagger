@@ -5,3 +5,4 @@ en:
     invalid_path: Does not have the expected public path /spreadsheets/d/<id>/pub
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
     missing_output: Is missing the parameter output as TSV
+    spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
