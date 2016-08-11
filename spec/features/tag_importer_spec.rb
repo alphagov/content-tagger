@@ -54,7 +54,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def given_tagging_data_is_present_in_a_google_spreadsheet
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
-      .to_return(body: google_sheet_fixture)
+      .to_return(status: 200, body: google_sheet_fixture)
   end
 
   def then_i_see_an_error_summary_instead_of_a_tagging_preview
@@ -64,7 +64,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def given_no_tagging_data_is_available_at_a_spreadsheet_url
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
-      .to_return(status: 404)
+      .to_return(status: 404, body: 'uh-oh')
   end
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
@@ -135,7 +135,7 @@ RSpec.feature "Tag importer", type: :feature do
       link_type: "organisation",
     )
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
-      .to_return(body: google_sheet_fixture([extra_row]))
+      .to_return(status: 200, body: google_sheet_fixture([extra_row]))
   end
 
   def and_refetch_the_tags
