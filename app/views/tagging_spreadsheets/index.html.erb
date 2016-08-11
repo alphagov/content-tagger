@@ -23,9 +23,7 @@
         <td><%= spreadsheet.url %></td>
         <td><%= spreadsheet.description %></td>
         <td>
-          <time data-toggle="tooltip" data-original-title="<%= spreadsheet.created_at.to_s %>">
-            <%= distance_of_time_in_words_to_now(spreadsheet.created_at) %>
-          </time>
+          <%= time_tag_for(spreadsheet.created_at) %>
         </td>
         <td><%= spreadsheet.added_by.name %></td>
         <td>

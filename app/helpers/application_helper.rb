@@ -6,4 +6,15 @@ module ApplicationHelper
       title
     end
   end
+
+  def time_tag_for(date)
+    data_attributes = {
+      'toggle': 'tooltip',
+      'original-title': date,
+    }
+
+    content_tag :time, data: data_attributes do
+      distance_of_time_in_words_to_now(date)
+    end
+  end
 end
