@@ -14,6 +14,7 @@ RSpec.describe "Tagging content", type: :feature do
     and_i_submit_the_url_of_the_content_item
     then_i_am_on_the_page_for_an_item
     and_the_expected_navigation_link_is_highlighted
+    and_i_see_the_taxon_form
 
     when_i_add_an_additional_tag
     and_i_submit_the_form
@@ -103,6 +104,11 @@ RSpec.describe "Tagging content", type: :feature do
     active_nav_link = find('.navbar-nav li.active')
 
     expect(active_nav_link.text).to match(/tags/i)
+  end
+
+  def and_i_see_the_taxon_form
+    taxon_options = all('#tagging_update_form_taxons option').map(&:text)
+    expect(taxon_options).to include("Vehicle plating")
   end
 
   def then_i_see_that_the_path_was_not_found
