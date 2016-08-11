@@ -27,6 +27,7 @@ group :development, :test do
   gem 'simplecov-rcov', '0.2.3', require: false
   gem 'govuk-content-schema-test-helpers', '~> 1.4'
   gem 'govuk-lint'
+  gem 'factory_girl_rails'
 end
 
 group :development do

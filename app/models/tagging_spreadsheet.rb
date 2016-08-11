@@ -2,6 +2,7 @@ class TaggingSpreadsheet < ActiveRecord::Base
   validates :url, presence: true
   validates_presence_of :state
   validates_inclusion_of :state, in: %w(uploaded errored ready_to_import imported)
+  validates_with GoogleUrlValidator
 
   has_many :tag_mappings, dependent: :delete_all
   has_one :added_by, class_name: "User", primary_key: :user_uid, foreign_key: :uid

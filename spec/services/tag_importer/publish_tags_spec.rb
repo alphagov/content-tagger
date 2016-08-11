@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TagImporter::PublishTags do
-  let(:tagging_spreadsheet) { TaggingSpreadsheet.create!(state: "uploaded", url: "https://tagging/spreadsheet/") }
+  let(:tagging_spreadsheet) { create(:tagging_spreadsheet, state: "uploaded") }
   let(:user) { double(uid: "user-123") }
 
   before do
