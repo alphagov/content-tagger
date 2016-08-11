@@ -1,6 +1,6 @@
 class TaggingSpreadsheetsController < ApplicationController
   def index
-    @tagging_spreadsheets = TaggingSpreadsheet.active.newest_first
+    @tagging_spreadsheets = TaggingSpreadsheet.active.newest_first.includes(:added_by)
   end
 
   def new
@@ -9,7 +9,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def create
     tagging_spreadsheet = TaggingSpreadsheet.new(tagging_spreadsheet_params)
-    tagging_spreadsheet.added_by = current_user.uid
+    tagging_spreadsheet.user_uid = current_user.uid
     tagging_spreadsheet.state = "uploaded"
 
     if tagging_spreadsheet.valid?
@@ -56,6 +56,6 @@ class TaggingSpreadsheetsController < ApplicationController
 private
 
   def tagging_spreadsheet_params
-    params.require(:tagging_spreadsheet).permit(:url)
+    params.require(:tagging_spreadsheet).permit(:url, :description)
   end
 end
