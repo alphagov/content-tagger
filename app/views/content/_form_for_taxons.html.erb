@@ -1,7 +1,7 @@
 <h3>Taxonomy</h3>
 
 <%= f.input :taxons,
-    collection: linkables.topics, as: :grouped_select, group_method: :last,
+    collection: linkables.taxons,
     placeholder: "Choose one...",
     input_html: { multiple: true, class: :select2 } %>
 
