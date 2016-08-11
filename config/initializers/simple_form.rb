@@ -38,10 +38,10 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :span, class: :error }
   end
 
-  config.wrappers :bootstrap, tag: 'div', class: 'form-group', error_class: 'error' do |b|
+  config.wrappers :bootstrap, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
-    b.use :label
+    b.use :label, class: 'control-label'
     b.wrapper tag: 'div' do |ba|
       ba.use :input
       ba.use :error, wrap_with: { tag: 'span', class: 'help-inline' }
@@ -49,7 +49,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :prepend, tag: 'div', class: "form-group", error_class: 'error' do |b|
+  config.wrappers :prepend, tag: 'div', class: "form-group", error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label
@@ -62,7 +62,7 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :append, tag: 'div', class: "form-group", error_class: 'error' do |b|
+  config.wrappers :append, tag: 'div', class: "form-group", error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
     b.use :label

@@ -1,0 +1,17 @@
+.select2 {
+  width: 100%;
+}
+
+form label {
+  display: block;
+}
+
+form {
+  .help-inline {
+    color: $state-danger-text;
+  }
+}
+
+input[type='text'] {
+  @extend .form-control;
+}
