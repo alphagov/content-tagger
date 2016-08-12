@@ -1,29 +1,45 @@
 <%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] %>
 
-<table>
-<tr>
-  <th>Parent taxons</th>
-  <th>Base path</th>
-</tr>
-<% parent_taxons.each do |parent_taxon| %>
-  <tr>
-    <td><%= link_to parent_taxon['title'], taxon_path(parent_taxon['content_id']) %></td>
-    <td><%= link_to parent_taxon['base_path'], "#{website_url('/api/content' + parent_taxon['base_path'])}" %></td>
-  </tr>
-<% end %>
-</table>
+<% if parent_taxons.any? %>
+  <table class="table queries-list table-bordered" data-module="filterable-table">
+    <thead>
+      <tr class="table-header">
+        <th>Parent taxons</th>
+        <th>Base path</th>
+      </tr>
 
-<table>
-<tr>
-  <th>Title</th>
-  <th>URL</th>
-  <th>Actions</th>
-</tr>
-<% tagged.each do |content_item| %>
-  <tr>
-    <td><%= content_item["title"] %></td>
-    <td><%= link_to content_item["base_path"], website_url(content_item["base_path"]) %></td>
-    <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
-  </tr>
+      <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+      <% parent_taxons.each do |parent_taxon| %>
+        <tr>
+          <td><%= link_to parent_taxon['title'], taxon_path(parent_taxon['content_id']) %></td>
+          <td><%= link_to parent_taxon['base_path'], "#{website_url('/api/content' + parent_taxon['base_path'])}" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
+
+<table class="table queries-list table-bordered" data-module="filterable-table">
+  <thead>
+    <tr class="table-header">
+      <th>Title</th>
+      <th>URL</th>
+      <th>Actions</th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+  </thead>
+
+  <tbody>
+    <% tagged.each do |content_item| %>
+      <tr>
+        <td><%= content_item["title"] %></td>
+        <td><%= link_to content_item["base_path"], website_url(content_item["base_path"]) %></td>
+        <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
