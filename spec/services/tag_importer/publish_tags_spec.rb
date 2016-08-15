@@ -5,21 +5,40 @@ RSpec.describe TagImporter::PublishTags do
   let(:user) { double(uid: "user-123") }
 
   before do
-    tagging_spreadsheet.tag_mappings.create(
-      content_base_path: "/content-1", link_title: "GDS",
-      link_content_id: "gds-ID", link_type: "organisations"
+    create(
+      :tag_mapping,
+      tagging_spreadsheet: tagging_spreadsheet,
+      content_base_path: "/content-1",
+      link_title: "GDS",
+      link_content_id: "gds-ID",
+      link_type: "organisations"
     )
-    tagging_spreadsheet.tag_mappings.create(
-      content_base_path: "/content-1", link_title: "GDS",
-      link_content_id: "gds-ID", link_type: "organisations"
+
+    create(
+      :tag_mapping,
+      tagging_spreadsheet: tagging_spreadsheet,
+      content_base_path: "/content-1",
+      link_title: "GDS",
+      link_content_id: "gds-ID",
+      link_type: "organisations"
     )
-    tagging_spreadsheet.tag_mappings.create(
-      content_base_path: "/content-1", link_title: "Education",
-      link_content_id: "education-ID", link_type: "taxons"
+
+    create(
+      :tag_mapping,
+      tagging_spreadsheet: tagging_spreadsheet,
+      content_base_path: "/content-1",
+      link_title: "Education",
+      link_content_id: "education-ID",
+      link_type: "taxons"
     )
-    tagging_spreadsheet.tag_mappings.create(
-      content_base_path: "/content-2", link_title: "Education",
-      link_content_id: "education-ID", link_type: "taxons"
+
+    create(
+      :tag_mapping,
+      tagging_spreadsheet: tagging_spreadsheet,
+      content_base_path: "/content-2",
+      link_title: "Education",
+      link_content_id: "education-ID",
+      link_type: "taxons"
     )
   end
 

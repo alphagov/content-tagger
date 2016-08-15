@@ -4,5 +4,6 @@ FactoryGirl.define do
     link_content_id 'a-content-id'
     link_type 'taxon'
     tagging_spreadsheet
+    state 'ready_to_tag'
   end
 end

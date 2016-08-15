@@ -36,6 +36,7 @@ module TagImporter
         link_title:         row["link_title"],
         link_content_id:    row["link_content_id"],
         link_type:          row["link_type"],
+        state:              'ready_to_tag'
       ).save
     end
 

@@ -3,6 +3,12 @@ class TagMapping < ActiveRecord::Base
   scope :by_content_base_path, -> { order(content_base_path: :asc) }
   scope :by_link_title, -> { order(link_title: :asc) }
 
+  validates(
+    :state,
+    presence: true,
+    inclusion: { in: %w(ready_to_tag tagged errored) }
+  )
+
   def self.publish_confirmed
     where("publish_requested_at < publish_completed_at")
   end
