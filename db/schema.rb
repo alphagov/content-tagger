@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20160811160752) do
     t.datetime "updated_at",             null: false
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
-    t.string   "state"
   end
 
   add_index "tag_mappings", ["tagging_spreadsheet_id"], name: "index_tag_mappings_on_tagging_spreadsheet_id", using: :btree
