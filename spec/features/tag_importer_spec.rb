@@ -52,7 +52,6 @@ RSpec.feature "Tag importer", type: :feature do
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet
     click_link "Refresh import"
-    click_link "Tag Importer"
   end
 
   def given_tagging_data_is_present_in_a_google_spreadsheet
@@ -61,7 +60,6 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def then_i_see_an_error_summary_instead_of_a_tagging_preview
-    click_link "Preview"
     expect(page).to have_content "An error occured"
   end
 
@@ -81,7 +79,6 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def then_i_can_preview_which_taggings_will_be_imported
-    click_link "Preview"
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
     expect_tag_mapping_statuses_to_be("No")
   end
@@ -150,6 +147,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_i_delete_the_tagging_spreadsheet
+    visit tagging_spreadsheets_path
     delete_button = first('table tbody a', text: 'Delete')
 
     expect { delete_button.click }.to_not change { TaggingSpreadsheet.count }
