@@ -105,7 +105,6 @@ RSpec.feature "Tag importer", type: :feature do
       "content-1-cid",
       links: {
         taxons: ["education-content-id", "education-content-id"],
-        organisations: ["cabinet-office-content-id"],
       }
     )
     link_update_2 = stub_publishing_api_patch_links(
