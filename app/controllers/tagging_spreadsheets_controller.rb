@@ -50,7 +50,7 @@ class TaggingSpreadsheetsController < ApplicationController
   def destroy
     tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
     tagging_spreadsheet.mark_as_deleted
-    redirect_to tagging_spreadsheets_path
+    redirect_to tagging_spreadsheets_path, success: "Import has been removed"
   end
 
 private
