@@ -16,8 +16,10 @@ RSpec.feature "Tag importer", type: :feature do
   scenario "Importing tags" do
     given_tagging_data_is_present_in_a_google_spreadsheet
     when_i_provide_the_public_uri_of_this_spreadsheet
+    then_i_can_see_it_is_ready_for_importing
     then_i_can_preview_which_taggings_will_be_imported
     and_confirming_this_will_import_taggings
+    and_the_state_of_the_import_is_successful
   end
 
   scenario "Reimporting tags" do
@@ -30,6 +32,7 @@ RSpec.feature "Tag importer", type: :feature do
   scenario "The spreadsheet contains bad data" do
     given_no_tagging_data_is_available_at_a_spreadsheet_url
     when_i_provide_the_public_uri_of_this_spreadsheet
+    then_i_see_the_import_failed
     then_i_see_an_error_summary_instead_of_a_tagging_preview
     when_i_correct_the_data_and_reimport
     then_i_can_preview_which_taggings_will_be_imported
@@ -160,5 +163,35 @@ RSpec.feature "Tag importer", type: :feature do
   def and_it_has_been_marked_as_deleted
     tagging_spreadsheet = TaggingSpreadsheet.first
     expect(tagging_spreadsheet.deleted_at).to_not be_nil
+  end
+
+  def then_i_can_see_it_is_ready_for_importing
+    tagging_spreadsheet = TaggingSpreadsheet.first
+    state = tagging_spreadsheet.state.humanize
+    row = first('table tbody tr')
+
+    expect(row).to have_selector('.label-warning', text: state)
+  end
+
+  def then_i_see_the_import_failed
+    tagging_spreadsheet = TaggingSpreadsheet.first
+    state = tagging_spreadsheet.state.humanize
+    row = first('table tbody tr')
+
+    expect(row).to have_selector('.label-danger', text: state)
+    expect(row).to have_selector('.label-danger[data-toggle="tooltip"]')
+    expect(row).to have_selector(
+      ".label-danger[data-original-title='#{tagging_spreadsheet.error_message}']"
+    )
+  end
+
+  def and_the_state_of_the_import_is_successful
+    tagging_spreadsheet = TaggingSpreadsheet.first
+    state = tagging_spreadsheet.state.humanize
+    visit root_path
+    click_link "Tag Importer"
+    row = first('table tbody tr')
+
+    expect(row).to have_selector('.label-success', text: state)
   end
 end
