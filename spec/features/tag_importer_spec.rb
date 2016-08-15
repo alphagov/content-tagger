@@ -80,7 +80,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def then_i_can_preview_which_taggings_will_be_imported
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
-    expect_tag_mapping_statuses_to_be("No")
+    expect_tag_mapping_statuses_to_be("Ready to tag")
   end
 
   def expect_tag_mapping_statuses_to_be(string)
@@ -124,7 +124,7 @@ RSpec.feature "Tag importer", type: :feature do
     click_link "Create tags"
     expect(link_update_1).to have_been_requested
     expect(link_update_2).to have_been_requested
-    expect_tag_mapping_statuses_to_be("Yes")
+    expect_tag_mapping_statuses_to_be("Tagged")
   end
 
   def given_some_imported_tags

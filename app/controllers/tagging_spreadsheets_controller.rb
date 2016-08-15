@@ -22,37 +22,54 @@ class TaggingSpreadsheetsController < ApplicationController
   end
 
   def show
-    @tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
-    @tag_mappings = @tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
+    render :show, locals: {
+      tagging_spreadsheet: tagging_spreadsheet,
+      tag_mappings: presented_tag_mappings,
+      confirmed: tag_mappings.publish_confirmed.count,
+    }
   end
 
   def import_progress
-    tagging_spreadsheet = TaggingSpreadsheet.find(params[:tagging_spreadsheet_id])
-    tag_mappings = tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
-    render partial: "import_progress_bar", formats: :html, locals: { tag_mappings: tag_mappings }
+    render partial: "import_progress_bar", formats: :html, locals: {
+      tag_mappings: tag_mappings,
+      confirmed: tag_mappings.publish_confirmed.count
+    }
   end
 
   def refetch
-    tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
     tagging_spreadsheet.tag_mappings.delete_all
     tagging_spreadsheet.update_attributes!(state: "uploaded")
     InitialTaggingImport.perform_async(tagging_spreadsheet.id)
+
     redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_refetched')
   end
 
   def publish_tags
-    tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
     TagImporter::PublishTags.new(tagging_spreadsheet, user: current_user).run
+
     redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_started')
   end
 
   def destroy
-    tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
     tagging_spreadsheet.mark_as_deleted
     redirect_to tagging_spreadsheets_path, success: I18n.t('tag_import.import_removed')
   end
 
 private
+
+  def tagging_spreadsheet
+    TaggingSpreadsheet.find(params[:id] || params.fetch(:tagging_spreadsheet_id))
+  end
+
+  def tag_mappings
+    tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
+  end
+
+  def presented_tag_mappings
+    tag_mappings.map do |tag_mapping|
+      TagMappingPresenter.new(tag_mapping)
+    end
+  end
 
   def tagging_spreadsheets
     TaggingSpreadsheet.active.newest_first.includes(:added_by)

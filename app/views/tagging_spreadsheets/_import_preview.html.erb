@@ -3,7 +3,8 @@
 
   <div data-module="import-progress">
     <% if tag_mappings.any? %>
-      <%= render partial: "import_progress_bar", locals: { tag_mappings: tag_mappings } %>
+      <%= render partial: "import_progress_bar",
+        locals: { tag_mappings: tag_mappings, confirmed: confirmed } %>
     <% end %>
   </div>
 
@@ -24,11 +25,9 @@
           <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
           <td><%= link_to tag.link_title, tagging_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
           <td class="tag-mapping-status">
-            <% if tag.publish_confirmed? %>
-              <span class="label label-success">Yes</span>
-            <% else %>
-              <span class="label label-default">No</span>
-            <% end %>
+            <%= state_label_for(label_type: tag.label_type,
+                                title: tag.state_title,
+                                data_attributes: tag.data_attributes) %>
           </td>
         </tr>
       <% end %>
