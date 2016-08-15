@@ -6,3 +6,9 @@ en:
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
     missing_output: Is missing the parameter output as TSV
     spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
+
+  tag_import:
+    import_created: Spreadsheet uploaded. It will be imported within a few minutes.
+    import_refetched: The import will be imported again.
+    import_started: The tagging import has started. It can take a few minutes for the tags to be published.
+    import_removed: Import has been removed.

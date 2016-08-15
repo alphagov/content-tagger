@@ -15,7 +15,7 @@ class TaggingSpreadsheetsController < ApplicationController
     if tagging_spreadsheet.valid?
       tagging_spreadsheet.save!
       InitialTaggingImport.perform_async(tagging_spreadsheet.id)
-      redirect_to tagging_spreadsheet, success: "Spreadsheet uploaded. It will be imported within a few minutes."
+      redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_created')
     else
       @tagging_spreadsheet = tagging_spreadsheet
       render :new
@@ -38,19 +38,19 @@ class TaggingSpreadsheetsController < ApplicationController
     tagging_spreadsheet.tag_mappings.delete_all
     tagging_spreadsheet.update_attributes!(state: "uploaded")
     InitialTaggingImport.perform_async(tagging_spreadsheet.id)
-    redirect_to tagging_spreadsheet, success: "The import will be imported again."
+    redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_refetched')
   end
 
   def publish_tags
     tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
     TagImporter::PublishTags.new(tagging_spreadsheet, user: current_user).run
-    redirect_to tagging_spreadsheet, success: "The tagging import has started. It can take a few minutes for the tags to be published."
+    redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_started')
   end
 
   def destroy
     tagging_spreadsheet = TaggingSpreadsheet.find(params[:id])
     tagging_spreadsheet.mark_as_deleted
-    redirect_to tagging_spreadsheets_path, success: "Import has been removed"
+    redirect_to tagging_spreadsheets_path, success: I18n.t('tag_import.import_removed')
   end
 
 private
