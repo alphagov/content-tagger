@@ -38,13 +38,13 @@ class TaggingSpreadsheetsController < ApplicationController
     tagging_spreadsheet.tag_mappings.delete_all
     tagging_spreadsheet.update_attributes!(state: "uploaded")
     InitialTaggingImport.perform_async(tagging_spreadsheet.id)
-    redirect_to tagging_spreadsheet_path(tagging_spreadsheet)
+    redirect_to tagging_spreadsheet
   end
 
   def publish_tags
     tagging_spreadsheet = TaggingSpreadsheet.find(params.fetch(:tagging_spreadsheet_id))
     TagImporter::PublishTags.new(tagging_spreadsheet, user: current_user).run
-    redirect_to tagging_spreadsheet_path(tagging_spreadsheet)
+    redirect_to tagging_spreadsheet
   end
 
   def destroy
