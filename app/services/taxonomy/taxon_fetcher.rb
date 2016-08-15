@@ -8,6 +8,10 @@ module Taxonomy
         ).sort_by { |taxon| taxon["title"] }
     end
 
+    def taxon_content_ids
+      taxons.map { |taxon| taxon['content_id'] }
+    end
+
     def taxons_for_select
       taxons.map { |taxon| [taxon['title'], taxon['content_id']] }
     end

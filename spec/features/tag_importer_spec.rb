@@ -132,7 +132,7 @@ RSpec.feature "Tag importer", type: :feature do
       content_base_path: "/content-2/",
       link_title: "GDS",
       link_content_id: "gds-content-id",
-      link_type: "organisation",
+      link_type: "taxons",
     )
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
       .to_return(status: 200, body: google_sheet_fixture([extra_row]))

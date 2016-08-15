@@ -21,6 +21,23 @@ RSpec.describe Taxonomy::TaxonFetcher do
     end
   end
 
+  describe '#taxon_content_ids' do
+    it 'returns the content ids of all taxons' do
+      content_id_1 = SecureRandom.uuid
+      content_id_2 = SecureRandom.uuid
+      linkables = [
+        { "title" => "foo", "base_path" => "/foo", "content_id" => content_id_1 },
+        { "title" => "bar", "base_path" => "/bar", "content_id" => content_id_2 },
+      ]
+      publishing_api_has_linkables(linkables, document_type: 'taxon')
+
+      result = described_class.new.taxon_content_ids
+
+      expect(result).to include(content_id_1)
+      expect(result).to include(content_id_2)
+    end
+  end
+
   describe '#parents_for_taxon' do
     let(:taxon_id_1) { SecureRandom.uuid }
     let(:taxon_id_2) { SecureRandom.uuid }
