@@ -15,7 +15,7 @@ class TaggingSpreadsheetsController < ApplicationController
     if tagging_spreadsheet.valid?
       tagging_spreadsheet.save!
       InitialTaggingImport.perform_async(tagging_spreadsheet.id)
-      redirect_to tagging_spreadsheets_path
+      redirect_to tagging_spreadsheet, success: "Spreadsheet uploaded. It will be imported within a few minutes."
     else
       @tagging_spreadsheet = tagging_spreadsheet
       render :new
