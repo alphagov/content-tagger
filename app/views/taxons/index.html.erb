@@ -2,19 +2,26 @@
   <%= link_to 'Add a taxon', new_taxon_path, class: 'btn btn-lg btn-default' %>
 <% end %>
 
-<table>
-<tr>
-  <th>Title</th>
-  <th>Content ID</th>
-  <th></th>
-  <th></th>
-</tr>
-<% taxons.each do |taxon| %>
-  <tr>
-    <td><%= taxon['title'] %></td>
-    <td><%= taxon['content_id'] %></td>
-    <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
-    <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
-  </tr>
-<% end %>
+<table class="table queries-list table-bordered" data-module="filterable-table">
+  <thead>
+    <tr class="table-header">
+      <th>Title</th>
+      <th>Content ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+  </thead>
+
+  <tbody>
+    <% taxons.each do |taxon| %>
+      <tr>
+        <td><%= taxon['title'] %></td>
+        <td><%= taxon['content_id'] %></td>
+        <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
+        <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

@@ -2,7 +2,7 @@
   <%= link_to 'Upload spreadsheet', new_tagging_spreadsheet_path, class: 'btn btn-lg btn-default' %>
 <% end %>
 
-<table>
+<table class="table queries-list table-bordered" data-module="filterable-table">
   <thead>
     <tr>
       <th>Google Sheet URL</th>
@@ -12,6 +12,7 @@
       <th></th>
       <th></th>
     </tr>
+    <%= render partial: 'shared/table_filter' %>
   </thead>
   <tbody>
     <% @tagging_spreadsheets.each do |spreadsheet| %>
