@@ -25,14 +25,14 @@ class TaggingSpreadsheetsController < ApplicationController
     render :show, locals: {
       tagging_spreadsheet: tagging_spreadsheet,
       tag_mappings: presented_tag_mappings,
-      confirmed: tag_mappings.publish_confirmed.count,
+      confirmed: tag_mappings.completed.count,
     }
   end
 
   def import_progress
     render partial: "import_progress_bar", formats: :html, locals: {
       tag_mappings: tag_mappings,
-      confirmed: tag_mappings.publish_confirmed.count
+      confirmed: tag_mappings.completed.count
     }
   end
 
