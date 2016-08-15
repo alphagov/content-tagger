@@ -1,6 +1,6 @@
 <%= display_header title: 'Upload spreadsheet', breadcrumbs: [:tagging_spreadsheets, "Upload"] %>
 
-<%= simple_form_for @tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
+<%= simple_form_for tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
   <div class="form-group">
     <%= f.input :url, input_html: { type: :text}, label: "Spreadsheet URL" %>
     <%= f.input :description %>

@@ -4,7 +4,7 @@ class TaggingSpreadsheetsController < ApplicationController
   end
 
   def new
-    @tagging_spreadsheet = TaggingSpreadsheet.new
+    render :new, locals: { tagging_spreadsheet: TaggingSpreadsheet.new }
   end
 
   def create
@@ -17,8 +17,7 @@ class TaggingSpreadsheetsController < ApplicationController
       InitialTaggingImport.perform_async(tagging_spreadsheet.id)
       redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_created')
     else
-      @tagging_spreadsheet = tagging_spreadsheet
-      render :new
+      render :new, locals: { tagging_spreadsheet: tagging_spreadsheet }
     end
   end
 

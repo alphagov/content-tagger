@@ -113,6 +113,13 @@ RSpec.feature "Tag importer", type: :feature do
         taxons: ["early-years-content-id"],
       }
     )
+    publishing_api_has_linkables(
+      [
+        { 'title' => 'Early Years', content_id: 'early-years-content-id' },
+        { 'title' => 'Education', content_id: 'education-content-id' }
+      ],
+      document_type: 'taxon'
+    )
 
     click_link "Create tags"
     expect(link_update_1).to have_been_requested
