@@ -12,3 +12,11 @@ en:
     import_refetched: The import will be imported again.
     import_started: The tagging import has started. It can take a few minutes for the tags to be published.
     import_removed: Import has been removed.
+
+  messages:
+    controller:
+      taxons:
+        success: You have sucessfully deleted the taxon
+        alert: It was not possible to delete the taxon
+    views:
+      confirm: Are you sure?

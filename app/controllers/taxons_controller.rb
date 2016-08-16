@@ -48,7 +48,21 @@ class TaxonsController < ApplicationController
     redirect_to taxons_path
   end
 
+  def destroy
+    response_code = Services.publishing_api.unpublish(params[:id], type: "gone").code
+
+    redirect_to taxons_path, flash: destroy_flash_message(response_code)
+  end
+
 private
+
+  def destroy_flash_message(response_code)
+    if response_code == 200
+      { success: I18n.t('messages.controller.taxons.success') }
+    else
+      { alert: I18n.t('messages.controller.taxons.alert') }
+    end
+  end
 
   def taxons_for_select
     taxon_fetcher.taxons_for_select
