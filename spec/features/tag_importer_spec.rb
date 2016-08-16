@@ -164,14 +164,17 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def then_i_can_see_it_is_ready_for_importing
+    visit tagging_spreadsheets_path
     tagging_spreadsheet = TaggingSpreadsheet.first
     state = tagging_spreadsheet.state.humanize
     row = first('table tbody tr')
 
     expect(row).to have_selector('.label-warning', text: state)
+    visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
   def then_i_see_the_import_failed
+    visit tagging_spreadsheets_path
     tagging_spreadsheet = TaggingSpreadsheet.first
     state = tagging_spreadsheet.state.humanize
     row = first('table tbody tr')
@@ -181,6 +184,7 @@ RSpec.feature "Tag importer", type: :feature do
     expect(row).to have_selector(
       ".label-danger[data-original-title='#{tagging_spreadsheet.error_message}']"
     )
+    visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
   def and_the_state_of_the_import_is_successful
