@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811160752) do
+ActiveRecord::Schema.define(version: 20160815093345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20160811160752) do
     t.datetime "updated_at",             null: false
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
+    t.string   "state",                  null: false
+    t.string   "message"
   end
 
   add_index "tag_mappings", ["tagging_spreadsheet_id"], name: "index_tag_mappings_on_tagging_spreadsheet_id", using: :btree

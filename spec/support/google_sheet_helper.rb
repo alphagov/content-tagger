@@ -8,7 +8,6 @@ module GoogleSheetHelper
       google_sheet_row(content_base_path: "content_base_path", link_title: "link_title", link_content_id: "link_content_id", link_type: "link_type"),
       google_sheet_row(content_base_path: "/content-1/", link_title: "Education", link_content_id: "education-content-id", link_type: "taxons"),
       google_sheet_row(content_base_path: "/content-1/", link_title: "Education", link_content_id: "education-content-id", link_type: "taxons"),
-      google_sheet_row(content_base_path: "/content-1/", link_title: "Cabinet Office", link_content_id: "cabinet-office-content-id", link_type: "organisations"),
       google_sheet_row(content_base_path: "/content-2/", link_title: "Early Years", link_content_id: "early-years-content-id", link_type: "taxons"),
     ].concat(extra_rows).join("\n")
   end

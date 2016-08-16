@@ -80,7 +80,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def then_i_can_preview_which_taggings_will_be_imported
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
-    expect_tag_mapping_statuses_to_be("No")
+    expect_tag_mapping_statuses_to_be("Ready to tag")
   end
 
   def expect_tag_mapping_statuses_to_be(string)
@@ -105,7 +105,6 @@ RSpec.feature "Tag importer", type: :feature do
       "content-1-cid",
       links: {
         taxons: ["education-content-id", "education-content-id"],
-        organisations: ["cabinet-office-content-id"],
       }
     )
     link_update_2 = stub_publishing_api_patch_links(
@@ -114,11 +113,18 @@ RSpec.feature "Tag importer", type: :feature do
         taxons: ["early-years-content-id"],
       }
     )
+    publishing_api_has_linkables(
+      [
+        { 'title' => 'Early Years', content_id: 'early-years-content-id' },
+        { 'title' => 'Education', content_id: 'education-content-id' }
+      ],
+      document_type: 'taxon'
+    )
 
     click_link "Create tags"
     expect(link_update_1).to have_been_requested
     expect(link_update_2).to have_been_requested
-    expect_tag_mapping_statuses_to_be("Yes")
+    expect_tag_mapping_statuses_to_be("Tagged")
   end
 
   def given_some_imported_tags
@@ -132,7 +138,7 @@ RSpec.feature "Tag importer", type: :feature do
       content_base_path: "/content-2/",
       link_title: "GDS",
       link_content_id: "gds-content-id",
-      link_type: "organisation",
+      link_type: "taxons",
     )
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
       .to_return(status: 200, body: google_sheet_fixture([extra_row]))

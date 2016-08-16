@@ -2,74 +2,25 @@ require "rails_helper"
 
 RSpec.describe PublishLinksWorker do
   describe "#perform" do
-    before do
-      publishing_api_has_lookups("/content-1" => "content-1-ID", "/content-2" => "content-2-ID")
-      allow(TagMapping).to receive(:update_publish_completed_at)
-      allow(TagMapping).to receive(:where).and_return(double(count: 1))
-    end
+    it 'does not call the links publisher when no taggings are available' do
+      expect(TagImporter::LinksPublisher).to_not receive(:publish)
 
-    def publish_content_1_links!
-      PublishLinksWorker.new.perform(
-        "/content-1",
-        "tag_mapping_ids" => [333],
-        "organisations" => ["gds-ID"]
+      described_class.new.perform(
+        '/a/base/path',
+        'tag_mapping_ids' => [],
+        'taxons' => ['taxon1-content-id'],
       )
     end
 
-    def publish_content_2_links!
-      PublishLinksWorker.new.perform(
-        "/content-2",
-        "tag_mapping_ids" => [444, 555],
-        "taxons" => ["some-taxon-ID", "another-taxon-ID"]
+    it 'it calls the links publisher service when there are tag mappings' do
+      tag_mapping = create(:tag_mapping)
+      expect(TagImporter::LinksPublisher).to receive(:publish)
+
+      described_class.new.perform(
+        '/a/base/path',
+        'tag_mapping_ids' => [tag_mapping.id],
+        'taxons' => ['taxon1-content-id'],
       )
-    end
-
-    it "sends the links payload to the publishing API" do
-      expect(Services.publishing_api).to receive(:patch_links).with(
-        "content-1-ID",
-        links: { "organisations" => ["gds-ID"] }
-      )
-      expect(Services.publishing_api).to receive(:patch_links).with(
-        "content-2-ID",
-        links: { "taxons" => ["some-taxon-ID", "another-taxon-ID"] }
-      )
-
-      publish_content_1_links!
-      publish_content_2_links!
-    end
-
-    it "updates the tag mappings with a completion time" do
-      allow(Services.publishing_api).to receive(:patch_links)
-
-      expect(TagMapping).to receive(:update_publish_completed_at).with([333])
-      expect(TagMapping).to receive(:update_publish_completed_at).with([444, 555])
-
-      publish_content_1_links!
-      publish_content_2_links!
-    end
-
-    context "when no matching link_content_id is found" do
-      it "doesn't do anything" do
-        publishing_api_has_lookups("/content-1" => nil)
-
-        expect(Services.publishing_api).to_not receive(:patch_links)
-        expect(TagMapping).to_not receive(:update_publish_completed_at)
-
-        publish_content_1_links!
-      end
-    end
-
-    context "when no tag mappings are found" do
-      before do
-        allow(TagMapping).to receive(:where).and_return(double(count: 0))
-      end
-
-      it "doesn't do anything" do
-        expect(Services.publishing_api).to_not receive(:patch_links)
-        expect(TagMapping).to_not receive(:update_publish_completed_at)
-
-        publish_content_1_links!
-      end
     end
   end
 end

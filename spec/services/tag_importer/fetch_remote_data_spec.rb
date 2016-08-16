@@ -22,8 +22,8 @@ RSpec.describe TagImporter::FetchRemoteData do
       it "creates tag mappings based on the retrieved data" do
         TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
 
-        expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/ /content-1/ /content-2/))
-        expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons organisations taxons))
+        expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/ /content-2/))
+        expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons taxons))
       end
     end
 

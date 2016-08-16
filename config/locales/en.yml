@@ -6,13 +6,15 @@ en:
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
     missing_output: Is missing the parameter output as TSV
     spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
-
   tag_import:
     import_created: Spreadsheet uploaded. It will be imported within a few minutes.
     import_refetched: The import will be imported again.
     import_started: The tagging import has started. It can take a few minutes for the tags to be published.
     import_removed: Import has been removed.
-
+    errors:
+      invalid_content_id: We could not find this URL on GOV.UK.
+      invalid_link_types: Invalid link types found - only taxons are allowed.
+      invalid_taxons_found: Invalid taxons found - please make sure you only use existing taxons when tagging.
   messages:
     controller:
       taxons:
@@ -20,3 +22,4 @@ en:
         alert: It was not possible to delete the taxon
     views:
       confirm: Are you sure?
+

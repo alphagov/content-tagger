@@ -3,18 +3,17 @@ class PublishLinksWorker
 
   sidekiq_options retry: 5
 
-  def perform(base_path, links_update)
-    tag_mapping_ids = links_update.fetch("tag_mapping_ids")
-    links_update.delete("tag_mapping_ids")
-
-    # Return if the tag mappings have been deleted.
+  def perform(base_path, links)
+    tag_mapping_ids = links.delete('tag_mapping_ids')
     tag_mappings = TagMapping.where(id: tag_mapping_ids)
-    return if tag_mappings.count.zero?
 
-    target_content_id = Services.publishing_api.lookup_content_id(base_path: base_path)
-    return if target_content_id.blank?
+    links_update = LinksUpdate.new(
+      base_path: base_path,
+      tag_mappings: tag_mappings,
+      links: links)
 
-    Services.publishing_api.patch_links(target_content_id, links: links_update)
-    TagMapping.update_publish_completed_at(tag_mapping_ids)
+    return if links_update.tag_mappings.empty?
+
+    TagImporter::LinksPublisher.publish(links_update: links_update)
   end
 end
