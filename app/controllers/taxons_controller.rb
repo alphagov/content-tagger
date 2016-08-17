@@ -84,7 +84,7 @@ private
     Services.publishing_api.get_linked_items(
       taxon.content_id,
       link_type: "taxons",
-      fields: %w(title content_id base_path)
+      fields: %w(title content_id base_path document_type)
     )
   end
 end

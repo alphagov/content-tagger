@@ -20,8 +20,8 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
-  describe "#index" do
-    it "renders index" do
+  describe "#destroy" do
+    it "sends a request to Publishing API to mark the taxon as 'gone'" do
       linkables = [
         { "title" => "foo", "base_path" => "/foo", "content_id" => SecureRandom.uuid },
         { "title" => "bar", "base_path" => "/bar", "content_id" => SecureRandom.uuid },
