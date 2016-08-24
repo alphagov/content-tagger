@@ -72,6 +72,7 @@ RSpec.feature "Tag importer", type: :feature do
     visit root_path
     click_link "Tag Importer"
     click_link "Upload spreadsheet"
+    expect(page).to have_text(/how to generate a google spreadsheet url/i)
     fill_in "Spreadsheet URL", with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
     click_button "Upload"
     expect(TaggingSpreadsheet.count).to eq 1

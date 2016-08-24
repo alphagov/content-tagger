@@ -1,16 +1,17 @@
 <%= display_header title: 'Upload spreadsheet', breadcrumbs: [:tagging_spreadsheets, "Upload"] %>
 
-<%= simple_form_for tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
-  <div class="form-group">
-    <%= f.input :url, input_html: { type: :text}, label: "Spreadsheet URL" %>
-    <%= f.input :description %>
+<div class="row">
+  <div class="col-md-8">
+    <%= simple_form_for tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
+      <div class="form-group">
+        <%= f.input :url, input_html: { type: :text}, label: "Spreadsheet URL" %>
+        <%= f.input :description %>
 
-    <p class='explain'>
-      See the <%= link_to "example spreadsheet",
-        "https://docs.google.com/spreadsheets/d/1Qjs6oGL3MC-kuwBJSeDdM9dDqImtM-xTSxkSrGk3TlA/pub?gid=0&single=true&output=tsv" %>
-        for the correct format.
-    </p>
-
-    <%= f.submit "Upload", class: "btn btn-lg btn-primary" %>
+        <%= f.submit "Upload", class: "btn btn-lg btn-primary" %>
+      </div>
+    <% end %>
   </div>
-<% end %>
+  <div class="col-md-4">
+    <%= render 'tagging_spreadsheets/help' %>
+  </div>
+</div>
