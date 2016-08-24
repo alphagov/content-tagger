@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="panel-title">
+      <i class="glyphicon glyphicon-info-sign"></i>
+      <%= I18n.t('panels.tagging_spreadsheets.title') %>
+    </div>
+  </div>
+  <div class="panel-body">
+    <p><%= I18n.t('panels.tagging_spreadsheets.subheading') %></p>
+    <ul>
+      <li><%= I18n.t('panels.tagging_spreadsheets.step_1') %></li>
+      <li><%= I18n.t('panels.tagging_spreadsheets.step_2') %></li>
+      <li><%= I18n.t('panels.tagging_spreadsheets.step_3') %></li>
+      <li><%= I18n.t('panels.tagging_spreadsheets.step_4') %></li>
+    </ul>
+    <p class='explain'>
+      See the <%= link_to "example spreadsheet",
+        "https://docs.google.com/spreadsheets/d/1Qjs6oGL3MC-kuwBJSeDdM9dDqImtM-xTSxkSrGk3TlA/pub?gid=0&single=true&output=tsv" %>
+        for the correct format.
+    </p>
+  </div>
+</div>
