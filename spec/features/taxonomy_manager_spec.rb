@@ -47,6 +47,13 @@ RSpec.feature "Managing taxonomies" do
     then_i_see_tagged_content
   end
 
+  scenario "Exporting taxons" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_export_the_first_taxon
+    then_i_downloaded_a_csv_file_with_the_taxon
+  end
+
   def and_i_click_on_the_edit_taxon_link
     first('a', text: 'Edit taxon').click
   end
@@ -119,5 +126,17 @@ RSpec.feature "Managing taxonomies" do
 
   def then_i_see_tagged_content
     expect(page).to have_content "Tagged Item"
+  end
+
+  def and_i_export_the_first_taxon
+    first_checkbox = first('table tbody tr td input[type=checkbox]')
+    first_checkbox.set(true)
+    find_button('Export selected taxons').click
+  end
+
+  def then_i_downloaded_a_csv_file_with_the_taxon
+    expect(page.response_headers['Content-Type']).to match(/csv/)
+    expect(page.response_headers['Content-Disposition']).to match(/attachment/)
+    expect(page.response_headers['Content-Disposition']).to match(/content-id-lookup.*.csv/)
   end
 end

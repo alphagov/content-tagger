@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'taggings#lookup'
 
   resources :taxons
+  resource :export_taxons, only: [:create]
 
   resources :taggings, only: %i(show update), param: :content_id do
     get '/lookup', action: 'lookup', on: :collection
