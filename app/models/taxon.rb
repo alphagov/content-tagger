@@ -1,5 +1,11 @@
 class Taxon
-  attr_accessor :title, :parent_taxons, :content_id, :base_path
+  attr_accessor :title,
+                :parent_taxons,
+                :content_id,
+                :base_path,
+                :publication_state,
+                :internal_name
+
   include ActiveModel::Model
 
   validates_presence_of :title
@@ -14,5 +20,9 @@ class Taxon
 
   def base_path
     @base_path ||= '/alpha-taxonomy/' + SecureRandom.uuid + '-' + title.parameterize
+  end
+
+  def link_type
+    'taxons'
   end
 end
