@@ -23,11 +23,22 @@
       <% tag_mappings.each do |tag| %>
         <tr>
           <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
-          <td><%= link_to tag.link_title, tagging_path(tag.link_content_id) %> (<%= tag.link_type %>)</td>
+          <td>
+            <%= link_to tag.link_title, tagging_path(tag.link_content_id) %> (<%= tag.link_type %>)
+
+            <% if tag.errored? %>
+              <hr />
+              <span class="error-message">
+                <ul>
+                  <% tag.error_messages.each do |error_message| %>
+                  <li><%= error_message %></li>
+                  <% end %>
+                </ul>
+              </span>
+            <% end %>
+          </td>
           <td class="tag-mapping-status">
-            <%= state_label_for(label_type: tag.label_type,
-                                title: tag.state_title,
-                                data_attributes: tag.data_attributes) %>
+            <%= state_label_for(label_type: tag.label_type, title: tag.state_title) %>
           </td>
         </tr>
       <% end %>

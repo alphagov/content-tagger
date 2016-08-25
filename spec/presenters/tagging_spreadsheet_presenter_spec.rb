@@ -38,33 +38,17 @@ RSpec.describe TaggingSpreadsheetPresenter do
     end
   end
 
-  describe '#data_attributes' do
-    it 'returns the tooltip data attributes with the error message for the errored state' do
+  describe 'errored?' do
+    it 'should return true when state is "errored"' do
       tagging_spreadsheet.state = 'errored'
-      tagging_spreadsheet.error_message = 'an error message'
 
-      expect(presenter.data_attributes).to include('toggle': 'tooltip')
-      expect(presenter.data_attributes).to include(
-        'original-title': tagging_spreadsheet.error_message
-      )
+      expect(presenter.errored?).to be_truthy
     end
 
-    it 'does not return data attributes for the imported state' do
-      tagging_spreadsheet.state = 'imported'
+    it 'should return false when state is not "errored"' do
+      tagging_spreadsheet.state = 'tagged'
 
-      expect(presenter.data_attributes).to be_empty
-    end
-
-    it 'does not return data attributes for the ready_to_import state' do
-      tagging_spreadsheet.state = 'ready_to_import'
-
-      expect(presenter.data_attributes).to be_empty
-    end
-
-    it 'does not return data attributes for the uploaded state' do
-      tagging_spreadsheet.state = 'uploaded'
-
-      expect(presenter.data_attributes).to be_empty
+      expect(presenter.errored?).to be_falsey
     end
   end
 end

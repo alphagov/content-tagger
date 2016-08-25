@@ -10,12 +10,11 @@ class TagMappingPresenter < SimpleDelegator
     state.humanize
   end
 
-  def data_attributes
-    return {} unless state == 'errored'
+  def errored?
+    state == 'errored'
+  end
 
-    {
-      'toggle': 'tooltip',
-      'original-title': message
-    }
+  def error_messages
+    message.split('.')
   end
 end

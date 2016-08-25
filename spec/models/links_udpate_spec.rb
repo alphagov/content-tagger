@@ -53,28 +53,43 @@ RSpec.describe LinksUpdate do
   end
 
   describe '#mark_as_errored' do
-    let(:tag_mapping) { create(:tag_mapping) }
+    let!(:tag_mapping) { create(:tag_mapping) }
 
     before do
+      publishing_api_has_lookups('/my-base-path' => 'my-content-id')
+
+      publishing_api_has_linkables(
+        [
+          { 'title' => 'Early Years', content_id: 'my-content-id' },
+        ],
+        document_type: 'taxon'
+      )
+    end
+
+    it 'adds error message for invalid link type' do
+      links_update = build(:links_update, links: { 'invalid' => ['my-content-id'] })
       links_update.tag_mappings = TagMapping.all
+
+      links_update.valid?
+      links_update.mark_as_errored
+      tag_mapping.reload
+
+      expect(tag_mapping.state).to eql('errored')
+      expect(tag_mapping.message).to_not match(/^Link types/)
+      expect(tag_mapping.message).to match(/invalid link types found/i)
     end
 
-    it 'marks a number of tag mappings as errored' do
-      expectation = lambda do
-        links_update.mark_as_errored
-        tag_mapping.reload
-      end
+    it 'adds error message for content not found' do
+      links_update = build(:links_update, links: { 'taxons' => ['a-taxon-content-id'] })
+      links_update.tag_mappings = TagMapping.all
 
-      expect { expectation.call }.to change { tag_mapping.state }.to('errored')
-    end
+      links_update.valid?
+      links_update.mark_as_errored
+      tag_mapping.reload
 
-    it 'adds an error message' do
-      expectation = lambda do
-        links_update.mark_as_errored
-        tag_mapping.reload
-      end
-
-      expect { expectation.call }.to change { tag_mapping.message }
+      expect(tag_mapping.state).to eql('errored')
+      expect(tag_mapping.message).to_not match(/^Content We could not find/)
+      expect(tag_mapping.message).to match(/we could not find this url/i)
     end
   end
 end

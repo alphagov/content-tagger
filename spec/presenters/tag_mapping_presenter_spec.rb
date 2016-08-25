@@ -32,27 +32,17 @@ RSpec.describe TagMappingPresenter do
     end
   end
 
-  describe '#data_attributes' do
-    it 'returns the tooltip data attributes with the error message for the errored state' do
+  describe 'errored?' do
+    it 'should return true when state is "errored"' do
       tag_mapping.state = 'errored'
-      tag_mapping.message = 'an error message'
 
-      expect(presenter.data_attributes).to include('toggle': 'tooltip')
-      expect(presenter.data_attributes).to include(
-        'original-title': tag_mapping.message
-      )
+      expect(presenter.errored?).to be_truthy
     end
 
-    it 'does not return data attributes for the tagged state' do
+    it 'should return false when state is not "errored"' do
       tag_mapping.state = 'tagged'
 
-      expect(presenter.data_attributes).to be_empty
-    end
-
-    it 'does not return data attributes for the ready_to_tagstate' do
-      tag_mapping.state = 'ready_to_tag'
-
-      expect(presenter.data_attributes).to be_empty
+      expect(presenter.errored?).to be_falsey
     end
   end
 end
