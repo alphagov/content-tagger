@@ -9,7 +9,9 @@ RSpec.describe Taxonomy::TaxonBuilder do
       {
         content_id: content_id,
         title: 'A title',
-        base_path: 'A base path'
+        base_path: 'A base path',
+        publication_state: 'State',
+        internal_name: 'Internal name'
       }
     end
     let(:taxon) { builder.build }
@@ -43,6 +45,14 @@ RSpec.describe Taxonomy::TaxonBuilder do
 
     it 'assigns the base_path correctly' do
       expect(taxon.base_path).to eq(content[:base_path])
+    end
+
+    it 'assigns the publication state correctly' do
+      expect(taxon.publication_state).to eq(content[:publication_state])
+    end
+
+    it 'assigns the internal_name correctly' do
+      expect(taxon.internal_name).to eq(content[:internal_name])
     end
 
     context 'without taxon parents' do

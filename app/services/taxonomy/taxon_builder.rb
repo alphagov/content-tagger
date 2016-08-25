@@ -15,6 +15,8 @@ module Taxonomy
         content_id: content_id,
         title: content_item["title"],
         base_path: content_item["base_path"],
+        publication_state: content_item['publication_state'],
+        internal_name: content_item['internal_name'],
         parent_taxons: parent_taxons
       )
     end
