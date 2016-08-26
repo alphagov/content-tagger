@@ -19,8 +19,6 @@ gem 'select2-rails', '~> 3.5.9'
 
 gem 'govuk_sidekiq', '~> 0.0.4'
 
-gem 'rubytree'
-
 group :development, :test do
   gem 'quiet_assets'
   gem 'pry-byebug'
