@@ -3,9 +3,8 @@ module Taxonomy
     # Return a list of taxons from the publishing API with links included.
     def taxons
       @taxons ||=
-        Services.publishing_api.get_linkables(
-          document_type: 'taxon'
-        ).sort_by { |taxon| taxon["title"] }
+        Services.publishing_api.get_linkables(document_type: 'taxon')
+          .sort_by { |taxon| taxon["title"] }
     end
 
     def taxon_content_ids
