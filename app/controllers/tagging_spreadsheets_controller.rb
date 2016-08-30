@@ -82,6 +82,9 @@ private
   end
 
   def tagging_spreadsheet_params
-    params.require(:tagging_spreadsheet).permit(:url, :description)
+    taggging_params = params.require(:tagging_spreadsheet).permit(:url, :description)
+    taggging_params["url"] = taggging_params["url"].strip
+
+    taggging_params
   end
 end
