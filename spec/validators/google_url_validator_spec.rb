@@ -40,6 +40,7 @@ RSpec.describe GoogleUrlValidator do
 
   it 'does not add validation errors for a correct URL' do
     valid_url = google_sheet_url(key: 'mykey', gid: 'mygid')
+
     record = double(url: valid_url, errors: { url: [] })
 
     GoogleUrlValidator.new.validate(record)
