@@ -1,3 +1,7 @@
+// A set of classes governing the degree of indent depending on the depth of a
+// given node in the taxonomy. 20 has no special significance. It's large
+// enough that we're unlikely to ever need to update this rule, but small
+// enough that we don't end up creating large amounts of unnecessary CSS.
 @for $i from 1 through 20 {
   .taxon-depth-#{$i} {
     margin-left: 4rem * $i;
