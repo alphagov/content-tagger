@@ -1,47 +1,37 @@
 class TreeNode
-  attr_reader :taxon, :children, :node_depth
+  attr_reader :taxon
   attr_accessor :parent
   delegate :title, :content_id, :parent_taxons, :parent_taxons=, to: :taxon
-  delegate :map, :each, to: :children
+  delegate :map, :each, to: :tree
 
-  def initialize(taxon_hash)
-    @taxon = Taxon.new(taxon_hash)
+  def initialize(title:, content_id:)
+    @taxon = Taxon.new(title: title, content_id: content_id)
     @children = []
   end
 
-  def add_children(children)
-    @children << children
+  def <<(child_node)
+    child_node.parent = self
+    @children << child_node
   end
 
-  def children
+  def tree
     return [self] if @children.empty?
 
-    _children = [self]
-    @children.each do |ch|
-      _children.concat(ch.children)
+    @children.each_with_object([self]) do |child, tree|
+      tree.concat(child.tree)
     end
-
-     _children
   end
 
-  def first
-    children.first
+  def count
+    tree.count
   end
 
   def root?
     parent.nil?
   end
 
-  def name
-    title
-  end
-
   def node_depth
     return 0 if root?
     1 + parent.node_depth
-  end
-
-  def count
-    children.count
   end
 end

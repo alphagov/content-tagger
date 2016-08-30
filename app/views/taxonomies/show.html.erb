@@ -1,11 +1,11 @@
-<%= display_header title: '', breadcrumbs: [:taxons, @taxonomy.first.name] do %>
+<%= display_header title: '', breadcrumbs: [:taxons, @taxonomy.tree.first.title] do %>
 <% end %>
 
 <% @taxonomy.each do |tree_node| %>
 
   <div class="taxon-level taxon-depth-<%= tree_node.node_depth %>">
     <span class="taxon-level-title">
-      <%= "#{(tree_node.node_depth + 1)} -" %> <%= link_to "#{tree_node.name}", taxonomy_path(tree_node.content_id) %>
+      <%= "#{(tree_node.node_depth + 1)} -" %> <%= link_to "#{tree_node.title}", taxonomy_path(tree_node.content_id) %>
     </span>
 
     <%= link_to edit_taxon_path(tree_node.content_id), class: "taxon-level-edit" do %>
@@ -17,7 +17,7 @@
       <div class="taxon-level-parent-links">
         <% parent_taxons.each do |parent_taxon| %>
           <p>
-            ↰ <%= link_to parent_taxon.title, taxonomy_path(parent_taxon.content_id ) %>
+            ↰ <%= link_to parent_taxon.title, taxonomy_path(parent_taxon.content_id) %>
           </p>
         <% end %>
       </div>

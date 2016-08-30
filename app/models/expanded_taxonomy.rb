@@ -34,13 +34,12 @@ private
     # recursively expand from the child node downwards.
     Array(expanded_links["child_taxons"]).each do |child_taxon|
       child_node = tree_node_based_on(child_taxon)
-      child_node.parent = node
-      node.add_children(child_node)
+      node << child_node
       expand_tree_from(child_node)
     end
   end
 
   def tree_node_based_on(content_item)
-    TreeNode.new(content_item.to_hash.slice('title', 'content_id'))
+    TreeNode.new(title: content_item["title"], content_id: content_item["content_id"])
   end
 end
