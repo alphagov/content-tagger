@@ -1,0 +1,47 @@
+// A set of classes governing the degree of indent depending on the depth of a
+// given node in the taxonomy. 20 has no special significance. It's large
+// enough that we're unlikely to ever need to update this rule, but small
+// enough that we don't end up creating large amounts of unnecessary CSS.
+@for $i from 1 through 20 {
+  .taxon-depth-#{$i} {
+    margin-left: 4rem * $i;
+  }
+}
+
+$taxon-level-font-size-lg: 16px;
+$taxon-level-font-size-sm: 13px;
+
+.taxon-level {
+  padding: 0.5rem;
+  border-left: 1px solid #bfc1c3;
+  border-bottom: 1px solid #bfc1c3;
+  margin-bottom: 1rem;
+  max-width: 40%;
+
+  a.btn {
+    padding: 1px 4px;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.taxon-level-title {
+  font-size: $taxon-level-font-size-lg;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.taxon-level-edit {
+  font-size: $taxon-level-font-size-sm;
+}
+
+.taxon-level-parent-links {
+  font-size: $taxon-level-font-size-sm;
+
+  span {
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    margin-bottom: 0rem;
+  }
+}

@@ -8,7 +8,7 @@
   <li class='<%= active_navigation_item == 'taggings' ? 'active' : nil %>'>
     <%= link_to 'Tagging', lookup_taggings_path %>
   </li>
-  <li class='<%= active_navigation_item == 'taxons' ? 'active' : nil %>'>
+  <li class='<%= (active_navigation_item == 'taxons' || active_navigation_item == 'taxonomies') ? 'active' : nil %>'>
     <%= link_to 'Taxons', taxons_path %>
   </li>
   <li class='<%= active_navigation_item == 'tagging_spreadsheets' ? 'active' : nil %>'>

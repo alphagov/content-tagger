@@ -10,6 +10,7 @@
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
 
     <%= render partial: 'shared/table_filter' %>
@@ -20,6 +21,7 @@
       <tr>
         <td><%= taxon['title'] %></td>
         <td><%= link_to taxon['content_id'], "#{website_url('/api/content' + taxon['base_path'])}" %></td>
+        <td><%= link_to 'View taxonomy', taxonomy_path(taxon['content_id']) %></td>
         <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
         <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
         <td><%= link_to 'Delete', taxon_path(taxon['content_id']),

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   get '/healthcheck', to: proc { [200, {}, ['OK']] }
 
+  resources :taxonomies, only: %i(show), param: :content_id
+
   if Rails.env.development?
     mount GovukAdminTemplate::Engine, at: '/style-guide'
 
