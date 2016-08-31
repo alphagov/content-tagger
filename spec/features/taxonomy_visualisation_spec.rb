@@ -12,6 +12,7 @@ RSpec.describe "Taxonomy visualisation" do
     then_i_see_the_entire_taxonomy
     when_i_view_one_of_the_children
     then_i_see_the_taxonomy_from_the_child_downwards
+    and_i_can_download_the_taxonomy_in_csv_form
   end
 
   scenario "Navigating multiple parents" do
@@ -113,5 +114,12 @@ RSpec.describe "Taxonomy visualisation" do
     within rendered_titles.first do
       expect(page).to have_content round_things["title"]
     end
+  end
+
+  def and_i_can_download_the_taxonomy_in_csv_form
+    click_link "Download as CSV"
+    expect(page.response_headers['Content-Type']).to match(/csv/)
+    expect(page.response_headers['Content-Disposition']).to match(/attachment/)
+    expect(page.response_headers['Content-Disposition']).to match(/Fruits.*.csv/)
   end
 end

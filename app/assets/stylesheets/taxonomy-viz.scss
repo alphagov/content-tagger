@@ -45,3 +45,9 @@ $taxon-level-font-size-sm: 13px;
     margin-bottom: 0rem;
   }
 }
+
+.taxonomy-csv-download-btn {
+  @extend .btn;
+  @extend .btn-default;
+  @extend .btn-sm;
+}
