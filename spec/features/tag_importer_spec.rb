@@ -187,10 +187,8 @@ RSpec.feature "Tag importer", type: :feature do
     row = first('table tbody tr')
 
     expect(row).to have_selector('.label-danger', text: state)
-    expect(row).to have_selector('.label-danger[data-toggle="tooltip"]')
-    expect(row).to have_selector(
-      ".label-danger[data-original-title='#{tagging_spreadsheet.error_message}']"
-    )
+    expect(row).to have_selector('.error-message', text: tagging_spreadsheet.error_message)
+    expect(row).to have_content(tagging_spreadsheet.error_message)
     visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 

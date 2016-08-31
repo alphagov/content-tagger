@@ -10,12 +10,7 @@ class TaggingSpreadsheetPresenter < SimpleDelegator
     state.humanize
   end
 
-  def data_attributes
-    return {} unless state == 'errored'
-
-    {
-      'toggle': 'tooltip',
-      'original-title': error_message
-    }
+  def errored?
+    state == 'errored'
   end
 end

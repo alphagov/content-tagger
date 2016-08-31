@@ -1,8 +1,8 @@
 module ApplicationHelper
-  def state_label_for(label_type:, title:, data_attributes:)
+  def state_label_for(label_type:, title:)
     css_class = ['label', label_type].join(' ')
 
-    content_tag :span, class: css_class, data: data_attributes do
+    content_tag :span, class: css_class do
       title
     end
   end
