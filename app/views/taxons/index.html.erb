@@ -1,35 +1,45 @@
-<%= display_header title: 'Taxons', breadcrumbs: ['Taxons'] do %>
-  <%= link_to 'Add a taxon', new_taxon_path, class: 'btn btn-lg btn-default' %>
-<% end %>
-
-<table class="table queries-list table-bordered" data-module="filterable-table">
-  <thead>
-    <tr class="table-header">
-      <th>Title</th>
-      <th>Content ID</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <%= render partial: 'shared/table_filter' %>
-  </thead>
-
-  <tbody>
-    <% taxons.each do |taxon| %>
-      <tr>
-        <td><%= taxon['title'] %></td>
-        <td><%= link_to taxon['content_id'], "#{website_url('/api/content' + taxon['base_path'])}" %></td>
-        <td><%= link_to 'View taxonomy', taxonomy_path(taxon['content_id']) %></td>
-        <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
-        <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
-        <td><%= link_to 'Delete', taxon_path(taxon['content_id']),
-            method: :delete,
-            data: { confirm: I18n.t('messages.views.confirm') },
-            class: 'btn btn-danger' %>
-        </td>
-      </tr>
+<%= form_tag export_taxons_path(format: :csv), method: :post do %>
+  <%= display_header title: 'Taxons', breadcrumbs: ['Taxons'] do %>
+    <%= link_to new_taxon_path, class: 'btn btn-lg btn-default' do %>
+      <i class="glyphicon glyphicon-plus"></i>
+      Add a taxon
     <% end %>
-  </tbody>
+    <%= button_tag type: :submit, class: 'btn btn-default' do %>
+      <i class="glyphicon glyphicon-download-alt"></i>
+      Export selected taxons
+    <% end %>
+  <% end %>
+
+  <table class="table queries-list table-bordered" data-module="filterable-table">
+    <thead>
+      <tr class="table-header">
+        <th></th>
+        <th>Title</th>
+        <th>Content ID</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <%= render partial: 'shared/table_filter' %>
+    </thead>
+    <tbody>
+      <% taxons.each do |taxon| %>
+        <tr>
+          <td><%= check_box_tag 'content_ids[]', taxon['content_id'] %></td>
+          <td><%= taxon['title'] %></td>
+          <td><%= link_to taxon['content_id'], "#{website_url('/api/content' + taxon['base_path'])}" %></td>
+          <td><%= link_to 'View taxonomy', taxonomy_path(taxon['content_id']) %></td>
+          <td><%= link_to 'View tagged content', taxon_path(taxon['content_id']), class: 'view-tagged-content' %></td>
+          <td><%= link_to 'Edit taxon', edit_taxon_path(taxon['content_id']) %></td>
+          <td><%= link_to 'Delete', taxon_path(taxon['content_id']),
+              method: :delete,
+              data: { confirm: I18n.t('messages.views.confirm') },
+              class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
 </table>
