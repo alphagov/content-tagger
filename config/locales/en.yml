@@ -19,6 +19,8 @@ en:
     callout_new: Creating
     callout_edit: Editing
     taxons:
+      add_taxon: Add a taxon
+      copy_taxon: Copy taxons
       new_title: New taxon
       new_breadcrumb: New taxon
       new_button: Create taxon
