@@ -13,5 +13,6 @@ form {
 }
 
 input[type='text'] {
+  // scss-lint:disable PlaceholderInExtend
   @extend .form-control;
 }

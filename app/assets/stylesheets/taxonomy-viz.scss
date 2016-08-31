@@ -10,15 +10,16 @@
 
 $taxon-level-font-size-lg: 16px;
 $taxon-level-font-size-sm: 13px;
+$gray: #bfc1c3;
 
 .taxon-level {
   padding: 0.5rem;
-  border-left: 1px solid #bfc1c3;
-  border-bottom: 1px solid #bfc1c3;
+  border-left: 1px solid $gray;
+  border-bottom: 1px solid $gray;
   margin-bottom: 1rem;
   max-width: 40%;
 
-  a.btn {
+  .btn {
     padding: 1px 4px;
     margin-bottom: 0.5rem;
   }
@@ -42,7 +43,7 @@ $taxon-level-font-size-sm: 13px;
   }
 
   p {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
   }
 }
 
