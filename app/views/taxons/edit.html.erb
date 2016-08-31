@@ -1,4 +1,4 @@
-<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] %>
+<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon], page_type: :edit %>
 
 <%= simple_form_for taxon, url: taxon_path(taxon.content_id), method: :patch do |f| %>
   <%= f.hidden_field :content_id, value: taxon.content_id %>
@@ -9,5 +9,5 @@
   <%= f.input :parent_taxons, collection: taxons_for_select,
       input_html: { class: :select2, multiple: true, include_blank: true } %>
 
-  <%= f.submit "Save", class: "btn btn-lg btn-success" %>
+  <%= f.submit I18n.t('views.taxons.edit_button'), class: "btn btn-lg btn-success" %>
 <% end %>

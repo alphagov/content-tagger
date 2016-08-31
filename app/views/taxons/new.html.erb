@@ -1,4 +1,5 @@
-<%= display_header title: "Taxons", breadcrumbs: [:taxons, "New taxon"] %>
+<%= display_header title: I18n.t('views.taxons.new_title'),
+  breadcrumbs: [:taxons, I18n.t('views.taxons.new_breadcrumb')], page_type: :new %>
 
 <%= simple_form_for taxon, url: taxons_path do |f| %>
   <% if flash[:error].present? %>
@@ -11,5 +12,5 @@
   <%= f.input :parent_taxons, collection: taxons_for_select,
       input_html: { class: :select2, multiple: true, include_blank: true } %>
 
-  <%= f.submit "Save", class: "btn btn-lg btn-success" %>
+  <%= f.submit I18n.t('views.taxons.new_button'), class: "btn btn-lg btn-success" %>
 <% end %>
