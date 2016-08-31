@@ -1,4 +1,13 @@
-<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] %>
+<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] do %>
+  <%= link_to taxon_path(taxon.content_id), method: :delete, data: { confirm: I18n.t('messages.views.confirm') } do %>
+    <i class="glyphicon glyphicon-trash"></i>
+      <%= I18n.t('views.taxons.delete_taxon') %>
+    </i>
+  <% end %>
+<% end %>
+
+<br/>
+<br/>
 
 <% if parent_taxons.any? %>
   <table class="table queries-list table-bordered table-striped" data-module="filterable-table">

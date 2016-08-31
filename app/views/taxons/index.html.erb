@@ -19,7 +19,6 @@
       <th></th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
 
     <%= render partial: 'shared/table_filter' %>
@@ -33,11 +32,6 @@
         <td><%= link_to 'View taxonomy', taxonomy_path(taxon.content_id) %></td>
         <td><%= link_to 'View tagged content', taxon_path(taxon.content_id), class: 'view-tagged-content' %></td>
         <td><%= link_to 'Edit taxon', edit_taxon_path(taxon.content_id) %></td>
-        <td><%= link_to 'Delete', taxon_path(taxon.content_id),
-            method: :delete,
-            data: { confirm: I18n.t('messages.views.confirm') },
-            class: 'btn btn-danger' %>
-        </td>
       </tr>
     <% end %>
   </tbody>
