@@ -3,6 +3,7 @@ class TagMapping < ActiveRecord::Base
   scope :completed, -> { where(state: %w(tagged errored)) }
   scope :by_content_base_path, -> { order(content_base_path: :asc) }
   scope :by_link_title, -> { order(link_title: :asc) }
+  scope :by_state, -> { order(state: :asc) }
 
   validates(
     :state,

@@ -46,6 +46,17 @@ RSpec.feature "Tag importer", type: :feature do
     and_it_has_been_marked_as_deleted
   end
 
+  scenario "Ordering of tag mappings" do
+    given_tagging_data_is_present_in_a_google_spreadsheet
+    when_i_provide_the_public_uri_of_this_spreadsheet
+    then_i_can_see_it_is_ready_for_importing
+    then_i_can_preview_which_taggings_will_be_imported
+    and_confirming_this_will_import_taggings
+    when_the_last_tag_mapping_has_errored
+    when_i_preview_the_tagging_spreadsheet
+    then_the_erroneous_tag_mappings_are_at_the_top
+  end
+
   SHEET_KEY = "THE-KEY-123".freeze
   SHEET_GID = "123456".freeze
 
@@ -200,5 +211,27 @@ RSpec.feature "Tag importer", type: :feature do
     row = first('table tbody tr')
 
     expect(row).to have_selector('.label-success', text: state)
+  end
+
+  def when_the_last_tag_mapping_has_errored
+    tag_mapping = TagMapping.last
+    tag_mapping.state = 'errored'
+    tag_mapping.message = 'An error message'
+    tag_mapping.save!
+  end
+
+  def when_i_preview_the_tagging_spreadsheet
+    visit tagging_spreadsheets_path
+    tagging_spreadsheet = TaggingSpreadsheet.first
+    visit tagging_spreadsheet_path(tagging_spreadsheet)
+  end
+
+  def then_the_erroneous_tag_mappings_are_at_the_top
+    tag_mapping = TagMapping.where(state: 'errored').first
+    first_row = find('table tbody').first('tr')
+
+    expect(first_row.text).to match(tag_mapping.content_base_path)
+    expect(first_row.text).to match(tag_mapping.link_title)
+    expect(first_row.text).to match(/errored/i)
   end
 end
