@@ -47,6 +47,13 @@ RSpec.feature "Managing taxonomies" do
     then_i_see_tagged_content
   end
 
+  scenario "Copy taxons" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_to_copy_taxons
+    then_i_can_see_a_table_with_taxons_to_copy
+  end
+
   def and_i_click_on_the_edit_taxon_link
     first('a', text: 'Edit taxon').click
     expect(page).to have_selector('.callout-warning', text: /editing/i)
@@ -129,5 +136,26 @@ RSpec.feature "Managing taxonomies" do
 
   def then_i_see_tagged_content
     expect(page).to have_content "Tagged Item"
+  end
+
+  def and_i_click_to_copy_taxons
+    find_link('Copy taxons').click
+  end
+
+  def then_i_can_see_a_table_with_taxons_to_copy
+    table = find('table')
+    table_head = table.all('thead th').map(&:text)
+    table_body = table.find('tbody').text
+
+    expect(table_head).to include(/title/i)
+    expect(table_head).to include(/content id/i)
+    expect(table_head).to include(/link type/i)
+
+    expect(table_body).to include(@taxon_1[:content_id])
+    expect(table_body).to include(@taxon_1[:title])
+
+    expect(table_body).to include(@taxon_2[:content_id])
+    expect(table_body).to include(@taxon_2[:title])
+    expect(table_body).to include('taxons')
   end
 end
