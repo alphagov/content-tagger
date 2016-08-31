@@ -1,5 +1,5 @@
 <%= display_header title: '', breadcrumbs: [:taxons, @taxonomy.tree.first.title] do %>
-  <%= link_to taxonomy_path(@taxonomy.tree.first.content_id, format: :csv), class: "taxonomy-csv-download-btn" do %>
+  <%= link_to taxonomy_path(@taxonomy.tree.first.content_id, format: :csv), class: "btn btn-default btn-sm" do %>
     <i class="glyphicon glyphicon-download-alt"></i>
       Download as CSV
     </i>

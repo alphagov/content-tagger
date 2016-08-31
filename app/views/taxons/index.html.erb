@@ -1,17 +1,17 @@
 <%= display_header title: 'Taxons', breadcrumbs: ['Taxons'] do %>
-  <%= link_to new_taxon_path, class: 'btn btn-lg btn-default' do %>
+  <%= link_to new_taxon_path, class: 'btn btn-default' do %>
     <i class="glyphicon glyphicon-plus"></i>
       <%= I18n.t('views.taxons.add_taxon') %>
     </i>
   <% end %>
-  <%= link_to copy_taxons_path, class: 'btn btn-lg btn-default' do %>
+  <%= link_to copy_taxons_path, class: 'btn btn-default' do %>
     <i class="glyphicon glyphicon-download-alt"></i>
       <%= I18n.t('views.taxons.copy_taxon') %>
     </i>
   <% end %>
 <% end %>
 
-<table class="table queries-list table-bordered" data-module="filterable-table">
+<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
   <thead>
     <tr class="table-header">
       <th>Title</th>

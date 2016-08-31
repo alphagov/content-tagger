@@ -44,13 +44,6 @@ $red: #b10e1e;
   }
 }
 
-table {
-  // scss-lint:disable PlaceholderInExtend
-  @extend .table;
-  @extend .table-bordered;
-  @extend .table-striped;
-}
-
 .heading-with-actions {
   margin: 10px 0 20px;
   overflow: hidden;
@@ -62,18 +55,8 @@ table {
     margin: 0;
   }
 
-  .actions {
+  .btn-group {
     float: right;
-  }
-}
-
-.actions {
-  // scss-lint:disable PlaceholderInExtend
-  @extend .btn-group;
-
-  a {
-    @extend .btn;
-    @extend .btn-default;
   }
 }
 

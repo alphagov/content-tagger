@@ -4,8 +4,8 @@
   <div class="col-md-8">
     <%= simple_form_for tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
       <div class="form-group">
-        <%= f.input :url, input_html: { type: :text}, label: "Spreadsheet URL" %>
-        <%= f.input :description %>
+        <%= f.input :url, input_html: { type: :text, class: 'form-control' }, label: "Spreadsheet URL" %>
+        <%= f.input :description, input_html: { class: 'form-control' } %>
 
         <%= f.submit "Upload", class: "btn btn-lg btn-success" %>
       </div>

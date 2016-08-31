@@ -2,7 +2,10 @@
 
 <%= simple_form_for @lookup, url: lookup_taggings_path do |f| %>
   <div class="form-group">
-    <%= f.input :base_path, label: "Path or URL of a page on GOV.UK (eg. /book-driving-test)" %>
+    <%= f.input :base_path,
+      label: "Path or URL of a page on GOV.UK (eg. /book-driving-test)",
+      input_html: { class: 'form-control' }
+    %>
 
     For example: <% ['/pay-vat', '/benefit-cap-calculator', '/bank-holidays'].each do |example| %>
       <%= link_to example, "/taggings/lookup#{example}" %>
