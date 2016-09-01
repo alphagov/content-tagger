@@ -62,7 +62,10 @@ private
   end
 
   def tag_mappings
-    tagging_spreadsheet.tag_mappings.by_content_base_path.by_link_title
+    tagging_spreadsheet.tag_mappings
+      .by_state
+      .by_content_base_path
+      .by_link_title
   end
 
   def presented_tag_mappings
