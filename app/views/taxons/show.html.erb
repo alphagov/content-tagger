@@ -1,5 +1,7 @@
 <%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] do %>
-  <%= link_to taxon_path(taxon.content_id), method: :delete, data: { confirm: I18n.t('messages.views.confirm') } do %>
+  <%= link_to taxon_path(taxon.content_id), method: :delete,
+    class: 'btn btn-md btn-default',
+    data: { confirm: I18n.t('messages.views.confirm') } do %>
     <i class="glyphicon glyphicon-trash"></i>
       <%= I18n.t('views.taxons.delete_taxon') %>
     </i>

@@ -1,6 +1,7 @@
 @import 'select2';
 @import 'select2-bootstrap';
 @import 'govuk_admin_template';
+@import 'heading';
 @import 'import-preview';
 @import 'forms';
 @import 'taxonomy-viz';
@@ -41,22 +42,6 @@ $red: #b10e1e;
   // Remove this once we've migrated to using `simple_form`.
   label {
     display: none;
-  }
-}
-
-.heading-with-actions {
-  margin: 10px 0 20px;
-  overflow: hidden;
-
-  h1,
-  h2 {
-    float: left;
-    line-height: 1.4;
-    margin: 0;
-  }
-
-  .btn-group {
-    float: right;
   }
 }
 
