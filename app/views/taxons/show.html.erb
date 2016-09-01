@@ -14,8 +14,8 @@
     <tbody>
       <% parent_taxons.each do |parent_taxon| %>
         <tr>
-          <td><%= link_to parent_taxon['title'], taxon_path(parent_taxon['content_id']) %></td>
-          <td><%= link_to parent_taxon['base_path'], "#{website_url('/api/content' + parent_taxon['base_path'])}" %></td>
+          <td><%= link_to parent_taxon.title, taxon_path(parent_taxon.content_id) %></td>
+          <td><%= link_to parent_taxon.base_path, "#{website_url('/api/content' + parent_taxon.base_path)}" %></td>
         </tr>
       <% end %>
     </tbody>
