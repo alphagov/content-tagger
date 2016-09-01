@@ -21,6 +21,7 @@ en:
     taxons:
       add_taxon: Add a taxon
       copy_taxon: Copy taxons
+      delete_taxon: Delete taxon
       new_title: New taxon
       new_breadcrumb: New taxon
       new_button: Create taxon
