@@ -14,6 +14,7 @@ require 'rspec/rails'
 require 'govuk_sidekiq/testing'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join('spec/matchers/**/*.rb')].each { |f| require f }
 
 PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
 

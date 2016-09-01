@@ -16,8 +16,8 @@ RSpec.describe Taxonomy::TaxonFetcher do
 
       result = described_class.new.taxons
 
-      expect(result.first["title"]).to eq("aha")
-      expect(result.last["title"]).to eq("foo")
+      expect(result.first.title).to eq("aha")
+      expect(result.last.title).to eq("foo")
     end
   end
 
@@ -45,13 +45,13 @@ RSpec.describe Taxonomy::TaxonFetcher do
       instance_double(Taxon, parent_taxons: [taxon_id_1, taxon_id_2])
     end
     let(:link_1) do
-      { "title" => "foo", "base_path" => "/foo", "content_id" => taxon_id_1 }
+      { title: "foo", base_path: "/foo", content_id: taxon_id_1 }
     end
     let(:link_2) do
-      { "title" => "bar", "base_path" => "/bar", "content_id" => taxon_id_2 }
+      { title: "bar", base_path: "/bar", content_id: taxon_id_2 }
     end
     let(:link_3) do
-      { "title" => "aha", "base_path" => "/aha", "content_id" => SecureRandom.uuid }
+      { title: "aha", base_path: "/aha", content_id: SecureRandom.uuid }
     end
     let(:linkables) { [link_1, link_2, link_3] }
 
@@ -60,8 +60,8 @@ RSpec.describe Taxonomy::TaxonFetcher do
       result = described_class.new.parents_for_taxon(taxon)
 
       expect(result.count).to eq(2)
-      expect(result).to include(link_1)
-      expect(result).to include(link_2)
+      expect(result).to include(taxon_with_attributes(link_1))
+      expect(result).to include(taxon_with_attributes(link_2))
     end
   end
 end
