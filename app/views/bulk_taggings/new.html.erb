@@ -1,0 +1,38 @@
+<%= display_header title: 'Bulk tagging', breadcrumbs: ["Search"] %>
+
+<div class="row">
+  <div class="col-md-4">
+    <%= simple_form_for :collection_search, url: search_bulk_tagging_path , method: :get do |f| %>
+      <div class="form-group">
+        <%= f.input :query, input_html: { type: :text, class: 'form-control' }, label: 'Query' %>
+        <%= f.submit "Search collection", class: "btn btn-md btn-success" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-8">
+    <table class="table queries-list table-bordered" data-module="filterable-table">
+      <thead>
+        <tr class="table-header">
+          <th>Title</th>
+          <th>Content ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if results.present? %>
+          <% results.each do |collection| %>
+            <tr>
+              <td><%= collection.title %></td>
+              <td><%= link_to collection.content_id,
+                    bulk_tagging_collection_path(collection.content_id) %></td>
+            </tr>
+          <% end %>
+        <% else %>
+            <tr>
+              <td><p>No results to display. Search to see results.</p></td>
+              <td></td>
+            </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

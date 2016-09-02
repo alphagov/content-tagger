@@ -4,7 +4,8 @@ class Taxon
                 :content_id,
                 :base_path,
                 :publication_state,
-                :internal_name
+                :internal_name,
+                :document_type
 
   include ActiveModel::Model
 

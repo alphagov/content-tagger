@@ -1,8 +1,6 @@
 <% total = tag_mappings.count %>
 <% percentage_complete = Integer((confirmed / total.to_f) * 100) %>
-<div
-  class="js-import-progress"
-  data-progress-path="<%= tagging_spreadsheet_import_progress_path(tag_mappings.first.tagging_source) %>">
+<div class="js-import-progress" data-progress-path="<%= progress_path %>">
 
   <div class="progress">
     <div class="progress-bar <%= percentage_complete == 100 ? '' : 'progress-bar-striped active'%>"

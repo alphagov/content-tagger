@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905103610) do
+ActiveRecord::Schema.define(version: 20160905162106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,10 @@ ActiveRecord::Schema.define(version: 20160905103610) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.string   "original_link_content_id"
+    t.string   "state"
+    t.datetime "last_published_at"
+    t.string   "last_published_by"
+    t.datetime "deleted_at"
   end
 
   create_table "tagging_spreadsheets", force: :cascade do |t|
@@ -49,15 +53,7 @@ ActiveRecord::Schema.define(version: 20160905103610) do
     t.string   "description"
     t.string   "state",             null: false
     t.text     "error_message"
-<<<<<<< HEAD
-<<<<<<< HEAD
-    t.string   "description"
-=======
->>>>>>> 66756b0... Create TagMigration model
-=======
->>>>>>> e0a3806... Convert TagMapping into a polymorphic relation
     t.datetime "deleted_at"
-    t.string   "description"
   end
 
   create_table "users", force: :cascade do |t|

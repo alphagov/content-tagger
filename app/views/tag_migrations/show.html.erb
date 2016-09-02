@@ -1,0 +1,14 @@
+<%= display_header title: 'Preview import', breadcrumbs: [:tag_migrations, "Preview"] do %>
+  <%= link_to "Create tags", tag_migration_publish_tags_path(tag_migration), method: :post, class: "btn btn-md btn-default" %>
+<% end %>
+
+<% if tag_migration.state == "errored" %>
+  <p class="alert alert-danger">
+    An error occured when attempting to read the spreadsheet:
+
+    <%= "TODO: error messages" %>
+  </p>
+<% else %>
+  <%= render partial: "migration_preview",
+    locals: { confirmed: confirmed, tag_mappings: tag_mappings, progress_path: progress_path } %>
+<% end %>

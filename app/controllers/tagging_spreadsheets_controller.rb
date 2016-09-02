@@ -26,6 +26,7 @@ class TaggingSpreadsheetsController < ApplicationController
       tagging_spreadsheet: tagging_spreadsheet,
       tag_mappings: presented_tag_mappings,
       confirmed: tag_mappings.completed.count,
+      progress_path: tagging_spreadsheet_import_progress_path(tagging_spreadsheet),
     }
   end
 
