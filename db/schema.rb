@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815093345) do
+ActiveRecord::Schema.define(version: 20160902153728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 20160815093345) do
 
   add_index "tag_mappings", ["tagging_spreadsheet_id"], name: "index_tag_mappings_on_tagging_spreadsheet_id", using: :btree
 
+  create_table "tag_migrations", force: :cascade do |t|
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "original_link_content_id"
+  end
+
   create_table "tagging_spreadsheets", force: :cascade do |t|
     t.string   "url",               null: false
     t.datetime "created_at",        null: false
@@ -39,9 +45,13 @@ ActiveRecord::Schema.define(version: 20160815093345) do
     t.string   "user_uid",          null: false
     t.string   "last_published_by"
     t.datetime "last_published_at"
+    t.string   "description"
     t.string   "state",             null: false
     t.text     "error_message"
+<<<<<<< HEAD
     t.string   "description"
+=======
+>>>>>>> 66756b0... Create TagMigration model
     t.datetime "deleted_at"
   end
 
