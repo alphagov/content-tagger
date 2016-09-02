@@ -11,26 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902153728) do
+ActiveRecord::Schema.define(version: 20160905103610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tag_mappings", force: :cascade do |t|
-    t.integer  "tagging_spreadsheet_id", null: false
-    t.string   "content_base_path",      null: false
+    t.integer  "tagging_source_id",    null: false
+    t.string   "content_base_path",    null: false
     t.string   "link_title"
-    t.string   "link_content_id",        null: false
-    t.string   "link_type",              null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "link_content_id",      null: false
+    t.string   "link_type",            null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
-    t.string   "state",                  null: false
+    t.string   "state",                null: false
     t.string   "message"
+    t.string   "tagging_source_type"
   end
 
-  add_index "tag_mappings", ["tagging_spreadsheet_id"], name: "index_tag_mappings_on_tagging_spreadsheet_id", using: :btree
+  add_index "tag_mappings", ["tagging_source_id"], name: "index_tag_mappings_on_tagging_source_id", using: :btree
 
   create_table "tag_migrations", force: :cascade do |t|
     t.datetime "created_at",               null: false
@@ -49,10 +50,14 @@ ActiveRecord::Schema.define(version: 20160902153728) do
     t.string   "state",             null: false
     t.text     "error_message"
 <<<<<<< HEAD
+<<<<<<< HEAD
     t.string   "description"
 =======
 >>>>>>> 66756b0... Create TagMigration model
+=======
+>>>>>>> e0a3806... Convert TagMapping into a polymorphic relation
     t.datetime "deleted_at"
+    t.string   "description"
   end
 
   create_table "users", force: :cascade do |t|
@@ -68,5 +73,4 @@ ActiveRecord::Schema.define(version: 20160902153728) do
     t.datetime "updated_at",              null: false
   end
 
-  add_foreign_key "tag_mappings", "tagging_spreadsheets", on_delete: :cascade
 end

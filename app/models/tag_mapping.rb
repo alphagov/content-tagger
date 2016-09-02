@@ -1,5 +1,6 @@
 class TagMapping < ActiveRecord::Base
-  belongs_to :tagging_spreadsheet
+  belongs_to :tagging_source, polymorphic: true
+
   scope :completed, -> { where(state: %w(tagged errored)) }
   scope :by_content_base_path, -> { order(content_base_path: :asc) }
   scope :by_link_title, -> { order(link_title: :asc) }

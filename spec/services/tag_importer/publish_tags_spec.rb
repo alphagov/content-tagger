@@ -7,7 +7,7 @@ RSpec.describe TagImporter::PublishTags do
   before do
     create(
       :tag_mapping,
-      tagging_spreadsheet: tagging_spreadsheet,
+      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-1",
       link_title: "GDS",
       link_content_id: "gds-ID",
@@ -16,7 +16,7 @@ RSpec.describe TagImporter::PublishTags do
 
     create(
       :tag_mapping,
-      tagging_spreadsheet: tagging_spreadsheet,
+      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-1",
       link_title: "GDS",
       link_content_id: "gds-ID",
@@ -25,7 +25,7 @@ RSpec.describe TagImporter::PublishTags do
 
     create(
       :tag_mapping,
-      tagging_spreadsheet: tagging_spreadsheet,
+      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-1",
       link_title: "Education",
       link_content_id: "education-ID",
@@ -34,7 +34,7 @@ RSpec.describe TagImporter::PublishTags do
 
     create(
       :tag_mapping,
-      tagging_spreadsheet: tagging_spreadsheet,
+      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-2",
       link_title: "Education",
       link_content_id: "education-ID",
