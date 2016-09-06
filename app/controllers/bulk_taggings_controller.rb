@@ -1,22 +1,31 @@
 class BulkTaggingsController < ApplicationController
   def new
-    render :new, locals: { results: [] }
+    render :new, locals: { results: [], query: '' }
   end
 
   def search
-    query = params[:collection_search][:query]
-    gds_response = Services.publishing_api.get_content_items(
-      document_type: "document_collection",
-      per_page: 20,
-      q: query
-    )
+    warning_about_multiple_pages
 
-    results = gds_response['results'].map { |result| ContentItem.new(result) }
-
-    render :new, locals: { results: results }
+    render :new, locals: { results: search_response.results, query: query }
   end
 
-  private
+private
+
+  def warning_about_multiple_pages
+    if search_response.multiple_pages?
+      flash[:warning] = I18n.t('controllers.bulk_taggings.too_many_results')
+    else
+      flash.delete(:warning)
+    end
+  end
+
+  def search_response
+    @search_response ||= BulkTagging::Search.perform(query: query)
+  end
+
+  def query
+    params[:collection_search][:query]
+  end
 
   def search_params
     params.require(:collection_search).permit(:query)

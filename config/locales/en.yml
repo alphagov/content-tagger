@@ -30,11 +30,16 @@ en:
       new_breadcrumb: New taxon
       new_button: Create taxon
       edit_button: Update taxon
-  messages:
-    controller:
-      taxons:
-        success: You have sucessfully deleted the taxon
-        alert: It was not possible to delete the taxon
+  controllers:
+    bulk_taggings:
+      too_many_results: Your search returned too many results. We are only displaying a subset, please try narrowing down your search.
+      failure: We could not perform search, please try again.
+    tag_migrations:
+      import_started: The tag migration import has started. It can take a few minutes for the tags to be published.
+      import_removed: Tag migration import has been removed.
+    taxons:
+      success: You have sucessfully deleted the taxon
+      alert: It was not possible to delete the taxon
     views:
       confirm: Are you sure?
   panels:

@@ -18,12 +18,6 @@ RSpec.describe SearchResponse do
       )
     end
 
-    it 'is successful' do
-      expect(
-        described_class.new(gds_api_response, 'document_collection')
-      ).to be_successful
-    end
-
     it 'includes content item search results' do
       search_response =
         described_class.new(gds_api_response, 'document_collection')

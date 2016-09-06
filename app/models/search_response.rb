@@ -11,10 +11,6 @@ class SearchResponse
     gds_api_response_hash['results'].map { |result| ContentItem.new(result) }
   end
 
-  def successful?
-    gds_api_response.code == 200
-  end
-
   def multiple_pages?
     gds_api_response_hash['pages'] > 1
   end

@@ -4,7 +4,9 @@
   <div class="col-md-4">
     <%= simple_form_for :collection_search, url: search_bulk_tagging_path , method: :get do |f| %>
       <div class="form-group">
-        <%= f.input :query, input_html: { type: :text, class: 'form-control' }, label: 'Query' %>
+        <%= f.input :query,
+          input_html: { type: :text, class: 'form-control', value: query },
+          label: 'Query'%>
         <%= f.submit "Search collection", class: "btn btn-md btn-success" %>
       </div>
     <% end %>

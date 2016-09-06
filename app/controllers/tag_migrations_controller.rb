@@ -11,18 +11,22 @@ class TagMigrationsController < ApplicationController
   def publish_tags
     TagImporter::PublishTags.new(tag_migration, user: current_user).run
 
-    # TODO update message
-    redirect_to tag_migration, success: I18n.t('tag_import.import_started')
+    redirect_to(
+      tag_migration,
+      success: I18n.t('controllers.tag_migrations.import_started')
+    )
   end
 
   def index
     render :index, locals: { tag_migrations: presented_tag_migrations }
   end
 
-  # TODO: update message
   def destroy
     tag_migration.mark_as_deleted
-    redirect_to tag_migrations_path, success: I18n.t('tag_import.import_removed')
+    redirect_to(
+      tag_migrations_path,
+      success: I18n.t('controllers.tag_migrations.import_removed')
+    )
   end
 
 private
@@ -38,7 +42,8 @@ private
   end
 
   def tag_migration
-    tag_migration = TagMigration.find(params[:id] || params.fetch(:tag_migration_id))
+    @tag_migration ||=
+      TagMigration.find(params[:id] || params.fetch(:tag_migration_id))
   end
 
   def tag_mappings
