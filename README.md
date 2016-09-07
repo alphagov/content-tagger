@@ -9,6 +9,19 @@ This is a Ruby on Rails application.
 It interacts with the publishing-api to manage the "links hash" for content on GOV.UK.
 It also allows the creation of new taxons, updating taxons and bulk-tagging.
 
+## Features
+
+### Bulk Tagging
+
+The bulk tagging feature allows us to search for existing content items via
+their collections, and apply taxon links in bulk to them.
+
+Please note that the search functionality has some restrictions. When a user
+searches for a collection, if the search is too broad, we will only show the top
+20 results on the search page. Currently, we do not paginate through the search
+results. Instead, we ask the user to be more specific in the search query in
+order to find the collection they are looking for.
+
 ## Screenshots
 
 ![Homepage](docs/screenshot-homepage.png)
