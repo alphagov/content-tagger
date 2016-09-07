@@ -58,9 +58,9 @@ private
 
   def destroy_flash_message(response_code)
     if response_code == 200
-      { success: I18n.t('messages.controller.taxons.success') }
+      { success: I18n.t('controllers.taxons.success') }
     else
-      { alert: I18n.t('messages.controller.taxons.alert') }
+      { alert: I18n.t('controllers.taxons.alert') }
     end
   end
 

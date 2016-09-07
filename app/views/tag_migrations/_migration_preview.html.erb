@@ -1,0 +1,47 @@
+<div class="import-preview">
+  <br/>
+
+  <div data-module="import-progress">
+    <% if tag_mappings.any? %>
+      <%= render partial: "import_progress_bar",
+        locals: { tag_mappings: tag_mappings, confirmed: confirmed, progress_path: progress_path } %>
+    <% end %>
+  </div>
+
+  <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+    <thead>
+      <tr>
+        <th>Page</th>
+        <th>Will be tagged to</th>
+        <th>Tag created?</th>
+      </tr>
+
+      <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+      <% tag_mappings.each do |tag| %>
+        <tr>
+          <td><%= link_to tag.content_base_path, website_url(tag.content_base_path) %></td>
+          <td>
+            <%= link_to tag.link_title, tagging_path(tag.link_content_id) %> (<%= tag.link_type %>)
+
+            <% if tag.errored? %>
+              <hr />
+              <span class="error-message">
+                <ul>
+                  <% tag.error_messages.each do |error_message| %>
+                  <li><%= error_message %></li>
+                  <% end %>
+                </ul>
+              </span>
+            <% end %>
+          </td>
+          <td class="tag-mapping-status">
+            <%= state_label_for(label_type: tag.label_type, title: tag.state_title) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

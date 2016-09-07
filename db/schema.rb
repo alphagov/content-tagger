@@ -11,26 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815093345) do
+ActiveRecord::Schema.define(version: 20160905162106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tag_mappings", force: :cascade do |t|
-    t.integer  "tagging_spreadsheet_id", null: false
-    t.string   "content_base_path",      null: false
+    t.integer  "tagging_source_id",    null: false
+    t.string   "content_base_path",    null: false
     t.string   "link_title"
-    t.string   "link_content_id",        null: false
-    t.string   "link_type",              null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "link_content_id",      null: false
+    t.string   "link_type",            null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
-    t.string   "state",                  null: false
+    t.string   "state",                null: false
     t.string   "message"
+    t.string   "tagging_source_type"
   end
 
-  add_index "tag_mappings", ["tagging_spreadsheet_id"], name: "index_tag_mappings_on_tagging_spreadsheet_id", using: :btree
+  add_index "tag_mappings", ["tagging_source_id"], name: "index_tag_mappings_on_tagging_source_id", using: :btree
+
+  create_table "tag_migrations", force: :cascade do |t|
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "original_link_content_id"
+    t.string   "state"
+    t.datetime "last_published_at"
+    t.string   "last_published_by"
+    t.datetime "deleted_at"
+  end
 
   create_table "tagging_spreadsheets", force: :cascade do |t|
     t.string   "url",               null: false
@@ -39,9 +50,9 @@ ActiveRecord::Schema.define(version: 20160815093345) do
     t.string   "user_uid",          null: false
     t.string   "last_published_by"
     t.datetime "last_published_at"
+    t.string   "description"
     t.string   "state",             null: false
     t.text     "error_message"
-    t.string   "description"
     t.datetime "deleted_at"
   end
 
@@ -58,5 +69,4 @@ ActiveRecord::Schema.define(version: 20160815093345) do
     t.datetime "updated_at",              null: false
   end
 
-  add_foreign_key "tag_mappings", "tagging_spreadsheets", on_delete: :cascade
 end

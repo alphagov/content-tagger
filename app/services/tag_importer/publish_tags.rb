@@ -6,7 +6,7 @@ module TagImporter
 
     def initialize(tagging_spreadsheet, user:)
       @tagging_spreadsheet = tagging_spreadsheet
-      @tag_mappings = tagging_spreadsheet.tag_mappings
+      @tag_mappings = tagging_spreadsheet.tag_mappings.order(id: :asc)
       @user = user
     end
 

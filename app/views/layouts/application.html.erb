@@ -14,6 +14,12 @@
   <li class='<%= active_navigation_item == 'tagging_spreadsheets' ? 'active' : nil %>'>
     <%= link_to 'Tag Importer', tagging_spreadsheets_path %>
   </li>
+  <li class='<%= request.fullpath.starts_with?('/bulk_tagging') ? 'active' : nil %>'>
+    <%= link_to 'Bulk Tagging', new_bulk_tagging_path %>
+  </li>
+  <li class='<%= active_navigation_item == 'tag_migrations' ? 'active' : nil %>'>
+    <%= link_to 'Tag Migration', tag_migrations_path %>
+  </li>
 <% end %>
 
 <%= render template: 'layouts/govuk_admin_template' %>

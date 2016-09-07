@@ -3,7 +3,7 @@ FactoryGirl.define do
     content_base_path 'a/base/path'
     link_content_id 'a-content-id'
     link_type 'taxon'
-    tagging_spreadsheet
+    association :tagging_source, factory: :tagging_spreadsheet
     state 'ready_to_tag'
   end
 end

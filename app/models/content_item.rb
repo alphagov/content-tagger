@@ -7,7 +7,7 @@ class ContentItem
     @content_id = data.fetch('content_id')
     @title = data.fetch('title')
     @base_path = data.fetch('base_path')
-    @publishing_app = data.fetch('publishing_app')
+    @publishing_app = data.fetch('publishing_app', nil)
     @document_type = data.fetch('document_type')
   end
 

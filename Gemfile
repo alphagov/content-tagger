@@ -9,7 +9,7 @@ gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
 gem 'govuk_admin_template', '~> 4.1.1'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
-gem 'gds-api-adapters', '~> 32.3'
+gem 'gds-api-adapters', '~> 35.0'
 
 gem 'airbrake', '~> 4.3.1'
 
@@ -32,6 +32,7 @@ end
 
 group :development do
   gem 'web-console', '~> 2.0'
+  gem "better_errors"
 end
 
 group :test do

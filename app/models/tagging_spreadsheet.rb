@@ -7,7 +7,7 @@ class TaggingSpreadsheet < ActiveRecord::Base
   )
   validates_with GoogleUrlValidator
 
-  has_many :tag_mappings, dependent: :delete_all
+  has_many :tag_mappings, dependent: :destroy, as: :tagging_source
   has_one :added_by, class_name: "User", primary_key: :user_uid, foreign_key: :uid
 
   scope :newest_first, -> { order(created_at: :desc) }
