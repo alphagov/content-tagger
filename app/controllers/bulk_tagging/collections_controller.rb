@@ -7,8 +7,10 @@ module BulkTagging
       render :show, locals: {
         bulk_tagging: TagMigration.new,
         content_id: params[:content_id],
+        base_path: params[:base_path],
         taxons: taxons,
-        expanded_links: expanded_links
+        expanded_links: expanded_links,
+        query: params[:query]
       }
     end
   end

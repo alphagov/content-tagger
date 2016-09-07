@@ -14,6 +14,8 @@ RSpec.feature "Bulk tagging", type: :feature do
     then_i_can_preview_my_changes
     when_i_create_tags
     then_the_content_items_have_been_retagged
+    when_i_go_to_all_migrations
+    then_i_can_see_it_has_been_imported
   end
 
   scenario "Not selecting anything to migrate" do
@@ -152,5 +154,19 @@ RSpec.feature "Bulk tagging", type: :feature do
 
   def when_i_select_taxons
     select "Taxon 1", from: "taxons"
+  end
+
+  def when_i_go_to_all_migrations
+    visit tag_migrations_path
+  end
+
+  def then_i_can_see_it_has_been_imported
+    expect(all('table tbody tr').count).to eq(1)
+
+    row = first('table tbody tr')
+
+    expect(row).to have_text(/imported/i)
+    expect(row).to have_text('Tax')
+    expect(row).to have_link('/tax-documents')
   end
 end

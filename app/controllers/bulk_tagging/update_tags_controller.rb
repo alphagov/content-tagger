@@ -13,7 +13,7 @@ module BulkTagging
 
     def tag_migration
       @tag_migration ||= BulkTagging::BuildTagMigration.perform(
-        original_link_content_id: params[:collection_content_id],
+        tag_migration_params: tag_migration_params,
         taxon_content_ids: taxon_content_ids,
         content_base_paths: content_base_paths
       )
@@ -25,6 +25,10 @@ module BulkTagging
 
     def content_base_paths
       params[:content_base_paths]
+    end
+
+    def tag_migration_params
+      params.permit(:collection_base_path, :query, :collection_content_id)
     end
   end
 end
