@@ -21,7 +21,7 @@
       <table class="table queries-list table-bordered" data-module="filterable-table">
         <thead>
           <tr class="table-header">
-            <th>Select</th>
+            <th data-module="select-all"><%= check_box_tag 'select_all', nil, false %></th>
             <th>Title</th>
             <th>Content ID</th>
           </tr>
@@ -29,7 +29,10 @@
         <tbody>
           <% expanded_links.each do |expanded_link| %>
             <tr>
-              <td><%= check_box_tag 'content_base_paths[]', expanded_link.base_path, true %></td>
+              <td>
+                <%= check_box_tag 'content_base_paths[]',
+                  expanded_link.base_path, false, class: 'select-content-item' %>
+              </td>
               <td><%= link_to expanded_link.title, website_url('/api/content' + expanded_link.base_path) %></td>
               <td><%= link_to expanded_link.content_id,
                 "#{website_url('/api/content' + expanded_link.base_path)}" %></td>

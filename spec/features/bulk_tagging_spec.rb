@@ -76,8 +76,10 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(page).to have_text "Tax doc 2"
     expect(page).to have_link "tax-doc-1"
     expect(page).to have_link "tax-doc-2"
-    # All content items checked by default
-    expect(all("input[type='checkbox']").select(&:checked?).count).to eq 2
+
+    expect(all(".select-content-item").select(&:checked?).count).to eq 0
+    when_i_select_all_content_items
+    expect(all(".select-content-item").select(&:checked?).count).to eq 2
   end
 
   def when_i_select_the_taxons_i_want_to_retag_them_to
@@ -133,8 +135,14 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_deselect_all_content_items
-    all("input[type='checkbox']").each do |checkbox|
+    all(".select-content-item").each do |checkbox|
       checkbox.set false
+    end
+  end
+
+  def when_i_select_all_content_items
+    all(".select-content-item").each do |checkbox|
+      checkbox.set true
     end
   end
 
