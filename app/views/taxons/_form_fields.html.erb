@@ -1,0 +1,9 @@
+<%= f.input :title, input_html: { class: 'form-control' } %>
+<%= f.input :internal_name, input_html: { class: 'form-control' } %>
+<%= f.input :description,
+  as: :text,
+  label: "Description (displayed on frontend)",
+  input_html: { class: 'form-control' } %>
+<%= f.input :notes_for_editors, as: :text, input_html: { class: 'form-control' } %>
+<%= f.input :parent_taxons, collection: taxons_for_select,
+  input_html: { class: :select2, multiple: true, include_blank: true } %>

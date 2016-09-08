@@ -1,10 +1,12 @@
 class Taxon
   ATTRIBUTES = %w(title
+                  description
                   parent_taxons
                   content_id
                   base_path
                   publication_state
                   internal_name
+                  notes_for_editors
                   document_type).freeze
 
   attr_accessor(*ATTRIBUTES)

@@ -8,9 +8,7 @@
     </div>
   <% end %>
 
-  <%= f.input :title, input_html: { class: 'form-control' } %>
-  <%= f.input :parent_taxons, collection: taxons_for_select,
-      input_html: { class: :select2, multiple: true, include_blank: true } %>
+  <%= render partial: 'form_fields', locals: { taxons_for_select: taxons_for_select, f: f} %>
 
   <%= f.submit I18n.t('views.taxons.new_button'), class: "btn btn-lg btn-success" %>
 <% end %>

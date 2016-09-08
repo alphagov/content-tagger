@@ -2,7 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Taxonomy::TaxonPayloadBuilder do
   let(:taxon) do
-    instance_double(Taxon, title: 'My Title', base_path: "/taxons/my-taxon")
+    instance_double(
+      Taxon,
+      title: 'My Title',
+      base_path: "/taxons/my-taxon",
+      description: "This is a taxon.",
+      internal_name: "Internal title",
+      notes_for_editors: "Use this taxon wisely."
+    )
   end
   let(:builder) { described_class.new(taxon) }
 
