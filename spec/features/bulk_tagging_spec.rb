@@ -56,12 +56,14 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def and_a_set_of_taxons
-    linkables = [
-      basic_content_item("Taxon 1"),
-      basic_content_item("Taxon 2"),
-      basic_content_item("Taxon 3"),
-    ]
-    publishing_api_has_linkables(linkables, document_type: 'taxon')
+    publishing_api_has_content(
+      [
+        basic_content_item("Taxon 1"),
+        basic_content_item("Taxon 2"),
+        basic_content_item("Taxon 3"),
+      ],
+      document_type: "taxon"
+    )
   end
 
   def when_i_find_the_collection_via_the_bulk_tagger

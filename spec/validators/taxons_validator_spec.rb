@@ -2,13 +2,9 @@ require 'rails_helper'
 
 RSpec.describe TaxonsValidator do
   before do
-    publishing_api_has_linkables(
-      [{
-        'title' => 'A taxon',
-        'content_id' => 'taxon1-content-id',
-      }],
-      document_type: 'taxon'
-    )
+    taxon = { title: "A taxon", content_id: 'taxon1-content-id' }
+
+    publishing_api_has_content([taxon], document_type: "taxon")
   end
 
   it 'validates unknown taxons' do

@@ -6,13 +6,11 @@ RSpec.describe Taxonomy::TaxonFetcher do
 
   describe '#taxons' do
     it 'retrieves content items from publishing api and orders by title' do
-      linkables = [
-        { "title" => "foo", "base_path" => "/foo", "content_id" => SecureRandom.uuid },
-        { "title" => "bar", "base_path" => "/bar", "content_id" => SecureRandom.uuid },
-        { "title" => "aha", "base_path" => "/aha", "content_id" => SecureRandom.uuid },
-      ]
+      taxon_1 = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }
+      taxon_2 = { title: "bar", base_path: "/bar", content_id: SecureRandom.uuid }
+      taxon_3 = { title: "aha", base_path: "/aha", content_id: SecureRandom.uuid }
 
-      publishing_api_has_linkables(linkables, document_type: 'taxon')
+      publishing_api_has_content([taxon_1, taxon_2, taxon_3], document_type: "taxon")
 
       result = described_class.new.taxons
 
@@ -25,11 +23,10 @@ RSpec.describe Taxonomy::TaxonFetcher do
     it 'returns the content ids of all taxons' do
       content_id_1 = SecureRandom.uuid
       content_id_2 = SecureRandom.uuid
-      linkables = [
-        { "title" => "foo", "base_path" => "/foo", "content_id" => content_id_1 },
-        { "title" => "bar", "base_path" => "/bar", "content_id" => content_id_2 },
-      ]
-      publishing_api_has_linkables(linkables, document_type: 'taxon')
+      taxon_1 = { title: "foo", base_path: "/foo", content_id: content_id_1 }
+      taxon_2 = { title: "bar", base_path: "/bar", content_id: content_id_2 }
+
+      publishing_api_has_content([taxon_1, taxon_2], document_type: "taxon")
 
       result = described_class.new.taxon_content_ids
 
@@ -44,24 +41,18 @@ RSpec.describe Taxonomy::TaxonFetcher do
     let(:taxon) do
       instance_double(Taxon, parent_taxons: [taxon_id_1, taxon_id_2])
     end
-    let(:link_1) do
-      { title: "foo", base_path: "/foo", content_id: taxon_id_1 }
-    end
-    let(:link_2) do
-      { title: "bar", base_path: "/bar", content_id: taxon_id_2 }
-    end
-    let(:link_3) do
-      { title: "aha", base_path: "/aha", content_id: SecureRandom.uuid }
-    end
-    let(:linkables) { [link_1, link_2, link_3] }
 
     it 'returns the parent taxons for a given taxon' do
-      publishing_api_has_linkables(linkables, document_type: 'taxon')
+      taxon_1 = { title: "foo", base_path: "/foo", content_id: taxon_id_1 }
+      taxon_2 = { title: "bar", base_path: "/bar", content_id: taxon_id_2 }
+      taxon_3 = { title: "bar", base_path: "/bar", content_id: SecureRandom.uuid }
+
+      publishing_api_has_content([taxon_1, taxon_2, taxon_3], document_type: "taxon")
       result = described_class.new.parents_for_taxon(taxon)
 
       expect(result.count).to eq(2)
-      expect(result).to include(taxon_with_attributes(link_1))
-      expect(result).to include(taxon_with_attributes(link_2))
+      expect(result).to include(taxon_with_attributes(taxon_1))
+      expect(result).to include(taxon_with_attributes(taxon_2))
     end
   end
 end

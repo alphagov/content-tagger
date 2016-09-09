@@ -45,12 +45,10 @@ RSpec.describe BulkTagging::BuildTagMigration do
 
   context 'with 2 valid taxons and 2 content base paths' do
     before do
-      linkables = [
-        { "title" => "Taxon 1", "base_path" => "/foo", "content_id" => 'taxon-1' },
-        { "title" => "Taxon 2", "base_path" => "/aha", "content_id" => 'taxon-2' },
-      ]
+      taxon_1 = { title: "Taxon 1", base_path: "/foo", content_id: 'taxon-1' }
+      taxon_2 = { title: "Taxon 2", base_path: "/ha", content_id: 'taxon-2' }
 
-      publishing_api_has_linkables(linkables, document_type: 'taxon')
+      publishing_api_has_content([taxon_1, taxon_2], document_type: "taxon")
     end
 
     let(:tag_migration) do

@@ -60,8 +60,7 @@ RSpec.feature "Managing taxonomies" do
   end
 
   def given_there_are_taxons
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
-      .to_return(body: [@taxon_1, @taxon_2].to_json)
+    publishing_api_has_content([@taxon_1, @taxon_2], document_type: "taxon")
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(body: { links: { parent_taxons: [] } }.to_json)
