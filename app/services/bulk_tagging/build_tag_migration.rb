@@ -47,8 +47,8 @@ module BulkTagging
     def tag_migration
       @tag_migration ||= TagMigration.new(
         state: 'ready_to_import',
-        original_link_content_id: tag_migration_params[:collection_content_id],
-        original_link_base_path: tag_migration_params[:collection_base_path],
+        original_link_content_id: tag_migration_params[:original_link_content_id],
+        original_link_base_path: tag_migration_params[:original_link_base_path],
         query: tag_migration_params[:query]
       )
     end

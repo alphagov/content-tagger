@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe BulkTagging::BuildTagMigration do
   let(:tag_migration_params) do
     {
-      collection_content_id: 'content-id',
-      collection_base_path: '/content-base-path',
+      original_link_content_id: 'content-id',
+      original_link_base_path: '/content-base-path',
       query: 'A query string'
     }
   end

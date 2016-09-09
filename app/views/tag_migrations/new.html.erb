@@ -1,14 +1,14 @@
-<%= simple_form_for bulk_tagging,
-  url: bulk_tagging_collection_update_tags_path(content_id,
-                                                query: query,
-                                                collection_base_path: base_path),
-  method: :post do |f| %>
+<%= simple_form_for tag_migration, url: tag_migrations_path, method: :post do |f| %>
+  <%= f.hidden_field :original_link_content_id %>
+  <%= f.hidden_field :query %>
+  <%= f.hidden_field :original_link_base_path %>
 
   <% if flash[:error].present? %>
     <div class="alert alert-danger" role="alert">
       <%= flash[:error] %>
     </div>
   <% end %>
+
   <div class='row'>
     <div class='col-md-4'>
       <div class="form-group">

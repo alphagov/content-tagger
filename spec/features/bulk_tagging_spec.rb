@@ -10,10 +10,10 @@ RSpec.feature "Bulk tagging", type: :feature do
     and_a_set_of_taxons
     when_i_find_the_collection_via_the_bulk_tagger
     then_i_can_see_the_content_items_in_this_collection
-    when_i_select_the_taxons_i_want_to_retag_them_to
+    when_i_select_the_taxons_i_want_to_tag_them_to
     then_i_can_preview_my_changes
     when_i_create_tags
-    then_the_content_items_have_been_retagged
+    then_the_content_items_have_been_tagged
     when_i_go_to_all_migrations
     then_i_can_see_it_has_been_imported
   end
@@ -65,7 +65,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_find_the_collection_via_the_bulk_tagger
-    visit new_bulk_tagging_path
+    visit new_tag_search_path
     fill_in "Query", with: "Tax"
     click_button "Search collection"
     expect(page).to have_text("Tax documents")
@@ -84,7 +84,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(all(".select-content-item").select(&:checked?).count).to eq 2
   end
 
-  def when_i_select_the_taxons_i_want_to_retag_them_to
+  def when_i_select_the_taxons_i_want_to_tag_them_to
     select "Taxon 1", from: "taxons"
     select "Taxon 2", from: "taxons"
   end
@@ -126,7 +126,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     click_link 'Create tags'
   end
 
-  def then_the_content_items_have_been_retagged
+  def then_the_content_items_have_been_tagged
     # Refresh the page so we see the updates
     visit current_path
 

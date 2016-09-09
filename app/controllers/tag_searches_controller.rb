@@ -1,9 +1,9 @@
-class BulkTaggingsController < ApplicationController
+class TagSearchesController < ApplicationController
   def new
     render :new, locals: { results: [], query: '' }
   end
 
-  def search
+  def results
     warning_about_multiple_pages
 
     render :new, locals: { results: search_response.results, query: query }

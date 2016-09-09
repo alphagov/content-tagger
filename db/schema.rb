@@ -52,10 +52,10 @@ ActiveRecord::Schema.define(version: 20160907131639) do
     t.string   "user_uid",          null: false
     t.string   "last_published_by"
     t.datetime "last_published_at"
-    t.string   "description"
     t.string   "state",             null: false
     t.text     "error_message"
     t.datetime "deleted_at"
+    t.string   "description"
   end
 
   create_table "users", force: :cascade do |t|
