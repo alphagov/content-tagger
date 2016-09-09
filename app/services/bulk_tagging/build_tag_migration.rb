@@ -2,17 +2,17 @@ module BulkTagging
   class BuildTagMigration
     class InvalidArgumentError < ArgumentError; end
 
-    attr_reader :original_link_content_id, :taxon_content_ids, :content_base_paths
+    attr_reader :tag_migration_params, :taxon_content_ids, :content_base_paths
 
-    def initialize(original_link_content_id:, taxon_content_ids:, content_base_paths:)
-      @original_link_content_id = original_link_content_id
+    def initialize(tag_migration_params:, taxon_content_ids:, content_base_paths:)
+      @tag_migration_params = tag_migration_params
       @taxon_content_ids = taxon_content_ids
       @content_base_paths = content_base_paths
     end
 
-    def self.perform(original_link_content_id:, taxon_content_ids:, content_base_paths:)
+    def self.perform(tag_migration_params:, taxon_content_ids:, content_base_paths:)
       new(
-        original_link_content_id: original_link_content_id,
+        tag_migration_params: tag_migration_params,
         taxon_content_ids: taxon_content_ids,
         content_base_paths: content_base_paths
       ).perform
@@ -47,7 +47,9 @@ module BulkTagging
     def tag_migration
       @tag_migration ||= TagMigration.new(
         state: 'ready_to_import',
-        original_link_content_id: original_link_content_id
+        original_link_content_id: tag_migration_params[:collection_content_id],
+        original_link_base_path: tag_migration_params[:collection_base_path],
+        query: tag_migration_params[:query]
       )
     end
 

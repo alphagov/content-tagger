@@ -6,7 +6,8 @@
   <thead>
     <tr>
       <th>State</th>
-      <th>Original content id</th>
+      <th>Search term</th>
+      <th>Original source</th>
       <th>Date added</th>
       <th></th>
       <th></th>
@@ -18,7 +19,11 @@
       <tr>
         <td><%= state_label_for(label_type: tag_migration.label_type,
                                 title: tag_migration.state_title) %></td>
-        <td><%= tag_migration.original_link_content_id %></td>
+        <td><%= tag_migration.query %></td>
+        <td>
+          <%= link_to tag_migration.original_link_base_path,
+            website_url('/api/content' + tag_migration.original_link_base_path) %>
+        </td>
         <td>
           <%= time_tag_for(tag_migration.created_at) %>
         </td>

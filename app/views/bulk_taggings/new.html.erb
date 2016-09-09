@@ -24,8 +24,11 @@
           <% results.each do |collection| %>
             <tr>
               <td><%= collection.title %></td>
-              <td><%= link_to collection.content_id,
-                    bulk_tagging_collection_path(collection.content_id) %></td>
+              <td>
+                <%= link_to collection.content_id,
+                  bulk_tagging_collection_path(collection.content_id,
+                                               query: query,
+                                               base_path: collection.base_path) %></td>
             </tr>
           <% end %>
         <% else %>
