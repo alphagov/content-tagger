@@ -4,6 +4,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   require 'gds_api/test_helpers/publishing_api_v2'
   include GdsApi::TestHelpers::PublishingApiV2
   include ContentItemHelper
+  include PublishingApiHelper
 
   scenario "Migrating tags from a collection to taxons" do
     given_a_collection_with_items
@@ -56,12 +57,13 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def and_a_set_of_taxons
-    linkables = [
-      basic_content_item("Taxon 1"),
-      basic_content_item("Taxon 2"),
-      basic_content_item("Taxon 3"),
-    ]
-    publishing_api_has_linkables(linkables, document_type: 'taxon')
+    publishing_api_has_taxons(
+      [
+        basic_content_item("Taxon 1"),
+        basic_content_item("Taxon 2"),
+        basic_content_item("Taxon 3"),
+      ]
+    )
   end
 
   def when_i_find_the_collection_via_the_bulk_tagger

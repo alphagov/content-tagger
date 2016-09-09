@@ -1,11 +1,13 @@
 class Taxon
-  attr_accessor :title,
-                :parent_taxons,
-                :content_id,
-                :base_path,
-                :publication_state,
-                :internal_name,
-                :document_type
+  ATTRIBUTES = %w(title
+                  parent_taxons
+                  content_id
+                  base_path
+                  publication_state
+                  internal_name
+                  document_type).freeze
+
+  attr_accessor(*ATTRIBUTES)
 
   include ActiveModel::Model
 

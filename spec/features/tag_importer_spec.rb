@@ -4,6 +4,7 @@ RSpec.feature "Tag importer", type: :feature do
   require 'gds_api/test_helpers/publishing_api_v2'
   include GdsApi::TestHelpers::PublishingApiV2
   include GoogleSheetHelper
+  include PublishingApiHelper
 
   before do
     Sidekiq::Testing.inline!
@@ -125,13 +126,9 @@ RSpec.feature "Tag importer", type: :feature do
         taxons: ["early-years-content-id"],
       }
     )
-    publishing_api_has_linkables(
-      [
-        { 'title' => 'Early Years', content_id: 'early-years-content-id' },
-        { 'title' => 'Education', content_id: 'education-content-id' }
-      ],
-      document_type: 'taxon'
-    )
+    taxon_1 = { title: 'Early Years', content_id: 'early-years-content-id' }
+    taxon_2 = { title: 'Education', content_id: 'education-content-id' }
+    publishing_api_has_taxons([taxon_1, taxon_2])
 
     click_link "Create tags"
     expect(link_update_1).to have_been_requested

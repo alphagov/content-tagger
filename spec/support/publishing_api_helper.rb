@@ -1,26 +1,34 @@
 module PublishingApiHelper
-  def publishing_api_has_taxons(base_paths)
+  def publishing_api_has_taxons(taxons)
+    publishing_api_has_content(
+      taxons,
+      document_type: "taxon",
+      order: '-public_updated_at',
+    )
+  end
+
+  def publishing_api_has_taxon_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_taxons, base_paths),
       document_type: 'taxon'
     )
   end
 
-  def publishing_api_has_topics(base_paths)
+  def publishing_api_has_topic_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_topics, base_paths),
       document_type: 'topic'
     )
   end
 
-  def publishing_api_has_organisations(base_paths)
+  def publishing_api_has_organisation_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_organisations, base_paths),
       document_type: 'organisation'
     )
   end
 
-  def publishing_api_has_mainstream_browse_pages(base_paths)
+  def publishing_api_has_mainstream_browse_page_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_mainstream_browse_pages, base_paths),
       document_type: 'mainstream_browse_page'
