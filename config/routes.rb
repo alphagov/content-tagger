@@ -19,19 +19,13 @@ Rails.application.routes.draw do
     get  'import_progress'
   end
 
-  resources :tag_migrations, only: %i(index show create) do
+  resources :tag_migrations, only: [:index, :new, :create, :show, :destroy] do
     post 'publish_tags'
     get  'import_progress'
   end
 
-  resource :bulk_tagging do
-    get 'search' => 'bulk_taggings#search'
-  end
-
-  namespace :bulk_tagging do
-    resources :collections, only: :show, param: :content_id do
-      resources :update_tags, only: :create
-    end
+  resource :tag_search, only: [:new] do
+    get 'results' => 'tag_searches#results', as: "results_of"
   end
 
   get '/healthcheck', to: proc { [200, {}, ['OK']] }

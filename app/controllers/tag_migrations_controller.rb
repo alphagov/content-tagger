@@ -1,4 +1,37 @@
 class TagMigrationsController < ApplicationController
+  def index
+    render :index, locals: { tag_migrations: presented_tag_migrations }
+  end
+
+  def new
+    unless tag_migration_params_present
+      redirect_to new_tag_search_path
+      return
+    end
+
+    expanded_links = ExpandedLinksFetcher.expanded_links(tag_migration_params[:source_content_id])
+    taxons = Taxonomy::TaxonFetcher.new.taxons
+
+    render :new, locals: {
+      tag_migration: TagMigration.new(tag_migration_params),
+      taxons: taxons,
+      expanded_links: expanded_links,
+    }
+  end
+
+  def create
+    tag_migration = BulkTagging::BuildTagMigration.perform(
+      tag_migration_params: tag_migration_params,
+      taxon_content_ids: params[:taxons],
+      content_base_paths: params[:content_base_paths],
+    )
+    tag_migration.save!
+    redirect_to tag_migration_path(tag_migration)
+  rescue BulkTagging::BuildTagMigration::InvalidArgumentError => e
+    flash[:error] = e.message
+    redirect_to new_tag_migration_path(tag_migration: tag_migration_params)
+  end
+
   def show
     render :show, locals: {
       tag_migration: tag_migration,
@@ -6,6 +39,14 @@ class TagMigrationsController < ApplicationController
       confirmed: tag_mappings.completed.count,
       progress_path: tag_migration_import_progress_path(tag_migration),
     }
+  end
+
+  def destroy
+    tag_migration.mark_as_deleted
+    redirect_to(
+      tag_migrations_path,
+      success: I18n.t('controllers.tag_migrations.import_removed')
+    )
   end
 
   def publish_tags
@@ -17,19 +58,18 @@ class TagMigrationsController < ApplicationController
     )
   end
 
-  def index
-    render :index, locals: { tag_migrations: presented_tag_migrations }
+private
+
+  def tag_migration_params_present
+    return false if params[:tag_migration].blank?
+    tag_migration_params.map { |_, v| v.present? }.all?
   end
 
-  def destroy
-    tag_migration.mark_as_deleted
-    redirect_to(
-      tag_migrations_path,
-      success: I18n.t('controllers.tag_migrations.import_removed')
+  def tag_migration_params
+    params.require(:tag_migration).permit(
+      :source_base_path, :query, :source_content_id
     )
   end
-
-private
 
   def tag_migrations
     TagMigration.active.newest_first
