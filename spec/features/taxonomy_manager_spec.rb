@@ -3,8 +3,20 @@ require "rails_helper"
 RSpec.feature "Managing taxonomies" do
   include PublishingApiHelper
   before do
-    @taxon_1 = { title: "I Am A Taxon", content_id: "ID-1", base_path: "/foo" }
-    @taxon_2 = { title: "I Am Another Taxon", content_id: "ID-2", base_path: "/bar" }
+    @taxon_1 = {
+      title: "I Am A Taxon",
+      content_id: "ID-1",
+      base_path: "/foo",
+      internal_name: "I Am A Taxon",
+      publication_state: 'active'
+    }
+    @taxon_2 = {
+      title: "I Am Another Taxon",
+      content_id: "ID-2",
+      base_path: "/bar",
+      internal_name: "I Am Another Taxon",
+      publication_state: 'active'
+    }
 
     @create_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 200, body: {}.to_json)
@@ -61,6 +73,7 @@ RSpec.feature "Managing taxonomies" do
   end
 
   def given_there_are_taxons
+    publishing_api_has_linkables([@taxon_1, @taxon_2], document_type: 'taxon')
     publishing_api_has_taxons([@taxon_1, @taxon_2])
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")

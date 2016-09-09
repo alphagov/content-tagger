@@ -13,10 +13,6 @@ module Taxonomy
       taxons.map(&:content_id)
     end
 
-    def taxons_for_select
-      taxons.map { |taxon| [taxon.title, taxon.content_id] }
-    end
-
     def parents_for_taxon(taxon_child)
       taxons.select do |taxon|
         taxon_child.parent_taxons.include?(taxon.content_id)

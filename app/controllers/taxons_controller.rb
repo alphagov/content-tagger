@@ -65,7 +65,7 @@ private
   end
 
   def taxons_for_select
-    taxon_fetcher.taxons_for_select
+    Linkables.new.taxons
   end
 
   def parent_taxons
