@@ -9,7 +9,7 @@ class TagMigrationsController < ApplicationController
       return
     end
 
-    expanded_links = ExpandedLinksFetcher.expanded_links(tag_migration_params[:original_link_content_id])
+    expanded_links = ExpandedLinksFetcher.expanded_links(tag_migration_params[:source_content_id])
     taxons = Taxonomy::TaxonFetcher.new.taxons
 
     render :new, locals: {
@@ -67,7 +67,7 @@ private
 
   def tag_migration_params
     params.require(:tag_migration).permit(
-      :original_link_base_path, :query, :original_link_content_id
+      :source_base_path, :query, :source_content_id
     )
   end
 

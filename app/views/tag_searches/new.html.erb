@@ -28,8 +28,8 @@
                 <%= link_to collection.content_id,
                   new_tag_migration_path(
                     tag_migration: {
-                      original_link_content_id: collection.content_id,
-                      original_link_base_path: collection.base_path,
+                      source_content_id: collection.content_id,
+                      source_base_path: collection.base_path,
                       query: query,
                     }
                   ) %>

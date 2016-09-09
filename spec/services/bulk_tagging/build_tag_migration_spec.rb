@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe BulkTagging::BuildTagMigration do
   let(:tag_migration_params) do
     {
-      original_link_content_id: 'content-id',
-      original_link_base_path: '/content-base-path',
+      source_content_id: 'content-id',
+      source_base_path: '/content-base-path',
       query: 'A query string'
     }
   end
@@ -69,8 +69,8 @@ RSpec.describe BulkTagging::BuildTagMigration do
       expect(tag_migration).to be_valid
     end
 
-    it 'assigns the original content id to the tag migration' do
-      expect(tag_migration.original_link_content_id).to eq('content-id')
+    it 'assigns the source tag content id to the tag migration' do
+      expect(tag_migration.source_content_id).to eq('content-id')
     end
 
     it 'assigns an initial state to the tag migration' do
@@ -82,7 +82,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
     end
 
     it 'assigns the content base path to the tag migration' do
-      expect(tag_migration.original_link_base_path).to eq('/content-base-path')
+      expect(tag_migration.source_base_path).to eq('/content-base-path')
     end
 
     it 'it builds 4 tag mappings' do
