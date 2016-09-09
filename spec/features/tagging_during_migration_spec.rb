@@ -20,7 +20,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   end
 
   def given_we_can_populate_the_dropdowns_with_content_from_publishing_api
-    publishing_api_has_topics(
+    publishing_api_has_topic_linkables(
       [
         "/topic/id-of-already-tagged",
         "/topic/business-tax/pension-scheme-administration",

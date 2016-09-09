@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe BulkTagging::BuildTagMigration do
+  include PublishingApiHelper
+
   let(:tag_migration_params) do
     {
       collection_content_id: 'content-id',
@@ -48,7 +50,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
       taxon_1 = { title: "Taxon 1", base_path: "/foo", content_id: 'taxon-1' }
       taxon_2 = { title: "Taxon 2", base_path: "/ha", content_id: 'taxon-2' }
 
-      publishing_api_has_content([taxon_1, taxon_2], document_type: "taxon")
+      publishing_api_has_taxons([taxon_1, taxon_2])
     end
 
     let(:tag_migration) do

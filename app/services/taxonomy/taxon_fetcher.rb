@@ -1,7 +1,12 @@
 module Taxonomy
   class TaxonFetcher
     def taxons
-      @taxons ||= taxon_list.sort_by(&:title)
+      @taxons ||=
+        begin
+          taxon_content_items.map do |taxon_hash|
+            Taxon.new(taxon_hash.slice(*Taxon::ATTRIBUTES))
+          end
+        end
     end
 
     def taxon_content_ids
@@ -20,16 +25,13 @@ module Taxonomy
 
   private
 
-    def taxon_list
-      taxon_content_items.map do |taxon_hash|
-        Taxon.new(taxon_hash.slice(*Taxon::ATTRIBUTES))
-      end
-    end
-
     def taxon_content_items
       Services
         .publishing_api
-        .get_content_items(document_type: 'taxon')['results']
+        .get_content_items(
+          document_type: 'taxon',
+          order: '-public_updated_at'
+        )['results']
     end
   end
 end

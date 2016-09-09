@@ -1,4 +1,12 @@
 module PublishingApiHelper
+  def publishing_api_has_taxons(taxons)
+    publishing_api_has_content(
+      taxons,
+      document_type: "taxon",
+      order: '-public_updated_at',
+    )
+  end
+
   def publishing_api_has_taxon_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_taxons, base_paths),
