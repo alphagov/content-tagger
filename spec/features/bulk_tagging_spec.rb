@@ -40,7 +40,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         base_path: "/tax-documents",
         document_type: "document_collection",
       }],
-      document_type: "document_collection",
+      document_type: BulkTagging::Search.default_document_types,
       per_page: 20,
       q: "Tax"
     )
@@ -69,7 +69,8 @@ RSpec.feature "Bulk tagging", type: :feature do
   def when_i_find_the_collection_via_the_bulk_tagger
     visit new_tag_search_path
     fill_in "Query", with: "Tax"
-    click_button "Search collection"
+    click_button "Search tags"
+
     expect(page).to have_text("Tax documents")
     expect(page).to have_link("collection-id")
     expect(page).to have_text('Document collection')

@@ -4,12 +4,15 @@ class TagMigrationsController < ApplicationController
   end
 
   def new
-    unless tag_migration_params_present
+    unless tag_migration_params_present?
       redirect_to new_tag_search_path
       return
     end
 
-    expanded_links = ExpandedLinksFetcher.expanded_links(tag_migration_params[:source_content_id])
+    expanded_links = ExpandedLinksFetcher.expanded_links(
+      tag_migration_params[:source_content_id],
+      tag_migration_params[:document_type],
+    )
     taxons = Taxonomy::TaxonFetcher.new.taxons
 
     render :new, locals: {
@@ -60,14 +63,14 @@ class TagMigrationsController < ApplicationController
 
 private
 
-  def tag_migration_params_present
+  def tag_migration_params_present?
     return false if params[:tag_migration].blank?
     tag_migration_params.map { |_, v| v.present? }.all?
   end
 
   def tag_migration_params
     params.require(:tag_migration).permit(
-      :source_base_path, :query, :source_content_id
+      :source_base_path, :source_content_id, :document_type, :query
     )
   end
 
