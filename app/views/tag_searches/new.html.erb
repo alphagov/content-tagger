@@ -1,48 +1,45 @@
 <%= display_header title: 'Tag Search', breadcrumbs: ["Tag Search"] %>
 
-<div class="row">
-  <div class="col-md-4">
-    <%= simple_form_for :collection_search, url: results_of_tag_search_path, method: :get do |f| %>
-      <div class="form-group">
-        <%= f.input :query,
-          input_html: { type: :text, class: 'form-control', value: query },
-          label: 'Query'%>
-        <%= f.submit "Search collection", class: "btn btn-md btn-success" %>
-      </div>
-    <% end %>
+<%= simple_form_for :collection_search, url: results_of_tag_search_path, method: :get do |f| %>
+  <div class="form-group">
+    <%= f.input :query,
+      input_html: { type: :text, class: 'form-control', value: query },
+      label: 'Query'%>
+    <%= f.submit "Search collection", class: "btn btn-md btn-success" %>
   </div>
-  <div class="col-md-8">
-    <table class="table queries-list table-bordered" data-module="filterable-table">
-      <thead>
-        <tr class="table-header">
-          <th>Title</th>
-          <th>Content ID</th>
+<% end %>
+
+<table class="table queries-list table-bordered" data-module="filterable-table">
+  <thead>
+    <tr class="table-header">
+      <th>Title</th>
+      <th>Content ID</th>
+      <th>Document type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if results.present? %>
+      <% results.each do |collection| %>
+        <tr>
+          <td><%= collection.title %></td>
+          <td>
+            <%= link_to collection.content_id,
+              new_tag_migration_path(
+                tag_migration: {
+                  source_content_id: collection.content_id,
+                  source_base_path: collection.base_path,
+                  query: query,
+                }
+              ) %>
+          </td>
+          <td><%= collection.document_type.humanize %></td>
         </tr>
-      </thead>
-      <tbody>
-        <% if results.present? %>
-          <% results.each do |collection| %>
-            <tr>
-              <td><%= collection.title %></td>
-              <td>
-                <%= link_to collection.content_id,
-                  new_tag_migration_path(
-                    tag_migration: {
-                      source_content_id: collection.content_id,
-                      source_base_path: collection.base_path,
-                      query: query,
-                    }
-                  ) %>
-              </td>
-            </tr>
-          <% end %>
-        <% else %>
-            <tr>
-              <td><p>No results to display. Search to see results.</p></td>
-              <td></td>
-            </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+      <% end %>
+    <% else %>
+        <tr>
+          <td><p>No results to display. Search to see results.</p></td>
+          <td></td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
