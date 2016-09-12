@@ -72,6 +72,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     click_button "Search collection"
     expect(page).to have_text("Tax documents")
     expect(page).to have_link("collection-id")
+    expect(page).to have_text('Document collection')
   end
 
   def then_i_can_see_the_content_items_in_this_collection
