@@ -17,6 +17,7 @@ RSpec.feature "Managing taxonomies" do
       internal_name: "I Am Another Taxon",
       publication_state: 'active'
     }
+    @dummy_editor_notes = "Some usage notes for this taxon."
 
     @create_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 200, body: {}.to_json)
@@ -48,7 +49,7 @@ RSpec.feature "Managing taxonomies" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_edit_taxon_link
-    when_i_update_the_taxons_title_and_parents
+    when_i_update_the_taxon
     then_my_taxon_is_updated
   end
 
@@ -79,11 +80,13 @@ RSpec.feature "Managing taxonomies" do
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(body: { links: { parent_taxons: [] } }.to_json)
 
+    empty_details = { "details" => {} }
+
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
-      .to_return(body: @taxon_1.to_json)
+      .to_return(body: @taxon_1.merge(empty_details).to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-2")
-      .to_return(body: @taxon_2.to_json)
+      .to_return(body: @taxon_2.merge(empty_details).to_json)
   end
 
   def when_i_visit_the_taxonomy_page
@@ -97,6 +100,7 @@ RSpec.feature "Managing taxonomies" do
 
   def fill_in_taxon_form
     fill_in :taxon_title, with: "My Lovely Taxon"
+    fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
 
     select @taxon_1[:title]
     expect(find('select').value).to include(@taxon_1[:content_id])
@@ -105,13 +109,25 @@ RSpec.feature "Managing taxonomies" do
     expect(find('select').value).to include(@taxon_2[:content_id])
   end
 
-  def when_i_update_the_taxons_title_and_parents
-    fill_in_taxon_form
+  def when_i_update_the_taxon
+    fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
+
+    @update_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .with(body: /details.*#{@dummy_editor_notes}/)
+      .to_return(status: 200, body: {}.to_json)
+
     click_on "Update taxon"
   end
 
   def when_i_submit_the_taxon_with_a_title_and_parents
-    fill_in_taxon_form
+    fill_in :taxon_title, with: "My Lovely Taxon"
+    fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
+
+    select @taxon_1[:title]
+    expect(find('select').value).to include(@taxon_1[:content_id])
+
+    select @taxon_2[:title]
+    expect(find('select').value).to include(@taxon_2[:content_id])
     click_on "Create taxon"
   end
 
@@ -135,7 +151,9 @@ RSpec.feature "Managing taxonomies" do
   end
 
   def then_my_taxon_is_updated
-    then_a_taxon_is_created
+    expect(@update_item).to have_been_requested
+    expect(@publish_item).to have_been_requested
+    expect(@create_links).to have_been_requested
   end
 
   def and_theres_content_tagged_to_the_taxons

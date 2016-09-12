@@ -9,9 +9,13 @@ RSpec.describe Taxonomy::TaxonBuilder do
       {
         content_id: content_id,
         title: 'A title',
+        description: 'A description',
         base_path: 'A base path',
         publication_state: 'State',
-        internal_name: 'Internal name'
+        details: {
+          internal_name: 'Internal name',
+          notes_for_editors: 'Notes for editors',
+        }
       }
     end
     let(:taxon) { builder.build }
@@ -40,7 +44,11 @@ RSpec.describe Taxonomy::TaxonBuilder do
     end
 
     it 'assigns the title correctly' do
-      expect(taxon.title).to eq(content[:title])
+      expect(taxon.title).to eq('A title')
+    end
+
+    it 'assigns the description correctly' do
+      expect(taxon.description).to eq('A description')
     end
 
     it 'assigns the base_path correctly' do
@@ -52,7 +60,11 @@ RSpec.describe Taxonomy::TaxonBuilder do
     end
 
     it 'assigns the internal_name correctly' do
-      expect(taxon.internal_name).to eq(content[:internal_name])
+      expect(taxon.internal_name).to eq("Internal name")
+    end
+
+    it 'assigns the notes_for_editors correctly' do
+      expect(taxon.notes_for_editors).to eq("Notes for editors")
     end
 
     context 'without taxon parents' do
