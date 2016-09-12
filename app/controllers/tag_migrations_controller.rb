@@ -9,7 +9,7 @@ class TagMigrationsController < ApplicationController
       return
     end
 
-    expanded_links = ExpandedLinksFetcher.expanded_links(
+    expanded_links = BulkTagging::TaggedContentFetcher.fetch(
       tag_migration_params[:source_content_id],
       tag_migration_params[:document_type],
     )
