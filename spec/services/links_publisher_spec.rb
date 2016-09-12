@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TagImporter::LinksPublisher do
+RSpec.describe LinksPublisher do
   describe '#publish' do
     let(:links_update) do
       instance_double(LinksUpdate,
