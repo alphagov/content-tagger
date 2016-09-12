@@ -107,6 +107,8 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_create_tags
+    publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
+    publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
     publishing_api_has_lookups(
       '/path/tax-doc-1' => 'tax-doc-1',
       '/path/tax-doc-2' => 'tax-doc-2',
