@@ -14,7 +14,15 @@ RSpec.describe Linkables do
             "publication_state" => "live",
             "base_path" => "/topic/business-tax/pension-scheme-administration",
             "internal_name" => "Business tax / Pension scheme administration"
-          }
+          },
+          {
+            "public_updated_at" => "2016-04-07 10:34:05",
+            "title" => nil,
+            "content_id" => "3535b8ad-7209-4c97-9dac-e25c25d9c27c",
+            "publication_state" => "live",
+            "base_path" => "/topic/redirect",
+            "internal_name" => nil
+          },
         ],
         document_type: "topic",
       )
