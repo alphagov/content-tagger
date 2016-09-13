@@ -31,13 +31,14 @@ module TagImporter
     end
 
     def save_row(row)
-      tagging_spreadsheet.tag_mappings.build(
+      TagMapping.create!(
+        tagging_source:     tagging_spreadsheet,
         content_base_path:  String(row["content_base_path"]),
         link_title:         row["link_title"],
         link_content_id:    String(row["link_content_id"]),
         link_type:          String(row["link_type"]),
         state:              'ready_to_tag'
-      ).save
+      )
     end
 
     def parsed_data
