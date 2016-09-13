@@ -1,6 +1,8 @@
 class InitialTaggingImport
   include Sidekiq::Worker
 
+  sidekiq_options retry: false
+
   def perform(tagging_spreadsheet_id)
     tagging_spreadsheet = TaggingSpreadsheet.find(tagging_spreadsheet_id)
     errors = TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
