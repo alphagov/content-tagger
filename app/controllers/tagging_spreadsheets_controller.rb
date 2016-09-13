@@ -26,14 +26,15 @@ class TaggingSpreadsheetsController < ApplicationController
       tagging_spreadsheet: tagging_spreadsheet,
       tag_mappings: presented_tag_mappings,
       confirmed: tag_mappings.completed.count,
-      progress_path: tagging_spreadsheet_import_progress_path(tagging_spreadsheet),
+      progress_path: tagging_spreadsheet_progress_path(tagging_spreadsheet),
     }
   end
 
-  def import_progress
-    render partial: "import_progress_bar", formats: :html, locals: {
+  def progress
+    render partial: "tag_update_progress_bar", formats: :html, locals: {
       tag_mappings: tag_mappings,
-      confirmed: tag_mappings.completed.count
+      confirmed: tag_mappings.completed.count,
+      progress_path: tagging_spreadsheet_progress_path(tagging_spreadsheet),
     }
   end
 

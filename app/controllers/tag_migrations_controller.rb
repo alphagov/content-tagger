@@ -37,7 +37,15 @@ class TagMigrationsController < ApplicationController
       tag_migration: tag_migration,
       tag_mappings: presented_tag_mappings,
       confirmed: tag_mappings.completed.count,
-      progress_path: tag_migration_import_progress_path(tag_migration),
+      progress_path: tag_migration_progress_path(tag_migration),
+    }
+  end
+
+  def progress
+    render partial: "tag_update_progress_bar", formats: :html, locals: {
+      tag_mappings: tag_mappings,
+      confirmed: tag_mappings.completed.count,
+      progress_path: tag_migration_progress_path(tag_migration),
     }
   end
 
