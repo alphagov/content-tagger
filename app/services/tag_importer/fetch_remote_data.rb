@@ -32,10 +32,10 @@ module TagImporter
 
     def save_row(row)
       tagging_spreadsheet.tag_mappings.build(
-        content_base_path:  row["content_base_path"],
+        content_base_path:  String(row["content_base_path"]),
         link_title:         row["link_title"],
-        link_content_id:    row["link_content_id"],
-        link_type:          row["link_type"],
+        link_content_id:    String(row["link_content_id"]),
+        link_type:          String(row["link_type"]),
         state:              'ready_to_tag'
       ).save
     end
