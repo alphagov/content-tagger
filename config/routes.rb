@@ -16,12 +16,12 @@ Rails.application.routes.draw do
   resources :tagging_spreadsheets, except: %i(update edit), path: '/tag-importer' do
     post 'refetch'
     post 'publish_tags'
-    get  'import_progress'
+    get  'progress'
   end
 
   resources :tag_migrations, only: [:index, :new, :create, :show, :destroy] do
     post 'publish_tags'
-    get  'import_progress'
+    get  'progress'
   end
 
   resource :tag_search, only: [:new] do

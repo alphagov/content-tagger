@@ -1,9 +1,9 @@
-<div class="import-preview">
+<div class="tag-update-preview">
   <br/>
 
-  <div data-module="import-progress">
+  <div data-module="tag-update-progress">
     <% if tag_mappings.any? %>
-      <%= render partial: "import_progress_bar",
+      <%= render partial: "tag_update_progress_bar",
         locals: { tag_mappings: tag_mappings, confirmed: confirmed, progress_path: progress_path } %>
     <% end %>
   </div>
