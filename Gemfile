@@ -38,4 +38,7 @@ end
 group :test do
   gem 'webmock', '~> 1.22'
   gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'headless'
+  gem 'database_cleaner'
 end

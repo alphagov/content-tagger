@@ -20,15 +20,20 @@ PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
 
 require 'capybara/rails'
 require 'gds_api/test_helpers/publishing_api_v2'
+require 'headless'
+require 'database_cleaner'
 
 ActiveRecord::Migration.maintain_test_schema!
+
+Capybara.javascript_driver = :rack_test
+DatabaseCleaner.strategy = :transaction
 
 RSpec.configure do |config|
   config.include GdsApi::TestHelpers::PublishingApiV2
   config.include FactoryGirl::Syntax::Methods
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
 
   # Authenticate a test user for controllers.
@@ -38,6 +43,29 @@ RSpec.configure do |config|
       authenticated?: true,
       user: User.new(permissions: ["signin"])
     )
+  end
+
+  config.before(:each) do
+    User.create!
+    DatabaseCleaner.start
+    WebMock.reset!
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  config.around(:each, js: true) do |example|
+    DatabaseCleaner.strategy = :truncation
+    Capybara.javascript_driver = :webkit
+    headless = Headless.new
+    headless.start
+
+    example.run
+
+    headless.destroy
+    Capybara.javascript_driver = :rack_test
+    DatabaseCleaner.strategy = :transaction
   end
 end
 
