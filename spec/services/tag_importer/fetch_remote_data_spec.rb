@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TagImporter::FetchRemoteData do
   include GoogleSheetHelper
 
-  describe "#run" do
+  describe ".call" do
     let(:url) { URI(tagging_spreadsheet.url) }
     let(:tagging_spreadsheet) { create(:tagging_spreadsheet) }
 
@@ -16,11 +16,11 @@ RSpec.describe TagImporter::FetchRemoteData do
       it "retrieves data from the tagging spreadsheet URL" do
         expect(Net::HTTP).to receive(:get_response).with(url)
 
-        TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
+        TagImporter::FetchRemoteData.call(tagging_spreadsheet)
       end
 
       it "creates tag mappings based on the retrieved data" do
-        TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
+        TagImporter::FetchRemoteData.call(tagging_spreadsheet)
 
         expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/ /content-2/))
         expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons taxons))
@@ -40,7 +40,7 @@ RSpec.describe TagImporter::FetchRemoteData do
         response = double("DodgyResponse", code: '200', body: dodgy_spreadsheet_data)
         allow(Net::HTTP).to receive(:get_response).with(url).and_return(response)
 
-        TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
+        TagImporter::FetchRemoteData.new(tagging_spreadsheet).call
 
         tag_mapping = TagMapping.first
         expect(tag_mapping.content_base_path).to eq "/content-1/"
@@ -57,13 +57,13 @@ RSpec.describe TagImporter::FetchRemoteData do
       end
 
       it 'does not create any taggings' do
-        expect { described_class.new(tagging_spreadsheet).run }.to_not change {
+        expect { described_class.call(tagging_spreadsheet) }.to_not change {
           tagging_spreadsheet.tag_mappings
         }
       end
 
       it 'returns the error message' do
-        expect(described_class.new(tagging_spreadsheet).run).to include(
+        expect(described_class.call(tagging_spreadsheet)).to include(
           /there is a problem downloading the spreadsheet/i
         )
       end
@@ -71,7 +71,7 @@ RSpec.describe TagImporter::FetchRemoteData do
       it 'notifies airbrake of the error' do
         expect(Airbrake).to receive(:notify)
 
-        described_class.new(tagging_spreadsheet).run
+        described_class.call(tagging_spreadsheet)
       end
     end
   end

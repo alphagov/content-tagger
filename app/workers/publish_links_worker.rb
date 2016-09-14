@@ -17,6 +17,6 @@ class PublishLinksWorker
     # time the job runs.
     return if links_update.tag_mappings.empty?
 
-    PublishLinks.publish(links_update: links_update)
+    PublishLinks.call(links_update: links_update)
   end
 end

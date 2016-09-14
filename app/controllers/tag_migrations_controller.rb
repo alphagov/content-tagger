@@ -23,7 +23,7 @@ class TagMigrationsController < ApplicationController
   end
 
   def create
-    tag_migration = BulkTagging::BuildTagMigration.perform(
+    tag_migration = BulkTagging::BuildTagMigration.call(
       tag_migration_params: tag_migration_params,
       taxon_content_ids: params[:taxons],
       content_base_paths: params[:content_base_paths],
@@ -61,7 +61,7 @@ class TagMigrationsController < ApplicationController
   end
 
   def publish_tags
-    QueueLinksForPublishing.new(tag_migration, user: current_user).run
+    QueueLinksForPublishing.call(tag_migration, user: current_user)
 
     redirect_to(
       tag_migration,

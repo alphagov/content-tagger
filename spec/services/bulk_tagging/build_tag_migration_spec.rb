@@ -13,7 +13,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
 
   context 'without any taxons' do
     let(:tag_migration) do
-      described_class.perform(
+      described_class.call(
         tag_migration_params: tag_migration_params,
         taxon_content_ids: [],
         content_base_paths: ['/content-1']
@@ -30,7 +30,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
 
   context 'without any content items' do
     let(:tag_migration) do
-      described_class.perform(
+      described_class.call(
         tag_migration_params: tag_migration_params,
         taxon_content_ids: ['taxon-1'],
         content_base_paths: []
@@ -54,7 +54,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
     end
 
     let(:tag_migration) do
-      described_class.perform(
+      described_class.call(
         tag_migration_params: tag_migration_params,
         taxon_content_ids: ['taxon-1', 'taxon-2'],
         content_base_paths: ['/content-1', '/content-2']
@@ -90,7 +90,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
     end
 
     it 'delegates the initialization of TagMapping records' do
-      expect(BulkTagging::BuildTagMapping).to receive(:perform)
+      expect(BulkTagging::BuildTagMapping).to receive(:call)
         .exactly(4)
         .times
         .and_return(TagMapping.new)

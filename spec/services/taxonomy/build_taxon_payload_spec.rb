@@ -11,10 +11,9 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
       notes_for_editors: "Use this taxon wisely."
     )
   end
-  let(:builder) { described_class.new(taxon) }
 
-  describe "#build" do
-    let(:payload) { builder.build }
+  describe ".call" do
+    let(:payload) { described_class.call(taxon: taxon) }
 
     it "generates a valid payload" do
       expect(payload).to be_valid_against_schema('taxon')

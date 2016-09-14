@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Taxonomy::BuildTaxon do
-  describe '.from(content_id:)' do
+  describe '.call(content_id:)' do
     let(:content_id) { SecureRandom.uuid }
     let(:content) do
       {
@@ -16,7 +16,7 @@ RSpec.describe Taxonomy::BuildTaxon do
         }
       }
     end
-    let(:taxon) { Taxonomy::BuildTaxon.from(content_id: content_id) }
+    let(:taxon) { Taxonomy::BuildTaxon.call(content_id: content_id) }
 
     before do
       publishing_api_has_item(content)

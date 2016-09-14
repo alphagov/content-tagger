@@ -1,7 +1,7 @@
 class PublishLinks
   attr_reader :links_update
 
-  def self.publish(links_update:)
+  def self.call(links_update:)
     new(links_update: links_update).publish
   end
 

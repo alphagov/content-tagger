@@ -5,7 +5,7 @@ RSpec.describe BulkTagging::BuildTagMapping do
   let(:build_tag_mapping) do
     described_class.new(taxon: taxon, content_base_path: '/content-base-path')
   end
-  let(:tag_mapping) { build_tag_mapping.perform }
+  let(:tag_mapping) { build_tag_mapping.call }
 
   it 'builds a TagMapping record' do
     expect(tag_mapping).to be_a(TagMapping)

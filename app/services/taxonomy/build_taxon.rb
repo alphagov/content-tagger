@@ -6,7 +6,7 @@ module Taxonomy
       @content_id = content_id
     end
 
-    def self.from(content_id:)
+    def self.call(content_id:)
       new(content_id: content_id).build
     end
 

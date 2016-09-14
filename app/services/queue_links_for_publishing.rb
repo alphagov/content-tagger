@@ -3,13 +3,17 @@ class QueueLinksForPublishing
   attr_reader :tag_mappings
   attr_reader :user
 
+  def self.call(tagging_spreadsheet, user:)
+    new(tagging_spreadsheet, user: user).call
+  end
+
   def initialize(tagging_spreadsheet, user:)
     @tagging_spreadsheet = tagging_spreadsheet
     @tag_mappings = tagging_spreadsheet.tag_mappings.order(id: :asc)
     @user = user
   end
 
-  def run
+  def call
     ActiveRecord::Base.transaction do
       tagging_spreadsheet.update!(
         last_published_at: Time.zone.now,

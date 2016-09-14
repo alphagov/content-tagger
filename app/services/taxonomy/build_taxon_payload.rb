@@ -4,7 +4,7 @@ module Taxonomy
       @taxon = taxon
     end
 
-    def self.build(taxon:)
+    def self.call(taxon:)
       new(taxon).build
     end
 

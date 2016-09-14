@@ -11,11 +11,11 @@ module BulkTagging
       @document_type = document_type
     end
 
-    def self.perform(query:, document_type: default_document_types)
-      new(query: query, document_type: document_type).perform
+    def self.call(query:, document_type: default_document_types)
+      new(query: query, document_type: document_type).call
     end
 
-    def perform
+    def call
       SearchResponse.new(gds_response, document_type)
     end
 

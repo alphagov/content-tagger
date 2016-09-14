@@ -18,7 +18,7 @@ private
   end
 
   def search_response
-    @search_response ||= BulkTagging::Search.perform(query: query)
+    @search_response ||= BulkTagging::Search.call(query: query)
   end
 
   def query

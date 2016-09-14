@@ -13,7 +13,7 @@ class TaxonsController < ApplicationController
   def create
     new_taxon = Taxon.new(params[:taxon])
     if new_taxon.valid?
-      Taxonomy::PublishTaxon.publish(taxon: new_taxon)
+      Taxonomy::PublishTaxon.call(taxon: new_taxon)
       redirect_to(taxons_path)
     else
       error_messages = new_taxon.errors.full_messages.join('; ')
@@ -44,7 +44,7 @@ class TaxonsController < ApplicationController
 
   def update
     new_taxon = Taxon.new(params[:taxon])
-    Taxonomy::PublishTaxon.publish(taxon: new_taxon)
+    Taxonomy::PublishTaxon.call(taxon: new_taxon)
     redirect_to taxons_path
   end
 
@@ -77,7 +77,7 @@ private
   end
 
   def taxon
-    Taxonomy::BuildTaxon.from(content_id: params[:id])
+    Taxonomy::BuildTaxon.call(content_id: params[:id])
   end
 
   def tagged
