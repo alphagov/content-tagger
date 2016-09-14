@@ -1,5 +1,5 @@
 module Taxonomy
-  class TaxonPayloadBuilder
+  class BuildTaxonPayload
     def initialize(taxon)
       @taxon = taxon
     end

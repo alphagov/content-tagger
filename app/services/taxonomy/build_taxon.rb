@@ -1,12 +1,12 @@
 module Taxonomy
-  class TaxonBuilder
+  class BuildTaxon
     attr_reader :content_id
 
     def initialize(content_id:)
       @content_id = content_id
     end
 
-    def self.build(content_id:)
+    def self.from(content_id:)
       new(content_id: content_id).build
     end
 

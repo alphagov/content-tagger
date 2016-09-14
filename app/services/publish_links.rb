@@ -1,4 +1,4 @@
-class LinksPublisher
+class PublishLinks
   attr_reader :links_update
 
   def self.publish(links_update:)

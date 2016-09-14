@@ -1,4 +1,4 @@
-class PublishTags
+class QueueLinksForPublishing
   attr_reader :tagging_spreadsheet
   attr_reader :tag_mappings
   attr_reader :user

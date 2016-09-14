@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Taxonomy::TaxonPayloadBuilder do
+RSpec.describe Taxonomy::BuildTaxonPayload do
   let(:taxon) do
     instance_double(
       Taxon,

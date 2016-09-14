@@ -1,5 +1,5 @@
 module Taxonomy
-  class TaxonFetcher
+  class FetchAllTaxons
     # Return a list of taxons from the publishing API with links included.
     # Does not include the details hash of each taxon.
     def taxons

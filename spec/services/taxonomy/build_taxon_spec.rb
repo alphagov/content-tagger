@@ -1,9 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Taxonomy::TaxonBuilder do
-  let(:builder) { described_class.new(content_id: content_id) }
-
-  describe '#build' do
+RSpec.describe Taxonomy::BuildTaxon do
+  describe '.from(content_id:)' do
     let(:content_id) { SecureRandom.uuid }
     let(:content) do
       {
@@ -18,7 +16,7 @@ RSpec.describe Taxonomy::TaxonBuilder do
         }
       }
     end
-    let(:taxon) { builder.build }
+    let(:taxon) { Taxonomy::BuildTaxon.from(content_id: content_id) }
 
     before do
       publishing_api_has_item(content)

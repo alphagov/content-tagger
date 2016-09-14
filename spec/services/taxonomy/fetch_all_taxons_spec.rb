@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'gds_api/test_helpers/publishing_api_v2'
 
-RSpec.describe Taxonomy::TaxonFetcher do
+RSpec.describe Taxonomy::FetchAllTaxons do
   include PublishingApiHelper
   include GdsApi::TestHelpers::PublishingApiV2
 

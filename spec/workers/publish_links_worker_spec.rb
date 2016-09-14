@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe PublishLinksWorker do
   describe "#perform" do
     it 'does not call the links publisher when no taggings are available' do
-      expect(LinksPublisher).to_not receive(:publish)
+      expect(PublishLinks).to_not receive(:publish)
 
       described_class.new.perform(
         '/a/base/path',
@@ -14,7 +14,7 @@ RSpec.describe PublishLinksWorker do
 
     it 'it calls the links publisher service when there are tag mappings' do
       tag_mapping = create(:tag_mapping)
-      expect(LinksPublisher).to receive(:publish)
+      expect(PublishLinks).to receive(:publish)
 
       described_class.new.perform(
         '/a/base/path',

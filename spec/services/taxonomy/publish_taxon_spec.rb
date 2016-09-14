@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Taxonomy::Publisher do
+RSpec.describe Taxonomy::PublishTaxon do
   let(:taxon) { Taxon.new(title: 'A Title') }
   let(:publisher) { described_class.new(taxon: taxon) }
 
@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::Publisher do
       it 'raises an error with a generic message and notifies Airbrake' do
         expect(Airbrake).to receive(:notify).with(error)
         expect { publisher.publish }.to raise_error(
-          Taxonomy::Publisher::InvalidTaxonError,
+          Taxonomy::PublishTaxon::InvalidTaxonError,
           /there was a problem with your request/i
         )
       end

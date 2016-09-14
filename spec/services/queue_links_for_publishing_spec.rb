@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PublishTags do
+RSpec.describe QueueLinksForPublishing do
   let(:tagging_spreadsheet) { create(:tagging_spreadsheet, state: "uploaded") }
   let(:user) { double(uid: "user-123") }
 
