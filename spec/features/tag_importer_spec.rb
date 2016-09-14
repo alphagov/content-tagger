@@ -114,10 +114,12 @@ RSpec.feature "Tag importer", type: :feature do
 
   def and_confirming_this_will_import_taggings
     publishing_api_has_lookups(google_sheet_content_items)
+    publishing_api_has_links(content_id: "content-2-cid", links: { taxons: [] })
+    publishing_api_has_links(content_id: "content-1-cid", links: { taxons: [] })
     link_update_1 = stub_publishing_api_patch_links(
       "content-1-cid",
       links: {
-        taxons: ["education-content-id", "education-content-id"],
+        taxons: ["education-content-id"],
       }
     )
     link_update_2 = stub_publishing_api_patch_links(

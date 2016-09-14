@@ -61,7 +61,7 @@ class TagMigrationsController < ApplicationController
   end
 
   def publish_tags
-    TagImporter::PublishTags.new(tag_migration, user: current_user).run
+    PublishTags.new(tag_migration, user: current_user).run
 
     redirect_to(
       tag_migration,

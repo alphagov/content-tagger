@@ -14,6 +14,6 @@ class PublishLinksWorker
 
     return if links_update.tag_mappings.empty?
 
-    TagImporter::LinksPublisher.publish(links_update: links_update)
+    LinksPublisher.publish(links_update: links_update)
   end
 end

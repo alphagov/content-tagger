@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TagImporter::PublishTags do
+RSpec.describe PublishTags do
   let(:tagging_spreadsheet) { create(:tagging_spreadsheet, state: "uploaded") }
   let(:user) { double(uid: "user-123") }
 
@@ -58,7 +58,7 @@ RSpec.describe TagImporter::PublishTags do
       expect(PublishLinksWorker).to receive(:perform_async).with("/content-1", links_payload_1)
       expect(PublishLinksWorker).to receive(:perform_async).with("/content-2", links_payload_2)
 
-      TagImporter::PublishTags.new(tagging_spreadsheet, user: user).run
+      described_class.new(tagging_spreadsheet, user: user).run
 
       expect(tagging_spreadsheet.last_published_by).to eq "user-123"
       expect(tagging_spreadsheet.last_published_at).to eq Time.new(0)
