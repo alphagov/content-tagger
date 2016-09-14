@@ -32,6 +32,13 @@ RSpec.feature "Bulk tagging", type: :feature do
     then_i_see_an_error_about_content_items
   end
 
+  scenario "Creating tags shows progress", js: true do
+    given_a_tag_migration_exists
+    when_i_go_to_the_tag_migration_page
+    when_i_create_tags
+    then_i_can_see_a_progress_bar
+  end
+
   def given_a_collection_with_items_and_some_other_content_groupings
     publishing_api_has_content(
       [{
@@ -214,5 +221,27 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(row).to have_text(/imported/i)
     expect(row).to have_text('Tax')
     expect(row).to have_link('/tax-documents')
+  end
+
+  def given_a_tag_migration_exists
+    tag_migration = build(:tag_migration)
+    tag_migration.tag_mappings << build(:tag_mapping)
+    tag_migration.save!
+  end
+
+  def when_i_go_to_the_tag_migration_page
+    tag_migration = TagMigration.last
+
+    visit tag_migration_path(tag_migration.id)
+  end
+
+  def then_i_can_see_a_progress_bar
+    expect(page).to have_selector('.progress-bar')
+
+    bar = find('.progress-bar')
+    max_value = bar['aria-valuemax']
+    current_value = bar['aria-valuenow']
+
+    expect(current_value).to eq(max_value)
   end
 end
