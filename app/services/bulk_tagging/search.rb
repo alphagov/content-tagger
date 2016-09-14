@@ -2,12 +2,16 @@ module BulkTagging
   class Search
     attr_reader :query, :document_type
 
+    def self.default_document_types
+      BulkTaggingSource.new.source_names
+    end
+
     def initialize(query:, document_type:)
       @query = query
       @document_type = document_type
     end
 
-    def self.perform(query:, document_type: "document_collection")
+    def self.perform(query:, document_type: default_document_types)
       new(query: query, document_type: document_type).perform
     end
 

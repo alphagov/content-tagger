@@ -13,9 +13,7 @@ private
 
   def warning_about_multiple_pages
     if search_response.multiple_pages?
-      flash[:warning] = I18n.t('controllers.bulk_taggings.too_many_results')
-    else
-      flash.delete(:warning)
+      flash.now[:warning] = I18n.t('controllers.bulk_taggings.too_many_results')
     end
   end
 
@@ -24,10 +22,10 @@ private
   end
 
   def query
-    params[:collection_search][:query]
+    params[:tag_search][:query]
   end
 
   def search_params
-    params.require(:collection_search).permit(:query)
+    params.require(:tag_search).permit(:query)
   end
 end

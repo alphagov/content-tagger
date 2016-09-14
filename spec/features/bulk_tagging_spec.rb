@@ -7,9 +7,9 @@ RSpec.feature "Bulk tagging", type: :feature do
   include PublishingApiHelper
 
   scenario "Migrating tags from a collection to taxons" do
-    given_a_collection_with_items
+    given_a_collection_with_items_and_some_other_content_groupings
     and_a_set_of_taxons
-    when_i_find_the_collection_via_the_bulk_tagger
+    when_i_search_for_the_collection
     then_i_can_see_the_content_items_in_this_collection
     when_i_select_the_taxons_i_want_to_tag_them_to
     then_i_can_preview_my_changes
@@ -20,9 +20,9 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   scenario "Not selecting anything to migrate" do
-    given_a_collection_with_items
+    given_a_collection_with_items_and_some_other_content_groupings
     and_a_set_of_taxons
-    when_i_find_the_collection_via_the_bulk_tagger
+    when_i_search_for_the_collection
     then_i_can_see_the_content_items_in_this_collection
     when_i_submit_the_form
     then_i_see_an_error_about_taxons
@@ -32,7 +32,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     then_i_see_an_error_about_content_items
   end
 
-  def given_a_collection_with_items
+  def given_a_collection_with_items_and_some_other_content_groupings
     publishing_api_has_content(
       [{
         content_id: "collection-id",
@@ -40,9 +40,33 @@ RSpec.feature "Bulk tagging", type: :feature do
         base_path: "/tax-documents",
         document_type: "document_collection",
       }],
-      document_type: "document_collection",
+      document_type: BulkTagging::Search.default_document_types,
       per_page: 20,
       q: "Tax"
+    )
+
+    publishing_api_has_content(
+      [{
+        content_id: "topic-id",
+        title: "A Topic",
+        base_path: "/a-topic",
+        document_type: "topic",
+      }],
+      document_type: BulkTagging::Search.default_document_types,
+      per_page: 20,
+      q: "topic"
+    )
+
+    publishing_api_has_content(
+      [{
+        content_id: "browse-page-id",
+        title: "A Mainstream Browse Page",
+        base_path: "/a-maintstream-browse-page",
+        document_type: "mainstream_browse_page",
+      }],
+      document_type: BulkTagging::Search.default_document_types,
+      per_page: 20,
+      q: "browse"
     )
 
     publishing_api_has_expanded_links(
@@ -66,10 +90,19 @@ RSpec.feature "Bulk tagging", type: :feature do
     )
   end
 
-  def when_i_find_the_collection_via_the_bulk_tagger
+  def when_i_search_for_the_collection
     visit new_tag_search_path
+
+    fill_in "Query", with: "topic"
+    click_button "Search tags"
+    expect(page).to have_text("A Topic")
+
+    fill_in "Query", with: "browse"
+    click_button "Search tags"
+    expect(page).to have_text("A Mainstream Browse Page")
+
     fill_in "Query", with: "Tax"
-    click_button "Search collection"
+    click_button "Search tags"
     expect(page).to have_text("Tax documents")
     expect(page).to have_link("collection-id")
     expect(page).to have_text('Document collection')
