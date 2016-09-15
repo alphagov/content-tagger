@@ -34,8 +34,8 @@
               <hr />
               <span class="error-message">
                 <ul>
-                  <% tag.error_messages.each do |error_message| %>
-                  <li><%= error_message %></li>
+                  <% tag.messages.each do |message| %>
+                  <li><%= message %></li>
                   <% end %>
                 </ul>
               </span>

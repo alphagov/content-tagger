@@ -13,8 +13,4 @@ class TagMappingPresenter < SimpleDelegator
   def errored?
     state == 'errored'
   end
-
-  def error_messages
-    messages.split('.')
-  end
 end

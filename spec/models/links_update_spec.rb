@@ -77,8 +77,8 @@ RSpec.describe LinksUpdate do
         expect(tag_mapping.state).to eql("errored")
       end
 
-      it "concatenates the error messages and sets them on the tag mapping" do
-        expect(tag_mapping.messages).to eql("Broken. Rubbish.")
+      it "assigns the error messages to the record" do
+        expect(tag_mapping.messages).to eql(["Broken.", "Rubbish."])
       end
     end
 

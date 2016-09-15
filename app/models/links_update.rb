@@ -34,7 +34,10 @@ class LinksUpdate
 
   def mark_as_errored
     return if errors.messages.blank?
-    message = errors.messages.values.join(' ')
-    tag_mappings.update_all(state: :errored, messages: message)
+
+    tag_mappings.update_all(
+      state: :errored,
+      messages: errors.messages.values.flatten
+    )
   end
 end
