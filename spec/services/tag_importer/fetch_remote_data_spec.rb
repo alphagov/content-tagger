@@ -25,6 +25,29 @@ RSpec.describe TagImporter::FetchRemoteData do
         expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/ /content-2/))
         expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons taxons))
       end
+
+      it "handles superfluous whitespace when creating tag_mappings" do
+        dodgy_spreadsheet_data = empty_google_sheet(
+          with_rows: [
+            google_sheet_row(
+              content_base_path: "/content-1/  ",
+              link_title: "  Education",
+              link_content_id: "  education-content-id  ",
+              link_type: " taxons"
+            )
+          ]
+        )
+        response = double("DodgyResponse", code: '200', body: dodgy_spreadsheet_data)
+        allow(Net::HTTP).to receive(:get_response).with(url).and_return(response)
+
+        TagImporter::FetchRemoteData.new(tagging_spreadsheet).run
+
+        tag_mapping = TagMapping.first
+        expect(tag_mapping.content_base_path).to eq "/content-1/"
+        expect(tag_mapping.link_title).to eq "Education"
+        expect(tag_mapping.link_content_id).to eq "education-content-id"
+        expect(tag_mapping.link_type).to eq "taxons"
+      end
     end
 
     context 'with an invalid response' do
