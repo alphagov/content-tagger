@@ -6,6 +6,6 @@ class CopyTaxonsController < ApplicationController
 private
 
   def taxons
-    @taxons ||= Taxonomy::FetchAllTaxons.new.taxons
+    @taxons ||= RemoteTaxons.new.all
   end
 end

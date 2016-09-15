@@ -1,6 +1,6 @@
 class TaxonsController < ApplicationController
   def index
-    render :index, locals: { taxons: taxon_fetcher.taxons }
+    render :index, locals: { taxons: remote_taxons.all }
   end
 
   def new
@@ -69,11 +69,11 @@ private
   end
 
   def parent_taxons
-    taxon_fetcher.parents_for_taxon(taxon)
+    remote_taxons.parents_for_taxon(taxon)
   end
 
-  def taxon_fetcher
-    @taxon_fetcher ||= Taxonomy::FetchAllTaxons.new
+  def remote_taxons
+    @remote_taxons ||= RemoteTaxons.new
   end
 
   def taxon

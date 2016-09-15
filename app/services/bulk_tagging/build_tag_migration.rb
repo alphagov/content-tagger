@@ -65,7 +65,7 @@ module BulkTagging
     end
 
     def taxons
-      @taxons ||= Taxonomy::FetchAllTaxons.new.taxons
+      @taxons ||= RemoteTaxons.new.all
     end
   end
 end

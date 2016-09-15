@@ -13,7 +13,7 @@ class TagMigrationsController < ApplicationController
       tag_content_id: tag_migration_params[:source_content_id],
       tag_document_type: tag_migration_params[:document_type],
     )
-    taxons = Taxonomy::FetchAllTaxons.new.taxons
+    taxons = RemoteTaxons.new.all
 
     render :new, locals: {
       tag_migration: TagMigration.new(tag_migration_params),

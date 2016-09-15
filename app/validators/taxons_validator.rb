@@ -10,6 +10,6 @@ class TaxonsValidator < ActiveModel::Validator
 private
 
   def known_taxon_content_ids
-    Taxonomy::FetchAllTaxons.new.taxon_content_ids
+    RemoteTaxons.new.content_ids
   end
 end
