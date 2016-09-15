@@ -12,6 +12,12 @@ module GoogleSheetHelper
     ].concat(extra_rows).join("\n")
   end
 
+  def empty_google_sheet(with_rows: [])
+    [
+      google_sheet_row(content_base_path: "content_base_path", link_title: "link_title", link_content_id: "link_content_id", link_type: "link_type"),
+    ].concat(with_rows).join("\n")
+  end
+
   def google_sheet_row(content_base_path:, link_title:, link_content_id:, link_type:)
     [content_base_path, link_title, link_content_id, link_type].join("\t")
   end

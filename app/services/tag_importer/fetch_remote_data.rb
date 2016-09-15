@@ -33,12 +33,16 @@ module TagImporter
     def save_row(row)
       TagMapping.create!(
         tagging_source:     tagging_spreadsheet,
-        content_base_path:  String(row["content_base_path"]),
-        link_title:         row["link_title"],
-        link_content_id:    String(row["link_content_id"]),
-        link_type:          String(row["link_type"]),
-        state:              'ready_to_tag'
+        content_base_path:  cast_and_strip(row["content_base_path"]),
+        link_title:         cast_and_strip(row["link_title"]),
+        link_content_id:    cast_and_strip(row["link_content_id"]),
+        link_type:          cast_and_strip(row["link_type"]),
+        state:              'ready_to_tag',
       )
+    end
+
+    def cast_and_strip(string)
+      String(string).strip
     end
 
     def parsed_data
