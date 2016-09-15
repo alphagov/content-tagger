@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915141004) do
+ActiveRecord::Schema.define(version: 20160915152936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160915141004) do
     t.string   "query"
     t.string   "source_base_path"
     t.string   "document_type"
+    t.string   "error_message"
   end
 
   create_table "tagging_spreadsheets", force: :cascade do |t|
