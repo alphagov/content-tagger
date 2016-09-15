@@ -78,7 +78,7 @@ RSpec.describe LinksUpdate do
       end
 
       it "concatenates the error messages and sets them on the tag mapping" do
-        expect(tag_mapping.message).to eql("Broken. Rubbish.")
+        expect(tag_mapping.messages).to eql("Broken. Rubbish.")
       end
     end
 
@@ -94,8 +94,8 @@ RSpec.describe LinksUpdate do
         expect { expectation.call }.to_not change { tag_mapping.state }
       end
 
-      it "doesn't change the tag mapping message" do
-        expect { expectation.call }.to_not change { tag_mapping.message }
+      it "doesn't change the tag mapping messages" do
+        expect { expectation.call }.to_not change { tag_mapping.messages }
       end
     end
   end

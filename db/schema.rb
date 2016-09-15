@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912102243) do
+ActiveRecord::Schema.define(version: 20160915140148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160912102243) do
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
     t.string   "state",                null: false
-    t.string   "message"
+    t.string   "messages"
     t.string   "tagging_source_type"
   end
 

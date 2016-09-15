@@ -215,7 +215,7 @@ RSpec.feature "Tag importer", type: :feature do
   def when_the_last_tag_mapping_has_errored
     tag_mapping = TagMapping.last
     tag_mapping.state = 'errored'
-    tag_mapping.message = 'An error message'
+    tag_mapping.messages = 'An error message'
     tag_mapping.save!
   end
 

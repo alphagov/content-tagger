@@ -15,6 +15,6 @@ class TagMappingPresenter < SimpleDelegator
   end
 
   def error_messages
-    message.split('.')
+    messages.split('.')
   end
 end
