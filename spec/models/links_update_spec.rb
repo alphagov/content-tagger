@@ -80,6 +80,15 @@ RSpec.describe LinksUpdate do
       it "assigns the error messages to the record" do
         expect(tag_mapping.messages).to eql(["Broken.", "Rubbish."])
       end
+
+      it 'changes the state of the tagging source to errored' do
+        expect(tag_mapping.tagging_source.state).to eq('errored')
+      end
+
+      it 'changes the error message of the tagging source' do
+        tagging_source = tag_mapping.tagging_source
+        expect(tagging_source.error_message).to match(/we could not tag all items/i)
+      end
     end
 
     context "when the links update is valid" do
@@ -96,6 +105,10 @@ RSpec.describe LinksUpdate do
 
       it "doesn't change the tag mapping messages" do
         expect { expectation.call }.to_not change { tag_mapping.messages }
+      end
+
+      it "doesn't change the state of the tagging source" do
+        expect { expectation.call }.to_not change { tag_mapping.tagging_source }
       end
     end
   end
