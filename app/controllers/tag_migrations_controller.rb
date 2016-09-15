@@ -38,7 +38,7 @@ class TagMigrationsController < ApplicationController
   def show
     render :show, locals: {
       tag_migration: tag_migration,
-      tag_mappings: presented_tag_mappings,
+      aggregated_tag_mappings: presented_aggregated_tag_mappings,
       confirmed: tag_mappings.completed.count,
       progress_path: tag_migration_progress_path(tag_migration),
     }
@@ -107,6 +107,16 @@ private
   def presented_tag_mappings
     tag_mappings.map do |tag_mapping|
       TagMappingPresenter.new(tag_mapping)
+    end
+  end
+
+  def aggregated_tag_mappings
+    tag_migration.aggregated_tag_mappings
+  end
+
+  def presented_aggregated_tag_mappings
+    aggregated_tag_mappings.map do |aggregated_tag_mapping|
+      AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
     end
   end
 end

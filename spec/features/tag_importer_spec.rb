@@ -128,7 +128,8 @@ RSpec.feature "Tag importer", type: :feature do
 
   def expect_tag_mapping_statuses_to_be(string)
     tag_mapping_statuses = page.all(".tag-mapping-status")
-    expect(tag_mapping_statuses.count).to eq TagMapping.count
+    expect(tag_mapping_statuses.count).to eq TaggingSpreadsheet.first.aggregated_tag_mappings.count
+
     tag_mapping_statuses.each do |status|
       expect(status.text).to include string
     end

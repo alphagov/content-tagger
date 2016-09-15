@@ -24,7 +24,7 @@ class TaggingSpreadsheetsController < ApplicationController
   def show
     render :show, locals: {
       tagging_spreadsheet: tagging_spreadsheet,
-      tag_mappings: presented_tag_mappings,
+      aggregated_tag_mappings: presented_aggregated_tag_mappings,
       confirmed: tag_mappings.completed.count,
       progress_path: tagging_spreadsheet_progress_path(tagging_spreadsheet),
     }
@@ -70,9 +70,13 @@ private
       .by_link_title
   end
 
-  def presented_tag_mappings
-    tag_mappings.map do |tag_mapping|
-      TagMappingPresenter.new(tag_mapping)
+  def aggregated_tag_mappings
+    tagging_spreadsheet.aggregated_tag_mappings
+  end
+
+  def presented_aggregated_tag_mappings
+    aggregated_tag_mappings.map do |aggregated_tag_mapping|
+      AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
     end
   end
 
