@@ -10,8 +10,11 @@ class PublishLinksWorker
     links_update = LinksUpdate.new(
       base_path: base_path,
       tag_mappings: tag_mappings,
-      links: links)
+      links: links
+    )
 
+    # In case the tag_mappings referenced by this job have been deleted by the
+    # time the job runs.
     return if links_update.tag_mappings.empty?
 
     LinksPublisher.publish(links_update: links_update)

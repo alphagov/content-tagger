@@ -9,6 +9,15 @@
     <%= "TODO: error messages" %>
   </p>
 <% else %>
-  <%= render partial: "tag_update_preview",
-    locals: { confirmed: confirmed, tag_mappings: tag_mappings, progress_path: progress_path } %>
+  <%=
+    render(
+      partial: "tag_update_preview",
+      locals: {
+        confirmed: confirmed,
+        error_count: tag_migration.error_count,
+        tag_mappings: tag_mappings,
+        progress_path: progress_path,
+      }
+    )
+  %>
 <% end %>
