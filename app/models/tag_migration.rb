@@ -14,4 +14,8 @@ class TagMigration < ActiveRecord::Base
   def mark_as_deleted
     update!(deleted_at: DateTime.current)
   end
+
+  def error_count
+    tag_mappings.errored.count
+  end
 end
