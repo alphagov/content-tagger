@@ -15,6 +15,7 @@ en:
       invalid_content_id: We could not find this URL on GOV.UK.
       invalid_link_types: Invalid link types found - only taxons are allowed.
       invalid_taxons_found: Invalid taxons found - please make sure you only use existing taxons when tagging.
+      tag_mappings_failed: We could not tag all items, please check the preview for more details.
   bulk_tagging:
     update_tags:
       no_taxons: No taxons selected.

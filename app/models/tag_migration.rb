@@ -5,7 +5,7 @@ class TagMigration < ActiveRecord::Base
   validates(
     :state,
     presence: true,
-    inclusion: { in: %w(ready_to_import imported) }
+    inclusion: { in: %w(ready_to_import imported errored) }
   )
 
   scope :newest_first, -> { order(created_at: :desc) }

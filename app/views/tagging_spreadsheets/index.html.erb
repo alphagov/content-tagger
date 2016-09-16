@@ -20,9 +20,8 @@
       <tr>
         <td><%= state_label_for(label_type: spreadsheet.label_type,
                                 title: spreadsheet.state_title) %></td>
-        <td><%= link_to spreadsheet.url, spreadsheet.url %></td>
         <td>
-          <%= spreadsheet.description %>
+          <%= link_to spreadsheet.url, spreadsheet.url %>
 
           <% if spreadsheet.errored? %>
             <hr />
@@ -32,6 +31,9 @@
               </ul>
             </span>
           <% end %>
+        </td>
+        <td>
+          <%= spreadsheet.description %>
         </td>
         <td>
           <%= time_tag_for(spreadsheet.created_at) %>

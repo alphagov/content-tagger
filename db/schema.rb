@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160912102243) do
+ActiveRecord::Schema.define(version: 20160915152936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160912102243) do
     t.datetime "publish_requested_at"
     t.datetime "publish_completed_at"
     t.string   "state",                null: false
-    t.string   "message"
+    t.string   "messages"
     t.string   "tagging_source_type"
   end
 
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20160912102243) do
     t.string   "query"
     t.string   "source_base_path"
     t.string   "document_type"
+    t.string   "error_message"
   end
 
   create_table "tagging_spreadsheets", force: :cascade do |t|

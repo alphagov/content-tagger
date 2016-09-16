@@ -34,7 +34,18 @@ class LinksUpdate
 
   def mark_as_errored
     return if errors.messages.blank?
-    message = errors.messages.values.join(' ')
-    tag_mappings.update_all(state: :errored, message: message)
+
+    ActiveRecord::Base.transaction do
+      tag_mappings.update_all(
+        state: :errored,
+        messages: errors.messages.values.flatten
+      )
+
+      tag_mapping = tag_mappings.first
+      tag_mapping.tagging_source.update(
+        state: :errored,
+        error_message: I18n.t('tag_import.errors.tag_mappings_failed')
+      )
+    end
   end
 end

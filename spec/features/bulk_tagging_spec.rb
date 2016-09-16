@@ -34,8 +34,7 @@ RSpec.feature "Bulk tagging", type: :feature do
 
   scenario "Creating tags shows progress", js: true do
     given_a_tag_migration_exists
-    when_i_go_to_the_tag_migration_page
-    when_i_create_tags
+    when_i_go_to_the_tag_migration_page_and_create_tags
     then_i_can_see_a_progress_bar
   end
 
@@ -225,14 +224,43 @@ RSpec.feature "Bulk tagging", type: :feature do
 
   def given_a_tag_migration_exists
     tag_migration = build(:tag_migration)
-    tag_migration.tag_mappings << build(:tag_mapping)
+    tag_mapping = build(:tag_mapping)
+    tag_migration.tag_mappings << tag_mapping
     tag_migration.save!
+
+    publishing_api_has_lookups(tag_mapping.content_base_path => 'content-id')
+    publishing_api_has_taxons(
+      [
+        basic_content_item(
+          tag_mapping.link_title,
+          other_fields: {
+            content_id: tag_mapping.link_content_id,
+            document_type: tag_mapping.link_type
+          }
+        )
+      ]
+    )
+    publishing_api_has_links(
+      content_id: 'content-id',
+      links: { taxons: [] },
+      version: 0
+    )
+    stub_publishing_api_patch_links(
+      'content-id',
+      links: {
+        taxons: [tag_mapping.link_content_id]
+      },
+      previous_version: 0
+    )
   end
 
-  def when_i_go_to_the_tag_migration_page
+  def when_i_go_to_the_tag_migration_page_and_create_tags
     tag_migration = TagMigration.last
 
     visit tag_migration_path(tag_migration.id)
+
+    Sidekiq::Testing.inline!
+    click_link 'Create tags'
   end
 
   def then_i_can_see_a_progress_bar
