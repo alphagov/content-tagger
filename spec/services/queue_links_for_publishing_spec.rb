@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PublishTags do
+RSpec.describe QueueLinksForPublishing do
   let(:tagging_spreadsheet) { create(:tagging_spreadsheet, state: "uploaded") }
   let(:user) { double(uid: "user-123") }
 
@@ -42,7 +42,7 @@ RSpec.describe PublishTags do
     )
   end
 
-  describe "#run" do
+  describe ".call" do
     it "constructs link payloads from tag mappings and queues them for publishing" do
       allow(Time.zone).to receive(:now).and_return(Time.new(0))
       links_payload_1 = {
@@ -58,7 +58,7 @@ RSpec.describe PublishTags do
       expect(PublishLinksWorker).to receive(:perform_async).with("/content-1", links_payload_1)
       expect(PublishLinksWorker).to receive(:perform_async).with("/content-2", links_payload_2)
 
-      described_class.new(tagging_spreadsheet, user: user).run
+      described_class.call(tagging_spreadsheet, user: user)
 
       expect(tagging_spreadsheet.last_published_by).to eq "user-123"
       expect(tagging_spreadsheet.last_published_at).to eq Time.new(0)

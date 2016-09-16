@@ -1,10 +1,10 @@
 module Taxonomy
-  class TaxonPayloadBuilder
+  class BuildTaxonPayload
     def initialize(taxon)
       @taxon = taxon
     end
 
-    def self.build(taxon:)
+    def self.call(taxon:)
       new(taxon).build
     end
 

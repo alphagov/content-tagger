@@ -5,12 +5,16 @@ module TagImporter
     attr_reader :tagging_spreadsheet
     attr_accessor :errors
 
+    def self.call(tagging_spreadsheet)
+      new(tagging_spreadsheet).call
+    end
+
     def initialize(tagging_spreadsheet)
       @tagging_spreadsheet = tagging_spreadsheet
       @errors = []
     end
 
-    def run
+    def call
       unless valid_response?
         Airbrake.notify(RuntimeError.new(response.body))
         return [spreadsheet_download_error]

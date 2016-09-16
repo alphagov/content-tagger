@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe LinksPublisher do
-  describe '#publish' do
+RSpec.describe PublishLinks do
+  describe '.call' do
     let(:links_update) do
       instance_double(LinksUpdate,
                       valid?: true,

@@ -1,6 +1,6 @@
 class TaxonsController < ApplicationController
   def index
-    render :index, locals: { taxons: taxon_fetcher.taxons }
+    render :index, locals: { taxons: remote_taxons.all }
   end
 
   def new
@@ -13,7 +13,7 @@ class TaxonsController < ApplicationController
   def create
     new_taxon = Taxon.new(params[:taxon])
     if new_taxon.valid?
-      Taxonomy::Publisher.publish(taxon: new_taxon)
+      Taxonomy::PublishTaxon.call(taxon: new_taxon)
       redirect_to(taxons_path)
     else
       error_messages = new_taxon.errors.full_messages.join('; ')
@@ -23,7 +23,7 @@ class TaxonsController < ApplicationController
       }
       render :new, locals: locals, flash: { error: error_messages }
     end
-  rescue Taxonomy::Publisher::InvalidTaxonError => e
+  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
     redirect_to(new_taxon_path, flash: { error: e.message })
   end
 
@@ -44,7 +44,7 @@ class TaxonsController < ApplicationController
 
   def update
     new_taxon = Taxon.new(params[:taxon])
-    Taxonomy::Publisher.publish(taxon: new_taxon)
+    Taxonomy::PublishTaxon.call(taxon: new_taxon)
     redirect_to taxons_path
   end
 
@@ -69,15 +69,15 @@ private
   end
 
   def parent_taxons
-    taxon_fetcher.parents_for_taxon(taxon)
+    remote_taxons.parents_for_taxon(taxon)
   end
 
-  def taxon_fetcher
-    @taxon_fetcher ||= Taxonomy::TaxonFetcher.new
+  def remote_taxons
+    @remote_taxons ||= RemoteTaxons.new
   end
 
   def taxon
-    Taxonomy::TaxonBuilder.build(content_id: params[:id])
+    Taxonomy::BuildTaxon.call(content_id: params[:id])
   end
 
   def tagged

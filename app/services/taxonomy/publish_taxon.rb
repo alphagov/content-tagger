@@ -1,5 +1,5 @@
 module Taxonomy
-  class Publisher
+  class PublishTaxon
     attr_reader :taxon
     delegate :content_id, :parent_taxons, to: :taxon
 
@@ -9,7 +9,7 @@ module Taxonomy
       @taxon = taxon
     end
 
-    def self.publish(taxon:)
+    def self.call(taxon:)
       new(taxon: taxon).publish
     end
 
@@ -28,7 +28,7 @@ module Taxonomy
   private
 
     def payload
-      Taxonomy::TaxonPayloadBuilder.build(taxon: taxon)
+      Taxonomy::BuildTaxonPayload.call(taxon: taxon)
     end
   end
 end

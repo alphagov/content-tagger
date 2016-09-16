@@ -1,11 +1,11 @@
 require 'rails_helper'
 require 'gds_api/test_helpers/publishing_api_v2'
 
-RSpec.describe Taxonomy::TaxonFetcher do
+RSpec.describe RemoteTaxons do
   include PublishingApiHelper
   include GdsApi::TestHelpers::PublishingApiV2
 
-  describe '#taxons' do
+  describe '#all' do
     it 'retrieves taxons from publishing api in descending order by public updated at' do
       taxon_1 = { title: "foo" }
       taxon_2 = { title: "bar" }
@@ -13,7 +13,7 @@ RSpec.describe Taxonomy::TaxonFetcher do
 
       publishing_api_has_taxons([taxon_1, taxon_2, taxon_3])
 
-      result = described_class.new.taxons
+      result = described_class.new.all
 
       expect(result.first).to be_a(Taxon)
       expect(result.first.title).to eq("foo")
@@ -22,7 +22,7 @@ RSpec.describe Taxonomy::TaxonFetcher do
     end
   end
 
-  describe '#taxon_content_ids' do
+  describe '#content_ids' do
     it 'returns the content ids of all taxons' do
       content_id_1 = SecureRandom.uuid
       content_id_2 = SecureRandom.uuid
@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::TaxonFetcher do
 
       publishing_api_has_taxons([taxon_1, taxon_2])
 
-      result = described_class.new.taxon_content_ids
+      result = described_class.new.content_ids
 
       expect(result).to include(content_id_1)
       expect(result).to include(content_id_2)

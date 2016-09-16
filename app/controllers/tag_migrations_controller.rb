@@ -9,11 +9,11 @@ class TagMigrationsController < ApplicationController
       return
     end
 
-    expanded_links = BulkTagging::TaggedContentFetcher.fetch(
-      tag_migration_params[:source_content_id],
-      tag_migration_params[:document_type],
+    expanded_links = BulkTagging::FetchTaggedContent.call(
+      tag_content_id: tag_migration_params[:source_content_id],
+      tag_document_type: tag_migration_params[:document_type],
     )
-    taxons = Taxonomy::TaxonFetcher.new.taxons
+    taxons = RemoteTaxons.new.all
 
     render :new, locals: {
       tag_migration: TagMigration.new(tag_migration_params),
@@ -23,7 +23,7 @@ class TagMigrationsController < ApplicationController
   end
 
   def create
-    tag_migration = BulkTagging::BuildTagMigration.perform(
+    tag_migration = BulkTagging::BuildTagMigration.call(
       tag_migration_params: tag_migration_params,
       taxon_content_ids: params[:taxons],
       content_base_paths: params[:content_base_paths],
@@ -61,7 +61,7 @@ class TagMigrationsController < ApplicationController
   end
 
   def publish_tags
-    PublishTags.new(tag_migration, user: current_user).run
+    QueueLinksForPublishing.call(tag_migration, user: current_user)
 
     redirect_to(
       tag_migration,

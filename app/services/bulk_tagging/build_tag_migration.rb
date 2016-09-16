@@ -10,15 +10,15 @@ module BulkTagging
       @content_base_paths = content_base_paths
     end
 
-    def self.perform(tag_migration_params:, taxon_content_ids:, content_base_paths:)
+    def self.call(tag_migration_params:, taxon_content_ids:, content_base_paths:)
       new(
         tag_migration_params: tag_migration_params,
         taxon_content_ids: taxon_content_ids,
         content_base_paths: content_base_paths
-      ).perform
+      ).call
     end
 
-    def perform
+    def call
       validate_taxons
       validate_content_items
 
@@ -55,7 +55,7 @@ module BulkTagging
 
     def create_tag_mappings_for_taxon(taxon)
       content_base_paths.each do |content_base_path|
-        tag_mapping = BulkTagging::BuildTagMapping.perform(
+        tag_mapping = BulkTagging::BuildTagMapping.call(
           taxon: taxon,
           content_base_path: content_base_path
         )
@@ -65,7 +65,7 @@ module BulkTagging
     end
 
     def taxons
-      @taxons ||= Taxonomy::TaxonFetcher.new.taxons
+      @taxons ||= RemoteTaxons.new.all
     end
   end
 end

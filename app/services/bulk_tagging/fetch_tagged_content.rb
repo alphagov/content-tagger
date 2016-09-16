@@ -1,7 +1,7 @@
 module BulkTagging
-  class TaggedContentFetcher
-    def self.fetch(content_id, document_type)
-      new(content_id, document_type).call
+  class FetchTaggedContent
+    def self.call(tag_content_id:, tag_document_type:)
+      new(tag_content_id, tag_document_type).call
     end
 
     attr_reader :content_id, :document_type

@@ -7,11 +7,11 @@ module BulkTagging
       @content_base_path = content_base_path
     end
 
-    def self.perform(taxon:, content_base_path:)
-      new(taxon: taxon, content_base_path: content_base_path).perform
+    def self.call(taxon:, content_base_path:)
+      new(taxon: taxon, content_base_path: content_base_path).call
     end
 
-    def perform
+    def call
       TagMapping.new(
         content_base_path: content_base_path,
         link_title:        taxon.title,

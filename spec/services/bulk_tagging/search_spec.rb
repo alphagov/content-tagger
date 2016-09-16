@@ -15,6 +15,6 @@ RSpec.describe BulkTagging::Search do
   it 'returns an instance of SearchResponse' do
     search = described_class.new(query: 'tax', document_type: 'taxon')
 
-    expect(search.perform).to be_a(SearchResponse)
+    expect(search.call).to be_a(SearchResponse)
   end
 end
