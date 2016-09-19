@@ -13,7 +13,7 @@ class AggregatedTagMapping
     end
   end
 
-  class Link 
+  class Link
     include ActiveModel::Model
 
     attr_accessor :link_title, :link_content_id, :link_type

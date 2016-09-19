@@ -1,17 +1,11 @@
 class AggregatedTagMappingPresenter < SimpleDelegator
   def errored?
-    presented_tag_mappings.any? do |tag_mapping|
-      tag_mapping.errored?
-    end
+    presented_tag_mappings.any?(&:errored?)
   end
 
   def error_messages
-    presented_tag_mappings.flat_map do |tag_mapping|
-      tag_mapping.messages
-    end
+    presented_tag_mappings.flat_map(&:messages)
   end
-
-private
 
   def presented_tag_mappings
     tag_mappings.map do |tag_mapping|
