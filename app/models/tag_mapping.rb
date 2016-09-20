@@ -7,9 +7,7 @@ class TagMapping < ActiveRecord::Base
   scope :by_link_title, -> { order(link_title: :asc) }
   scope :by_state, -> { order(state: :asc) }
 
-  # TODO: when migration 20160915141004 runs in production, be more strict and
-  # change this serialization to `serialize :messages, Array`.
-  serialize :messages
+  serialize :messages, Array
 
   validates(
     :state,
