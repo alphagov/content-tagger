@@ -1,4 +1,6 @@
 class TaggingSpreadsheet < ActiveRecord::Base
+  include AggregatableTagMappings
+
   validates :url, presence: true
   validates(
     :state,

@@ -134,11 +134,11 @@ RSpec.feature "Bulk tagging", type: :feature do
   def then_i_can_preview_my_changes
     click_button "Bulk tag selected items"
 
-    expect(all("table tbody tr").count).to eq 4
+    expect(all("table tbody tr").count).to eq TagMigration.first.aggregated_tag_mappings.count
     expect(page).to have_text("Taxon 1", count: 2)
     expect(page).to have_text("Taxon 2", count: 2)
-    expect(page).to have_text("/path/tax-doc-1", count: 2)
-    expect(page).to have_text("/path/tax-doc-2", count: 2)
+    expect(page).to have_text("/path/tax-doc-1", count: 1)
+    expect(page).to have_text("/path/tax-doc-2", count: 1)
 
     within("table") do
       state_labels = all("span.label")

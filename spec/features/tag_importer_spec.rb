@@ -58,6 +58,12 @@ RSpec.feature "Tag importer", type: :feature do
     then_the_erroneous_tag_mappings_are_at_the_top
   end
 
+  scenario "Consolidate tag mappings" do
+    given_tagging_spreadsheet_exists
+    when_i_go_to_the_tagging_spreadsheet_page
+    then_i_expect_tag_mappings_to_be_grouped_by_base_path
+  end
+
   SHEET_KEY = "THE-KEY-123".freeze
   SHEET_GID = "123456".freeze
 
@@ -91,6 +97,30 @@ RSpec.feature "Tag importer", type: :feature do
     expect(TaggingSpreadsheet.first.added_by.name).to eq "Barry Allen"
   end
 
+  def given_tagging_spreadsheet_exists
+    tagging_spreadsheet = build(:tagging_spreadsheet)
+    tagging_spreadsheet.tag_mappings << build(:tag_mapping, link_content_id: 'a-content-id-1', link_title: 'Education')
+    tagging_spreadsheet.tag_mappings << build(:tag_mapping, link_content_id: 'a-content-id-2', link_title: 'Early Years')
+
+    tagging_spreadsheet.save!
+  end
+
+  def when_i_go_to_the_tagging_spreadsheet_page
+    visit tagging_spreadsheet_path(TaggingSpreadsheet.last)
+  end
+
+  def then_i_expect_tag_mappings_to_be_grouped_by_base_path
+    rows = all('table tbody tr')
+    expect(rows.count).to eq(1)
+
+    first_row = rows.first
+
+    TagMapping.all.each do |tag_mapping|
+      expect(page).to have_content(tag_mapping.content_base_path, count: 1)
+      expect(first_row.text).to include(tag_mapping.link_title)
+    end
+  end
+
   def then_i_can_preview_which_taggings_will_be_imported
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
     expect_tag_mapping_statuses_to_be("Ready to tag")
@@ -98,7 +128,8 @@ RSpec.feature "Tag importer", type: :feature do
 
   def expect_tag_mapping_statuses_to_be(string)
     tag_mapping_statuses = page.all(".tag-mapping-status")
-    expect(tag_mapping_statuses.count).to eq TagMapping.count
+    expect(tag_mapping_statuses.count).to eq TaggingSpreadsheet.first.aggregated_tag_mappings.count
+
     tag_mapping_statuses.each do |status|
       expect(status.text).to include string
     end
