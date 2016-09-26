@@ -75,24 +75,15 @@ RSpec.feature "Bulk tagging", type: :feature do
       q: "browse"
     )
 
-    publishing_api_has_linked_content_items(
-      "collection-id",
-      [
-        basic_content_item('Tax doc 1'),
-        basic_content_item('Tax doc 2'),
-      ]
+    publishing_api_has_expanded_links(
+      content_id: "collection-id",
+      expanded_links: {
+        documents: [
+          basic_content_item("Tax doc 1"),
+          basic_content_item("Tax doc 2"),
+        ]
+      }
     )
-  end
-
-  def publishing_api_has_linked_content_items(content_id, response_body)
-    publishing_api_endpoint = "#{Plek.current.find('publishing-api')}/v2/linked/#{content_id}?"
-    request_parmeters = {
-      "fields" => %w(base_path content_id document_type title),
-      "link_type" => "document_collection"
-    }.to_query
-
-    stub_request(:get, "#{publishing_api_endpoint}#{request_parmeters}")
-      .and_return(body: response_body.to_json, status: 200)
   end
 
   def and_a_set_of_taxons
