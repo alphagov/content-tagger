@@ -12,10 +12,18 @@ module BulkTagging
     end
 
     def call
-      api_response = Services.publishing_api.get_expanded_links(content_id)
-      results = api_response['expanded_links'].fetch(
-        BulkTaggingSource.new.content_key_for(document_type), []
+      request_tagged_content_items
+    end
+
+  private
+
+    def request_tagged_content_items
+      results = Services.publishing_api.get_linked_items(
+        content_id,
+        link_type: document_type,
+        fields: %w(title content_id base_path document_type)
       )
+
       results.map { |result| ContentItem.new(result) }
     end
   end

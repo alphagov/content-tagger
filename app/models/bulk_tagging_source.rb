@@ -4,6 +4,7 @@ class BulkTaggingSource
       document_collection: 'documents',
       topic: 'children',
       mainstream_browse_page: 'children',
+      taxon: 'taxon',
     }
   end
 
