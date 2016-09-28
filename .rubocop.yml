@@ -16,7 +16,7 @@ LineLength:
 # Complexity metrics are disabled in govuk-lint
 
 Metrics/AbcSize:
-  Enabled: true
+  Enabled: false
   Max: 20
   Exclude:
     - spec/features/**/*

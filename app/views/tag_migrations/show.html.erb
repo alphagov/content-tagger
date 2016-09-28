@@ -1,4 +1,4 @@
-<%= display_header title: 'Preview import', breadcrumbs: [:tag_migrations, "Preview"] do %>
+<%= display_header title: tag_migration.source_description, breadcrumbs: [:tag_migrations, tag_migration.source_description] do %>
   <%= link_to "Create tags", tag_migration_publish_tags_path(tag_migration), method: :post, class: "btn btn-md btn-default" %>
 <% end %>
 

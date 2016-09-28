@@ -2,19 +2,12 @@ require 'rails_helper'
 
 RSpec.describe BulkTagging::BuildTagMigration do
   include PublishingApiHelper
-
-  let(:tag_migration_params) do
-    {
-      source_content_id: 'content-id',
-      source_base_path: '/content-base-path',
-      query: 'A query string'
-    }
-  end
+  include ContentItemHelper
 
   context 'without any taxons' do
     let(:tag_migration) do
       described_class.call(
-        tag_migration_params: tag_migration_params,
+        source_content_item: stub_content_item,
         taxon_content_ids: [],
         content_base_paths: ['/content-1']
       )
@@ -31,7 +24,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
   context 'without any content items' do
     let(:tag_migration) do
       described_class.call(
-        tag_migration_params: tag_migration_params,
+        source_content_item: stub_content_item,
         taxon_content_ids: ['taxon-1'],
         content_base_paths: []
       )
@@ -55,7 +48,7 @@ RSpec.describe BulkTagging::BuildTagMigration do
 
     let(:tag_migration) do
       described_class.call(
-        tag_migration_params: tag_migration_params,
+        source_content_item: stub_content_item,
         taxon_content_ids: ['taxon-1', 'taxon-2'],
         content_base_paths: ['/content-1', '/content-2']
       )
@@ -77,14 +70,6 @@ RSpec.describe BulkTagging::BuildTagMigration do
       expect(tag_migration.state).to eq('ready_to_import')
     end
 
-    it 'assigns the query to the tag migration' do
-      expect(tag_migration.query).to eq('A query string')
-    end
-
-    it 'assigns the content base path to the tag migration' do
-      expect(tag_migration.source_base_path).to eq('/content-base-path')
-    end
-
     it 'it builds 4 tag mappings' do
       expect(tag_migration.tag_mappings.length).to eq(4)
     end
@@ -97,5 +82,9 @@ RSpec.describe BulkTagging::BuildTagMigration do
 
       tag_migration
     end
+  end
+
+  def stub_content_item
+    ContentItem.new(basic_content_item("Some random title", other_fields: { content_id: 'content-id' }))
   end
 end

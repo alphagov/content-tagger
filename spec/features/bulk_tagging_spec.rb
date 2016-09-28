@@ -39,17 +39,21 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def given_a_collection_with_items_and_some_other_content_groupings
+    document_collection = {
+      content_id: "collection-id",
+      title: "Tax documents",
+      base_path: "/tax-documents",
+      document_type: "document_collection",
+    }
+
     publishing_api_has_content(
-      [{
-        content_id: "collection-id",
-        title: "Tax documents",
-        base_path: "/tax-documents",
-        document_type: "document_collection",
-      }],
+      [document_collection],
       document_type: BulkTagging::Search.default_document_types,
       per_page: 20,
       q: "Tax"
     )
+
+    publishing_api_has_item(document_collection)
 
     publishing_api_has_content(
       [{
@@ -218,8 +222,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     row = first('table tbody tr')
 
     expect(row).to have_text(/imported/i)
-    expect(row).to have_text('Tax')
-    expect(row).to have_link('/tax-documents')
+    expect(row).to have_text('Tax documents (Document collection)')
   end
 
   def given_a_tag_migration_exists

@@ -1,8 +1,5 @@
 <%= simple_form_for tag_migration, url: tag_migrations_path, method: :post do |f| %>
   <%= f.hidden_field :source_content_id %>
-  <%= f.hidden_field :source_base_path %>
-  <%= f.hidden_field :document_type %>
-  <%= f.hidden_field :query %>
 
   <% if flash[:error].present? %>
     <div class="alert alert-danger" role="alert">
