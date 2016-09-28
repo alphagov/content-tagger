@@ -23,14 +23,7 @@
               <td><%= tag.title %></td>
               <td>
                 <%= link_to tag.content_id,
-                  new_tag_migration_path(
-                    tag_migration: {
-                      source_content_id: tag.content_id,
-                      source_base_path: tag.base_path,
-                      document_type: tag.document_type,
-                      query: query,
-                    }
-                  ) %>
+                  new_tag_migration_path(source_content_id: tag.content_id) %>
               </td>
               <td> <%= tag.document_type.humanize %> </td>
             </tr>

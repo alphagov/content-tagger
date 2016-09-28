@@ -4,35 +4,41 @@ class TagMigrationsController < ApplicationController
   end
 
   def new
-    unless tag_migration_params_present?
+    unless params[:source_content_id]
       redirect_to new_tag_search_path
       return
     end
 
+    source_content_item = ContentItem.find!(params[:source_content_id])
+
     expanded_links = BulkTagging::FetchTaggedContent.call(
-      tag_content_id: tag_migration_params[:source_content_id],
-      tag_document_type: tag_migration_params[:document_type],
+      tag_content_id: source_content_item.content_id,
+      tag_document_type: source_content_item.document_type,
     )
+
     taxons = RemoteTaxons.new.all
 
     render :new, locals: {
-      tag_migration: TagMigration.new(tag_migration_params),
+      tag_migration: TagMigration.new(source_content_id: source_content_item.content_id),
       taxons: taxons,
       expanded_links: expanded_links,
     }
   end
 
   def create
+    source_content_item = ContentItem.find!(params[:tag_migration][:source_content_id])
+
     tag_migration = BulkTagging::BuildTagMigration.call(
-      tag_migration_params: tag_migration_params,
+      source_content_item: source_content_item,
       taxon_content_ids: params[:taxons],
       content_base_paths: params[:content_base_paths],
     )
+
     tag_migration.save!
     redirect_to tag_migration_path(tag_migration)
   rescue BulkTagging::BuildTagMigration::InvalidArgumentError => e
     flash[:error] = e.message
-    redirect_to new_tag_migration_path(tag_migration: tag_migration_params)
+    redirect_to new_tag_migration_path(source_content_id: source_content_item.content_id)
   end
 
   def show
@@ -70,17 +76,6 @@ class TagMigrationsController < ApplicationController
   end
 
 private
-
-  def tag_migration_params_present?
-    return false if params[:tag_migration].blank?
-    tag_migration_params.map { |_, v| v.present? }.all?
-  end
-
-  def tag_migration_params
-    params.require(:tag_migration).permit(
-      :source_base_path, :source_content_id, :document_type, :query
-    )
-  end
 
   def tag_migrations
     TagMigration.active.newest_first
