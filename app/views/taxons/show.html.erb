@@ -1,15 +1,11 @@
 <%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] do %>
-  <%= link_to taxon_path(taxon.content_id), method: :delete,
-    class: 'btn btn-md btn-default',
-    data: { confirm: I18n.t('messages.views.confirm') } do %>
-    <i class="glyphicon glyphicon-trash"></i>
+  <%= link_to taxon_confirm_delete_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
+    <span class="glyphicon glyphicon-trash"></span>
+    <span>
       <%= I18n.t('views.taxons.delete_taxon') %>
-    </i>
+    </span>
   <% end %>
 <% end %>
-
-<br/>
-<br/>
 
 <% if parent_taxons.any? %>
   <table class="table queries-list table-bordered table-striped" data-module="filterable-table">

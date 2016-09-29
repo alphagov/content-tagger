@@ -1,0 +1,41 @@
+<% if tagged.any? || children.any? %>
+<div class="alert alert-warning clearfix" role="warning">
+  <p>
+  This taxon has content tagged to it, deleting it will cause the content to not
+  be tagged to this taxon anymore, as well as any child taxons,
+  please confirm that you really want to delete this taxon.
+  </p>
+
+  <%= link_to taxon_path(taxon.content_id), method: :delete,
+    class: 'btn btn-md btn-danger pull-right left-space',
+    data: { confirm: I18n.t('messages.views.confirm') } do %>
+    <span class="glyphicon glyphicon-trash"></span>
+    <span>
+      <!-- <%= I18n.t('views.taxons.delete_taxon') %> -->
+      I understand and I want to delete it!
+    </span>
+  <% end %>
+
+  <%= link_to taxon_path(taxon.content_id), class: 'btn btn-md btn-default pull-right' do %>
+    <span>
+      <%= I18n.t('views.taxons.cancel_button') %>
+    </span>
+  <% end %>
+</div>
+<% else %>
+  <%= link_to taxon_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
+    <span>
+      <%= I18n.t('views.taxons.cancel_button') %>
+    </span>
+  <% end %>
+
+  <%= link_to taxon_path(taxon.content_id), method: :delete,
+    class: 'btn btn-md btn-danger left-space',
+    data: { confirm: I18n.t('messages.views.confirm') } do %>
+    <span class="glyphicon glyphicon-trash"></span>
+    <span>
+      <!-- <%= I18n.t('views.taxons.delete_taxon') %> -->
+      I understand and I want to delete it!
+    </span>
+  <% end %>
+<% end %>

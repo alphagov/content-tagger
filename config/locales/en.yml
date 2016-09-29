@@ -28,6 +28,7 @@ en:
       new_breadcrumb: New taxon
       new_button: Create taxon
       edit_button: Update taxon
+      cancel_button: Cancel
   controllers:
     bulk_taggings:
       too_many_results: Your search returned too many results. We are only displaying a subset, please try narrowing down your search.

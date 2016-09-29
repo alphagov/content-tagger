@@ -58,6 +58,14 @@ class TaxonsController < ApplicationController
     redirect_to taxons_path
   end
 
+  def confirm_delete
+    render :confirm_delete, locals: {
+      taxon: taxon,
+      tagged: tagged,
+      children: child_taxons,
+    }
+  end
+
   def destroy
     response_code = Services.publishing_api.unpublish(params[:id], type: "gone").code
 
@@ -82,12 +90,17 @@ private
     remote_taxons.parents_for_taxon(taxon)
   end
 
+  def child_taxons
+    remote_taxons.childs_for_taxon(taxon)
+  end
+
   def remote_taxons
     @remote_taxons ||= RemoteTaxons.new
   end
 
   def taxon
-    Taxonomy::BuildTaxon.call(content_id: params[:id])
+    id_param = params[:id] || params[:taxon_id]
+    Taxonomy::BuildTaxon.call(content_id: id_param)
   end
 
   def tagged

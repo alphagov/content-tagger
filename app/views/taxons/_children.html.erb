@@ -1,0 +1,21 @@
+<h1>Children</h1>
+
+<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+  <thead>
+    <tr class="table-header">
+      <th>Taxon</th>
+      <th>Base path</th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+  </thead>
+
+  <tbody>
+    <% children.each do |child| %>
+      <tr>
+        <td><%= link_to child.title, taxon_path(child.content_id) %></td>
+        <td><%= link_to child.base_path, "#{website_url('/api/content' + child.base_path)}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
