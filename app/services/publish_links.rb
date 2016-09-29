@@ -21,7 +21,11 @@ private
 
   def updated_links
     links_update.links_to_update.merge(existing_links) do |_, new_links, old_links|
-      (old_links || []).concat(new_links).uniq
+      if new_links.empty?
+        []
+      else
+        (old_links || []).concat(new_links).uniq
+      end
     end
   end
 

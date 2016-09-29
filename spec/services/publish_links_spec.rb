@@ -67,5 +67,31 @@ RSpec.describe PublishLinks do
         described_class.new(links_update: links_update).publish
       end
     end
+
+    context 'with an empty list of links for a given link type' do
+      let(:links_update) do
+        instance_double(LinksUpdate,
+                        content_id: 'a-content-id',
+                        links_to_update: { 'parent' => [] })
+      end
+
+      before do
+        publishing_api_has_links(
+          content_id: links_update.content_id,
+          links: { parent: ['parent-content-id'] },
+          version: 10
+        )
+      end
+
+      it 'deletes the existing links for that link type' do
+        expect(Services.publishing_api).to receive(:patch_links).with(
+          links_update.content_id,
+          links: links_update.links_to_update,
+          previous_version: 10
+        )
+
+        described_class.new(links_update: links_update).publish
+      end
+    end
   end
 end
