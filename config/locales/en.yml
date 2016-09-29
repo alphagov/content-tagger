@@ -38,6 +38,7 @@ en:
     taxons:
       success: You have sucessfully deleted the taxon
       alert: It was not possible to delete the taxon
+  messages:
     views:
       confirm: Are you sure?
   panels:
