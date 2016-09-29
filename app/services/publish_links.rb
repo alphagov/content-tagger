@@ -10,16 +10,11 @@ class PublishLinks
   end
 
   def publish
-    if links_update.valid?
-      Services.publishing_api.patch_links(
-        links_update.content_id,
-        links: updated_links,
-        previous_version: previous_version
-      )
-      links_update.mark_as_tagged
-    else
-      links_update.mark_as_errored
-    end
+    Services.publishing_api.patch_links(
+      links_update.content_id,
+      links: updated_links,
+      previous_version: previous_version
+    )
   end
 
 private
