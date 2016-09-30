@@ -16,11 +16,9 @@ class TagMigrationsController < ApplicationController
       tag_document_type: source_content_item.document_type,
     )
 
-    taxons = RemoteTaxons.new.all
-
     render :new, locals: {
       tag_migration: TagMigration.new(source_content_id: source_content_item.content_id),
-      taxons: taxons,
+      taxons: Linkables.new.taxons,
       expanded_links: expanded_links,
     }
   end
