@@ -9,7 +9,6 @@ RSpec.describe LinksUpdate do
     it "validates with these validators" do
       expect(LinksUpdate.validators).to include(instance_of(ContentIdValidator))
       expect(LinksUpdate.validators).to include(instance_of(LinkTypeValidator))
-      expect(LinksUpdate.validators).to include(instance_of(TaxonsValidator))
     end
   end
 

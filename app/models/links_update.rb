@@ -4,7 +4,6 @@ class LinksUpdate
 
   validates_with ContentIdValidator
   validates_with LinkTypeValidator
-  validates_with TaxonsValidator
 
   attr_accessor :base_path, :links, :tag_mappings
   attr_reader :content_id
