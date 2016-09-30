@@ -10,23 +10,22 @@ class PublishLinks
   end
 
   def publish
-    if links_update.valid?
-      Services.publishing_api.patch_links(
-        links_update.content_id,
-        links: updated_links,
-        previous_version: previous_version
-      )
-      links_update.mark_as_tagged
-    else
-      links_update.mark_as_errored
-    end
+    Services.publishing_api.patch_links(
+      links_update.content_id,
+      links: updated_links,
+      previous_version: previous_version
+    )
   end
 
 private
 
   def updated_links
     links_update.links_to_update.merge(existing_links) do |_, new_links, old_links|
-      (old_links || []).concat(new_links).uniq
+      if new_links.empty?
+        []
+      else
+        (old_links || []).concat(new_links).uniq
+      end
     end
   end
 
