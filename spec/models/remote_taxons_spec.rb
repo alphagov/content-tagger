@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'gds_api/test_helpers/publishing_api_v2'
 
 RSpec.describe RemoteTaxons do
+  include ContentItemHelper
   include PublishingApiHelper
   include GdsApi::TestHelpers::PublishingApiV2
 
@@ -42,34 +43,42 @@ RSpec.describe RemoteTaxons do
     end
   end
 
-  describe '#all' do
-    it 'retrieves taxons from publishing api in descending order by public updated at' do
-      taxon_1 = { title: "foo" }
-      taxon_2 = { title: "bar" }
-      taxon_3 = { title: "aha" }
-      publishing_api_has_taxons([taxon_1, taxon_2, taxon_3])
-
-      result = described_class.new.all
-
-      expect(result.first).to be_a(Taxon)
-      expect(result.first.title).to eq("foo")
-      expect(result.last).to be_a(Taxon)
-      expect(result.last.title).to eq("aha")
-    end
-  end
-
   describe '#parents_for_taxon' do
     let(:taxon_id_1) { SecureRandom.uuid }
     let(:taxon_id_2) { SecureRandom.uuid }
+    let(:taxon_id_3) { SecureRandom.uuid }
     let(:taxon) do
       instance_double(Taxon, parent_taxons: [taxon_id_1, taxon_id_2])
     end
 
     it 'returns the parent taxons for a given taxon' do
-      taxon_1 = { title: "foo", base_path: "/foo", content_id: taxon_id_1 }
-      taxon_2 = { title: "bar", base_path: "/bar", content_id: taxon_id_2 }
-      taxon_3 = { title: "bar", base_path: "/bar", content_id: SecureRandom.uuid }
-      publishing_api_has_taxons([taxon_1, taxon_2, taxon_3])
+      taxon_1 = content_item_with_details(
+        "foo",
+        other_fields: {
+          base_path: "/foo",
+          content_id: taxon_id_1
+        }
+      )
+      taxon_2 = content_item_with_details(
+        "bar",
+        other_fields: {
+          base_path: "/bar",
+          content_id: taxon_id_2
+        }
+      )
+      taxon_3 = content_item_with_details(
+        "bar",
+        other_fields: {
+          base_path: "/bar",
+          content_id: taxon_id_3
+        }
+      )
+      publishing_api_has_item(taxon_1)
+      publishing_api_has_links(content_id: taxon_id_1, links: {})
+      publishing_api_has_item(taxon_2)
+      publishing_api_has_links(content_id: taxon_id_2, links: {})
+      publishing_api_has_item(taxon_3)
+      publishing_api_has_links(content_id: taxon_id_3, links: {})
 
       result = described_class.new.parents_for_taxon(taxon)
 
