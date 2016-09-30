@@ -1,6 +1,4 @@
 class TaggingSpreadsheet < ActiveRecord::Base
-  include AggregatableTagMappings
-
   validates :url, presence: true
   validates(
     :state,
@@ -14,6 +12,10 @@ class TaggingSpreadsheet < ActiveRecord::Base
 
   scope :newest_first, -> { order(created_at: :desc) }
   scope :active, -> { where(deleted_at: nil) }
+
+  def aggregated_tag_mappings
+    AggregatableTagMappings.new(tag_mappings).aggregated_tag_mappings
+  end
 
   def mark_as_deleted
     update(deleted_at: DateTime.current)
