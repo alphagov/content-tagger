@@ -6,6 +6,6 @@ class CopyTaxonsController < ApplicationController
 private
 
   def taxons
-    @taxons ||= RemoteTaxons.new.all
+    Services.publishing_api.get_linkables(format: 'taxon')
   end
 end
