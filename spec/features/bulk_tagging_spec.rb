@@ -91,14 +91,8 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def and_a_set_of_taxons
-    # Used in BuildTagMigration
-    publishing_api_has_taxons(
-      [
-        basic_content_item("Taxon 1", other_fields: { content_id: 'taxon-1' }),
-        basic_content_item("Taxon 2", other_fields: { content_id: 'taxon-2' }),
-        basic_content_item("Taxon 3", other_fields: { content_id: 'taxon-3' }),
-      ]
-    )
+    publishing_api_has_item(basic_content_item("Taxon 1"))
+    publishing_api_has_item(basic_content_item("Taxon 2"))
 
     # Used in the dropdown
     publishing_api_has_linkables(
