@@ -16,10 +16,6 @@ class RemoteTaxons
     )
   end
 
-  def content_ids
-    all.map(&:content_id)
-  end
-
   # TODO: replace all with another method.
   def parents_for_taxon(taxon_child)
     all.select do |taxon|

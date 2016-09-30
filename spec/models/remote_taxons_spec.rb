@@ -41,22 +41,6 @@ RSpec.describe RemoteTaxons do
     end
   end
 
-  describe '#content_ids' do
-    it 'returns the content ids of all taxons' do
-      content_id_1 = SecureRandom.uuid
-      content_id_2 = SecureRandom.uuid
-      taxon_1 = { title: "foo", base_path: "/foo", content_id: content_id_1 }
-      taxon_2 = { title: "bar", base_path: "/bar", content_id: content_id_2 }
-
-      publishing_api_has_taxons([taxon_1, taxon_2])
-
-      result = described_class.new.content_ids
-
-      expect(result).to include(content_id_1)
-      expect(result).to include(content_id_2)
-    end
-  end
-
   describe '#parents_for_taxon' do
     let(:taxon_id_1) { SecureRandom.uuid }
     let(:taxon_id_2) { SecureRandom.uuid }
