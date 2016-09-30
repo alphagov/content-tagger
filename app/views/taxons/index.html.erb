@@ -11,7 +11,9 @@
   <% end %>
 <% end %>
 
-<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+<%= render 'taxons/search', query: query %>
+
+<table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
       <th>Title</th>
@@ -20,8 +22,6 @@
       <th></th>
       <th></th>
     </tr>
-
-    <%= render partial: 'shared/table_filter' %>
   </thead>
 
   <tbody>

@@ -23,6 +23,23 @@ RSpec.describe RemoteTaxons do
       taxon = result.taxons.first
       expect(taxon.title).to eq('aha')
     end
+
+    it 'is possible to search with a query string' do
+      taxon_1 = { title: "foo" }
+      publishing_api_has_taxons(
+        [taxon_1],
+        page: 1,
+        per_page: 1,
+        q: 'foo'
+      )
+      result = described_class.new.search(
+        page: 1,
+        per_page: 1,
+        query: 'foo'
+      )
+
+      expect(result.taxons.length).to eq(1)
+    end
   end
 
   describe '#all' do
