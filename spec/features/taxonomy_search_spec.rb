@@ -12,6 +12,14 @@ RSpec.feature "Taxonomy Search" do
     then_i_can_see_the_second_page_of_taxons
   end
 
+  scenario "User searches for taxons" do
+    given_there_are_taxons_for_search
+    when_i_visit_the_taxonomy_page
+    then_i_can_see_all_the_taxons
+    when_i_search_for_taxons
+    then_i_can_see_my_search_results
+  end
+
   def given_there_are_multiple_pages_of_taxons
     @taxon_1 = {
       title: "I Am A Taxon 1",
@@ -44,6 +52,38 @@ RSpec.feature "Taxonomy Search" do
       [@taxon_1, @taxon_2, @taxon_3],
       page: 2,
       per_page: 2
+    )
+  end
+
+  def given_there_are_taxons_for_search
+    @taxon_1 = {
+      title: "Taxon 1",
+      content_id: "ID-1",
+      base_path: "/foo",
+      internal_name: "I Am A Taxon 1",
+      publication_state: 'active'
+    }
+    @taxon_2 = {
+      title: "Taxon 2",
+      content_id: "ID-2",
+      base_path: "/bar",
+      internal_name: "I Am Another Taxon 2",
+      publication_state: 'active'
+    }
+
+    publishing_api_has_taxons(
+      [@taxon_1, @taxon_2],
+      document_type: 'taxon',
+      page: 1,
+      per_page: 2,
+    )
+
+    publishing_api_has_taxons(
+      [@taxon_2],
+      document_type: 'taxon',
+      page: 1,
+      per_page: 50,
+      q: 'Taxon 2'
     )
   end
 
@@ -90,5 +130,21 @@ RSpec.feature "Taxonomy Search" do
 
     expect(page).to_not have_text(@taxon_1[:title])
     expect(page).to_not have_text(@taxon_2[:title])
+  end
+
+  def then_i_can_see_all_the_taxons
+    expect(page).to have_text(@taxon_1[:title])
+    expect(page).to have_text(@taxon_2[:title])
+  end
+
+  def when_i_search_for_taxons
+    fill_in 'Query', with: 'Taxon 2'
+    click_button 'Search taxons'
+  end
+
+  def then_i_can_see_my_search_results
+    expect(page).to have_text(@taxon_2[:title])
+
+    expect(page).to_not have_text(@taxon_1[:title])
   end
 end

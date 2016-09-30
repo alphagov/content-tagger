@@ -2,12 +2,14 @@ class TaxonsController < ApplicationController
   def index
     search_results = remote_taxons.search(
       page: params[:page],
-      per_page: params[:per_page]
+      per_page: params[:per_page],
+      query: query
     )
 
     render :index, locals: {
       taxons: search_results.taxons,
       search_results: search_results,
+      query: query,
     }
   end
 
@@ -94,5 +96,11 @@ private
       link_type: "taxons",
       fields: %w(title content_id base_path document_type)
     )
+  end
+
+  def query
+    return '' unless params[:taxon_search].present?
+
+    params[:taxon_search][:query]
   end
 end
