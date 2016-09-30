@@ -1,6 +1,4 @@
 class TagMigration < ActiveRecord::Base
-  include AggregatableTagMappings
-
   has_many :tag_mappings, dependent: :destroy, as: :tagging_source
   validates :source_content_id, presence: true
 
@@ -12,6 +10,10 @@ class TagMigration < ActiveRecord::Base
 
   scope :newest_first, -> { order(created_at: :desc) }
   scope :active, -> { where(deleted_at: nil) }
+
+  def aggregated_tag_mappings
+    AggregatableTagMappings.new(tag_mappings).aggregated_tag_mappings
+  end
 
   def mark_as_deleted
     update!(deleted_at: DateTime.current)
