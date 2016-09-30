@@ -87,4 +87,20 @@ RSpec.describe RemoteTaxons do
       expect(result).to include(taxon_with_attributes(taxon_2))
     end
   end
+
+  describe '#childs_for_taxon' do
+    it 'returns the parent taxons for a given taxon' do
+      parent_taxon = build(:taxon)
+      child_taxon_1 = build(:taxon, parent_taxons: [parent_taxon.content_id], content_id: 'child-taxon-1')
+      child_taxon_2 = build(:taxon, parent_taxons: [parent_taxon.content_id], content_id: 'child-taxon-2')
+
+      publishing_api_has_taxons([parent_taxon, child_taxon_1, child_taxon_2])
+
+      result = described_class.new.childs_for_taxon(parent_taxon)
+
+      expect(result.count).to eq(2)
+      expect(result.first.content_id).to eql(child_taxon_1.content_id)
+      expect(result.last.content_id).to eql(child_taxon_2.content_id)
+    end
+  end
 end
