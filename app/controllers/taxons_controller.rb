@@ -1,6 +1,14 @@
 class TaxonsController < ApplicationController
   def index
-    render :index, locals: { taxons: remote_taxons.all }
+    search_results = remote_taxons.search(
+      page: params[:page],
+      per_page: params[:per_page]
+    )
+
+    render :index, locals: {
+      taxons: search_results.taxons,
+      search_results: search_results,
+    }
   end
 
   def new
