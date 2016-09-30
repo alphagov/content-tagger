@@ -1,10 +1,13 @@
 module PublishingApiHelper
-  def publishing_api_has_taxons(taxons)
-    publishing_api_has_content(
-      taxons,
+  def publishing_api_has_taxons(taxons, options = {})
+    default_options = {
       document_type: "taxon",
       order: '-public_updated_at',
-    )
+      page: 1,
+      per_page: 50,
+    }
+
+    publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_taxon_linkables(base_paths)

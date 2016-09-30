@@ -9,7 +9,7 @@ gem 'plek', '~> 1.10'
 gem 'gds-sso', '~> 11.1'
 gem 'govuk_admin_template', '~> 4.4'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
-gem 'gds-api-adapters', '~> 35.0'
+gem 'gds-api-adapters', '~> 36.4'
 
 gem 'airbrake', '~> 4.3.1'
 
@@ -18,6 +18,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'select2-rails', '~> 3.5.9'
 
 gem 'govuk_sidekiq', '~> 0.0.4'
+
+gem 'kaminari', '~> 0.17'
+gem 'bootstrap-kaminari-views', '~> 0.0.5'
 
 group :development, :test do
   gem 'quiet_assets'
