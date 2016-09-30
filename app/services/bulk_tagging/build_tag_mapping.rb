@@ -14,10 +14,10 @@ module BulkTagging
     def call
       TagMapping.new(
         content_base_path: content_base_path,
-        link_title:        taxon.title,
-        link_content_id:   taxon.content_id,
-        link_type:         taxon.link_type,
-        state:             'ready_to_tag'
+        link_title: taxon.title,
+        link_content_id: taxon.content_id,
+        link_type: 'taxons',
+        state: 'ready_to_tag'
       )
     end
   end

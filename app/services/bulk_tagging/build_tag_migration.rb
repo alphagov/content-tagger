@@ -23,7 +23,7 @@ module BulkTagging
       validate_content_items
 
       taxon_content_ids.each do |taxon_content_id|
-        expected_taxon = taxons.find { |taxon| taxon.content_id == taxon_content_id }
+        expected_taxon = ContentItem.find!(taxon_content_id)
         create_tag_mappings_for_taxon(expected_taxon)
       end
 
@@ -61,10 +61,6 @@ module BulkTagging
 
         tag_migration.tag_mappings << tag_mapping
       end
-    end
-
-    def taxons
-      @taxons ||= RemoteTaxons.new.all
     end
   end
 end
