@@ -70,7 +70,6 @@ RSpec.feature "Managing taxonomies" do
 
   def and_i_click_on_the_edit_taxon_link
     first('a', text: 'Edit taxon').click
-    expect(page).to have_selector('.callout-warning', text: /editing/i)
   end
 
   def given_there_are_taxons
@@ -95,7 +94,6 @@ RSpec.feature "Managing taxonomies" do
 
   def and_i_click_on_the_new_taxon_button
     click_on "Add a taxon"
-    expect(page).to have_selector('.callout-info', text: /creating/i)
   end
 
   def fill_in_taxon_form

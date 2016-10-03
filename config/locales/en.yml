@@ -20,8 +20,6 @@ en:
       no_taxons: No taxons selected.
       no_content_items: No content items selected.
   views:
-    callout_new: Creating
-    callout_edit: Editing
     taxons:
       add_taxon: Add a taxon
       copy_taxon: Copy taxons

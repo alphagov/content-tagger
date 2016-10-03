@@ -9,11 +9,7 @@
     <li class="active"><%= active_item %></li>
   </ol>
 
-  <% if callout_presenter.should_render? %>
-    <%= render 'shared/title', callout_presenter: callout_presenter %>
-  <% else %>
-    <h1><%= raw title %></h1>
-  <% end %>
+  <h1><%= raw title %></h1>
 
   <% if block_given? %>
     <nav class="btn-group">
