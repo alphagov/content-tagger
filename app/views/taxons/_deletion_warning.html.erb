@@ -9,8 +9,7 @@
   </p>
 
   <%= link_to taxon_path(taxon.content_id), method: :delete,
-    class: 'btn btn-md btn-danger pull-right left-space',
-    data: { confirm: I18n.t('messages.views.confirm') } do %>
+    class: 'btn btn-md btn-danger pull-right left-space' do %>
     <span class="glyphicon glyphicon-trash"></span>
     <span>
       <%= I18n.t('views.taxons.confirm_deletion') %>
@@ -31,8 +30,7 @@
   <% end %>
 
   <%= link_to taxon_path(taxon.content_id), method: :delete,
-    class: 'btn btn-md btn-danger left-space',
-    data: { confirm: I18n.t('messages.views.confirm') } do %>
+    class: 'btn btn-md btn-danger left-space' do %>
     <span class="glyphicon glyphicon-trash"></span>
     <span>
       <%= I18n.t('views.taxons.confirm_deletion') %>
