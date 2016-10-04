@@ -1,9 +1,11 @@
-<% if tagged.any? || children.any? %>
+<% if tagged.any? || taxon.child_taxons.any? %>
 <div class="alert alert-warning clearfix" role="warning">
   <p>
-  This taxon has content tagged to it, deleting it will cause the content to not
-  be tagged to this taxon anymore, as well as any child taxons,
-  please confirm that you really want to delete this taxon.
+    <%= I18n.t('views.taxons.delete_warning_1') %>
+    <ul>
+      <li><%= I18n.t('views.taxons.delete_warning_2') %></li>
+      <li><%= I18n.t('views.taxons.delete_warning_3') %></li>
+    </ul>
   </p>
 
   <%= link_to taxon_path(taxon.content_id), method: :delete,
@@ -11,8 +13,7 @@
     data: { confirm: I18n.t('messages.views.confirm') } do %>
     <span class="glyphicon glyphicon-trash"></span>
     <span>
-      <!-- <%= I18n.t('views.taxons.delete_taxon') %> -->
-      I understand and I want to delete it!
+      <%= I18n.t('views.taxons.confirm_deletion') %>
     </span>
   <% end %>
 
@@ -34,8 +35,7 @@
     data: { confirm: I18n.t('messages.views.confirm') } do %>
     <span class="glyphicon glyphicon-trash"></span>
     <span>
-      <!-- <%= I18n.t('views.taxons.delete_taxon') %> -->
-      I understand and I want to delete it!
+      <%= I18n.t('views.taxons.confirm_deletion') %>
     </span>
   <% end %>
 <% end %>

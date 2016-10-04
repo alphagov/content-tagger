@@ -1,10 +1,6 @@
 <h1>You are about to delete "<%= taxon.title %>"</h1>
 
-<%= render partial: 'deletion_warning',
-  locals: {
-    taxon: taxon,
-    children: children,
-    tagged: tagged } %>
+<%= render partial: 'deletion_warning', locals: { taxon: taxon, tagged: tagged } %>
 
 <% if children.any? %>
   <%= render partial: 'children', locals: { children: children } %>
