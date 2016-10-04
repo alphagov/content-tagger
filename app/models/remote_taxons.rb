@@ -11,12 +11,6 @@ class RemoteTaxons
     end
   end
 
-  def childs_for_taxon(parent_taxon)
-    all.select do |taxon|
-      taxon.parent_taxons.include?(parent_taxon.content_id)
-    end
-  end
-
 private
 
   # Return a list of taxons from the publishing API with links included.
