@@ -41,12 +41,6 @@
   </thead>
 
   <tbody>
-    <% tagged.each do |content_item| %>
-      <tr>
-        <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
-        <td><%= content_item["document_type"].humanize if content_item["document_type"] %></td>
-        <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
-      </tr>
-    <% end %>
+    <%= render partial: 'tagged_content', locals: { tagged: tagged } %>
   </tbody>
 </table>
