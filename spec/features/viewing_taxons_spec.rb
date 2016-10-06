@@ -1,10 +1,20 @@
 require "rails_helper"
 
-RSpec.describe "Taxonomy visualisation" do
+RSpec.describe "Viewing taxons" do
+  include ContentItemHelper
+
   let(:food)   { fake_taxon("Food") }
   let(:fruits) { fake_taxon("Fruits") }
   let(:apples) { fake_taxon("Apples") }
   let(:round_things) { fake_taxon("Round things") }
+
+  before do
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
+      .to_return(status: 200, body: {}.to_json)
+
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(status: 200, body: {}.to_json)
+  end
 
   scenario "Viewing a taxonomy" do
     given_a_taxonomy
@@ -23,8 +33,26 @@ RSpec.describe "Taxonomy visualisation" do
     and_can_navigate_to_the_other_parent
   end
 
+  scenario "Viewing tagged content of a taxon" do
+    given_a_taxonomy
+    and_the_top_level_taxon_has_content_tagged_to_it
+    when_i_view_the_top_level_taxon
+    then_i_see_tagged_content
+  end
+
+  def and_the_top_level_taxon_has_content_tagged_to_it
+    stub_request(:get, %r{publishing-api.test.gov.uk/v2/linked/food-id})
+      .to_return(
+        body: [basic_content_item("Tagged content")].to_json
+      )
+  end
+
+  def then_i_see_tagged_content
+    expect(page).to have_content("Tagged content")
+  end
+
   def fake_taxon(title)
-    { "title" => title, "content_id" => "#{title.parameterize}-id" }
+    { "title" => title, "content_id" => "#{title.parameterize}-id", "details" => {} }
   end
 
   def given_a_taxonomy
@@ -61,7 +89,7 @@ RSpec.describe "Taxonomy visualisation" do
   end
 
   def when_i_view_the_top_level_taxon
-    visit taxonomy_path(food["content_id"])
+    visit taxon_path(food["content_id"])
   end
 
   def then_i_see_the_entire_taxonomy
@@ -117,7 +145,7 @@ RSpec.describe "Taxonomy visualisation" do
   end
 
   def and_i_can_download_the_taxonomy_in_csv_form
-    click_link "Download as CSV"
+    click_link I18n.t('views.taxons.download_csv')
     expect(page.response_headers['Content-Type']).to match(/csv/)
     expect(page.response_headers['Content-Disposition']).to match(/attachment/)
     expect(page.response_headers['Content-Disposition']).to match(/Fruits.*.csv/)

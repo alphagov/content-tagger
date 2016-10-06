@@ -6,19 +6,19 @@
 
 <% content_for :navbar_items do %>
   <li class='<%= active_navigation_item == 'taggings' ? 'active' : nil %>'>
-    <%= link_to 'Tagging', lookup_taggings_path %>
+    <%= link_to t('navigation.tagging_content'), lookup_taggings_path %>
   </li>
-  <li class='<%= (active_navigation_item == 'taxons' || active_navigation_item == 'taxonomies') ? 'active' : nil %>'>
-    <%= link_to 'Taxons', taxons_path %>
+
+  <li class='<%= active_navigation_item.in?(%w[tag_searches tag_migrations]) ? 'active' : nil %>'>
+    <%= link_to t('navigation.tag_search'), new_tag_search_path %>
   </li>
+
   <li class='<%= active_navigation_item == 'tagging_spreadsheets' ? 'active' : nil %>'>
-    <%= link_to 'Tag Importer', tagging_spreadsheets_path %>
+    <%= link_to t('navigation.tag_importer'), tagging_spreadsheets_path %>
   </li>
-  <li class='<%= active_navigation_item == 'tag_searches' ? 'active' : nil %>'>
-    <%= link_to 'Tag Search', new_tag_search_path %>
-  </li>
-  <li class='<%= active_navigation_item == 'tag_migrations' ? 'active' : nil %>'>
-    <%= link_to 'Tag Migration', tag_migrations_path %>
+
+  <li class='<%= active_navigation_item.in?(%w[taxons ]) ? 'active' : nil %>'>
+    <%= link_to t('navigation.taxons'), taxons_path %>
   </li>
 <% end %>
 

@@ -20,7 +20,7 @@ RSpec.describe TagMappingPresenter do
     it 'returns a label css class indicting a warning for the ready_to_tagstate' do
       tag_mapping.state = 'ready_to_tag'
 
-      expect(presenter.label_type).to eq('label-warning')
+      expect(presenter.label_type).to eq('label-default')
     end
   end
 

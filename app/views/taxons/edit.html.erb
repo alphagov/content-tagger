@@ -1,4 +1,5 @@
-<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] %>
+<%= display_header title: taxon.title,
+  breadcrumbs: [:taxons, link_to(taxon.title, taxon_path(taxon.content_id)), "Edit"] %>
 
 <%= simple_form_for taxon, url: taxon_path(taxon.content_id), method: :patch do |f| %>
   <%= f.hidden_field :content_id, value: taxon.content_id %>

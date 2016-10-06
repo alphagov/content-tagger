@@ -1,4 +1,4 @@
-<%= display_header title: "Tagging", breadcrumbs: ["Tagging"] %>
+<%= display_header title: t('navigation.tagging_content'), breadcrumbs: [t('navigation.tagging_content')] %>
 
 <%= simple_form_for @lookup, url: lookup_taggings_path do |f| %>
   <div class="form-group">
@@ -12,5 +12,5 @@
     <% end %>
   </div>
 
-  <input type='submit' value='Show content item' class='btn btn-success btn-md' />
+  <%= submit_tag I18n.t('taggings.search'), class: 'btn btn-success btn-md' %>
 <% end %>

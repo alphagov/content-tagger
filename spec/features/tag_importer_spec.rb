@@ -69,7 +69,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet
-    click_link "Refresh import"
+    click_link I18n.t('tag_import.refresh')
   end
 
   def given_tagging_data_is_present_in_a_google_spreadsheet
@@ -88,11 +88,11 @@ RSpec.feature "Tag importer", type: :feature do
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
     visit root_path
-    click_link "Tag Importer"
-    click_link "Upload spreadsheet"
+    click_link I18n.t("navigation.tag_importer")
+    click_link I18n.t('tag_import.upload_sheet')
     expect(page).to have_text(/how to generate a google spreadsheet url/i)
-    fill_in "Spreadsheet URL", with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
-    click_button "Upload"
+    fill_in I18n.t('tag_import.sheet_url'), with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
+    click_button I18n.t('tag_import.upload')
     expect(TaggingSpreadsheet.count).to eq 1
     expect(TaggingSpreadsheet.first.added_by.name).to eq "Barry Allen"
   end
@@ -163,7 +163,7 @@ RSpec.feature "Tag importer", type: :feature do
     taxon_2 = { title: 'Education', content_id: 'education-content-id' }
     publishing_api_has_taxons([taxon_1, taxon_2])
 
-    click_link "Create tags"
+    click_link I18n.t('tag_import.start_tagging')
     expect(link_update_1).to have_been_requested
     expect(link_update_2).to have_been_requested
     expect_tag_mapping_statuses_to_be("Tagged")
@@ -187,7 +187,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_refetch_the_tags
-    expect { click_link "Refresh import" }.to change { TagMapping.count }.by(1)
+    expect { click_link I18n.t('tag_import.refresh') }.to change { TagMapping.count }.by(1)
   end
 
   def then_i_should_see_an_updated_preview
@@ -196,7 +196,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def and_i_delete_the_tagging_spreadsheet
     visit tagging_spreadsheets_path
-    delete_button = first('table tbody a', text: 'Delete')
+    delete_button = first('table tbody a', text: I18n.t('tag_import.delete'))
 
     expect { delete_button.click }.to_not change { TaggingSpreadsheet.count }
   end
@@ -228,8 +228,6 @@ RSpec.feature "Tag importer", type: :feature do
     row = first('table tbody tr')
 
     expect(row).to have_selector('.label-danger', text: state)
-    expect(row).to have_selector('.error-message', text: tagging_spreadsheet.error_message)
-    expect(row).to have_content(tagging_spreadsheet.error_message)
     visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
@@ -237,7 +235,7 @@ RSpec.feature "Tag importer", type: :feature do
     tagging_spreadsheet = TaggingSpreadsheet.first
     state = tagging_spreadsheet.state.humanize
     visit root_path
-    click_link "Tag Importer"
+    click_link I18n.t("navigation.tag_importer")
     row = first('table tbody tr')
 
     expect(row).to have_selector('.label-success', text: state)

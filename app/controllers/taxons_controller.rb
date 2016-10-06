@@ -38,10 +38,11 @@ class TaxonsController < ApplicationController
   end
 
   def show
+    taxonomy_tree = ExpandedTaxonomy.new(taxon.content_id).build
     render :show, locals: {
       taxon: taxon,
       tagged: tagged,
-      parent_taxons: parent_taxons,
+      taxonomy_tree: taxonomy_tree,
     }
   end
 
@@ -55,7 +56,7 @@ class TaxonsController < ApplicationController
   def update
     new_taxon = Taxon.new(params[:taxon])
     Taxonomy::PublishTaxon.call(taxon: new_taxon)
-    redirect_to taxons_path
+    redirect_to taxon_path(new_taxon.content_id)
   end
 
   def destroy
@@ -76,10 +77,6 @@ private
 
   def taxons_for_select
     Linkables.new.taxons
-  end
-
-  def parent_taxons
-    remote_taxons.parents_for_taxon(taxon)
   end
 
   def remote_taxons

@@ -1,4 +1,10 @@
 en:
+  navigation:
+    tagging_content: 'Tag a page'
+    taxons: 'Edit taxonomy'
+    tag_importer: 'Bulk tag by upload'
+    tag_search: 'Bulk tag'
+    tag_migration: 'Bulk tag history'
   errors:
     invalid_taxon: There was a problem with your request and we were notified about it. We will fix this issue as soon as possible
     invalid_hostname: Is not a Google Docs URL
@@ -6,7 +12,19 @@ en:
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
     missing_output: Is missing the parameter output as TSV
     spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
+  taggings:
+    update_tags: Update tags
+    search: Show content item
+  tag_search:
+    search_button: "Search"
+    bulk_tag: "Bulk tag"
   tag_import:
+    upload_sheet: Upload spreadsheet
+    upload: Upload
+    refresh: Refresh import
+    sheet_url: Spreadsheet URL
+    delete: Delete
+    start_tagging: "Do tagging"
     import_created: Spreadsheet uploaded. It will be imported within a few minutes.
     import_refetched: The import will be imported again.
     import_started: The tagging import has started. It can take a few minutes for the tags to be published.
@@ -16,18 +34,24 @@ en:
       invalid_link_types: Invalid link types found - only taxons are allowed.
       tag_mappings_failed: We could not tag all items, please check the preview for more details.
   bulk_tagging:
+    start_tagging: "Start tagging"
+    preview: "Preview tagging"
     update_tags:
       no_taxons: No taxons selected.
       no_content_items: No content items selected.
   views:
     taxons:
+      update_tags: Update tags
+      edit: Edit taxon
+      view: View taxon
       add_taxon: Add a taxon
-      copy_taxon: Copy taxons
+      copy_taxon: Export taxons with IDs for spreadsheet
       delete_taxon: Delete taxon
       new_title: New taxon
       new_breadcrumb: New taxon
       new_button: Create taxon
       edit_button: Update taxon
+      download_csv: Download taxonomy as CSV
   controllers:
     bulk_taggings:
       too_many_results: Your search returned too many results. We are only displaying a subset, please try narrowing down your search.

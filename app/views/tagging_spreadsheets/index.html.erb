@@ -1,12 +1,16 @@
-<%= display_header title: 'Tagging spreadsheets', breadcrumbs: ['Tag importer'] do %>
-  <%= link_to 'Upload spreadsheet', new_tagging_spreadsheet_path, class: 'btn btn-default' %>
+<%= display_header title: t('navigation.tag_importer'), breadcrumbs: [t('navigation.tag_importer')] do %>
+  <%= link_to I18n.t('tag_import.upload_sheet'), new_tagging_spreadsheet_path, class: 'btn btn-default' %>
+  <%= link_to copy_taxons_path, class: 'btn btn-default' do %>
+    <i class="glyphicon glyphicon-download-alt"></i>
+      Export taxons with IDs for spreadsheet
+    </i>
+  <% end %>
 <% end %>
 
 <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
   <thead>
     <tr>
       <th>State</th>
-      <th>Google Sheet URL</th>
       <th>Description</th>
       <th>Date added</th>
       <th>Added by</th>
@@ -18,19 +22,9 @@
   <tbody>
     <% tagging_spreadsheets.each do |spreadsheet| %>
       <tr>
-        <td><%= state_label_for(label_type: spreadsheet.label_type,
-                                title: spreadsheet.state_title) %></td>
         <td>
-          <%= link_to spreadsheet.url, spreadsheet.url %>
-
-          <% if spreadsheet.errored? %>
-            <hr />
-            <span class="error-message">
-              <ul>
-                <li><%= spreadsheet.error_message %></li>
-              </ul>
-            </span>
-          <% end %>
+          <%= state_label_for(label_type: spreadsheet.label_type,
+                                title: spreadsheet.state_title) %>
         </td>
         <td>
           <%= spreadsheet.description %>
@@ -38,12 +32,17 @@
         <td>
           <%= time_tag_for(spreadsheet.created_at) %>
         </td>
-        <td><%= spreadsheet.added_by.name %></td>
         <td>
-          <%= link_to "Preview", tagging_spreadsheet_path(spreadsheet) %>
+          <%= spreadsheet.added_by.name %>
         </td>
         <td>
-          <%= link_to "Delete", tagging_spreadsheet_path(spreadsheet), method: :delete, class: "btn btn-danger btn-sm" %>
+          <%= link_to "View", tagging_spreadsheet_path(spreadsheet) %>
+        </td>
+        <td>
+          <%= link_to I18n.t('tag_import.delete'),
+            tagging_spreadsheet_path(spreadsheet),
+            method: :delete,
+            class: "btn btn-danger btn-sm" %>
         </td>
       </tr>
     <% end %>

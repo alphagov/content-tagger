@@ -1,7 +1,8 @@
 require "rails_helper"
 
-RSpec.feature "Managing taxonomies" do
+RSpec.feature "Taxonomy editing" do
   include PublishingApiHelper
+
   before do
     @taxon_1 = {
       title: "I Am A Taxon",
@@ -53,23 +54,8 @@ RSpec.feature "Managing taxonomies" do
     then_my_taxon_is_updated
   end
 
-  scenario "Viewing tagged content of a taxon" do
-    given_there_are_taxons
-    and_theres_content_tagged_to_the_taxons
-    when_i_visit_the_taxonomy_page
-    and_i_click_on_view_tagged_content
-    then_i_see_tagged_content
-  end
-
-  scenario "Copy taxons" do
-    given_there_are_taxons
-    when_i_visit_the_taxonomy_page
-    and_i_click_to_copy_taxons
-    then_i_can_see_a_table_with_taxons_to_copy
-  end
-
   def and_i_click_on_the_edit_taxon_link
-    first('a', text: 'Edit taxon').click
+    click_link(I18n.t('views.taxons.edit'), match: :prefer_exact)
   end
 
   def given_there_are_taxons
@@ -93,7 +79,7 @@ RSpec.feature "Managing taxonomies" do
   end
 
   def and_i_click_on_the_new_taxon_button
-    click_on "Add a taxon"
+    click_on I18n.t('views.taxons.add_taxon')
   end
 
   def fill_in_taxon_form
@@ -114,7 +100,15 @@ RSpec.feature "Managing taxonomies" do
       .with(body: /details.*#{@dummy_editor_notes}/)
       .to_return(status: 200, body: {}.to_json)
 
-    click_on "Update taxon"
+    publishing_api_has_expanded_links(
+      content_id: @taxon_1[:content_id],
+      expanded_links: {},
+    )
+
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(status: 200, body: {}.to_json)
+
+    click_on I18n.t('views.taxons.edit_button')
   end
 
   def when_i_submit_the_taxon_with_a_title_and_parents
@@ -126,7 +120,7 @@ RSpec.feature "Managing taxonomies" do
 
     select @taxon_2[:title]
     expect(find('select').value).to include(@taxon_2[:content_id])
-    click_on "Create taxon"
+    click_on I18n.t('views.taxons.new_button')
   end
 
   def when_i_submit_the_taxon_with_a_taxon_with_semantic_issues
@@ -135,7 +129,7 @@ RSpec.feature "Managing taxonomies" do
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
 
-    click_on "Create taxon"
+    click_on I18n.t('views.taxons.new_button')
   end
 
   def then_i_can_see_an_error_message
@@ -152,39 +146,5 @@ RSpec.feature "Managing taxonomies" do
     expect(@update_item).to have_been_requested
     expect(@publish_item).to have_been_requested
     expect(@create_links).to have_been_requested
-  end
-
-  def and_theres_content_tagged_to_the_taxons
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/ID-1?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=document_type&fields%5B%5D=title&link_type=taxons")
-      .to_return(body: [{ content_id: 'ID', title: 'Tagged Item', base_path: '/my/item', document_type: "guidance" }].to_json)
-  end
-
-  def and_i_click_on_view_tagged_content
-    first('.view-tagged-content').click
-  end
-
-  def then_i_see_tagged_content
-    expect(page).to have_content "Tagged Item"
-  end
-
-  def and_i_click_to_copy_taxons
-    find_link('Copy taxons').click
-  end
-
-  def then_i_can_see_a_table_with_taxons_to_copy
-    table = find('table')
-    table_head = table.all('thead th').map(&:text)
-    table_body = table.find('tbody').text
-
-    expect(table_head).to include(/title/i)
-    expect(table_head).to include(/content id/i)
-    expect(table_head).to include(/link type/i)
-
-    expect(table_body).to include(@taxon_1[:content_id])
-    expect(table_body).to include(@taxon_1[:title])
-
-    expect(table_body).to include(@taxon_2[:content_id])
-    expect(table_body).to include(@taxon_2[:title])
-    expect(table_body).to include('taxons')
   end
 end

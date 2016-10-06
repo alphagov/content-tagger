@@ -109,26 +109,34 @@ RSpec.feature "Bulk tagging", type: :feature do
     visit new_tag_search_path
 
     fill_in "Query", with: "topic"
-    click_button "Search tags"
+    click_button I18n.t('tag_search.search_button')
     expect(page).to have_text("A Topic")
 
     fill_in "Query", with: "browse"
-    click_button "Search tags"
+    click_button I18n.t('tag_search.search_button')
     expect(page).to have_text("A Mainstream Browse Page")
 
     fill_in "Query", with: "Tax"
-    click_button "Search tags"
+    click_button I18n.t('tag_search.search_button')
     expect(page).to have_text("Tax documents")
-    expect(page).to have_link("collection-id")
     expect(page).to have_text('Document collection')
+    expect(page).to have_link(
+      "Bulk tag",
+      href: new_tag_migration_path(source_content_id: "collection-id")
+    )
   end
 
   def then_i_can_see_the_content_items_in_this_collection
-    click_link("collection-id")
-    expect(page).to have_text "Tax doc 1"
-    expect(page).to have_text "Tax doc 2"
-    expect(page).to have_link "tax-doc-1"
-    expect(page).to have_link "tax-doc-2"
+    within "main" do
+      click_link I18n.t("tag_search.bulk_tag")
+    end
+
+    within "form.new_tag_migration" do
+      expect(page).to have_text "Tax doc 1"
+      expect(page).to have_link "View on site", href: /tax-doc-1/
+      expect(page).to have_text "Tax doc 2"
+      expect(page).to have_link "View on site", href: /tax-doc-2/
+    end
 
     expect(all(".select-content-item").select(&:checked?).count).to eq 0
     when_i_select_all_content_items
@@ -141,7 +149,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def then_i_can_preview_my_changes
-    click_button "Bulk tag selected items"
+    click_button I18n.t("bulk_tagging.preview")
 
     expect(all("table tbody tr").count).to eq TagMigration.first.aggregated_tag_mappings.count
     expect(page).to have_text("Taxon 1", count: 2)
@@ -176,7 +184,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     )
 
     Sidekiq::Testing.inline!
-    click_link 'Create tags'
+    click_link I18n.t("bulk_tagging.start_tagging")
   end
 
   def then_the_content_items_have_been_tagged
@@ -206,7 +214,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_submit_the_form
-    click_button "Bulk tag selected items"
+    click_button I18n.t("bulk_tagging.preview")
   end
 
   def then_i_see_an_error_about_content_items
@@ -268,7 +276,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     visit tag_migration_path(tag_migration.id)
 
     Sidekiq::Testing.inline!
-    click_link 'Create tags'
+    click_link I18n.t("bulk_tagging.start_tagging")
   end
 
   def then_i_can_see_a_progress_bar

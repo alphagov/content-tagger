@@ -1,0 +1,15 @@
+<table class="table queries-list table-bordered" data-module="filterable-table">
+  <tbody>
+    <% results.each do |tag| %>
+      <tr>
+        <td>
+          <%= tag.title %><br/>
+          <small><%= tag.document_type.humanize %></small>
+        </td>
+        <td>
+          <%= link_to t("tag_search.bulk_tag"), new_tag_migration_path(source_content_id: tag.content_id) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
