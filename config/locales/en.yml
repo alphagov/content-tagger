@@ -24,10 +24,15 @@ en:
       add_taxon: Add a taxon
       copy_taxon: Copy taxons
       delete_taxon: Delete taxon
+      confirm_deletion: I understand and I want to delete it!
       new_title: New taxon
       new_breadcrumb: New taxon
       new_button: Create taxon
       edit_button: Update taxon
+      cancel_button: Cancel
+      delete_warning_1: "Before you delete this taxon, make sure you've:"
+      delete_warning_2: given its child taxons a new parent
+      delete_warning_3: added new tags for all content tagged to this taxon
   controllers:
     bulk_taggings:
       too_many_results: Your search returned too many results. We are only displaying a subset, please try narrowing down your search.
@@ -38,6 +43,7 @@ en:
     taxons:
       success: You have sucessfully deleted the taxon
       alert: It was not possible to delete the taxon
+  messages:
     views:
       confirm: Are you sure?
   panels:
