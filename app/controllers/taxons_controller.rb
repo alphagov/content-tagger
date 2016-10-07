@@ -58,16 +58,6 @@ class TaxonsController < ApplicationController
     redirect_to taxons_path
   end
 
-  def confirm_delete
-    tree = ExpandedTaxonomy.new(taxon.content_id).build
-
-    render :confirm_delete, locals: {
-      taxon: tree.taxon,
-      tagged: tagged,
-      children: tree.children,
-    }
-  end
-
   def destroy
     response_code = Services.publishing_api.unpublish(params[:id], type: "gone").code
 
@@ -97,8 +87,7 @@ private
   end
 
   def taxon
-    id_param = params[:id] || params[:taxon_id]
-    Taxonomy::BuildTaxon.call(content_id: id_param)
+    Taxonomy::BuildTaxon.call(content_id: params[:id])
   end
 
   def tagged

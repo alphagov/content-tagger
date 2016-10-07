@@ -30,15 +30,4 @@ module ContentItemHelper
 
     default.stringify_keys.merge(hash.stringify_keys)
   end
-
-  def publishing_api_has_linked_content_items(content_id, link_type, response_body)
-    publishing_api_endpoint = "#{Plek.current.find('publishing-api')}/v2/linked/#{content_id}?"
-    request_parmeters = {
-      "fields" => %w(base_path content_id document_type title),
-      "link_type" => link_type,
-    }.to_query
-
-    stub_request(:get, "#{publishing_api_endpoint}#{request_parmeters}")
-      .and_return(body: response_body.to_json, status: 200)
-  end
 end
