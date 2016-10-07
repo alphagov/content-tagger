@@ -4,8 +4,6 @@ class TaxonomiesController < ApplicationController
     @taxonomy = ExpandedTaxonomy.new(taxon_content_id).build
 
     respond_to do |format|
-      format.html
-
       format.csv do
         send_data(
           CsvTreePresenter.new(@taxonomy).present,

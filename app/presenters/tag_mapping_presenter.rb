@@ -3,7 +3,7 @@ class TagMappingPresenter < SimpleDelegator
     {
       errored: 'label-danger',
       tagged: 'label-success'
-    }.fetch(state.to_sym, 'label-warning')
+    }.fetch(state.to_sym, 'label-default')
   end
 
   def state_title

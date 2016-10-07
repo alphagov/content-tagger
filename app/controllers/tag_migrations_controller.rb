@@ -20,6 +20,7 @@ class TagMigrationsController < ApplicationController
       tag_migration: TagMigration.new(source_content_id: source_content_item.content_id),
       taxons: Linkables.new.taxons,
       expanded_links: expanded_links,
+      source_content_item: source_content_item,
     }
   end
 

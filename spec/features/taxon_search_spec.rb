@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Taxonomy Search" do
+RSpec.feature "Taxon Search" do
   include PublishingApiHelper
 
   scenario "User navigates using pagination links" do

@@ -60,7 +60,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
 
   def and_i_submit_the_url_of_the_content_item
     fill_in 'content_lookup_form_base_path', with: '/my-content-item'
-    click_on 'Show content item'
+    click_on I18n.t('taggings.search')
   end
 
   def when_i_add_an_additional_tag
@@ -71,7 +71,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    click_on 'Update tags'
+    click_on I18n.t('views.taxons.update_tags')
   end
 
   def then_only_that_link_type_is_sent_to_the_publishing_api

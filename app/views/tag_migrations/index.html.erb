@@ -1,37 +1,8 @@
-<%= display_header title: 'Tag Migrations', breadcrumbs: ['Tag Migration'] do %>
-  <%= link_to 'New tag migration', new_tag_search_path, class: 'btn btn-default' %>
-<% end %>
+<%= display_header title: t('navigation.tag_migration'), breadcrumbs: [
+  link_to(t('navigation.tag_search'), new_tag_search_path), t('navigation.tag_migration')] %>
 
-<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
-  <thead>
-    <tr>
-      <th>State</th>
-      <th>Description</th>
-      <th>Date added</th>
-      <th></th>
-      <th></th>
-    </tr>
-    <%= render partial: 'shared/table_filter' %>
-  </thead>
-  <tbody>
-    <% tag_migrations.each do |tag_migration| %>
-      <tr>
-        <td><%= state_label_for(label_type: tag_migration.label_type,
-                                title: tag_migration.state_title) %></td>
-        <td>
-          <%= tag_migration.source_description %>
-        </td>
-        <td>
-          <%= time_tag_for(tag_migration.created_at) %>
-        </td>
-        <td>
-          <%= link_to "Preview", tag_migration_path(tag_migration) %>
-        </td>
-        <td>
-          <%= link_to "Delete", tag_migration_path(tag_migration),
-            method: :delete, class: "btn btn-danger btn-sm" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if tag_migrations.any? %>
+  <%= render 'bulk_tagging_history_table', tag_migrations: tag_migrations %>
+<% else %>
+  <p class="no-content no-content-bordered">Nothing to see here yet.</p>
+<% end %>

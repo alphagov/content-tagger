@@ -1,3 +1,11 @@
+<%= display_header(
+  title: "Tag content from #{source_content_item.document_type.humanize.downcase} '#{source_content_item.title}'",
+  breadcrumbs: [
+    link_to(t('navigation.tag_search'), new_tag_search_path),
+    "Retag content from '#{source_content_item.title}'"
+  ]
+) %>
+
 <%= simple_form_for tag_migration, url: tag_migrations_path, method: :post do |f| %>
   <%= f.hidden_field :source_content_id %>
 
@@ -7,38 +15,15 @@
     </div>
   <% end %>
 
-  <div class='row'>
-    <div class='col-md-4'>
-      <div class="form-group">
-        <h4>Tag selected pages to taxon:</h4>
-        <%= select_tag :taxons, options_for_select(taxons), multiple: true, class: 'select2' %>
-      </div>
-      <%= f.submit "Bulk tag selected items", class: 'btn btn-md btn-success' %>
-    </div>
-    <div class='col-md-8'>
-      <h3>Content Items</h3>
-      <table class="table queries-list table-bordered" data-module="filterable-table">
-        <thead>
-          <tr class="table-header">
-            <th data-module="select-all"><%= check_box_tag 'select_all', nil, false %></th>
-            <th>Title</th>
-            <th>Content ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% expanded_links.each do |expanded_link| %>
-            <tr>
-              <td>
-                <%= check_box_tag 'content_base_paths[]',
-                  expanded_link.base_path, false, class: 'select-content-item' %>
-              </td>
-              <td><%= link_to expanded_link.title, website_url('/api/content' + expanded_link.base_path) %></td>
-              <td><%= link_to expanded_link.content_id,
-                "#{website_url('/api/content' + expanded_link.base_path)}" %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+  <% if expanded_links.any? %>
+    <%= render 'items_tagged_to_item', expanded_links: expanded_links %>
+  <% else %>
+    <p class="no-content no-content-bordered">No content tagged to this item</p>
+  <% end %>
+
+  <div class="form-group">
+    <h4>Tag selected pages to taxon:</h4>
+    <%= select_tag :taxons, options_for_select(taxons), multiple: true, class: 'select2' %>
   </div>
+  <%= f.submit t("bulk_tagging.preview"), class: 'btn btn-md btn-default' %>
 <% end %>

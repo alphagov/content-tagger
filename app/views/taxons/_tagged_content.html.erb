@@ -1,0 +1,21 @@
+<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+  <thead>
+    <tr class="table-header">
+      <th>Title</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+  </thead>
+
+  <tbody>
+    <% tagged.each do |content_item| %>
+      <tr>
+        <td><%= content_item["title"] %> (<%= content_item["document_type"].humanize %>)<br/></td>
+        <td><%= link_to "View on site", website_url(content_item["base_path"]) %></td>
+        <td><%= link_to I18n.t('views.taxons.update_tags'), tagging_url(content_item["content_id"]) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

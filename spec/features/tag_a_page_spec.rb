@@ -84,7 +84,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   def and_i_submit_the_url_of_the_content_item
     fill_in 'content_lookup_form_base_path', with: '/my-content-item'
-    click_on 'Show content item'
+    click_on I18n.t('taggings.search')
   end
 
   def and_i_fill_a_unknown_base_path_to_my_content_item
@@ -92,7 +92,7 @@ RSpec.describe "Tagging content", type: :feature do
     publishing_api_has_lookups({})
 
     fill_in 'content_lookup_form_base_path', with: '/an-unknown-content-item'
-    click_on 'Show content item'
+    click_on I18n.t('taggings.search')
   end
 
   def then_i_am_on_the_page_for_an_item
@@ -103,7 +103,7 @@ RSpec.describe "Tagging content", type: :feature do
   def and_the_expected_navigation_link_is_highlighted
     active_nav_link = find('.navbar-nav li.active')
 
-    expect(active_nav_link.text).to match(/Tagging/i)
+    expect(active_nav_link.text).to match(I18n.t('navigation.tagging_content'))
   end
 
   def and_i_see_the_taxon_form
@@ -132,7 +132,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def and_i_submit_the_form
-    click_on 'Update tags'
+    click_on I18n.t('taggings.update_tags')
   end
 
   def then_the_new_links_are_sent_to_the_publishing_api

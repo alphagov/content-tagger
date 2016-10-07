@@ -1,0 +1,20 @@
+<% taxonomy_tree.each do |tree_node| %>
+  <div class="taxon-level taxon-depth-<%= tree_node.node_depth %>">
+    <span class="taxon-level-title">
+      <%= link_to tree_node.title, taxon_path(tree_node.content_id) %>
+    </span>
+
+    <% parent_taxons = tree_node.parent_taxons %>
+
+    <% if parent_taxons.present? && (parent_taxons.count > 1 || tree_node.node_depth == 0) %>
+      <br/><strong>Parents:</strong>
+      <div class="taxon-level-parent-links">
+        <% parent_taxons.each do |parent_taxon| %>
+          <p>
+            ↰ <%= link_to parent_taxon.title, taxon_path(parent_taxon.content_id) %>
+          </p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

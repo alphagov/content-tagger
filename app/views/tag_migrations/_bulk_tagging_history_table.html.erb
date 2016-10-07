@@ -1,0 +1,33 @@
+<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+  <thead>
+    <tr>
+      <th>State</th>
+      <th>Description</th>
+      <th>Date added</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <%= render partial: 'shared/table_filter' %>
+  </thead>
+  <tbody>
+    <% tag_migrations.each do |tag_migration| %>
+      <tr>
+        <td><%= state_label_for(label_type: tag_migration.label_type,
+                                title: tag_migration.state_title) %></td>
+        <td>
+          <%= tag_migration.source_description %>
+        </td>
+        <td>
+          <%= time_tag_for(tag_migration.created_at) %> ago
+        </td>
+        <td>
+          <%= link_to "View", tag_migration_path(tag_migration) %>
+        </td>
+        <td>
+          <%= link_to "Delete", tag_migration_path(tag_migration),
+            method: :delete, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
