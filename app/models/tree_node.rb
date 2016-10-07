@@ -1,7 +1,7 @@
 class TreeNode
-  attr_reader :taxon, :children
+  attr_reader :taxon
   attr_accessor :parent
-  delegate :title, :base_path, :content_id, :parent_taxons, :parent_taxons=, to: :taxon
+  delegate :title, :content_id, :parent_taxons, :parent_taxons=, to: :taxon
   delegate :map, :each, to: :tree
 
   def initialize(title:, content_id:)

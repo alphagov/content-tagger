@@ -2,7 +2,6 @@ class Taxon
   ATTRIBUTES = %w(title
                   description
                   parent_taxons
-                  child_taxons
                   content_id
                   base_path
                   publication_state

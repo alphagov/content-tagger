@@ -1,11 +1,15 @@
 <%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] do %>
-  <%= link_to taxon_confirm_delete_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
-    <span class="glyphicon glyphicon-trash"></span>
-    <span>
+  <%= link_to taxon_path(taxon.content_id), method: :delete,
+    class: 'btn btn-md btn-default',
+    data: { confirm: I18n.t('messages.views.confirm') } do %>
+    <i class="glyphicon glyphicon-trash"></i>
       <%= I18n.t('views.taxons.delete_taxon') %>
-    </span>
+    </i>
   <% end %>
 <% end %>
+
+<br/>
+<br/>
 
 <% if parent_taxons.any? %>
   <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
@@ -41,6 +45,12 @@
   </thead>
 
   <tbody>
-    <%= render partial: 'tagged_content', locals: { tagged: tagged } %>
+    <% tagged.each do |content_item| %>
+      <tr>
+        <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
+        <td><%= content_item["document_type"].humanize if content_item["document_type"] %></td>
+        <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>

@@ -1,9 +1,7 @@
 Rails.application.routes.draw do
   root to: 'taggings#lookup'
 
-  resources :taxons do
-    get :confirm_delete
-  end
+  resources :taxons
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
 
   resources :taggings, only: %i(show update), param: :content_id do
