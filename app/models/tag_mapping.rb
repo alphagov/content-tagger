@@ -17,6 +17,8 @@ class TagMapping < ActiveRecord::Base
   validates_with ContentIdValidator, on: :update_links
   validates_with LinkTypeValidator, on: :update_links
 
+  delegate :delete_source_link?, to: :tagging_source, prefix: false
+
   def content_id
     @content_id ||=
       Services.publishing_api.lookup_content_id(base_path: content_base_path)

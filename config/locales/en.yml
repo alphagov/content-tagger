@@ -40,7 +40,10 @@ en:
       no_taxons: No taxons selected.
       no_content_items: No content items selected.
   views:
+    tag_migrations:
+      move_message: "Please note that this action will remove the link to %{name} from the content items below."
     taxons:
+      move_content: Move content
       update_tags: Update tags
       edit: Edit taxon
       view: View taxon

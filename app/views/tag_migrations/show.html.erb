@@ -4,6 +4,14 @@
     tag_migration.source_description ] do %>
 <% end %>
 
+<% if tag_migration.should_delete_source_link? %>
+  <%= content_tag(
+    :p,
+    I18n.t('views.tag_migrations.move_message', name: tag_migration.source_description),
+    class: 'alert alert-warning'
+  ) %>
+<% end %>
+
 <% if tag_migration.state == 'ready_to_import' %>
   <%= link_to t('bulk_tagging.start_tagging'),
     tag_migration_publish_tags_path(tag_migration),

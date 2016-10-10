@@ -7,23 +7,10 @@
 ) %>
 
 <%= simple_form_for tag_migration, url: tag_migrations_path, method: :post do |f| %>
-  <%= f.hidden_field :source_content_id %>
-
-  <% if flash[:error].present? %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:error] %>
-    </div>
-  <% end %>
-
-  <% if expanded_links.any? %>
-    <%= render 'items_tagged_to_item', expanded_links: expanded_links %>
-  <% else %>
-    <p class="no-content no-content-bordered">No content tagged to this item</p>
-  <% end %>
-
-  <div class="form-group">
-    <h4>Tag selected pages to taxon:</h4>
-    <%= select_tag :taxons, options_for_select(taxons), multiple: true, class: 'select2' %>
-  </div>
-  <%= f.submit t("bulk_tagging.preview"), class: 'btn btn-md btn-default' %>
+  <%= render(
+    'shared/tag_migration_form',
+    f: f,
+    taxons: taxons,
+    expanded_links: expanded_links
+  ) %>
 <% end %>

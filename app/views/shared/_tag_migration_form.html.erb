@@ -1,0 +1,20 @@
+<%= f.hidden_field :source_content_id %>
+
+<% if flash[:error].present? %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
+<div class="form-group">
+  <h4>Tag selected pages to taxon:</h4>
+  <%= select_tag :taxons, options_for_select(taxons), multiple: true, class: 'select2' %>
+</div>
+
+<% if expanded_links.any? %>
+  <%= render 'tag_migrations/items_tagged_to_item', expanded_links: expanded_links %>
+<% else %>
+  <p class="no-content no-content-bordered">No content tagged to this item</p>
+<% end %>
+
+<%= f.submit t("bulk_tagging.preview"), class: 'btn btn-md btn-default' %>

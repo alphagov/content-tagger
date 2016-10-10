@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     get  'progress'
   end
 
+  resources :taxon_migrations, only: [:new, :create]
+
   resources :tag_migrations, only: [:index, :new, :create, :show, :destroy] do
     post 'publish_tags'
     get  'progress'

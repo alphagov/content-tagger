@@ -15,11 +15,19 @@ class TagMigration < ActiveRecord::Base
     AggregatableTagMappings.new(tag_mappings).aggregated_tag_mappings
   end
 
+  def should_delete_source_link?
+    ready_to_import? && delete_source_link?
+  end
+
   def mark_as_deleted
     update!(deleted_at: DateTime.current)
   end
 
   def error_count
     tag_mappings.errored.count
+  end
+
+  def ready_to_import?
+    state == 'ready_to_import'
   end
 end
