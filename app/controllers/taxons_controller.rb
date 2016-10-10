@@ -65,6 +65,16 @@ class TaxonsController < ApplicationController
     redirect_to taxons_path, flash: destroy_flash_message(response_code)
   end
 
+  def confirm_delete
+    tree = ExpandedTaxonomy.new(taxon.content_id).build
+
+    render :confirm_delete, locals: {
+      taxon: tree.taxon,
+      tagged: tagged,
+      children: tree.children,
+    }
+  end
+
 private
 
   def destroy_flash_message(response_code)
@@ -84,7 +94,8 @@ private
   end
 
   def taxon
-    Taxonomy::BuildTaxon.call(content_id: params[:id])
+    content_id = params[:id] || params[:taxon_id]
+    Taxonomy::BuildTaxon.call(content_id: content_id)
   end
 
   def tagged
