@@ -1,7 +1,38 @@
 require "rails_helper"
 
 RSpec.describe Linkables do
+  include ContentItemHelper
+
   let(:linkables) { Linkables.new }
+
+  describe '.taxons' do
+    it 'returns an array of hashes with only valid taxons' do
+      publishing_api_has_linkables(
+        [
+          build_linkable(
+            content_id: 'invalid-1',
+            publication_state: 'live',
+            internal_name: nil,
+          ),
+          build_linkable(
+            content_id: 'invalid-2',
+            publication_state: 'live',
+            internal_name: '',
+          ),
+          build_linkable(
+            content_id: 'valid-1',
+            publication_state: 'live',
+            internal_name: 'Valid!',
+          ),
+        ],
+        document_type: 'taxon'
+      )
+
+      expect(linkables.taxons).to eq(
+        [['Valid!', 'valid-1']]
+      )
+    end
+  end
 
   describe ".topics" do
     it 'returns an array of hashes with title and content id pairs' do

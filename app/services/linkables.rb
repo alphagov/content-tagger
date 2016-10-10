@@ -55,6 +55,6 @@ private
     items = Services.publishing_api.get_linkables(format: document_type)
     # We only are interested in linkables that have an internal name and not
     # redirects or similar
-    items.select { |item| item['internal_name'] }
+    items.select { |item| item['internal_name'].present? }
   end
 end
