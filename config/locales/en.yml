@@ -57,6 +57,10 @@ en:
       delete_warning_1: "Before you delete this taxon, make sure you've:"
       delete_warning_2: given its child taxons a new parent
       delete_warning_3: added new tags for all content tagged to this taxon
+      internal_name: 'Internal taxon name'
+      internal_name_hint: 'Displayed in Content Tagger'
+      external_name: 'External taxon name'
+      displayed_on_govuk: 'Displayed on GOV.UK'
   controllers:
     bulk_taggings:
       too_many_results: Your search returned too many results. We are only displaying a subset, please try narrowing down your search.

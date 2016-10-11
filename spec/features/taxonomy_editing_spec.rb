@@ -97,7 +97,6 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_internal_name, with: "My updated taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
 
-
     @update_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .with(body: /details.*#{@dummy_editor_notes}/)
       .to_return(status: 200, body: {}.to_json)
