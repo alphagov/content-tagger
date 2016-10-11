@@ -1,21 +1,21 @@
 class QueueLinksForPublishing
-  attr_reader :tagging_spreadsheet
+  attr_reader :tagging_source
   attr_reader :tag_mappings
   attr_reader :user
 
-  def self.call(tagging_spreadsheet, user:)
-    new(tagging_spreadsheet, user: user).call
+  def self.call(tagging_source, user:)
+    new(tagging_source, user: user).call
   end
 
-  def initialize(tagging_spreadsheet, user:)
-    @tagging_spreadsheet = tagging_spreadsheet
-    @tag_mappings = tagging_spreadsheet.tag_mappings.order(id: :asc)
+  def initialize(tagging_source, user:)
+    @tagging_source = tagging_source
+    @tag_mappings = tagging_source.tag_mappings.order(id: :asc)
     @user = user
   end
 
   def call
     ActiveRecord::Base.transaction do
-      tagging_spreadsheet.update!(
+      tagging_source.update!(
         last_published_at: Time.zone.now,
         last_published_by: user.uid,
         state: "imported"
