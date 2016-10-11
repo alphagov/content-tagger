@@ -13,7 +13,7 @@ class Taxon
 
   include ActiveModel::Model
 
-  validates_presence_of :title
+  validates_presence_of :title, :internal_name
 
   def parent_taxons
     @parent_taxons ||= []
