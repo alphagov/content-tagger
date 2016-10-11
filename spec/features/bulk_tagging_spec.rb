@@ -172,15 +172,19 @@ RSpec.feature "Bulk tagging", type: :feature do
     )
     stub_publishing_api_patch_links(
       "tax-doc-1",
-      links: {
-        taxons: ["taxon-1", "taxon-2"],
-      }
+      links: { taxons: ["taxon-1"] }
+    )
+    stub_publishing_api_patch_links(
+      "tax-doc-1",
+      links: { taxons: ["taxon-2"] }
     )
     stub_publishing_api_patch_links(
       "tax-doc-2",
-      links: {
-        taxons: ["taxon-1", "taxon-2"],
-      }
+      links: { taxons: ["taxon-1"] }
+    )
+    stub_publishing_api_patch_links(
+      "tax-doc-2",
+      links: { taxons: ["taxon-2"] }
     )
 
     Sidekiq::Testing.inline!

@@ -22,8 +22,8 @@ RSpec.describe TagImporter::FetchRemoteData do
       it "creates tag mappings based on the retrieved data" do
         TagImporter::FetchRemoteData.call(tagging_spreadsheet)
 
-        expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/ /content-2/))
-        expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons taxons))
+        expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-2/))
+        expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons))
       end
 
       it "handles superfluous whitespace when creating tag_mappings" do
@@ -47,6 +47,33 @@ RSpec.describe TagImporter::FetchRemoteData do
         expect(tag_mapping.link_title).to eq "Education"
         expect(tag_mapping.link_content_id).to eq "education-content-id"
         expect(tag_mapping.link_type).to eq "taxons"
+      end
+    end
+
+    context 'with rows containing the same base path' do
+      before do
+        row_data = {
+          content_base_path: "/content-1/",
+          link_title: "Education",
+          link_content_id: "education-content-id",
+          link_type: "taxons"
+        }
+        google_sheet_data = empty_google_sheet(
+          with_rows: [
+            google_sheet_row(row_data),
+            google_sheet_row(row_data),
+          ]
+        )
+
+        good_response = double(code: '200', body: google_sheet_data)
+        allow(Net::HTTP).to receive(:get_response).with(url).and_return(good_response)
+      end
+
+      it 'saves each record per row' do
+        TagImporter::FetchRemoteData.call(tagging_spreadsheet)
+
+        expect(TagMapping.count).to eq(2)
+        expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/))
       end
     end
 

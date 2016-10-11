@@ -3,25 +3,18 @@ class PublishLinksWorker
 
   sidekiq_options retry: 5
 
-  def perform(base_path, links)
-    tag_mapping_ids = links.delete('tag_mapping_ids')
-    tag_mappings = TagMapping.where(id: tag_mapping_ids)
+  def perform(tag_mapping_id)
+    tag_mapping = TagMapping.find_by_id(tag_mapping_id)
 
-    links_update = LinksUpdate.new(
-      base_path: base_path,
-      tag_mappings: tag_mappings,
-      links: links
-    )
-
-    # In case the tag_mappings referenced by this job have been deleted by the
+    # In case the tag_mapping referenced by this job have been deleted by the
     # time the job runs.
-    return if links_update.tag_mappings.empty?
+    return if tag_mapping.blank?
 
-    if links_update.valid?
-      PublishLinks.call(links_update: links_update)
-      links_update.mark_as_tagged
+    if tag_mapping.valid?(context: :update_links)
+      PublishLinks.call(tag_mapping: tag_mapping)
+      tag_mapping.mark_as_tagged
     else
-      links_update.mark_as_errored
+      tag_mapping.mark_as_errored
     end
   end
 end
