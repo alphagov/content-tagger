@@ -1,40 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe QueueLinksForPublishing do
-  let(:tagging_spreadsheet) { create(:tagging_spreadsheet, state: "uploaded") }
+  let(:tagging_spreadsheet) do
+    create(
+      :tagging_spreadsheet,
+      state: "uploaded",
+      tag_mappings: [tag_mapping_1, tag_mapping_2, tag_mapping_3]
+    )
+  end
   let(:user) { double(uid: "user-123") }
-
-  before do
+  let(:tag_mapping_1) do
     create(
       :tag_mapping,
-      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-1",
       link_title: "GDS",
       link_content_id: "gds-ID",
       link_type: "organisations"
     )
-
+  end
+  let(:tag_mapping_2) do
     create(
       :tag_mapping,
-      tagging_source: tagging_spreadsheet,
-      content_base_path: "/content-1",
-      link_title: "GDS",
-      link_content_id: "gds-ID",
-      link_type: "organisations"
-    )
-
-    create(
-      :tag_mapping,
-      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-1",
       link_title: "Education",
       link_content_id: "education-ID",
       link_type: "taxons"
     )
-
+  end
+  let(:tag_mapping_3) do
     create(
       :tag_mapping,
-      tagging_source: tagging_spreadsheet,
       content_base_path: "/content-2",
       link_title: "Education",
       link_content_id: "education-ID",
@@ -43,20 +38,15 @@ RSpec.describe QueueLinksForPublishing do
   end
 
   describe ".call" do
-    it "constructs link payloads from tag mappings and queues them for publishing" do
+    it "published the links for the 3 tag mapping records" do
       allow(Time.zone).to receive(:now).and_return(Time.new(0))
-      links_payload_1 = {
-        "tag_mapping_ids" => TagMapping.where(content_base_path: "/content-1").pluck(:id),
-        "taxons" => ["education-ID"],
-        "organisations" => ["gds-ID", "gds-ID"]
-      }
-      links_payload_2 = {
-        "tag_mapping_ids" => TagMapping.where(content_base_path: "/content-2").pluck(:id),
-        "taxons" => ["education-ID"]
-      }
 
-      expect(PublishLinksWorker).to receive(:perform_async).with("/content-1", links_payload_1)
-      expect(PublishLinksWorker).to receive(:perform_async).with("/content-2", links_payload_2)
+      expect(PublishLinksWorker).to receive(:perform_async)
+        .with(tag_mapping_1.id)
+      expect(PublishLinksWorker).to receive(:perform_async)
+        .with(tag_mapping_2.id)
+      expect(PublishLinksWorker).to receive(:perform_async)
+        .with(tag_mapping_3.id)
 
       described_class.call(tagging_spreadsheet, user: user)
 

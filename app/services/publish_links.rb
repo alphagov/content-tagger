@@ -1,17 +1,17 @@
 class PublishLinks
-  attr_reader :links_update
+  attr_reader :tag_mapping
 
-  def self.call(links_update:)
-    new(links_update: links_update).publish
+  def self.call(tag_mapping:)
+    new(tag_mapping: tag_mapping).publish
   end
 
-  def initialize(links_update:)
-    @links_update = links_update
+  def initialize(tag_mapping:)
+    @tag_mapping = tag_mapping
   end
 
   def publish
     Services.publishing_api.patch_links(
-      links_update.content_id,
+      tag_mapping.content_id,
       links: updated_links,
       previous_version: previous_version
     )
@@ -19,13 +19,15 @@ class PublishLinks
 
 private
 
+  def links_to_update
+    {
+      tag_mapping.link_type => [tag_mapping.link_content_id]
+    }
+  end
+
   def updated_links
-    links_update.links_to_update.merge(existing_links) do |_, new_links, old_links|
-      if new_links.empty?
-        []
-      else
-        (old_links || []).concat(new_links).uniq
-      end
+    links_to_update.merge(existing_links) do |_, new_links, old_links|
+      (old_links || []).concat(new_links).uniq
     end
   end
 
@@ -39,6 +41,6 @@ private
 
   def links_response
     @links_response ||=
-      Services.publishing_api.get_links(links_update.content_id)
+      Services.publishing_api.get_links(tag_mapping.content_id)
   end
 end
