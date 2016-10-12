@@ -57,7 +57,11 @@ RSpec.feature "Delete Taxon", type: :feature do
       }
     )
 
-    publishing_api_has_linked_content_items(@content_id, "taxons", [@taxon])
+    publishing_api_has_linked_items(
+      [@taxon],
+      content_id: @content_id,
+      link_type: "taxons"
+    )
 
     publishing_api_has_expanded_links(
       content_id: @content_id,
@@ -90,7 +94,11 @@ RSpec.feature "Delete Taxon", type: :feature do
       }
     )
 
-    publishing_api_has_linked_content_items(@content_id, "taxons", [@taxon, @child_taxon])
+    publishing_api_has_linked_items(
+      [@taxon, @child_taxon],
+      content_id: @content_id,
+      link_type: "taxons"
+    )
   end
 
   def given_a_taxon_with_children
