@@ -94,6 +94,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_update_the_taxon
+    fill_in :taxon_internal_name, with: "My updated taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
 
     @update_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
@@ -113,6 +114,7 @@ RSpec.feature "Taxonomy editing" do
 
   def when_i_submit_the_taxon_with_a_title_and_parents
     fill_in :taxon_title, with: "My Lovely Taxon"
+    fill_in :taxon_internal_name, with: "My Lovely Taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
 
     select @taxon_1[:title]
@@ -125,6 +127,7 @@ RSpec.feature "Taxonomy editing" do
 
   def when_i_submit_the_taxon_with_a_taxon_with_semantic_issues
     fill_in :taxon_title, with: 'My Taxon'
+    fill_in :taxon_internal_name, with: 'My Taxon'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)

@@ -21,20 +21,7 @@ class TaxonsController < ApplicationController
   end
 
   def create
-    new_taxon = Taxon.new(params[:taxon])
-    if new_taxon.valid?
-      Taxonomy::PublishTaxon.call(taxon: new_taxon)
-      redirect_to(taxons_path)
-    else
-      error_messages = new_taxon.errors.full_messages.join('; ')
-      locals = {
-        taxon: new_taxon,
-        taxons_for_select: taxons_for_select
-      }
-      render :new, locals: locals, flash: { error: error_messages }
-    end
-  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to(new_taxon_path, flash: { error: e.message })
+    publish_taxon_to_publish_api(action: :new)
   end
 
   def show
@@ -54,9 +41,7 @@ class TaxonsController < ApplicationController
   end
 
   def update
-    new_taxon = Taxon.new(params[:taxon])
-    Taxonomy::PublishTaxon.call(taxon: new_taxon)
-    redirect_to taxon_path(new_taxon.content_id)
+    publish_taxon_to_publish_api(action: :edit)
   end
 
   def destroy
@@ -76,6 +61,26 @@ class TaxonsController < ApplicationController
   end
 
 private
+
+  def publish_taxon_to_publish_api(action:)
+    taxon = Taxon.new(params[:taxon])
+
+    if taxon.valid?
+      Taxonomy::PublishTaxon.call(taxon: taxon)
+      redirect_to(taxons_path)
+    else
+      error_messages = taxon.errors.full_messages.join('; ')
+      locals = {
+        taxon: taxon,
+        taxons_for_select: taxons_for_select
+      }
+      render action, locals: locals, flash: { error: error_messages }
+    end
+  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
+    path = action == :new ? new_taxon_path : edit_taxon_path(new_taxon.content_id)
+
+    redirect_to(path, flash: { error: e.message })
+  end
 
   def destroy_flash_message(response_code)
     if response_code == 200
