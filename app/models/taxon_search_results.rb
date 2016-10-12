@@ -8,9 +8,12 @@ class TaxonSearchResults
   def taxons
     @taxons ||=
       begin
-        search_response['results'].map do |taxon_hash|
+        results = search_response['results'].map do |taxon_hash|
+          next if taxon_hash['publication_state'] == 'unpublished'
           Taxon.new(taxon_hash.slice(*Taxon::ATTRIBUTES))
         end
+
+        results.compact
       end
   end
 
