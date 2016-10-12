@@ -15,4 +15,12 @@ RSpec.describe Taxon do
 
     expect(taxon_1.base_path).to_not eq(taxon_2.base_path)
   end
+
+  context 'without notes_for_editors set' do
+    it 'returns an empty string to comply with the schema definition' do
+      taxon = described_class.new
+
+      expect(taxon.notes_for_editors).to eq('')
+    end
+  end
 end
