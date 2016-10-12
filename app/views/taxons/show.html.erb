@@ -1,4 +1,4 @@
-<%= display_header title: taxon.title, breadcrumbs: [:taxons, taxon] do %>
+<%= display_header title: taxon.internal_name, breadcrumbs: [:taxons, taxon] do %>
   <%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(taxon.content_id), class: "btn btn-default"%>
 
   <%= link_to taxonomy_path(taxon.content_id, format: :csv), class: "btn btn-default" do %>

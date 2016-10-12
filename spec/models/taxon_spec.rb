@@ -16,6 +16,14 @@ RSpec.describe Taxon do
     expect(taxon_1.base_path).to_not eq(taxon_2.base_path)
   end
 
+  context 'when internal_name is not set' do
+    it 'uses the title value' do
+      taxon = described_class.new(title: 'I Title')
+
+      expect(taxon.internal_name).to eql(taxon.title)
+    end
+  end
+
   context 'without notes_for_editors set' do
     it 'returns an empty string to comply with the schema definition' do
       taxon = described_class.new

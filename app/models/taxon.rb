@@ -31,6 +31,10 @@ class Taxon
     'taxons'
   end
 
+  def internal_name
+    @internal_name || @title
+  end
+
   def notes_for_editors
     @notes_for_editors || ""
   end
