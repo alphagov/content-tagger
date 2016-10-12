@@ -30,4 +30,8 @@ class Taxon
   def link_type
     'taxons'
   end
+
+  def notes_for_editors
+    @notes_for_editors || ""
+  end
 end
