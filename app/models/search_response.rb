@@ -11,7 +11,15 @@ class SearchResponse
     gds_api_response_hash['results'].map { |result| ContentItem.new(result) }
   end
 
-  def multiple_pages?
-    gds_api_response_hash['pages'] > 1
+  def current_page
+    gds_api_response_hash['current_page']
+  end
+
+  def total_pages
+    gds_api_response_hash['pages']
+  end
+
+  def limit_value
+    5
   end
 end

@@ -13,25 +13,33 @@ RSpec.describe SearchResponse do
             basic_content_item('Content item 1'),
             basic_content_item('Content item 2'),
           ],
-          'pages' => 1
+          'pages' => 2,
+          'current_page' => 1
         }
       )
     end
 
-    it 'includes content item search results' do
-      search_response =
-        described_class.new(gds_api_response, 'document_collection')
+    let(:search_response) do
+      described_class.new(gds_api_response, 'document_collection')
+    end
 
+    it 'includes content item search results' do
       expect(search_response.results.length).to eq(2)
       search_response.results.each do |result|
         expect(result).to be_a(ContentItem)
       end
     end
 
-    it 'does not have multiple pages when pages are 1' do
-      expect(
-        described_class.new(gds_api_response, 'document_collection').multiple_pages?
-      ).to be_falsy
+    it 'knows the total number of pages' do
+      expect(search_response.total_pages).to eq(2)
+    end
+
+    it 'knows in which page the results are on' do
+      expect(search_response.current_page).to eq(1)
+    end
+
+    it 'sets a limit number of pagination links to display' do
+      expect(search_response.limit_value).to eq(5)
     end
   end
 end
