@@ -47,7 +47,9 @@ class TaxonsController < ApplicationController
   def destroy
     response_code = Services.publishing_api.unpublish(params[:id], type: "gone").code
 
-    redirect_to taxons_path, flash: destroy_flash_message(response_code)
+    redirect_to taxon_path(params[:id]), flash: destroy_flash_message(response_code)
+  rescue GdsApi::HTTPUnprocessableEntity => e
+    redirect_to taxon_path(params[:id]), flash: { danger: e.error_details["error"]["message"] }
   end
 
   def confirm_delete

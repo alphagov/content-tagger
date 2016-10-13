@@ -25,6 +25,15 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_i_expect_the_request_to_have_been_made
   end
 
+  scenario "an issue deleting a taxon" do
+    given_a_taxon_with_no_children
+    when_i_visit_the_taxon_page
+    and_i_click_to_delete_the_taxon
+    and_i_click_delete_with_a_draft_present
+    then_i_expect_the_request_to_have_been_made
+    then_i_should_see_an_error_message
+  end
+
   def given_a_taxon_with_no_children
     @content_id = SecureRandom.uuid
 
@@ -136,6 +145,18 @@ RSpec.feature "Delete Taxon", type: :feature do
     click_on "I understand and I want to delete it!"
   end
 
+  def and_i_click_delete_with_a_draft_present
+    @unpublish_request = stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{@content_id}/unpublish")
+      .with(body: "{\"type\":\"gone\"}").to_raise(GdsApi::HTTPUnprocessableEntity.new(
+                                                    422,
+                                                    "An error message",
+                                                    'error' => { 'message' => 'Cannot unpublish with a draft present' }
+                                                    )
+                                                  )
+
+    click_on "I understand and I want to delete it!"
+  end
+
   def then_i_expect_the_request_to_have_been_made
     expect(@unpublish_request).to have_been_made
   end
@@ -146,5 +167,9 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def then_i_should_see_a_warning_message
     expect(page).to have_text("Before you delete this taxon, make sure you've")
+  end
+
+  def then_i_should_see_an_error_message
+    expect(page).to have_text("Cannot unpublish with a draft present")
   end
 end
