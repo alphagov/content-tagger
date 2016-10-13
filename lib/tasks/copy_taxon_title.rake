@@ -4,8 +4,12 @@ task copy_taxons_title: :environment do
   taxons = RemoteTaxons.new.search(per_page: total).taxons
 
   taxons.each do |taxon|
-    next unless taxon.internal_name.empty?
+    unless taxon.internal_name == taxon.title
+      puts "Skipping #{taxon.title}..."
+      next
+    end
 
+    puts "Updating #{taxon.title}'s internal name..."
     taxon.internal_name = taxon.title
     Taxonomy::PublishTaxon.call(taxon: taxon)
   end
