@@ -1,23 +1,23 @@
-<h1>Tagged Content</h1>
-
-<table class="table queries-list table-bordered table-striped" data-module="filterable-table">
-  <thead>
-    <tr class="table-header">
-      <th>Title</th>
-      <th>Format</th>
-      <th>Actions</th>
-    </tr>
-
-    <%= render partial: 'shared/table_filter' %>
-  </thead>
-
-  <tbody>
-    <% tagged.each do |content_item| %>
-      <tr>
-        <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
-        <td><%= content_item["document_type"].humanize %></td>
-        <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
+<div class="tagged-content">
+  <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+    <thead>
+      <tr class="table-header">
+        <th>Title</th>
+        <th>Format</th>
+        <th>Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+
+      <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+      <% tagged.each do |content_item| %>
+        <tr>
+          <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
+          <td><%= content_item["document_type"].humanize %></td>
+          <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

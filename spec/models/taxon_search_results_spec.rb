@@ -5,7 +5,7 @@ RSpec.describe TaxonSearchResults do
     {
       'current_page' => 1,
       'pages' => 2,
-      'results' => [{ content_id: 'id-1' }, { content_id: 'id-2' }]
+      'results' => [{ 'content_id' => 'id-1' }, { 'content_id' => 'id-2' }]
     }
   end
   let(:search_results) { described_class.new(search_response) }
@@ -30,5 +30,20 @@ RSpec.describe TaxonSearchResults do
 
   it 'knows about the limit value so it works with kaminari' do
     expect(search_results.limit_value).to eq(5)
+  end
+
+  context 'when unpublished items are in the results' do
+    let(:search_response) do
+      {
+        'results' => [
+          { 'content_id' => 'id-1', 'publication_state' => 'published' },
+          { 'content_id' => 'id-2', 'publication_state' => 'unpublished' },
+        ]
+      }
+    end
+
+    it 'filters them out' do
+      expect(search_results.taxons.count).to eq 1
+    end
   end
 end
