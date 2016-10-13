@@ -10,7 +10,18 @@ class TaxonSearchResults
       begin
         results = search_response['results'].map do |taxon_hash|
           next if taxon_hash['publication_state'] == 'unpublished'
-          Taxon.new(taxon_hash.slice(*Taxon::ATTRIBUTES))
+
+          details = taxon_hash['details'] || {}
+          Taxon.new(
+            document_type: taxon_hash['document_type'],
+            content_id: taxon_hash['content_id'],
+            title: taxon_hash["title"],
+            description: taxon_hash["description"],
+            base_path: taxon_hash["base_path"],
+            publication_state: taxon_hash['publication_state'],
+            internal_name: details['internal_name'],
+            notes_for_editors: details['notes_for_editors']
+          )
         end
 
         results.compact

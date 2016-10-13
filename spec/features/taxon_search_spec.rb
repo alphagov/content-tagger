@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Taxon Search" do
   include PublishingApiHelper
+  include ContentItemHelper
 
   scenario "User navigates using pagination links" do
     given_there_are_multiple_pages_of_taxons
@@ -21,27 +22,30 @@ RSpec.feature "Taxon Search" do
   end
 
   def given_there_are_multiple_pages_of_taxons
-    @taxon_1 = {
-      title: "I Am A Taxon 1",
-      content_id: "ID-1",
-      base_path: "/foo",
-      internal_name: "I Am A Taxon 1",
-      publication_state: 'active'
-    }
-    @taxon_2 = {
-      title: "I Am Another Taxon 2",
-      content_id: "ID-2",
-      base_path: "/bar",
-      internal_name: "I Am Another Taxon 2",
-      publication_state: 'active'
-    }
-    @taxon_3 = {
-      title: "I Am Yet Another Taxon 3",
-      content_id: "ID-3",
-      base_path: "/bar",
-      internal_name: "I Am Yet Another Taxon 3",
-      publication_state: 'active'
-    }
+    @taxon_1 = content_item_with_details(
+      "I Am A Taxon 1",
+      other_fields: {
+        content_id: "ID-1",
+        base_path: "/foo",
+        publication_state: 'active'
+      }
+    )
+    @taxon_2 = content_item_with_details(
+      "I Am Another Taxon 2",
+      other_fields: {
+        content_id: "ID-2",
+        base_path: "/bar",
+        publication_state: 'active'
+      }
+    )
+    @taxon_3 = content_item_with_details(
+      "I Am Yet Another Taxon 3",
+      other_fields: {
+        content_id: "ID-3",
+        base_path: "/bar",
+        publication_state: 'active'
+      }
+    )
 
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2, @taxon_3],
@@ -56,20 +60,22 @@ RSpec.feature "Taxon Search" do
   end
 
   def given_there_are_taxons_for_search
-    @taxon_1 = {
-      title: "Taxon 1",
-      content_id: "ID-1",
-      base_path: "/foo",
-      internal_name: "I Am A Taxon 1",
-      publication_state: 'active'
-    }
-    @taxon_2 = {
-      title: "Taxon 2",
-      content_id: "ID-2",
-      base_path: "/bar",
-      internal_name: "I Am Another Taxon 2",
-      publication_state: 'active'
-    }
+    @taxon_1 = content_item_with_details(
+      "Taxon 1",
+      other_fields: {
+        content_id: "ID-1",
+        base_path: "/foo",
+        publication_state: 'active'
+      }
+    )
+    @taxon_2 = content_item_with_details(
+      "Taxon 2",
+      other_fields: {
+        content_id: "ID-2",
+        base_path: "/bar",
+        publication_state: 'active'
+      }
+    )
 
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2],
