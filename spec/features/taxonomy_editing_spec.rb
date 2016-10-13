@@ -2,22 +2,40 @@ require "rails_helper"
 
 RSpec.feature "Taxonomy editing" do
   include PublishingApiHelper
+  include ContentItemHelper
 
   before do
-    @taxon_1 = {
+    @taxon_1 = content_item_with_details(
+      "I Am A Taxon",
+      other_fields: {
+        content_id: "ID-1",
+        base_path: "/foo",
+        publication_state: 'active'
+      }
+    )
+    @taxon_2 = content_item_with_details(
+      "I Am Another Taxon",
+      other_fields: {
+        content_id: "ID-2",
+        base_path: "/bar",
+        publication_state: 'active'
+      }
+    )
+    @linkable_taxon_1 = {
       title: "I Am A Taxon",
       content_id: "ID-1",
       base_path: "/foo",
       internal_name: "I Am A Taxon",
       publication_state: 'active'
     }
-    @taxon_2 = {
+    @linkable_taxon_2 = {
       title: "I Am Another Taxon",
       content_id: "ID-2",
       base_path: "/bar",
       internal_name: "I Am Another Taxon",
       publication_state: 'active'
     }
+
     @dummy_editor_notes = "Some usage notes for this taxon."
 
     @create_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
@@ -59,19 +77,20 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def given_there_are_taxons
-    publishing_api_has_linkables([@taxon_1, @taxon_2], document_type: 'taxon')
+    publishing_api_has_linkables(
+      [@linkable_taxon_1, @linkable_taxon_2],
+      document_type: 'taxon'
+    )
     publishing_api_has_taxons([@taxon_1, @taxon_2])
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(body: { links: { parent_taxons: [] } }.to_json)
 
-    empty_details = { "details" => {} }
-
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
-      .to_return(body: @taxon_1.merge(empty_details).to_json)
+      .to_return(body: @taxon_1.to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-2")
-      .to_return(body: @taxon_2.merge(empty_details).to_json)
+      .to_return(body: @taxon_2.to_json)
   end
 
   def when_i_visit_the_taxonomy_page

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Copying taxons for use in a spreadsheet" do
+  include ContentItemHelper
+
   scenario "Copy taxons" do
     given_there_are_taxons
     when_i_visit_the_bulk_tag_by_upload_page
@@ -9,20 +11,22 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
   end
 
   def given_there_are_taxons
-    @taxon_1 = {
-      title: "I Am A Taxon",
-      content_id: "ID-1",
-      base_path: "/foo",
-      internal_name: "I Am A Taxon",
-      publication_state: 'active'
-    }
-    @taxon_2 = {
-      title: "I Am Another Taxon",
-      content_id: "ID-2",
-      base_path: "/bar",
-      internal_name: "I Am Another Taxon",
-      publication_state: 'active'
-    }
+    @taxon_1 = basic_content_item(
+      "I Am A Taxon",
+      other_fields: {
+        content_id: "ID-1",
+        base_path: "/foo",
+        publication_state: 'active'
+      }
+    )
+    @taxon_2 = basic_content_item(
+      "I Am Another Taxon",
+      other_fields: {
+        content_id: "ID-2",
+        base_path: "/bar",
+        publication_state: 'active'
+      }
+    )
 
     publishing_api_has_linkables([@taxon_1, @taxon_2], document_type: 'taxon')
 
