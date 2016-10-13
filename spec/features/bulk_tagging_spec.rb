@@ -49,7 +49,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     publishing_api_has_content(
       [document_collection],
       document_type: BulkTagging::Search.default_document_types,
-      per_page: 20,
+      page: 1,
       q: "Tax"
     )
 
@@ -63,7 +63,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         document_type: "topic",
       }],
       document_type: BulkTagging::Search.default_document_types,
-      per_page: 20,
+      page: 1,
       q: "topic"
     )
 
@@ -75,7 +75,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         document_type: "mainstream_browse_page",
       }],
       document_type: BulkTagging::Search.default_document_types,
-      per_page: 20,
+      page: 1,
       q: "browse"
     )
 

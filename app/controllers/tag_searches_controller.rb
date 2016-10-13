@@ -1,24 +1,23 @@
 class TagSearchesController < ApplicationController
   def new
-    render :new, locals: { results: [], query: '' }
+    render :new, locals: {
+      search_results: EmptySearchResponse.new,
+      query: ''
+    }
   end
 
   def results
-    warning_about_multiple_pages
-
-    render :new, locals: { results: search_response.results, query: query }
+    render :new, locals: { search_results: search_response, query: query }
   end
 
 private
 
-  def warning_about_multiple_pages
-    if search_response.multiple_pages?
-      flash.now[:warning] = I18n.t('controllers.bulk_taggings.too_many_results')
-    end
+  def search_response
+    @search_response ||= BulkTagging::Search.call(query: query, page: page)
   end
 
-  def search_response
-    @search_response ||= BulkTagging::Search.call(query: query)
+  def page
+    params[:page] || 1
   end
 
   def query

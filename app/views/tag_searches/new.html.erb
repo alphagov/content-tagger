@@ -17,8 +17,10 @@
   </div>
 <% end %>
 
-<% if results.any? %>
-  <%= render 'search_results', results: results %>
+<% if search_results.results.any? %>
+  <%= render 'search_results', results: search_results.results %>
 <% elsif query.present? %>
   <p class="no-content no-content-bordered">No search results for '<%= query %>'</p>
 <% end %>
+
+<%= paginate search_results, theme: 'twitter-bootstrap-3' %>
