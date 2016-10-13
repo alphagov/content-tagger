@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PublishLinks do
   let(:content_id) { 'a-content-id' }
   let(:tag_mapping) do
-    mapping = build(:tag_mapping)
+    mapping = build(:tag_mapping, tagging_source: build(:tag_migration))
     publishing_api_has_lookups(
       mapping.content_base_path => content_id
     )
@@ -61,6 +61,30 @@ RSpec.describe PublishLinks do
       end
 
       it 'updates the links via the publishing API and marks the tagging as tagged' do
+        expect(Services.publishing_api).to receive(:patch_links).with(
+          tag_mapping.content_id,
+          links: { tag_mapping.link_type => [tag_mapping.link_content_id] },
+          previous_version: 10
+        )
+
+        described_class.new(tag_mapping: tag_mapping).publish
+      end
+    end
+
+    context 'with the option to delete the source link activated' do
+      before do
+        tagging_source = tag_mapping.tagging_source
+        tagging_source.source_content_id = 'source-content-id'
+        tagging_source.delete_source_link = true
+
+        publishing_api_has_links(
+          content_id: content_id,
+          links: { taxons: ['source-content-id'] },
+          version: 10
+        )
+      end
+
+      it 'adds the new link and remove the old link in the same request' do
         expect(Services.publishing_api).to receive(:patch_links).with(
           tag_mapping.content_id,
           links: { tag_mapping.link_type => [tag_mapping.link_content_id] },

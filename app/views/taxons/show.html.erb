@@ -3,14 +3,18 @@
 
   <%= link_to taxonomy_path(taxon.content_id, format: :csv), class: "btn btn-default" do %>
     <i class="glyphicon glyphicon-download-alt"></i>
-      <%= I18n.t('views.taxons.download_csv') %>
-    </i>
+    <%= I18n.t('views.taxons.download_csv') %>
   <% end %>
 
   <%= link_to taxon_confirm_delete_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
     <i class="glyphicon glyphicon-trash"></i>
-      <%= I18n.t('views.taxons.delete_taxon') %>
-    </i>
+    <%= I18n.t('views.taxons.delete_taxon') %>
+  <% end %>
+
+  <%= link_to new_taxon_migration_path(source_content_id: taxon.content_id),
+    class: 'btn btn-md btn-default' do %>
+    <i class="glyphicon glyphicon-move"></i>
+    <%= I18n.t('views.taxons.move_content') %>
   <% end %>
 <% end %>
 
