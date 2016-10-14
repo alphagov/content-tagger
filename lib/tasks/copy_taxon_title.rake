@@ -4,7 +4,7 @@ task copy_taxons_title: :environment do
   taxons = RemoteTaxons.new.search(per_page: total).taxons
 
   taxons.each do |taxon|
-    unless taxon.internal_name == taxon.title
+    unless taxon.internal_name.blank?
       puts "Skipping #{taxon.title}..."
       next
     end
