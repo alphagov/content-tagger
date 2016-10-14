@@ -3,12 +3,12 @@
 <%= render partial: 'deletion_warning',
   locals: { taxon: taxon, children: children, tagged: tagged } %>
 
-<h2>Children</h2>
 <% if children.any? %>
+  <h2>Children</h2>
   <%= render partial: 'children', locals: { children: children } %>
 <% end %>
 
-<h2>Tagged content</h2>
 <% if tagged.any? %>
+  <h2>Tagged content</h2>
   <%= render partial: 'tagged_content', locals: { tagged: tagged } %>
 <% end %>

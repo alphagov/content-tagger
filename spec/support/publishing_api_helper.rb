@@ -5,7 +5,8 @@ module PublishingApiHelper
       order: '-public_updated_at',
       page: 1,
       per_page: 50,
-      q: ''
+      q: '',
+      states: ["published"],
     }
 
     publishing_api_has_content(taxons, default_options.merge(options))
