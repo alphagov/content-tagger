@@ -9,8 +9,6 @@ class TaxonSearchResults
     @taxons ||=
       begin
         results = search_response['results'].map do |taxon_hash|
-          next if taxon_hash['publication_state'] == 'unpublished'
-
           details = taxon_hash['details'] || {}
           Taxon.new(
             document_type: taxon_hash['document_type'],

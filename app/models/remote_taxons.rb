@@ -23,7 +23,8 @@ private
         order: '-public_updated_at',
         q: query || '',
         page: page || 1,
-        per_page: per_page || 50
+        per_page: per_page || 50,
+        states: ["published"],
       )
   end
 end
