@@ -30,4 +30,8 @@ class TagMigration < ActiveRecord::Base
   def ready_to_import?
     state == 'ready_to_import'
   end
+
+  def errored?
+    state == "errored"
+  end
 end

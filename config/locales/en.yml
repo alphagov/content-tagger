@@ -41,7 +41,7 @@ en:
       no_content_items: No content items selected.
   views:
     tag_migrations:
-      move_message: "Please note that this action will remove the link to %{name} from the content items below."
+      move_message: "Please note that moving these pages will remove them from the %{taxon_name} taxon."
     taxons:
       move_content: Move content
       update_tags: Update tags

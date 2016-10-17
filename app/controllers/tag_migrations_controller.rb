@@ -43,6 +43,7 @@ class TagMigrationsController < ApplicationController
   def show
     render :show, locals: {
       tag_migration: tag_migration,
+      current_tagged_taxon: tag_migration.tag_mappings.first.link_title,
       aggregated_tag_mappings: presented_aggregated_tag_mappings,
       confirmed: tag_mappings.completed.count,
       progress_path: tag_migration_progress_path(tag_migration),
