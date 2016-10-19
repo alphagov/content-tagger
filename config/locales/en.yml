@@ -14,7 +14,7 @@ en:
     spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
   taggings:
     update_tags: Update tags
-    search: Show content item
+    search: Edit tagging
   tag_search:
     search_button: "Search"
     bulk_tag: "Bulk tag"
