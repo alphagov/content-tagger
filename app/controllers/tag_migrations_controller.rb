@@ -45,8 +45,8 @@ class TagMigrationsController < ApplicationController
       tag_migration: tag_migration,
       current_tagged_taxon: tag_migration.source_title,
       aggregated_tag_mappings: presented_aggregated_tag_mappings,
-      completed_tag_mappings: aggregated_tag_mappings.sum(&:completed_tag_mappings),
-      total_tag_mappings: aggregated_tag_mappings.sum(&:total_tag_mappings),
+      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+      total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tag_migration_progress_path(tag_migration),
     }
   end
@@ -54,8 +54,8 @@ class TagMigrationsController < ApplicationController
   def progress
     render partial: "tag_update_progress_bar", formats: :html, locals: {
       tag_mappings: aggregated_tag_mappings,
-      completed_tag_mappings: aggregated_tag_mappings.sum(&:completed_tag_mappings),
-      total_tag_mappings: aggregated_tag_mappings.sum(&:total_tag_mappings),
+      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+      total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tag_migration_progress_path(tag_migration),
     }
   end
