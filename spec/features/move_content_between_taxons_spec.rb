@@ -105,7 +105,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
     expect(page).to have_text(
       I18n.t(
         'views.tag_migrations.move_message',
-        taxon_name: tag_migration.tag_mappings.first.link_title
+        taxon_name: tag_migration.source_title
       )
     )
   end
