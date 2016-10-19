@@ -1,6 +1,6 @@
 class TagMigration < ActiveRecord::Base
   has_many :tag_mappings, dependent: :destroy, as: :tagging_source
-  validates :source_content_id, presence: true
+  validates :source_content_id, :source_title, :source_document_type, presence: true
 
   validates(
     :state,

@@ -49,6 +49,8 @@ module BulkTagging
         state: 'ready_to_import',
         source_content_id: source_content_item.content_id,
         source_description: "#{source_content_item.title} (#{source_content_item.document_type.humanize})",
+        source_title: source_content_item.title,
+        source_document_type: source_content_item.document_type.humanize,
       )
     end
 
