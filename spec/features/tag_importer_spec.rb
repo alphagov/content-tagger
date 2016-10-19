@@ -123,6 +123,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def then_i_can_preview_which_taggings_will_be_imported
     expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
+    expect(page).to have_text("0 of 2 content items updated")
     expect_tag_mapping_statuses_to_be("Ready to tag")
   end
 

@@ -25,15 +25,17 @@ class TaggingSpreadsheetsController < ApplicationController
     render :show, locals: {
       tagging_spreadsheet: tagging_spreadsheet,
       aggregated_tag_mappings: presented_aggregated_tag_mappings,
-      confirmed: tag_mappings.completed.count,
+      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+      total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tagging_spreadsheet_progress_path(tagging_spreadsheet),
     }
   end
 
   def progress
     render partial: "tag_update_progress_bar", formats: :html, locals: {
-      tag_mappings: tag_mappings,
-      confirmed: tag_mappings.completed.count,
+      tag_mappings: aggregated_tag_mappings,
+      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+      total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tagging_spreadsheet_progress_path(tagging_spreadsheet),
     }
   end

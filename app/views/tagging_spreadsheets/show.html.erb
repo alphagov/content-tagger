@@ -14,7 +14,8 @@
   </div>
 
   <%= render "tag_update_preview",
-        confirmed: confirmed,
+        completed_tag_mappings: completed_tag_mappings,
+        total_tag_mappings: total_tag_mappings,
         error_count: tagging_spreadsheet.error_count,
         aggregated_tag_mappings: aggregated_tag_mappings,
         progress_path: progress_path %>

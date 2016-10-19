@@ -156,6 +156,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(page).to have_text("Taxon 2", count: 2)
     expect(page).to have_text("/path/tax-doc-1", count: 1)
     expect(page).to have_text("/path/tax-doc-2", count: 1)
+    expect(page).to have_text("0 of 2 content items updated")
 
     within("table") do
       state_labels = all("span.label")

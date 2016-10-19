@@ -43,16 +43,19 @@ class TagMigrationsController < ApplicationController
   def show
     render :show, locals: {
       tag_migration: tag_migration,
+      current_tagged_taxon: tag_migration.source_title,
       aggregated_tag_mappings: presented_aggregated_tag_mappings,
-      confirmed: tag_mappings.completed.count,
+      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+      total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tag_migration_progress_path(tag_migration),
     }
   end
 
   def progress
     render partial: "tag_update_progress_bar", formats: :html, locals: {
-      tag_mappings: tag_mappings,
-      confirmed: tag_mappings.completed.count,
+      tag_mappings: aggregated_tag_mappings,
+      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+      total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tag_migration_progress_path(tag_migration),
     }
   end

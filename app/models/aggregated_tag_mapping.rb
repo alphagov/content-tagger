@@ -13,6 +13,18 @@ class AggregatedTagMapping
     end
   end
 
+  def completed?
+    total_tag_mappings == completed_tag_mappings.size
+  end
+
+  def completed_tag_mappings
+    tag_mappings.select { |mapping| TagMapping::COMPLETED_STATES.include?(mapping.state) }
+  end
+
+  def total_tag_mappings
+    tag_mappings.size
+  end
+
   class Link
     include ActiveModel::Model
 

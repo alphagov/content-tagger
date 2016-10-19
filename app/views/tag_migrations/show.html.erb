@@ -7,26 +7,27 @@
 <% if tag_migration.should_delete_source_link? %>
   <%= content_tag(
     :p,
-    I18n.t('views.tag_migrations.move_message', name: tag_migration.source_description),
+    I18n.t('views.tag_migrations.move_message', taxon_name: current_tagged_taxon),
     class: 'alert alert-warning'
   ) %>
 <% end %>
 
-<% if tag_migration.state == 'ready_to_import' %>
+<% if tag_migration.ready_to_import? %>
   <%= link_to t('bulk_tagging.start_tagging'),
     tag_migration_publish_tags_path(tag_migration),
     method: :post,
     class: "btn btn-lg btn-success" %>
 <% end %>
 
-<% if tag_migration.state == "errored" %>
+<% if tag_migration.errored? %>
   <p class="alert alert-danger">
     <%= tag_migration.error_message %>
   </p>
 <% end %>
 
 <%= render "tag_update_preview",
-    confirmed: confirmed,
+    completed_tag_mappings: completed_tag_mappings,
+    total_tag_mappings: total_tag_mappings,
     error_count: tag_migration.error_count,
     aggregated_tag_mappings: aggregated_tag_mappings,
     progress_path: progress_path %>

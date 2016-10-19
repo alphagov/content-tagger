@@ -1,13 +1,12 @@
-<% total = tag_mappings.count %>
-<% percentage_complete = Integer((confirmed / total.to_f) * 100) %>
+<% percentage_complete = Integer((completed_tag_mappings / total_tag_mappings.to_f) * 100) %>
 <div class="js-tag-update-progress" data-progress-path="<%= progress_path %>">
 
   <div class="progress">
-    <div class="progress-bar <%= percentage_complete == 100 ? '' : 'progress-bar-striped active'%>"
+    <div class="progress-bar <%= 'progress-bar-striped active' if percentage_complete == 100 %>"
       role="progressbar"
-      aria-valuenow="<%= confirmed %>"
+      aria-valuenow="<%= completed_tag_mappings %>"
       aria-valuemin="0"
-      aria-valuemax="<%= total %>"
+      aria-valuemax="<%= total_tag_mappings %>"
       style="width: <%= percentage_complete %>%;">
       <span class="sr-only"><%= percentage_complete %>% Complete</span>
     </div>
@@ -15,7 +14,7 @@
 
   <div class="progress-counter">
     <p>
-      Create tags progress: <%= confirmed %> of <%= total %>
+      <%= I18n.t('views.tag_update_progress_bar', completed: completed_tag_mappings, total: total_tag_mappings)%>
     </p>
   </div>
 

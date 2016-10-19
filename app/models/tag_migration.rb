@@ -1,6 +1,6 @@
 class TagMigration < ActiveRecord::Base
   has_many :tag_mappings, dependent: :destroy, as: :tagging_source
-  validates :source_content_id, presence: true
+  validates :source_content_id, :source_title, :source_document_type, presence: true
 
   validates(
     :state,
@@ -10,6 +10,10 @@ class TagMigration < ActiveRecord::Base
 
   scope :newest_first, -> { order(created_at: :desc) }
   scope :active, -> { where(deleted_at: nil) }
+
+  def source_description
+    "#{source_title} (#{source_document_type})"
+  end
 
   def aggregated_tag_mappings
     AggregatableTagMappings.new(tag_mappings).aggregated_tag_mappings
@@ -29,5 +33,9 @@ class TagMigration < ActiveRecord::Base
 
   def ready_to_import?
     state == 'ready_to_import'
+  end
+
+  def errored?
+    state == "errored"
   end
 end
