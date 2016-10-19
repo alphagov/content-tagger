@@ -11,6 +11,10 @@ class TagMigration < ActiveRecord::Base
   scope :newest_first, -> { order(created_at: :desc) }
   scope :active, -> { where(deleted_at: nil) }
 
+  def source_description
+    "#{source_title} (#{source_document_type})"
+  end
+
   def aggregated_tag_mappings
     AggregatableTagMappings.new(tag_mappings).aggregated_tag_mappings
   end
