@@ -12,7 +12,7 @@
         <div class="taxon-level-parent-links">
           <% parent_taxons.each do |parent_taxon| %>
             <p>
-              ↰ <%= link_to parent_taxon.title, taxon_path(parent_taxon.content_id) %>
+              ↰ <%= link_to parent_taxon.internal_name, taxon_path(parent_taxon.content_id) %>
             </p>
           <% end %>
         </div>
