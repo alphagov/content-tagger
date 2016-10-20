@@ -121,7 +121,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(page).to have_text("Tax documents")
     expect(page).to have_text('Document collection')
     expect(page).to have_link(
-      "Bulk tag",
+      "View tagged pages",
       href: new_tag_migration_path(source_content_id: "collection-id")
     )
   end
