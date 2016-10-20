@@ -71,10 +71,7 @@ class TagMigrationsController < ApplicationController
   def publish_tags
     QueueLinksForPublishing.call(tag_migration, user: current_user)
 
-    redirect_to(
-      tag_migration,
-      success: I18n.t('controllers.tag_migrations.import_started')
-    )
+    redirect_to tag_migration
   end
 
 private
