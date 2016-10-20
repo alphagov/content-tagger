@@ -34,6 +34,7 @@ en:
       invalid_link_types: Invalid link types found - only taxons are allowed.
       tag_mappings_failed: We could not tag all items, please check the preview for more details.
   bulk_tagging:
+    title: "Find pages to tag"
     start_tagging: "Start tagging"
     preview: "Preview tagging"
     update_tags:
