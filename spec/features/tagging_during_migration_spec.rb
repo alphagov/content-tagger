@@ -71,7 +71,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    click_on I18n.t('views.taxons.update_tags')
+    click_on I18n.t('taggings.update_tags')
   end
 
   def then_only_that_link_type_is_sent_to_the_publishing_api
