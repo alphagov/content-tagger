@@ -27,7 +27,6 @@ en:
     start_tagging: "Do tagging"
     import_created: Spreadsheet uploaded. It will be imported within a few minutes.
     import_refetched: The import will be imported again.
-    import_started: The tagging import has started. It can take a few minutes for the tags to be published.
     import_removed: Import has been removed.
     errors:
       invalid_content_id: We could not find this URL on GOV.UK.
@@ -70,7 +69,6 @@ en:
     bulk_taggings:
       failure: We could not perform search, please try again.
     tag_migrations:
-      import_started: The tag migration import has started. It can take a few minutes for the tags to be published.
       import_removed: Tag migration import has been removed.
     taxons:
       success: You have sucessfully deleted the taxon

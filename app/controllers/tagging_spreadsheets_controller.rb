@@ -51,7 +51,7 @@ class TaggingSpreadsheetsController < ApplicationController
   def publish_tags
     QueueLinksForPublishing.call(tagging_spreadsheet, user: current_user)
 
-    redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_started')
+    redirect_to tagging_spreadsheet
   end
 
   def destroy
