@@ -1,4 +1,11 @@
-<%= display_header title: t('navigation.tag_importer'), breadcrumbs: [t('navigation.tag_importer')] do %>
+<%= display_header(
+      title: t('navigation.tag_importer'),
+      breadcrumbs: [
+        link_to(I18n.t('navigation.tag_search'), new_tag_search_path),
+        t('navigation.tag_importer')
+      ]
+    ) do %>
+
   <%= link_to I18n.t('tag_import.upload_sheet'), new_tagging_spreadsheet_path, class: 'btn btn-default' %>
   <%= link_to copy_taxons_path, class: 'btn btn-default' do %>
     <i class="glyphicon glyphicon-download-alt"></i>
