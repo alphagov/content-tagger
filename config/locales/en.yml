@@ -17,7 +17,7 @@ en:
     search: Edit tagging
   tag_search:
     search_button: "Search"
-    bulk_tag: "Bulk tag"
+    bulk_tag: "View tagged pages"
   tag_import:
     upload_sheet: Upload spreadsheet
     upload: Upload
