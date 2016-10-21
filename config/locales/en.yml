@@ -13,7 +13,7 @@ en:
     missing_output: Is missing the parameter output as TSV
     spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
   taggings:
-    update_tags: Update tags
+    update_tags: Update tagging
     search: Edit tagging
   tag_search:
     search_button: "Search"
@@ -45,7 +45,6 @@ en:
       move_message: "Please note that moving these pages will remove them from the %{taxon_name} taxon."
     taxons:
       move_content: Move content
-      update_tags: Update tags
       edit: Edit taxon
       view: View taxon
       add_taxon: Add a taxon
