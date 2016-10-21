@@ -108,15 +108,15 @@ RSpec.feature "Bulk tagging", type: :feature do
   def when_i_search_for_the_collection
     visit new_tag_search_path
 
-    fill_in "Query", with: "topic"
+    fill_in "tag_search_query", with: "topic"
     click_button I18n.t('tag_search.search_button')
     expect(page).to have_text("A Topic")
 
-    fill_in "Query", with: "browse"
+    fill_in "tag_search_query", with: "browse"
     click_button I18n.t('tag_search.search_button')
     expect(page).to have_text("A Mainstream Browse Page")
 
-    fill_in "Query", with: "Tax"
+    fill_in "tag_search_query", with: "Tax"
     click_button I18n.t('tag_search.search_button')
     expect(page).to have_text("Tax documents")
     expect(page).to have_text('Document collection')
