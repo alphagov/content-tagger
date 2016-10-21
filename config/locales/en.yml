@@ -2,9 +2,9 @@ en:
   navigation:
     tagging_content: 'Tag a page'
     taxons: 'Edit taxonomy'
-    tag_importer: 'Bulk tag by upload'
     tag_search: 'Bulk tag'
     tag_migration: 'Bulk tag history'
+    tag_importer: 'Bulk tag by upload'
   errors:
     invalid_taxon: There was a problem with your request and we were notified about it. We will fix this issue as soon as possible
     invalid_hostname: Is not a Google Docs URL

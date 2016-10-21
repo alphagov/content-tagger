@@ -13,11 +13,7 @@
     <%= link_to t('navigation.tag_search'), new_tag_search_path %>
   </li>
 
-  <li class='<%= active_navigation_item == 'tagging_spreadsheets' ? 'active' : nil %>'>
-    <%= link_to t('navigation.tag_importer'), tagging_spreadsheets_path %>
-  </li>
-
-  <li class='<%= active_navigation_item.in?(%w[taxons ]) ? 'active' : nil %>'>
+  <li class='<%= active_navigation_item.in?(%w[taxons]) ? 'active' : nil %>'>
     <%= link_to t('navigation.taxons'), taxons_path %>
   </li>
 <% end %>

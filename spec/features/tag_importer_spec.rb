@@ -88,6 +88,8 @@ RSpec.feature "Tag importer", type: :feature do
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
     visit root_path
+    click_link I18n.t('navigation.tag_search')
+
     click_link I18n.t("navigation.tag_importer")
     click_link I18n.t('tag_import.upload_sheet')
     expect(page).to have_text(/how to generate a google spreadsheet url/i)
@@ -235,7 +237,10 @@ RSpec.feature "Tag importer", type: :feature do
   def and_the_state_of_the_import_is_successful
     tagging_spreadsheet = TaggingSpreadsheet.first
     state = tagging_spreadsheet.state.humanize
+
     visit root_path
+    click_link I18n.t('navigation.tag_search')
+
     click_link I18n.t("navigation.tag_importer")
     row = first('table tbody tr')
 
