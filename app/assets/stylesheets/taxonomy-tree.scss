@@ -1,46 +1,51 @@
 $gray: #bfc1c3;
+$blue-link: rgb(0, 0, 238);
 
 .taxonomy-tree {
-  a, a:visited { color: rgb(0, 0, 238) }
+  a,
+  a:visited {
+    color: $blue-link;
+  }
 
   .taxon-focus {
     display: flex;
-    justify-content: center;
-    position: relative;
-    padding: 2em;
-    margin: auto;
     font-weight: bold;
+    justify-content: center;
+    margin: auto;
+    padding: 2em;
+    position: relative;
   }
 
   .taxon-focus--has-parents {
     border-top: 2px solid $gray;
   }
 
-  .taxon-focus--has-children{
+  .taxon-focus--has-children {
     border-bottom: 2px solid $gray;
   }
 
   .taxon-focus--has-parents:before,
   .taxon-focus--has-children:after {
-     content: ".";
-     color: transparent;
-     position: absolute;
-     overflow: hidden;
-     height: 1.75em;
-     width: 0;
-     left: 50%;
-     border-left: 2px solid $gray;
+    border-left: 2px solid $gray;
+    color: transparent;
+    content: ".";
+    height: 1.75em;
+    left: 50%;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
   }
 
   .taxon-focus--has-parents:before {
-     top: 0;
+    top: 0;
   }
 
   .taxon-focus--has-children:after {
-     bottom: 0;
+    bottom: 0;
   }
 
-  .taxon-parents, .taxon-children {
+  .taxon-parents,
+  .taxon-children {
     display: flex;
     justify-content: space-around;
   }
@@ -62,8 +67,8 @@ $gray: #bfc1c3;
   }
 
   .parent-expansion .taxon-depth-1 {
-    margin-top: 0.5rem;
     margin-bottom: 1.75rem;
+    margin-top: 0.5rem;
   }
 
   .child-expansion .taxon-depth-1 {
@@ -73,15 +78,15 @@ $gray: #bfc1c3;
 
   .parent-expansion .taxon-depth-1:before,
   .child-expansion .taxon-depth-1:after {
-    content: ".";
-    color: transparent;
-    position: absolute;
-    overflow: hidden;
-    height: 1.25em;
-    bottom: 0;
-    left: 1.5em;
-    width: 0;
     border-left: 2px solid $gray;
+    bottom: 0;
+    color: transparent;
+    content: ".";
+    height: 1.25em;
+    left: 1.5em;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
   }
 
   .parent-expansion .taxon-depth-1:before {
@@ -99,37 +104,37 @@ $gray: #bfc1c3;
   // lots of unnecessary CSS.
   @for $i from 2 through 20 {
     .taxon-depth-#{$i} {
+      font-size: 1.2rem;
       margin-left: 1rem * $i;
       margin-top: 1rem;
-      font-size: 1.2rem;
-      position: relative;
       max-width: 25rem;
+      position: relative;
     }
 
-   .parent-expansion .taxon-depth-#{$i}:before {
-       content: ".";
-       color: transparent;
-       position: absolute;
-       overflow: hidden;
-       left: -0.85rem;
-       width: 0.5rem;
-       border-left: 1px solid #bfc1c3;
-       top: 0.5rem;
-       bottom: -1rem;
-       border-top: 1px solid #bfc1c3;
+    .parent-expansion .taxon-depth-#{$i}:before {
+      border-left: 1px solid $gray;
+      border-top: 1px solid $gray;
+      bottom: -1rem;
+      color: transparent;
+      content: ".";
+      left: -0.85rem;
+      overflow: hidden;
+      position: absolute;
+      top: 0.5rem;
+      width: 0.5rem;
     }
 
     .child-expansion .taxon-depth-#{$i}:before {
-       content: ".";
-       color: transparent;
-       position: absolute;
-       overflow: hidden;
-       left: -0.85rem;
-       width: 0.5rem;
-       border-left: 1px solid #bfc1c3;
-       top: -1.2rem;
-       bottom: 1rem;
-       border-bottom: 1px solid #bfc1c3;
+      border-left: 1px solid $gray;
+      border-top: 1px solid $gray;
+      bottom: 1rem;
+      color: transparent;
+      content: ".";
+      left: -0.85rem;
+      overflow: hidden;
+      position: absolute;
+      top: -1.2rem;
+      width: 0.5rem;
     }
   }
 }
