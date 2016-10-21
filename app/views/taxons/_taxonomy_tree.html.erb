@@ -1,22 +1,52 @@
 <div class="taxonomy-tree">
-  <% taxonomy_tree.each do |tree_node| %>
-    <div class="taxon-level taxon-depth-<%= tree_node.node_depth %>">
-      <span class="taxon-level-title">
-        <%= link_to tree_node.title, taxon_path(tree_node.content_id) %>
-      </span>
-
-      <% parent_taxons = tree_node.parent_taxons %>
-
-      <% if parent_taxons.present? && (parent_taxons.count > 1 || tree_node.node_depth == 0) %>
-        <br/><strong>Parents:</strong>
-        <div class="taxon-level-parent-links">
-          <% parent_taxons.each do |parent_taxon| %>
-            <p>
-              ↰ <%= link_to parent_taxon.internal_name, taxon_path(parent_taxon.content_id) %>
-            </p>
-          <% end %>
+  <div class="taxon-parents">
+    <% taxonomy_tree.immediate_parents.each do |parent_node| %>
+      <div class="parent-expansion">
+        <div class="taxon-level taxon-depth-1">
+          <span class="taxon-level-title">
+            <%= link_to parent_node.title, taxon_path(parent_node.content_id) %>
+          </span>
         </div>
-      <% end %>
+        <% parent_node.each do |parent_ancestor| %>
+          <% next if parent_ancestor.node_depth == 1 %>
+          <div class="taxon-level taxon-depth-<%= parent_ancestor.node_depth %>">
+            <span class="taxon-level-title">
+              <%= link_to parent_ancestor.title, taxon_path(parent_ancestor.content_id) %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <% parents_class = taxonomy_tree.immediate_parents.present? ? "taxon-focus--has-parents" : "" %>
+  <% children_class = taxonomy_tree.immediate_children.present? ? "taxon-focus--has-children" : "" %>
+
+  <div class="taxon-focus <%= parents_class %> <%= children_class %>">
+    <div class="taxon-level taxon-depth-0">
+       <span class="taxon-level-title">
+         <%= taxonomy_tree.root_node.title %>
+       </span>
     </div>
-  <% end %>
+  </div>
+
+  <div class="taxon-children">
+    <% taxonomy_tree.immediate_children.each do |child_node| %>
+      <div class="child-expansion">
+        <div class="taxon-level taxon-depth-1">
+          <span class="taxon-level-title">
+            <%= link_to child_node.title, taxon_path(child_node.content_id) %>
+          </span>
+        </div>
+        <% child_node.each do |child_successor| %>
+          <% next if child_successor.node_depth == 1 %>
+          <div class="taxon-level taxon-depth-<%= child_successor.node_depth %>">
+            <span class="taxon-level-title">
+              <%= link_to child_successor.title, taxon_path(child_successor.content_id) %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
 </div>

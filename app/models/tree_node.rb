@@ -1,7 +1,7 @@
 class TreeNode
   attr_reader :taxon, :children
-  attr_accessor :parent
   delegate :title, :base_path, :content_id, :parent_taxons, :parent_taxons=, to: :taxon
+  attr_accessor :parent_node
   delegate :map, :each, to: :tree
 
   def initialize(title:, content_id:)
@@ -10,7 +10,7 @@ class TreeNode
   end
 
   def <<(child_node)
-    child_node.parent = self
+    child_node.parent_node = self
     @children << child_node
   end
 
@@ -27,11 +27,11 @@ class TreeNode
   end
 
   def root?
-    parent.nil?
+    parent_node.nil?
   end
 
   def node_depth
     return 0 if root?
-    1 + parent.node_depth
+    1 + parent_node.node_depth
   end
 end

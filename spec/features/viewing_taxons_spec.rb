@@ -3,10 +3,10 @@ require "rails_helper"
 RSpec.describe "Viewing taxons" do
   include ContentItemHelper
 
-  let(:food)   { fake_taxon("Food") }
   let(:fruits) { fake_taxon("Fruits") }
-  let(:apples) { fake_taxon("Apples") }
   let(:round_things) { fake_taxon("Round things") }
+  let(:apples) { fake_taxon("Apples") }
+  let(:cox) { fake_taxon("Cox") }
 
   before do
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
@@ -18,30 +18,22 @@ RSpec.describe "Viewing taxons" do
 
   scenario "Viewing a taxonomy" do
     given_a_taxonomy
-    when_i_view_the_top_level_taxon
+    when_i_view_the_root_taxon
     then_i_see_the_entire_taxonomy
-    when_i_view_one_of_the_children
-    then_i_see_the_taxonomy_from_the_child_downwards
+    when_i_view_one_of_the_parents
+    then_i_see_the_taxonomy_from_the_parent_downwards
     and_i_can_download_the_taxonomy_in_csv_form
-  end
-
-  scenario "Navigating multiple parents" do
-    given_a_taxonomy
-    and_a_taxon_with_multiple_parents
-    when_i_view_the_top_level_taxon
-    then_i_can_see_the_multi_parent_taxon
-    and_can_navigate_to_the_other_parent
   end
 
   scenario "Viewing tagged content of a taxon" do
     given_a_taxonomy
-    and_the_top_level_taxon_has_content_tagged_to_it
-    when_i_view_the_top_level_taxon
+    and_the_root_taxon_has_content_tagged_to_it
+    when_i_view_the_root_taxon
     then_i_see_tagged_content
   end
 
-  def and_the_top_level_taxon_has_content_tagged_to_it
-    stub_request(:get, %r{publishing-api.test.gov.uk/v2/linked/food-id})
+  def and_the_root_taxon_has_content_tagged_to_it
+    stub_request(:get, %r{publishing-api.test.gov.uk/v2/linked/apples-id})
       .to_return(
         body: [basic_content_item("Tagged content")].to_json
       )
@@ -51,28 +43,28 @@ RSpec.describe "Viewing taxons" do
     expect(page).to have_content("Tagged content")
   end
 
-  def fake_taxon(title)
-    { "title" => title, "content_id" => "#{title.parameterize}-id", "details" => {} }
-  end
-
   def given_a_taxonomy
-    publishing_api_has_item(food)
     publishing_api_has_item(fruits)
-
-    publishing_api_has_expanded_links(
-      content_id: food["content_id"],
-      expanded_links: { child_taxons: [fruits] },
-    )
     publishing_api_has_expanded_links(
       content_id: fruits["content_id"],
       expanded_links: {
-        parent_taxons: [food],
-        child_taxons: [apples]
-      },
+        parent_taxons: [],
+        child_taxons: [apples],
+      }
     )
+
+    publishing_api_has_item(apples)
     publishing_api_has_expanded_links(
       content_id: apples["content_id"],
-      expanded_links: { parent_taxons: [fruits] },
+      expanded_links: {
+        parent_taxons: [fruits, round_things],
+        child_taxons: [cox],
+      }
+    )
+
+    publishing_api_has_expanded_links(
+      content_id: cox["content_id"],
+      expanded_links: {}
     )
   end
 
@@ -88,19 +80,20 @@ RSpec.describe "Viewing taxons" do
     )
   end
 
-  def when_i_view_the_top_level_taxon
-    visit taxon_path(food["content_id"])
+  def when_i_view_the_root_taxon
+    visit taxon_path(apples["content_id"])
   end
 
   def then_i_see_the_entire_taxonomy
     expected_titles = [
-      food["title"],
       fruits["title"],
+      round_things["title"],
       apples["title"],
+      cox["title"],
     ]
     rendered_titles = all(".taxon-level-title")
 
-    expect(rendered_titles.count).to eq 3
+    expect(rendered_titles.count).to eq 4
     rendered_titles.zip(expected_titles).each do |rendered, expected|
       within rendered do
         expect(page).to have_content expected
@@ -108,17 +101,23 @@ RSpec.describe "Viewing taxons" do
     end
   end
 
-  def when_i_view_one_of_the_children
-    within ".taxon-depth-1" do
-      click_link fruits["title"]
-    end
+  def when_i_view_one_of_the_parents
+    click_link fruits["title"]
   end
 
-  def then_i_see_the_taxonomy_from_the_child_downwards
+  def then_i_see_the_taxonomy_from_the_parent_downwards
     rendered_titles = all(".taxon-level-title")
 
-    expect(rendered_titles.count).to eq 2
-    expect(rendered_titles.first).to have_content fruits["title"]
+    expect(rendered_titles.count).to eq 3
+    within ".taxon-focus" do
+      expect(page).to have_content("Fruits")
+    end
+    within ".taxon-children .taxon-depth-1" do
+      expect(page).to have_content("Apples")
+    end
+    within ".taxon-children .taxon-depth-2" do
+      expect(page).to have_content("Cox")
+    end
   end
 
   def then_i_can_see_the_multi_parent_taxon
@@ -149,5 +148,11 @@ RSpec.describe "Viewing taxons" do
     expect(page.response_headers['Content-Type']).to match(/csv/)
     expect(page.response_headers['Content-Disposition']).to match(/attachment/)
     expect(page.response_headers['Content-Disposition']).to match(/Fruits.*.csv/)
+  end
+
+private
+
+  def fake_taxon(title)
+    { "title" => title, "content_id" => "#{title.parameterize}-id", "details" => {} }
   end
 end
