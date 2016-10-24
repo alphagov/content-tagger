@@ -1,5 +1,9 @@
 <%= display_header title: I18n.t('tag_import.upload_sheet'),
-  breadcrumbs: [:tagging_spreadsheets, I18n.t('tag_import.upload')] %>
+  breadcrumbs: [
+    link_to(I18n.t('navigation.tag_search'), new_tag_search_path),
+    link_to(I18n.t('navigation.tag_importer'), tagging_spreadsheets_path),
+    I18n.t('tag_import.upload_sheet')
+  ] %>
 
 <div class="row">
   <div class="col-md-8">
