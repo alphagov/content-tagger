@@ -75,7 +75,7 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def then_i_see_a_basic_prompt_to_delete
-    expect(page).to have_text('You are about to delete "Taxon 1"')
+    expect(page).to have_text('You are about to delete "internal name for Taxon 1"')
     expect(page).to_not have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
     expect(page).to have_link('I understand and I want to delete it')
@@ -105,7 +105,7 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def then_i_see_a_prompt_to_delete_with_a_warning_message
-    expect(page).to have_text('You are about to delete "Taxon 1"')
+    expect(page).to have_text('You are about to delete "internal name for Taxon 1"')
     expect(page).to have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
     expect(page).to have_link('I understand and I want to delete it')

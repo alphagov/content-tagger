@@ -45,6 +45,7 @@ GEM
     ast (2.3.0)
     autoprefixer-rails (6.4.1.1)
       execjs
+    awesome_print (1.7.0)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -347,6 +348,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (~> 4.3.1)
+  awesome_print
   better_errors
   bootstrap-kaminari-views (~> 0.0.5)
   capybara
@@ -379,4 +381,4 @@ DEPENDENCIES
   webmock (~> 1.22)
 
 BUNDLED WITH
-   1.11.2
+   1.13.5

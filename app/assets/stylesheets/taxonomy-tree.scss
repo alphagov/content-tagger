@@ -1,46 +1,140 @@
-// A set of classes governing the degree of indent depending on the depth of a
-// given node in the taxonomy. 20 has no special significance. It's large
-// enough that we're unlikely to ever need to update this rule, but small
-// enough that we don't end up creating large amounts of unnecessary CSS.
-@for $i from 1 through 20 {
-  .taxon-depth-#{$i} {
-    margin-left: 4rem * $i;
-  }
-}
-
-$taxon-level-font-size-lg: 16px;
-$taxon-level-font-size-sm: 13px;
 $gray: #bfc1c3;
+$blue-link: rgb(0, 0, 238);
 
-.taxon-level {
-  padding: 0.5rem;
-  border-left: 1px solid $gray;
-  border-bottom: 1px solid $gray;
-  margin-bottom: 1rem;
-  max-width: 40%;
+.taxonomy-tree {
+  a,
+  a:visited {
+    color: $blue-link;
+  }
 
-  .btn {
-    padding: 1px 4px;
+  .taxon-focus {
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    margin: auto;
+    padding: 2em;
+    position: relative;
+  }
+
+  .taxon-focus--has-parents {
+    border-top: 2px solid $gray;
+  }
+
+  .taxon-focus--has-children {
+    border-bottom: 2px solid $gray;
+  }
+
+  .taxon-focus--has-parents:before,
+  .taxon-focus--has-children:after {
+    border-left: 2px solid $gray;
+    color: transparent;
+    content: ".";
+    height: 1.75em;
+    left: 50%;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+  }
+
+  .taxon-focus--has-parents:before {
+    top: 0;
+  }
+
+  .taxon-focus--has-children:after {
+    bottom: 0;
+  }
+
+  .taxon-parents,
+  .taxon-children {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .parent-expansion {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+  }
+
+  .child-expansion {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .taxon-depth-1 {
+    font-size: 1.5rem;
+  }
+
+  .parent-expansion .taxon-depth-1 {
+    margin-bottom: 1.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .child-expansion .taxon-depth-1 {
     margin-bottom: 0.5rem;
-  }
-}
-
-.taxon-level-title {
-  font-size: $taxon-level-font-size-lg;
-}
-
-.taxon-level-edit {
-  font-size: $taxon-level-font-size-sm;
-}
-
-.taxon-level-parent-links {
-  font-size: $taxon-level-font-size-sm;
-
-  span {
-    margin-bottom: 0.8rem;
+    margin-top: 1.75rem;
   }
 
-  p {
-    margin-bottom: 0;
+  .parent-expansion .taxon-depth-1:before,
+  .child-expansion .taxon-depth-1:after {
+    border-left: 2px solid $gray;
+    bottom: 0;
+    color: transparent;
+    content: ".";
+    height: 1.25em;
+    left: 1.5em;
+    overflow: hidden;
+    position: absolute;
+    width: 0;
+  }
+
+  .parent-expansion .taxon-depth-1:before {
+    bottom: 0;
+  }
+
+  .child-expansion .taxon-depth-1:after {
+    top: 0;
+  }
+
+  // A set of classes governing the degree of indent and styling of taxons,
+  // depending on their depth relative to a node in the taxonomy. The number 20
+  // has no special significance. It's large enough that we're unlikely to ever
+  // need to update this rule, but small enough that we don't end up generating
+  // lots of unnecessary CSS.
+  @for $i from 2 through 20 {
+    .taxon-depth-#{$i} {
+      font-size: 1.2rem;
+      margin-left: 1rem * $i;
+      margin-top: 1rem;
+      max-width: 25rem;
+      position: relative;
+    }
+
+    .parent-expansion .taxon-depth-#{$i}:before {
+      border-left: 1px solid $gray;
+      border-top: 1px solid $gray;
+      bottom: -1rem;
+      color: transparent;
+      content: ".";
+      left: -0.85rem;
+      overflow: hidden;
+      position: absolute;
+      top: 0.5rem;
+      width: 0.5rem;
+    }
+
+    .child-expansion .taxon-depth-#{$i}:before {
+      border-left: 1px solid $gray;
+      border-top: 1px solid $gray;
+      bottom: 1rem;
+      color: transparent;
+      content: ".";
+      left: -0.85rem;
+      overflow: hidden;
+      position: absolute;
+      top: -1.2rem;
+      width: 0.5rem;
+    }
   }
 }

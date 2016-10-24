@@ -31,6 +31,7 @@ group :development, :test do
   gem 'govuk-content-schema-test-helpers', '~> 1.4'
   gem 'govuk-lint'
   gem 'factory_girl_rails'
+  gem 'awesome_print'
 end
 
 group :development do

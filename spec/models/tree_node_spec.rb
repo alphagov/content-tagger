@@ -9,7 +9,7 @@ RSpec.describe TreeNode do
       root_node << child_node_1
 
       expect(root_node.tree).to include child_node_1
-      expect(child_node_1.parent).to eq root_node
+      expect(child_node_1.parent_node).to eq root_node
     end
   end
 

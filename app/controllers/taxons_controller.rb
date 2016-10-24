@@ -51,12 +51,12 @@ class TaxonsController < ApplicationController
   end
 
   def confirm_delete
-    tree = ExpandedTaxonomy.new(taxon.content_id).build
+    expanded_taxonomy = ExpandedTaxonomy.new(taxon.content_id).build
 
     render :confirm_delete, locals: {
-      taxon: tree.taxon,
+      taxon: taxon,
       tagged: tagged,
-      children: tree.children,
+      children: expanded_taxonomy.child_expansion.children,
     }
   end
 
