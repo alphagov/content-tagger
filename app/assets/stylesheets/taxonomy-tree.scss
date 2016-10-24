@@ -125,8 +125,8 @@ $blue-link: rgb(0, 0, 238);
     }
 
     .child-expansion .taxon-depth-#{$i}:before {
+      border-bottom: 1px solid $gray;
       border-left: 1px solid $gray;
-      border-top: 1px solid $gray;
       bottom: 1rem;
       color: transparent;
       content: ".";
