@@ -47,7 +47,11 @@ en:
       title: "Select pages to tag from '%{taxon}' (%{type})"
       move_message: "Please note that moving these pages will remove them from the %{taxon_name} taxon."
     taxons:
+      tree: Taxon hierarchy
+      tagged_content: Pages tagged to this taxon
+      edit_tagging: Edit tagging
       move_content: Move content
+      title: Taxons
       edit: Edit taxon
       view: View taxon
       add_taxon: Add a taxon

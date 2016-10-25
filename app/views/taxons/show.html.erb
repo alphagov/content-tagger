@@ -18,11 +18,11 @@
   <% end %>
 <% end %>
 
-<h3>Tree</h3>
+<h3><%= t('views.taxons.tree') %></h3>
 
 <%= render 'taxonomy_tree', taxonomy_tree: taxonomy_tree %>
 
-<h3>Tagged content</h3>
+<h3><%= t('views.taxons.tagged_content') %></h3>
 
 <% if tagged.any? %>
   <%= render 'tagged_content', tagged: tagged %>

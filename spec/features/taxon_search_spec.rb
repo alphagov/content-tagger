@@ -144,7 +144,7 @@ RSpec.feature "Taxon Search" do
   end
 
   def when_i_search_for_taxons
-    fill_in 'Query', with: 'Taxon 2'
+    find('#taxon_search_query').set('Taxon 2')
     click_button 'Search taxons'
   end
 
