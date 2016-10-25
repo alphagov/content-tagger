@@ -76,4 +76,46 @@ RSpec.describe ExpandedTaxonomy do
       expect(taxonomy.immediate_children.map(&:title)).to eq %w(Bramley Cox)
     end
   end
+
+  describe "#child_expansion" do
+    let(:taxonomy) { ExpandedTaxonomy.new(apples["content_id"]) }
+
+    context "when the expansion hasn't been built yet" do
+      it "raises an error" do
+        expect { taxonomy.child_expansion }.to raise_error(
+          ExpandedTaxonomy::ExpansionNotBuiltError
+        )
+      end
+    end
+
+    context "when the expansion has been built" do
+      it "returns the expansion" do
+        taxonomy.build_child_expansion
+
+        expect(taxonomy.child_expansion.map(&:title)).to eq %w(Apples Bramley Cox)
+        expect(taxonomy.child_expansion.map(&:node_depth)).to eq [0, 1, 1]
+      end
+    end
+  end
+
+  describe "#parent_expansion" do
+    let(:taxonomy) { ExpandedTaxonomy.new(apples["content_id"]) }
+
+    context "when the expansion hasn't been built yet" do
+      it "raises an error" do
+        expect { taxonomy.parent_expansion }.to raise_error(
+          ExpandedTaxonomy::ExpansionNotBuiltError
+        )
+      end
+    end
+
+    context "when the expansion has been built" do
+      it "returns the expansion" do
+        taxonomy.build_parent_expansion
+
+        expect(taxonomy.parent_expansion.map(&:title)).to eq %w(Apples Fruits Food Red-Things)
+        expect(taxonomy.parent_expansion.map(&:node_depth)).to eq [0, 1, 2, 1]
+      end
+    end
+  end
 end
