@@ -1,6 +1,8 @@
 en:
   navigation:
-    tagging_content: 'Tag a page'
+    tagging_content: Tag a page
+    tagging_title: Which page do you want to tag?
+    tagging_label: Enter the URL or path of a GOV.UK page
     taxons: 'Edit taxonomy'
     tag_search: 'Bulk tag'
     tag_migration: 'Bulk tag history'
