@@ -1,8 +1,11 @@
 <table class="table queries-list table-bordered" data-module="filterable-table">
   <thead>
     <tr class="table-header">
-      <th data-module="select-all"><%= check_box_tag 'select_all', nil, false %></th>
-      <th>Title</th>
+      <th data-module="select-all">
+        Select all
+        <%= check_box_tag 'select_all', nil, false %>
+      </th>
+      <th>Page</th>
       <th></th>
     </tr>
   </thead>
