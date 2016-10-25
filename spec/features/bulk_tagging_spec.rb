@@ -251,6 +251,13 @@ RSpec.feature "Bulk tagging", type: :feature do
     tag_migration.tag_mappings << tag_mapping
     tag_migration.save!
 
+    publishing_api_has_item(
+      content_id: tag_migration.source_content_id,
+      title: 'Source content',
+      document_type: 'taxon',
+      base_path: '/source-content'
+    )
+
     publishing_api_has_lookups(tag_mapping.content_base_path => 'content-id')
     publishing_api_has_taxons(
       [
