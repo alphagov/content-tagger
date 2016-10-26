@@ -41,6 +41,8 @@ class TagMigrationsController < ApplicationController
   end
 
   def show
+    source_content_item = ContentItem.find!(tag_migration.source_content_id)
+
     render :show, locals: {
       tag_migration: tag_migration,
       current_tagged_taxon: tag_migration.source_title,
@@ -48,6 +50,7 @@ class TagMigrationsController < ApplicationController
       completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
       total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tag_migration_progress_path(tag_migration),
+      source_content_item: source_content_item
     }
   end
 

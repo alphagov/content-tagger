@@ -44,7 +44,10 @@ en:
   views:
     tag_update_progress_bar: "%{completed} of %{total} pages updated"
     tag_migrations:
-      title: "Select pages to tag from '%{taxon}' (%{type})"
+      new:
+        title: "Select pages to tag from '%{taxon}' (%{type})"
+      show:
+        title: "Confirm bulk tagging from '%{taxon}' (%{type})"
       move_message: "Please note that moving these pages will remove them from the %{taxon_name} taxon."
     taxons:
       tree: Taxon hierarchy
