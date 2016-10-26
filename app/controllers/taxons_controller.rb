@@ -28,10 +28,7 @@ class TaxonsController < ApplicationController
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      locals = {
-        taxon: taxon,
-        taxons_for_select: taxons_for_select,
-      }
+      locals = { taxon: taxon, taxons_for_select: taxons_for_select }
       render :new, locals: locals, flash: { error: error_messages }
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
@@ -62,10 +59,7 @@ class TaxonsController < ApplicationController
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      locals = {
-        taxon: taxon,
-        taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id)
-      }
+      locals = { taxon: taxon, taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id) }
       render :edit, locals: locals, flash: { error: error_messages }
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
@@ -74,7 +68,6 @@ class TaxonsController < ApplicationController
 
   def destroy
     response_code = Services.publishing_api.unpublish(params[:id], type: "gone").code
-
     redirect_to taxons_path, flash: destroy_flash_message(response_code)
   end
 
@@ -99,7 +92,7 @@ private
   end
 
   def taxons_for_select(exclude_ids: nil)
-    selectable_taxons = Linkables.new.taxons(exclude_ids: exclude_ids)
+    Linkables.new.taxons(exclude_ids: exclude_ids)
   end
 
   def remote_taxons
@@ -121,7 +114,6 @@ private
 
   def query
     return '' unless params[:taxon_search].present?
-
     params[:taxon_search][:query]
   end
 end
