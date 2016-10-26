@@ -96,6 +96,30 @@ RSpec.describe ExpandedTaxonomy do
         expect(taxonomy.child_expansion.map(&:node_depth)).to eq [0, 1, 1]
       end
     end
+
+    context "given a circular dependency between taxons" do
+      before do
+        publishing_api_has_expanded_links(
+          content_id: bramley["content_id"],
+          expanded_links: {
+            parent_taxons: [apples],
+            child_taxons: [apples],
+          }
+        )
+      end
+
+      it "ensures the same traversal isn't rendered more than once" do
+        taxonomy.build_child_expansion
+
+        tree = taxonomy.child_expansion.map do |child_node|
+          [child_node.node_depth, child_node.title]
+        end
+
+        expect(tree).to eq(
+          [[0, "Apples"], [1, "Bramley"], [2, "Apples"], [1, "Cox"]]
+        )
+      end
+    end
   end
 
   describe "#parent_expansion" do

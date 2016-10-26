@@ -70,7 +70,10 @@ private
     @root_content_item ||= Services.publishing_api.get_content(@content_id)
   end
 
-  def expand_child_nodes(start_node:)
+  def expand_child_nodes(start_node:, already_expanded: [])
+    return if already_expanded.include? start_node.content_id
+    already_expanded << start_node.content_id
+
     child_taxons = Services.publishing_api.get_expanded_links(
       start_node.content_id
     )["expanded_links"]["child_taxons"]
@@ -78,7 +81,13 @@ private
     Array(child_taxons).each do |child_taxon|
       child_node = tree_node_based_on(child_taxon)
       start_node << child_node
-      expand_child_nodes(start_node: child_node)
+      # We reset the list of already_expanded nodes with each branch off the
+      # root taxon, i.e. - for each immediate child of the root. This gives
+      # each of these 'main' branches their own traversal history, preventing
+      # premature termination of a branch's expansion just because a node has
+      # already been visited in a sibling branch.
+      expansion_history = child_node.node_depth == 1 ? [root_node.content_id] : already_expanded
+      expand_child_nodes(start_node: child_node, already_expanded: expansion_history)
     end
     start_node
   end
