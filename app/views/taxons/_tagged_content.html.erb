@@ -2,7 +2,7 @@
   <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
     <thead>
       <tr class="table-header">
-        <th>Title</th>
+        <th>Page</th>
         <th>Format</th>
         <th>Actions</th>
       </tr>
@@ -15,7 +15,7 @@
         <tr>
           <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
           <td><%= content_item["document_type"].humanize %></td>
-          <td><%= link_to 'Update tags', tagging_url(content_item["content_id"]) %></td>
+          <td><%= link_to t('views.taxons.edit_tagging'), tagging_url(content_item["content_id"]) %></td>
         </tr>
       <% end %>
     </tbody>
