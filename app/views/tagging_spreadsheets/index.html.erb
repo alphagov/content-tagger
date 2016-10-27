@@ -30,8 +30,12 @@
     <% tagging_spreadsheets.each do |spreadsheet| %>
       <tr>
         <td>
-          <%= state_label_for(label_type: spreadsheet.label_type,
-                                title: spreadsheet.state_title) %>
+          <%=
+            state_label_for(
+              label_type: spreadsheet.label_type,
+              title: spreadsheet.state_title
+            )
+          %>
         </td>
         <td>
           <%= spreadsheet.description %>
@@ -40,7 +44,7 @@
           <%= time_tag_for(spreadsheet.created_at) %>
         </td>
         <td>
-          <%= spreadsheet.added_by.name %>
+          <%= spreadsheet.added_by.present? ? spreadsheet.added_by.name : "unknown user"  %>
         </td>
         <td>
           <%= link_to "View", tagging_spreadsheet_path(spreadsheet) %>
