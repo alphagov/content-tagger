@@ -14,13 +14,16 @@ $blue-link: rgb(0, 0, 238);
     margin: auto;
     padding: 2em;
     position: relative;
+    width: 60%;
+    margin-top: -2px;
+    margin-bottom: -2px;
   }
 
-  .taxon-focus--has-parents {
+  .taxon-focus--multi-parents {
     border-top: 2px solid $gray;
   }
 
-  .taxon-focus--has-children {
+  .taxon-focus--multi-children {
     border-bottom: 2px solid $gray;
   }
 
@@ -44,6 +47,10 @@ $blue-link: rgb(0, 0, 238);
     bottom: 0;
   }
 
+  .taxon-depth-1 {
+    font-size: 1.5rem;
+  }
+
   .taxon-parents,
   .taxon-children {
     display: flex;
@@ -54,16 +61,38 @@ $blue-link: rgb(0, 0, 238);
     display: flex;
     flex-direction: column-reverse;
     position: relative;
+    padding: 0.5rem;
+    border-bottom: 2px solid $gray;
+
+    &:first-child {
+      padding: 0.5rem;
+      padding-left: 0;
+
+    }
+
+    &:last-child {
+      padding: 0.5rem;
+      padding-right: 0;
+    }
   }
 
   .child-expansion {
     display: flex;
     flex-direction: column;
     position: relative;
-  }
+    padding: 0.5rem;
+    border-top: 2px solid $gray;
 
-  .taxon-depth-1 {
-    font-size: 1.5rem;
+    &:first-child {
+      padding: 0.5rem;
+      padding-left: 0;
+
+    }
+
+    &:last-child {
+      padding: 0.5rem;
+      padding-right: 0;
+    }
   }
 
   .parent-expansion .taxon-depth-1 {
@@ -76,10 +105,9 @@ $blue-link: rgb(0, 0, 238);
     margin-top: 1.75rem;
   }
 
-  .parent-expansion .taxon-depth-1:before,
-  .child-expansion .taxon-depth-1:after {
+  .parent-expansion:before,
+  .child-expansion:before {
     border-left: 2px solid $gray;
-    bottom: 0;
     color: transparent;
     content: ".";
     height: 1.25em;
@@ -89,12 +117,34 @@ $blue-link: rgb(0, 0, 238);
     width: 0;
   }
 
-  .parent-expansion .taxon-depth-1:before {
+  .parent-expansion:before {
     bottom: 0;
   }
 
-  .child-expansion .taxon-depth-1:after {
+  .child-expansion:before {
     top: 0;
+  }
+
+  .parent-expansion:first-child:before {
+    left: 0;
+  }
+
+  .parent-expansion:last-child:before {
+    border-left: none;
+    border-right: 2px solid $gray;
+    left: 0;
+    width: 100%;
+  }
+
+  .child-expansion:first-child:before {
+    left: 0;
+  }
+
+  .child-expansion:last-child:before {
+    border-left: none;
+    border-right: 2px solid $gray;
+    left: 0;
+    width: 100%;
   }
 
   // A set of classes governing the degree of indent and styling of taxons,
