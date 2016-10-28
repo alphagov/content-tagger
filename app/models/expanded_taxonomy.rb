@@ -67,7 +67,7 @@ class ExpandedTaxonomy
 private
 
   def root_content_item
-    @root_content_item ||= Services.publishing_api.get_content(@content_id)
+    @root_content_item ||= Services.publishing_api.get_content(@content_id).to_h
   end
 
   def expand_child_nodes(start_node:, already_expanded: [])
@@ -105,6 +105,9 @@ private
   end
 
   def tree_node_based_on(content_item)
-    TreeNode.new(title: content_item["title"], content_id: content_item["content_id"])
+    TreeNode.new(
+      title: content_item.fetch("details").fetch("internal_name"),
+      content_id: content_item.fetch("content_id"),
+    )
   end
 end
