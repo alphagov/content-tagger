@@ -1,4 +1,18 @@
 module PublishingApiHelper
+  def publishing_api_has_content_items(items, options = {})
+    default_options = {
+      document_type: BulkTagging::Search.default_document_types,
+      page: 1,
+      q: '',
+      fields: [:content_id, :document_type, :title, :base_path]
+    }
+
+    publishing_api_has_content(
+      items,
+      default_options.merge(options)
+    )
+  end
+
   def publishing_api_has_taxons(taxons, options = {})
     default_options = {
       document_type: "taxon",
