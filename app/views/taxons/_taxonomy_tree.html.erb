@@ -19,10 +19,12 @@
     <% end %>
   </div>
 
-  <% parents_class = taxonomy_tree.immediate_parents.present? ? "taxon-focus--has-parents" : "" %>
-  <% children_class = taxonomy_tree.immediate_children.present? ? "taxon-focus--has-children" : "" %>
+  <% has_parents = taxonomy_tree.immediate_parents.present? ? "taxon-focus--has-parents" : "" %>
+  <% has_children = taxonomy_tree.immediate_children.present? ? "taxon-focus--has-children" : "" %>
+  <% multiple_parents = taxonomy_tree.multiple_immediate_parents? ? "taxon-focus--multi-parents" : "" %>
+  <% multiple_children = taxonomy_tree.multiple_immediate_children? ? "taxon-focus--multi-children" : "" %>
 
-  <div class="taxon-focus <%= parents_class %> <%= children_class %>">
+  <div class="taxon-focus <%= has_parents %> <%= has_children %> <%= multiple_parents %> <%= multiple_children %>">
     <div class="taxon-level taxon-depth-0">
        <span class="taxon-level-title">
          <%= taxonomy_tree.root_node.title %>

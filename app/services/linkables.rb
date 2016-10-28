@@ -3,8 +3,15 @@ class Linkables
     @topics ||= for_nested_document_type('topic')
   end
 
-  def taxons
-    @taxons ||= for_document_type('taxon')
+  def taxons(exclude_ids: [])
+    @taxons ||=
+      begin
+        items = for_document_type('taxon')
+        if Array(exclude_ids).present?
+          items.delete_if { |item| item.last.in? Array(exclude_ids) }
+        end
+        items
+      end
   end
 
   def organisations
