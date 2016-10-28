@@ -6,7 +6,7 @@ RSpec.describe Linkables do
   let(:linkables) { Linkables.new }
 
   describe '.taxons' do
-    it 'returns an array of hashes with only valid taxons' do
+    before do
       publishing_api_has_linkables(
         [
           build_linkable(
@@ -22,14 +22,27 @@ RSpec.describe Linkables do
           build_linkable(
             content_id: 'valid-1',
             publication_state: 'live',
-            internal_name: 'Valid!',
+            internal_name: 'Valid-1!',
+          ),
+          build_linkable(
+            content_id: 'valid-2',
+            publication_state: 'live',
+            internal_name: 'Valid-2!',
           ),
         ],
         document_type: 'taxon'
       )
+    end
 
+    it 'returns an array of hashes with only valid taxons' do
       expect(linkables.taxons).to eq(
-        [['Valid!', 'valid-1']]
+        [%w(Valid-1! valid-1), %w(Valid-2! valid-2)]
+      )
+    end
+
+    it 'filters out excluded IDs' do
+      expect(linkables.taxons(exclude_ids: 'valid-2')).to eq(
+        [%w(Valid-1! valid-1)]
       )
     end
   end
