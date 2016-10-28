@@ -34,8 +34,16 @@ class ExpandedTaxonomy
     parent_expansion.children
   end
 
+  def multiple_immediate_parents?
+    immediate_parents.count > 1
+  end
+
   def immediate_children
     child_expansion.children
+  end
+
+  def multiple_immediate_children?
+    immediate_children.count > 1
   end
 
   def root_node
