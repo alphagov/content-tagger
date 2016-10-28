@@ -8,7 +8,8 @@ RSpec.describe BulkTagging::Search do
       [basic_content_item('A content item')],
       q: 'tax',
       page: 1,
-      document_type: 'taxon'
+      document_type: 'taxon',
+      fields: [:content_id, :document_type, :title, :base_path]
     )
   end
 

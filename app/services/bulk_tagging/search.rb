@@ -26,7 +26,8 @@ module BulkTagging
       Services.publishing_api.get_content_items(
         document_type: document_type,
         page: page,
-        q: query
+        q: query,
+        fields: [:content_id, :document_type, :title, :base_path]
       )
     end
   end

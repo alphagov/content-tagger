@@ -46,36 +46,30 @@ RSpec.feature "Bulk tagging", type: :feature do
       document_type: "document_collection",
     }
 
-    publishing_api_has_content(
+    publishing_api_has_content_items(
       [document_collection],
-      document_type: BulkTagging::Search.default_document_types,
-      page: 1,
       q: "Tax"
     )
 
     publishing_api_has_item(document_collection)
 
-    publishing_api_has_content(
+    publishing_api_has_content_items(
       [{
         content_id: "topic-id",
         title: "A Topic",
         base_path: "/a-topic",
         document_type: "topic",
       }],
-      document_type: BulkTagging::Search.default_document_types,
-      page: 1,
       q: "topic"
     )
 
-    publishing_api_has_content(
+    publishing_api_has_content_items(
       [{
         content_id: "browse-page-id",
         title: "A Mainstream Browse Page",
         base_path: "/a-maintstream-browse-page",
         document_type: "mainstream_browse_page",
       }],
-      document_type: BulkTagging::Search.default_document_types,
-      page: 1,
       q: "browse"
     )
 
