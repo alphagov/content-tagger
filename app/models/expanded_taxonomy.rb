@@ -105,9 +105,15 @@ private
   end
 
   def tree_node_based_on(content_item)
+    taxon = Taxon.new(
+      content_id: content_item.fetch('content_id'),
+      title: content_item.fetch('title'),
+      base_path: "", # client code isn't expected to require this at present
+      internal_name: content_item.fetch('details').fetch('internal_name'),
+    )
     TreeNode.new(
-      title: content_item.fetch("details").fetch("internal_name"),
-      content_id: content_item.fetch("content_id"),
+      name: taxon.internal_name,
+      content_item: taxon,
     )
   end
 end

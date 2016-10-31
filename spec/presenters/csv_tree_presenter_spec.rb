@@ -1,11 +1,13 @@
 require "rails_helper"
 
 RSpec.describe CsvTreePresenter do
+  include ContentItemHelper
+
   describe "#present" do
-    let(:root_node) { TreeNode.new(title: "Root", content_id: "root-id") }
-    let(:child_node_1) { TreeNode.new(title: "Child-1", content_id: "child-1-id") }
-    let(:child_node_2) { TreeNode.new(title: "Child-2", content_id: "child-2-id") }
-    let(:child_node_3) { TreeNode.new(title: "Child-3", content_id: "child-3-id") }
+    let(:root_node) { TreeNode.new(name: "root", content_item: ContentItem.new(basic_content_item("Root"))) }
+    let(:child_node_1) { TreeNode.new(name: "child-1", content_item: ContentItem.new(basic_content_item("Child-1"))) }
+    let(:child_node_2) { TreeNode.new(name: "child-2", content_item: ContentItem.new(basic_content_item("Child-2"))) }
+    let(:child_node_3) { TreeNode.new(name: "child-3", content_item: ContentItem.new(basic_content_item("Child-3"))) }
 
     before do
       root_node << child_node_1

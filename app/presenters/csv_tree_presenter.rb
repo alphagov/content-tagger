@@ -8,7 +8,7 @@ class CsvTreePresenter
   def present
     CSV.generate do |csv|
       @tree.each do |node|
-        row = [node.title]
+        row = [node.content_item.title]
         node.node_depth.times { row.unshift nil }
         csv << row
       end

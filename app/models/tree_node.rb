@@ -1,11 +1,12 @@
 class TreeNode
-  attr_reader :taxon, :children
+  attr_reader :name, :content_item, :children
   attr_accessor :parent_node
-  delegate :title, :base_path, :content_id, to: :taxon
+  delegate :content_id, to: :content_item
   delegate :map, :each, to: :tree
 
-  def initialize(title:, content_id:)
-    @taxon = Taxon.new(title: title, content_id: content_id)
+  def initialize(name:, content_item:)
+    @name = name
+    @content_item = content_item
     @children = []
   end
 
