@@ -3,7 +3,7 @@
            taxon: source_content_item.title,
            type: source_content_item.document_type.humanize.downcase),
   breadcrumbs: [
-    link_to(t('navigation.tag_search'), new_tag_search_path),
+    link_to(t('navigation.bulk_tag'), new_bulk_tag_path),
     "Retag content from '#{source_content_item.title}'"
   ]
 ) %>

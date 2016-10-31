@@ -88,7 +88,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
     visit root_path
-    click_link I18n.t('navigation.tag_search')
+    click_link I18n.t('navigation.bulk_tag')
 
     click_link I18n.t("navigation.tag_importer")
     click_link I18n.t('tag_import.upload_sheet')
@@ -241,7 +241,7 @@ RSpec.feature "Tag importer", type: :feature do
     state = tagging_spreadsheet.state.humanize
 
     visit root_path
-    click_link I18n.t('navigation.tag_search')
+    click_link I18n.t('navigation.bulk_tag')
 
     click_link I18n.t("navigation.tag_importer")
     row = first('table tbody tr')

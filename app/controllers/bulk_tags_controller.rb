@@ -1,4 +1,4 @@
-class TagSearchesController < ApplicationController
+class BulkTagsController < ApplicationController
   def new
     render :new, locals: {
       search_results: EmptySearchResponse.new,
@@ -21,10 +21,10 @@ private
   end
 
   def query
-    params[:tag_search][:query]
+    search_params[:query]
   end
 
   def search_params
-    params.require(:tag_search).permit(:query)
+    params.require(:bulk_tag).permit(:query)
   end
 end
