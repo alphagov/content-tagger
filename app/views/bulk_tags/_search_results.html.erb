@@ -7,7 +7,7 @@
           <small><%= tag.document_type.humanize %></small>
         </td>
         <td>
-          <%= link_to t("tag_search.bulk_tag"), new_tag_migration_path(source_content_id: tag.content_id) %>
+          <%= link_to t("bulk_tag.view_tagged_pages"), new_tag_migration_path(source_content_id: tag.content_id) %>
         </td>
       </tr>
     <% end %>

@@ -100,18 +100,18 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_search_for_the_collection
-    visit new_tag_search_path
+    visit new_bulk_tag_path
 
-    fill_in "tag_search_query", with: "topic"
-    click_button I18n.t('tag_search.search_button')
+    fill_in "bulk_tag_query", with: "topic"
+    click_button I18n.t('bulk_tag.search_button')
     expect(page).to have_text("A Topic")
 
-    fill_in "tag_search_query", with: "browse"
-    click_button I18n.t('tag_search.search_button')
+    fill_in "bulk_tag_query", with: "browse"
+    click_button I18n.t('bulk_tag.search_button')
     expect(page).to have_text("A Mainstream Browse Page")
 
-    fill_in "tag_search_query", with: "Tax"
-    click_button I18n.t('tag_search.search_button')
+    fill_in "bulk_tag_query", with: "Tax"
+    click_button I18n.t('bulk_tag.search_button')
     expect(page).to have_text("Tax documents")
     expect(page).to have_text('Document collection')
     expect(page).to have_link(
@@ -122,7 +122,7 @@ RSpec.feature "Bulk tagging", type: :feature do
 
   def then_i_can_see_the_content_items_in_this_collection
     within "main" do
-      click_link I18n.t("tag_search.bulk_tag")
+      click_link I18n.t("bulk_tag.view_tagged_pages")
     end
 
     within "form.new_tag_migration" do

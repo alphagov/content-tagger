@@ -4,7 +4,7 @@ en:
     tagging_title: Which page do you want to tag?
     tagging_label: Enter the URL or path of a GOV.UK page
     taxons: 'Edit taxonomy'
-    tag_search: 'Bulk tag'
+    bulk_tag: 'Bulk tag'
     tag_migration: 'Bulk tag history'
     tag_importer: 'Bulk tag by upload'
   errors:
@@ -19,9 +19,9 @@ en:
   taggings:
     update_tags: Update tagging
     search: Edit tagging
-  tag_search:
+  bulk_tag:
     search_button: "Search"
-    bulk_tag: "View tagged pages"
+    view_tagged_pages: "View tagged pages"
   tag_import:
     upload_sheet: Upload spreadsheet
     upload: Upload

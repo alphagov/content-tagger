@@ -5,7 +5,7 @@ class TagMigrationsController < ApplicationController
 
   def new
     unless params[:source_content_id]
-      redirect_to new_tag_search_path
+      redirect_to new_bulk_tag_path
       return
     end
 

@@ -28,8 +28,8 @@ Rails.application.routes.draw do
     get  'progress'
   end
 
-  resource :tag_search, only: [:new] do
-    get 'results' => 'tag_searches#results', as: "results_of"
+  resource :bulk_tag, only: [:new] do
+    get 'results' => 'bulk_tags#results', as: "search_results_for"
   end
 
   get '/healthcheck', to: proc { [200, {}, ['OK']] }
