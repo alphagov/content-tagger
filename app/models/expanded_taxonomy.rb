@@ -113,6 +113,6 @@ private
   end
 
   def tree_node_based_on(content_item)
-    TreeNode.new(title: content_item["title"], content_id: content_item["content_id"])
+    TreeNode.new(title: content_item["details"]["internal_name"], content_id: content_item["content_id"])
   end
 end
