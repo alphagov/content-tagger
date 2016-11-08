@@ -1,8 +1,10 @@
 require "rails_helper"
 
 RSpec.describe TreeNode do
-  let(:root_node) { TreeNode.new(title: "Root", content_id: "root-id") }
-  let(:child_node_1) { TreeNode.new(title: "Child-1", content_id: "child-1-id") }
+  include ContentItemHelper
+
+  let(:root_node) { TreeNode.new(name: "Root", content_item: basic_content_item("root-id")) }
+  let(:child_node_1) { TreeNode.new(name: "Child-1", content_item: basic_content_item("child-1-id")) }
 
   describe "#<<(child_node)" do
     it "makes one node the child of another node" do
@@ -16,8 +18,8 @@ RSpec.describe TreeNode do
   describe "#tree" do
     context "given a node with a tree of successors" do
       it "returns an array representing a pre-order traversal of the tree" do
-        child_node_2 = TreeNode.new(title: "Child-2", content_id: "child-2-id")
-        child_node_3 = TreeNode.new(title: "Child-3", content_id: "child-3-id")
+        child_node_2 = TreeNode.new(name: "Child-2", content_item: basic_content_item("child-2-id"))
+        child_node_3 = TreeNode.new(name: "Child-3", content_item: basic_content_item("child-3-id"))
 
         root_node << child_node_1
         child_node_1 << child_node_3
@@ -25,14 +27,14 @@ RSpec.describe TreeNode do
 
         expect(root_node.tree.count).to eq 4
         expect(root_node.tree.first).to eq root_node
-        expect(root_node.tree.map(&:title)).to eq %w(Root Child-1 Child-3 Child-2)
-        expect(child_node_1.tree.map(&:title)).to eq %w(Child-1 Child-3 Child-2)
+        expect(root_node.tree.map(&:name)).to eq %w(Root Child-1 Child-3 Child-2)
+        expect(child_node_1.tree.map(&:name)).to eq %w(Child-1 Child-3 Child-2)
       end
     end
 
     context "given a single node" do
       it "returns an array containing only that node" do
-        expect(root_node.tree.map(&:title)).to eq %w(Root)
+        expect(root_node.tree.map(&:name)).to eq %w(Root)
       end
     end
   end
@@ -53,7 +55,7 @@ RSpec.describe TreeNode do
 
   describe "#node_depth" do
     it "returns the depth of the node in its tree" do
-      child_node_2 = TreeNode.new(title: "Child-2", content_id: "child-2-id")
+      child_node_2 = TreeNode.new(name: "Child-2", content_item: basic_content_item("child-2-id"))
       root_node << child_node_1
       child_node_1 << child_node_2
 

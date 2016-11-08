@@ -8,16 +8,9 @@ RSpec.describe "Viewing taxons" do
   let(:apples) { fake_taxon("Apples") }
   let(:cox) { fake_taxon("Cox") }
 
-  before do
-    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
-      .to_return(status: 200, body: {}.to_json)
-
-    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
-      .to_return(status: 200, body: {}.to_json)
-  end
-
   scenario "Viewing a taxonomy" do
     given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
     when_i_view_the_root_taxon
     then_i_see_the_entire_taxonomy
     when_i_view_one_of_the_parents
@@ -30,17 +23,6 @@ RSpec.describe "Viewing taxons" do
     and_the_root_taxon_has_content_tagged_to_it
     when_i_view_the_root_taxon
     then_i_see_tagged_content
-  end
-
-  def and_the_root_taxon_has_content_tagged_to_it
-    stub_request(:get, %r{publishing-api.test.gov.uk/v2/linked/apples-id})
-      .to_return(
-        body: [basic_content_item("Tagged content")].to_json
-      )
-  end
-
-  def then_i_see_tagged_content
-    expect(page).to have_content("Tagged content")
   end
 
   def given_a_taxonomy
@@ -68,6 +50,22 @@ RSpec.describe "Viewing taxons" do
     )
   end
 
+  def given_im_ignoring_tagged_content_for_now
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(status: 200, body: {}.to_json)
+  end
+
+  def and_the_root_taxon_has_content_tagged_to_it
+    stub_request(:get, %r{publishing-api.test.gov.uk/v2/linked/apples})
+      .to_return(
+        body: [basic_content_item("Tagged content")].to_json
+      )
+  end
+
+  def then_i_see_tagged_content
+    expect(page).to have_content("Tagged content")
+  end
+
   def and_a_taxon_with_multiple_parents
     publishing_api_has_expanded_links(
       content_id: apples["content_id"],
@@ -81,6 +79,9 @@ RSpec.describe "Viewing taxons" do
   end
 
   def when_i_view_the_root_taxon
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/apples})
+      .to_return(status: 200, body: {}.to_json)
+
     visit taxon_path(apples["content_id"])
   end
 
@@ -102,6 +103,9 @@ RSpec.describe "Viewing taxons" do
   end
 
   def when_i_view_one_of_the_parents
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/fruits})
+      .to_return(status: 200, body: {}.to_json)
+
     click_link fruits["title"]
   end
 
@@ -153,6 +157,6 @@ RSpec.describe "Viewing taxons" do
 private
 
   def fake_taxon(title)
-    { "title" => title, "content_id" => "#{title.parameterize}-id", "details" => {} }
+    content_item_with_details(title)
   end
 end
