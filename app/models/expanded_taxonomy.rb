@@ -116,7 +116,7 @@ private
     taxon = Taxon.new(
       content_id: content_item.fetch('content_id'),
       title: content_item.fetch('title'),
-      base_path: "", # client code isn't expected to require this at present
+      base_path: content_item.fetch('base_path'),
       internal_name: content_item.fetch('details').fetch('internal_name'),
     )
     TreeNode.new(
