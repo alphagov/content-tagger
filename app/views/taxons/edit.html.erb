@@ -3,7 +3,6 @@
 
 <%= simple_form_for taxon, url: taxon_path(taxon.content_id), method: :patch do |f| %>
   <%= f.hidden_field :content_id, value: taxon.content_id %>
-  <%= f.hidden_field :base_path, value: taxon.base_path %>
 
   <%= render partial: 'form_fields', locals: { taxons_for_select: taxons_for_select, f: f} %>
 
