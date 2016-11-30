@@ -75,6 +75,7 @@ en:
       internal_name: 'Internal taxon name'
       internal_name_hint: 'Displayed in Content Tagger'
       external_name: 'External taxon name'
+      base_path: 'Base Path'
       displayed_on_govuk: 'Displayed on GOV.UK'
   controllers:
     bulk_taggings:
