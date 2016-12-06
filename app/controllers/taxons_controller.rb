@@ -42,6 +42,8 @@ class TaxonsController < ApplicationController
       tagged: tagged,
       taxonomy_tree: taxonomy_tree,
     }
+  rescue Taxonomy::BuildTaxon::TaxonNotFoundError
+    render "taxon_not_found", status: 404
   end
 
   def edit

@@ -15,6 +15,17 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
+  describe "#show" do
+    it "renders 404 for unknown taxons" do
+      stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/does-not-exist")
+        .to_return(status: 404)
+
+      get :show, id: "does-not-exist"
+
+      expect(response.code).to eql "404"
+    end
+  end
+
   describe "#destroy" do
     it "sends a request to Publishing API to mark the taxon as 'gone'" do
       taxon = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }

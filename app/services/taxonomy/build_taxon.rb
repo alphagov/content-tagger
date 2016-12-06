@@ -2,6 +2,8 @@ module Taxonomy
   class BuildTaxon
     attr_reader :content_id
 
+    class TaxonNotFoundError < StandardError; end
+
     def initialize(content_id:)
       @content_id = content_id
     end
@@ -30,7 +32,9 @@ module Taxonomy
     end
 
     def content_item
-      @content_item ||= Services.publishing_api.get_content(content_id)
+      @content_item ||= Services.publishing_api.get_content!(content_id)
+    rescue GdsApi::HTTPNotFound => e
+      raise(TaxonNotFoundError, e.message)
     end
 
     def links

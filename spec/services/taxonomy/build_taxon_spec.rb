@@ -96,5 +96,17 @@ RSpec.describe Taxonomy::BuildTaxon do
         expect(taxon.parent_taxons).to eq(parent_taxons)
       end
     end
+
+    context 'with an invalid taxon' do
+      before do
+        publishing_api_does_not_have_item(content_id)
+      end
+
+      it 'raises an exception' do
+        expect { taxon }.to raise_error(
+          Taxonomy::BuildTaxon::TaxonNotFoundError
+        )
+      end
+    end
   end
 end
