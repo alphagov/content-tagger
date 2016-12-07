@@ -15,6 +15,7 @@ class TaggingUpdateForm
       mainstream_browse_pages: content_item_links.mainstream_browse_pages,
       parent: content_item_links.parent,
       taxons: content_item_links.taxons,
+      ordered_related_items: content_item_links.ordered_related_items
     )
   end
 

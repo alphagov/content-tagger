@@ -9,6 +9,7 @@ RSpec.describe ContentItemLinks do
         organisations: [''],
         taxons: [''],
         parent: [''],
+        ordered_related_items: [''],
       )
 
       links_payload = form.links_payload
@@ -19,6 +20,7 @@ RSpec.describe ContentItemLinks do
         organisations: [],
         taxons: [],
         parent: [],
+        ordered_related_items: [],
       )
     end
 
