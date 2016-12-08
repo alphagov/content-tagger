@@ -143,6 +143,7 @@ RSpec.describe "Tagging content", type: :feature do
         organisations: [],
         taxons: [],
         parent: [],
+        ordered_related_items: [],
       },
       previous_version: 54_321,
     }
