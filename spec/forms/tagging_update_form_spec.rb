@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe ContentItemLinks do
+RSpec.describe TaggingUpdateForm do
   describe '#links_payload' do
     it 'generates a payload with links' do
-      form = ContentItemLinks.new(
+      form = TaggingUpdateForm.new(
         topics: ['', '877a4785-bcec-4e23-98b6-1a3a84e33755'],
         mainstream_browse_pages: [''],
         organisations: [''],
@@ -25,7 +25,7 @@ RSpec.describe ContentItemLinks do
     end
 
     it "does not include a key if it wasn't submitted from the form" do
-      form = ContentItemLinks.new(
+      form = TaggingUpdateForm.new(
         topics: [],
         organisations: [],
         taxons: [],
