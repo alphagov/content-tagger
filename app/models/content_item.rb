@@ -1,5 +1,4 @@
 class ContentItem
-
   attr_reader :content_id, :title, :base_path, :publishing_app, :document_type
 
   def initialize(data)

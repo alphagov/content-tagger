@@ -76,7 +76,7 @@ RSpec.describe "Tagging content", type: :feature do
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links: {
-          topics: [{"content_id": "ID-OF-ALREADY-TAGGED"}],
+          topics: [{ "content_id": "ID-OF-ALREADY-TAGGED" }],
         },
         version: 54_321,
       }.to_json)

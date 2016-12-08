@@ -47,8 +47,8 @@ RSpec.describe "Tagging content during migration", type: :feature do
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links: {
-          topics: [{"content_id": "ID-OF-ALREADY-TAGGED"}],
-          mainstream_browse_pages: [{"content_id": "ID-OF-ALREADY-TAGGED-BROWSE-PAGE"}],
+          topics: [{ "content_id": "ID-OF-ALREADY-TAGGED" }],
+          mainstream_browse_pages: [{ "content_id": "ID-OF-ALREADY-TAGGED-BROWSE-PAGE" }],
         },
         version: 54_321,
       }.to_json)

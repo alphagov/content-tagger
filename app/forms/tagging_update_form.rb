@@ -40,11 +40,25 @@ class TaggingUpdateForm
     end
 
     unless ordered_related_items.nil?
-      payload[:ordered_related_items] = clean_input_array(ordered_related_items).map {|ri| find_by_base_path(ri)}
+      payload[:ordered_related_items] = clean_input_array(ordered_related_items).map { |ri| find_by_base_path(ri) }
     end
 
     payload
   end
+
+  def self.extract_content_ids(links_hashes)
+    unless links_hashes.nil?
+      links_hashes.map { |links_hash| links_hash["content_id"] }
+    end
+  end
+
+  def self.extract_base_paths(links_hashes)
+    unless links_hashes.nil?
+      links_hashes.map { |links_hash| links_hash["base_path"] }
+    end
+  end
+
+  private_class_method(:extract_content_ids, :extract_base_paths)
 
 private
 
@@ -54,18 +68,6 @@ private
       content_lookup.content_id
     else
       base_path # FIXME
-    end
-  end
-
-  def self.extract_content_ids(links_hashes)
-    unless links_hashes.nil?
-      links_hashes.map {|links_hash| links_hash["content_id"]}
-    end
-  end
-
-  def self.extract_base_paths(links_hashes)
-    unless links_hashes.nil?
-      links_hashes.map {|links_hash| links_hash["base_path"]}
     end
   end
 
