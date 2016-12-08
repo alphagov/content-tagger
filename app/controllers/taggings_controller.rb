@@ -18,7 +18,7 @@ class TaggingsController < ApplicationController
     @content_item = ContentItem.find!(params[:content_id])
     @tagging_update = TaggingUpdateForm.from_content_item_links(@content_item.link_set)
 
-    @tag_types = ContentItemLinks::TAG_TYPES - @content_item.blacklisted_tag_types
+    @tag_types = ContentItemExpandedLinks::TAG_TYPES - @content_item.blacklisted_tag_types
     @linkables = Linkables.new
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
