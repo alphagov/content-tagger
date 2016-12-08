@@ -1,4 +1,4 @@
-class ContentItemLinks
+class ContentItemExpandedLinks
   include ActiveModel::Model
   attr_accessor :content_id, :previous_version
 
@@ -7,7 +7,7 @@ class ContentItemLinks
 
   # Find the links for a content item by its content ID
   def self.find(content_id)
-    data = Services.publishing_api.get_links(content_id)
+    data = Services.publishing_api.get_expanded_links(content_id)
 
     links = data['links'] || {}
 
