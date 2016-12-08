@@ -9,7 +9,7 @@ class ContentItemExpandedLinks
   def self.find(content_id)
     data = Services.publishing_api.get_expanded_links(content_id)
 
-    links = data['links'] || {}
+    links = data['expanded_links'] || {}
 
     new(
       content_id: content_id,
