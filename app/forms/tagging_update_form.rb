@@ -52,7 +52,9 @@ class TaggingUpdateForm
       []
     else
       base_paths = related_items.map { |ri| URI.parse(ri).path }
-      Services.publishing_api.lookup_content_ids(base_paths: base_paths).values
+      content_id_by_path = Services.publishing_api.lookup_content_ids(base_paths: base_paths)
+
+      base_paths.map { |path| content_id_by_path[path] }
     end
   end
 
