@@ -4,6 +4,11 @@ class TaggingUpdateForm
 
   attr_accessor(*ContentItemExpandedLinks::TAG_TYPES)
 
+  # The number of extra empty form fields to add to a link section when the link
+  # section shows an individual form input for each value. This allows users to
+  # append new links to the end of the existing list.
+  # ExtraFormItemCount = 5
+
   RelatedContentItem = Struct.new("RelatedContentItem", :content_id, :base_path)
 
   validate :related_item_paths_should_be_valid
@@ -19,7 +24,7 @@ class TaggingUpdateForm
       mainstream_browse_pages: extract_content_ids(content_item_links.mainstream_browse_pages),
       parent: extract_content_ids(content_item_links.parent),
       taxons: extract_content_ids(content_item_links.taxons),
-      ordered_related_items: extract_base_paths(content_item_links.ordered_related_items)
+      ordered_related_items: pad_with_empty_items(extract_base_paths(content_item_links.ordered_related_items))
     )
   end
 
@@ -72,6 +77,10 @@ class TaggingUpdateForm
     unless links_hashes.nil?
       links_hashes.map { |links_hash| links_hash["base_path"] }
     end
+  end
+
+  def self.pad_with_empty_items(items)
+    (items || []) + [""] * 5
   end
 
   private_class_method(:extract_content_ids, :extract_base_paths)
