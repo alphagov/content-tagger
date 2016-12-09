@@ -4,6 +4,10 @@ class TaggingUpdateForm
 
   attr_accessor(*ContentItemExpandedLinks::TAG_TYPES)
 
+  RelatedContentItem = Struct.new("RelatedContentItem", :content_id, :base_path)
+
+  validate :related_item_paths_should_be_valid
+
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
   def self.from_content_item_links(content_item_links)
@@ -41,7 +45,7 @@ class TaggingUpdateForm
 
     unless ordered_related_items.nil?
       payload[:ordered_related_items] =
-        self.class.find_by_base_paths(clean_input_array(ordered_related_items))
+        self.class.find_by_base_paths(clean_input_array(ordered_related_items)).map(&:content_id)
     end
 
     payload
@@ -54,7 +58,7 @@ class TaggingUpdateForm
       base_paths = related_items.map { |ri| URI.parse(ri).path }
       content_id_by_path = Services.publishing_api.lookup_content_ids(base_paths: base_paths)
 
-      base_paths.map { |path| content_id_by_path[path] }
+      base_paths.map { |path| RelatedContentItem.new(content_id_by_path[path], path) }
     end
   end
 
@@ -76,5 +80,20 @@ private
 
   def clean_input_array(select_form_input)
     Array(select_form_input).select(&:present?)
+  end
+
+  def related_item_paths_should_be_valid
+    unless ordered_related_items.nil?
+      base_paths = clean_input_array(ordered_related_items).map { |ri| URI.parse(ri).path }
+
+      related_items = self.class.find_by_base_paths(base_paths)
+
+      related_items.each do |ri|
+        if ri.content_id.nil?
+          index = ordered_related_items.index(ri.base_path)
+          errors[:"ordered_related_items[#{index}]"] << "Could not find content item with this URL or path"
+        end
+      end
+    end
   end
 end
