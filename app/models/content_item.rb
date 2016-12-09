@@ -18,7 +18,7 @@ class ContentItem
   end
 
   def link_set
-    @link_set ||= ContentItemLinks.find(content_id)
+    @link_set ||= ContentItemExpandedLinks.find(content_id)
   end
 
   def blacklisted_tag_types

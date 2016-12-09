@@ -1,0 +1,19 @@
+<h3>Related content items</h3>
+
+<p class="explain">
+  Related items are displayed in the sidebar. Enter the URL or path of a GOV.UK
+  page, such as /pay-vat or /benefit-cap-calculator
+</p>
+
+<% unless @tagging_update.ordered_related_items.nil? %>
+  <% @tagging_update.ordered_related_items.each_with_index do |related_item, index| %>
+    <% link_has_error = !@tagging_update.errors[:"ordered_related_items[#{index}]"].empty? %>
+
+    <div class="form-group related-item <%= link_has_error ? 'has-error' : '' %>">
+      <%= text_field_tag "tagging_update_form[ordered_related_items][]", related_item, class: ["form-control", "related-item-path"] %>
+      <% @tagging_update.errors[:"ordered_related_items[#{index}]"].each do |error| %>
+        <span class="help-block"><%= error %></span>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
