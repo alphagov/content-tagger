@@ -48,8 +48,33 @@ RSpec.describe TaggingUpdateForm do
       stub_request(:post, "https://publishing-api.test.gov.uk/lookup-by-base-path")
         .with(body: { "base_paths" => ["/bank-holidays", "/pay-vat"] })
         .to_return(body: {
-            "/bank-holidays" => "58f79dbd-e57f-4ab2-ae96-96df5767d1b2",
-            "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
+          "/bank-holidays" => "58f79dbd-e57f-4ab2-ae96-96df5767d1b2",
+          "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
+        }.to_json)
+
+      links_payload = form.links_payload
+
+      expect(links_payload).to eql(
+        ordered_related_items: [
+          "58f79dbd-e57f-4ab2-ae96-96df5767d1b2",
+          "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
+        ],
+      )
+    end
+
+    it "converts absolute paths of related items into content IDs" do
+      form = TaggingUpdateForm.new(
+        ordered_related_items: [
+          'https://www.gov.uk/bank-holidays',
+          'https://www-origin.staging.publishing.service.gov.uk/pay-vat',
+        ],
+      )
+
+      stub_request(:post, "https://publishing-api.test.gov.uk/lookup-by-base-path")
+        .with(body: { "base_paths" => ["/bank-holidays", "/pay-vat"] })
+        .to_return(body: {
+          "/bank-holidays" => "58f79dbd-e57f-4ab2-ae96-96df5767d1b2",
+          "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
         }.to_json)
 
       links_payload = form.links_payload

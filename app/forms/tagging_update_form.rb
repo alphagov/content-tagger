@@ -47,10 +47,11 @@ class TaggingUpdateForm
     payload
   end
 
-  def self.find_by_base_paths(base_paths)
-    if base_paths.empty?
+  def self.find_by_base_paths(related_items)
+    if related_items.empty?
       []
     else
+      base_paths = related_items.map { |ri| URI.parse(ri).path }
       Services.publishing_api.lookup_content_ids(base_paths: base_paths).values
     end
   end
