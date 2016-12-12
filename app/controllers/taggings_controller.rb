@@ -17,8 +17,7 @@ class TaggingsController < ApplicationController
   def show
     @content_item = ContentItem.find!(params[:content_id])
     @tagging_update = TaggingUpdateForm.from_content_item_links(@content_item.link_set)
-
-    @tag_types = ContentItemExpandedLinks::TAG_TYPES - @content_item.blacklisted_tag_types
+    @tag_types = @content_item.allowed_tag_types
     @linkables = Linkables.new
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
@@ -26,10 +25,12 @@ class TaggingsController < ApplicationController
 
   def update
     tagging_update_form = TaggingUpdateForm.new(params[:tagging_update_form])
+    content_item = ContentItem.find!(params[:content_id])
+    tag_types = content_item.allowed_tag_types
 
     Services.publishing_api.patch_links(
       tagging_update_form.content_id,
-      links: tagging_update_form.links_payload,
+      links: tagging_update_form.links_payload(tag_types),
       previous_version: tagging_update_form.previous_version.to_i,
     )
 

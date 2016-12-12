@@ -18,17 +18,11 @@ class TaggingUpdateForm
     )
   end
 
-  def links_payload
-    payload = {}
-
-    ContentItemExpandedLinks::TAG_TYPES.each do |tag_type|
+  def links_payload(tag_types)
+    tag_types.each_with_object({}) do |tag_type, payload|
       content_ids = send(tag_type)
-      # Because the field might be a blacklisted field switched off in the form.
-      next if content_ids.nil?
-      payload.merge!(tag_type => clean_content_ids(content_ids))
+      payload[tag_type] = clean_content_ids(content_ids)
     end
-
-    payload
   end
 
   def self.extract_content_ids(links_hashes)

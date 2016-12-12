@@ -26,6 +26,10 @@ class ContentItem
     Array(blacklist[publishing_app]).map(&:to_sym) + additional_temporary_blacklist
   end
 
+  def allowed_tag_types
+    ContentItemExpandedLinks::TAG_TYPES - blacklisted_tag_types
+  end
+
   class ItemNotFoundError < StandardError
   end
 
