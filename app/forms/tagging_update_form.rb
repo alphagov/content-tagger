@@ -18,14 +18,6 @@ class TaggingUpdateForm
     )
   end
 
-  def publish!
-    Services.publishing_api.patch_links(
-      content_id,
-      links: links_payload,
-      previous_version: previous_version.to_i,
-    )
-  end
-
   def links_payload
     payload = {}
 

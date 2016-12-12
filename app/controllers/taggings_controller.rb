@@ -26,8 +26,15 @@ class TaggingsController < ApplicationController
 
   def update
     tagging_update_form = TaggingUpdateForm.new(params[:tagging_update_form])
-    tagging_update_form.publish!
+
+    Services.publishing_api.patch_links(
+      tagging_update_form.content_id,
+      links: tagging_update_form.links_payload,
+      previous_version: tagging_update_form.previous_version.to_i,
+    )
+
     redirect_to :back, success: "Tags have been updated!"
+
   rescue GdsApi::HTTPConflict
     redirect_to :back, danger: "Somebody changed the tags before you could. Your changes have not been saved."
   end
