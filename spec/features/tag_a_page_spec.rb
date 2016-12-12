@@ -8,7 +8,9 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   scenario "User looks up and tags a content item" do
-    given_there_is_a_content_item_with_tags
+    given_there_is_a_content_item_with_expanded_links(
+      topics: [example_topic]
+    )
 
     when_i_visit_the_homepage
     and_i_submit_the_url_of_the_content_item
@@ -16,17 +18,39 @@ RSpec.describe "Tagging content", type: :feature do
     and_the_expected_navigation_link_is_highlighted
     and_i_see_the_taxon_form
 
-    when_i_add_an_additional_tag
+    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
     and_i_submit_the_form
 
-    then_the_new_links_are_sent_to_the_publishing_api
+    then_the_publishing_api_is_sent(
+      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
+      mainstream_browse_pages: [],
+      organisations: [],
+      taxons: [],
+      parent: [],
+    )
+  end
+
+  scenario "User tags a link type without existing tags" do
+    given_there_is_a_content_item_with_no_expanded_links
+    and_i_am_on_the_page_for_the_item
+
+    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
+    and_i_submit_the_form
+
+    then_the_publishing_api_is_sent(
+      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
+      mainstream_browse_pages: [],
+      organisations: [],
+      taxons: [],
+      parent: [],
+    )
   end
 
   scenario "User makes a conflicting change" do
-    given_there_is_a_content_item_with_tags
+    given_there_is_a_content_item_with_expanded_links(topics: [example_topic])
     and_i_am_on_the_page_for_the_item
 
-    when_i_add_an_additional_tag
+    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
     and_somebody_else_makes_a_change
     and_i_submit_the_form
 
@@ -40,7 +64,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   scenario "User inputs a correct basepath directly in the URL" do
-    given_there_is_a_content_item_with_tags
+    given_there_is_a_content_item_with_expanded_links(topics: [example_topic])
     when_i_type_its_basepath_in_the_url_directly
     then_i_am_on_the_page_for_the_item
     and_the_expected_navigation_link_is_highlighted
@@ -58,7 +82,12 @@ RSpec.describe "Tagging content", type: :feature do
     visit "/taggings/MY-CONTENT-ID"
   end
 
-  def given_there_is_a_content_item_with_tags
+  def given_there_is_a_content_item_with_no_expanded_links
+    # Stub the empty expanded links response
+    given_there_is_a_content_item_with_expanded_links
+  end
+
+  def given_there_is_a_content_item_with_expanded_links(**expanded_links)
     publishing_api_has_lookups(
       '/my-content-item' => 'MY-CONTENT-ID'
     )
@@ -75,9 +104,7 @@ RSpec.describe "Tagging content", type: :feature do
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
-        expanded_links: {
-          topics: [{"content_id": "ID-OF-ALREADY-TAGGED"}],
-        },
+        expanded_links: expanded_links,
         version: 54_321,
       }.to_json)
   end
@@ -115,11 +142,11 @@ RSpec.describe "Tagging content", type: :feature do
     expect(page).to have_content 'No page found with this path'
   end
 
-  def when_i_add_an_additional_tag
+  def when_i_select_an_additional_topic(selection)
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    select "Business tax / Pension scheme administration", from: "Topics"
+    select selection, from: "Topics"
   end
 
   def and_somebody_else_makes_a_change
@@ -135,15 +162,9 @@ RSpec.describe "Tagging content", type: :feature do
     click_on I18n.t('taggings.update_tags')
   end
 
-  def then_the_new_links_are_sent_to_the_publishing_api
+  def then_the_publishing_api_is_sent(**links)
     body = {
-      links: {
-        topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", "ID-OF-ALREADY-TAGGED"],
-        mainstream_browse_pages: [],
-        organisations: [],
-        taxons: [],
-        parent: [],
-      },
+      links: links,
       previous_version: 54_321,
     }
 
@@ -175,5 +196,13 @@ RSpec.describe "Tagging content", type: :feature do
         "/browse/driving/car-tax-discs",
       ]
     )
+  end
+
+  def example_topic
+    {
+      "content_id" => "ID-OF-ALREADY-TAGGED",
+      "base_path" => "/already-tagged",
+      "title" => "Already tagged",
+    }
   end
 end

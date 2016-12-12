@@ -26,9 +26,7 @@ class TaggingUpdateForm
   end
 
   def self.extract_content_ids(links_hashes)
-    unless links_hashes.nil?
-      links_hashes.map {|links_hash| links_hash["content_id"]}
-    end
+    links_hashes.map { |links_hash| links_hash["content_id"] }
   end
 
 private
