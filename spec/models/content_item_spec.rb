@@ -20,7 +20,7 @@ RSpec.describe ContentItem do
       end
 
       it "returns the blacklisted fields" do
-        expect(content_item.blacklisted_tag_types).to eq [:parent]
+        expect(content_item.blacklisted_tag_types).to eq ['parent']
       end
     end
 
@@ -47,7 +47,7 @@ RSpec.describe ContentItem do
       end
 
       it "blacklists topics as well as other tag types" do
-        expect(content_item.blacklisted_tag_types).to include :topics
+        expect(content_item.blacklisted_tag_types).to include 'topics'
       end
     end
 
