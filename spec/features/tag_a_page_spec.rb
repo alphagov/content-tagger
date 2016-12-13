@@ -22,11 +22,11 @@ RSpec.describe "Tagging content", type: :feature do
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
-      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
-      mainstream_browse_pages: [],
-      organisations: [],
       taxons: [],
+      mainstream_browse_pages: [],
       parent: [],
+      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
+      organisations: [],
     )
   end
 
@@ -38,11 +38,11 @@ RSpec.describe "Tagging content", type: :feature do
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
-      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
-      mainstream_browse_pages: [],
-      organisations: [],
       taxons: [],
+      mainstream_browse_pages: [],
       parent: [],
+      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
+      organisations: [],
     )
   end
 

@@ -2,7 +2,7 @@ class ContentItemExpandedLinks
   include ActiveModel::Model
   attr_accessor :content_id, :previous_version
 
-  TAG_TYPES = %i(topics mainstream_browse_pages organisations taxons parent).freeze
+  TAG_TYPES = %i(taxons mainstream_browse_pages parent topics organisations).freeze
   attr_accessor(*TAG_TYPES)
 
   # Find the links for a content item by its content ID
