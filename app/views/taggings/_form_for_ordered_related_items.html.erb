@@ -5,13 +5,21 @@
   page, such as /pay-vat or /benefit-cap-calculator
 </p>
 
-<% @tagging_update.ordered_related_items.each_with_index do |related_item, index| %>
-  <% link_has_error = !@tagging_update.errors[:"ordered_related_items[#{index}]"].empty? %>
+<div class="sortable-inputs">
 
-  <div class="form-group related-item <%= link_has_error ? 'has-error' : '' %>">
-    <%= text_field_tag "tagging_update_form[ordered_related_items][]", related_item, class: ["form-control", "related-item-path"] %>
-    <% @tagging_update.errors[:"ordered_related_items[#{index}]"].each do |error| %>
-      <span class="help-block"><%= error %></span>
-    <% end %>
+</div>
+
+<fieldset class="sortable-inputs">
+  <% @tagging_update.ordered_related_items.each_with_index do |related_item, index| %>
+    <% link_has_error = !@tagging_update.errors[:"ordered_related_items[#{index}]"].empty? %>
+    <div class="well" style="padding:13px;">
+    <div class="form-group related-item <%= link_has_error ? 'has-error' : '' %>">
+      <%= text_field_tag "tagging_update_form[ordered_related_items][]", related_item, class: ["form-control", "related-item-path"], style: "display:inline-block;vertical-align:middle;width:95%" %>
+      <% @tagging_update.errors[:"ordered_related_items[#{index}]"].each do |error| %>
+        <span class="help-block"><%= error %></span>
+      <% end %>
+      <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true" style="padding-left:10px;font-size:20px;vertical-align:middle;"></span>
+    </div>
   </div>
-<% end %>
+  <% end %>
+</fieldset>
