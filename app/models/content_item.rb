@@ -1,6 +1,4 @@
 class ContentItem
-  TAG_TYPES = %w(taxons mainstream_browse_pages parent topics organisations).freeze
-
   attr_reader :content_id, :title, :base_path, :publishing_app, :document_type
 
   def initialize(data)
@@ -20,12 +18,16 @@ class ContentItem
   end
 
   def link_set
-    @link_set ||= LinkSet.find(content_id)
+    @link_set ||= ContentItemExpandedLinks.find(content_id)
   end
 
   def blacklisted_tag_types
     blacklist = YAML.load_file("#{Rails.root}/config/blacklisted-tag-types.yml")
-    Array(blacklist[publishing_app]) + additional_temporary_blacklist
+    Array(blacklist[publishing_app]).map(&:to_sym) + additional_temporary_blacklist
+  end
+
+  def allowed_tag_types
+    ContentItemExpandedLinks::TAG_TYPES - blacklisted_tag_types
   end
 
   class ItemNotFoundError < StandardError
@@ -34,6 +36,6 @@ class ContentItem
 private
 
   def additional_temporary_blacklist
-    publishing_app == 'specialist-publisher' && document_type == 'finder' ? ['topics'] : []
+    publishing_app == 'specialist-publisher' && document_type == 'finder' ? [:topics] : []
   end
 end
