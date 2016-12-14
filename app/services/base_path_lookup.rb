@@ -1,6 +1,10 @@
 class BasePathLookup
   RelatedContentItem = Struct.new("RelatedContentItem", :content_id, :base_path)
 
+  def self.find_by_base_path(base_path)
+    self.find_by_base_paths([base_path]).first
+  end
+
   def self.find_by_base_paths(base_paths_or_urls)
     return [] if base_paths_or_urls.empty?
 

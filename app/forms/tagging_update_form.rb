@@ -3,6 +3,7 @@ class TaggingUpdateForm
   attr_accessor :content_id, :previous_version
 
   attr_accessor(*ContentItemExpandedLinks::TAG_TYPES)
+  attr_writer :related_content_items
 
   # The number of extra empty form fields to add to a link section when the link
   # section shows an individual form input for each value. This allows users to
@@ -10,6 +11,9 @@ class TaggingUpdateForm
   EXTRA_TEXT_FIELD_COUNT = 5
 
   validate :related_item_paths_should_be_valid
+
+  # TODO: Move this
+  ExpandedLink = Struct.new(:title, :base_path, :content_id)
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
@@ -22,8 +26,14 @@ class TaggingUpdateForm
       mainstream_browse_pages: extract_content_ids(content_item_links.mainstream_browse_pages),
       parent: extract_content_ids(content_item_links.parent),
       taxons: extract_content_ids(content_item_links.taxons),
-      ordered_related_items: pad_with_empty_items(extract_base_paths(content_item_links.ordered_related_items))
-    )
+      ordered_related_items: extract_base_paths(content_item_links.ordered_related_items),
+    ).tap do |form|
+      form.related_content_items = pad_with_empty_items(
+        content_item_links.ordered_related_items.map do |ri|
+          ExpandedLink.new(ri['title'], ri['base_path'], ri['content_id'])
+        end
+      )
+    end
   end
 
   def links_payload(tag_types)
@@ -39,10 +49,15 @@ class TaggingUpdateForm
     end
   end
 
+  # TODO: rename this
   def related_content_items
     @related_content_items ||= BasePathLookup.find_by_base_paths(
       clean_input_array(ordered_related_items)
-    )
+    ).map do |path_lookup|
+      # TODO: here we may need to do an extra content lookup, because the base path
+      # lookup doesn't give us the title
+      ExpandedLink.new(path_lookup.base_path, path_lookup.base_path, path_lookup.content_id)
+    end
   end
 
   def self.extract_content_ids(links_hashes)
@@ -56,7 +71,7 @@ class TaggingUpdateForm
   end
 
   def self.pad_with_empty_items(items)
-    (items || []) + [""] * EXTRA_TEXT_FIELD_COUNT
+    (items || []) + [ExpandedLink.new("", nil, nil)] * EXTRA_TEXT_FIELD_COUNT
   end
 
   private_class_method(:extract_content_ids, :extract_base_paths, :pad_with_empty_items)

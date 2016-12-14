@@ -4,13 +4,9 @@ class TaggingsController < ApplicationController
   end
 
   def find_by_slug
-    content_lookup = ContentLookupForm.new(lookup_params)
-
-    if content_lookup.valid?
-      redirect_to tagging_path(content_lookup.content_id)
-    else
-      @lookup = content_lookup
-      render 'lookup'
+    respond_to do |format|
+      format.json {json_lookup}
+      format.html {html_lookup}
     end
   end
 
@@ -50,6 +46,34 @@ class TaggingsController < ApplicationController
   end
 
 private
+
+  def html_lookup
+    content_lookup = ContentLookupForm.new(lookup_params)
+
+    if content_lookup.valid?
+      redirect_to tagging_path(content_lookup.content_id)
+    else
+      @lookup = content_lookup
+      render 'lookup'
+    end
+  end
+
+  def json_lookup
+    content_lookup = ContentLookupForm.new(lookup_params)
+
+    if content_lookup.valid?
+        content_item = ContentItem.find!(content_lookup.content_id)
+        render json: {
+          base_path: content_item.base_path,
+          content_id: content_item.content_id,
+          title: content_item.title
+        }
+    else
+      render json: {errors: content_lookup.errors}, status: 404
+    end
+  rescue ContentItem:: ItemNotFoundError
+    render json: {errors: []}, status: 404
+  end
 
   def lookup_params
     params[:content_lookup_form] || { base_path: "/#{params[:slug]}" }
