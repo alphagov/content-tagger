@@ -2,7 +2,8 @@ class ContentItemExpandedLinks
   include ActiveModel::Model
   attr_accessor :content_id, :previous_version
 
-  TAG_TYPES = %i(taxons mainstream_browse_pages parent topics organisations).freeze
+  TAG_TYPES = %i(taxons ordered_related_items mainstream_browse_pages parent topics organisations).freeze
+
   attr_accessor(*TAG_TYPES)
 
   # Find the links for a content item by its content ID
@@ -19,6 +20,7 @@ class ContentItemExpandedLinks
       mainstream_browse_pages: links.fetch('mainstream_browse_pages', []),
       parent: links.fetch('parent', []),
       taxons: links.fetch('taxons', []),
+      ordered_related_items: links.fetch('ordered_related_items', [])
     )
   end
 end

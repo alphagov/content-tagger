@@ -16,6 +16,7 @@ gem 'airbrake', '~> 4.3.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'select2-rails', '~> 3.5.9'
+gem 'jquery-ui-rails', '6.0.1'
 
 gem 'govuk_sidekiq', '~> 0.0.4'
 

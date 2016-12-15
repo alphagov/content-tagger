@@ -1,0 +1,35 @@
+<h3>Related content items</h3>
+
+<fieldset id="ordered_related_items" class="select2-container select2-container-multi" style="width:100%">
+  <ul class="select2-choices ui-sortable sortable-inputs" style="background-image:none; margin-bottom:20px;">
+    <% @tagging_update.related_content_items.each_with_index do |related_item, index| %>
+      <% link_has_error = !@tagging_update.errors[:"ordered_related_items[#{index}]"].empty? %>
+      <li style="width:100%;">
+        <% unless related_item.title.blank? %>
+        <div class="title select2-search-choice ui-sortable-handle" style="display:none;">
+          <a href="http://gov.uk<%= related_item.base_path %>" class="js-artefact-name"><%= related_item.title %></a>
+          <a href="#" class="select2-search-choice-close" tabindex="-1"></a>
+          <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true" style="padding-left:10px;vertical-align:middle;float:right"></span>
+        </div>
+        <% end %>
+        <div class="value <%= link_has_error ? 'has-error' : '' %>", style="padding-top:5px; padding-bottom:5px">
+          <%= text_field_tag "tagging_update_form[ordered_related_items][]", related_item.base_path, class: ["form-control", "related-item-path"], style:"margin-left: 10px; width:95%" %>
+          <% @tagging_update.errors[:"ordered_related_items[#{index}]"].each do |error| %>
+            <div class="help-block" style="margin-left:10px"><%= error %></p>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <div class="input-group add-sortable-input" style="margin-top:-10px; margin-bottom:20px; display:none">
+    <input id="related_item_new_base_path" name="_new_base_path" type="text" class="form-control" placeholder="URL or path">
+    <span class="input-group-btn">
+      <button id="lookup_base_path_button" class="btn btn-default" type="button">Add</button>
+    </span>
+  </div>
+
+  <p class="explain">
+    Related items are displayed in the sidebar. Enter the URL or path of a GOV.UK
+    page, such as /pay-vat or /benefit-cap-calculator
+  </p>
+</div>

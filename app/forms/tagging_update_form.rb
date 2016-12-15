@@ -3,6 +3,17 @@ class TaggingUpdateForm
   attr_accessor :content_id, :previous_version
 
   attr_accessor(*ContentItemExpandedLinks::TAG_TYPES)
+  attr_writer :related_content_items
+
+  # The number of extra empty form fields to add to a link section when the link
+  # section shows an individual form input for each value. This allows users to
+  # append new links to the end of the existing list.
+  EXTRA_TEXT_FIELD_COUNT = 5
+
+  validate :related_item_paths_should_be_valid
+
+  # TODO: Move this
+  ExpandedLink = Struct.new(:title, :base_path, :content_id)
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
@@ -14,14 +25,38 @@ class TaggingUpdateForm
       organisations: extract_content_ids(content_item_links.organisations),
       mainstream_browse_pages: extract_content_ids(content_item_links.mainstream_browse_pages),
       parent: extract_content_ids(content_item_links.parent),
-      taxons: extract_content_ids(content_item_links.taxons)
-    )
+      taxons: extract_content_ids(content_item_links.taxons),
+      ordered_related_items: extract_base_paths(content_item_links.ordered_related_items),
+    ).tap do |form|
+      form.related_content_items = pad_with_empty_items(
+        content_item_links.ordered_related_items.map do |ri|
+          ExpandedLink.new(ri['title'], ri['base_path'], ri['content_id'])
+        end
+      )
+    end
   end
 
   def links_payload(tag_types)
     tag_types.each_with_object({}) do |tag_type, payload|
-      content_ids = send(tag_type)
-      payload[tag_type] = clean_content_ids(content_ids)
+      field_value = send(tag_type)
+
+      payload[tag_type] =
+        if tag_type == :ordered_related_items
+          related_content_items.map(&:content_id)
+        else
+          clean_input_array(field_value)
+        end
+    end
+  end
+
+  # TODO: rename this
+  def related_content_items
+    @related_content_items ||= BasePathLookup.find_by_base_paths(
+      clean_input_array(ordered_related_items)
+    ).map do |path_lookup|
+      # TODO: here we may need to do an extra content lookup, because the base path
+      # lookup doesn't give us the title
+      ExpandedLink.new(path_lookup.base_path, path_lookup.base_path, path_lookup.content_id)
     end
   end
 
@@ -29,11 +64,32 @@ class TaggingUpdateForm
     links_hashes.map { |links_hash| links_hash["content_id"] }
   end
 
+  def self.extract_base_paths(links_hashes)
+    unless links_hashes.nil?
+      links_hashes.map { |links_hash| links_hash["base_path"] }
+    end
+  end
+
+  def self.pad_with_empty_items(items)
+    (items || []) + [ExpandedLink.new("", nil, nil)] * EXTRA_TEXT_FIELD_COUNT
+  end
+
+  private_class_method(:extract_content_ids, :extract_base_paths, :pad_with_empty_items)
+
 private
 
-  private_class_method :extract_content_ids
-
-  def clean_content_ids(select_form_input)
+  def clean_input_array(select_form_input)
     Array(select_form_input).select(&:present?)
+  end
+
+  def related_item_paths_should_be_valid
+    unless ordered_related_items.nil?
+      related_content_items.each do |ri|
+        if ri.content_id.nil?
+          index = ordered_related_items.index(ri.base_path)
+          errors[:"ordered_related_items[#{index}]"] << "Could not find content item with this URL or path"
+        end
+      end
+    end
   end
 end
