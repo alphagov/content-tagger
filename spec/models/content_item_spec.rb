@@ -7,7 +7,8 @@ RSpec.describe ContentItem do
       'title'          => 'A content item',
       'document_type'  => 'placeholder',
       'base_path'      => '/a-content-item',
-      'publishing_app' => 'whitehall'
+      'publishing_app' => 'publisher',
+      'rendering_app'  => 'frontend',
     }
   end
 
@@ -33,6 +34,30 @@ RSpec.describe ContentItem do
 
       it "returns an empty list" do
         expect(content_item.blacklisted_tag_types).to eq []
+      end
+    end
+
+    context "for rendering apps with a sidebar" do
+      let(:content_item) do
+        ContentItem.new(
+          content_item_params.merge('publishing_app' => 'not-in-the-blacklist', 'rendering_app' => 'frontend')
+        )
+      end
+
+      it "returns an empty list" do
+        expect(content_item.blacklisted_tag_types).to eq []
+      end
+    end
+
+    context "for rendering apps without a sidebar" do
+      let(:content_item) do
+        ContentItem.new(
+          content_item_params.merge('publishing_app' => 'not-in-the-blacklist', 'rendering_app' => 'whitehall-frontend')
+        )
+      end
+
+      it "blacklists related items" do
+        expect(content_item.blacklisted_tag_types).to eq [:ordered_related_items]
       end
     end
 

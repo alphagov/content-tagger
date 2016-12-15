@@ -109,6 +109,7 @@ RSpec.describe "Tagging content", type: :feature do
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         publishing_app: "a-migrated-app",
+        rendering_app: "frontend",
         content_id: "MY-CONTENT-ID",
         base_path: '/my-content-item',
         document_type: 'mainstream_browse_page',
