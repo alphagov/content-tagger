@@ -23,6 +23,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     then_the_publishing_api_is_sent(
       taxons: [],
+      ordered_related_items: [],
       mainstream_browse_pages: [],
       parent: [],
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
@@ -39,6 +40,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     then_the_publishing_api_is_sent(
       taxons: [],
+      ordered_related_items: [],
       mainstream_browse_pages: [],
       parent: [],
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
@@ -70,6 +72,18 @@ RSpec.describe "Tagging content", type: :feature do
     and_the_expected_navigation_link_is_highlighted
   end
 
+  scenario "User tries to tag a content item with a non-existent related item" do
+    given_there_is_a_content_item_with_expanded_links(topics: [example_topic])
+    given_there_is_related_content_with_matching_base_paths
+
+    when_i_type_its_basepath_in_the_url_directly
+    and_i_add_a_valid_related_content_item_path
+    and_i_add_a_path_which_does_not_match_a_content_item
+    and_i_submit_the_form
+
+    then_i_see_a_highlighted_error_for_the_missing_path
+  end
+
   def when_i_visit_the_homepage
     visit root_path
   end
@@ -95,6 +109,7 @@ RSpec.describe "Tagging content", type: :feature do
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         publishing_app: "a-migrated-app",
+        rendering_app: "frontend",
         content_id: "MY-CONTENT-ID",
         base_path: '/my-content-item',
         document_type: 'mainstream_browse_page',
@@ -107,6 +122,12 @@ RSpec.describe "Tagging content", type: :feature do
         expanded_links: expanded_links,
         version: 54_321,
       }.to_json)
+  end
+
+  def given_there_is_related_content_with_matching_base_paths
+    stub_request(:post, "https://publishing-api.test.gov.uk/lookup-by-base-path")
+      .with(body: { "base_paths" => ["/pay-vat", "/no-such-path"] })
+      .to_return(body: { "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6" }.to_json)
   end
 
   def and_i_submit_the_url_of_the_content_item
@@ -196,6 +217,21 @@ RSpec.describe "Tagging content", type: :feature do
         "/browse/driving/car-tax-discs",
       ]
     )
+  end
+
+  def and_i_add_a_valid_related_content_item_path
+    all(".related-item-path")[0].set("/pay-vat")
+  end
+
+  def and_i_add_a_path_which_does_not_match_a_content_item
+    all(".related-item-path")[1].set("/no-such-path")
+  end
+
+  def then_i_see_a_highlighted_error_for_the_missing_path
+    related_items = all(".related-item")
+
+    expect(related_items[0]["class"]).not_to include("has-error")
+    expect(related_items[1]["class"]).to include("has-error")
   end
 
   def example_topic
