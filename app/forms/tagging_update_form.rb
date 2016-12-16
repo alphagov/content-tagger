@@ -2,27 +2,38 @@ class TaggingUpdateForm
   include ActiveModel::Model
   attr_accessor :content_id, :previous_version
 
-  attr_accessor(*ContentItemExpandedLinks::TAG_TYPES)
+  TAG_TYPES = ContentItemExpandedLinks::TAG_TYPES
+  attr_accessor(*TAG_TYPES)
 
   # The number of extra empty form fields to add to a link section when the link
   # section shows an individual form input for each value. This allows users to
   # append new links to the end of the existing list.
   EXTRA_TEXT_FIELD_COUNT = 5
 
-  validate :related_item_paths_should_be_valid
+  if TAG_TYPES.include?(:ordered_related_items)
+    validate :related_item_paths_should_be_valid
+  end
 
   # Return a new LinkUpdate object with topics, mainstream_browse_pages,
   # organisations and content_item set.
   def self.from_content_item_links(content_item_links)
+    tags = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
+      if tag_type == :ordered_related_items
+        base_paths = extract_base_paths(
+          content_item_links.ordered_related_items
+        )
+        current_tags[tag_type] = pad_with_empty_items(base_paths)
+      else
+        current_tags[tag_type] = extract_content_ids(
+          content_item_links.send(tag_type)
+        )
+      end
+    end
+
     new(
       content_id: content_item_links.content_id,
       previous_version: content_item_links.previous_version,
-      topics: extract_content_ids(content_item_links.topics),
-      organisations: extract_content_ids(content_item_links.organisations),
-      mainstream_browse_pages: extract_content_ids(content_item_links.mainstream_browse_pages),
-      parent: extract_content_ids(content_item_links.parent),
-      taxons: extract_content_ids(content_item_links.taxons),
-      ordered_related_items: pad_with_empty_items(extract_base_paths(content_item_links.ordered_related_items))
+      **tags
     )
   end
 
