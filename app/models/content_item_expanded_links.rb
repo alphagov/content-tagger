@@ -36,15 +36,14 @@ class ContentItemExpandedLinks
 
     links = data.fetch('expanded_links', {})
 
+    tags = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
+      current_tags[tag_type] = links.fetch(tag_type.to_s, [])
+    end
+
     new(
       content_id: content_id,
       previous_version: data.fetch('version', 0),
-      topics: links.fetch('topics', []),
-      organisations: links.fetch('organisations', []),
-      mainstream_browse_pages: links.fetch('mainstream_browse_pages', []),
-      parent: links.fetch('parent', []),
-      taxons: links.fetch('taxons', []),
-      ordered_related_items: links.fetch('ordered_related_items', [])
+      **tags
     )
   end
 end
