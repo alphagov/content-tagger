@@ -9,11 +9,11 @@
     <%= link_to t('navigation.tagging_content'), lookup_taggings_path %>
   </li>
 
-  <li class='<%= active_navigation_item.in?(%w[tag_searches tag_migrations]) ? 'active' : nil %>'>
+  <li class='<%= active_navigation_item.in?(%w[bulk_tags tag_migrations copy_taxons tagging_spreadsheets]) ? 'active' : nil %>'>
     <%= link_to t('navigation.bulk_tag'), new_bulk_tag_path %>
   </li>
 
-  <li class='<%= active_navigation_item.in?(%w[taxons]) ? 'active' : nil %>'>
+  <li class='<%= active_navigation_item.in?(%w[taxons taxon_migrations]) ? 'active' : nil %>'>
     <%= link_to t('navigation.taxons'), taxons_path %>
   </li>
 <% end %>
