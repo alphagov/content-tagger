@@ -6,6 +6,10 @@ class TagMigrationPresenter < SimpleDelegator
   end
 
   def state_title
-    state.humanize
+    case state
+    when "ready_to_import" then "Tagging incomplete"
+    when "imported" then "Tagging completed"
+    when "errored" then "Errored"
+    end
   end
 end

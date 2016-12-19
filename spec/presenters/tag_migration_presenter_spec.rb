@@ -19,10 +19,22 @@ RSpec.describe TagMigrationPresenter do
   end
 
   describe '#state_title' do
-    it 'humanizes the state' do
+    it "returns 'Tagging incomplete' if the state is 'ready_to_import'" do
+      tag_migration.state = 'ready_to_import'
+
+      expect(presenter.state_title).to eq('Tagging incomplete')
+    end
+
+    it "returns 'Tagging completed' if the state is 'imported'" do
       tag_migration.state = 'imported'
 
-      expect(presenter.state_title).to eq('Imported')
+      expect(presenter.state_title).to eq('Tagging completed')
+    end
+
+    it "returns 'Errored' if the state is 'errored'" do
+      tag_migration.state = 'errored'
+
+      expect(presenter.state_title).to eq('Errored')
     end
   end
 end
