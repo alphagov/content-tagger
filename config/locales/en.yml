@@ -1,8 +1,7 @@
 en:
   navigation:
-    tagging_content: Tag a page
-    tagging_title: Which page do you want to tag?
-    tagging_label: Enter the URL or path of a GOV.UK page
+    tagging_content: Edit a page
+    tagging_title: Which page do you want to edit?
     taxons: 'Edit taxonomy'
     bulk_tag: 'Bulk tag'
     tag_migration: 'Bulk tag history'
@@ -18,7 +17,7 @@ en:
       on_self: "Includes the taxon being edited - you can't set a taxon as the parent of itself."
   taggings:
     update_tags: Update tagging
-    search: Edit tagging
+    search: Edit page
   bulk_tag:
     search_button: "Search"
     view_tagged_pages: "View tagged pages"

@@ -1,17 +1,20 @@
 <%= display_header title: t('navigation.tagging_title'),
   breadcrumbs: [t('navigation.tagging_content')] %>
 
+<div class="lead">
+  Enter the URL or path of a GOV.UK page to edit its tagging or related links.
+</div>
+
 <%= simple_form_for @lookup, url: lookup_taggings_path do |f| %>
   <div class="form-group">
     <%= f.input :base_path,
-      label: t('navigation.tagging_label'),
+      label: false,
       required: false,
       input_html: { class: 'form-control' }
     %>
 
-    For example: <% ['/pay-vat', '/benefit-cap-calculator', '/bank-holidays'].each do |example| %>
-      <%= link_to example, "/taggings/lookup#{example}" %>
-    <% end %>
+    For example: <%= link_to "https://www.gov.uk/pay-vat", "/taggings/lookup/pay-vat" %>
+    or <%= link_to "/bank-holidays", "/taggings/lookup/bank-holidays" %>
   </div>
 
   <%= submit_tag I18n.t('taggings.search'), class: 'btn btn-success btn-md' %>
