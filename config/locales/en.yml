@@ -25,12 +25,12 @@ en:
     view_taxons: View all taxon IDs
     upload_sheet: Upload spreadsheet
     upload: Upload
-    refresh: Refresh import
+    refresh: Re-upload spreadsheet
     sheet_url: Spreadsheet URL
     delete: Delete
-    start_tagging: "Do tagging"
-    import_created: Spreadsheet uploaded. It will be imported within a few minutes.
-    import_refetched: The import will be imported again.
+    start_tagging: "Start tagging"
+    import_created: Your spreadsheet is now uploading. This can take a few minutes. Refresh this page to see which pages are ready to tag.
+    import_refetched: Your spreadsheet is now re-uploading. This can take a few minutes. Refresh this page to see which pages are ready to tag.
     import_removed: Import has been removed.
     errors:
       invalid_content_id: We could not find this URL on GOV.UK.
