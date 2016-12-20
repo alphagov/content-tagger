@@ -47,7 +47,7 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
   end
 
   def and_i_click_to_copy_taxons
-    find_link(I18n.t('views.taxons.copy_taxon')).click
+    find_link(I18n.t('tag_import.view_taxons')).click
   end
 
   def then_i_can_see_a_table_with_taxons_to_copy

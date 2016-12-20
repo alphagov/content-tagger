@@ -235,7 +235,7 @@ RSpec.feature "Bulk tagging", type: :feature do
 
     row = first('table tbody tr')
 
-    expect(row).to have_text(/imported/i)
+    expect(row).to have_text(/Tagging completed/i)
     expect(row).to have_text('Tax documents (Document collection)')
   end
 

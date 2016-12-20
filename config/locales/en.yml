@@ -23,6 +23,7 @@ en:
     search_button: "Search"
     view_tagged_pages: "View tagged pages"
   tag_import:
+    view_taxons: View all taxon IDs
     upload_sheet: Upload spreadsheet
     upload: Upload
     refresh: Refresh import
