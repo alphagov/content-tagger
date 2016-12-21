@@ -6,10 +6,6 @@ class TagMigrationPresenter < SimpleDelegator
   end
 
   def state_title
-    case state
-    when "ready_to_import" then "Tagging incomplete"
-    when "imported" then "Tagging completed"
-    when "errored" then "Errored"
-    end
+    I18n.t("bulk_tagging.state.#{state}")
   end
 end

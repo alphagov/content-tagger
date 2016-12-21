@@ -219,10 +219,12 @@ RSpec.feature "Tag importer", type: :feature do
   def then_i_can_see_it_is_ready_for_importing
     visit tagging_spreadsheets_path
     tagging_spreadsheet = TaggingSpreadsheet.first
-    state = tagging_spreadsheet.state.humanize
+    state = tagging_spreadsheet.state
+    state_message = I18n.t("bulk_tagging.state.#{state}")
+
     row = first('table tbody tr')
 
-    expect(row).to have_selector('.label-warning', text: state)
+    expect(row).to have_selector('.label-warning', text: state_message)
     visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
@@ -238,7 +240,8 @@ RSpec.feature "Tag importer", type: :feature do
 
   def and_the_state_of_the_import_is_successful
     tagging_spreadsheet = TaggingSpreadsheet.first
-    state = tagging_spreadsheet.state.humanize
+    state = tagging_spreadsheet.state
+    state_message = I18n.t("bulk_tagging.state.#{state}")
 
     visit root_path
     click_link I18n.t('navigation.bulk_tag')
@@ -246,7 +249,7 @@ RSpec.feature "Tag importer", type: :feature do
     click_link I18n.t("navigation.tag_importer")
     row = first('table tbody tr')
 
-    expect(row).to have_selector('.label-success', text: state)
+    expect(row).to have_selector('.label-success', text: state_message)
   end
 
   def when_the_last_tag_mapping_has_errored
