@@ -7,7 +7,7 @@ class TaggingSpreadsheetPresenter < SimpleDelegator
   end
 
   def state_title
-    state.humanize
+    I18n.t("bulk_tagging.state.#{state}")
   end
 
   def errored?

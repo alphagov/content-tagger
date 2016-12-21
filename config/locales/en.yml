@@ -43,6 +43,10 @@ en:
     update_tags:
       no_taxons: No taxons selected.
       no_content_items: No content items selected.
+    state:
+      ready_to_import: Tagging incomplete
+      imported: Tagging completed
+      errored: Errored
   views:
     tag_update_progress_bar: "%{completed} of %{total} pages updated"
     tag_migrations:
