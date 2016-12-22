@@ -15,32 +15,22 @@ class TaggingsController < ApplicationController
   end
 
   def show
-    @content_item = ContentItem.find!(params[:content_id])
-    @tagging_update = TaggingUpdateForm.from_content_item_links(@content_item.link_set)
-    @tag_types = @content_item.allowed_tag_types
-    @linkables = Linkables.new
+    content_item = ContentItem.find!(params[:content_id])
+    @tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
   end
 
   def update
-    tagging_update_form = TaggingUpdateForm.new(params[:tagging_update_form])
     content_item = ContentItem.find!(params[:content_id])
-    tag_types = content_item.allowed_tag_types
+    publisher = Tagging::TaggingUpdatePublisher.new(content_item, params[:tagging_tagging_update_form])
 
-    if tagging_update_form.valid?
-      Services.publishing_api.patch_links(
-        tagging_update_form.content_id,
-        links: tagging_update_form.links_payload(tag_types),
-        previous_version: tagging_update_form.previous_version.to_i,
-      )
-
+    if publisher.save_to_publishing_api
       redirect_to :back, success: "Tags have been updated!"
     else
-      @content_item = content_item
-      @tagging_update = tagging_update_form
-      @tag_types = content_item.allowed_tag_types
-      @linkables = Linkables.new
+      @tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
+      @tagging_update.related_item_errors = publisher.errors
+      @tagging_update.update_attributes_from_form(params[:tagging_tagging_update_form])
 
       flash.now[:danger] = "This form contains errors. Please correct them and try again."
       render 'show'
