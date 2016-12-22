@@ -2,9 +2,9 @@
   <%= f.hidden_field :content_id %>
   <%= f.hidden_field :previous_version %>
 
-  <% @tag_types.each do |tag_type| %>
+  <% tagging_update.allowed_tag_types.each do |tag_type| %>
     <div class='tag-section'>
-      <%= render "form_for_#{tag_type}", {f: f, linkables: linkables} %>
+      <%= render "form_for_#{tag_type}", { f: f, linkables: tagging_update.linkables } %>
     </div>
   <% end %>
 

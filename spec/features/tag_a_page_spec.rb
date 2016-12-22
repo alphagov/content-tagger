@@ -137,7 +137,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def and_i_see_the_taxon_form
-    taxon_options = all('#tagging_update_form_taxons option').map(&:text)
+    taxon_options = all('#tagging_tagging_update_form_taxons option').map(&:text)
     expect(taxon_options).to include("Vehicle plating")
   end
 

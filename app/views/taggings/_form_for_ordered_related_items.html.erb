@@ -6,12 +6,11 @@
 </p>
 
 <% @tagging_update.ordered_related_items.each_with_index do |related_item, index| %>
-  <% link_has_error = !@tagging_update.errors[:"ordered_related_items[#{index}]"].empty? %>
+  <div class="form-group related-item <%= @tagging_update.related_item_errors[related_item] ? 'has-error' : '' %>">
+    <%= text_field_tag "tagging_tagging_update_form[ordered_related_items][]", related_item, class: ["form-control", "related-item-path"] %>
 
-  <div class="form-group related-item <%= link_has_error ? 'has-error' : '' %>">
-    <%= text_field_tag "tagging_update_form[ordered_related_items][]", related_item, class: ["form-control", "related-item-path"] %>
-    <% @tagging_update.errors[:"ordered_related_items[#{index}]"].each do |error| %>
-      <span class="help-block"><%= error %></span>
+    <% if @tagging_update.related_item_errors[related_item] %>
+      <span class="help-block"><%= @tagging_update.related_item_errors[related_item] %></span>
     <% end %>
   </div>
 <% end %>
