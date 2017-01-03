@@ -22,9 +22,13 @@ Metrics/AbcSize:
     - spec/features/**/*
 
 Metrics/ClassLength:
+  # TODO: bring this down to 100
+  Max: 150
   Enabled: true
 
 Metrics/ModuleLength:
+  # TODO: bring this down to 100
+  Max: 150
   Enabled: true
 
 Metrics/PerceivedComplexity:

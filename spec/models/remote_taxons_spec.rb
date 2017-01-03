@@ -19,7 +19,7 @@ RSpec.describe RemoteTaxons do
 
       result = described_class.new.search(page: 2, per_page: 2)
 
-      expect(result).to be_a(TaxonSearchResults)
+      expect(result).to be_a(BulkTagging::TaxonSearchResults)
       expect(result.taxons.length).to eq(1)
       taxon = result.taxons.first
       expect(taxon.title).to eq('aha')

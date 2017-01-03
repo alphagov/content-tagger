@@ -100,7 +100,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def then_i_can_see_that_the_old_taxon_link_will_be_removed
-    tag_migration = TagMigration.last
+    tag_migration = BulkTagging::TagMigration.last
 
     expect(page).to have_text(
       I18n.t(

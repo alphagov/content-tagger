@@ -95,8 +95,8 @@ RSpec.feature "Tag importer", type: :feature do
     expect(page).to have_text(/how to generate a google spreadsheet url/i)
     fill_in I18n.t('tag_import.sheet_url'), with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
     click_button I18n.t('tag_import.upload')
-    expect(TaggingSpreadsheet.count).to eq 1
-    expect(TaggingSpreadsheet.first.added_by.name).to eq "Barry Allen"
+    expect(BulkTagging::TaggingSpreadsheet.count).to eq 1
+    expect(BulkTagging::TaggingSpreadsheet.first.added_by.name).to eq "Barry Allen"
   end
 
   def given_tagging_spreadsheet_exists
@@ -108,7 +108,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def when_i_go_to_the_tagging_spreadsheet_page
-    visit tagging_spreadsheet_path(TaggingSpreadsheet.last)
+    visit tagging_spreadsheet_path(BulkTagging::TaggingSpreadsheet.last)
   end
 
   def then_i_expect_tag_mappings_to_be_grouped_by_base_path
@@ -117,14 +117,14 @@ RSpec.feature "Tag importer", type: :feature do
 
     first_row = rows.first
 
-    TagMapping.all.each do |tag_mapping|
+    BulkTagging::TagMapping.all.each do |tag_mapping|
       expect(page).to have_content(tag_mapping.content_base_path, count: 1)
       expect(first_row.text).to include(tag_mapping.link_title)
     end
   end
 
   def then_i_can_preview_which_taggings_will_be_imported
-    expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
+    expect_page_to_contain_details_of(tag_mappings: BulkTagging::TagMapping.all)
     expect(page).to have_text(
       I18n.t('views.tag_update_progress_bar', completed: 0, total: 2)
     )
@@ -133,7 +133,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def expect_tag_mapping_statuses_to_be(string)
     tag_mapping_statuses = page.all(".tag-mapping-status")
-    expect(tag_mapping_statuses.count).to eq TaggingSpreadsheet.first.aggregated_tag_mappings.count
+    expect(tag_mapping_statuses.count).to eq BulkTagging::TaggingSpreadsheet.first.aggregated_tag_mappings.count
 
     tag_mapping_statuses.each do |status|
       expect(status.text).to include string
@@ -192,18 +192,18 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_refetch_the_tags
-    expect { click_link I18n.t('tag_import.refresh') }.to change { TagMapping.count }.by(1)
+    expect { click_link I18n.t('tag_import.refresh') }.to change { BulkTagging::TagMapping.count }.by(1)
   end
 
   def then_i_should_see_an_updated_preview
-    expect_page_to_contain_details_of(tag_mappings: TagMapping.all)
+    expect_page_to_contain_details_of(tag_mappings: BulkTagging::TagMapping.all)
   end
 
   def and_i_delete_the_tagging_spreadsheet
     visit tagging_spreadsheets_path
     delete_button = first('table tbody a', text: I18n.t('tag_import.delete'))
 
-    expect { delete_button.click }.to_not change { TaggingSpreadsheet.count }
+    expect { delete_button.click }.to_not change { BulkTagging::TaggingSpreadsheet.count }
   end
 
   def then_it_is_no_longer_available
@@ -212,13 +212,13 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_it_has_been_marked_as_deleted
-    tagging_spreadsheet = TaggingSpreadsheet.first
+    tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
     expect(tagging_spreadsheet.deleted_at).to_not be_nil
   end
 
   def then_i_can_see_it_is_ready_for_importing
     visit tagging_spreadsheets_path
-    tagging_spreadsheet = TaggingSpreadsheet.first
+    tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
     state = tagging_spreadsheet.state
     state_message = I18n.t("bulk_tagging.state.#{state}")
 
@@ -230,7 +230,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def then_i_see_the_import_failed
     visit tagging_spreadsheets_path
-    tagging_spreadsheet = TaggingSpreadsheet.first
+    tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
     state = tagging_spreadsheet.state.humanize
     row = first('table tbody tr')
 
@@ -239,7 +239,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_the_state_of_the_import_is_successful
-    tagging_spreadsheet = TaggingSpreadsheet.first
+    tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
     state = tagging_spreadsheet.state
     state_message = I18n.t("bulk_tagging.state.#{state}")
 
@@ -253,7 +253,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def when_the_last_tag_mapping_has_errored
-    tag_mapping = TagMapping.last
+    tag_mapping = BulkTagging::TagMapping.last
     tag_mapping.state = 'errored'
     tag_mapping.messages = ['An error message']
     tag_mapping.save!
@@ -261,12 +261,12 @@ RSpec.feature "Tag importer", type: :feature do
 
   def when_i_preview_the_tagging_spreadsheet
     visit tagging_spreadsheets_path
-    tagging_spreadsheet = TaggingSpreadsheet.first
+    tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
     visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
   def then_the_erroneous_tag_mappings_are_at_the_top
-    tag_mapping = TagMapping.where(state: 'errored').first
+    tag_mapping = BulkTagging::TagMapping.where(state: 'errored').first
     first_row = find('table tbody').first('tr')
 
     expect(first_row.text).to match(tag_mapping.content_base_path)
