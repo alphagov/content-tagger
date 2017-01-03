@@ -1,6 +1,7 @@
+# TODO: Split this up and move it into the BulkTagging & Taxonomy namespaces.
 class RemoteTaxons
   def search(page: 1, per_page: 50, query: '')
-    TaxonSearchResults.new(
+    BulkTagging::TaxonSearchResults.new(
       taxon_content_items(page: page, per_page: per_page, query: query)
     )
   end

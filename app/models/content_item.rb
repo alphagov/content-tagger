@@ -19,7 +19,7 @@ class ContentItem
   end
 
   def link_set
-    @link_set ||= ContentItemExpandedLinks.find(content_id)
+    @link_set ||= Tagging::ContentItemExpandedLinks.find(content_id)
   end
 
   def blacklisted_tag_types
@@ -35,7 +35,7 @@ class ContentItem
   end
 
   def allowed_tag_types
-    ContentItemExpandedLinks::TAG_TYPES - blacklisted_tag_types
+    Tagging::ContentItemExpandedLinks::TAG_TYPES - blacklisted_tag_types
   end
 
   class ItemNotFoundError < StandardError

@@ -17,7 +17,7 @@ class TagMigrationsController < ApplicationController
     )
 
     render :new, locals: {
-      tag_migration: TagMigration.new(source_content_id: source_content_item.content_id),
+      tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
       taxons: Linkables.new.taxons,
       expanded_links: expanded_links,
       source_content_item: source_content_item,
@@ -25,7 +25,7 @@ class TagMigrationsController < ApplicationController
   end
 
   def create
-    source_content_item = ContentItem.find!(params[:tag_migration][:source_content_id])
+    source_content_item = ContentItem.find!(params[:bulk_tagging_tag_migration][:source_content_id])
 
     tag_migration = BulkTagging::BuildTagMigration.call(
       source_content_item: source_content_item,
@@ -72,26 +72,26 @@ class TagMigrationsController < ApplicationController
   end
 
   def publish_tags
-    QueueLinksForPublishing.call(tag_migration, user: current_user)
+    BulkTagging::QueueLinksForPublishing.call(tag_migration, user: current_user)
 
-    redirect_to tag_migration
+    redirect_to tag_migration_path(tag_migration)
   end
 
 private
 
   def tag_migrations
-    TagMigration.active.newest_first
+    BulkTagging::TagMigration.active.newest_first
   end
 
   def presented_tag_migrations
     tag_migrations.map do |tag_migration|
-      TagMigrationPresenter.new(tag_migration)
+      BulkTagging::TagMigrationPresenter.new(tag_migration)
     end
   end
 
   def tag_migration
     @tag_migration ||=
-      TagMigration.find(params[:id] || params.fetch(:tag_migration_id))
+      BulkTagging::TagMigration.find(params[:id] || params.fetch(:tag_migration_id))
   end
 
   def tag_mappings
@@ -103,7 +103,7 @@ private
 
   def presented_tag_mappings
     tag_mappings.map do |tag_mapping|
-      TagMappingPresenter.new(tag_mapping)
+      BulkTagging::TagMappingPresenter.new(tag_mapping)
     end
   end
 
@@ -113,7 +113,7 @@ private
 
   def presented_aggregated_tag_mappings
     aggregated_tag_mappings.map do |aggregated_tag_mapping|
-      AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
+      BulkTagging::AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
     end
   end
 end

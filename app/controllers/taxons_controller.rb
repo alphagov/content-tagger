@@ -36,7 +36,7 @@ class TaxonsController < ApplicationController
   end
 
   def show
-    taxonomy_tree = ExpandedTaxonomy.new(taxon.content_id).build
+    taxonomy_tree = Taxonomy::ExpandedTaxonomy.new(taxon.content_id).build
     render :show, locals: {
       taxon: taxon,
       tagged: tagged,
@@ -74,7 +74,7 @@ class TaxonsController < ApplicationController
   end
 
   def confirm_delete
-    expanded_taxonomy = ExpandedTaxonomy.new(taxon.content_id).build
+    expanded_taxonomy = Taxonomy::ExpandedTaxonomy.new(taxon.content_id).build
 
     render :confirm_delete, locals: {
       taxon: taxon,

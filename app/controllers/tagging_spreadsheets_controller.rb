@@ -4,18 +4,18 @@ class TaggingSpreadsheetsController < ApplicationController
   end
 
   def new
-    render :new, locals: { tagging_spreadsheet: TaggingSpreadsheet.new }
+    render :new, locals: { tagging_spreadsheet: BulkTagging::TaggingSpreadsheet.new }
   end
 
   def create
-    tagging_spreadsheet = TaggingSpreadsheet.new(tagging_spreadsheet_params)
+    tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.new(tagging_spreadsheet_params)
     tagging_spreadsheet.user_uid = current_user.uid
     tagging_spreadsheet.state = "uploaded"
 
     if tagging_spreadsheet.valid?
       tagging_spreadsheet.save!
       InitialTaggingImport.perform_async(tagging_spreadsheet.id)
-      redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_created')
+      redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t('tag_import.import_created')
     else
       render :new, locals: { tagging_spreadsheet: tagging_spreadsheet }
     end
@@ -45,13 +45,13 @@ class TaggingSpreadsheetsController < ApplicationController
     tagging_spreadsheet.update_attributes!(state: "uploaded")
     InitialTaggingImport.perform_async(tagging_spreadsheet.id)
 
-    redirect_to tagging_spreadsheet, success: I18n.t('tag_import.import_refetched')
+    redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t('tag_import.import_refetched')
   end
 
   def publish_tags
-    QueueLinksForPublishing.call(tagging_spreadsheet, user: current_user)
+    BulkTagging::QueueLinksForPublishing.call(tagging_spreadsheet, user: current_user)
 
-    redirect_to tagging_spreadsheet
+    redirect_to tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
   def destroy
@@ -62,7 +62,7 @@ class TaggingSpreadsheetsController < ApplicationController
 private
 
   def tagging_spreadsheet
-    TaggingSpreadsheet.find(params[:id] || params.fetch(:tagging_spreadsheet_id))
+    BulkTagging::TaggingSpreadsheet.find(params[:id] || params.fetch(:tagging_spreadsheet_id))
   end
 
   def tag_mappings
@@ -78,22 +78,22 @@ private
 
   def presented_aggregated_tag_mappings
     aggregated_tag_mappings.map do |aggregated_tag_mapping|
-      AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
+      BulkTagging::AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
     end
   end
 
   def tagging_spreadsheets
-    TaggingSpreadsheet.active.newest_first.includes(:added_by)
+    BulkTagging::TaggingSpreadsheet.active.newest_first.includes(:added_by)
   end
 
   def presented_tagging_spreadsheets
     tagging_spreadsheets.map do |tagging_spreadsheet|
-      TaggingSpreadsheetPresenter.new(tagging_spreadsheet)
+      BulkTagging::TaggingSpreadsheetPresenter.new(tagging_spreadsheet)
     end
   end
 
   def tagging_spreadsheet_params
-    taggging_params = params.require(:tagging_spreadsheet).permit(:url, :description)
+    taggging_params = params.require(:bulk_tagging_tagging_spreadsheet).permit(:url, :description)
     taggging_params["url"] = taggging_params["url"].strip
 
     taggging_params

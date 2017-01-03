@@ -1,7 +1,7 @@
 class BulkTagsController < ApplicationController
   def new
     render :new, locals: {
-      search_results: EmptySearchResponse.new,
+      search_results: BulkTagging::EmptySearchResponse.new,
       query: ''
     }
   end

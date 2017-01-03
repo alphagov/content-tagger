@@ -125,7 +125,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       click_link I18n.t("bulk_tag.view_tagged_pages")
     end
 
-    within "form.new_tag_migration" do
+    within "form.new_bulk_tagging_tag_migration" do
       expect(page).to have_text "Tax doc 1"
       expect(page).to have_link "View on site", href: /tax-doc-1/
       expect(page).to have_text "Tax doc 2"
@@ -145,7 +145,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   def then_i_can_preview_my_changes
     click_button I18n.t("bulk_tagging.preview")
 
-    expect(all("table tbody tr").count).to eq TagMigration.first.aggregated_tag_mappings.count
+    expect(all("table tbody tr").count).to eq BulkTagging::TagMigration.first.aggregated_tag_mappings.count
     expect(page).to have_text("Taxon 1", count: 2)
     expect(page).to have_text("Taxon 2", count: 2)
     expect(page).to have_text("/path/tax-doc-1", count: 1)
@@ -279,7 +279,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_go_to_the_tag_migration_page_and_create_tags
-    tag_migration = TagMigration.last
+    tag_migration = BulkTagging::TagMigration.last
 
     visit tag_migration_path(tag_migration.id)
 
