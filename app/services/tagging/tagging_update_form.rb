@@ -2,7 +2,7 @@ module Tagging
   # ActiveModel-compliant object that is passed into the tagging form.
   class TaggingUpdateForm
     include ActiveModel::Model
-    attr_accessor :content_item, :previous_version, :related_item_errors
+    attr_accessor :content_item, :previous_version, :related_item_errors, :links
 
     delegate :content_id, :allowed_tag_types, to: :content_item
 
@@ -26,6 +26,7 @@ module Tagging
       end
 
       new(
+        links: links,
         content_item: content_item,
         previous_version: links.previous_version,
         **tag_values
@@ -38,6 +39,24 @@ module Tagging
 
     def related_item_errors
       @related_item_errors ||= {}
+    end
+
+    def title_for_related_link(base_path)
+      link = links.ordered_related_items.find { |related_item| related_item.fetch("base_path") == base_path }
+
+      if link.nil?
+        # links is populated from the existing links. When we submit a form and
+        # it fails, we may have additional related links we want to know the
+        # titles of.
+        # In practice this shouldn't actually be visible most of the time,
+        # because with javascript enabled, the user can't enter invalid data,
+        # and without it we don't display the titles. It is still possible to
+        # see errors due to tagging conflicts though.
+        # TODO: attempt to fetch missing links on demand.
+        "Related item"
+      else
+        link.fetch("title")
+      end
     end
 
     def update_attributes_from_form(params)

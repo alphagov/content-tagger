@@ -1,16 +1,37 @@
 <h3>Related content items</h3>
 
+<div class="form-group">
+  <fieldset class="ordered-related-items select2-container select2-container-multi"
+            data-module="related-content-tagger">
+    <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
+      <% @tagging_update.ordered_related_items.each do |base_path| %>
+        <%= render 'related_item_tagging_entry', base_path: base_path, is_template: false %>
+      <% end %>
+    </ul>
+
+    <% # Hidden, empty tag used by JS to asynchronously render the related item template %>
+    <div class="related-item-template hide">
+      <%= render 'related_item_tagging_entry', base_path: '', is_template: true %>
+    </div>
+
+    <div class="add-sortable-input">
+      <div class="input-group">
+        <input id="related_item_new_base_path" type="text" class="form-control" placeholder="URL or path" />
+        <span class="input-group-btn">
+          <button id="lookup_base_path_button" class="btn btn-default" type="button">
+            Add related item
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="error-message related-item-error-message">
+      Not a known URL or path on GOV.UK
+    </div>
+  </fieldset>
+</div>
+
 <p class="explain">
   Related items are displayed in the sidebar. Enter the URL or path of a GOV.UK
   page, such as /pay-vat or /benefit-cap-calculator
 </p>
-
-<% @tagging_update.ordered_related_items.each_with_index do |related_item, index| %>
-  <div class="form-group related-item <%= @tagging_update.related_item_errors[related_item] ? 'has-error' : '' %>">
-    <%= text_field_tag "tagging_tagging_update_form[ordered_related_items][]", related_item, class: ["form-control", "related-item-path"] %>
-
-    <% if @tagging_update.related_item_errors[related_item] %>
-      <span class="help-block"><%= @tagging_update.related_item_errors[related_item] %></span>
-    <% end %>
-  </div>
-<% end %>

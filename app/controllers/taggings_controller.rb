@@ -14,6 +14,22 @@ class TaggingsController < ApplicationController
     end
   end
 
+  def lookup_urls
+    content_lookup = ContentLookupForm.new(base_path: params[:base_path])
+
+    if content_lookup.valid?
+      content_item = ContentItem.find!(content_lookup.content_id)
+
+      render json: {
+        base_path: content_item.base_path,
+        content_id: content_item.content_id,
+        title: content_item.title
+      }
+    else
+      render json: { errors: content_lookup.errors }, status: 404
+    end
+  end
+
   def show
     content_item = ContentItem.find!(params[:content_id])
     @tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
