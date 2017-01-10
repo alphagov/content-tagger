@@ -1,3 +1,6 @@
+$light-gray: #f1f1f1;
+$red: #b10e1e;
+
 @import 'select2';
 @import 'select2-bootstrap';
 @import 'govuk_admin_template';
@@ -5,9 +8,7 @@
 @import 'tag-update-preview';
 @import 'forms';
 @import 'taxonomy-tree';
-
-$light-gray: #f1f1f1;
-$red: #b10e1e;
+@import 'related-item-tagging';
 
 .error-message {
   color: $red;

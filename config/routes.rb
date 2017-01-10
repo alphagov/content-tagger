@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :taggings, only: %i(show update), param: :content_id do
     get '/lookup', action: 'lookup', on: :collection
+    get '/lookup-urls', action: 'lookup_urls', on: :collection
     get '/lookup/:slug', action: 'find_by_slug', on: :collection
     post '/lookup', action: 'find_by_slug', on: :collection
   end

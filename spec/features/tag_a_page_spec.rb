@@ -72,6 +72,56 @@ RSpec.describe "Tagging content", type: :feature do
     and_the_expected_navigation_link_is_highlighted
   end
 
+  context "with javascript disabled", type: :feature, js: false do
+    scenario "the user sets a new related link" do
+      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
+      publishing_api_has_lookups(
+        example_topic["base_path"] => example_topic["content_id"],
+        "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
+      )
+      and_i_am_on_the_page_for_the_item
+      when_i_fill_in_related_items(2 => "/pay-vat")
+      and_i_submit_the_form
+
+      then_the_publishing_api_is_sent(
+        taxons: [],
+        ordered_related_items: [example_topic["content_id"], "a484eaea-eeb6-48fa-92a7-b67c6cd414f6"],
+        mainstream_browse_pages: [],
+        parent: [],
+        topics: [],
+        organisations: [],
+      )
+    end
+
+    scenario "the user sets an invalid related link" do
+      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
+      publishing_api_has_lookups(
+        example_topic["base_path"] => example_topic["content_id"],
+      )
+      and_i_am_on_the_page_for_the_item
+      when_i_fill_in_related_items(2 => "/pay-cat")
+      and_i_submit_the_form
+
+      then_i_am_on_the_page_for_the_item
+      and_i_see_the_url_is_invalid
+    end
+
+    scenario "the user sets a new valid and invalid related link" do
+      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
+      publishing_api_has_lookups(
+        example_topic["base_path"] => example_topic["content_id"],
+        "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
+      )
+      and_i_am_on_the_page_for_the_item
+      when_i_fill_in_related_items(2 => "/pay-vat", 3 => "/pay-cat")
+      and_i_submit_the_form
+
+      then_i_am_on_the_page_for_the_item
+      and_i_see_the_url_is_invalid
+      and_the_related_items_should_be_prefilled_with(2 => "/pay-vat", 3 => "/pay-cat")
+    end
+  end
+
   def when_i_visit_the_homepage
     visit root_path
   end
@@ -125,6 +175,23 @@ RSpec.describe "Tagging content", type: :feature do
     click_on I18n.t('taggings.search')
   end
 
+  def when_i_fill_in_related_items(values)
+    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+      .to_return(status: 200)
+
+    fields = all('.related-item input')
+    values.each do |i, value|
+      fields[i].set(value)
+    end
+  end
+
+  def and_the_related_items_should_be_prefilled_with(values)
+    fields = all('.related-item input')
+    values.each do |i, value|
+      expect(fields[i].value).to eq(value)
+    end
+  end
+
   def then_i_am_on_the_page_for_an_item
     expect(page).to have_content 'This Is A Content Item'
   end
@@ -143,6 +210,10 @@ RSpec.describe "Tagging content", type: :feature do
 
   def then_i_see_that_the_path_was_not_found
     expect(page).to have_content 'No page found with this path'
+  end
+
+  def and_i_see_the_url_is_invalid
+    expect(page).to have_content 'Not a known URL on GOV.UK'
   end
 
   def when_i_select_an_additional_topic(selection)
