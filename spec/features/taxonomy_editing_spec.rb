@@ -9,7 +9,7 @@ RSpec.feature "Taxonomy editing" do
       "I Am A Taxon",
       other_fields: {
         content_id: "ID-1",
-        base_path: "/foo",
+        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
         publication_state: 'active'
       }
     )
@@ -17,21 +17,21 @@ RSpec.feature "Taxonomy editing" do
       "I Am Another Taxon",
       other_fields: {
         content_id: "ID-2",
-        base_path: "/bar",
+        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
         publication_state: 'active'
       }
     )
     @linkable_taxon_1 = {
       title: "I Am A Taxon",
       content_id: "ID-1",
-      base_path: "/foo",
+      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
       internal_name: "I Am A Taxon",
       publication_state: 'active'
     }
     @linkable_taxon_2 = {
       title: "I Am Another Taxon",
       content_id: "ID-2",
-      base_path: "/bar",
+      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
       internal_name: "I Am Another Taxon",
       publication_state: 'active'
     }
@@ -137,12 +137,14 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "My Lovely Taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
+    find('select.path-prefix').find(:xpath, 'option[2]').select_option
+    fill_in :taxon_path_slug, with: '/slug'
 
     select @taxon_1[:title]
-    expect(find('select').value).to include(@taxon_1[:content_id])
+    expect(find('select.select2').value).to include(@taxon_1[:content_id])
 
     select @taxon_2[:title]
-    expect(find('select').value).to include(@taxon_2[:content_id])
+    expect(find('select.select2').value).to include(@taxon_2[:content_id])
     click_on I18n.t('views.taxons.new_button')
   end
 
@@ -150,6 +152,8 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
+    find('select.path-prefix').find(:xpath, 'option[2]').select_option
+    fill_in :taxon_path_slug, with: '/slug'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)

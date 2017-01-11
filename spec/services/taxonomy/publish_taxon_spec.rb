@@ -1,7 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe Taxonomy::PublishTaxon do
-  let(:taxon) { Taxon.new(title: 'A Title') }
+  let(:taxon) do
+    Taxon.new(
+      title: 'A Title',
+      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_slug: '/slug',
+    )
+  end
   let(:publish) { described_class.call(taxon: taxon) }
 
   describe '.call' do

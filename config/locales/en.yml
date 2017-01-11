@@ -7,7 +7,7 @@ en:
     tag_migration: 'Bulk tag history'
     tag_importer: 'Bulk tag by upload'
   errors:
-    invalid_taxon: There was a problem with your request and we were notified about it. We will fix this issue as soon as possible
+    invalid_taxon: There was a problem with your request. The chosen slug may already be in use. We have been notified of the issue and will fix it as soon as possible.
     invalid_hostname: Is not a Google Docs URL
     invalid_path: Does not have the expected public path /spreadsheets/d/<id>/pub
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
@@ -80,7 +80,8 @@ en:
       internal_name: 'Internal taxon name'
       internal_name_hint: 'Displayed in Content Tagger'
       external_name: 'External taxon name'
-      base_path: 'Base Path'
+      path_prefix: 'Path prefix'
+      path_slug: 'Path slug'
       displayed_on_govuk: 'Displayed on GOV.UK'
   controllers:
     bulk_taggings:

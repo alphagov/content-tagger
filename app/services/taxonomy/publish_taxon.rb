@@ -14,6 +14,8 @@ module Taxonomy
     end
 
     def publish
+      raise "Invalid Taxon passed into PublishTaxon" unless taxon.valid?
+
       Services.publishing_api.put_content(content_id, payload)
       Services.publishing_api.publish(content_id, "minor")
       Services.publishing_api.patch_links(

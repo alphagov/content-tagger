@@ -3,11 +3,13 @@
 
 <%= simple_form_for taxon, url: taxon_path(taxon.content_id), method: :patch do |f| %>
   <%= f.hidden_field :content_id, value: taxon.content_id %>
-  <%= f.input :base_path, input_html: { class: 'form-control' },
-  	label: I18n.t('views.taxons.base_path'),
-  	:readonly => true %>
 
-  <%= render partial: 'form_fields', locals: { taxons_for_select: taxons_for_select, f: f} %>
+  <%= render partial: 'form_fields',
+     locals: {
+       f: f,
+       taxons_for_select: taxons_for_select,
+       path_prefixes_for_select: path_prefixes_for_select,
+     } %>
 
   <%= f.submit I18n.t('views.taxons.edit_button'), class: "btn btn-lg btn-success" %>
 <% end %>

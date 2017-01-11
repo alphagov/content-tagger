@@ -13,13 +13,14 @@ RSpec.describe Taxon do
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:description)
     end
-  end
 
-  it 'generates unique base paths for the same title' do
-    taxon_1 = described_class.new(title: 'A Title')
-    taxon_2 = described_class.new(title: 'A Title')
+    it 'is not valid without both a path prefix and a slug' do
+      taxon = described_class.new(path_prefix: '', path_slug: '')
 
-    expect(taxon_1.base_path).to_not eq(taxon_2.base_path)
+      expect(taxon).to_not be_valid
+      expect(taxon.errors.keys).to include(:path_prefix)
+      expect(taxon.errors.keys).to include(:path_slug)
+    end
   end
 
   context 'when internal_name is not set' do
@@ -36,5 +37,50 @@ RSpec.describe Taxon do
 
       expect(taxon.notes_for_editors).to eq('')
     end
+  end
+
+  it 'parses the path prefix and slug from the base path' do
+    taxon = described_class.new(base_path: '/prefix/slug')
+
+    expect(taxon.path_prefix).to eq('/prefix')
+    expect(taxon.path_slug).to eq('/slug')
+  end
+
+  it 'must have an allowed path prefix' do
+    valid_taxon = described_class.new(
+      title: 'Title',
+      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_slug: '/slug',
+    )
+
+    expect(valid_taxon).to be_valid
+
+    invalid_taxon = described_class.new(
+      title: 'Title',
+      path_prefix: '/foo',
+      path_slug: '/slug',
+    )
+
+    expect(invalid_taxon).to_not be_valid
+    expect(invalid_taxon.errors.keys).to include(:path_prefix)
+  end
+
+  it 'must have a slug with alphanumeric characters and dashes only' do
+    valid_taxon = described_class.new(
+      title: 'Title',
+      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_slug: '/ab01-cd02',
+    )
+
+    expect(valid_taxon).to be_valid
+
+    invalid_taxon = described_class.new(
+      title: 'Title',
+      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_slug: '/slug/',
+    )
+
+    expect(invalid_taxon).to_not be_valid
+    expect(invalid_taxon.errors.keys).to include(:path_slug)
   end
 end

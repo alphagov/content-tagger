@@ -8,7 +8,12 @@
     </div>
   <% end %>
 
-  <%= render partial: 'form_fields', locals: { taxons_for_select: taxons_for_select, f: f} %>
+  <%= render partial: 'form_fields',
+    locals: {
+      f: f,
+      taxons_for_select: taxons_for_select,
+      path_prefixes_for_select: path_prefixes_for_select,
+    } %>
 
   <%= f.submit I18n.t('views.taxons.new_button'), class: "btn btn-lg btn-success" %>
 <% end %>
