@@ -2,6 +2,10 @@ require 'rails_helper'
 
 module BulkTagging
   RSpec.describe PublishLinks do
+    before do
+      allow(Services.publishing_api).to receive(:patch_links)
+    end
+
     let(:content_id) { 'a-content-id' }
     let(:tag_mapping) do
       mapping = build(:tag_mapping, tagging_source: build(:tag_migration))
@@ -20,13 +24,13 @@ module BulkTagging
             version: 10
           )
 
-          expect(Services.publishing_api).to receive(:patch_links).with(
+          described_class.new(tag_mapping: tag_mapping).publish
+
+          expect(Services.publishing_api).to have_received(:patch_links).with(
             tag_mapping.content_id,
             links: { 'taxons' => ['existing-content-id', tag_mapping.link_content_id] },
             previous_version: 10
           )
-
-          described_class.new(tag_mapping: tag_mapping).publish
         end
       end
 
@@ -38,13 +42,13 @@ module BulkTagging
             version: 10
           )
 
-          expect(Services.publishing_api).to receive(:patch_links).with(
+          described_class.new(tag_mapping: tag_mapping).publish
+
+          expect(Services.publishing_api).to have_received(:patch_links).with(
             tag_mapping.content_id,
             links: { 'taxons' => [tag_mapping.link_content_id] },
             previous_version: 10
           )
-
-          described_class.new(tag_mapping: tag_mapping).publish
         end
       end
 
@@ -56,13 +60,13 @@ module BulkTagging
             version: 10
           )
 
-          expect(Services.publishing_api).to receive(:patch_links).with(
+          described_class.new(tag_mapping: tag_mapping).publish
+
+          expect(Services.publishing_api).to have_received(:patch_links).with(
             tag_mapping.content_id,
             links: { tag_mapping.link_type => [tag_mapping.link_content_id] },
             previous_version: 10
           )
-
-          described_class.new(tag_mapping: tag_mapping).publish
         end
       end
 
@@ -78,13 +82,13 @@ module BulkTagging
             version: 10
           )
 
-          expect(Services.publishing_api).to receive(:patch_links).with(
+          described_class.new(tag_mapping: tag_mapping).publish
+
+          expect(Services.publishing_api).to have_received(:patch_links).with(
             tag_mapping.content_id,
             links: { tag_mapping.link_type => [tag_mapping.link_content_id] },
             previous_version: 10
           )
-
-          described_class.new(tag_mapping: tag_mapping).publish
         end
       end
     end
