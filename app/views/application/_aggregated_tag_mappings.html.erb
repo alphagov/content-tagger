@@ -1,7 +1,7 @@
 <% aggregated_tag_mappings.each do |aggregated_tagging| %>
   <tr>
     <td>
-      <%= link_to aggregated_tagging.content_base_path, website_url(aggregated_tagging.content_base_path) %>
+      <%= aggregated_tagging.content_base_path %>
     </td>
     <td>
       <% aggregated_tagging.links.each do |tag_link| %>
@@ -26,6 +26,10 @@
         <%= state_label_for(label_type: tag_mapping.label_type, title: tag_mapping.state_title) %>
         <br>
       <% end %>
+    </td>
+
+    <td class="link-to-site">
+      <%= link_to "View on site", website_url(aggregated_tagging.content_base_path) %>
     </td>
   </tr>
 <% end %>
