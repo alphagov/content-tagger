@@ -72,6 +72,14 @@ RSpec.feature "Taxonomy editing" do
     then_my_taxon_is_updated
   end
 
+  scenario "Taxon base path preview", js: true do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_the_edit_taxon_link
+    when_i_change_the_path_slug
+    then_the_base_path_preview_is_updated
+  end
+
   def and_i_click_on_the_edit_taxon_link
     click_link(I18n.t('views.taxons.edit'), match: :prefer_exact)
   end
@@ -137,7 +145,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "My Lovely Taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-    find('select.path-prefix').find(:xpath, 'option[2]').select_option
+    find('select.js-path-prefix').find(:xpath, 'option[2]').select_option
     fill_in :taxon_path_slug, with: '/slug'
 
     select @taxon_1[:title]
@@ -152,13 +160,18 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    find('select.path-prefix').find(:xpath, 'option[2]').select_option
+    find('select.js-path-prefix').find(:xpath, 'option[2]').select_option
     fill_in :taxon_path_slug, with: '/slug'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
 
     click_on I18n.t('views.taxons.new_button')
+  end
+
+  def when_i_change_the_path_slug
+    fill_in :taxon_path_slug, with: '/changed-slug'
+    page.find('body').click # jQuery updates on blur
   end
 
   def then_i_can_see_an_error_message
@@ -175,5 +188,9 @@ RSpec.feature "Taxonomy editing" do
     expect(@update_item).to have_been_requested
     expect(@publish_item).to have_been_requested
     expect(@create_links).to have_been_requested
+  end
+
+  def then_the_base_path_preview_is_updated
+    expect(find('.js-base-path input').value).to have_content '/changed-slug'
   end
 end

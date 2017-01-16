@@ -82,6 +82,8 @@ en:
       external_name: 'External taxon name'
       path_prefix: 'Path prefix'
       path_slug: 'Path slug'
+      base_path: 'Base path'
+      base_path_hint: 'Full base path made from the prefix and the slug'
       displayed_on_govuk: 'Displayed on GOV.UK'
   controllers:
     bulk_taggings:

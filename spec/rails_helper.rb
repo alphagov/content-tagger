@@ -22,6 +22,7 @@ require 'capybara/rails'
 require 'gds_api/test_helpers/publishing_api_v2'
 require 'headless'
 require 'database_cleaner'
+require 'capybara/poltergeist'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -57,7 +58,7 @@ RSpec.configure do |config|
 
   config.around(:each, js: true) do |example|
     DatabaseCleaner.strategy = :truncation
-    Capybara.javascript_driver = :webkit
+    Capybara.javascript_driver = :poltergeist
     headless = Headless.new
     headless.start
 

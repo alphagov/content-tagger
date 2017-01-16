@@ -41,6 +41,14 @@ class Taxon
     @base_path ||= path_prefix + path_slug
   end
 
+  def path_prefix
+    @path_prefix ||= ''
+  end
+
+  def path_slug
+    @path_slug ||= ''
+  end
+
   def link_type
     'taxons'
   end

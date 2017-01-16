@@ -1,9 +1,21 @@
-<%= f.input :path_prefix, input_html: { class: 'form-control path-prefix' },
+<%= f.input :path_prefix,
+  input_html: { class: 'js-path-prefix form-control' },
   label: I18n.t('views.taxons.path_prefix'),
   collection: path_prefixes_for_select %>
 
-<%= f.input :path_slug, input_html: { class: 'form-control' },
+<%= f.input :path_slug,
+  input_html: { class: 'js-path-slug form-control' },
   label: I18n.t('views.taxons.path_slug') %>
+
+<%= f.input :base_path,
+  wrapper_html: { class: 'js-base-path hidden' },
+  input_html: {
+      class: 'form-control',
+      'data-module': 'base-path-preview',
+  },
+  label: I18n.t('views.taxons.base_path'),
+  hint: I18n.t('views.taxons.base_path_hint'),
+  readonly: true %>
 
 <%= f.input :internal_name, input_html: { class: 'form-control' },
   label: I18n.t('views.taxons.internal_name'),
