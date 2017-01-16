@@ -2,6 +2,12 @@
   breadcrumbs: [:taxons, link_to(taxon.internal_name, taxon_path(taxon.content_id)), "Edit"] %>
 
 <%= simple_form_for taxon, url: taxon_path(taxon.content_id), method: :patch do |f| %>
+  <% if flash[:error].present? %>
+    <div class="alert alert-danger" role="alert">
+      <%= flash[:error] %>
+    </div>
+  <% end %>
+
   <%= f.hidden_field :content_id, value: taxon.content_id %>
 
   <%= render partial: 'form_fields',
