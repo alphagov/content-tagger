@@ -14,12 +14,11 @@ RSpec.describe Taxon do
       expect(taxon.errors.keys).to include(:description)
     end
 
-    it 'is not valid without both a path prefix and a slug' do
-      taxon = described_class.new(path_prefix: '', path_slug: '')
+    it 'is not valid without a path prefix' do
+      taxon = described_class.new(path_prefix: '')
 
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:path_prefix)
-      expect(taxon.errors.keys).to include(:path_slug)
     end
   end
 
