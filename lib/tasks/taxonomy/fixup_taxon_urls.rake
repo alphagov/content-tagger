@@ -17,7 +17,11 @@ namespace :taxonomy do
       end
 
       puts "Updating #{taxon.title}'s base path"
-      taxon.base_path = Theme::EDUCATION_THEME_BASE_PATH + '/' + taxon.title.parameterize
+
+      slug = '/' + taxon.title.parameterize
+      # If the slug is the same as the path prefix, this is the top-level taxon
+      taxon.base_path = slug == Theme::EDUCATION_THEME_BASE_PATH ? slug : Theme::EDUCATION_THEME_BASE_PATH + slug
+
       begin
         Taxonomy::PublishTaxon.call(taxon: taxon)
       rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
