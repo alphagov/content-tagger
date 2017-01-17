@@ -171,7 +171,6 @@ RSpec.feature "Taxonomy editing" do
 
   def when_i_change_the_path_slug
     fill_in :taxon_path_slug, with: '/changed-slug'
-    page.find('body').click # jQuery updates on blur
   end
 
   def then_i_can_see_an_error_message

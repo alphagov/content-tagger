@@ -10,7 +10,7 @@
       var pathSlug = $('input.js-path-slug');
 
       pathPrefix.change(updateBasePathPreview);
-      pathSlug.change(updateBasePathPreview);
+      pathSlug.on('keyup', updateBasePathPreview);
 
       basePathWrapper.removeClass('hidden');
 
