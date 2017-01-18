@@ -4,14 +4,21 @@
   <fieldset class="ordered-related-items select2-container select2-container-multi"
             data-module="related-content-tagger">
     <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
-      <% @tagging_update.ordered_related_items.each do |base_path| %>
-        <%= render 'related_item_tagging_entry', base_path: base_path, is_template: false %>
+      <% tagging_update.ordered_related_items.each do |base_path| %>
+        <%= render 'related_item_tagging_entry',
+          base_path: base_path,
+          is_template: false,
+          tagging_update: tagging_update %>
       <% end %>
     </ul>
 
     <% # Hidden, empty tag used by JS to asynchronously render the related item template %>
     <div class="related-item-template hide">
-      <%= render 'related_item_tagging_entry', base_path: '', is_template: true %>
+      <%= render 'related_item_tagging_entry',
+        base_path: '',
+        is_template: true,
+        tagging_update: tagging_update
+      %>
     </div>
 
     <div class="add-sortable-input">

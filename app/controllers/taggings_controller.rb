@@ -1,6 +1,6 @@
 class TaggingsController < ApplicationController
   def lookup
-    @lookup = ContentLookupForm.new
+    render :lookup, locals: { lookup: ContentLookupForm.new }
   end
 
   def find_by_slug
@@ -9,8 +9,7 @@ class TaggingsController < ApplicationController
     if content_lookup.valid?
       redirect_to tagging_path(content_lookup.content_id)
     else
-      @lookup = content_lookup
-      render 'lookup'
+      render :lookup, locals: { lookup: content_lookup }
     end
   end
 
@@ -32,7 +31,10 @@ class TaggingsController < ApplicationController
 
   def show
     content_item = ContentItem.find!(params[:content_id])
-    @tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
+
+    render :show, locals: {
+      tagging_update: Tagging::TaggingUpdateForm.from_content_item(content_item)
+    }
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
   end
@@ -44,12 +46,12 @@ class TaggingsController < ApplicationController
     if publisher.save_to_publishing_api
       redirect_to :back, success: "Tags have been updated!"
     else
-      @tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
-      @tagging_update.related_item_errors = publisher.errors
-      @tagging_update.update_attributes_from_form(params[:tagging_tagging_update_form])
+      tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
+      tagging_update.related_item_errors = publisher.errors
+      tagging_update.update_attributes_from_form(params[:tagging_tagging_update_form])
 
       flash.now[:danger] = "This form contains errors. Please correct them and try again."
-      render 'show'
+      render :show, locals: { tagging_update: tagging_update }
     end
   rescue GdsApi::HTTPConflict
     redirect_to :back, danger: "Somebody changed the tags before you could. Your changes have not been saved."

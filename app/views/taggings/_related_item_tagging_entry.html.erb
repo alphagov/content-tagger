@@ -1,10 +1,10 @@
 <li class="related-content-item-entry">
   <% # JavaScript-specific HTML, which should only be included in tags with populated, error-free base paths,
      # or for the template used by JavaScript to create new tags %>
-  <% if is_template || (!base_path.blank? && !@tagging_update.related_item_errors[base_path]) %>
+  <% if is_template || (!base_path.blank? && !tagging_update.related_item_errors[base_path]) %>
     <div class="title select2-search-choice ui-sortable-handle ">
       <a href="https://www.gov.uk<%= base_path %>" class="js-artefact-name">
-        <%= @tagging_update.title_for_related_link(base_path) %> (<%= base_path %>)
+        <%= tagging_update.title_for_related_link(base_path) %> (<%= base_path %>)
       </a>
 
       <a href="#" class="select2-search-choice-close" tabindex="-1"></a>
@@ -13,13 +13,13 @@
     </div>
   <% end %>
 
-  <div class="related-item value <%= @tagging_update.related_item_errors[base_path] ? 'has-error' : '' %>">
+  <div class="related-item value <%= tagging_update.related_item_errors[base_path] ? 'has-error' : '' %>">
     <%= text_field_tag "tagging_tagging_update_form[ordered_related_items][]",
       base_path,
       class: "form-control related-item-path" %>
 
     <span class="help-block">
-      <%= @tagging_update.related_item_errors[base_path] %>
+      <%= tagging_update.related_item_errors[base_path] %>
     </span>
   </div>
 </li>
