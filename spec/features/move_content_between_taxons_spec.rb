@@ -4,6 +4,8 @@ RSpec.feature "Move content between Taxons", type: :feature do
   include ContentItemHelper
   include PublishingApiHelper
 
+  before { Sidekiq::Testing.inline! }
+
   scenario "Successfully move content between existing taxons" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
@@ -13,7 +15,23 @@ RSpec.feature "Move content between Taxons", type: :feature do
     and_select_all_content
     and_preview_my_changes
     then_i_can_see_that_the_old_taxon_link_will_be_removed
-    and_all_content_has_been_moved_when_i_start_the_content_move
+    and_all_content_can_be_moved_when_i_start_the_content_move
+    and_i_start_tagging
+    then_i_should_see_both_of_the_pages_have_been_moved
+  end
+
+  scenario "Attempting to move draft content between taxons" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_view_the_first_taxon
+    and_click_to_move_content_to_another_taxon
+    and_select_a_taxon_to_move_content_to
+    and_select_all_content
+    and_preview_my_changes
+    then_i_can_see_that_the_old_taxon_link_will_be_removed
+    and_only_published_content_can_be_moved_when_i_start_the_content_move
+    and_i_start_tagging
+    then_i_should_see_that_the_url_couldnt_be_found
   end
 
   def given_there_are_taxons
@@ -110,7 +128,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
     )
   end
 
-  def and_all_content_has_been_moved_when_i_start_the_content_move
+  def and_all_content_can_be_moved_when_i_start_the_content_move
     # Lookups to fetch the content ID based on existing base paths
     publishing_api_has_lookups(
       @document_1[:base_path] => @document_1[:content_id],
@@ -128,8 +146,30 @@ RSpec.feature "Move content between Taxons", type: :feature do
       @source_taxon,
       @dest_taxon
     )
+  end
 
-    Sidekiq::Testing.inline!
+  def and_only_published_content_can_be_moved_when_i_start_the_content_move
+    publishing_api_has_lookups(
+      @document_2[:base_path] => @document_2[:content_id]
+    )
+
+    # Make sure we assert the correct API calls are made
+    assert_content_items_have_been_moved_for_document(
+      @document_2,
+      @source_taxon,
+      @dest_taxon
+    )
+  end
+
+  def then_i_should_see_both_of_the_pages_have_been_moved
+    expect(page).to have_text('2 of 2 pages updated')
+  end
+
+  def then_i_should_see_that_the_url_couldnt_be_found
+    expect(page).to have_text('We could not find this URL on GOV.UK.')
+  end
+
+  def and_i_start_tagging
     click_link I18n.t('bulk_tagging.start_tagging')
   end
 

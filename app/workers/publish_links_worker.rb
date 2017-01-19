@@ -10,7 +10,7 @@ class PublishLinksWorker
     # time the job runs.
     return if tag_mapping.blank?
 
-    if tag_mapping.valid?(context: :update_links)
+    if tag_mapping.valid?(:update_links)
       BulkTagging::PublishLinks.call(tag_mapping: tag_mapping)
       tag_mapping.mark_as_tagged
     else

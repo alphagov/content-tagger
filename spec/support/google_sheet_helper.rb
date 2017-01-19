@@ -32,4 +32,10 @@ module GoogleSheetHelper
       hash[base_path] = fake_content_id
     end
   end
+
+  def google_sheet_content_items_with_draft
+    items = google_sheet_content_items
+    items["/content-2/"] = nil
+    items
+  end
 end
