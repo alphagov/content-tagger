@@ -4,7 +4,11 @@
 
   <% tagging_update.allowed_tag_types.each do |tag_type| %>
     <div class='tag-section'>
-      <%= render "form_for_#{tag_type}", { f: f, linkables: tagging_update.linkables } %>
+      <%= render "form_for_#{tag_type}", {
+        f: f,
+        linkables: tagging_update.linkables,
+        tagging_update: tagging_update
+      } %>
     </div>
   <% end %>
 

@@ -1,8 +1,8 @@
-<%= display_header title: "Add or remove tags from #{@tagging_update.content_item.title}",
-  breadcrumbs: [link_to(t('navigation.tagging_content'), lookup_taggings_path), @tagging_update.content_item] %>
+<%= display_header title: "Add or remove tags from #{tagging_update.content_item.title}",
+  breadcrumbs: [link_to(t('navigation.tagging_content'), lookup_taggings_path), tagging_update.content_item] %>
 
 <div class='view-on-site'>
-  View on site: <%= link_to @tagging_update.content_item.base_path, website_url(@tagging_update.content_item.base_path), target: "_blank" %>
+  View on site: <%= link_to tagging_update.content_item.base_path, website_url(tagging_update.content_item.base_path), target: "_blank" %>
 </div>
 
 <hr/>
@@ -10,7 +10,7 @@
 <%= render(
   partial: 'tagging_form',
   locals: {
-    tagging_update: @tagging_update,
+    tagging_update: tagging_update,
   }
 )
 %>

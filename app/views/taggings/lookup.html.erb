@@ -5,7 +5,7 @@
   Enter the URL or path of a GOV.UK page to edit its tagging or related links.
 </div>
 
-<%= simple_form_for @lookup, url: lookup_taggings_path do |f| %>
+<%= simple_form_for lookup, url: lookup_taggings_path do |f| %>
   <div class="form-group">
     <%= f.input :base_path,
       label: false,
