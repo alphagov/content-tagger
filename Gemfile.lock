@@ -41,6 +41,9 @@ GEM
     airbrake (4.3.8)
       builder
       multi_json
+    appsignal (2.0.5)
+      rack
+      thread_safe
     arel (6.0.3)
     ast (2.3.0)
     autoprefixer-rails (6.4.1.1)
@@ -350,6 +353,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake (~> 4.3.1)
+  appsignal (~> 2.0)
   awesome_print
   better_errors
   bootstrap-kaminari-views (~> 0.0.5)
