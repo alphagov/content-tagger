@@ -2,7 +2,8 @@ module BulkTagging
   class TagMigrationPresenter < SimpleDelegator
     def label_type
       {
-        imported: 'label-success'
+        imported: 'label-success',
+        errored: 'label-danger',
       }.fetch(state.to_sym, 'label-warning')
     end
 
