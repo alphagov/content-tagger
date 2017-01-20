@@ -48,6 +48,7 @@ RSpec.describe Taxon do
   it 'must have an allowed path prefix' do
     valid_taxon = described_class.new(
       title: 'Title',
+      description: 'Description',
       path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
       path_slug: '/slug',
     )
@@ -56,6 +57,7 @@ RSpec.describe Taxon do
 
     invalid_taxon = described_class.new(
       title: 'Title',
+      description: 'Description',
       path_prefix: '/foo',
       path_slug: '/slug',
     )
@@ -67,6 +69,7 @@ RSpec.describe Taxon do
   it 'must have a slug with alphanumeric characters and dashes only' do
     valid_taxon = described_class.new(
       title: 'Title',
+      description: 'Description',
       path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
       path_slug: '/ab01-cd02',
     )
@@ -75,6 +78,7 @@ RSpec.describe Taxon do
 
     invalid_taxon = described_class.new(
       title: 'Title',
+      description: 'Description',
       path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
       path_slug: '/slug/',
     )

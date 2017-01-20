@@ -4,6 +4,7 @@ RSpec.describe Taxonomy::PublishTaxon do
   let(:taxon) do
     Taxon.new(
       title: 'A Title',
+      description: 'Description',
       path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
       path_slug: '/slug',
     )
