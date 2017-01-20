@@ -12,6 +12,7 @@ gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'gds-api-adapters', '~> 37.2'
 
 gem 'airbrake', '~> 4.3.1'
+gem 'appsignal', '~> 2.0'
 
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
