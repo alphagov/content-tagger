@@ -5,6 +5,8 @@ class Taxon
     :parent_taxons,
     :content_id,
     :base_path,
+    :path_prefix,
+    :path_slug,
     :publication_state,
     :internal_name,
     :notes_for_editors,
@@ -13,7 +15,9 @@ class Taxon
 
   include ActiveModel::Model
 
-  validates_presence_of :title, :description, :internal_name
+  validates_presence_of :title, :description, :internal_name, :path_prefix
+  validates :path_prefix, inclusion: { in: Theme.taxon_path_prefixes }
+  validates :path_slug, allow_blank: true, format: { with: %r{\A/[a-zA-Z0-9\-]+\z} }
   validates_with CircularDependencyValidator
 
   def parent_taxons
@@ -24,8 +28,25 @@ class Taxon
     @content_id ||= SecureRandom.uuid
   end
 
+  def base_path=(base_path)
+    path_components = %r{(?<prefix>/[^/]+)(?<slug>/.+)?}.match(base_path)
+
+    unless path_components.nil?
+      @path_prefix = path_components['prefix']
+      @path_slug = path_components['slug']
+    end
+  end
+
   def base_path
-    @base_path ||= '/alpha-taxonomy/' + SecureRandom.uuid + '-' + title.parameterize
+    @base_path ||= path_prefix + path_slug
+  end
+
+  def path_prefix
+    @path_prefix ||= ''
+  end
+
+  def path_slug
+    @path_slug ||= ''
   end
 
   def link_type

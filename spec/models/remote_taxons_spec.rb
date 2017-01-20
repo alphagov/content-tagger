@@ -55,21 +55,21 @@ RSpec.describe RemoteTaxons do
       taxon_1 = content_item_with_details(
         "foo",
         other_fields: {
-          base_path: "/foo",
+          base_path: "/foo/1",
           content_id: taxon_id_1
         }
       )
       taxon_2 = content_item_with_details(
         "bar",
         other_fields: {
-          base_path: "/bar",
+          base_path: "/bar/2",
           content_id: taxon_id_2
         }
       )
       taxon_3 = content_item_with_details(
         "bar",
         other_fields: {
-          base_path: "/bar",
+          base_path: "/bar/3",
           content_id: taxon_id_3
         }
       )

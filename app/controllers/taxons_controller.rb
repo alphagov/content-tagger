@@ -17,6 +17,7 @@ class TaxonsController < ApplicationController
     render :new, locals: {
       taxon: Taxon.new,
       taxons_for_select: taxons_for_select,
+      path_prefixes_for_select: path_prefixes_for_select,
     }
   end
 
@@ -28,11 +29,15 @@ class TaxonsController < ApplicationController
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      locals = { taxon: taxon, taxons_for_select: taxons_for_select }
-      render :new, locals: locals, flash: { error: error_messages }
+      locals = {
+        taxon: taxon,
+        taxons_for_select: taxons_for_select,
+        path_prefixes_for_select: path_prefixes_for_select,
+      }
+      render :new, locals: locals, flash: { danger: error_messages }
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to(new_taxon_path, flash: { error: e.message })
+    redirect_to(new_taxon_path, flash: { danger: e.message })
   end
 
   def show
@@ -50,6 +55,7 @@ class TaxonsController < ApplicationController
     render :edit, locals: {
       taxon: taxon,
       taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id),
+      path_prefixes_for_select: path_prefixes_for_select,
     }
   end
 
@@ -61,11 +67,15 @@ class TaxonsController < ApplicationController
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      locals = { taxon: taxon, taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id) }
-      render :edit, locals: locals, flash: { error: error_messages }
+      locals = {
+        taxon: taxon,
+        taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id),
+        path_prefixes_for_select: path_prefixes_for_select,
+      }
+      render :edit, locals: locals, flash: { danger: error_messages }
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to edit_taxon_path(new_taxon.content_id), flash: { error: e.message }
+    redirect_to edit_taxon_path(taxon.content_id), flash: { danger: e.message }
   end
 
   def destroy
@@ -91,6 +101,10 @@ private
     else
       { alert: I18n.t('controllers.taxons.alert') }
     end
+  end
+
+  def path_prefixes_for_select
+    Theme.taxon_path_prefixes
   end
 
   def taxons_for_select(exclude_ids: nil)

@@ -63,16 +63,14 @@ GEM
       sass (>= 3.3.0)
     builder (3.2.2)
     byebug (9.0.5)
-    capybara (2.7.1)
+    capybara (2.11.0)
       addressable
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.11.1)
-      capybara (>= 2.3.0, < 2.8.0)
-      json
+    cliver (0.3.2)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
@@ -192,6 +190,11 @@ GEM
     pg (0.18.4)
     pkg-config (1.1.7)
     plek (1.12.0)
+    poltergeist (1.7.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     powerpack (0.1.1)
     pry (0.10.3)
       coderay (~> 1.1.0)
@@ -345,6 +348,9 @@ GEM
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
+    websocket-driver (0.6.4)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -358,7 +364,6 @@ DEPENDENCIES
   better_errors
   bootstrap-kaminari-views (~> 0.0.5)
   capybara
-  capybara-webkit
   database_cleaner
   factory_girl_rails
   gds-api-adapters (~> 37.2)
@@ -373,6 +378,7 @@ DEPENDENCIES
   logstasher (= 0.6.2)
   pg
   plek (~> 1.10)
+  poltergeist
   pry-byebug
   quiet_assets
   rails (= 4.2.7.1)

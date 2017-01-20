@@ -2,13 +2,13 @@
   breadcrumbs: [:taxons, I18n.t('views.taxons.new_breadcrumb')] %>
 
 <%= simple_form_for taxon, url: taxons_path do |f| %>
-  <% if flash[:error].present? %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:error] %>
-    </div>
-  <% end %>
 
-  <%= render partial: 'form_fields', locals: { taxons_for_select: taxons_for_select, f: f} %>
+  <%= render partial: 'form_fields',
+    locals: {
+      f: f,
+      taxons_for_select: taxons_for_select,
+      path_prefixes_for_select: path_prefixes_for_select,
+    } %>
 
   <%= f.submit I18n.t('views.taxons.new_button'), class: "btn btn-lg btn-success" %>
 <% end %>
