@@ -13,7 +13,7 @@ class Taxon
 
   include ActiveModel::Model
 
-  validates_presence_of :title, :internal_name
+  validates_presence_of :title, :description, :internal_name
   validates_with CircularDependencyValidator
 
   def parent_taxons

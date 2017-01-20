@@ -7,6 +7,12 @@ RSpec.describe Taxon do
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:title)
     end
+
+    it 'is not valid without a description' do
+      taxon = described_class.new
+      expect(taxon).to_not be_valid
+      expect(taxon.errors.keys).to include(:description)
+    end
   end
 
   it 'generates unique base paths for the same title' do
