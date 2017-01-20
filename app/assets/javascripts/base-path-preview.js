@@ -12,6 +12,7 @@
       pathPrefix.change(updateBasePathPreview);
       pathSlug.on('keyup', updateBasePathPreview);
 
+      updateBasePathPreview();
       basePathWrapper.removeClass('hidden');
 
       function updateBasePathPreview() {

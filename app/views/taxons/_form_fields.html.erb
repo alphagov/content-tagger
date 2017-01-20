@@ -7,7 +7,8 @@
   input_html: { class: 'js-path-slug form-control' },
   label: I18n.t('views.taxons.path_slug') %>
 
-<%= f.input :base_path,
+<%= f.input :base_path_preview,
+  as: :fake,
   wrapper_html: { class: 'js-base-path hidden' },
   input_html: {
       class: 'form-control',
