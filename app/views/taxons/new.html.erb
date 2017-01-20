@@ -2,11 +2,6 @@
   breadcrumbs: [:taxons, I18n.t('views.taxons.new_breadcrumb')] %>
 
 <%= simple_form_for taxon, url: taxons_path do |f| %>
-  <% if flash[:error].present? %>
-    <div class="alert alert-danger" role="alert">
-      <%= flash[:error] %>
-    </div>
-  <% end %>
 
   <%= render partial: 'form_fields',
     locals: {

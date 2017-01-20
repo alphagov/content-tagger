@@ -34,10 +34,10 @@ class TaxonsController < ApplicationController
         taxons_for_select: taxons_for_select,
         path_prefixes_for_select: path_prefixes_for_select,
       }
-      render :new, locals: locals, flash: { error: error_messages }
+      render :new, locals: locals, flash: { danger: error_messages }
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to(new_taxon_path, flash: { error: e.message })
+    redirect_to(new_taxon_path, flash: { danger: e.message })
   end
 
   def show
@@ -72,10 +72,10 @@ class TaxonsController < ApplicationController
         taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id),
         path_prefixes_for_select: path_prefixes_for_select,
       }
-      render :edit, locals: locals, flash: { error: error_messages }
+      render :edit, locals: locals, flash: { danger: error_messages }
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to edit_taxon_path(taxon.content_id), flash: { error: e.message }
+    redirect_to edit_taxon_path(taxon.content_id), flash: { danger: e.message }
   end
 
   def destroy
