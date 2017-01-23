@@ -24,7 +24,7 @@ namespace :taxonomy do
 
       begin
         Taxonomy::PublishTaxon.call(taxon: taxon)
-      rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
+      rescue => e
         puts "#{taxon.title} is invalid"
         puts e.cause
         errors.push(taxon_base_path: taxon.base_path, taxon_id: taxon.content_id, e: e)
