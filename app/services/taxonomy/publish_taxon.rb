@@ -9,12 +9,12 @@ module Taxonomy
       @taxon = taxon
     end
 
-    def self.call(taxon:)
-      new(taxon: taxon).publish
+    def self.call(taxon:, validate: true)
+      new(taxon: taxon).publish(validate: validate)
     end
 
-    def publish
-      raise "Invalid Taxon passed into PublishTaxon" unless taxon.valid?
+    def publish(validate: true)
+      raise "Invalid Taxon passed into PublishTaxon" if validate && !taxon.valid?
 
       Services.publishing_api.put_content(content_id, payload)
       Services.publishing_api.publish(content_id, "minor")
