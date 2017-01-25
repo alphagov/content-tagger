@@ -3,7 +3,8 @@
     <%= f.input :path_prefix,
       input_html: { class: 'js-path-prefix form-control' },
       label: I18n.t('views.taxons.path_prefix'),
-      collection: path_prefixes_for_select %>
+      collection: path_prefixes_for_select,
+      include_blank: false %>
   </div>
 
   <div class='col-md-9'>
