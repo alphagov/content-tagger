@@ -1,11 +1,17 @@
-<%= f.input :path_prefix,
-  input_html: { class: 'js-path-prefix form-control' },
-  label: I18n.t('views.taxons.path_prefix'),
-  collection: path_prefixes_for_select %>
+<div class='row'>
+  <div class='col-md-3'>
+    <%= f.input :path_prefix,
+      input_html: { class: 'js-path-prefix form-control' },
+      label: I18n.t('views.taxons.path_prefix'),
+      collection: path_prefixes_for_select %>
+  </div>
 
-<%= f.input :path_slug,
-  input_html: { class: 'js-path-slug form-control' },
-  label: I18n.t('views.taxons.path_slug') %>
+  <div class='col-md-9'>
+    <%= f.input :path_slug,
+      input_html: { class: 'js-path-slug form-control' },
+      label: I18n.t('views.taxons.path_slug') %>
+  </div>
+</div>
 
 <%= f.input :base_path_preview,
   as: :fake,
