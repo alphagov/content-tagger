@@ -82,8 +82,7 @@ en:
       external_name: 'External taxon name'
       path_prefix: 'Theme'
       path_slug: 'Slug'
-      base_path: 'Base path'
-      base_path_hint: 'Full base path made from the prefix and the slug'
+      preview: 'The URL of the navigation page will be:'
       displayed_on_govuk: 'Displayed on GOV.UK'
   controllers:
     bulk_taggings:

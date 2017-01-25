@@ -13,16 +13,9 @@
   </div>
 </div>
 
-<%= f.input :base_path_preview,
-  as: :fake,
-  wrapper_html: { class: 'js-base-path hidden' },
-  input_html: {
-      class: 'form-control',
-      'data-module': 'base-path-preview',
-  },
-  label: I18n.t('views.taxons.base_path'),
-  hint: I18n.t('views.taxons.base_path_hint'),
-  readonly: true %>
+<div class='js-base-path' data-module='base-path-preview'>
+  <%= I18n.t('views.taxons.preview') %> <strong class='base-path'>asdd</strong>
+</div>
 
 <%= f.input :internal_name, input_html: { class: 'form-control' },
   label: I18n.t('views.taxons.internal_name'),
