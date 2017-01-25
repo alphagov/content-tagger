@@ -3,9 +3,8 @@
 
   Modules.BasePathPreview = function () {
     this.start = function() {
-
       var basePathWrapper = $('.js-base-path');
-      var basePath = $('.js-base-path input');
+      var basePath = $('.js-base-path .base-path');
       var pathPrefix = $('select.js-path-prefix');
       var pathSlug = $('input.js-path-slug');
 
@@ -16,7 +15,7 @@
       basePathWrapper.removeClass('hidden');
 
       function updateBasePathPreview() {
-        basePath.val(pathPrefix.val() + pathSlug.val());
+        basePath.html(pathPrefix.val() + pathSlug.val());
       }
 
     };

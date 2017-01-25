@@ -80,10 +80,9 @@ en:
       internal_name: 'Internal taxon name'
       internal_name_hint: 'Displayed in Content Tagger'
       external_name: 'External taxon name'
-      path_prefix: 'Path prefix'
-      path_slug: 'Path slug'
-      base_path: 'Base path'
-      base_path_hint: 'Full base path made from the prefix and the slug'
+      path_prefix: 'Theme'
+      path_slug: 'Slug'
+      preview: 'The URL of the navigation page will be:'
       displayed_on_govuk: 'Displayed on GOV.UK'
   controllers:
     bulk_taggings:

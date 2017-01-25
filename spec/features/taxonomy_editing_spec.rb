@@ -190,6 +190,6 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def then_the_base_path_preview_is_updated
-    expect(find('.js-base-path input').value).to have_content '/changed-slug'
+    expect(find('.js-base-path .base-path').text).to eql('/education-training-and-skills/changed-slug')
   end
 end
