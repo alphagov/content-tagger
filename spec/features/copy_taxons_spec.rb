@@ -16,7 +16,8 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'active'
+        publication_state: 'active',
+        internal_name: "I am an internal name",
       }
     )
     @taxon_2 = basic_content_item(
@@ -24,7 +25,8 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'active'
+        publication_state: 'active',
+        internal_name: "I am another internal name",
       }
     )
 
@@ -55,15 +57,15 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
     table_head = table.all('thead th').map(&:text)
     table_body = table.find('tbody').text
 
-    expect(table_head).to include(/title/i)
+    expect(table_head).to include(/taxon/i)
     expect(table_head).to include(/content id/i)
     expect(table_head).to include(/link type/i)
 
     expect(table_body).to include(@taxon_1[:content_id])
-    expect(table_body).to include(@taxon_1[:title])
+    expect(table_body).to include(@taxon_1[:internal_name])
 
     expect(table_body).to include(@taxon_2[:content_id])
-    expect(table_body).to include(@taxon_2[:title])
+    expect(table_body).to include(@taxon_2[:internal_name])
     expect(table_body).to include('taxons')
   end
 end
