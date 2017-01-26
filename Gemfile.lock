@@ -294,7 +294,7 @@ GEM
       activesupport
       sidekiq (>= 2.6)
       statsd-ruby (>= 1.1.0)
-    simple_form (3.2.1)
+    simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
     simplecov (0.10.0)
