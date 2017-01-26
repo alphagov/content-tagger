@@ -145,7 +145,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "My Lovely Taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-    find('select.js-path-prefix').find(:xpath, 'option[2]').select_option
+    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
     fill_in :taxon_path_slug, with: '/slug'
 
     select @taxon_1[:title]
@@ -160,7 +160,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    find('select.js-path-prefix').find(:xpath, 'option[2]').select_option
+    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
     fill_in :taxon_path_slug, with: '/slug'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
