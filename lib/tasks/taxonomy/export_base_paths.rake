@@ -11,7 +11,7 @@ namespace :taxonomy do
     output = {}
 
     chosen_taxon = OpenStruct.new Services.publishing_api.get_content(taxon_id).to_h
-    taxonomy = ExpandedTaxonomy.new(chosen_taxon.content_id)
+    taxonomy = Taxonomy::ExpandedTaxonomy.new(chosen_taxon.content_id)
     taxonomy.build_child_expansion
 
     taxons = taxonomy.child_expansion.map do |node|
