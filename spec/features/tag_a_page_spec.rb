@@ -28,6 +28,7 @@ RSpec.describe "Tagging content", type: :feature do
       parent: [],
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
       organisations: [],
+      meets_user_needs: [],
     )
   end
 
@@ -45,6 +46,7 @@ RSpec.describe "Tagging content", type: :feature do
       parent: [],
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
       organisations: [],
+      meets_user_needs: [],
     )
   end
 
@@ -90,6 +92,7 @@ RSpec.describe "Tagging content", type: :feature do
         parent: [],
         topics: [],
         organisations: [],
+        meets_user_needs: [],
       )
     end
 
@@ -262,6 +265,12 @@ RSpec.describe "Tagging content", type: :feature do
     publishing_api_has_organisation_linkables(
       [
         "/government/organisations/student-loans-company",
+      ]
+    )
+
+    publishing_api_has_need_linkables(
+      [
+        "/needs/apply-for-a-copy-of-a-marriage-certificate",
       ]
     )
 
