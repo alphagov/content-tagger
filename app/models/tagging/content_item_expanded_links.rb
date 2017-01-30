@@ -10,6 +10,7 @@ module Tagging
       parent
       topics
       organisations
+      meets_user_needs
     ).freeze
 
     attr_accessor(*TAG_TYPES)

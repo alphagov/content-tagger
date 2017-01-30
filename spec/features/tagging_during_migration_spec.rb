@@ -26,6 +26,11 @@ RSpec.describe "Tagging content during migration", type: :feature do
         "/topic/business-tax/pension-scheme-administration",
       ]
     )
+    publishing_api_has_need_linkables(
+      [
+        "/needs/apply-for-a-copy-of-a-marriage-certificate",
+      ]
+    )
   end
 
   def given_there_is_an_item_that_can_have_only_one_link_type
