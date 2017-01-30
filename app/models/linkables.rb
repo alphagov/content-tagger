@@ -22,8 +22,11 @@ class Linkables
 
 private
 
-  def for_document_type(document_type)
+  def for_document_type(document_type, include_draft: true)
     items = get_tags_of_type(document_type)
+    unless include_draft
+      items = items.reject { |x| x['publication_state'] == 'draft' }
+    end
     present_items(items)
   end
 
