@@ -40,7 +40,7 @@ module BulkTagging
         content_base_path:  cast_and_strip(row["content_base_path"]),
         link_title:         cast_and_strip(row["link_title"]),
         link_content_id:    cast_and_strip(row["link_content_id"]),
-        link_type:          cast_and_strip(row["link_type"]),
+        link_type:          'taxons',
         state:              'ready_to_tag',
       )
     end
