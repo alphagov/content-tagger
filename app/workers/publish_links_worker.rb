@@ -11,8 +11,21 @@ class PublishLinksWorker
     return if tag_mapping.blank?
 
     if tag_mapping.valid?(:update_links)
-      BulkTagging::PublishLinks.call(tag_mapping: tag_mapping)
-      tag_mapping.mark_as_tagged
+      attempts = 0
+      begin
+        attempts += 1
+        BulkTagging::PublishLinks.call(tag_mapping: tag_mapping)
+        tag_mapping.mark_as_tagged
+      rescue GdsApi::HTTPConflict => e
+        # If multiple jobs reference the same content_id then some will fail
+        # with a lock version conflict. We can safely retry such jobs since
+        # they always fetch the latest version before updating links. We catch
+        # the exception to prevent it being reported, but then need to retry
+        # manually since Sidekiq won't see it. After 5 retries we re-raise the
+        # exception and let Sidekiq handle it.
+        raise e if attempts >= 5
+        retry
+      end
     else
       tag_mapping.mark_as_errored
     end
