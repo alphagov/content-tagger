@@ -12,8 +12,12 @@ private
 
   helper_method :active_navigation_item, :website_url
 
-  def website_url(base_path)
-    Plek.new.website_root + base_path
+  def website_url(base_path, draft: false)
+    if draft
+      Plek.new.find('draft-origin') + base_path
+    else
+      Plek.new.website_root + base_path
+    end
   end
 
   def active_navigation_item

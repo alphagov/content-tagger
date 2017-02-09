@@ -9,6 +9,7 @@ RSpec.describe ContentItem do
       'base_path'      => '/a-content-item',
       'publishing_app' => 'publisher',
       'rendering_app'  => 'frontend',
+      'state'          => 'draft',
     }
   end
 

@@ -16,8 +16,11 @@
           <%= check_box_tag 'content_base_paths[]',
             expanded_link.base_path, false, class: 'select-content-item' %>
         </td>
-        <td><%= expanded_link.title %></td>
-        <td><%= link_to 'View on site', website_url(expanded_link.base_path) %></td>
+        <td>
+          <%= expanded_link.title %>
+          <%- if expanded_link.draft? %><%= expanded_link_label(expanded_link) %><%- end %>
+        </td>
+        <td><%= link_to 'View on site', website_url(expanded_link.base_path, draft: expanded_link.draft?) %></td>
       </tr>
     <% end %>
   </tbody>

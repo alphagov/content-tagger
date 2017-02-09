@@ -1,5 +1,13 @@
 class ContentItem
-  attr_reader :content_id, :title, :base_path, :publishing_app, :rendering_app, :document_type
+  attr_reader(
+    :content_id,
+    :title,
+    :base_path,
+    :publishing_app,
+    :rendering_app,
+    :document_type,
+    :state,
+  )
 
   def initialize(data)
     @content_id = data.fetch('content_id')
@@ -8,6 +16,7 @@ class ContentItem
     @publishing_app = data.fetch('publishing_app', nil)
     @rendering_app = data.fetch('rendering_app', nil)
     @document_type = data.fetch('document_type')
+    @state = data.fetch('state', nil)
   end
 
   def self.find!(content_id)
@@ -16,6 +25,10 @@ class ContentItem
     new(content_item.to_h)
   rescue GdsApi::HTTPNotFound
     raise ItemNotFoundError
+  end
+
+  def draft?
+    state == 'draft'
   end
 
   def link_set
