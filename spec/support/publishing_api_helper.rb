@@ -4,7 +4,8 @@ module PublishingApiHelper
       document_type: BulkTagging::Search.default_document_types,
       page: 1,
       q: '',
-      fields: [:content_id, :document_type, :title, :base_path]
+      fields: [:content_id, :document_type, :title, :base_path],
+      search_in: [:title, :base_path, :'details.internal_name']
     }
 
     publishing_api_has_content(
