@@ -6,7 +6,7 @@ namespace :taxonomy do
     taxon as a starting point. The script will print to STDOUT base paths for
     all content tagged to the chosen taxon and all of its children.
   DESC
-  task :export_base_paths, [:taxon_id] => :environment do |_, args|
+  task :export_tagged_content, [:taxon_id] => :environment do |_, args|
     taxon_id = args.fetch(:taxon_id)
     output = {}
 
