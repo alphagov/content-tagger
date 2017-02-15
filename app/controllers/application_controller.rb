@@ -10,7 +10,11 @@ class ApplicationController < ActionController::Base
 
 private
 
-  helper_method :active_navigation_item, :website_url
+  helper_method(
+    :active_navigation_item,
+    :website_url,
+    :similar_search_results_url
+  )
 
   def website_url(base_path, draft: false)
     if draft
@@ -18,6 +22,11 @@ private
     else
       Plek.new.website_root + base_path
     end
+  end
+
+  def similar_search_results_url(base_path)
+    Plek.new.find('search-admin') +
+      "/similar-search-results/result?base_path=#{base_path}"
   end
 
   def active_navigation_item

@@ -4,7 +4,8 @@
       <tr class="table-header">
         <th>Page</th>
         <th>Format</th>
-        <th>Actions</th>
+        <th></th>
+        <th></th>
       </tr>
 
       <%= render partial: 'shared/table_filter' %>
@@ -15,7 +16,23 @@
         <tr>
           <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
           <td><%= content_item["document_type"].humanize %></td>
-          <td><%= link_to t('views.taxons.edit_tagging'), tagging_url(content_item["content_id"]) %></td>
+          <td>
+            <%=
+              link_to(
+                t('views.taxons.edit_tagging'),
+                tagging_url(content_item["content_id"])
+              )
+            %>
+          </td>
+          <td>
+            <%=
+              link_to(
+                t('views.taxons.view_similar'),
+                similar_search_results_url(content_item['base_path']),
+                target: 'blank'
+              )
+            %>
+          </td>
         </tr>
       <% end %>
     </tbody>
