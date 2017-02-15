@@ -84,6 +84,7 @@ en:
       path_slug: 'Slug'
       preview: 'The URL of the navigation page will be:'
       displayed_on_govuk: 'Displayed on GOV.UK'
+      view_similar: 'More like this'
   controllers:
     bulk_taggings:
       failure: We could not perform search, please try again.
