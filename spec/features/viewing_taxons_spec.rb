@@ -30,8 +30,13 @@ RSpec.describe "Viewing taxons" do
     publishing_api_has_expanded_links(
       content_id: fruits["content_id"],
       expanded_links: {
-        parent_taxons: [],
-        child_taxons: [apples],
+        child_taxons: [
+          apples.merge(
+            "links" => {
+              child_taxons: [cox],
+            }
+          )
+        ],
       }
     )
 
@@ -42,11 +47,6 @@ RSpec.describe "Viewing taxons" do
         parent_taxons: [fruits, round_things],
         child_taxons: [cox],
       }
-    )
-
-    publishing_api_has_expanded_links(
-      content_id: cox["content_id"],
-      expanded_links: {}
     )
   end
 
@@ -94,12 +94,12 @@ RSpec.describe "Viewing taxons" do
     ]
     rendered_titles = all(".taxon-level-title")
 
-    expect(rendered_titles.count).to eq 4
     rendered_titles.zip(expected_titles).each do |rendered, expected|
       within rendered do
         expect(page).to have_content expected
       end
     end
+    expect(rendered_titles.count).to eq 4
   end
 
   def when_i_view_one_of_the_parents

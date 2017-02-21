@@ -61,20 +61,20 @@ module Taxonomy
       it "returns a representation of the taxonomy, with both parent and child taxons expanded" do
         taxonomy = ExpandedTaxonomy.new(apples["content_id"]).build
 
-        expect(taxonomy.root_node.name).to eq "i-Apples"
-        expect(taxonomy.parent_expansion.map(&:name)).to eq %w(
+        expect(taxonomy.root_node.internal_name).to eq "i-Apples"
+        expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(
           i-Apples
           i-Fruits
           i-Food
           i-Red-Things
         )
-        expect(taxonomy.parent_expansion.map(&:node_depth)).to eq [0, 1, 2, 1]
-        expect(taxonomy.child_expansion.map(&:name)).to eq %w(
+        expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 1]
+        expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(
           i-Apples
           i-Bramley
           i-Cox
         )
-        expect(taxonomy.child_expansion.map(&:node_depth)).to eq [0, 1, 1]
+        expect(taxonomy.child_expansion.map(&:depth)).to eq [0, 1, 1]
       end
     end
 
@@ -82,7 +82,7 @@ module Taxonomy
       it "returns immediate parents of the root node" do
         taxonomy = ExpandedTaxonomy.new(apples["content_id"]).build
 
-        expect(taxonomy.immediate_parents.map(&:name)).to eq %w(
+        expect(taxonomy.immediate_parents.map(&:internal_name)).to eq %w(
           i-Fruits
           i-Red-Things
         )
@@ -93,7 +93,7 @@ module Taxonomy
       it "returns immediate children of the root node" do
         taxonomy = ExpandedTaxonomy.new(apples["content_id"]).build
 
-        expect(taxonomy.immediate_children.map(&:name)).to eq %w(
+        expect(taxonomy.immediate_children.map(&:internal_name)).to eq %w(
           i-Bramley
           i-Cox
         )
@@ -115,16 +115,15 @@ module Taxonomy
         it "returns the expansion" do
           taxonomy.build_child_expansion
 
-          expect(taxonomy.child_expansion.map(&:name)).to eq %w(i-Apples i-Bramley i-Cox)
-          expect(taxonomy.child_expansion.map(&:node_depth)).to eq [0, 1, 1]
+          expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(i-Apples i-Bramley i-Cox)
+          expect(taxonomy.child_expansion.map(&:depth)).to eq [0, 1, 1]
         end
       end
 
       context "given a circular dependency between taxons" do
-        before do
-          publishing_api_has_expanded_links(
-            content_id: bramley["content_id"],
-            expanded_links: {
+        let(:bramley) do
+          fake_taxon("Bramley").merge(
+            "links" => {
               parent_taxons: [apples],
               child_taxons: [apples],
             }
@@ -135,7 +134,7 @@ module Taxonomy
           taxonomy.build_child_expansion
 
           tree = taxonomy.child_expansion.map do |child_node|
-            [child_node.node_depth, child_node.name]
+            [child_node.depth, child_node.internal_name]
           end
 
           expect(tree).to eq(
@@ -160,8 +159,8 @@ module Taxonomy
         it "returns the expansion" do
           taxonomy.build_parent_expansion
 
-          expect(taxonomy.parent_expansion.map(&:name)).to eq %w(i-Apples i-Fruits i-Food i-Red-Things)
-          expect(taxonomy.parent_expansion.map(&:node_depth)).to eq [0, 1, 2, 1]
+          expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(i-Apples i-Fruits i-Food i-Red-Things)
+          expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 1]
         end
       end
     end

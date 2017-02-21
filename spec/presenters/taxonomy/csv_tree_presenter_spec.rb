@@ -5,10 +5,21 @@ module Taxonomy
     include ContentItemHelper
 
     describe "#present" do
-      let(:root_node) { TreeNode.new(name: "root", content_item: ContentItem.new(basic_content_item("Root"))) }
-      let(:child_node_1) { TreeNode.new(name: "child-1", content_item: ContentItem.new(basic_content_item("Child-1"))) }
-      let(:child_node_2) { TreeNode.new(name: "child-2", content_item: ContentItem.new(basic_content_item("Child-2"))) }
-      let(:child_node_3) { TreeNode.new(name: "child-3", content_item: ContentItem.new(basic_content_item("Child-3"))) }
+      let(:root_node) do
+        GovukTaxonomyHelpers::LinkedContentItem.new(internal_name: "root", base_path: "/root", content_id: "Root", title: "Root")
+      end
+
+      let(:child_node_1) do
+        GovukTaxonomyHelpers::LinkedContentItem.new(internal_name: "child-1", base_path: "/Child-1", content_id: "Child-1", title: "Child-1")
+      end
+
+      let(:child_node_2) do
+        GovukTaxonomyHelpers::LinkedContentItem.new(internal_name: "child-2", base_path: "/Child-2", content_id: "Child-2", title: "Child-2")
+      end
+
+      let(:child_node_3) do
+        GovukTaxonomyHelpers::LinkedContentItem.new(internal_name: "child-3", base_path: "/Child-3", content_id: "Child-3", title: "Child-3")
+      end
 
       before do
         root_node << child_node_1

@@ -23,6 +23,7 @@ gem 'govuk_sidekiq', '~> 0.0.4'
 
 gem 'kaminari', '~> 0.17'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
+gem 'govuk_taxonomy_helpers', git: 'https://github.com/alphagov/govuk_taxonomy_helpers'
 
 group :development, :test do
   gem 'quiet_assets'
