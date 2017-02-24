@@ -48,7 +48,8 @@ RSpec.feature "Bulk tagging", type: :feature do
 
     publishing_api_has_content_items(
       [document_collection],
-      q: "Tax"
+      q: "Tax",
+      search_in: [:title, :base_path, :'details.internal_name']
     )
 
     publishing_api_has_item(document_collection)
@@ -60,7 +61,8 @@ RSpec.feature "Bulk tagging", type: :feature do
         base_path: "/a-topic",
         document_type: "topic",
       }],
-      q: "topic"
+      q: "topic",
+      search_in: [:title, :base_path, :'details.internal_name']
     )
 
     publishing_api_has_content_items(
@@ -70,7 +72,8 @@ RSpec.feature "Bulk tagging", type: :feature do
         base_path: "/a-maintstream-browse-page",
         document_type: "mainstream_browse_page",
       }],
-      q: "browse"
+      q: "browse",
+      search_in: [:title, :base_path, :'details.internal_name']
     )
 
     publishing_api_has_expanded_links(
@@ -89,11 +92,20 @@ RSpec.feature "Bulk tagging", type: :feature do
     publishing_api_has_item(basic_content_item("Taxon 2"))
 
     # Used in the dropdown
-    publishing_api_has_linkables(
+    publishing_api_has_content_items_for_linkables(
       [
-        build_linkable(internal_name: "Taxon 1", content_id: 'taxon-1'),
-        build_linkable(internal_name: "Taxon 2", content_id: 'taxon-2'),
-        build_linkable(internal_name: "Taxon 3", content_id: 'taxon-3'),
+        content_item_with_details(
+          'Taxon 1',
+          other_fields: { content_id: 'taxon-1' }
+        ),
+        content_item_with_details(
+          'Taxon 2',
+          other_fields: { content_id: 'taxon-2' }
+        ),
+        content_item_with_details(
+          'Taxon 3',
+          other_fields: { content_id: 'taxon-3' }
+        ),
       ],
       document_type: "taxon",
     )

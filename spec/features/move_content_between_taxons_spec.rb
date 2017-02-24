@@ -41,22 +41,12 @@ RSpec.feature "Move content between Taxons", type: :feature do
         document_type: 'taxon'
       }
     )
-    @source_taxon_for_select = {
-      'internal_name' => @source_taxon['details']['internal_name'],
-      'content_id' => @source_taxon['content_id'],
-      'publication_state' => 'live'
-    }
     @dest_taxon = content_item_with_details(
       "Destination taxon",
       other_fields: {
         document_type: 'taxon'
       }
     )
-    @dest_taxon_for_select = {
-      'internal_name' => @dest_taxon['details']['internal_name'],
-      'content_id' => @dest_taxon['content_id'],
-      'publication_state' => 'live'
-    }
 
     @document_1 = basic_content_item("Tagged content 1")
     @document_2 = basic_content_item("Tagged content 2")
@@ -82,8 +72,8 @@ RSpec.feature "Move content between Taxons", type: :feature do
     publishing_api_has_item(@source_taxon)
     publishing_api_has_item(@dest_taxon)
 
-    publishing_api_has_linkables(
-      [@source_taxon_for_select, @dest_taxon_for_select],
+    publishing_api_has_content_items_for_linkables(
+      [@source_taxon, @dest_taxon],
       document_type: 'taxon'
     )
   end
@@ -104,7 +94,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_select_a_taxon_to_move_content_to
-    select @dest_taxon_for_select['internal_name']
+    select @dest_taxon['details']['internal_name']
   end
 
   def and_select_all_content

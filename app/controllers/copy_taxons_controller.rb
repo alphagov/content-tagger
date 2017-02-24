@@ -6,6 +6,6 @@ class CopyTaxonsController < ApplicationController
 private
 
   def taxons
-    Services.publishing_api.get_linkables(format: 'taxon')
+    Linkables.new.get_tags_of_type(:taxon)
   end
 end

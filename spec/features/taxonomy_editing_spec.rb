@@ -21,20 +21,6 @@ RSpec.feature "Taxonomy editing" do
         publication_state: 'active'
       }
     )
-    @linkable_taxon_1 = {
-      title: "I Am A Taxon",
-      content_id: "ID-1",
-      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
-      internal_name: "I Am A Taxon",
-      publication_state: 'active'
-    }
-    @linkable_taxon_2 = {
-      title: "I Am Another Taxon",
-      content_id: "ID-2",
-      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
-      internal_name: "I Am Another Taxon",
-      publication_state: 'active'
-    }
 
     @dummy_editor_notes = "Some usage notes for this taxon."
 
@@ -85,8 +71,8 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def given_there_are_taxons
-    publishing_api_has_linkables(
-      [@linkable_taxon_1, @linkable_taxon_2],
+    publishing_api_has_content_items_for_linkables(
+      [@taxon_1, @taxon_2],
       document_type: 'taxon'
     )
     publishing_api_has_taxons([@taxon_1, @taxon_2])
