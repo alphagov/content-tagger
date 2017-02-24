@@ -7,6 +7,7 @@ class ContentItem
     :rendering_app,
     :document_type,
     :state,
+    :details,
   )
 
   def initialize(data)
@@ -17,6 +18,7 @@ class ContentItem
     @rendering_app = data.fetch('rendering_app', nil)
     @document_type = data.fetch('document_type')
     @state = data.fetch('state', nil)
+    @details = data.fetch('details', {})
   end
 
   def self.find!(content_id)

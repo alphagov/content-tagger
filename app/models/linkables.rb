@@ -24,13 +24,28 @@ class Linkables
     @mainstream_browse_pages ||= for_nested_document_type('mainstream_browse_page')
   end
 
+  def get_tags_of_type(document_type)
+    items = Services
+      .publishing_api
+      .get_content_items(
+        document_type: document_type,
+        q: '',
+        page: 1,
+        per_page: 10_000,
+        states: %w(live published draft),
+        fields: [:content_id, :publication_state, :title, :base_path, :details],
+    )
+
+    items['results']
+      .map { |result| Linkable.new(result.merge('document_type' => document_type)) }
+      .select(&:valid_internal_name?)
+  end
+
 private
 
   def for_document_type(document_type, include_draft: true)
     items = get_tags_of_type(document_type)
-    unless include_draft
-      items = items.reject { |x| x['publication_state'] == 'draft' }
-    end
+    items = items.reject(&:draft?) unless include_draft
     present_items(items)
   end
 
@@ -42,18 +57,19 @@ private
     # filter out the top-level (which don't have the slash) topics/browse
     # pages here. This of course is temporary, until we've introduced a
     # global taxonomy that will allow editors to tag to any level.
-    items = get_tags_of_type(document_type)
-      .select { |item| item.fetch('internal_name').include?(' / ') }
+    items = get_tags_of_type(document_type).select do |item|
+      item.internal_name.include?(' / ')
+    end
 
     organise_items(present_items(items))
   end
 
   def present_items(items)
     items = items.map do |item|
-      title = item.fetch('internal_name')
-      title = "#{title} (draft)" if item.fetch("publication_state") == "draft"
+      title = item.internal_name
+      title = "#{title} (draft)" if item.draft?
 
-      [title, item.fetch('content_id')]
+      [title, item.content_id]
     end
 
     items.sort_by(&:first)
@@ -61,12 +77,5 @@ private
 
   def organise_items(items)
     items.group_by { |entry| entry.first.split(' / ').first }
-  end
-
-  def get_tags_of_type(document_type)
-    items = Services.publishing_api.get_linkables(format: document_type)
-    # We only are interested in linkables that have an internal name and not
-    # redirects or similar
-    items.select { |item| item['internal_name'].present? }
   end
 end

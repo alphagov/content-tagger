@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Copying taxons for use in a spreadsheet" do
   include ContentItemHelper
+  include PublishingApiHelper
 
   scenario "Copy taxons" do
     given_there_are_taxons
@@ -17,7 +18,9 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
         content_id: "ID-1",
         base_path: "/foo",
         publication_state: 'active',
-        internal_name: "I am an internal name",
+        details: {
+          internal_name: "I am an internal name",
+        }
       }
     )
     @taxon_2 = basic_content_item(
@@ -26,11 +29,16 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
         content_id: "ID-2",
         base_path: "/bar",
         publication_state: 'active',
-        internal_name: "I am another internal name",
+        details: {
+          internal_name: "I am another internal name",
+        }
       }
     )
 
-    publishing_api_has_linkables([@taxon_1, @taxon_2], document_type: 'taxon')
+    publishing_api_has_content_items_for_linkables(
+      [@taxon_1, @taxon_2],
+      document_type: 'taxon'
+    )
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(body: { links: { parent_taxons: [] } }.to_json)
@@ -62,10 +70,10 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
     expect(table_head).to include(/link type/i)
 
     expect(table_body).to include(@taxon_1[:content_id])
-    expect(table_body).to include(@taxon_1[:internal_name])
+    expect(table_body).to include(@taxon_1[:details][:internal_name])
 
     expect(table_body).to include(@taxon_2[:content_id])
-    expect(table_body).to include(@taxon_2[:internal_name])
+    expect(table_body).to include(@taxon_2[:details][:internal_name])
     expect(table_body).to include('taxons')
   end
 end

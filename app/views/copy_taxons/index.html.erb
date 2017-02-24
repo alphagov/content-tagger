@@ -16,8 +16,8 @@
   <tbody>
     <% taxons.each do |taxon| %>
       <tr>
-        <td><%= taxon['internal_name'] %></td>
-        <td><%= taxon['content_id'] %></td>
+        <td><%= taxon.internal_name %></td>
+        <td><%= taxon.content_id %></td>
         <td>taxons</td>
       </tr>
     <% end %>
