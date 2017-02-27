@@ -12,10 +12,14 @@ module Taxonomy
       self
     end
 
+    def root_expanded_links
+      @expanded_links ||= Services.publishing_api.get_expanded_links(
+        @content_id
+      )
+    end
+
     def build_parent_expansion
-      parent_taxons = Services.publishing_api.get_expanded_links(
-        root_node.content_id
-      )["expanded_links"]["parent_taxons"]
+      parent_taxons = root_expanded_links["expanded_links"]["parent_taxons"]
 
       @parent_expansion = expand_parent_nodes(
         start_node: tree_node_based_on(root_content_item),
@@ -25,9 +29,15 @@ module Taxonomy
     end
 
     def build_child_expansion
-      @child_expansion = expand_child_nodes(
-        start_node: tree_node_based_on(root_content_item)
+      @child_expansion = GovukTaxonomyHelpers::LinkedContentItem.from_publishing_api(
+        content_item: root_content_item,
+        expanded_links: root_expanded_links
       )
+
+      # We want to work with the child expansion in isolation, so remove
+      # the parent. This makes all depth values relative to the current taxon.
+      @child_expansion.parent = nil
+
       self
     end
 
@@ -79,28 +89,6 @@ module Taxonomy
       @root_content_item ||= Services.publishing_api.get_content(@content_id).to_h
     end
 
-    def expand_child_nodes(start_node:, already_expanded: [])
-      return if already_expanded.include? start_node.content_id
-      already_expanded << start_node.content_id
-
-      child_taxons = Services.publishing_api.get_expanded_links(
-        start_node.content_id
-      )["expanded_links"]["child_taxons"]
-
-      Array(child_taxons).each do |child_taxon|
-        child_node = tree_node_based_on(child_taxon)
-        start_node << child_node
-        # We reset the list of already_expanded nodes with each branch off the
-        # root taxon, i.e. - for each immediate child of the root. This gives
-        # each of these 'main' branches their own traversal history, preventing
-        # premature termination of a branch's expansion just because a node has
-        # already been visited in a sibling branch.
-        expansion_history = child_node.node_depth == 1 ? [root_node.content_id] : already_expanded
-        expand_child_nodes(start_node: child_node, already_expanded: expansion_history)
-      end
-      start_node
-    end
-
     def expand_parent_nodes(start_node:, parent_taxons:)
       Array(parent_taxons).each do |parent_taxon|
         parent_node = tree_node_based_on(parent_taxon)
@@ -120,9 +108,11 @@ module Taxonomy
         base_path: content_item.fetch('base_path'),
         internal_name: content_item.fetch('details').fetch('internal_name'),
       )
-      TreeNode.new(
-        name: taxon.internal_name,
-        content_item: taxon,
+      GovukTaxonomyHelpers::LinkedContentItem.new(
+        internal_name: taxon.internal_name,
+        title: taxon.title,
+        base_path: taxon.base_path,
+        content_id: taxon.content_id
       )
     end
   end

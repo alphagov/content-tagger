@@ -10,7 +10,7 @@
  <tbody>
    <% children.each do |child| %>
      <tr>
-       <td><%= link_to child.name, taxon_path(child.content_id) %></td>
+       <td><%= link_to child.internal_name, taxon_path(child.content_id) %></td>
      </tr>
    <% end %>
  </tbody>
