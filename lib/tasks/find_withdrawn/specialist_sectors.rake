@@ -5,29 +5,29 @@ namespace :find_withdrawn do
   desc <<-DESC
     Fetch all mainstream browse pages and ensure that their mainstream content is valid
   DESC
-  task mainstream_browse_pages: :environment do
-    mainstream_browse_pages = GdsApi::Rummager.new(Plek.find('rummager'))
+  task specialist_sectors: :environment do
+    specialist_sectors = GdsApi::Rummager.new(Plek.find('rummager'))
       .search(
-        filter_format: 'mainstream_browse_page',
+        filter_format: 'specialist_sector',
         count: 1000,
       )['results']
 
     results = {}
 
-    mainstream_browse_pages.each do |page|
+    specialist_sectors.each do |page|
       slug = page['slug']
       rummager_content = GdsApi::Rummager.new(Plek.find('rummager'))
         .search(
-          filter_mainstream_browse_pages: [slug],
+          filter_specialist_sectors: [slug],
           fields: ['content_id'],
           count: 1000,
-        )['results']
+      )['results']
       rummager_paths = rummager_content.map { |content| content['_id'] }
 
       base_path = page['link']
       content_store_content = GdsApi::ContentStore.new(Plek.find('content-store'))
         .content_item(base_path)
-        .dig('links', 'mainstream_browse_content') || []
+        .dig('links', 'topic_content') || []
       content_store_paths = content_store_content.map { |content| content['base_path'] }
 
       results[base_path] = {
