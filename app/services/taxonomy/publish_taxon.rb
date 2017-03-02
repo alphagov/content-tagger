@@ -23,8 +23,19 @@ module Taxonomy
         links: { parent_taxons: parent_taxons.select(&:present?) }
       )
     rescue GdsApi::HTTPUnprocessableEntity => e
-      Airbrake.notify(e)
-      raise(InvalidTaxonError, I18n.t('errors.invalid_taxon'))
+      # Since we cannot easily differentiate the reasons for getting a 422
+      # error code, we do a lookup to see if a content item with the slug
+      # already exists, and if so, provide a more customised error message.
+      existing_content_item = Services.publishing_api.lookup_content_id(
+        base_path: taxon.base_path
+      )
+
+      if existing_content_item.nil?
+        Airbrake.notify(e)
+        raise(InvalidTaxonError, I18n.t('errors.invalid_taxon'))
+      else
+        raise(InvalidTaxonError, I18n.t('errors.invalid_taxon_base_path'))
+      end
     end
 
   private

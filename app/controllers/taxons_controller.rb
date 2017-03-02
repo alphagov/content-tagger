@@ -3,14 +3,34 @@ class TaxonsController < ApplicationController
     search_results = remote_taxons.search(
       page: params[:page],
       per_page: params[:per_page],
-      query: query
+      query: query,
+      states: ['published']
     )
 
-    render :index, locals: {
+    locals = {
       taxons: search_results.taxons,
       search_results: search_results,
       query: query,
     }
+
+    render :index, locals: locals
+  end
+
+  def trash
+    search_results = remote_taxons.search(
+      page: params[:page],
+      per_page: params[:per_page],
+      query: query,
+      states: ['unpublished']
+    )
+
+    locals = {
+      taxons: search_results.taxons,
+      search_results: search_results,
+      query: query,
+    }
+
+    render :trash, locals: locals
   end
 
   def new
@@ -24,20 +44,23 @@ class TaxonsController < ApplicationController
   def create
     taxon = Taxon.new(params[:taxon])
 
+    locals = {
+      taxon: taxon,
+      taxons_for_select: taxons_for_select,
+      path_prefixes_for_select: path_prefixes_for_select,
+    }
+
     if taxon.valid?
       Taxonomy::PublishTaxon.call(taxon: taxon)
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      locals = {
-        taxon: taxon,
-        taxons_for_select: taxons_for_select,
-        path_prefixes_for_select: path_prefixes_for_select,
-      }
-      render :new, locals: locals, flash: { danger: error_messages }
+      flash[:danger] = error_messages
+      render :new, locals: locals
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to(new_taxon_path, flash: { danger: e.message })
+    flash[:danger] = e.message
+    render :new, locals: locals
   end
 
   def show
@@ -62,25 +85,35 @@ class TaxonsController < ApplicationController
   def update
     taxon = Taxon.new(params[:taxon])
 
+    locals = {
+      taxon: taxon,
+      taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id),
+      path_prefixes_for_select: path_prefixes_for_select,
+    }
+
     if taxon.valid?
       Taxonomy::PublishTaxon.call(taxon: taxon)
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      locals = {
-        taxon: taxon,
-        taxons_for_select: taxons_for_select(exclude_ids: taxon.content_id),
-        path_prefixes_for_select: path_prefixes_for_select,
-      }
-      render :edit, locals: locals, flash: { danger: error_messages }
+      flash[:danger] = error_messages
+      render :edit, locals: locals
     end
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
-    redirect_to edit_taxon_path(taxon.content_id), flash: { danger: e.message }
+    flash[:danger] = e.message
+    render :edit, locals: locals
   end
 
   def destroy
     response_code = Services.publishing_api.unpublish(params[:id], type: "gone").code
-    redirect_to taxons_path, flash: destroy_flash_message(response_code)
+
+    flash_message = if response_code == 200
+                      { success: I18n.t("controllers.taxons.destroy_success") }
+                    else
+                      { alert: I18n.t("controllers.taxons.destroy_alert") }
+                    end
+
+    redirect_to taxons_path, flash: flash_message
   end
 
   def confirm_delete
@@ -93,15 +126,21 @@ class TaxonsController < ApplicationController
     }
   end
 
-private
+  def restore
+    Taxonomy::PublishTaxon.call(taxon: taxon)
 
-  def destroy_flash_message(response_code)
-    if response_code == 200
-      { success: I18n.t('controllers.taxons.success') }
-    else
-      { alert: I18n.t('controllers.taxons.alert') }
-    end
+    flash_message = if response_code == 200
+                      { success: I18n.t("controllers.taxons.restore_success") }
+                    else
+                      { alert: I18n.t("controllers.taxons.restore_alert") }
+                    end
+
+    redirect_to taxons_path, flash: flash_message
+  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
+    redirect_to trash_taxons_path, flash: { danger: e.message }
   end
+
+private
 
   def path_prefixes_for_select
     Theme.taxon_path_prefixes

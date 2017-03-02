@@ -61,7 +61,15 @@ RSpec.feature "Taxonomy editing" do
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
     when_i_submit_the_taxon_with_a_taxon_with_semantic_issues
-    then_i_can_see_an_error_message
+    then_i_can_see_a_generic_error_message
+  end
+
+  scenario "User attempts to create a taxon with a duplicate base path" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_the_new_taxon_button
+    when_i_submit_the_taxon_with_a_taxon_with_a_duplicate_base_path
+    then_i_can_see_a_specific_error_message
   end
 
   scenario "User edits a taxon" do
@@ -165,6 +173,25 @@ RSpec.feature "Taxonomy editing" do
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
+    stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
+      .to_return(status: 200, body: {}.to_json)
+
+    click_on I18n.t('views.taxons.new_button')
+  end
+
+  def when_i_submit_the_taxon_with_a_taxon_with_a_duplicate_base_path
+    fill_in :taxon_title, with: 'My Taxon'
+    fill_in :taxon_description, with: 'Description of my taxon.'
+    fill_in :taxon_internal_name, with: 'My Taxon'
+    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
+    fill_in :taxon_path_slug, with: '/ID-1'
+
+    stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .to_return(status: 422, body: {}.to_json)
+    stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
+      .to_return(status: 200, body: {
+        '/education/ID-1' => SecureRandom.uuid
+      }.to_json)
 
     click_on I18n.t('views.taxons.new_button')
   end
@@ -173,8 +200,12 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_path_slug, with: '/changed-slug'
   end
 
-  def then_i_can_see_an_error_message
+  def then_i_can_see_a_generic_error_message
     expect(page).to have_selector('.alert', text: /there was a problem with your request/i)
+  end
+
+  def then_i_can_see_a_specific_error_message
+    expect(page).to have_selector('.alert', text: /a taxon with this slug already exists/i)
   end
 
   def then_a_taxon_is_created

@@ -1,8 +1,8 @@
 # TODO: Split this up and move it into the BulkTagging & Taxonomy namespaces.
 class RemoteTaxons
-  def search(page: 1, per_page: 50, query: '')
+  def search(page: 1, per_page: 50, query: '', states: ['published'])
     BulkTagging::TaxonSearchResults.new(
-      taxon_content_items(page: page, per_page: per_page, query: query)
+      taxon_content_items(page: page, per_page: per_page, query: query, states: states)
     )
   end
 
@@ -16,7 +16,7 @@ private
 
   # Return a list of taxons from the publishing API with links included.
   # Does not include the details hash of each taxon.
-  def taxon_content_items(page:, per_page:, query:)
+  def taxon_content_items(page:, per_page:, query:, states:)
     Services
       .publishing_api
       .get_content_items(
@@ -25,7 +25,7 @@ private
         q: query || '',
         page: page || 1,
         per_page: per_page || 50,
-        states: ["published"],
+        states: states || [],
       )
   end
 end

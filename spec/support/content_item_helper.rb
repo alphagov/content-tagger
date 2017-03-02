@@ -1,5 +1,5 @@
 module ContentItemHelper
-  def content_item_with_details(title, other_fields: {})
+  def content_item_with_details(title, other_fields: {}, unpublished: false)
     other_fields_with_details = other_fields.merge(
       details: {
         internal_name: "internal name for #{title}",
@@ -7,17 +7,30 @@ module ContentItemHelper
       },
       links: {}
     )
-    basic_content_item(title, other_fields: other_fields_with_details)
+    basic_content_item(
+      title,
+      other_fields: other_fields_with_details,
+      unpublished: unpublished
+    )
   end
 
-  def basic_content_item(title, other_fields: {})
-    ActiveSupport::HashWithIndifferentAccess.new(
+  def basic_content_item(title, other_fields: {}, unpublished: false)
+    content_item = ActiveSupport::HashWithIndifferentAccess.new(
       content_id: title.parameterize,
       title: title,
       base_path: title.parameterize.prepend('/path/'),
       document_type: "guidance",
       links: {}
     ).merge(other_fields)
+
+    if unpublished
+      content_item[:publication_state] = 'unpublished'
+      content_item[:unpublishing] = {
+        type: 'gone'
+      }
+    end
+
+    content_item
   end
 
   def build_linkable(hash)

@@ -4,6 +4,9 @@
       <%= I18n.t('views.taxons.add_taxon') %>
     </i>
   <% end %>
+  <%= link_to trash_taxons_path, class: 'btn btn-default' do %>
+    <%= I18n.t('views.taxons.view_deleted_taxons') %>
+  <% end %>
 <% end %>
 
 <div class="lead">
