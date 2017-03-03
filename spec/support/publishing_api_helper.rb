@@ -27,6 +27,19 @@ module PublishingApiHelper
     publishing_api_has_content(taxons, default_options.merge(options))
   end
 
+  def publishing_api_has_deleted_taxons(taxons, options = {})
+    default_options = {
+      document_type: "taxon",
+      order: '-public_updated_at',
+      page: 1,
+      per_page: 50,
+      q: '',
+      states: ["unpublished"],
+    }
+
+    publishing_api_has_content(taxons, default_options.merge(options))
+  end
+
   def publishing_api_has_taxon_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_taxons, base_paths),

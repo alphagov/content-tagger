@@ -7,7 +7,8 @@ en:
     tag_migration: 'Bulk tag history'
     tag_importer: 'Bulk tag by upload'
   errors:
-    invalid_taxon: There was a problem with your request. The chosen slug may already be in use. We have been notified of the issue and will fix it as soon as possible.
+    invalid_taxon: There was a problem with your request. We have been notified of the issue and will fix it as soon as possible.
+    invalid_taxon_base_path: A taxon with this slug already exists. If the taxon has been deleted, you can restore it.
     invalid_hostname: Is not a Google Docs URL
     invalid_path: Does not have the expected public path /spreadsheets/d/<id>/pub
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
@@ -62,17 +63,23 @@ en:
       edit_tagging: Edit tagging
       move_content: Move content
       title: Taxons
+      deleted_title: Deleted taxons
       edit: Edit taxon
       view: View taxon
+      view_live_taxons: View live taxons
+      view_deleted_taxons: View deleted taxons
       add_taxon: Add a taxon
       copy_taxon: Export taxons with IDs for spreadsheet
       delete_taxon: Delete taxon
+      restore_taxon: Restore taxon
       new_title: New taxon
       new_breadcrumb: New taxon
       new_button: Create taxon
       edit_button: Update taxon
       download_csv: Download taxonomy as CSV
-      confirm_deletion: I understand and I want to delete it!
+      confirm_deletion_title: You are about to delete
+      confirm_deletion_restore: Deleted taxons can be restored.
+      confirm_deletion: Delete
       cancel_button: Cancel
       delete_warning_1: "Before you delete this taxon, make sure you've:"
       delete_warning_2: given its child taxons a new parent
@@ -91,8 +98,10 @@ en:
     tag_migrations:
       import_removed: Tag migration import has been removed.
     taxons:
-      success: You have sucessfully deleted the taxon
-      alert: It was not possible to delete the taxon
+      destroy_success: You have sucessfully deleted the taxon
+      destroy_alert: It was not possible to delete the taxon
+      restore_success: You have sucessfully restored the taxon
+      restore_alert: It was not possible to restore the taxon
   messages:
     views:
       confirm: Are you sure?

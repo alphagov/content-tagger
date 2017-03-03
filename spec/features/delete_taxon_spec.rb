@@ -33,6 +33,13 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_the_taxon_is_deleted
   end
 
+  scenario "restoring a deleted taxon" do
+    given_a_deleted_taxon
+    when_i_visit_the_taxon_trash_page
+    when_i_click_restore_taxon
+    then_the_taxon_is_restored
+  end
+
   def given_a_taxon_with_no_children
     @taxon_content_id = SecureRandom.uuid
     @taxon = content_item_with_details(
@@ -66,30 +73,69 @@ RSpec.feature "Delete Taxon", type: :feature do
     add_tagged_content
   end
 
+  def given_a_deleted_taxon
+    @taxon_content_id = SecureRandom.uuid
+    @taxon = content_item_with_details(
+      "Taxon 2",
+      other_fields: {
+        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/taxon-2",
+        content_id: @taxon_content_id,
+        description: 'A description of Taxon 2.'
+      },
+      unpublished: true
+    )
+    list_taxons
+    publishing_api_has_item(@taxon)
+    publishing_api_has_links(
+      content_id: @taxon_content_id,
+      links: {}
+    )
+  end
+
   def when_i_visit_the_taxon_page
     visit taxon_path(@taxon_content_id)
+  end
+
+  def when_i_visit_the_taxon_trash_page
+    visit trash_taxons_path
   end
 
   def when_i_click_delete_taxon
     click_on "Delete taxon"
   end
 
+  def when_i_click_restore_taxon
+    @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
+    @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
+    @publish_request = stub_publishing_api_publish(@taxon_content_id, update_type: 'minor')
+    # First restore link on the page
+    page.find('table.queries-list a:nth-of-type(1)').click
+  end
+
   def then_i_see_a_basic_prompt_to_delete
     expect(page).to have_text('You are about to delete "internal name for Taxon 1"')
     expect(page).to_not have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
-    expect(page).to have_link('I understand and I want to delete it')
+    expect(page).to have_link('Delete')
   end
 
   def when_i_confirm_deletion
     @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :gone }.to_json)
     publishing_api_has_taxons([])
-    click_on "I understand and I want to delete it!"
+    click_on "Delete"
   end
 
   def then_the_taxon_is_deleted
     expect(@unpublish_request).to have_been_made
     expect(page).to_not have_content @taxon.fetch(:title)
+  end
+
+  def then_the_taxon_is_restored
+    expect(@put_content_request).to have_been_made
+    expect(@patch_links_request).to have_been_made
+    expect(@publish_request).to have_been_made
+    # This is the taxons index page and not the trash page
+    expect(page).to have_content @taxon.fetch(:title)
   end
 
   def then_i_expect_to_see_the_child_taxon
@@ -108,7 +154,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to have_text('You are about to delete "internal name for Taxon 1"')
     expect(page).to have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
-    expect(page).to have_link('I understand and I want to delete it')
+    expect(page).to have_link('Delete')
   end
 
 private
@@ -147,6 +193,27 @@ private
       [basic_content_item("tagged content")],
       content_id: @taxon_content_id,
       link_type: "taxons"
+    )
+  end
+
+  def list_taxons
+    publishing_api_has_content(
+      [@taxon],
+      document_type: 'taxon',
+      order: '-public_updated_at',
+      page: 1,
+      per_page: 50,
+      q: '',
+      states: ['published']
+    )
+    publishing_api_has_content(
+      [@taxon],
+      document_type: 'taxon',
+      order: '-public_updated_at',
+      page: 1,
+      per_page: 50,
+      q: '',
+      states: ['unpublished']
     )
   end
 end

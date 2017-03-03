@@ -41,6 +41,41 @@ RSpec.describe RemoteTaxons do
 
       expect(result.taxons.length).to eq(1)
     end
+
+    it 'fetches deleted taxons from the publishing api with pagination' do
+      taxon_1 = { title: "foo" }
+      taxon_2 = { title: "bar" }
+      taxon_3 = { title: "aha" }
+      publishing_api_has_deleted_taxons(
+        [taxon_1, taxon_2, taxon_3],
+        page: 2,
+        per_page: 2
+      )
+
+      result = described_class.new.search(page: 2, per_page: 2, states: ['unpublished'])
+
+      expect(result).to be_a(BulkTagging::TaxonSearchResults)
+      expect(result.taxons.length).to eq(1)
+      taxon = result.taxons.first
+      expect(taxon.title).to eq('aha')
+    end
+
+    it 'is possible to search with a query string' do
+      taxon_1 = { title: "foo" }
+      publishing_api_has_taxons(
+        [taxon_1],
+        page: 1,
+        per_page: 1,
+        q: 'foo'
+      )
+      result = described_class.new.search(
+        page: 1,
+        per_page: 1,
+        query: 'foo'
+      )
+
+      expect(result.taxons.length).to eq(1)
+    end
   end
 
   describe '#parents_for_taxon' do

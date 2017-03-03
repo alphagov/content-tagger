@@ -1,4 +1,6 @@
-<h1>You are about to delete "<%= taxon.internal_name %>"</h1>
+<h1><%= I18n.t('views.taxons.confirm_deletion_title') %> "<%= taxon.internal_name %>"</h1>
+
+<div class="lead"><%= I18n.t('views.taxons.confirm_deletion_restore') %></div>
 
 <%= render partial: 'deletion_warning',
   locals: { taxon: taxon, children: children, tagged: tagged } %>

@@ -3,7 +3,10 @@ Rails.application.routes.draw do
 
   resources :taxons do
     get :confirm_delete
+    get :restore
+    get :trash, on: :collection
   end
+
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
 
   resources :taggings, only: %i(show update), param: :content_id do
