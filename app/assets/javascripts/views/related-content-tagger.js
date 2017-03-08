@@ -2,16 +2,23 @@
   "use strict";
 
   Modules.RelatedContentTagger = function () {
-    this.start = function () {
+    this.start = function (fieldset) {
+      var $fieldset = $(fieldset);
+      var $basePathInput = $fieldset.find(".new-base-path");
+      var $lookupButton = $fieldset.find(".lookup-base-path-button");
+      var $tagList = $fieldset.find("ul");
+      var $templateTag = $fieldset.find(".related-item-template > li").first();
+      var $fieldErrors = $fieldset.find(".related-item-error-message");
 
-      $(".ordered-related-items").on("click", ".select2-search-choice-close", removeItem);
-      $("#related_item_new_base_path").on("keypress", lookUpBasePathOnEnterPress);
-      $("#lookup_base_path_button").on("click", lookUpBasePath);
 
-      $(".related-content-item-entry .title").show();
-      $(".related-content-item-entry .value").hide();
-      $(".add-sortable-input").show();
-      $(".sortable-inputs").sortable();
+      $fieldset.on("click", ".select2-search-choice-close", removeItem);
+      $basePathInput.on("keypress", lookUpBasePathOnEnterPress);
+      $lookupButton.on("click", lookUpBasePath);
+
+      $fieldset.find(".related-content-item-entry .title").show();
+      $fieldset.find(".related-content-item-entry .value").hide();
+      $fieldset.find(".add-sortable-input").show();
+      $fieldset.find(".sortable-inputs").sortable();
 
 
       function removeItem() {
@@ -33,7 +40,6 @@
       }
 
       function lookUpBasePath() {
-        var $basePathInput = $("#related_item_new_base_path");
         var basePath = $basePathInput.val();
 
         $.getJSON({
@@ -43,11 +49,9 @@
         });
 
         function onTagLookupSuccess(lookup) {
-          var $templateTag = $(".related-item-template > li").first();
-
           var $newTag = $templateTag
             .clone()
-            .appendTo(".ordered-related-items ul");
+            .appendTo($tagList);
 
           $newTag
             .find("input")
@@ -60,12 +64,12 @@
 
           $basePathInput.val("");
           $basePathInput.removeClass("has-error");
-          $(".related-item-error-message").hide();
+          $fieldErrors.hide();
         }
 
         function onTagLookupError(error) {
           $basePathInput.addClass("has-error");
-          $(".related-item-error-message").show();
+          $fieldErrors.show();
         }
       }
     };
