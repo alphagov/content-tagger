@@ -31,7 +31,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
       )
 
       expect(response.save_to_publishing_api).to eql(false)
-      expect(response.errors).to eql("/my-page" => "Not a known URL on GOV.UK")
+      expect(response.related_item_errors).to eql("/my-page" => "Not a known URL on GOV.UK")
     end
 
     def expect_links_to_have_been_published(links)

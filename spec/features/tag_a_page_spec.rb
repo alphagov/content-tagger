@@ -24,6 +24,7 @@ RSpec.describe "Tagging content", type: :feature do
     then_the_publishing_api_is_sent(
       taxons: [],
       ordered_related_items: [],
+      ordered_related_items_overrides: [],
       mainstream_browse_pages: [],
       parent: [],
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
@@ -42,6 +43,7 @@ RSpec.describe "Tagging content", type: :feature do
     then_the_publishing_api_is_sent(
       taxons: [],
       ordered_related_items: [],
+      ordered_related_items_overrides: [],
       mainstream_browse_pages: [],
       parent: [],
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
@@ -88,6 +90,7 @@ RSpec.describe "Tagging content", type: :feature do
       then_the_publishing_api_is_sent(
         taxons: [],
         ordered_related_items: [example_topic["content_id"], "a484eaea-eeb6-48fa-92a7-b67c6cd414f6"],
+        ordered_related_items_overrides: [],
         mainstream_browse_pages: [],
         parent: [],
         topics: [],

@@ -3,12 +3,13 @@
 module Tagging
   class TaggingUpdatePublisher
     attr_reader :content_item, :params
-    attr_reader :errors
+    attr_reader :related_item_errors, :related_item_overrides_errors
 
     def initialize(content_item, params)
       @content_item = content_item
       @params = params
-      @errors = {}
+      @related_item_errors = {}
+      @related_item_overrides_errors = {}
     end
 
     def save_to_publishing_api
@@ -26,16 +27,23 @@ module Tagging
     def valid?
       related_content_items.each do |related_item|
         next if related_item.content_id
-        @errors[related_item.base_path] = "Not a known URL on GOV.UK"
+        @related_item_errors[related_item.base_path] = "Not a known URL on GOV.UK"
       end
 
-      @errors.none?
+      related_content_items_overrides.each do |related_item|
+        next if related_item.content_id
+        @related_item_overrides_errors[related_item.base_path] = "Not a known URL on GOV.UK"
+      end
+
+      @related_item_errors.none? && @related_item_overrides_errors.none?
     end
 
     def generate_links_payload
       content_item.allowed_tag_types.reduce({}) do |payload, tag_type|
         content_ids = if tag_type == :ordered_related_items
                         related_content_items.map(&:content_id)
+                      elsif tag_type == :ordered_related_items_overrides
+                        related_content_items_overrides.map(&:content_id)
                       else
                         clean_input_array(params[tag_type])
                       end
@@ -47,6 +55,12 @@ module Tagging
     def related_content_items
       @related_content_items ||= BasePathLookup.find_by_base_paths(
         clean_input_array(params[:ordered_related_items])
+      )
+    end
+
+    def related_content_items_overrides
+      @related_content_items_overrides ||= BasePathLookup.find_by_base_paths(
+        clean_input_array(params[:ordered_related_items_overrides])
       )
     end
 

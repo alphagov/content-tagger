@@ -6,6 +6,7 @@ module Tagging
     TAG_TYPES = %i(
       taxons
       ordered_related_items
+      ordered_related_items_overrides
       mainstream_browse_pages
       parent
       topics
