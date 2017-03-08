@@ -15,7 +15,7 @@ namespace :taxonomy do
     taxonomy.build
 
     taxons = taxonomy.child_expansion.map do |node|
-      { base_path: node.content_item.base_path, content_id: node.content_id }
+      { base_path: node.base_path, content_id: node.content_id }
     end
 
     taxons.each do |taxon|
