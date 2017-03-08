@@ -40,7 +40,7 @@ def connected_taxonomy
 end
 
 def taxonomy_includes?(content_id, taxonomy: connected_taxonomy)
-  return true if taxonomy.content_item.content_id == content_id
+  return true if taxonomy.content_id == content_id
 
   taxonomy.children.any? do |node|
     taxonomy_includes?(content_id, taxonomy: node)
