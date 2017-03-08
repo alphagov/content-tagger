@@ -6,7 +6,11 @@ class ContentLookupForm
   validate :base_path_should_be_a_content_item
 
   def content_id
-    @content_id ||= Services.publishing_api.lookup_content_id(base_path: base_path)
+    @content_id ||= begin
+      Services.statsd.time "base_path_lookup" do
+        Services.publishing_api.lookup_content_id(base_path: base_path)
+      end
+    end
   end
 
 private

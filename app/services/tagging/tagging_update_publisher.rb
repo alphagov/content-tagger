@@ -14,11 +14,13 @@ module Tagging
     def save_to_publishing_api
       return false unless valid?
 
-      Services.publishing_api.patch_links(
-        content_item.content_id,
-        links: generate_links_payload,
-        previous_version: params[:previous_version].to_i,
-      )
+      Services.statsd.time "patch_links" do
+        Services.publishing_api.patch_links(
+          content_item.content_id,
+          links: generate_links_payload,
+          previous_version: params[:previous_version].to_i,
+        )
+      end
     end
 
   private
