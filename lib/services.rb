@@ -8,4 +8,12 @@ module Services
       bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
     )
   end
+
+  def self.statsd
+    @statsd_client ||= begin
+      statsd_client = Statsd.new
+      statsd_client.namespace = "govuk.app.content-tagger"
+      statsd_client
+    end
+  end
 end

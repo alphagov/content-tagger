@@ -64,7 +64,10 @@ private
   end
 
   def get_tags_of_type(document_type)
-    items = Services.publishing_api.get_linkables(format: document_type)
+    items = Services.statsd.time "linkables.#{document_type}" do
+      Services.publishing_api.get_linkables(format: document_type)
+    end
+
     # We only are interested in linkables that have an internal name and not
     # redirects or similar
     items.select { |item| item['internal_name'].present? }
