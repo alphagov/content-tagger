@@ -47,7 +47,8 @@ class TaggingsController < ApplicationController
       redirect_to :back, success: "Tags have been updated!"
     else
       tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
-      tagging_update.related_item_errors = publisher.errors
+      tagging_update.related_item_errors = publisher.related_item_errors
+      tagging_update.related_item_overrides_errors = publisher.related_item_overrides_errors
       tagging_update.update_attributes_from_form(params[:tagging_tagging_update_form])
 
       flash.now[:danger] = "This form contains errors. Please correct them and try again."

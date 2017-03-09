@@ -1,11 +1,11 @@
-<h3>Related content items</h3>
+<h3>Related content items (new navigation)</h3>
 
 <div class="form-group">
   <fieldset class="ordered-related-items select2-container select2-container-multi"
             data-module="related-content-tagger">
     <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
-      <% tagging_update.ordered_related_items.each do |base_path| %>
-        <%= render 'related_item_tagging_entry',
+      <% tagging_update.ordered_related_items_overrides.each do |base_path| %>
+        <%= render 'related_item_override_tagging_entry',
           base_path: base_path,
           is_template: false,
           tagging_update: tagging_update %>
@@ -14,7 +14,7 @@
 
     <% # Hidden, empty tag used by JS to asynchronously render the related item template %>
     <div class="related-item-template hide">
-      <%= render 'related_item_tagging_entry',
+      <%= render 'related_item_override_tagging_entry',
         base_path: '',
         is_template: true,
         tagging_update: tagging_update
@@ -39,6 +39,7 @@
 </div>
 
 <p class="explain">
-  Related items are displayed in the sidebar. Enter the URL or path of a GOV.UK
-  page, such as /pay-vat or /benefit-cap-calculator
+  Related items override the automatically-generated items in the sidebar for users
+  viewing the beta navigation. Enter the URL or path of a GOV.UK page, such as
+  /national-curriculum or /free-school-transport
 </p>

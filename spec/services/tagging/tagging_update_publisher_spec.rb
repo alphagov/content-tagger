@@ -6,20 +6,38 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
       stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links/*}).to_return(status: 200)
     end
 
+    let(:content_id) { "2797b5f2-7154-411e-9282-7756b78b22d6" }
+
+    let(:stubbed_content_item) do
+      double(content_id: content_id, allowed_tag_types: [:ordered_related_items, :ordered_related_items_overrides])
+    end
+
     it "converts base paths of related items into content IDs" do
-      stub_content_id_lookup("/my-page" => "THE-CONTENT-ID-OF-THIS-PAGE")
+      stub_content_id_lookup("/my-page" => content_id)
 
-      update_taggings_with_params(ordered_related_items: ["/my-page"])
+      update_taggings_with_params(ordered_related_items: ["/my-page"], ordered_related_items_overrides: ["/my-page"])
 
-      expect_links_to_have_been_published(ordered_related_items: ['THE-CONTENT-ID-OF-THIS-PAGE'])
+      expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [content_id])
+    end
+
+    it "generates a valid links payload using ordered_related_items" do
+      stub_content_id_lookup("/my-page" => content_id)
+
+      publisher = Tagging::TaggingUpdatePublisher.new(
+        stubbed_content_item,
+        ordered_related_items: ["/my-page"],
+        ordered_related_items_overrides: ["/my-page"]
+      )
+
+      expect(links: publisher.generate_links_payload).to be_valid_against_links_schema('publication')
     end
 
     it "converts absolute paths of related items into content IDs" do
-      stub_content_id_lookup("/my-page" => "THE-CONTENT-ID-OF-THIS-PAGE")
+      stub_content_id_lookup("/my-page" => content_id)
 
       update_taggings_with_params(ordered_related_items: ["https://www.gov.uk/my-page"])
 
-      expect_links_to_have_been_published(ordered_related_items: ['THE-CONTENT-ID-OF-THIS-PAGE'])
+      expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [])
     end
 
     it "is not valid if the provided base path does not exist" do
@@ -31,7 +49,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
       )
 
       expect(response.save_to_publishing_api).to eql(false)
-      expect(response.errors).to eql("/my-page" => "Not a known URL on GOV.UK")
+      expect(response.related_item_errors).to eql("/my-page" => "Not a known URL on GOV.UK")
     end
 
     def expect_links_to_have_been_published(links)
@@ -46,10 +64,6 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
       stub_request(:post, "https://publishing-api.test.gov.uk/lookup-by-base-path")
         .with(body: { "base_paths" => response.keys })
         .to_return(body: response.to_json)
-    end
-
-    def stubbed_content_item
-      double(content_id: 'some-id', allowed_tag_types: [:ordered_related_items])
     end
   end
 end

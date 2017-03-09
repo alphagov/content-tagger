@@ -2,7 +2,7 @@ module Tagging
   # ActiveModel-compliant object that is passed into the tagging form.
   class TaggingUpdateForm
     include ActiveModel::Model
-    attr_accessor :content_item, :previous_version, :related_item_errors, :links
+    attr_accessor :content_item, :previous_version, :related_item_errors, :related_item_overrides_errors, :links
 
     delegate :content_id, :allowed_tag_types, to: :content_item
 
@@ -15,8 +15,8 @@ module Tagging
       tag_values = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
         current_tags[tag_type] = links.send(tag_type).map { |links_hash| links_hash["content_id"] }
 
-        next unless tag_type == :ordered_related_items
-        base_paths = links.ordered_related_items.map { |links_hash| links_hash["base_path"] }
+        next unless tag_type == :ordered_related_items || tag_type == :ordered_related_items_overrides
+        base_paths = links.send(tag_type).map { |links_hash| links_hash["base_path"] }
 
         # The number of extra empty form fields to add to a link section when the link
         # section shows an individual form input for each value. This allows users to
@@ -41,8 +41,13 @@ module Tagging
       @related_item_errors ||= {}
     end
 
+    def related_item_overrides_errors
+      @related_item_overrides_errors ||= {}
+    end
+
     def title_for_related_link(base_path)
-      link = links.ordered_related_items.find { |related_item| related_item.fetch("base_path") == base_path }
+      items = links.ordered_related_items + links.ordered_related_items_overrides
+      link = items.find { |related_item| related_item.fetch("base_path") == base_path }
 
       if link.nil?
         # links is populated from the existing links. When we submit a form and

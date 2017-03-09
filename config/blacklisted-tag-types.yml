@@ -52,4 +52,5 @@ test-app-that-can-be-tagged-to-topics-only:
   - organisations
   - parent
   - ordered_related_items
+  - ordered_related_items_overrides
   - meets_user_needs
