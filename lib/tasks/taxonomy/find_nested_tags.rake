@@ -45,7 +45,12 @@ namespace :taxonomy do
 
       next unless already_tagged
 
+      content_links = Services.publishing_api.get_expanded_links(content['content_id']).to_h
+      organisations = content_links.dig('expanded_links', 'organisations') || []
+      organisation_titles = organisations.map { |organisation| organisation['title'] }
+
       nested_tag_warnings << {
+        organisation: organisation_titles.join('; '),
         content_base_path: content_base_path,
         content_title: content['title'],
         content_id: content['content_id'],
@@ -66,7 +71,7 @@ namespace :taxonomy do
 
   def clone_hash_of_hashes(hash_of_hashes)
     hash_of_hashes.each_with_object({}) do |(key, hash), clone|
-      clone.merge!(key => hash.clone)
+      clone[key] = hash.clone
     end
   end
 
@@ -81,6 +86,7 @@ namespace :taxonomy do
 
       unique_nested_tags.each do |tags|
         row = [
+          content_warnings.first[:organisation],
           content_warnings.first[:content_id],
           content_warnings.first[:content_base_path],
           content_warnings.first[:content_title],
