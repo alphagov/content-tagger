@@ -20,11 +20,12 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
       expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [content_id])
     end
 
-    it "generates a valid links payload using ordered_related_items" do
+    it "generates a valid links payload using ordered_related_items and overrides" do
       stub_content_id_lookup("/my-page" => content_id)
 
       publisher = Tagging::TaggingUpdatePublisher.new(
         stubbed_content_item,
+        taxons: ["0ffd5e18-af20-4413-a215-8511cf7628b5"],
         ordered_related_items: ["/my-page"],
         ordered_related_items_overrides: ["/my-page"]
       )

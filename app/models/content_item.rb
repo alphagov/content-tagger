@@ -9,6 +9,8 @@ class ContentItem
     :state,
   )
 
+  attr_writer :link_set
+
   def initialize(data)
     @content_id = data.fetch('content_id')
     @title = data.fetch('title')
@@ -35,6 +37,10 @@ class ContentItem
     @link_set ||= Tagging::ContentItemExpandedLinks.find(content_id)
   end
 
+  def taxons?
+    link_set.taxons.present?
+  end
+
   def blacklisted_tag_types
     blacklist = YAML.load_file("#{Rails.root}/config/blacklisted-tag-types.yml")
     document_blacklist = Array(blacklist[publishing_app]).map(&:to_sym)
@@ -42,6 +48,10 @@ class ContentItem
 
     unless related_links_are_renderable
       document_blacklist += [:ordered_related_items]
+    end
+
+    unless taxons?
+      document_blacklist += [:ordered_related_items_overrides]
     end
 
     document_blacklist
