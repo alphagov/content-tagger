@@ -13,7 +13,7 @@ namespace :taxonomy do
       loop do
         results = GdsApi::Rummager.new(Plek.find('rummager')).search(
           filter_part_of_taxonomy_tree: root_taxon_id,
-          fields: %w(link taxons content_id}),
+          fields: %w(link taxons content_id),
           start: page * results_per_page,
           count: results_per_page,
         )['results']
