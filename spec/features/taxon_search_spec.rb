@@ -145,7 +145,7 @@ RSpec.feature "Taxon Search" do
 
   def when_i_search_for_taxons
     find('#taxon_search_query').set('Taxon 2')
-    click_button 'Search taxons'
+    click_button 'Search'
   end
 
   def then_i_can_see_my_search_results

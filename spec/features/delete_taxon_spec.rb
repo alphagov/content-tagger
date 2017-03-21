@@ -35,7 +35,8 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   scenario "restoring a deleted taxon" do
     given_a_deleted_taxon
-    when_i_visit_the_taxon_trash_page
+    when_i_visit_the_taxon_page
+
     when_i_click_restore_taxon
     then_the_taxon_is_restored
   end
@@ -90,14 +91,15 @@ RSpec.feature "Delete Taxon", type: :feature do
       content_id: @taxon_content_id,
       links: {}
     )
+
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon_content_id}")
+      .to_return(status: 200, body: { expanded_links: {} }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/#{@taxon_content_id}?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=document_type&fields%5B%5D=title&link_type=taxons")
+      .to_return(status: 200, body: {}.to_json)
   end
 
   def when_i_visit_the_taxon_page
     visit taxon_path(@taxon_content_id)
-  end
-
-  def when_i_visit_the_taxon_trash_page
-    visit trash_taxons_path
   end
 
   def when_i_click_delete_taxon
@@ -108,8 +110,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
     @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
     @publish_request = stub_publishing_api_publish(@taxon_content_id, update_type: 'minor')
-    # First restore link on the page
-    page.find('table.queries-list a:nth-of-type(1)').click
+    click_link "Restore taxon"
   end
 
   def then_i_see_a_basic_prompt_to_delete
@@ -127,7 +128,6 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def then_the_taxon_is_deleted
     expect(@unpublish_request).to have_been_made
-    expect(page).to_not have_content @taxon.fetch(:title)
   end
 
   def then_the_taxon_is_restored

@@ -58,6 +58,15 @@ en:
         title: "Confirm bulk tagging from '%{taxon}' (%{type})"
       move_message: "Please note that moving these pages will remove them from the %{taxon_name} taxon."
     taxons:
+      index:
+        title: Taxons
+        explain: Search for a taxon to see its place in the taxonomy, edit the taxon or move its content
+      drafts:
+        title: Draft
+        explain: These are drafts mate
+      trash:
+        title: Deleted
+        explain: Search for a deleted taxon to restore it
       tree: Taxon hierarchy
       tagged_content: Pages tagged to this taxon
       edit_tagging: Edit tagging
