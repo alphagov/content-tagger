@@ -1,8 +1,9 @@
-<%= display_header title: t('views.taxons.deleted_title'), breadcrumbs: [t('navigation.taxons')] do %>
-  <%= link_to taxons_path, class: 'btn btn-default' do %>
-    <%= I18n.t('views.taxons.view_live_taxons') %>
-  <% end %>
-<% end %>
+<%= display_header title: t('views.taxons.deleted_title'), breadcrumbs: [t('navigation.taxons')] %>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to "Published", taxons_path %></li>
+  <li role="presentation" class="active"><%= link_to "Deleted", trash_taxons_path %></li>
+</ul>
 
 <div class="lead">
   Search for a deleted taxon to restore it.
