@@ -133,7 +133,7 @@ class TaxonsController < ApplicationController
                       { alert: I18n.t("controllers.taxons.destroy_alert") }
                     end
 
-    redirect_to taxons_path, flash: flash_message
+    redirect_to taxon_path(taxon.content_id), flash: flash_message
   end
 
   def confirm_delete
@@ -155,7 +155,7 @@ class TaxonsController < ApplicationController
                       { alert: I18n.t("controllers.taxons.restore_alert") }
                     end
 
-    redirect_to taxons_path, flash: flash_message
+    redirect_to taxon_path(taxon.content_id), flash: flash_message
   rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
     redirect_to trash_taxons_path, flash: { danger: e.message }
   end

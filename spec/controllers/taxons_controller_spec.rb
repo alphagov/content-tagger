@@ -43,6 +43,9 @@ RSpec.describe TaxonsController, type: :controller do
       taxon = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }
       foo_content_id = taxon[:content_id]
 
+      # We'll redirect to the show page
+      stub_taxon_show_page(foo_content_id)
+
       stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
         .with(body: "{\"type\":\"gone\"}")
         .to_return(status: 200, body: "", headers: {})
