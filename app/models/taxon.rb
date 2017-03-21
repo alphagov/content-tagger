@@ -28,6 +28,14 @@ class Taxon
     publication_state == "draft"
   end
 
+  def published?
+    publication_state == "published"
+  end
+
+  def unpublished?
+    publication_state == "unpublished"
+  end
+
   def content_id
     @content_id ||= SecureRandom.uuid
   end

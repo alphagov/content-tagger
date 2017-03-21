@@ -12,11 +12,19 @@
     <%= I18n.t('views.taxons.download_csv') %>
   <% end %>
 
-  <% unless taxon.draft? %>
+  <% if taxon.draft? %>
+  <% elsif taxon.unpublished? %>
+    <%= link_to taxon_restore_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
+      <i class="glyphicon glyphicon-trash"></i>
+      <%= I18n.t('views.taxons.restore_taxon') %>
+    <% end %>
+  <% elsif taxon.published? %>
     <%= link_to taxon_confirm_delete_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
       <i class="glyphicon glyphicon-trash"></i>
       <%= I18n.t('views.taxons.delete_taxon') %>
     <% end %>
+  <% else %>
+    <% raise "NO STATE #{taxon.inspect}" %>
   <% end %>
 <% end %>
 

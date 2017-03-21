@@ -110,8 +110,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
     @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
     @publish_request = stub_publishing_api_publish(@taxon_content_id, update_type: 'minor')
-    # First restore link on the page
-    page.find('table.queries-list a:nth-of-type(1)').click
+    click_link "Restore taxon"
   end
 
   def then_i_see_a_basic_prompt_to_delete

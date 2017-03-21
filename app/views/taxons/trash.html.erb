@@ -17,6 +17,7 @@
     <tr class="table-header">
       <th>Taxon</th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
 
@@ -24,7 +25,8 @@
     <% taxons.each do |taxon| %>
       <tr>
         <td><%= taxon.internal_name %></td>
-        <td><%= link_to I18n.t('views.taxons.restore_taxon'), taxon_restore_path(taxon.content_id) %></td>
+        <td><%= link_to I18n.t('views.taxons.view'), taxon_path(taxon.content_id) %></td>
+        <td><%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(taxon.content_id) %></td>
       </tr>
     <% end %>
   </tbody>

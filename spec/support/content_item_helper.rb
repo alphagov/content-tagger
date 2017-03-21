@@ -20,6 +20,7 @@ module ContentItemHelper
       title: title,
       base_path: title.parameterize.prepend('/path/'),
       document_type: "guidance",
+      publication_state: "published",
       links: {}
     ).merge(other_fields)
 
