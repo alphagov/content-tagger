@@ -1,8 +1,0 @@
-<%= simple_form_for :taxon_search, url: taxons_path, method: :get do |f| %>
-  <div class="form-group">
-    <%= f.input :query,
-      input_html: { type: :text, class: 'form-control', value: query },
-      label: false %>
-    <%= f.submit "Search taxons", class: "btn btn-md btn-success" %>
-  </div>
-<% end %>

@@ -14,7 +14,9 @@ module Taxonomy
     end
 
     def publish(validate: true)
-      raise "Invalid Taxon passed into PublishTaxon" if validate && !taxon.valid?
+      if validate && !taxon.valid?
+        raise "Invalid Taxon passed into PublishTaxon: #{taxon.errors.full_messages}"
+      end
 
       Services.publishing_api.put_content(content_id, payload)
       Services.publishing_api.publish(content_id, "minor")

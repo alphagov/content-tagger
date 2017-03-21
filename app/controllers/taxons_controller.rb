@@ -1,56 +1,14 @@
 class TaxonsController < ApplicationController
-  # TODO: deduplicate code between index, drafts, trash
   def index
-    search_results = remote_taxons.search(
-      page: params[:page],
-      per_page: params[:per_page],
-      query: query,
-      states: ['published']
-    )
-
-    locals = {
-      taxons: search_results.taxons,
-      search_results: search_results,
-      query: query,
-    }
-
-    render :index, locals: locals
+    render_index_for_taxons_in_state("published")
   end
 
-  # TODO: deduplicate code between index, drafts, trash
   def drafts
-    search_results = remote_taxons.search(
-      page: params[:page],
-      per_page: params[:per_page],
-      query: query,
-      states: ['draft']
-    )
-
-    locals = {
-      taxons: search_results.taxons,
-      search_results: search_results,
-      query: query,
-    }
-
-    render :drafts, locals: locals
+    render_index_for_taxons_in_state("draft")
   end
 
-  # TODO: deduplicate code between index, drafts, trash
   def trash
-    search_results = remote_taxons.search(
-      page: params[:page],
-      per_page: params[:per_page],
-      query: query,
-      states: ['unpublished']
-    )
-
-    locals = {
-      taxons: search_results.taxons,
-      search_results: search_results,
-      query: query,
-    }
-
-    render :trash, locals: locals
+    render_index_for_taxons_in_state("unpublished")
   end
 
   def new
@@ -162,6 +120,21 @@ class TaxonsController < ApplicationController
 
 private
 
+  def render_index_for_taxons_in_state(state)
+    search_results = remote_taxons.search(
+      page: params[:page],
+      per_page: params[:per_page],
+      query: query,
+      states: [state]
+    )
+
+    render :index, locals: {
+      taxons: search_results.taxons,
+      search_results: search_results,
+      query: query,
+    }
+  end
+
   def path_prefixes_for_select
     Theme.taxon_path_prefixes
   end
@@ -180,6 +153,8 @@ private
   end
 
   def tagged
+    return [] if taxon.unpublished?
+
     Services.publishing_api.get_linked_items(
       taxon.content_id,
       link_type: "taxons",

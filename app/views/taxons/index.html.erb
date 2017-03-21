@@ -1,4 +1,4 @@
-<%= display_header title: t('views.taxons.title'), breadcrumbs: [t('navigation.taxons')] do %>
+<%= display_header title: t("views.taxons.#{params[:action]}.title"), breadcrumbs: [t('navigation.taxons')] do %>
   <%= link_to new_taxon_path, class: 'btn btn-default' do %>
     <i class="glyphicon glyphicon-plus"></i>
       <%= I18n.t('views.taxons.add_taxon') %>
@@ -7,16 +7,23 @@
 <% end %>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><%= link_to "Published", taxons_path %></li>
-  <li role="presentation"><%= link_to "Draft", drafts_taxons_path %></li>
-  <li role="presentation"><%= link_to "Deleted", trash_taxons_path %></li>
+  <li role="presentation" class="<%= current_page?(taxons_path) ? "active" : nil%>"><%= link_to "Published", taxons_path %></li>
+  <li role="presentation" class="<%= current_page?(drafts_taxons_path) ? "active" : nil%>"><%= link_to "Draft", drafts_taxons_path %></li>
+  <li role="presentation" class="<%= current_page?(trash_taxons_path) ? "active" : nil%>"><%= link_to "Deleted", trash_taxons_path %></li>
 </ul>
 
 <div class="lead">
-  Search for a taxon to see its place in the taxonomy, edit the taxon or move its content.
+  <%= t "views.taxons.#{params[:action]}.explain" %>
 </div>
 
-<%= render 'taxons/search', query: query %>
+<%= simple_form_for :taxon_search, url: '', method: :get do |f| %>
+  <div class="form-group">
+    <%= f.input :query,
+      input_html: { type: :text, class: 'form-control', value: query },
+      label: false %>
+    <%= f.submit "Search", class: "btn btn-md btn-success" %>
+  </div>
+<% end %>
 
 <table class="table queries-list table-bordered table-striped">
   <thead>

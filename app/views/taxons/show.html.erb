@@ -13,9 +13,9 @@
   <% end %>
 
   <% if taxon.draft? %>
+    <%# publishing of drafts to be implemented shortly %>
   <% elsif taxon.unpublished? %>
     <%= link_to taxon_restore_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
-      <i class="glyphicon glyphicon-trash"></i>
       <%= I18n.t('views.taxons.restore_taxon') %>
     <% end %>
   <% elsif taxon.published? %>
@@ -23,8 +23,6 @@
       <i class="glyphicon glyphicon-trash"></i>
       <%= I18n.t('views.taxons.delete_taxon') %>
     <% end %>
-  <% else %>
-    <% raise "NO STATE #{taxon.inspect}" %>
   <% end %>
 <% end %>
 

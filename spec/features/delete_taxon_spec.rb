@@ -92,10 +92,10 @@ RSpec.feature "Delete Taxon", type: :feature do
       links: {}
     )
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon_content_id}").
-      to_return(status: 200, body: { expanded_links: {} }.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/#{@taxon_content_id}?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=document_type&fields%5B%5D=title&link_type=taxons").
-      to_return(status: 200, body: { }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon_content_id}")
+      .to_return(status: 200, body: { expanded_links: {} }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/#{@taxon_content_id}?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=document_type&fields%5B%5D=title&link_type=taxons")
+      .to_return(status: 200, body: {}.to_json)
   end
 
   def when_i_visit_the_taxon_page
