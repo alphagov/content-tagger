@@ -49,7 +49,7 @@ RSpec.describe Taxon do
     valid_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_prefix: "/education",
       path_slug: '/slug',
     )
 
@@ -70,7 +70,7 @@ RSpec.describe Taxon do
     valid_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_prefix: "/education",
       path_slug: '/ab01-cd02',
     )
 
@@ -79,7 +79,7 @@ RSpec.describe Taxon do
     invalid_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: Theme::EDUCATION_THEME_BASE_PATH,
+      path_prefix: "/education",
       path_slug: '/slug/',
     )
 

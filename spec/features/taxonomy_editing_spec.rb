@@ -9,7 +9,7 @@ RSpec.feature "Taxonomy editing" do
       "I Am A Taxon",
       other_fields: {
         content_id: "ID-1",
-        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
+        base_path: "/education/1",
         publication_state: 'active'
       }
     )
@@ -17,21 +17,21 @@ RSpec.feature "Taxonomy editing" do
       "I Am Another Taxon",
       other_fields: {
         content_id: "ID-2",
-        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
+        base_path: "/education/2",
         publication_state: 'active'
       }
     )
     @linkable_taxon_1 = {
       title: "I Am A Taxon",
       content_id: "ID-1",
-      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
+      base_path: "/education/1",
       internal_name: "I Am A Taxon",
       publication_state: 'active'
     }
     @linkable_taxon_2 = {
       title: "I Am Another Taxon",
       content_id: "ID-2",
-      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
+      base_path: "/education/2",
       internal_name: "I Am Another Taxon",
       publication_state: 'active'
     }
@@ -183,7 +183,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
+    find('select.js-path-prefix').find(:xpath, 'option[2]').select_option
     fill_in :taxon_path_slug, with: '/ID-1'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
