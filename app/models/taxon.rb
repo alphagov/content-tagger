@@ -24,6 +24,10 @@ class Taxon
     @parent_taxons ||= []
   end
 
+  def draft?
+    publication_state == "draft"
+  end
+
   def content_id
     @content_id ||= SecureRandom.uuid
   end
