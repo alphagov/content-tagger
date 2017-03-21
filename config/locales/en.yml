@@ -66,8 +66,6 @@ en:
       deleted_title: Deleted taxons
       edit: Edit taxon
       view: View taxon
-      view_live_taxons: View live taxons
-      view_deleted_taxons: View deleted taxons
       add_taxon: Add a taxon
       copy_taxon: Export taxons with IDs for spreadsheet
       delete_taxon: Delete taxon
