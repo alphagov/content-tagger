@@ -183,7 +183,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
+    find('select.js-path-prefix').find(:xpath, 'option[2]').select_option
     fill_in :taxon_path_slug, with: '/ID-1'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
