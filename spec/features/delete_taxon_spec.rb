@@ -78,7 +78,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     @taxon = content_item_with_details(
       "Taxon 2",
       other_fields: {
-        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/taxon-2",
+        base_path: "/education/taxon-2",
         content_id: @taxon_content_id,
         description: 'A description of Taxon 2.'
       },

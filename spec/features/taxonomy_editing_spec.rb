@@ -9,7 +9,7 @@ RSpec.feature "Taxonomy editing" do
       "I Am A Taxon",
       other_fields: {
         content_id: "ID-1",
-        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
+        base_path: "/education/1",
         publication_state: 'active'
       }
     )
@@ -17,21 +17,21 @@ RSpec.feature "Taxonomy editing" do
       "I Am Another Taxon",
       other_fields: {
         content_id: "ID-2",
-        base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
+        base_path: "/education/2",
         publication_state: 'active'
       }
     )
     @linkable_taxon_1 = {
       title: "I Am A Taxon",
       content_id: "ID-1",
-      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/1",
+      base_path: "/education/1",
       internal_name: "I Am A Taxon",
       publication_state: 'active'
     }
     @linkable_taxon_2 = {
       title: "I Am Another Taxon",
       content_id: "ID-2",
-      base_path: "#{Theme::EDUCATION_THEME_BASE_PATH}/2",
+      base_path: "/education/2",
       internal_name: "I Am Another Taxon",
       publication_state: 'active'
     }
