@@ -1,4 +1,5 @@
 class TaxonsController < ApplicationController
+  # TODO: deduplicate code between index, drafts, trash
   def index
     search_results = remote_taxons.search(
       page: params[:page],
@@ -16,6 +17,25 @@ class TaxonsController < ApplicationController
     render :index, locals: locals
   end
 
+  # TODO: deduplicate code between index, drafts, trash
+  def drafts
+    search_results = remote_taxons.search(
+      page: params[:page],
+      per_page: params[:per_page],
+      query: query,
+      states: ['draft']
+    )
+
+    locals = {
+      taxons: search_results.taxons,
+      search_results: search_results,
+      query: query,
+    }
+
+    render :drafts, locals: locals
+  end
+
+  # TODO: deduplicate code between index, drafts, trash
   def trash
     search_results = remote_taxons.search(
       page: params[:page],

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get :confirm_delete
     get :restore
     get :trash, on: :collection
+    get :drafts, on: :collection
   end
 
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
