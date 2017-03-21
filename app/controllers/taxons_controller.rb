@@ -29,14 +29,14 @@ class TaxonsController < ApplicationController
     }
 
     if taxon.valid?
-      Taxonomy::PublishTaxon.call(taxon: taxon)
+      Taxonomy::UpdateTaxon.call(taxon: taxon)
       redirect_to taxon_path(taxon.content_id), success: t('controllers.taxons.create_success')
     else
       error_messages = taxon.errors.full_messages.join('; ')
       flash[:danger] = error_messages
       render :new, locals: locals
     end
-  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
+  rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     flash[:danger] = e.message
     render :new, locals: locals
   end
@@ -70,14 +70,14 @@ class TaxonsController < ApplicationController
     }
 
     if taxon.valid?
-      Taxonomy::PublishTaxon.call(taxon: taxon)
+      Taxonomy::UpdateTaxon.call(taxon: taxon)
       redirect_to(taxons_path)
     else
       error_messages = taxon.errors.full_messages.join('; ')
       flash[:danger] = error_messages
       render :edit, locals: locals
     end
-  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
+  rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     flash[:danger] = e.message
     render :edit, locals: locals
   end
@@ -105,7 +105,7 @@ class TaxonsController < ApplicationController
   end
 
   def restore
-    Taxonomy::PublishTaxon.call(taxon: taxon)
+    Taxonomy::UpdateTaxon.call(taxon: taxon)
 
     flash_message = if response_code == 200
                       { success: I18n.t("controllers.taxons.restore_success") }
@@ -114,7 +114,7 @@ class TaxonsController < ApplicationController
                     end
 
     redirect_to taxon_path(taxon.content_id), flash: flash_message
-  rescue Taxonomy::PublishTaxon::InvalidTaxonError => e
+  rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     redirect_to trash_taxons_path, flash: { danger: e.message }
   end
 

@@ -12,7 +12,7 @@ module ParentingChildcare
       taxon = Taxon.new(taxon_params)
       puts " => Creating '#{taxon.title}'"
 
-      Taxonomy::PublishTaxon.call(taxon: taxon)
+      Taxonomy::UpdateTaxon.call(taxon: taxon)
 
       taxon
     end

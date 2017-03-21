@@ -10,7 +10,7 @@ module ParentingChildcare
       }
       theme = Taxon.new(theme_params)
       puts "Creating theme '#{theme.title}'"
-      Taxonomy::PublishTaxon.call(taxon: theme)
+      Taxonomy::UpdateTaxon.call(taxon: theme)
 
       theme
     end
