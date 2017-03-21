@@ -30,7 +30,7 @@ class TaxonsController < ApplicationController
 
     if taxon.valid?
       Taxonomy::PublishTaxon.call(taxon: taxon)
-      redirect_to(taxons_path)
+      redirect_to taxon_path(taxon.content_id), success: t('controllers.taxons.create_success')
     else
       error_messages = taxon.errors.full_messages.join('; ')
       flash[:danger] = error_messages

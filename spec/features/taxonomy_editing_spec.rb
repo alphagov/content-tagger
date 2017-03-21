@@ -149,6 +149,17 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_submit_the_taxon_with_a_title_and_parents
+    # After the taxon is created we'll be redirected to the taxon's "view" page
+    # which needs a bunch of API calls stubbed.
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
+      .to_return(body: { content_id: "", title: "Hey", base_path: "/foo", details: { internal_name: "Foo" } }.to_json)
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
+      .to_return(body: {}.to_json)
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/expanded-links/*})
+      .to_return(body: { expanded_links: {} }.to_json)
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(body: {}.to_json)
+
     fill_in :taxon_title, with: "My Lovely Taxon"
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "My Lovely Taxon"
@@ -212,6 +223,7 @@ RSpec.feature "Taxonomy editing" do
     expect(@create_item).to have_been_requested
     expect(@publish_item).to have_been_requested
     expect(@create_links).to have_been_requested
+    expect(page).to have_content I18n.t('controllers.taxons.create_success')
   end
 
   def then_my_taxon_is_updated
