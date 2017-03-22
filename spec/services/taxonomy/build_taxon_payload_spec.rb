@@ -8,6 +8,7 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
       base_path: "/taxons/my-taxon",
       description: "This is a taxon.",
       internal_name: "Internal title",
+      parent_taxons: [],
       notes_for_editors: "Use this taxon wisely."
     )
   end
