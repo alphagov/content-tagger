@@ -3,7 +3,7 @@
     <%= f.input :path_prefix,
       input_html: { class: 'js-path-prefix form-control' },
       label: I18n.t('views.taxons.path_prefix'),
-      collection: path_prefixes_for_select,
+      collection: page.path_prefixes_for_select,
       include_blank: false %>
   </div>
 
@@ -33,5 +33,5 @@
 
 <%= f.input :notes_for_editors, as: :text, input_html: { class: 'form-control' } %>
 
-<%= f.input :parent_taxons, collection: taxons_for_select,
+<%= f.input :parent_taxons, collection: page.taxons_for_select,
   input_html: { class: :select2, multiple: true, include_blank: true } %>

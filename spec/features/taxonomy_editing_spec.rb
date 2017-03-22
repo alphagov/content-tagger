@@ -161,7 +161,6 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
       .to_return(status: 200, body: "[]", headers: {})
 
-    # TODO: probably not necessary
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(status: 200, body: "{}", headers: {})
   end
@@ -178,7 +177,6 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
       .to_return(status: 200, body: "[]", headers: {})
 
-    # TODO: probably not necessary
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(status: 200, body: "{}", headers: {})
   end

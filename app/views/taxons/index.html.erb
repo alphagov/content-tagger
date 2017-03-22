@@ -19,7 +19,7 @@
 <%= simple_form_for :taxon_search, url: '', method: :get do |f| %>
   <div class="form-group">
     <%= f.input :query,
-      input_html: { type: :text, class: 'form-control', value: query },
+      input_html: { type: :text, class: 'form-control', value: page.query },
       label: false %>
     <%= f.submit "Search", class: "btn btn-md btn-success" %>
   </div>
@@ -37,7 +37,7 @@
   </thead>
 
   <tbody>
-    <% taxons.each do |taxon| %>
+    <% page.taxons.each do |taxon| %>
       <tr>
         <td><%= taxon.theme %></td>
         <td><%= taxon.internal_name %></td>
@@ -49,4 +49,4 @@
   </tbody>
 </table>
 
-<%= paginate search_results, theme: 'twitter-bootstrap-3' %>
+<%= paginate page.search_results, theme: 'twitter-bootstrap-3' %>
