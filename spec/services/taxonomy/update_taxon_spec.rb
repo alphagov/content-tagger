@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Taxonomy::PublishTaxon do
+RSpec.describe Taxonomy::UpdateTaxon do
   let(:taxon) do
     Taxon.new(
       title: 'A Title',
@@ -15,7 +15,6 @@ RSpec.describe Taxonomy::PublishTaxon do
     context 'with a valid taxon form' do
       it 'publishes the document via the publishing API' do
         expect(Services.publishing_api).to receive(:put_content)
-        expect(Services.publishing_api).to receive(:publish)
         expect(Services.publishing_api).to receive(:patch_links)
 
         expect { publish }.to_not raise_error
@@ -39,7 +38,7 @@ RSpec.describe Taxonomy::PublishTaxon do
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(nil)
         expect(Airbrake).to receive(:notify).with(error)
         expect { publish }.to raise_error(
-          Taxonomy::PublishTaxon::InvalidTaxonError,
+          Taxonomy::UpdateTaxon::InvalidTaxonError,
           /there was a problem with your request/i
         )
       end
@@ -47,7 +46,7 @@ RSpec.describe Taxonomy::PublishTaxon do
       it 'raises an error with a specific message if it is a base path conflict' do
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(SecureRandom.uuid)
         expect { publish }.to raise_error(
-          Taxonomy::PublishTaxon::InvalidTaxonError,
+          Taxonomy::UpdateTaxon::InvalidTaxonError,
           /a taxon with this slug already exists/i
         )
       end

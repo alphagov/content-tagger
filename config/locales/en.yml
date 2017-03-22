@@ -63,7 +63,7 @@ en:
         explain: Search for a taxon to see its place in the taxonomy, edit the taxon or move its content
       drafts:
         title: Draft
-        explain: These are drafts mate
+        explain: Search drafts
       trash:
         title: Deleted
         explain: Search for a deleted taxon to restore it

@@ -39,7 +39,7 @@ namespace :taxonomy do
         content_id = Services.publishing_api.lookup_content_id(base_path: parent_base_path)
 
         taxon.parent_taxons << content_id
-        Taxonomy::PublishTaxon.call(taxon: taxon)
+        Taxonomy::UpdateTaxon.call(taxon: taxon)
       end
     end
   end

@@ -1,0 +1,10 @@
+<h1>Publish "<%= taxon.internal_name %>"</h1>
+
+<div class="lead">
+  You are about to <strong>publish</strong> this taxon - this will make the
+  navigation page appear to everyone on GOV.UK.
+</div>
+
+<%= button_to "Confirm publish",
+  taxon_publish_path(taxon.content_id),
+  class: 'btn btn-success' %>

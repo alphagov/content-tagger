@@ -1,5 +1,5 @@
 module Taxonomy
-  class PublishTaxon
+  class UpdateTaxon
     attr_reader :taxon
     delegate :content_id, :parent_taxons, to: :taxon
 
@@ -15,11 +15,10 @@ module Taxonomy
 
     def publish(validate: true)
       if validate && !taxon.valid?
-        raise "Invalid Taxon passed into PublishTaxon: #{taxon.errors.full_messages}"
+        raise "Invalid Taxon passed into UpdateTaxon: #{taxon.errors.full_messages}"
       end
 
       Services.publishing_api.put_content(content_id, payload)
-      Services.publishing_api.publish(content_id, "minor")
       Services.publishing_api.patch_links(
         content_id,
         links: { parent_taxons: parent_taxons.select(&:present?) }
