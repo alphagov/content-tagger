@@ -24,6 +24,10 @@ class Taxon
     @parent_taxons ||= []
   end
 
+  def theme
+    Theme::THEMES[path_prefix] || "Other"
+  end
+
   def draft?
     publication_state == "draft"
   end

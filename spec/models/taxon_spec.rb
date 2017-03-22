@@ -86,4 +86,12 @@ RSpec.describe Taxon do
     expect(invalid_taxon).to_not be_valid
     expect(invalid_taxon.errors.keys).to include(:path_slug)
   end
+
+  describe '#theme' do
+    it "returns the theme" do
+      taxon = Taxon.new(base_path: "/education/foo")
+
+      expect(taxon.theme).to eql("Education")
+    end
+  end
 end

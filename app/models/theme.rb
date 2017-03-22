@@ -1,8 +1,10 @@
 class Theme
+  THEMES = {
+    '/childcare-parenting' => 'Childcare and Parenting',
+    '/education' => 'Education',
+  }.freeze
+
   def self.taxon_path_prefixes
-    [
-      '/childcare-parenting',
-      '/education',
-    ]
+    THEMES.keys
   end
 end
