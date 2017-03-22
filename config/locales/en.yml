@@ -105,6 +105,7 @@ en:
     tag_migrations:
       import_removed: Tag migration import has been removed.
     taxons:
+      create_success: You have sucessfully created a taxon
       destroy_success: You have sucessfully deleted the taxon
       destroy_alert: It was not possible to delete the taxon
       restore_success: You have sucessfully restored the taxon
