@@ -73,7 +73,6 @@ private
       licencefinder
       frontend
       multipage-frontend
-      businesssupportfinder
       calculators
     ).include?(rendering_app)
   end
