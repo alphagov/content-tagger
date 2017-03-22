@@ -1,18 +1,12 @@
-<%= display_header title: taxon.internal_name,
-  breadcrumbs: [:taxons, link_to(taxon.internal_name, taxon_path(taxon.content_id)), "Edit"] %>
+<%= display_header title: page.title,
+  breadcrumbs: [:taxons, link_to(page.taxon.internal_name, taxon_path(page.taxon_content_id)), "Edit"] %>
 
-<%= simple_form_for taxon, url: taxon_path(taxon.content_id), method: :patch do |f| %>
+<%= simple_form_for page.taxon, url: taxon_path(page.taxon_content_id), method: :patch do |f| %>
+  <%= f.hidden_field :content_id, value: page.taxon_content_id %>
 
-  <%= f.hidden_field :content_id, value: taxon.content_id %>
+  <%= render 'form_fields', f: f, page: page %>
 
-  <%= render partial: 'form_fields',
-     locals: {
-       f: f,
-       taxons_for_select: taxons_for_select,
-       path_prefixes_for_select: path_prefixes_for_select,
-     } %>
-
-  <% if taxon.published? %>
+  <% if page.published? %>
     <input type="hidden" name="publish_taxon_on_save" value="true" />
     <%= f.submit "Save & publish", class: "btn btn-lg btn-success submit-button" %>
   <% else %>
