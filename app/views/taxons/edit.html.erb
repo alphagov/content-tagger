@@ -12,11 +12,5 @@
        path_prefixes_for_select: path_prefixes_for_select,
      } %>
 
-  <% if taxon.draft? %>
-    <div class="alert alert-danger clearfix" role="warning">
-      WARNING: This is a draft taxon. Saving it will also publish it.
-    </div>
-  <% end %>
-
   <%= f.submit I18n.t('views.taxons.edit_button'), class: "btn btn-lg btn-success" %>
 <% end %>

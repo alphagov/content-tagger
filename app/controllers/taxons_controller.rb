@@ -118,6 +118,15 @@ class TaxonsController < ApplicationController
     redirect_to trash_taxons_path, flash: { danger: e.message }
   end
 
+  def confirm_publish
+    render :confirm_publish, locals: { taxon: taxon }
+  end
+
+  def publish
+    Services.publishing_api.publish(taxon.content_id, "major")
+    redirect_to taxon_path(taxon.content_id), success: "You have successfully published the taxon"
+  end
+
 private
 
   def render_index_for_taxons_in_state(state)

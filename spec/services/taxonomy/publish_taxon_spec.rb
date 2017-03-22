@@ -15,7 +15,6 @@ RSpec.describe Taxonomy::PublishTaxon do
     context 'with a valid taxon form' do
       it 'publishes the document via the publishing API' do
         expect(Services.publishing_api).to receive(:put_content)
-        expect(Services.publishing_api).to receive(:publish)
         expect(Services.publishing_api).to receive(:patch_links)
 
         expect { publish }.to_not raise_error

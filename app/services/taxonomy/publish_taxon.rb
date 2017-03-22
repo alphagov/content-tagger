@@ -19,7 +19,6 @@ module Taxonomy
       end
 
       Services.publishing_api.put_content(content_id, payload)
-      Services.publishing_api.publish(content_id, "minor")
       Services.publishing_api.patch_links(
         content_id,
         links: { parent_taxons: parent_taxons.select(&:present?) }

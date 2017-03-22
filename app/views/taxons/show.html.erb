@@ -13,7 +13,9 @@
   <% end %>
 
   <% if taxon.draft? %>
-    <%# publishing of drafts to be implemented shortly %>
+    <%= link_to taxon_confirm_publish_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
+      Publish taxon
+    <% end %>
   <% elsif taxon.unpublished? %>
     <%= link_to taxon_restore_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
       <%= I18n.t('views.taxons.restore_taxon') %>
