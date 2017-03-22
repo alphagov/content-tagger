@@ -11,22 +11,22 @@
     <i class="glyphicon glyphicon-download-alt"></i>
     <%= I18n.t('views.taxons.download_csv') %>
   <% end %>
+<% end %>
 
-  <% if taxon.draft? %>
+<div class="well state-box">
+  <div class="state">State: <%= taxon.publication_state_name %></div>
+  <% if taxon.published? %>
+    <%= link_to "Delete", taxon_confirm_delete_path(taxon.content_id), class: 'delete-link' %>
+  <% elsif taxon.draft? %>
     <%= link_to taxon_confirm_publish_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
-      Publish taxon
+      Publish
     <% end %>
   <% elsif taxon.unpublished? %>
     <%= link_to taxon_restore_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
-      <%= I18n.t('views.taxons.restore_taxon') %>
-    <% end %>
-  <% elsif taxon.published? %>
-    <%= link_to taxon_confirm_delete_path(taxon.content_id), class: 'btn btn-md btn-default' do %>
-      <i class="glyphicon glyphicon-trash"></i>
-      <%= I18n.t('views.taxons.delete_taxon') %>
+      Restore
     <% end %>
   <% end %>
-<% end %>
+</div>
 
 <h3><%= t('views.taxons.tree') %></h3>
 

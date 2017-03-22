@@ -90,7 +90,7 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def and_i_click_the_publish_button
-    click_link "Publish taxon"
+    click_link "Publish"
   end
 
   def and_i_confirm_that_i_want_to_publish
