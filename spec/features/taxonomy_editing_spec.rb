@@ -146,7 +146,7 @@ RSpec.feature "Taxonomy editing" do
     # After the taxon is created we'll be redirected to the taxon's "view" page
     # which needs a bunch of API calls stubbed.
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
-      .to_return(body: { content_id: "", title: "Hey", base_path: "/foo", details: { internal_name: "Foo" } }.to_json)
+      .to_return(body: { content_id: "", title: "Hey", base_path: "/foo", publication_state: "published", details: { internal_name: "Foo" } }.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
       .to_return(body: {}.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/expanded-links/*})

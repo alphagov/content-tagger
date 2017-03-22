@@ -40,6 +40,14 @@ class Taxon
     publication_state == "unpublished"
   end
 
+  def publication_state_name
+    {
+      "draft" => "Draft",
+      "published" => "Published",
+      "unpublished" => "Deleted",
+    }.fetch(publication_state)
+  end
+
   def content_id
     @content_id ||= SecureRandom.uuid
   end

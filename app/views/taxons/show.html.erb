@@ -14,7 +14,7 @@
 <% end %>
 
 <div class="well state-box">
-  <div class="state">State: <%= taxon.publication_state %></div>
+  <div class="state">State: <%= taxon.publication_state_name %></div>
   <% if taxon.published? %>
     <%= link_to "Delete", taxon_confirm_delete_path(taxon.content_id), class: 'delete-link' %>
   <% elsif taxon.draft? %>
