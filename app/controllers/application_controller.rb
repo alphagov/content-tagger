@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   include GDS::SSO::ControllerMethods
   before_filter :require_signin_permission!
+  before_filter :set_authenticated_user_header
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -31,5 +32,9 @@ private
 
   def active_navigation_item
     controller_name
+  end
+
+  def set_authenticated_user_header
+    GdsApi::GovukHeaders.set_header(:x_govuk_authenticated_user, current_user.uid)
   end
 end
