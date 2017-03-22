@@ -82,7 +82,6 @@ en:
       new_title: New taxon
       new_breadcrumb: New taxon
       new_button: Create taxon
-      edit_button: Update taxon
       download_csv: Download taxonomy as CSV
       confirm_deletion_title: You are about to delete
       confirm_deletion_restore: Deleted taxons can be restored.

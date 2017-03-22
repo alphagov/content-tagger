@@ -71,7 +71,12 @@ class TaxonsController < ApplicationController
 
     if taxon.valid?
       Taxonomy::UpdateTaxon.call(taxon: taxon)
-      redirect_to(taxons_path)
+
+      if params[:publish_taxon_on_save] == "true"
+        Services.publishing_api.publish(taxon.content_id, "major")
+      end
+
+      redirect_to taxon_path(taxon.content_id)
     else
       error_messages = taxon.errors.full_messages.join('; ')
       flash[:danger] = error_messages

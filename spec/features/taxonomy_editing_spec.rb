@@ -66,12 +66,20 @@ RSpec.feature "Taxonomy editing" do
     then_i_can_see_a_specific_error_message
   end
 
-  scenario "User edits a taxon" do
-    given_there_are_taxons
-    when_i_visit_the_taxonomy_page
-    and_i_click_on_the_edit_taxon_link
+  scenario "User edits a live taxon" do
+    given_there_is_a_live_taxon
+    and_i_visit_the_taxon_edit_page
     when_i_update_the_taxon
     then_my_taxon_is_updated
+    and_my_taxon_is_automatically_published
+  end
+
+  scenario "User edits a draft taxon" do
+    given_there_is_a_draft_taxon
+    and_i_visit_the_taxon_edit_page
+    when_i_update_the_taxon
+    then_my_taxon_is_updated
+    and_my_taxon_is_not_published
   end
 
   scenario "Taxon base path preview", js: true do
@@ -131,6 +139,9 @@ RSpec.feature "Taxonomy editing" do
       .with(body: /details.*#{@dummy_editor_notes}/)
       .to_return(status: 200, body: {}.to_json)
 
+    @publish_item = stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/ID-1/publish")
+      .to_return(status: 200, body: "", headers: {})
+
     publishing_api_has_expanded_links(
       content_id: @taxon_1[:content_id],
       expanded_links: {},
@@ -139,7 +150,37 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
 
-    click_on I18n.t('views.taxons.edit_button')
+    find('.submit-button').click
+  end
+
+  def given_there_is_a_live_taxon
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
+      .to_return(body: { content_id: "ID-1", base_path: "/foo", title: "Foo", publication_state: "published", details: { internal_name: "foo" } }.to_json)
+
+    # dropdown of parent taxons
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
+      .to_return(status: 200, body: "[]", headers: {})
+
+    # TODO: probably not necessary
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
+      .to_return(status: 200, body: "{}", headers: {})
+  end
+
+  def and_i_visit_the_taxon_edit_page
+    visit edit_taxon_path("ID-1")
+  end
+
+  def given_there_is_a_draft_taxon
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
+      .to_return(body: { content_id: "ID-1", base_path: "/foo", title: "Foo", publication_state: "draft", details: { internal_name: "foo" } }.to_json)
+
+    # dropdown of parent taxons
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
+      .to_return(status: 200, body: "[]", headers: {})
+
+    # TODO: probably not necessary
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
+      .to_return(status: 200, body: "{}", headers: {})
   end
 
   def when_i_submit_the_taxon_with_a_title_and_parents
@@ -220,6 +261,14 @@ RSpec.feature "Taxonomy editing" do
 
   def then_my_taxon_is_updated
     expect(@update_item).to have_been_requested
+  end
+
+  def and_my_taxon_is_automatically_published
+    expect(@publish_item).to have_been_requested
+  end
+
+  def and_my_taxon_is_not_published
+    expect(@publish_item).not_to have_been_requested
   end
 
   def then_the_base_path_preview_is_updated
