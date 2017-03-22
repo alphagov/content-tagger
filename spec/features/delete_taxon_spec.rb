@@ -103,12 +103,12 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def when_i_click_delete_taxon
-    click_on "Delete taxon"
+    click_on "Delete"
   end
 
   def when_i_click_restore_taxon
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
-    click_link "Restore taxon"
+    click_link "Restore"
   end
 
   def then_i_see_a_basic_prompt_to_delete
