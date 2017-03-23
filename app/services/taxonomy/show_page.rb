@@ -1,6 +1,6 @@
 module Taxonomy
   class ShowPage
-    delegate :content_id, :draft?, :published?, :unpublished?, to: :taxon
+    delegate :content_id, :draft?, :published?, :unpublished?, :base_path, to: :taxon
 
     attr_reader :taxon
 
