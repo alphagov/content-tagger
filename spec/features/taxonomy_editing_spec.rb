@@ -10,7 +10,7 @@ RSpec.feature "Taxonomy editing" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/education/1",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
     @taxon_2 = content_item_with_details(
@@ -18,7 +18,7 @@ RSpec.feature "Taxonomy editing" do
       other_fields: {
         content_id: "ID-2",
         base_path: "/education/2",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
     @linkable_taxon_1 = {
@@ -26,14 +26,14 @@ RSpec.feature "Taxonomy editing" do
       content_id: "ID-1",
       base_path: "/education/1",
       internal_name: "I Am A Taxon",
-      publication_state: 'active'
+      publication_state: 'published'
     }
     @linkable_taxon_2 = {
       title: "I Am Another Taxon",
       content_id: "ID-2",
       base_path: "/education/2",
       internal_name: "I Am Another Taxon",
-      publication_state: 'active'
+      publication_state: 'published'
     }
 
     @dummy_editor_notes = "Some usage notes for this taxon."
@@ -84,14 +84,9 @@ RSpec.feature "Taxonomy editing" do
 
   scenario "Taxon base path preview", js: true do
     given_there_are_taxons
-    when_i_visit_the_taxonomy_page
-    and_i_click_on_the_edit_taxon_link
+    and_i_visit_the_taxon_edit_page
     when_i_change_the_path_slug
     then_the_base_path_preview_is_updated
-  end
-
-  def and_i_click_on_the_edit_taxon_link
-    click_link(I18n.t('views.taxons.edit'), match: :prefer_exact)
   end
 
   def given_there_are_taxons
