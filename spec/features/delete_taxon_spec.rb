@@ -108,6 +108,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def when_i_click_restore_taxon
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
+    @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
     click_link "Restore"
   end
 
@@ -130,6 +131,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def then_the_taxon_is_restored
     expect(@put_content_request).to have_been_made
+    expect(@patch_links_request).to have_been_made
 
     # This is the taxons index page and not the trash page
     expect(page).to have_content @taxon.fetch(:title)
