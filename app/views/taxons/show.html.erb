@@ -30,14 +30,16 @@
   <% end %>
 </div>
 
-<h3><%= t('views.taxons.tree') %></h3>
+<% unless page.unpublished? %>
+  <h3><%= t('views.taxons.tree') %></h3>
 
-<%= render 'taxonomy_tree', taxonomy_tree: page.taxonomy_tree %>
+  <%= render 'taxonomy_tree', taxonomy_tree: page.taxonomy_tree %>
 
-<h3><%= t('views.taxons.tagged_content') %></h3>
+  <h3><%= t('views.taxons.tagged_content') %></h3>
 
-<% if page.tagged.any? %>
-  <%= render 'tagged_content', tagged: page.tagged %>
-<% else %>
-  <p class="no-content no-content-bordered">No content tagged to this taxon</p>
+  <% if page.tagged.any? %>
+    <%= render 'tagged_content', tagged: page.tagged %>
+  <% else %>
+    <p class="no-content no-content-bordered">No content tagged to this taxon</p>
+  <% end %>
 <% end %>
