@@ -23,9 +23,6 @@ module Taxonomy
           internal_name: internal_name,
           notes_for_editors: notes_for_editors,
         },
-        links: {
-          parent_taxons: taxon.parent_taxons.select(&:present?)
-        },
         routes: [
           { path: base_path, type: "exact" },
         ]

@@ -40,6 +40,9 @@ RSpec.feature "Taxonomy editing" do
 
     @create_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 200, body: {}.to_json)
+
+    @create_links = stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links*})
+      .to_return(status: 200, body: {}.to_json)
   end
 
   scenario "User creates a taxon with multiple parents" do
@@ -254,11 +257,13 @@ RSpec.feature "Taxonomy editing" do
 
   def then_a_taxon_is_created
     expect(@create_item).to have_been_requested
+    expect(@create_links).to have_been_requested
     expect(page).to have_content I18n.t('controllers.taxons.create_success')
   end
 
   def then_my_taxon_is_updated
     expect(@update_item).to have_been_requested
+    expect(@create_links).to have_been_requested
   end
 
   def and_my_taxon_is_automatically_published
