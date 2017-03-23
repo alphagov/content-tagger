@@ -13,6 +13,12 @@ RSpec.describe Taxonomy::BuildTaxon do
         details: {
           internal_name: 'Internal name',
           notes_for_editors: 'Notes for editors',
+        },
+        links: {
+          parent_taxons: %w(
+            0f27606a-4012-4106-8f50-70ad3c898a0b
+            cb000e46-4c16-42fe-bb9c-595a5f9eb677
+          ),
         }
       }
     end
@@ -20,13 +26,6 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     before do
       publishing_api_has_item(content)
-      publishing_api_has_links(
-        content_id: content_id,
-        links: {
-          topics: [],
-          parent_taxons: []
-        }
-      )
     end
 
     it 'builds a taxon object' do
@@ -34,7 +33,10 @@ RSpec.describe Taxonomy::BuildTaxon do
     end
 
     it 'assigns the parents to the taxon' do
-      expect(taxon.parent_taxons).to be_empty
+      expect(taxon.parent_taxons).to eql(%w(
+                                           0f27606a-4012-4106-8f50-70ad3c898a0b
+                                           cb000e46-4c16-42fe-bb9c-595a5f9eb677
+                                         ))
     end
 
     it 'assigns the content id correctly' do
@@ -63,38 +65,6 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     it 'assigns the notes_for_editors correctly' do
       expect(taxon.notes_for_editors).to eq("Notes for editors")
-    end
-
-    context 'without taxon parents' do
-      before do
-        publishing_api_has_links(
-          content_id: content_id,
-          links: {
-            topics: []
-          }
-        )
-      end
-
-      it 'has no taxon parents' do
-        expect(taxon.parent_taxons).to be_empty
-      end
-    end
-
-    context 'with existing links' do
-      let(:parent_taxons) { ["CONTENT-ID-RTI", "CONTENT-ID-VAT"] }
-      before do
-        publishing_api_has_links(
-          content_id: content_id,
-          links: {
-            topics: [],
-            parent_taxons: parent_taxons
-          }
-        )
-      end
-
-      it 'assigns the parents to the taxon' do
-        expect(taxon.parent_taxons).to eq(parent_taxons)
-      end
     end
 
     context 'with an invalid taxon' do
