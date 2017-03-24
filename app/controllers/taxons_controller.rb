@@ -87,6 +87,11 @@ class TaxonsController < ApplicationController
     redirect_to taxon_path(taxon.content_id), success: "You have successfully published the taxon"
   end
 
+  def discard_draft
+    Services.publishing_api.discard_draft(taxon.content_id)
+    redirect_to taxons_path, success: t("controllers.taxons.discard_draft_success")
+  end
+
 private
 
   def taxon

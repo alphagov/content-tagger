@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get :restore
     get :trash, on: :collection
     get :drafts, on: :collection
+    delete :discard_draft
   end
 
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
