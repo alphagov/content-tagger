@@ -1,15 +1,17 @@
 <%= display_header title: page.title, breadcrumbs: [:taxons, page.taxon] do %>
-  <%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(page.taxon_content_id), class: "btn btn-default"%>
+  <% unless page.unpublished? %>
+    <%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(page.taxon_content_id), class: "btn btn-default"%>
 
-  <%= link_to new_taxon_migration_path(source_content_id: page.taxon_content_id),
-    class: 'btn btn-md btn-default' do %>
-    <i class="glyphicon glyphicon-move"></i>
-    <%= I18n.t('views.taxons.move_content') %>
-  <% end %>
+    <%= link_to new_taxon_migration_path(source_content_id: page.taxon_content_id),
+      class: 'btn btn-md btn-default' do %>
+      <i class="glyphicon glyphicon-move"></i>
+      <%= I18n.t('views.taxons.move_content') %>
+    <% end %>
 
-  <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
-    <i class="glyphicon glyphicon-download-alt"></i>
-    <%= I18n.t('views.taxons.download_csv') %>
+    <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
+      <i class="glyphicon glyphicon-download-alt"></i>
+      <%= I18n.t('views.taxons.download_csv') %>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -36,14 +38,16 @@
   <% end %>
 </div>
 
-<h3><%= t('views.taxons.tree') %></h3>
+<% unless page.unpublished? %>
+  <h3><%= t('views.taxons.tree') %></h3>
 
-<%= render 'taxonomy_tree', taxonomy_tree: page.taxonomy_tree %>
+  <%= render 'taxonomy_tree', taxonomy_tree: page.taxonomy_tree %>
 
-<h3><%= t('views.taxons.tagged_content') %></h3>
+  <h3><%= t('views.taxons.tagged_content') %></h3>
 
-<% if page.tagged.any? %>
-  <%= render 'tagged_content', tagged: page.tagged %>
-<% else %>
-  <p class="no-content no-content-bordered">No content tagged to this taxon</p>
+  <% if page.tagged.any? %>
+    <%= render 'tagged_content', tagged: page.tagged %>
+  <% else %>
+    <p class="no-content no-content-bordered">No content tagged to this taxon</p>
+  <% end %>
 <% end %>
