@@ -9,3 +9,16 @@
     float: right;
   }
 }
+
+.confirmation-box {
+  padding-top: 2em;
+  padding-bottom: 2em;
+
+  form {
+    display: inline-block;
+  }
+
+  .cancel-link {
+    margin-left: 40px;
+  }
+}

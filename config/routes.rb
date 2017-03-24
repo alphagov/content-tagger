@@ -3,11 +3,13 @@ Rails.application.routes.draw do
 
   resources :taxons do
     get :confirm_delete
+    get :confirm_discard
     get :confirm_publish
     post :publish
     get :restore
     get :trash, on: :collection
     get :drafts, on: :collection
+    delete :discard_draft
   end
 
   resources :copy_taxons, only: [:index], path: 'copy-taxons'

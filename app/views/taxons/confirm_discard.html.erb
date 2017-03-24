@@ -1,0 +1,15 @@
+<h1><%= taxon.internal_name %></h1>
+
+<div class="lead">
+  You are about to <strong>delete</strong> this topic - this will remove the
+  topic from the system, and cannot be undone.
+ </div>
+
+<div class="confirmation-box">
+  <%= button_to "Confirm delete",
+  taxon_discard_draft_path(taxon.content_id),
+  method: :delete,
+  class: 'btn btn-lg btn-success confirm-button' %>
+
+  <%= link_to "Cancel", taxon_path(taxon.content_id), class: "cancel-link" %>
+</div>

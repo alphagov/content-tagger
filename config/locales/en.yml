@@ -109,6 +109,7 @@ en:
       destroy_alert: It was not possible to delete the taxon
       restore_success: You have sucessfully restored the taxon
       restore_alert: It was not possible to restore the taxon
+      discard_draft_success: You have successfully deleted the draft taxon
   messages:
     views:
       confirm: Are you sure?
