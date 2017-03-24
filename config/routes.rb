@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :taxons do
     get :confirm_delete
+    get :confirm_discard
     get :confirm_publish
     post :publish
     get :restore

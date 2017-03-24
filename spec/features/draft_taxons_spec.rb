@@ -22,6 +22,7 @@ RSpec.feature "Draft taxonomy" do
     given_there_is_a_draft_taxon
     when_i_visit_the_taxon_page
     and_i_click_the_delete_link
+    and_i_confirm_that_i_want_to_discard
     then_the_taxon_should_be_discarded
   end
 
@@ -101,12 +102,6 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def and_i_click_the_delete_link
-    taxon = build(:taxon, publication_state: "draft")
-    publishing_api_has_taxons([taxon])
-
-    @discard_request = stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{@taxon_content_id}/discard-draft")
-      .to_return(status: 200, body: "{}")
-
     click_on "Delete"
   end
 
@@ -119,6 +114,16 @@ RSpec.feature "Draft taxonomy" do
 
   def then_the_taxon_should_be_published
     expect(@publish_request).to have_been_requested
+  end
+
+  def and_i_confirm_that_i_want_to_discard
+    taxon = build(:taxon, publication_state: "draft")
+    publishing_api_has_taxons([taxon])
+
+    @discard_request = stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{@taxon_content_id}/discard-draft")
+      .to_return(status: 200, body: "{}")
+
+    click_on "Confirm delete"
   end
 
   def then_the_taxon_should_be_discarded
