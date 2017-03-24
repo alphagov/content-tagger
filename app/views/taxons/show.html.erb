@@ -13,6 +13,14 @@
   <% end %>
 <% end %>
 
+<div class='view-on-site'>
+  <% if page.published? %>
+    View on site: <%= link_to page.base_path, website_url(page.base_path) %>
+  <% elsif page.draft? %>
+    <%= link_to "View draft page", website_url(page.base_path, draft: true) %>
+  <% end %>
+</div>
+
 <div class="well state-box">
   <div class="state">State: <%= page.publication_state_name %></div>
   <% if page.published? %>
