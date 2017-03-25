@@ -29,7 +29,7 @@ module Taxonomy
     end
 
     def base_path
-      '/taxonomy-email-signup'
+      '/email-signup'
     end
 
     def routes
