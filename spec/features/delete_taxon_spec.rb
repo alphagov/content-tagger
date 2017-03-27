@@ -9,6 +9,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     when_i_visit_the_taxon_page
     when_i_click_delete_taxon
     then_i_see_a_basic_prompt_to_delete
+    when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
   end
@@ -19,6 +20,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_i_expect_to_see_the_child_taxon
     when_i_click_delete_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
+    when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
   end
@@ -29,6 +31,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_i_expect_to_see_the_tagged_content
     when_i_click_delete_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
+    when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
   end
@@ -103,6 +106,7 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def when_i_click_delete_taxon
+    @get_linkables_request = publishing_api_has_taxon_linkables("/alpha-taxonomy/vehicle-plating")
     click_on "Delete"
   end
 
@@ -116,13 +120,17 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to have_text('You are about to delete "internal name for Taxon 1"')
     expect(page).to_not have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
-    expect(page).to have_link('Delete')
+    expect(page).to have_button('Delete and redirect')
+  end
+
+  def when_i_choose_a_taxon_to_redirect_to(selection)
+    select selection, from: "Redirect to"
   end
 
   def when_i_confirm_deletion
-    @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :gone }.to_json)
-    publishing_api_has_taxons([])
-    click_on "Delete"
+    @get_content_request = publishing_api_has_item(stubbed_taxons[0])
+    @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :redirect, alternative_path: "/alpha-taxonomy/vehicle-plating" }.to_json)
+    click_on "Delete and redirect"
   end
 
   def then_the_taxon_is_deleted
@@ -153,7 +161,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to have_text('You are about to delete "internal name for Taxon 1"')
     expect(page).to have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
-    expect(page).to have_link('Delete')
+    expect(page).to have_button('Delete and redirect')
   end
 
 private

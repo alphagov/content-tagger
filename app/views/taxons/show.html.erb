@@ -24,7 +24,12 @@
 </div>
 
 <div class="well state-box">
-  <div class="state">State: <%= page.publication_state_name %></div>
+  <div class="state">
+    State: <%= page.publication_state_name %>
+    <% if page.redirected? %>
+      (redirects to <%= page.redirect_to %>)
+    <% end %>
+  </div>
   <% if page.published? %>
     <%= link_to "Delete", taxon_confirm_delete_path(page.taxon_content_id), class: 'delete-link' %>
   <% elsif page.draft? %>

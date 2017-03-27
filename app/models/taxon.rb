@@ -10,7 +10,8 @@ class Taxon
     :publication_state,
     :internal_name,
     :notes_for_editors,
-    :document_type
+    :document_type,
+    :redirect_to
   )
 
   include ActiveModel::Model
@@ -38,6 +39,10 @@ class Taxon
 
   def unpublished?
     publication_state == "unpublished"
+  end
+
+  def redirected?
+    publication_state == "unpublished" && !redirect_to.nil?
   end
 
   def content_id
