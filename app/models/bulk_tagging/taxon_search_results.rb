@@ -19,7 +19,8 @@ module BulkTagging
               base_path: taxon_hash["base_path"],
               publication_state: taxon_hash['publication_state'],
               internal_name: details['internal_name'],
-              notes_for_editors: details['notes_for_editors']
+              notes_for_editors: details['notes_for_editors'],
+              redirect_to: taxon_hash.dig('unpublishing', 'alternative_path')
             )
           end
 

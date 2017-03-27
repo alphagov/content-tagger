@@ -85,7 +85,7 @@ en:
       download_csv: Download taxonomy as CSV
       confirm_deletion_title: You are about to delete
       confirm_deletion_restore: Deleted taxons can be restored.
-      confirm_deletion: Delete
+      confirm_deletion: Delete and redirect
       cancel_button: Cancel
       delete_warning_1: "Before you delete this taxon, make sure you've:"
       delete_warning_2: given its child taxons a new parent
@@ -107,6 +107,7 @@ en:
       create_success: You have sucessfully created a taxon
       destroy_success: You have sucessfully deleted the taxon
       destroy_alert: It was not possible to delete the taxon
+      destroy_no_redirect: Please select a taxon to redirect to
       restore_success: You have sucessfully restored the taxon
       restore_alert: It was not possible to restore the taxon
       discard_draft_success: You have successfully deleted the draft taxon

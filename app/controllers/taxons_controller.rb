@@ -63,8 +63,14 @@ class TaxonsController < ApplicationController
   end
 
   def destroy
-    Services.publishing_api.unpublish(params[:id], type: "gone").code
-    redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.destroy_success")
+    if params[:taxon][:redirect_to].empty?
+      flash[:danger] = t("controllers.taxons.destroy_no_redirect")
+      render :confirm_delete, locals: { page: Taxonomy::ShowPage.new(taxon) }
+    else
+      base_path = Services.publishing_api.get_content(params[:taxon][:redirect_to])['base_path']
+      Services.publishing_api.unpublish(params[:id], type: "redirect", alternative_path: base_path).code
+      redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.destroy_success")
+    end
   end
 
   def confirm_delete

@@ -1,6 +1,7 @@
 module Taxonomy
   class ShowPage
-    delegate :content_id, :draft?, :published?, :unpublished?, :base_path, to: :taxon
+    delegate :content_id, :draft?, :published?, :unpublished?, :redirected?,
+             :redirect_to, :base_path, to: :taxon
 
     attr_reader :taxon
 
@@ -42,6 +43,10 @@ module Taxonomy
           fields: %w(title content_id base_path document_type)
         )
       end
+    end
+
+    def taxons_for_select
+      Linkables.new.taxons(exclude_ids: taxon_content_id)
     end
   end
 end

@@ -39,21 +39,39 @@ RSpec.describe TaxonsController, type: :controller do
   end
 
   describe "#destroy" do
-    it "sends a request to Publishing API to mark the taxon as 'gone'" do
+    it "sends a request to Publishing API to mark the taxon as 'redirect'" do
+      taxon = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }
+      taxon_redirected_to = { title: "bar", base_path: "/bar", content_id: SecureRandom.uuid }
+      foo_content_id = taxon[:content_id]
+      bar_content_id = taxon_redirected_to[:content_id]
+
+      # We'll redirect to the show page
+      stub_taxon_show_page(foo_content_id)
+
+      stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{bar_content_id}")
+        .to_return(status: 200, body: taxon_redirected_to.to_json, headers: {})
+
+      stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
+        .with(body: "{\"type\":\"redirect\",\"alternative_path\":\"#{taxon_redirected_to[:base_path]}\"}")
+        .to_return(status: 200, body: "", headers: {})
+
+      publishing_api_has_taxons([taxon])
+
+      delete :destroy, id: foo_content_id, taxon: { redirect_to: bar_content_id }
+      expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
+    end
+
+    it "does not send a request to Publishing API if a taxon to redirect to is not provided" do
       taxon = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }
       foo_content_id = taxon[:content_id]
 
       # We'll redirect to the show page
       stub_taxon_show_page(foo_content_id)
 
-      stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
-        .with(body: "{\"type\":\"gone\"}")
-        .to_return(status: 200, body: "", headers: {})
-
       publishing_api_has_taxons([taxon])
 
-      delete :destroy, id: foo_content_id
-      expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
+      delete :destroy, id: foo_content_id, taxon: { redirect_to: "" }
+      expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
     end
   end
 
