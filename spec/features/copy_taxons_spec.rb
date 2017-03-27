@@ -32,9 +32,6 @@ RSpec.describe "Copying taxons for use in a spreadsheet" do
 
     publishing_api_has_linkables([@taxon_1, @taxon_2], document_type: 'taxon')
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
-
     empty_details = { "details" => {} }
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")

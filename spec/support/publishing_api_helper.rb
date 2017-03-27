@@ -2,8 +2,6 @@ module PublishingApiHelper
   def stub_taxon_show_page(content_id)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
       .to_return(status: 200, body: { content_id: content_id, title: "Hey", base_path: "/foo", details: { internal_name: "Foo" } }.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{content_id}")
-      .to_return(status: 200, body: {}.to_json)
   end
 
   def publishing_api_has_content_items(items, options = {})

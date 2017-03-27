@@ -99,9 +99,6 @@ RSpec.feature "Taxonomy editing" do
     )
     publishing_api_has_taxons([@taxon_1, @taxon_2])
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
-
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
       .to_return(body: @taxon_1.to_json)
 
@@ -158,9 +155,6 @@ RSpec.feature "Taxonomy editing" do
     # dropdown of parent taxons
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
       .to_return(status: 200, body: "[]", headers: {})
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
-      .to_return(status: 200, body: "{}", headers: {})
   end
 
   def and_i_visit_the_taxon_edit_page
@@ -174,9 +168,6 @@ RSpec.feature "Taxonomy editing" do
     # dropdown of parent taxons
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
       .to_return(status: 200, body: "[]", headers: {})
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
-      .to_return(status: 200, body: "{}", headers: {})
   end
 
   def when_i_submit_the_taxon_with_a_title_and_parents
@@ -184,8 +175,6 @@ RSpec.feature "Taxonomy editing" do
     # which needs a bunch of API calls stubbed.
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
       .to_return(body: { content_id: "", title: "Hey", base_path: "/foo", publication_state: "published", details: { internal_name: "Foo" } }.to_json)
-    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
-      .to_return(body: {}.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/expanded-links/*})
       .to_return(body: { expanded_links: {} }.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
