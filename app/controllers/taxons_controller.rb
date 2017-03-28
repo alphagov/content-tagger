@@ -84,6 +84,10 @@ class TaxonsController < ApplicationController
     redirect_to trash_taxons_path, danger: e.message
   end
 
+  def confirm_restore
+    render :confirm_restore, locals: { page: Taxonomy::ShowPage.new(taxon) }
+  end
+
   def confirm_publish
     render :confirm_publish, locals: { taxon: taxon }
   end

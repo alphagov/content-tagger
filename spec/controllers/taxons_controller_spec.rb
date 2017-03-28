@@ -15,6 +15,18 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
+  describe "#drafts" do
+    it "renders drafts" do
+      taxon = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }
+
+      publishing_api_has_draft_taxons([taxon])
+
+      get :drafts
+
+      expect(response.code).to eql "200"
+    end
+  end
+
   describe "#trash" do
     it "renders trash" do
       taxon = { title: "foo", base_path: "/foo", content_id: SecureRandom.uuid }
@@ -72,6 +84,28 @@ RSpec.describe TaxonsController, type: :controller do
 
       delete :destroy, id: foo_content_id, taxon: { redirect_to: "" }
       expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
+    end
+  end
+
+  describe "#restore" do
+    it "sends a request to Publishing API to mark the taxon as 'draft'" do
+      taxon = build(:taxon, publication_state: "unpublished")
+      payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+      links = {
+        links: {
+          parent_taxons: []
+        }
+      }
+
+      publishing_api_has_item(payload.merge(content_id: taxon.content_id))
+      publishing_api_has_links(links.merge(content_id: taxon.content_id))
+      stub_publishing_api_put_content(taxon.content_id, payload)
+      stub_publishing_api_patch_links(taxon.content_id, links.to_json)
+
+      post :restore, taxon_id: taxon.content_id
+      expect(WebMock).to have_requested(:put, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}")
+      expect(WebMock).to have_requested(:patch, "https://publishing-api.test.gov.uk/v2/links/#{taxon.content_id}")
+      expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}/publish")
     end
   end
 
