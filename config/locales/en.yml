@@ -86,6 +86,8 @@ en:
       confirm_deletion_title: You are about to delete
       confirm_deletion_restore: Deleted taxons can be restored.
       confirm_deletion: Delete and redirect
+      confirm_restore_title: You are about to restore
+      confirm_restore_redirect: This topic will become a draft, but the redirect will stay live until this topic is re-published.
       cancel_button: Cancel
       delete_warning_1: "Before you delete this taxon, make sure you've:"
       delete_warning_2: given its child taxons a new parent

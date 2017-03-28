@@ -39,8 +39,9 @@ RSpec.feature "Delete Taxon", type: :feature do
   scenario "restoring a deleted taxon" do
     given_a_deleted_taxon
     when_i_visit_the_taxon_page
-
     when_i_click_restore_taxon
+    then_i_see_a_prompt_to_restore_with_an_informative_message
+    when_i_confirm_restoration
     then_the_taxon_is_restored
   end
 
@@ -111,8 +112,6 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def when_i_click_restore_taxon
-    @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
-    @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
     click_link "Restore"
   end
 
@@ -131,6 +130,12 @@ RSpec.feature "Delete Taxon", type: :feature do
     @get_content_request = publishing_api_has_item(stubbed_taxons[0])
     @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :redirect, alternative_path: "/alpha-taxonomy/vehicle-plating" }.to_json)
     click_on "Delete and redirect"
+  end
+
+  def when_i_confirm_restoration
+    @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
+    @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
+    click_on "Confirm restore"
   end
 
   def then_the_taxon_is_deleted
@@ -162,6 +167,10 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
     expect(page).to have_button('Delete and redirect')
+  end
+
+  def then_i_see_a_prompt_to_restore_with_an_informative_message
+    expect(page).to have_text('This topic will become a draft, but the redirect will stay live until this topic is re-published.')
   end
 
 private
