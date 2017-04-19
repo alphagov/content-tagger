@@ -24,20 +24,20 @@ module GovukTaxonomyHelpers
       parent_taxons = expanded_links_response["expanded_links"]["parent_taxons"]
       taxons = expanded_links_response["expanded_links"]["taxons"]
 
-      if !child_taxons.nil?
+      unless child_taxons.nil?
         child_taxons.each do |child|
           linked_content_item << parse_nested_child(child)
         end
       end
 
-      if !parent_taxons.nil?
+      unless parent_taxons.nil?
         # Assume no taxon has multiple parents
         single_parent = parent_taxons.first
 
         parse_nested_parent(single_parent) << linked_content_item
       end
 
-      if !taxons.nil?
+      unless taxons.nil?
         taxons.each do |taxon|
           taxon_node = parse_nested_parent(taxon)
           linked_content_item.add_taxon(taxon_node)
@@ -58,7 +58,7 @@ module GovukTaxonomyHelpers
 
       child_taxons = links["child_taxons"]
 
-      if !child_taxons.nil?
+      unless child_taxons.nil?
         child_taxons.each do |child|
           nested_linked_content_item << parse_nested_child(child)
         end
@@ -80,7 +80,7 @@ module GovukTaxonomyHelpers
 
       parent_taxons = links["parent_taxons"]
 
-      if !parent_taxons.nil?
+      unless parent_taxons.nil?
         single_parent = parent_taxons.first
         parse_nested_parent(single_parent) << nested_linked_content_item
       end

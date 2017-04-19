@@ -59,7 +59,6 @@ module GovukTaxonomyHelpers
       end
     end
 
-
     # Get descendants of a taxon
     #
     # @return [Array] all taxons in this branch of the taxonomy, excluding the content item itself
