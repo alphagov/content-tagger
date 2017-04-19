@@ -102,17 +102,11 @@ module Taxonomy
     end
 
     def tree_node_based_on(content_item)
-      taxon = Taxon.new(
-        content_id: content_item.fetch('content_id'),
+      GovukTaxonomyHelpers::LinkedContentItem.new(
+        internal_name: content_item.fetch('details').fetch('internal_name'),
         title: content_item.fetch('title'),
         base_path: content_item.fetch('base_path'),
-        internal_name: content_item.fetch('details').fetch('internal_name'),
-      )
-      GovukTaxonomyHelpers::LinkedContentItem.new(
-        internal_name: taxon.internal_name,
-        title: taxon.title,
-        base_path: taxon.base_path,
-        content_id: taxon.content_id
+        content_id: content_item.fetch('content_id'),
       )
     end
   end
