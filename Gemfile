@@ -22,7 +22,6 @@ gem 'govuk_sidekiq', '~> 0.0.4'
 
 gem 'kaminari', '~> 0.17'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
-gem 'govuk_taxonomy_helpers', '~> 0.1.0'
 
 group :development, :test do
   gem 'quiet_assets'
