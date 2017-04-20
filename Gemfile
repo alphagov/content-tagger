@@ -5,7 +5,7 @@ gem 'unicorn', '~> 5.0.0'
 gem 'logstasher', '~> 1.2'
 gem 'pg'
 
-gem 'plek', '~> 1.10'
+gem 'plek', '~> 2.0'
 gem 'gds-sso', '~> 11.1'
 gem 'govuk_admin_template', '~> 4.4'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
