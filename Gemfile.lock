@@ -144,9 +144,10 @@ GEM
       activesupport (>= 3.0.0)
     kgio (2.11.0)
     link_header (0.0.8)
-    logstash-event (1.1.5)
-    logstasher (0.6.2)
-      logstash-event (~> 1.1.0)
+    logstash-event (1.2.02)
+    logstasher (1.2.1)
+      activesupport (>= 4.0)
+      logstash-event (~> 1.2.0)
       request_store
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
@@ -366,7 +367,7 @@ DEPENDENCIES
   headless
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 0.17)
-  logstasher (= 0.6.2)
+  logstasher (~> 1.2)
   pg
   plek (~> 1.10)
   poltergeist

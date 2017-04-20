@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.7.1'
 gem 'unicorn', '~> 5.0.0'
-gem 'logstasher', '0.6.2'
+gem 'logstasher', '~> 1.2'
 gem 'pg'
 
 gem 'plek', '~> 1.10'
