@@ -43,7 +43,7 @@ GEM
       multi_json
     arel (6.0.4)
     ast (2.3.0)
-    autoprefixer-rails (6.7.4)
+    autoprefixer-rails (6.7.7.2)
       execjs
     awesome_print (1.7.0)
     better_errors (2.1.1)
@@ -110,7 +110,7 @@ GEM
     govuk-lint (1.2.1)
       rubocop (~> 0.39.0)
       scss_lint
-    govuk_admin_template (4.4.2)
+    govuk_admin_template (5.0.1)
       bootstrap-sass (= 3.3.5.1)
       jquery-rails (~> 4.1.1)
       rails (>= 3.2.0)
@@ -358,7 +358,7 @@ DEPENDENCIES
   gds-sso (~> 13.2)
   govuk-content-schema-test-helpers (~> 1.4)
   govuk-lint
-  govuk_admin_template (~> 4.4)
+  govuk_admin_template (~> 5.0)
   govuk_sidekiq (~> 0.0.4)
   govuk_taxonomy_helpers (~> 0.1.0)
   headless
