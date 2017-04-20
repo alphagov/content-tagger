@@ -198,8 +198,6 @@ GEM
     pry-byebug (3.4.2)
       byebug (~> 9.0)
       pry (~> 0.10)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     rack (1.6.5)
     rack-cache (1.7.0)
       rack (>= 0.4)
@@ -369,7 +367,6 @@ DEPENDENCIES
   plek (~> 2.0)
   poltergeist
   pry-byebug
-  quiet_assets
   rails (= 4.2.7.1)
   rspec-rails (~> 3.3)
   sass-rails (~> 5.0)

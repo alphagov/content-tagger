@@ -25,7 +25,6 @@ gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'govuk_taxonomy_helpers', '~> 0.1.0'
 
 group :development, :test do
-  gem 'quiet_assets'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.3'
   gem 'simplecov', '0.10.0', require: false
