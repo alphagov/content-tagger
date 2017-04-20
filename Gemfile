@@ -41,7 +41,7 @@ group :development do
 end
 
 group :test do
-  gem 'webmock', '~> 1.22'
+  gem 'webmock'
   gem 'capybara'
   gem 'poltergeist'
   gem 'headless'
