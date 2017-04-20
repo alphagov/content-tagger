@@ -9,7 +9,7 @@ gem 'plek', '~> 2.0'
 gem 'gds-sso', '~> 13.2'
 gem 'govuk_admin_template', '~> 5.0'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
-gem 'gds-api-adapters', '~> 37.2'
+gem 'gds-api-adapters', '~> 41.5'
 
 gem 'airbrake', '~> 4.3.1'
 
