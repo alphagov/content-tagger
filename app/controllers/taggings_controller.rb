@@ -61,6 +61,8 @@ class TaggingsController < ApplicationController
 private
 
   def lookup_params
-    params[:content_lookup_form] || { base_path: "/#{params[:slug]}" }
+    params.require(:content_lookup_form).permit(:base_path)
+  rescue ActionController::ParameterMissing
+    { base_path: "/#{params[:slug]}" }
   end
 end
