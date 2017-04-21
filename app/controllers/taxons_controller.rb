@@ -16,7 +16,7 @@ class TaxonsController < ApplicationController
   end
 
   def create
-    taxon = Taxon.new permitted_params
+    taxon = Taxon.new taxon_params
 
     if taxon.valid?
       Taxonomy::UpdateTaxon.call(taxon: taxon)
@@ -42,7 +42,7 @@ class TaxonsController < ApplicationController
   end
 
   def update
-    taxon = Taxon.new permitted_params
+    taxon = Taxon.new taxon_params
 
     if taxon.valid?
       Taxonomy::UpdateTaxon.call(taxon: taxon)
@@ -108,7 +108,7 @@ class TaxonsController < ApplicationController
 
 private
 
-  def permitted_params
+  def taxon_params
     params.require(:taxon).permit(
       :content_id,
       :path_prefix,
