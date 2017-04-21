@@ -34,7 +34,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "better_errors"
+  gem 'better_errors'
   gem 'web-console'
 end
 
