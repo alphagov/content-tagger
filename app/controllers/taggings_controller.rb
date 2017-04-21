@@ -44,7 +44,10 @@ class TaggingsController < ApplicationController
     publisher = Tagging::TaggingUpdatePublisher.new(content_item, params[:tagging_tagging_update_form])
 
     if publisher.save_to_publishing_api
-      redirect_to :back, success: "Tags have been updated!"
+      redirect_back(
+        fallback_location: tagging_path(content_item.content_id),
+        success: "Tags have been updated!"
+      )
     else
       tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
       tagging_update.related_item_errors = publisher.related_item_errors
@@ -55,7 +58,10 @@ class TaggingsController < ApplicationController
       render :show, locals: { tagging_update: tagging_update }
     end
   rescue GdsApi::HTTPConflict
-    redirect_to :back, danger: "Somebody changed the tags before you could. Your changes have not been saved."
+    redirect_back(
+      fallback_location: tagging_path(content_item.content_id),
+      danger: "Somebody changed the tags before you could. Your changes have not been saved."
+    )
   end
 
 private

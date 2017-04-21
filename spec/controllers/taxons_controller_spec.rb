@@ -44,7 +44,7 @@ RSpec.describe TaxonsController, type: :controller do
       stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/does-not-exist")
         .to_return(status: 404)
 
-      get :show, id: "does-not-exist"
+      get :show, params: { id: "does-not-exist" }
 
       expect(response.code).to eql "404"
     end
@@ -69,7 +69,7 @@ RSpec.describe TaxonsController, type: :controller do
 
       publishing_api_has_taxons([taxon])
 
-      delete :destroy, id: foo_content_id, taxon: { redirect_to: bar_content_id }
+      delete :destroy, params: { id: foo_content_id, taxon: { redirect_to: bar_content_id } }
       expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
     end
 
@@ -82,7 +82,7 @@ RSpec.describe TaxonsController, type: :controller do
 
       publishing_api_has_taxons([taxon])
 
-      delete :destroy, id: foo_content_id, taxon: { redirect_to: "" }
+      delete :destroy, params: { id: foo_content_id, taxon: { redirect_to: "" } }
       expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
     end
   end
@@ -102,7 +102,7 @@ RSpec.describe TaxonsController, type: :controller do
       stub_publishing_api_put_content(taxon.content_id, payload)
       stub_publishing_api_patch_links(taxon.content_id, links.to_json)
 
-      post :restore, taxon_id: taxon.content_id
+      post :restore, params: { taxon_id: taxon.content_id }
       expect(WebMock).to have_requested(:put, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}")
       expect(WebMock).to have_requested(:patch, "https://publishing-api.test.gov.uk/v2/links/#{taxon.content_id}")
       expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}/publish")
@@ -123,7 +123,7 @@ RSpec.describe TaxonsController, type: :controller do
       stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{taxon.content_id}")
         .to_return(status: 200, body: {}.to_json, headers: {})
 
-      delete :discard_draft, taxon_id: taxon.content_id
+      delete :discard_draft, params: { taxon_id: taxon.content_id }
       expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}/discard-draft")
     end
   end
