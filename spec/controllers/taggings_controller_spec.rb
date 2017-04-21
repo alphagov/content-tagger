@@ -6,7 +6,7 @@ RSpec.describe TaggingsController, type: :controller do
       stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/does-not-exist")
         .to_return(status: 404)
 
-      get :show, content_id: "does-not-exist"
+      get :show, params: { content_id: "does-not-exist" }
 
       expect(response.code).to eql "404"
     end

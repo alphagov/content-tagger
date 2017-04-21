@@ -1,5 +1,5 @@
 module BulkTagging
-  class TaggingSpreadsheet < ActiveRecord::Base
+  class TaggingSpreadsheet < ApplicationRecord
     validates :url, presence: true
     validates(
       :state,
