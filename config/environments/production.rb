@@ -72,6 +72,8 @@ Rails.application.configure do
   config.logstasher.enabled = true
   config.logstasher.logger = Logger.new(Rails.root.join("log/production.json.log"))
   config.logstasher.suppress_app_log = true
+  config.logstasher.job_enabled = false
+  config.logstasher.mailer_enabled = false
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
