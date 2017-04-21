@@ -25,17 +25,17 @@ gem 'plek', '~> 2.0'
 group :development, :test do
   gem 'awesome_print'
   gem 'factory_girl_rails'
-  gem 'govuk-content-schema-test-helpers', '~> 1.4'
+  gem 'govuk-content-schema-test-helpers'
   gem 'govuk-lint'
   gem 'pry-byebug'
-  gem 'rspec-rails', '~> 3.3'
-  gem 'simplecov', '0.10.0', require: false
-  gem 'simplecov-rcov', '0.2.3', require: false
+  gem 'rspec-rails'
+  gem 'simplecov', require: false
+  gem 'simplecov-rcov', require: false
 end
 
 group :development do
   gem "better_errors"
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 end
 
 group :test do
