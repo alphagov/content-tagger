@@ -72,6 +72,7 @@ private
       smartanswers
       licencefinder
       frontend
+      government-frontend
       multipage-frontend
       calculators
     ).include?(rendering_app)
