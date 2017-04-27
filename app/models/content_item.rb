@@ -42,7 +42,7 @@ class ContentItem
   end
 
   def blacklisted_tag_types
-    blacklist = YAML.load_file("#{Rails.root}/config/blacklisted-tag-types.yml")
+    blacklist = Rails.configuration.blacklisted_tag_types
     document_blacklist = Array(blacklist[publishing_app]).map(&:to_sym)
     document_blacklist += additional_temporary_blacklist
 

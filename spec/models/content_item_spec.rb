@@ -46,11 +46,22 @@ RSpec.describe ContentItem do
 
       context "for apps in the blacklist" do
         let(:content_item_params) do
-          super().merge('publishing_app' => 'travel-advice-publisher')
+          super().merge('publishing_app' => 'test-app-that-can-be-tagged-to-topics-only')
         end
 
         it "returns the blacklisted fields" do
-          expect(content_item.blacklisted_tag_types).to eq [:parent]
+          expect(content_item.blacklisted_tag_types)
+            .to eq(
+                  %i(
+                    mainstream_browse_pages
+                    meets_user_needs
+                    ordered_related_items
+                    ordered_related_items_overrides
+                    organisations
+                    parent
+                    taxons
+                  )
+                )
         end
       end
 
