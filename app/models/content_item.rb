@@ -46,7 +46,7 @@ class ContentItem
     document_blacklist = Array(blacklist[publishing_app]).map(&:to_sym)
     document_blacklist += additional_temporary_blacklist
 
-    unless related_links_are_renderable
+    unless related_links_are_renderable?
       document_blacklist += [:ordered_related_items]
     end
 
@@ -66,7 +66,7 @@ class ContentItem
 
 private
 
-  def related_links_are_renderable
+  def related_links_are_renderable?
     %w(
       calendars
       smartanswers
