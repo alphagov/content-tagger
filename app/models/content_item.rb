@@ -70,14 +70,21 @@ private
 
   def related_links_are_renderable?
     %w(
-      calendars
-      smartanswers
-      licencefinder
-      frontend
-      government-frontend
-      multipage-frontend
-      calculators
-    ).include?(rendering_app)
+      answer
+      calculator
+      calendar
+      contact
+      guide
+      help_page
+      licence
+      local_transaction
+      place
+      programme
+      simple_smart_answer
+      smart_answer
+      transaction
+      travel_advice
+    ).include?(document_type)
   end
 
   def additional_temporary_blacklist

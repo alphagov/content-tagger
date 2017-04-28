@@ -48,14 +48,14 @@ RSpec.describe ContentItem do
       it { is_expected.to include(:topics) }
     end
 
-    context 'for rendering apps with a sidebar' do
-      let(:rendering_app) { 'frontend' }
+    context 'for a document type with related items' do
+      let(:document_type) { 'guide' }
 
       it { is_expected.not_to include(:ordered_related_items) }
     end
 
-    context 'for rendering apps without a sidebar' do
-      let(:rendering_app) { 'whitehall-frontend' }
+    context 'for a document type without related items' do
+      let(:document_type) { 'speech' }
 
       it { is_expected.to include(:ordered_related_items) }
     end
