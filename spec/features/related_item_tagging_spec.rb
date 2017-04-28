@@ -47,7 +47,7 @@ RSpec.describe "Tagging content", type: :feature do
         rendering_app: "frontend",
         content_id: "MY-CONTENT-ID",
         base_path: '/my-content-item',
-        document_type: 'mainstream_browse_page',
+        document_type: 'guide',
         title: 'This Is A Content Item',
       }.to_json)
 

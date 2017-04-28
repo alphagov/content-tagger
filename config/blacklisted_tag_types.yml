@@ -1,0 +1,67 @@
+default: &default
+  contacts:
+    # Contacts pages like https://www.gov.uk/government/organisations/hm-revenue-customs/contact/agent-dedicated-line-debt-management
+    # have a breadcrumb to the HMRC contact page (https://www.gov.uk/government/organisations/hm-revenue-customs/contact)
+    # Allowing to tag to the parent here would be confusing to the user.
+    - parent
+
+  travel-advice-publisher:
+    # This is  a temporary workaround for the fact that 'parent' links
+    # can sometimes be blobs of JSON (containing a breadcrumb, for example)
+    # rather than the array of content IDs content-tagger currently expects. We
+    # need to either improve the editing interface in content tagger to somehow
+    # support this or wait until the publishing API no longer allows writing of
+    # arbitrary JSON to the parent link, and we support tagging to arbitrary
+    # pages.
+    - parent
+
+  whitehall:
+    # Topics and the parent (breadcrumb) are managed in Whitehall itself. This
+    # will stay that way because Whitehall is too complex to make a half-way
+    # change to a system where topics and breadcrumb are read & written from
+    # the publishing-api.
+    #
+    # Whitehall does send this information to the publishing-api so it can still
+    # be used as a source of information.
+    - parent
+    - topics
+
+    # Organisation tagging is done in Whitehall, because its data model is too
+    # much intertwined with organisations to make it read/write this tag from
+    # publishing-api.
+    - organisations
+
+  specialist-publisher:
+    # Documents owned by specialist-publisher are automatically tagged to
+    # organisations via a harcoded list per document type. In the
+    # specialist-publisher rebuild this could be changed to be a default. When
+    # that has happened we could allow modifying the `organisations` link type
+    # here as well.
+    - organisations
+
+    # Documents owned by specialist-publisher currently don't have a breadcrumb,
+    # to avoid confusion we disable tagging to a `parent` until we've unified
+    # the navigation.
+    - parent
+
+  service-manual-publisher:
+    # The service-manual-publisher automatically tags everything to the GDS
+    # organisation and overwrites the `organisations` link type on each publish.
+    - organisations
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  test-app-that-can-be-tagged-to-topics-only:
+    - mainstream_browse_pages
+    - meets_user_needs
+    - ordered_related_items
+    - ordered_related_items_overrides
+    - organisations
+    - parent
+    - taxons
+
+production:
+  <<: *default

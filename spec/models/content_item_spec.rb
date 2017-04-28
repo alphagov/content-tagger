@@ -1,113 +1,75 @@
 require 'rails_helper'
 
 RSpec.describe ContentItem do
-  let(:content_item) do
-    ContentItem.new(
-      content_item_params
-    ).tap do |content_item|
-      content_item.link_set = Tagging::ContentItemExpandedLinks.new(link_set_params)
-    end
-  end
+  subject(:content_item) { described_class.new(data, blacklist: blacklist) }
 
-  let(:content_item_params) do
+  let(:data) do
     {
-      'content_id'     => 'uuid-88',
-      'title'          => 'A content item',
-      'document_type'  => 'placeholder',
-      'base_path'      => '/a-content-item',
-      'publishing_app' => 'publisher',
-      'rendering_app'  => 'frontend',
-      'state'          => 'draft',
+      'base_path' => double,
+      'content_id' => double,
+      'document_type' => document_type,
+      'publishing_app' => publishing_app,
+      'rendering_app' => rendering_app,
+      'title' => double,
     }
   end
 
-  let(:link_set_params) do
+  let(:blacklist) do
     {
-      'content_id'     => 'uuid-88',
-      'previous_version' => 0,
+      'blacklisted-app' => blacklisted_tag_types,
     }
   end
 
-  describe "#blacklisted_tag_types" do
-    context "without taxons" do
-      let(:content_item_params) do
-        super().merge('publishing_app' => 'not-in-the-blacklist')
-      end
+  let(:document_type) { double }
+  let(:publishing_app) { double }
+  let(:rendering_app) { 'frontend' }
 
-      it "blacklists related item overrides for content not tagged to taxons" do
-        expect(content_item.blacklisted_tag_types).to eq [:ordered_related_items_overrides]
+  let(:blacklisted_tag_types) do
+    Tagging::ContentItemExpandedLinks::TAG_TYPES.sample(2)
+  end
+
+  before { allow(content_item).to receive(:taxons?) }
+
+  describe '#blacklisted_tag_types' do
+    subject { content_item.blacklisted_tag_types }
+
+    context 'for apps in the blacklist' do
+      let(:publishing_app) { 'blacklisted-app' }
+
+      specify 'should include blacklisted tag types' do
+        is_expected.to include(*blacklisted_tag_types)
       end
     end
 
-    context "with taxons" do
-      let(:link_set_params) do
-        super().merge('taxons' => ["6fde156c-98f3-4045-ac21-c64fcf1677e5"])
-      end
+    context 'for finder blacklisting during specialist-publisher migration' do
+      let(:document_type) { 'finder' }
+      let(:publishing_app) { 'specialist-publisher' }
 
-      context "for apps in the blacklist" do
-        let(:content_item_params) do
-          super().merge('publishing_app' => 'travel-advice-publisher')
-        end
+      it { is_expected.to include(:topics) }
+    end
 
-        it "returns the blacklisted fields" do
-          expect(content_item.blacklisted_tag_types).to eq [:parent]
-        end
-      end
+    context 'for a document type with related items' do
+      let(:document_type) { 'guide' }
 
-      context "for apps not in the blacklist" do
-        let(:content_item_params) do
-          super().merge('publishing_app' => 'not-in-the-blacklist')
-        end
+      it { is_expected.not_to include(:ordered_related_items) }
+    end
 
-        it "returns an empty list" do
-          expect(content_item.blacklisted_tag_types).to eq []
-        end
-      end
+    context 'for a document type without related items' do
+      let(:document_type) { 'speech' }
 
-      context "for rendering apps with a sidebar" do
-        let(:content_item_params) do
-          super().merge('publishing_app' => 'not-in-the-blacklist', 'rendering_app' => 'frontend')
-        end
+      it { is_expected.to include(:ordered_related_items) }
+    end
 
-        it "returns an empty list" do
-          expect(content_item.blacklisted_tag_types).to eq []
-        end
-      end
+    context 'with taxons' do
+      before { allow(content_item).to receive(:taxons?) { true } }
 
-      context "for rendering apps without a sidebar" do
-        let(:content_item_params) do
-          super().merge('publishing_app' => 'not-in-the-blacklist', 'rendering_app' => 'whitehall-frontend')
-        end
+      it { is_expected.not_to include(:ordered_related_items_overrides) }
+    end
 
-        it "blacklists related items" do
-          expect(content_item.blacklisted_tag_types).to eq [:ordered_related_items]
-        end
-      end
+    context 'without taxons' do
+      before { allow(content_item).to receive(:taxons?) { false } }
 
-      context "for finder blacklisting during specialist-publisher migration" do
-        let(:content_item_params) do
-          super().merge(
-            'publishing_app' => 'specialist-publisher',
-            'document_type' => 'finder',
-          )
-        end
-
-        it "blacklists topics as well as other tag types" do
-          expect(content_item.blacklisted_tag_types).to include :topics
-        end
-      end
-
-      context 'for the publisher app' do
-        let(:content_item_params) do
-          super().merge(
-            'publishing_app' => 'publisher',
-          )
-        end
-
-        it 'does not blacklist any tag types' do
-          expect(content_item.blacklisted_tag_types).to be_empty
-        end
-      end
+      it { is_expected.to include(:ordered_related_items_overrides) }
     end
   end
 end

@@ -11,7 +11,8 @@ class ContentItem
 
   attr_writer :link_set
 
-  def initialize(data)
+  def initialize(data, blacklist: Rails.configuration.blacklisted_tag_types)
+    @blacklist = blacklist
     @content_id = data.fetch('content_id')
     @title = data.fetch('title')
     @base_path = data.fetch('base_path')
@@ -42,11 +43,10 @@ class ContentItem
   end
 
   def blacklisted_tag_types
-    blacklist = YAML.load_file("#{Rails.root}/config/blacklisted-tag-types.yml")
     document_blacklist = Array(blacklist[publishing_app]).map(&:to_sym)
     document_blacklist += additional_temporary_blacklist
 
-    unless related_links_are_renderable
+    unless related_links_are_renderable?
       document_blacklist += [:ordered_related_items]
     end
 
@@ -66,16 +66,25 @@ class ContentItem
 
 private
 
-  def related_links_are_renderable
+  attr_accessor :blacklist
+
+  def related_links_are_renderable?
     %w(
-      calendars
-      smartanswers
-      licencefinder
-      frontend
-      government-frontend
-      multipage-frontend
-      calculators
-    ).include?(rendering_app)
+      answer
+      calculator
+      calendar
+      contact
+      guide
+      help_page
+      licence
+      local_transaction
+      place
+      programme
+      simple_smart_answer
+      smart_answer
+      transaction
+      travel_advice
+    ).include?(document_type)
   end
 
   def additional_temporary_blacklist
