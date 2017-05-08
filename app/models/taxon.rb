@@ -81,4 +81,19 @@ class Taxon
   def notes_for_editors
     @notes_for_editors || ""
   end
+
+  # Lets talk about this.
+  #
+  # This model takes data in either formencoded or JSON formats:
+  #  - the Rails form submission gives us stringified data
+  #  - the JSON API response gives us true booleans.
+  # In an ideal world we wouldn't have to worry about this
+  # but ActiveModel doesn't have decent type coercion yet.
+  def visible_to_departmental_editors=(val)
+    @visible_to_departmental_editors = ('true' == val.to_s)
+  end
+
+  def visible_to_departmental_editors
+    @visible_to_departmental_editors || false
+  end
 end

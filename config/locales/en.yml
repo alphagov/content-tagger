@@ -100,6 +100,8 @@ en:
       preview: 'The URL of the navigation page will be:'
       displayed_on_govuk: 'Displayed on GOV.UK'
       view_similar: 'More like this'
+      visible_to_departmental_editors: 'Visible to departmental editors?'
+      visible_to_departmental_editors_hint: 'Affects the visiblity of draft taxonomy root nodes only'
   controllers:
     bulk_taggings:
       failure: We could not perform search, please try again.
