@@ -97,7 +97,7 @@ RSpec.describe Taxon do
 
   describe '#visible_to_departmental_editors' do
     it "defaults to false if it's not set" do
-      taxon = Taxon.new()
+      taxon = Taxon.new
       expect(taxon.visible_to_departmental_editors).to be false
     end
 
