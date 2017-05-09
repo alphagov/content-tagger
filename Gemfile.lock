@@ -114,6 +114,7 @@ GEM
       bootstrap-sass (= 3.3.5.1)
       jquery-rails (~> 4.1.1)
       rails (>= 3.2.0)
+    govuk_document_types (0.1.4)
     govuk_sidekiq (1.0.3)
       airbrake (>= 3.1.0)
       gds-api-adapters (>= 19.1.0)
@@ -357,6 +358,7 @@ DEPENDENCIES
   govuk-content-schema-test-helpers
   govuk-lint
   govuk_admin_template (~> 5.0)
+  govuk_document_types (~> 0.1)
   govuk_sidekiq (~> 1.0)
   govuk_taxonomy_helpers (~> 0.1.0)
   headless
