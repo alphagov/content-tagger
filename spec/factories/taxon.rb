@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :taxon do
     title 'A taxon'
     description 'A description'
-    parent_taxons []
+    parent nil
     content_id 'taxon-content-id'
     base_path '/education/taxon-base-path'
     publication_state 'published'

@@ -2,7 +2,7 @@ class Taxon
   attr_accessor(
     :title,
     :description,
-    :parent_taxons,
+    :parent,
     :content_id,
     :base_path,
     :path_prefix,
@@ -20,10 +20,6 @@ class Taxon
   validates :path_prefix, inclusion: { in: Theme.taxon_path_prefixes }
   validates :path_slug, allow_blank: true, format: { with: %r{\A/[a-zA-Z0-9\-]+\z} }
   validates_with CircularDependencyValidator
-
-  def parent_taxons
-    @parent_taxons ||= []
-  end
 
   def theme
     Theme::THEMES[path_prefix] || "Other"

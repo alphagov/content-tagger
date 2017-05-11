@@ -14,7 +14,6 @@ module Taxonomy
     end
 
     # parent taxons
-    let(:red_things) { fake_taxon("Red-Things") }
     let(:food) { fake_taxon("Food") }
     let(:fruits) do
       fake_taxon("Fruits").merge(
@@ -37,7 +36,7 @@ module Taxonomy
       publishing_api_has_expanded_links(
         content_id: apples["content_id"],
         expanded_links: {
-          parent_taxons: [fruits, red_things],
+          parent_taxons: [fruits],
           child_taxons: [bramley, cox],
         },
       )
@@ -66,9 +65,8 @@ module Taxonomy
           i-Apples
           i-Fruits
           i-Food
-          i-Red-Things
         )
-        expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 1]
+        expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2]
         expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(
           i-Apples
           i-Bramley
@@ -84,7 +82,6 @@ module Taxonomy
 
         expect(taxonomy.immediate_parents.map(&:internal_name)).to eq %w(
           i-Fruits
-          i-Red-Things
         )
       end
     end
@@ -159,8 +156,8 @@ module Taxonomy
         it "returns the expansion" do
           taxonomy.build_parent_expansion
 
-          expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(i-Apples i-Fruits i-Food i-Red-Things)
-          expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 1]
+          expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(i-Apples i-Fruits i-Food)
+          expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2]
         end
       end
     end
