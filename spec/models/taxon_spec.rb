@@ -94,4 +94,21 @@ RSpec.describe Taxon do
       expect(taxon.theme).to eql("Education")
     end
   end
+
+  describe '#visible_to_departmental_editors' do
+    it "defaults to false if it's not set" do
+      taxon = Taxon.new
+      expect(taxon.visible_to_departmental_editors).to be false
+    end
+
+    it "can be set through the initializer by value" do
+      taxon = Taxon.new(visible_to_departmental_editors: true)
+      expect(taxon.visible_to_departmental_editors).to be true
+    end
+
+    it "can be set through the initializer by string" do
+      taxon = Taxon.new(visible_to_departmental_editors: "true")
+      expect(taxon.visible_to_departmental_editors).to be true
+    end
+  end
 end

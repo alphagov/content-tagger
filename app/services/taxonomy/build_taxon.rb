@@ -23,6 +23,7 @@ module Taxonomy
         notes_for_editors: content_item['details']['notes_for_editors'],
         parent_taxons: parent_taxons,
         redirect_to: content_item.dig('unpublishing', 'alternative_path'),
+        visible_to_departmental_editors: content_item.dig('details', 'visible_to_departmental_editors')
       )
     end
 

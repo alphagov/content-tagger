@@ -23,5 +23,9 @@ module Taxonomy
     def path_prefixes_for_select
       Theme.taxon_path_prefixes
     end
+
+    def show_visibilty_checkbox?
+      taxon.draft? && taxon.parent_taxons.empty?
+    end
   end
 end

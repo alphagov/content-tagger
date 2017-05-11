@@ -13,6 +13,7 @@ RSpec.describe Taxonomy::BuildTaxon do
         details: {
           internal_name: 'Internal name',
           notes_for_editors: 'Notes for editors',
+          visible_to_departmental_editors: true
         }
       }
     end
@@ -63,6 +64,10 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     it 'assigns the notes_for_editors correctly' do
       expect(taxon.notes_for_editors).to eq("Notes for editors")
+    end
+
+    it "assigns the visible_to_departmental_editors flag correctly" do
+      expect(taxon.visible_to_departmental_editors).to be true
     end
 
     context 'without taxon parents' do

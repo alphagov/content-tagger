@@ -22,6 +22,7 @@ module Taxonomy
         details: {
           internal_name: internal_name,
           notes_for_editors: notes_for_editors,
+          visible_to_departmental_editors: visible_to_departmental_editors,
         },
         routes: [
           { path: base_path, type: "exact" },
@@ -34,6 +35,7 @@ module Taxonomy
     attr_reader :taxon
     delegate(
       :base_path, :title, :description, :internal_name, :notes_for_editors,
+      :visible_to_departmental_editors,
       to: :taxon
     )
   end

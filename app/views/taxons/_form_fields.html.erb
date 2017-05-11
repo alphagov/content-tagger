@@ -31,6 +31,15 @@
   hint: I18n.t('views.taxons.displayed_on_govuk'),
   input_html: { class: 'form-control' } %>
 
+<% if page.show_visibilty_checkbox? %>
+  <%= f.input :visible_to_departmental_editors,
+    as: :boolean,
+    input_html: { class: 'form-control' },
+    checked_value: 'true',
+    label: I18n.t('views.taxons.visible_to_departmental_editors'),
+    hint: I18n.t('views.taxons.visible_to_departmental_editors_hint')  %>
+<% end %>
+
 <%= f.input :notes_for_editors, as: :text, input_html: { class: 'form-control' } %>
 
 <%= f.input :parent_taxons, collection: page.taxons_for_select,
