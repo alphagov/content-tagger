@@ -21,7 +21,7 @@ module Taxonomy
         publication_state: content_item['publication_state'],
         internal_name: content_item['details']['internal_name'],
         notes_for_editors: content_item['details']['notes_for_editors'],
-        parent_taxons: parent_taxons,
+        parent: parent,
         redirect_to: content_item.dig('unpublishing', 'alternative_path'),
         visible_to_departmental_editors: content_item.dig('details', 'visible_to_departmental_editors')
       )
@@ -29,8 +29,8 @@ module Taxonomy
 
   private
 
-    def parent_taxons
-      links["parent_taxons"] || []
+    def parent
+      links.dig('parent_taxons', 0)
     end
 
     def content_item

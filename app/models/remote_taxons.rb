@@ -6,10 +6,8 @@ class RemoteTaxons
     )
   end
 
-  def parents_for_taxon(taxon_child)
-    taxon_child.parent_taxons.map do |parent_taxon_content_id|
-      Taxonomy::BuildTaxon.call(content_id: parent_taxon_content_id)
-    end
+  def parent_for_taxon(taxon_child)
+    Taxonomy::BuildTaxon.call(content_id: taxon_child.parent)
   end
 
 private

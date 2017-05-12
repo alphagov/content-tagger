@@ -118,7 +118,7 @@ private
       :description,
       :visible_to_departmental_editors,
       :notes_for_editors,
-      parent_taxons: []
+      :parent,
     )
   end
 

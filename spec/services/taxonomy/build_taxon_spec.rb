@@ -34,8 +34,8 @@ RSpec.describe Taxonomy::BuildTaxon do
       expect(taxon).to be_a(Taxon)
     end
 
-    it 'assigns the parents to the taxon' do
-      expect(taxon.parent_taxons).to be_empty
+    it 'assigns the parent to the taxon' do
+      expect(taxon.parent).to be_nil
     end
 
     it 'assigns the content id correctly' do
@@ -80,25 +80,25 @@ RSpec.describe Taxonomy::BuildTaxon do
         )
       end
 
-      it 'has no taxon parents' do
-        expect(taxon.parent_taxons).to be_empty
+      it 'has no taxon parent' do
+        expect(taxon.parent).to be_nil
       end
     end
 
     context 'with existing links' do
-      let(:parent_taxons) { ["CONTENT-ID-RTI", "CONTENT-ID-VAT"] }
+      let(:parent_taxon) { "CONTENT-ID-RTI" }
       before do
         publishing_api_has_links(
           content_id: content_id,
           links: {
             topics: [],
-            parent_taxons: parent_taxons
+            parent_taxons: Array(parent_taxon)
           }
         )
       end
 
-      it 'assigns the parents to the taxon' do
-        expect(taxon.parent_taxons).to eq(parent_taxons)
+      it 'assigns the parent to the taxon' do
+        expect(taxon.parent).to eq(parent_taxon)
       end
     end
 

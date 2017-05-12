@@ -25,7 +25,7 @@ module Taxonomy
     end
 
     def show_visibilty_checkbox?
-      taxon.draft? && taxon.parent_taxons.empty?
+      taxon.draft? && taxon.parent.nil?
     end
   end
 end

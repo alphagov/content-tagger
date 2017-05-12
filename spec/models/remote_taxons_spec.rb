@@ -78,48 +78,33 @@ RSpec.describe RemoteTaxons do
     end
   end
 
-  describe '#parents_for_taxon' do
-    let(:taxon_id_1) { SecureRandom.uuid }
-    let(:taxon_id_2) { SecureRandom.uuid }
-    let(:taxon_id_3) { SecureRandom.uuid }
-    let(:taxon) do
-      instance_double(Taxon, parent_taxons: [taxon_id_1, taxon_id_2])
+  describe '#parent_for_taxon' do
+    subject { described_class.new.parent_for_taxon(child_taxon) }
+
+    let(:parent_taxon_id) { SecureRandom.uuid }
+    let(:parent_taxon) do
+      content_item_with_details(
+        'foo',
+        other_fields: {
+          base_path: '/foo/1',
+          content_id: parent_taxon_id,
+        },
+      )
     end
 
-    it 'returns the parent taxons for a given taxon' do
-      taxon_1 = content_item_with_details(
-        "foo",
-        other_fields: {
-          base_path: "/foo/1",
-          content_id: taxon_id_1
-        }
-      )
-      taxon_2 = content_item_with_details(
-        "bar",
-        other_fields: {
-          base_path: "/bar/2",
-          content_id: taxon_id_2
-        }
-      )
-      taxon_3 = content_item_with_details(
-        "bar",
-        other_fields: {
-          base_path: "/bar/3",
-          content_id: taxon_id_3
-        }
-      )
-      publishing_api_has_item(taxon_1)
-      publishing_api_has_links(content_id: taxon_id_1, links: {})
-      publishing_api_has_item(taxon_2)
-      publishing_api_has_links(content_id: taxon_id_2, links: {})
-      publishing_api_has_item(taxon_3)
-      publishing_api_has_links(content_id: taxon_id_3, links: {})
+    let(:child_taxon) { instance_double(Taxon, parent: parent_taxon_id) }
 
-      result = described_class.new.parents_for_taxon(taxon)
+    before do
+      publishing_api_has_item(parent_taxon)
+      publishing_api_has_links(content_id: parent_taxon_id, links: {})
+    end
 
-      expect(result.count).to eq(2)
-      expect(result).to include(taxon_with_attributes(taxon_1))
-      expect(result).to include(taxon_with_attributes(taxon_2))
+    it 'returns the parent taxon for a given taxon' do
+      is_expected.to have_attributes(
+        base_path: parent_taxon[:base_path],
+        content_id: parent_taxon[:content_id],
+        title: parent_taxon[:title],
+                     )
     end
   end
 end

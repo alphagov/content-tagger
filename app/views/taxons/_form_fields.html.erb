@@ -42,5 +42,5 @@
 
 <%= f.input :notes_for_editors, as: :text, input_html: { class: 'form-control' } %>
 
-<%= f.input :parent_taxons, collection: page.taxons_for_select,
-  input_html: { class: :select2, multiple: true, include_blank: true } %>
+<%= f.input :parent, collection: page.taxons_for_select,
+  input_html: { class: 'form-control', include_blank: true } %>

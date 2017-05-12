@@ -19,11 +19,9 @@ module Taxonomy
     end
 
     def build_parent_expansion
-      parent_taxons = root_expanded_links["expanded_links"]["parent_taxons"]
-
       @parent_expansion = expand_parent_nodes(
-        start_node: tree_node_based_on(root_content_item),
-        parent_taxons: parent_taxons,
+        start_node: root_node,
+        parent: root_expanded_links.dig('expanded_links', 'parent_taxons', 0),
       )
       self
     end
@@ -89,15 +87,18 @@ module Taxonomy
       @root_content_item ||= Services.publishing_api.get_content(@content_id).to_h
     end
 
-    def expand_parent_nodes(start_node:, parent_taxons:)
-      Array(parent_taxons).each do |parent_taxon|
-        parent_node = tree_node_based_on(parent_taxon)
-        start_node << parent_node
-        expand_parent_nodes(
-          start_node: parent_node,
-          parent_taxons: parent_taxon.dig("links", "parent_taxons")
-        )
-      end
+    def expand_parent_nodes(start_node:, parent:)
+      return start_node unless parent
+
+      parent_node = tree_node_based_on(parent)
+
+      start_node << parent_node
+
+      expand_parent_nodes(
+        start_node: parent_node,
+        parent: parent.dig('links', 'parent_taxons', 0),
+      )
+
       start_node
     end
 

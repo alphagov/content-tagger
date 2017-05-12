@@ -1,7 +1,7 @@
 module Taxonomy
   class UpdateTaxon
     attr_reader :taxon
-    delegate :content_id, :parent_taxons, to: :taxon
+    delegate :content_id, :parent, to: :taxon
 
     class InvalidTaxonError < StandardError; end
 
@@ -21,7 +21,7 @@ module Taxonomy
       Services.publishing_api.put_content(content_id, payload)
       Services.publishing_api.patch_links(
         content_id,
-        links: { parent_taxons: parent_taxons.select(&:present?) }
+        links: { parent_taxons: Array(parent) }
       )
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422

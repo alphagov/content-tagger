@@ -45,11 +45,11 @@ RSpec.feature "Taxonomy editing" do
       .to_return(status: 200, body: {}.to_json)
   end
 
-  scenario "User creates a taxon with multiple parents" do
+  scenario "User creates a taxon" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
-    when_i_submit_the_taxon_with_a_title_and_parents
+    when_i_submit_the_taxon_with_a_title_and_parent
     then_a_taxon_is_created
   end
 
@@ -179,7 +179,7 @@ RSpec.feature "Taxonomy editing" do
       .to_return(status: 200, body: "{}", headers: {})
   end
 
-  def when_i_submit_the_taxon_with_a_title_and_parents
+  def when_i_submit_the_taxon_with_a_title_and_parent
     # After the taxon is created we'll be redirected to the taxon's "view" page
     # which needs a bunch of API calls stubbed.
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
@@ -199,10 +199,8 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_path_slug, with: '/slug'
 
     select @taxon_1[:title]
-    expect(find('select.select2').value).to include(@taxon_1[:content_id])
+    expect(find('select#taxon_parent').value).to eq(@taxon_1[:content_id])
 
-    select @taxon_2[:title]
-    expect(find('select.select2').value).to include(@taxon_2[:content_id])
     click_on I18n.t('views.taxons.new_button')
   end
 
