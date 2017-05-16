@@ -132,6 +132,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_internal_name, with: "My updated taxon"
     fill_in :taxon_description, with: "Description of my updated taxon."
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
+    select "foo", from: "Parent"
 
     @update_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .with(body: /details.*#{@dummy_editor_notes}/)
@@ -157,7 +158,7 @@ RSpec.feature "Taxonomy editing" do
 
     # dropdown of parent taxons
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
-      .to_return(status: 200, body: "[]", headers: {})
+      .to_return(status: 200, body: parent_taxon_json, headers: {})
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(status: 200, body: "{}", headers: {})
@@ -173,7 +174,7 @@ RSpec.feature "Taxonomy editing" do
 
     # dropdown of parent taxons
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
-      .to_return(status: 200, body: "[]", headers: {})
+      .to_return(status: 200, body: parent_taxon_json, headers: {})
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(status: 200, body: "{}", headers: {})
@@ -269,5 +270,9 @@ RSpec.feature "Taxonomy editing" do
 
   def then_the_base_path_preview_is_updated
     expect(find('.js-base-path .base-path').text).to eql('/education/changed-slug')
+  end
+
+  def parent_taxon_json
+    '[{ "internal_name": "foo", "content_id": "bar", "publication_state": "baz" }]'
   end
 end
