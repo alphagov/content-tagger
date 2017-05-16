@@ -93,7 +93,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     publishing_api_has_item(@taxon)
     publishing_api_has_links(
       content_id: @taxon_content_id,
-      links: {}
+      links: { parent_taxons: ["guid"] }
     )
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon_content_id}")

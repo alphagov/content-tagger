@@ -1,21 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe Taxonomy::UpdateTaxon do
-  let(:taxon) do
-    Taxon.new(
+  before do
+    @taxon = Taxon.new(
       title: 'A Title',
       description: 'Description',
       path_prefix: "/education",
       path_slug: '/slug',
+      parent: 'guid'
     )
   end
-  let(:publish) { described_class.call(taxon: taxon) }
+  let(:publish) { described_class.call(taxon: @taxon) }
 
   describe '.call' do
     context 'with a valid taxon form' do
       it 'publishes the document via the publishing API' do
         expect(Services.publishing_api).to receive(:put_content)
         expect(Services.publishing_api).to receive(:patch_links)
+
+        expect { publish }.to_not raise_error
+      end
+    end
+
+    context "when the taxon has no parent" do
+      before { @taxon.parent = "" }
+
+      it "patches the links hash with an empty array" do
+        expect(Services.publishing_api).to receive(:put_content)
+        expect(Services.publishing_api)
+          .to receive(:patch_links)
+          .with(@taxon.content_id, links: { parent_taxons: [] })
 
         expect { publish }.to_not raise_error
       end

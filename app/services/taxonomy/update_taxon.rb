@@ -19,10 +19,8 @@ module Taxonomy
       end
 
       Services.publishing_api.put_content(content_id, payload)
-      Services.publishing_api.patch_links(
-        content_id,
-        links: { parent_taxons: Array(parent) }
-      )
+      Services.publishing_api.patch_links(content_id, links: links)
+
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422
       # error code, we do a lookup to see if a content item with the slug
@@ -43,6 +41,11 @@ module Taxonomy
 
     def payload
       Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+    end
+
+    def links
+      parent_taxons = parent.empty? ? [] : Array(parent)
+      { parent_taxons: parent_taxons }
     end
   end
 end
