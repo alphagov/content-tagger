@@ -18,6 +18,21 @@ namespace :taxonomy do
         details[content_id] = {
           "document_count" => document_count
         }
+        non_guidance = GdsApi::Rummager.new(Plek.find('rummager')).search(
+          start: 0,
+          filter_taxons: content_id,
+          reject_navigation_document_supertype: 'guidance',
+          count: 1,
+        )['total']
+        details[content_id]["non_guidance"] = non_guidance
+
+        guidance = GdsApi::Rummager.new(Plek.find('rummager')).search(
+          start: 0,
+          filter_taxons: content_id,
+          filter_navigation_document_supertype: 'guidance',
+          count: 1,
+        )['total']
+        details[content_id]["guidance"] = guidance
       end
 
       details.keys.each do |content_id|
@@ -26,7 +41,7 @@ namespace :taxonomy do
         details[content_id]["base_path"] = resp["base_path"]
       end
 
-      headers = ['Content ID', 'Title', 'Link', 'Number of documents']
+      headers = ['Content ID', 'Title', 'Link', 'Guidance Documents', 'Non-Guidance Documents', 'Total no. of documents']
       CSV do |csv|
         csv << headers
         details.keys.each do |content_id|
@@ -34,6 +49,8 @@ namespace :taxonomy do
             content_id,
             details[content_id]["title"],
             details[content_id]["base_path"],
+            details[content_id]["guidance"],
+            details[content_id]["non_guidance"],
             details[content_id]["document_count"]
           ]
         end
