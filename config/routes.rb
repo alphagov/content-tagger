@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get :confirm_restore
     get :confirm_discard
     get :confirm_publish
+    get :download_tagged
     post :publish
     post :restore
     get :trash, on: :collection
