@@ -26,7 +26,7 @@ en:
     view_taxons: View all taxon IDs
     upload_sheet: Upload spreadsheet
     upload: Upload
-    refresh: Re-upload spreadsheet
+    refresh: Refresh spreadsheet
     sheet_url: Spreadsheet URL
     delete: Delete
     start_tagging: "Start tagging"
