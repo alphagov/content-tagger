@@ -118,11 +118,3 @@ en:
   messages:
     views:
       confirm: Are you sure?
-  panels:
-    tagging_spreadsheets:
-      title: How to generate a Google Spreadsheet URL
-      subheading: 'In order to create a publicly available Google Spreadsheet URL, follow these instructions:'
-      step_1: Find your spreadsheet in Google Drive;
-      step_2: Click in the File menu and select the Publish to the web option;
-      step_3: In the Link tab, select the the sheet you want to make public in the first dropdown and tab-separated values in the second dropdown;
-      step_4: Finalise by clicking Publish and copying the link.
