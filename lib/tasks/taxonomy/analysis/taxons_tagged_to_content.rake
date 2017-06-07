@@ -32,8 +32,6 @@ namespace :taxonomy do
           .join('; ')
 
         csv_row = [
-          organisations,
-          content_item['content_id'],
           content_item['link'],
           content_item['taxons'].length,
         ]
