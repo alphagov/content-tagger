@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019130634) do
+ActiveRecord::Schema.define(version: 20170612151306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,9 +28,8 @@ ActiveRecord::Schema.define(version: 20161019130634) do
     t.string   "state",                null: false
     t.string   "messages"
     t.string   "tagging_source_type"
+    t.index ["tagging_source_id"], name: "index_tag_mappings_on_tagging_source_id", using: :btree
   end
-
-  add_index "tag_mappings", ["tagging_source_id"], name: "index_tag_mappings_on_tagging_source_id", using: :btree
 
   create_table "tag_migrations", force: :cascade do |t|
     t.datetime "created_at",                           null: false
@@ -45,6 +43,23 @@ ActiveRecord::Schema.define(version: 20161019130634) do
     t.boolean  "delete_source_link",   default: false
     t.string   "source_title"
     t.string   "source_document_type"
+  end
+
+  create_table "tagging_events", force: :cascade do |t|
+    t.uuid     "taxon_content_id",    null: false
+    t.string   "taxon_content_title", null: false
+    t.uuid     "content_id",          null: false
+    t.string   "content_title",       null: false
+    t.uuid     "user_id",             null: false
+    t.string   "user_email",          null: false
+    t.date     "tagged_on",           null: false
+    t.datetime "tagged_at",           null: false
+    t.integer  "change",              null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["content_id"], name: "index_tagging_events_on_content_id", using: :btree
+    t.index ["tagged_on"], name: "index_tagging_events_on_tagged_on", using: :btree
+    t.index ["taxon_content_id"], name: "index_tagging_events_on_taxon_content_id", using: :btree
   end
 
   create_table "tagging_spreadsheets", force: :cascade do |t|

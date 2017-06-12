@@ -1,0 +1,2 @@
+class TaggingEvent < ApplicationRecord
+end
