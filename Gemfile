@@ -36,6 +36,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'web-console'
+  gem 'faker'
 end
 
 group :test do
