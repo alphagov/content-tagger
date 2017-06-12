@@ -129,6 +129,7 @@ private
       :visible_to_departmental_editors,
       :notes_for_editors,
       :parent,
+      associated_taxons: [],
     )
   end
 

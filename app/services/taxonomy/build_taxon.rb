@@ -22,6 +22,7 @@ module Taxonomy
         internal_name: content_item['details']['internal_name'],
         notes_for_editors: content_item['details']['notes_for_editors'],
         parent: parent,
+        associated_taxons: associated_taxons,
         redirect_to: content_item.dig('unpublishing', 'alternative_path'),
         visible_to_departmental_editors: content_item.dig('details', 'visible_to_departmental_editors')
       )
@@ -31,6 +32,10 @@ module Taxonomy
 
     def parent
       links.dig('parent_taxons', 0)
+    end
+
+    def associated_taxons
+      links.dig('associated_taxons')
     end
 
     def content_item

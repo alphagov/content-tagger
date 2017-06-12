@@ -1,7 +1,7 @@
 module Taxonomy
   class UpdateTaxon
     attr_reader :taxon
-    delegate :content_id, :parent, to: :taxon
+    delegate :content_id, :parent, :associated_taxons, to: :taxon
 
     class InvalidTaxonError < StandardError; end
 
@@ -44,8 +44,10 @@ module Taxonomy
     end
 
     def links
-      parent_taxons = parent.empty? ? [] : Array(parent)
-      { parent_taxons: parent_taxons }
+      {
+        parent_taxons: parent.empty? ? [] : Array(parent),
+        associated_taxons: associated_taxons.empty? ? [] : Array(associated_taxons.reject(&:blank?)),
+      }
     end
   end
 end

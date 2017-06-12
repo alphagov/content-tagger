@@ -21,6 +21,14 @@ RSpec.feature "Taxonomy editing" do
         publication_state: 'published'
       }
     )
+    @taxon_3 = content_item_with_details(
+      "I Am Yet Another Taxon",
+      other_fields: {
+        content_id: "ID-3",
+        base_path: "/education/3",
+        publication_state: 'published'
+      }
+    )
     @linkable_taxon_1 = {
       title: "I Am A Taxon",
       content_id: "ID-1",
@@ -35,6 +43,13 @@ RSpec.feature "Taxonomy editing" do
       internal_name: "I Am Another Taxon",
       publication_state: 'published'
     }
+    @linkable_taxon_3 = {
+      title: "I Am Yet Another Taxon",
+      content_id: "ID-3",
+      base_path: "/education/3",
+      internal_name: "I Am Yet Another Taxon",
+      publication_state: 'published'
+    }
 
     @dummy_editor_notes = "Some usage notes for this taxon."
 
@@ -42,6 +57,17 @@ RSpec.feature "Taxonomy editing" do
       .to_return(status: 200, body: {}.to_json)
 
     @create_links = stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links*})
+      .to_return(status: 200, body: {}.to_json)
+
+    @create_links_with_associated_taxons = stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links*})
+      .with(
+        body: {
+          links: {
+            parent_taxons: ["ID-1"],
+            associated_taxons: ["ID-2", "ID-3"]
+          }
+        }
+      )
       .to_return(status: 200, body: {}.to_json)
   end
 
@@ -51,6 +77,16 @@ RSpec.feature "Taxonomy editing" do
     and_i_click_on_the_new_taxon_button
     when_i_submit_the_taxon_with_a_title_and_parent
     then_a_taxon_is_created
+  end
+
+  scenario "User creates a taxon with associated taxons" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_the_new_taxon_button
+    when_i_set_title_and_parent
+    and_i_select_associated_taxons
+    and_i_submit_the_create_form
+    then_a_taxon_with_associated_taxons_is_created
   end
 
   scenario "User attempts to create a taxon that isn't semantically valid" do
@@ -94,10 +130,10 @@ RSpec.feature "Taxonomy editing" do
 
   def given_there_are_taxons
     publishing_api_has_linkables(
-      [@linkable_taxon_1, @linkable_taxon_2],
+      [@linkable_taxon_1, @linkable_taxon_2, @linkable_taxon_3],
       document_type: 'taxon'
     )
-    publishing_api_has_taxons([@taxon_1, @taxon_2])
+    publishing_api_has_taxons([@taxon_1, @taxon_2, @taxon_3])
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
       .to_return(body: { links: { parent_taxons: [] } }.to_json)
@@ -107,6 +143,9 @@ RSpec.feature "Taxonomy editing" do
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-2")
       .to_return(body: @taxon_2.to_json)
+
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-3")
+      .to_return(body: @taxon_3.to_json)
   end
 
   def when_i_visit_the_taxonomy_page
@@ -115,17 +154,6 @@ RSpec.feature "Taxonomy editing" do
 
   def and_i_click_on_the_new_taxon_button
     click_on I18n.t('views.taxons.add_taxon')
-  end
-
-  def fill_in_taxon_form
-    fill_in :taxon_title, with: "My Lovely Taxon"
-    fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-
-    select @taxon_1[:title]
-    expect(find('select').value).to include(@taxon_1[:content_id])
-
-    select @taxon_2[:title]
-    expect(find('select').value).to include(@taxon_2[:content_id])
   end
 
   def when_i_update_the_taxon
@@ -181,6 +209,23 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_submit_the_taxon_with_a_title_and_parent
+    when_i_set_title_and_parent
+    and_i_submit_the_create_form
+  end
+
+  def when_i_set_title_and_parent
+    fill_in :taxon_title, with: "My Lovely Taxon"
+    fill_in :taxon_description, with: "A description of my lovely taxon."
+    fill_in :taxon_internal_name, with: "My Lovely Taxon"
+    fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
+    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
+    fill_in :taxon_path_slug, with: '/slug'
+
+    select @taxon_1[:title], from: "taxon_parent"
+    expect(find('select#taxon_parent').value).to eq(@taxon_1[:content_id])
+  end
+
+  def and_i_submit_the_create_form
     # After the taxon is created we'll be redirected to the taxon's "view" page
     # which needs a bunch of API calls stubbed.
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
@@ -192,17 +237,12 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(body: {}.to_json)
 
-    fill_in :taxon_title, with: "My Lovely Taxon"
-    fill_in :taxon_description, with: "A description of my lovely taxon."
-    fill_in :taxon_internal_name, with: "My Lovely Taxon"
-    fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-    find('select.js-path-prefix').find(:xpath, 'option[1]').select_option
-    fill_in :taxon_path_slug, with: '/slug'
-
-    select @taxon_1[:title]
-    expect(find('select#taxon_parent').value).to eq(@taxon_1[:content_id])
-
     click_on I18n.t('views.taxons.new_button')
+  end
+
+  def and_i_select_associated_taxons
+    select @taxon_2[:title], from: "taxon_associated_taxons"
+    select @taxon_3[:title], from: "taxon_associated_taxons"
   end
 
   def when_i_submit_the_taxon_with_a_taxon_with_semantic_issues
@@ -252,6 +292,12 @@ RSpec.feature "Taxonomy editing" do
   def then_a_taxon_is_created
     expect(@create_item).to have_been_requested
     expect(@create_links).to have_been_requested
+    expect(page).to have_content I18n.t('controllers.taxons.create_success')
+  end
+
+  def then_a_taxon_with_associated_taxons_is_created
+    expect(@create_item).to have_been_requested
+    expect(@create_links_with_associated_taxons).to have_been_requested
     expect(page).to have_content I18n.t('controllers.taxons.create_success')
   end
 

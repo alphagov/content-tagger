@@ -7,7 +7,8 @@ RSpec.describe Taxonomy::UpdateTaxon do
       description: 'Description',
       path_prefix: "/education",
       path_slug: '/slug',
-      parent: 'guid'
+      parent: 'guid',
+      associated_taxons: ['1234']
     )
   end
   let(:publish) { described_class.call(taxon: @taxon) }
@@ -29,7 +30,32 @@ RSpec.describe Taxonomy::UpdateTaxon do
         expect(Services.publishing_api).to receive(:put_content)
         expect(Services.publishing_api)
           .to receive(:patch_links)
-          .with(@taxon.content_id, links: { parent_taxons: [] })
+          .with(
+            @taxon.content_id,
+            links: {
+              parent_taxons: [],
+              associated_taxons: ['1234'],
+            }
+          )
+
+        expect { publish }.to_not raise_error
+      end
+    end
+
+    context "when the taxon has no associated taxons" do
+      before { @taxon.associated_taxons = [] }
+
+      it "patches the links hash with an empty array" do
+        expect(Services.publishing_api).to receive(:put_content)
+        expect(Services.publishing_api)
+          .to receive(:patch_links)
+          .with(
+            @taxon.content_id,
+            links: {
+              parent_taxons: ['guid'],
+              associated_taxons: [],
+            }
+          )
 
         expect { publish }.to_not raise_error
       end

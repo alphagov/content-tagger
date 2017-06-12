@@ -44,3 +44,8 @@
 
 <%= f.input :parent, collection: page.taxons_for_select,
   input_html: { class: 'form-control', include_blank: true } %>
+
+<%= f.input :associated_taxons,
+    collection: page.taxons_for_select,
+    placeholder: "Choose associated taxons...",
+    input_html: { multiple: true, class: :select2 } %>

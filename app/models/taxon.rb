@@ -11,7 +11,8 @@ class Taxon
     :internal_name,
     :notes_for_editors,
     :document_type,
-    :redirect_to
+    :redirect_to,
+    :associated_taxons,
   )
 
   include ActiveModel::Model
