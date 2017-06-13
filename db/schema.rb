@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612151306) do
+ActiveRecord::Schema.define(version: 20170613095944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,17 +47,16 @@ ActiveRecord::Schema.define(version: 20170612151306) do
 
   create_table "tagging_events", force: :cascade do |t|
     t.uuid     "taxon_content_id",    null: false
-    t.string   "taxon_content_title", null: false
-    t.uuid     "content_id",          null: false
-    t.string   "content_title",       null: false
-    t.uuid     "user_id",             null: false
-    t.string   "user_email",          null: false
+    t.string   "taxon_title",         null: false
+    t.uuid     "taggable_content_id", null: false
+    t.string   "taggable_title",      null: false
+    t.uuid     "user_uid",            null: false
     t.date     "tagged_on",           null: false
     t.datetime "tagged_at",           null: false
     t.integer  "change",              null: false
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.index ["content_id"], name: "index_tagging_events_on_content_id", using: :btree
+    t.index ["taggable_content_id"], name: "index_tagging_events_on_taggable_content_id", using: :btree
     t.index ["tagged_on"], name: "index_tagging_events_on_tagged_on", using: :btree
     t.index ["taxon_content_id"], name: "index_tagging_events_on_taxon_content_id", using: :btree
   end
