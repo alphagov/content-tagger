@@ -55,6 +55,19 @@
 
   <%= render 'taxonomy_tree', taxonomy_tree: page.taxonomy_tree %>
 
+  <% if page.associated_taxons.present? %>
+    <h3><%= t('views.taxons.associated_taxons') %></h3>
+    <div class="associated-taxons">
+      <ul>
+        <% page.associated_taxons.each do |t| %>
+          <li>
+            <%= link_to t["title"], taxon_path(t["content_id"]) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <h3><%= t('views.taxons.tagged_content') %></h3>
 
   <p>

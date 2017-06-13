@@ -48,5 +48,9 @@ module Taxonomy
     def taxons_for_select
       Linkables.new.taxons(exclude_ids: taxon_content_id)
     end
+
+    def associated_taxons
+      taxonomy_tree.root_expanded_links.dig('expanded_links', 'associated_taxons')
+    end
   end
 end

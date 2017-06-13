@@ -5,6 +5,8 @@ RSpec.describe "Viewing taxons" do
 
   let(:fruits) { fake_taxon("Fruits") }
   let(:apples) { fake_taxon("Apples") }
+  let(:pears) { fake_taxon("Pears") }
+  let(:oranges) { fake_taxon("Oranges") }
   let(:cox) { fake_taxon("Cox") }
 
   scenario "Viewing a taxonomy" do
@@ -22,6 +24,13 @@ RSpec.describe "Viewing taxons" do
     and_the_root_taxon_has_content_tagged_to_it
     when_i_view_the_root_taxon
     then_i_see_tagged_content
+  end
+
+  scenario "Viewing associated taxons of a taxon" do
+    given_a_taxonomy_with_associated_taxons
+    given_im_ignoring_tagged_content_for_now
+    when_i_view_the_root_taxon
+    then_i_see_associated_taxons
   end
 
   def given_a_taxonomy
@@ -45,6 +54,29 @@ RSpec.describe "Viewing taxons" do
       expanded_links: {
         parent_taxons: [fruits],
         child_taxons: [cox],
+      }
+    )
+  end
+
+  def given_a_taxonomy_with_associated_taxons
+    publishing_api_has_item(fruits)
+    publishing_api_has_expanded_links(
+      content_id: fruits["content_id"],
+      expanded_links: {
+        child_taxons: [
+          apples
+        ],
+      }
+    )
+
+    publishing_api_has_item(apples)
+    publishing_api_has_item(pears)
+    publishing_api_has_item(oranges)
+    publishing_api_has_expanded_links(
+      content_id: apples["content_id"],
+      expanded_links: {
+        parent_taxons: [fruits],
+        associated_taxons: [pears, oranges],
       }
     )
   end
@@ -115,6 +147,15 @@ RSpec.describe "Viewing taxons" do
     expect(page.response_headers['Content-Type']).to match(/csv/)
     expect(page.response_headers['Content-Disposition']).to match(/attachment/)
     expect(page.response_headers['Content-Disposition']).to match(/Fruits.*.csv/)
+  end
+
+  def then_i_see_associated_taxons
+    expect(page).to have_content("Associated taxons")
+
+    within(".associated-taxons") do
+      expect(page).to have_content("Pears")
+      expect(page).to have_content("Oranges")
+    end
   end
 
 private
