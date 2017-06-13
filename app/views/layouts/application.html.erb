@@ -16,6 +16,10 @@
   <li class='<%= active_navigation_item.in?(%w[taxons taxon_migrations]) ? 'active' : nil %>'>
     <%= link_to t('navigation.taxons'), taxons_path %>
   </li>
+
+  <li class='<%= active_navigation_item == 'analytics' ? 'active' : nil %>'>
+    <%= link_to t('navigation.analytics'), analytics_path %>
+  </li>
 <% end %>
 
 <%= render template: 'layouts/govuk_admin_template' %>
