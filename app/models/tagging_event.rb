@@ -1,6 +1,10 @@
 class TaggingEvent < ApplicationRecord
-  scope :taxon_events_in_week, (lambda do |taxon_id, date_of_start_of_week|
+  scope :for_taxon_id, (lambda do |taxon_id|
     where(taxon_content_id: taxon_id)
+  end)
+
+  scope :taxon_events_in_week, (lambda do |taxon_id, date_of_start_of_week|
+    self.for_taxon_id(taxon_id)
       .where("tagged_on >= ?", date_of_start_of_week)
       .where("tagged_on < ?", date_of_start_of_week.next_week)
       .order(tagged_at: :asc)
@@ -19,5 +23,13 @@ class TaggingEvent < ApplicationRecord
 
       acc.merge(week => content_count_acc)
     end
+  end
+
+  def added?
+    change.positive?
+  end
+
+  def removed?
+    change.negative?
   end
 end

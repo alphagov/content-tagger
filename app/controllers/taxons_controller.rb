@@ -37,6 +37,10 @@ class TaxonsController < ApplicationController
     render "taxon_not_found", status: 404
   end
 
+  def history
+    render :history, locals: { page: Taxonomy::HistoryPage.new(taxon) }
+  end
+
   def edit
     render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
   end

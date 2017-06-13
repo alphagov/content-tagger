@@ -75,6 +75,7 @@ en:
       deleted_title: Deleted taxons
       edit: Edit taxon
       view: View taxon
+      history: Taxon history
       add_taxon: Add a taxon
       copy_taxon: Export taxons with IDs for spreadsheet
       delete_taxon: Delete taxon

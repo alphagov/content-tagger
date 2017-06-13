@@ -1,0 +1,36 @@
+<%= display_header title: page.title, breadcrumbs: [:taxons, page.taxon] do %>
+  <%= link_to I18n.t('views.taxons.view'), taxon_path(page.taxon_content_id),
+    class: 'btn btn-md btn-default' %>
+<% end %>
+
+<div class='tagged-content-chart'>
+  <%= line_chart TaggingEvent.content_count_over_time(page.taxon_content_id) %>
+</div>
+
+<div class="tagged-content">
+  <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+    <thead>
+      <tr class="table-header">
+        <th>Date</th>
+        <th>Page</th>
+        <th>User</th>
+      </tr>
+
+      <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+      <% page.tagging_events.each do |tagging_event| %>
+        <tr>
+          <td><%= tagging_event.tagged_on %></td>
+          <td>
+            <% if tagging_event.removed? %>
+              <s>
+            <% end %>
+            <%= tagging_event['taggable_title'] %></td>
+          <td><%= User.find_by(uid: tagging_event['user_uid'])&.name || "A Whitehall User" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
