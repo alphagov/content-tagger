@@ -12,8 +12,14 @@
       <i class="glyphicon glyphicon-download-alt"></i>
       <%= I18n.t('views.taxons.download_csv') %>
     <% end %>
+
+    <%= link_to taxon_history_path(page.taxon_content_id), class: 'btn btn-default' do %>
+      <i class='glyphicon glyphicon-time'></i>
+      <%= I18n.t('views.taxons.history') %>
+    <% end %>
   <% end %>
 <% end %>
+
 
 <div class='view-on-site'>
   <% if page.published? %>
@@ -21,10 +27,6 @@
   <% elsif page.draft? %>
     <%= link_to "View draft page", website_url(page.base_path, draft: true) %>
   <% end %>
-</div>
-
-<div class='tagged-content-chart'>
-  <%= line_chart TaggingEvent.content_count_over_time(page.taxon_content_id) %>
 </div>
 
 <div class="well state-box">
