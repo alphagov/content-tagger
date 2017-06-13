@@ -4,6 +4,7 @@ gem 'rails', '5.0.2'
 
 gem 'airbrake', '~> 4.3.1'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
+gem 'chartkick'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'kaminari', '~> 0.17'
 gem 'logstasher', '~> 1.2'

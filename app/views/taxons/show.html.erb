@@ -23,6 +23,10 @@
   <% end %>
 </div>
 
+<div class='tagged-content-chart'>
+  <%= line_chart TaggingEvent.content_count_over_time(page.taxon_content_id) %>
+</div>
+
 <div class="well state-box">
   <div class="state">
     State: <%= page.publication_state_name %>
