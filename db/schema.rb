@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612151306) do
+ActiveRecord::Schema.define(version: 20170612171555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20170612151306) do
     t.string   "taxon_content_title", null: false
     t.uuid     "content_id",          null: false
     t.string   "content_title",       null: false
-    t.uuid     "user_id",             null: false
+    t.uuid     "user_uuid",           null: false
     t.string   "user_email",          null: false
     t.date     "tagged_on",           null: false
     t.datetime "tagged_at",           null: false
