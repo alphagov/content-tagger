@@ -24,7 +24,7 @@ namespace :alternative_facts do
     # invent some users
     users = (0..100).map do
       {
-        id: SecureRandom.uuid,
+        uuid: SecureRandom.uuid,
         email: Faker::Internet.unique.email
       }
     end
@@ -45,7 +45,7 @@ namespace :alternative_facts do
         taxon_content_title: taxon[:content_title],
         content_id: content_item[:id],
         content_title: content_item[:title],
-        user_id: user[:id],
+        user_uuid: user[:uuid],
         user_email: user[:email],
         tagged_on: timestamp.to_date,
         tagged_at: timestamp,
