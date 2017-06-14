@@ -4,6 +4,8 @@ FactoryGirl.define do
     taxon_title 'Test taxon title'
     taggable_content_id { SecureRandom.uuid }
     taggable_title 'Test taggable title'
+    taggable_base_path '/some/example'
+    taggable_navigation_document_supertype 'guidance'
     user_uid { SecureRandom.uuid }
     tagged_on { 1.week.ago }
     tagged_at { DateTime.now - 1.week }
