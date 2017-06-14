@@ -1,5 +1,5 @@
 class AnalyticsController < ApplicationController
   def index
-    render :index, locals: { page: Analytics::IndexPage.new(params) }
+    render :index, locals: { page: Analytics::IndexPage.new }
   end
 end
