@@ -1,0 +1,19 @@
+<%= display_header title: t("views.analytics"), breadcrumbs: [t('views.analytics')] %>
+
+<table class="table queries-list table-bordered table-striped">
+  <thead>
+    <tr class="table-header">
+      <th>Taxon</th>
+      <th>Content Items</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% page.taxons.each do |taxon| %>
+      <tr>
+        <td><%= link_to taxon[:title], taxon_history_path(taxon[:id]) %></td>
+        <td><%= taxon[:count] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     delete :discard_draft
   end
 
+  get '/analytics' => 'analytics#index'
+
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
 
   resources :taggings, only: %i(show update), param: :content_id do

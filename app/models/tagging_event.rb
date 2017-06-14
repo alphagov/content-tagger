@@ -10,6 +10,20 @@ class TaggingEvent < ApplicationRecord
       .order(tagged_at: :asc)
   end)
 
+  def self.content_counts_by_taxon
+    group(:taxon_title, :taxon_content_id)
+      .sum(:change)
+      .sort_by { |_, v| v }
+      .reverse
+      .map do |result|
+        {
+          title: result[0][0],
+          id: result[0][1],
+          count: result[1]
+        }
+      end
+  end
+
   def self.content_count_over_time(taxon_id)
     weeks_in_period = (6.months.ago.to_date..Date.today).select(&:monday?)
 

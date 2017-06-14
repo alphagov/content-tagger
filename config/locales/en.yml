@@ -1,5 +1,6 @@
 en:
   navigation:
+    analytics: Analytics
     tagging_content: Edit a page
     tagging_title: Which page do you want to edit?
     taxons: 'Edit taxonomy'
@@ -50,6 +51,7 @@ en:
       imported: Tagging completed
       errored: Errored
   views:
+    analytics: 'Taxonomy analytics'
     tag_update_progress_bar: "%{completed} of %{total} pages updated"
     tag_migrations:
       new:
