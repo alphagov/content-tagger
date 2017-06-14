@@ -58,3 +58,11 @@ $red: #b10e1e;
 .nav.nav-tabs {
   margin-bottom: 20px;
 }
+
+// for the experimental tagging history
+.filters {
+  margin-bottom: 20px;
+  a {
+    text-decoration: underline;
+  }
+}
