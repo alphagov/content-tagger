@@ -425,6 +425,9 @@ SpecialGlobalVars:
   Description: 'Avoid Perl-style global variables.'
   Enabled: true
 
+Style/VariableNumber:
+  Enabled: false
+
 UnneededCapitalW:
   Description: 'Checks for %W when interpolation is not needed.'
   Enabled: true
