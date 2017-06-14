@@ -10,33 +10,63 @@ class TaggingEvent < ApplicationRecord
       .order(tagged_at: :asc)
   end)
 
+  scope :guidance, -> { where(taggable_navigation_document_supertype: 'guidance') }
+  scope :other, -> { where(taggable_navigation_document_supertype: 'other') }
+
   def self.content_counts_by_taxon
-    group(:taxon_title, :taxon_content_id)
-      .sum(:change)
-      .sort_by { |_, v| v }
-      .reverse
-      .map do |result|
-        {
-          title: result[0][0],
-          id: result[0][1],
-          count: result[1]
-        }
-      end
+    taxons = group(:taxon_title, :taxon_content_id)
+      .order(taxon_title: :asc)
+      .count
+      .map { |t| { title: t[0][0], id: t[0][1] } }
+
+    counts = group(:taxon_content_id, :taggable_navigation_document_supertype).sum(:change)
+
+    taxons.map do |taxon|
+      {
+        title: taxon[:title],
+        id: taxon[:id],
+        guidance_count: counts[[taxon[:id], 'guidance']] || 0,
+        other_count: counts[[taxon[:id], 'other']] || 0
+      }
+    end
   end
 
   def self.content_count_over_time(taxon_id)
     weeks_in_period = (6.months.ago.to_date..Date.today).select(&:monday?)
 
-    content_count_acc = 0
+    guidance_count_acc = guidance.for_taxon_id(taxon_id)
+      .where("tagged_on < ?", 6.months.ago.to_date)
+      .sum(:change)
 
-    weeks_in_period.reduce({}) do |acc, week|
+    other_count_acc = other.for_taxon_id(taxon_id)
+      .where("tagged_on < ?", 6.months.ago.to_date)
+      .sum(:change)
+
+    guidance_series = {}
+    other_series = {}
+
+    weeks_in_period.each do |week|
       events = taxon_events_in_week(taxon_id, week)
       events.each do |e|
-        content_count_acc += e.change
+        if e.guidance?
+          guidance_count_acc += e.change
+        else
+          other_count_acc += e.change
+        end
       end
 
-      acc.merge(week => content_count_acc)
+      guidance_series[week] = guidance_count_acc
+      other_series[week] = other_count_acc
     end
+
+    [
+      { name: "Guidance", data: guidance_series },
+      { name: "Other content", data: other_series }
+    ]
+  end
+
+  def guidance?
+    taggable_navigation_document_supertype == 'guidance'
   end
 
   def added?

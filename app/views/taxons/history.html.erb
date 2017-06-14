@@ -3,20 +3,23 @@
     class: 'btn btn-md btn-default' %>
 <% end %>
 
+<% content_for :head do %>
+<script>$(document).ready(function() { $('table').DataTable(); });</script>
+<% end %>
+
 <div class='tagged-content-chart'>
-  <%= line_chart TaggingEvent.content_count_over_time(page.taxon_content_id) %>
+  <%= column_chart TaggingEvent.content_count_over_time(page.taxon_content_id), stacked: true, min: 0 %>
 </div>
 
 <div class="tagged-content">
-  <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+  <table class="table table-bordered table-striped">
     <thead>
       <tr class="table-header">
         <th>Date</th>
         <th>Page</th>
+        <th>Guidance?</th>
         <th>User</th>
       </tr>
-
-      <%= render partial: 'shared/table_filter' %>
     </thead>
 
     <tbody>
@@ -28,6 +31,7 @@
               <s>
             <% end %>
             <%= tagging_event['taggable_title'] %></td>
+          <td><%= tagging_event.guidance? ? 'Guidance' : 'Other' %></td>
           <td><%= User.find_by(uid: tagging_event['user_uid'])&.name || "A Whitehall User" %></td>
         </tr>
       <% end %>
