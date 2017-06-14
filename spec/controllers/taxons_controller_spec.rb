@@ -93,7 +93,8 @@ RSpec.describe TaxonsController, type: :controller do
       payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
       links = {
         links: {
-          parent_taxons: ['guid']
+          parent_taxons: ['guid'],
+          associated_taxons: ['1234'],
         }
       }
 

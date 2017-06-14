@@ -22,6 +22,12 @@ searches for a collection, if the search is too broad, we will only show the top
 results. Instead, we ask the user to be more specific in the search query in
 order to find the collection they are looking for.
 
+### Tagging taxons to associated taxons
+
+When adding or editing a taxon, it is possible to associate it with other taxons.
+These associated taxons are stored in the links hash of a taxon's content item,
+and can be used to pull in associated content from other taxons.
+
 ## Screenshots
 
 ![Homepage](docs/screenshot-homepage.png)
