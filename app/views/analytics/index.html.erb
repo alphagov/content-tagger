@@ -1,10 +1,15 @@
 <%= display_header title: t("views.analytics"), breadcrumbs: [t('views.analytics')] %>
 
+<% content_for :head do %>
+<script>$(document).ready(function() { $('table').DataTable(); });</script>
+<% end %>
+
 <table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
       <th>Taxon</th>
-      <th>Content Items</th>
+      <th>Guidance</th>
+      <th>Other</th>
     </tr>
   </thead>
 
@@ -12,7 +17,8 @@
     <% page.taxons.each do |taxon| %>
       <tr>
         <td><%= link_to taxon[:title], taxon_history_path(taxon[:id]) %></td>
-        <td><%= taxon[:count] %></td>
+        <td><%= taxon[:guidance_count] %></td>
+        <td><%= taxon[:other_count] %></td>
       </tr>
     <% end %>
   </tbody>
