@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170613155946) do
+ActiveRecord::Schema.define(version: 20170614161432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,9 +58,13 @@ ActiveRecord::Schema.define(version: 20170613155946) do
     t.datetime "updated_at",                             null: false
     t.string   "taggable_navigation_document_supertype", null: false
     t.string   "taggable_base_path",                     null: false
+    t.string   "user_name"
+    t.string   "user_organisation"
     t.index ["taggable_content_id"], name: "index_tagging_events_on_taggable_content_id", using: :btree
     t.index ["tagged_on"], name: "index_tagging_events_on_tagged_on", using: :btree
     t.index ["taxon_content_id"], name: "index_tagging_events_on_taxon_content_id", using: :btree
+    t.index ["user_name"], name: "index_tagging_events_on_user_name", using: :btree
+    t.index ["user_organisation"], name: "index_tagging_events_on_user_organisation", using: :btree
   end
 
   create_table "tagging_spreadsheets", force: :cascade do |t|

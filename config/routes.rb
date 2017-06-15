@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   get '/analytics' => 'analytics#index'
+  get '/analytics/activity' => 'analytics#activity', as: :activity
 
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
 
