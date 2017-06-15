@@ -8,10 +8,10 @@ module Analytics
 
     DEFAULT_QUERY = 'changes_in_the_last_two_weeks'.freeze
 
-    attr_reader :time_query
+    attr_reader :time_span_query
 
     def initialize(time_span_query)
-      @time_query = TIME_QUERIES[time_span_query || DEFAULT_QUERY]
+      @time_span_query = time_span_query
     end
 
     def self.queries
@@ -20,6 +20,10 @@ module Analytics
 
     def queries
       TIME_QUERIES.keys
+    end
+
+    def time_query
+      TIME_QUERIES[time_span_query || DEFAULT_QUERY]
     end
 
     def taxons
