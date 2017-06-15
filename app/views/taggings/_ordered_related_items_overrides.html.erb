@@ -1,0 +1,26 @@
+<% content_for :sortable_form_title, 'Related content items (new navigation)', flush: true %>
+
+<% content_for :sortable_form_list_items, flush: true do %>
+  <% tagging_update.ordered_related_items_overrides.each do |base_path| %>
+    <%= render 'related_item_override_tagging_entry',
+        base_path: base_path,
+        is_template: false,
+        tagging_update: tagging_update %>
+  <% end %>
+<% end %>
+
+<% content_for :sortable_form_list_item_template, flush: true do %>
+  <%= render 'related_item_override_tagging_entry',
+      base_path: '',
+      is_template: true,
+      tagging_update: tagging_update
+  %>
+<% end %>
+
+<% content_for :sortable_form_add_button_text, 'Add related item', flush: true %>
+<% content_for :sortable_form_error_message, 'Not a known URL or path on GOV.UK', flush: true %>
+<% content_for :sortable_form_help_text, flush: true do %>
+  Related items override the automatically-generated items in the sidebar for users
+  viewing the beta navigation. Enter the URL or path of a GOV.UK page, such as
+  /national-curriculum or /free-school-transport
+<% end %>
