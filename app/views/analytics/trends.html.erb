@@ -17,6 +17,10 @@
   <% end %>
 </ul>
 
+<div class='tagged-content-chart'>
+  <%= column_chart page.change_over_time, stacked: true, min: 0 %>
+</div>
+
 <table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
