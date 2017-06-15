@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get '/analytics' => 'analytics#index'
   get '/analytics/activity' => 'analytics#activity', as: :activity
+  get '/analytics/trends(/:query)' => 'analytics#trends', as: :trends
   get '/analytics/:taxon_id' => 'analytics#show', as: :taxon_history
 
   resources :copy_taxons, only: [:index], path: 'copy-taxons'

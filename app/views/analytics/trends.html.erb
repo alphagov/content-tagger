@@ -5,17 +5,23 @@
 <% end %>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><%= link_to "Tagging analytics", analytics_path %></li>
-  <li role="presentation"><%= link_to "Trending Topics", trends_path %></li>
+  <li role="presentation"><%= link_to "Tagging analytics", analytics_path %></li>
+  <li role="presentation" class="active"><%= link_to "Trending Topics", trends_path %></li>
   <li role="presentation"><%= link_to "Tagging activity", activity_path %></li>
+</ul>
+
+<ul class='filters'>
+  <% page.queries.each do |query| %>
+    <li><%= link_to query.humanize, trends_path(query: query) %></li>
+  <% end %>
 </ul>
 
 <table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
       <th>Taxon</th>
-      <th>Guidance</th>
-      <th>Other</th>
+      <th>Guidance Change</th>
+      <th>Other Change</th>
     </tr>
   </thead>
 
@@ -23,8 +29,8 @@
     <% page.taxons.each do |taxon| %>
       <tr>
         <td><%= link_to taxon[:title], taxon_history_path(taxon[:id]) %></td>
-        <td><%= taxon[:guidance_count] %></td>
-        <td><%= taxon[:other_count] %></td>
+        <td><%= taxon[:guidance_change] %></td>
+        <td><%= taxon[:other_change] %></td>
       </tr>
     <% end %>
   </tbody>
