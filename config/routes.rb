@@ -7,7 +7,6 @@ Rails.application.routes.draw do
     get :confirm_discard
     get :confirm_publish
     get :download_tagged
-    get :history
     post :publish
     post :restore
     get :trash, on: :collection
@@ -17,6 +16,7 @@ Rails.application.routes.draw do
 
   get '/analytics' => 'analytics#index'
   get '/analytics/activity' => 'analytics#activity', as: :activity
+  get '/analytics/:taxon_id' => 'analytics#show', as: :taxon_history
 
   resources :copy_taxons, only: [:index], path: 'copy-taxons'
 

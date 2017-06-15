@@ -6,4 +6,8 @@ class AnalyticsController < ApplicationController
   def activity
     render :activity, locals: { page: Analytics::ActivityPage.new(params) }
   end
+
+  def show
+    render :show, locals: { page: Analytics::ShowPage.new(params[:taxon_id]) }
+  end
 end
