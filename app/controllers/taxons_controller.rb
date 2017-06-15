@@ -68,7 +68,7 @@ class TaxonsController < ApplicationController
       render :confirm_delete, locals: { page: Taxonomy::ShowPage.new(taxon) }
     else
       base_path = Services.publishing_api.get_content(params[:taxon][:redirect_to])['base_path']
-      Services.publishing_api.unpublish(params[:id], type: "redirect", alternative_path: base_path).code
+      Services.publishing_api.unpublish(params[:id], type: "redirect", alternative_path: base_path)
       redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.destroy_success")
     end
   end
