@@ -106,6 +106,11 @@ class TaxonsController < ApplicationController
     redirect_to taxons_path, success: t("controllers.taxons.discard_draft_success")
   end
 
+  def download
+    export = Taxonomy::TaxonsExport.new
+    send_data export.to_csv, filename: "#{Date.today} Taxonomy.csv"
+  end
+
   def download_tagged
     export = Taxonomy::TaxonomyExport.new(taxon.content_id)
     send_data export.to_csv,
