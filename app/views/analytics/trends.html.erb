@@ -10,18 +10,23 @@
   <li role="presentation"><%= link_to "Tagging activity", activity_path %></li>
 </ul>
 
-<ul class='filters'>
+<ul class='filters list-inline'>
   <% page.queries.each do |query| %>
-    <li><%= link_to query.humanize, trends_path(query: query) %></li>
+    <% classes = (page.time_span_query == query) ? 'btn btn-success active' : 'btn btn-default' %>
+    <li><%= button_to query.humanize, trends_path(query: query), class: classes, method: :get %></li>
   <% end %>
 </ul>
+
+<div class='tagged-content-chart'>
+  <%= column_chart page.change_over_time, stacked: true, min: 0 %>
+</div>
 
 <table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
       <th>Taxon</th>
-      <th>Guidance Change</th>
-      <th>Other Change</th>
+      <th>Guidance</th>
+      <th>Other</th>
     </tr>
   </thead>
 

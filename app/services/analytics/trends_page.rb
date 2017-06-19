@@ -8,10 +8,10 @@ module Analytics
 
     DEFAULT_QUERY = 'changes_in_the_last_two_weeks'.freeze
 
-    attr_reader :time_query
+    attr_reader :time_span_query
 
     def initialize(time_span_query)
-      @time_query = TIME_QUERIES[time_span_query || DEFAULT_QUERY]
+      @time_span_query = time_span_query
     end
 
     def self.queries
@@ -20,6 +20,40 @@ module Analytics
 
     def queries
       TIME_QUERIES.keys
+    end
+
+    def time_query
+      TIME_QUERIES[time_span_query || DEFAULT_QUERY]
+    end
+
+    def change_over_time
+      grouped_events = TaggingEvent
+        .since(time_query)
+        .order(tagged_at: :asc)
+        .group_by(&:tagged_on)
+
+      guidance_series = {}
+      other_series = {}
+
+      days = (time_query.to_date..Date.today).to_a
+
+      days.each do |day|
+        guidance_series[day] = 0
+        other_series[day] = 0
+
+        grouped_events.fetch(day, []).each do |event|
+          if event.guidance?
+            guidance_series[day] += event.change
+          else
+            other_series[day] += event.change
+          end
+        end
+      end
+
+      [
+        { name: "Guidance", data: guidance_series },
+        { name: "Other content", data: other_series }
+      ]
     end
 
     def taxons
