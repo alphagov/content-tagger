@@ -1,0 +1,38 @@
+<h3>
+  <%= content_for :sortable_form_title %>
+</h3>
+
+<div class="form-group">
+  <fieldset class="ordered-related-items select2-container select2-container-multi"
+            data-module="related-content-tagger">
+    <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
+      <%= content_for :sortable_form_list_items %>
+    </ul>
+
+    <% # Hidden, empty tag used by JS to asynchronously render the related item template %>
+    <div class="related-item-template hide">
+      <%= content_for :sortable_form_list_item_template %>
+    </div>
+
+    <div class="add-sortable-input">
+      <div class="input-group">
+        <input type="text" class="form-control new-base-path" placeholder="URL or path"/>
+        <span class="input-group-btn">
+          <button class="btn btn-default lookup-base-path-button" type="button">
+            <%= content_for :sortable_form_add_button_text %>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="error-message related-item-error-message">
+      <%= content_for :sortable_form_error_message %>
+    </div>
+  </fieldset>
+</div>
+
+<% if content_for?(:sortable_form_help_text) %>
+  <p class="explain">
+    <%= content_for :sortable_form_help_text %>
+  </p>
+<% end %>
