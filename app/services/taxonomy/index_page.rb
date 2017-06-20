@@ -21,8 +21,7 @@ module Taxonomy
     end
 
     def query
-      return '' unless params[:taxon_search].present?
-      params[:taxon_search][:query]
+      params[:q]
     end
 
   private
