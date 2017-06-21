@@ -12,9 +12,9 @@
 <% end %>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" class="<%= current_page?(taxons_path) ? "active" : nil%>"><%= link_to "Published", taxons_path %></li>
-  <li role="presentation" class="<%= current_page?(drafts_taxons_path) ? "active" : nil%>"><%= link_to "Draft", drafts_taxons_path %></li>
-  <li role="presentation" class="<%= current_page?(trash_taxons_path) ? "active" : nil%>"><%= link_to "Deleted", trash_taxons_path %></li>
+  <li role="presentation" class="<%= current_page?(taxons_path) ? "active" : nil%>"><%= link_to "Published", taxons_path(q: page.query) %></li>
+  <li role="presentation" class="<%= current_page?(drafts_taxons_path) ? "active" : nil%>"><%= link_to "Draft", drafts_taxons_path(q: page.query) %></li>
+  <li role="presentation" class="<%= current_page?(trash_taxons_path) ? "active" : nil%>"><%= link_to "Deleted", trash_taxons_path(q: page.query) %></li>
 </ul>
 
 <div class="lead">
@@ -24,7 +24,7 @@
 <%= simple_form_for :taxon_search, url: '', method: :get do |f| %>
   <div class="form-group">
     <%= f.input :query,
-      input_html: { type: :text, class: 'form-control', value: page.query },
+      input_html: { type: :text, class: 'form-control', value: page.query, name: 'q' },
       label: false %>
     <%= f.submit "Search", class: "btn btn-md btn-success" %>
   </div>
