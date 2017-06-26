@@ -5,6 +5,12 @@
     </i>
   <% end %>
 
+  <%= link_to root_taxons_path, class: 'btn btn-default' do %>
+      <i class="glyphicon glyphicon-plus"></i>
+        Manage root taxons
+      </i>
+  <% end %>
+
   <%= link_to download_taxons_path, class: 'btn btn-md btn-default' do %>
     <i class="glyphicon glyphicon-download"></i>
     Download published taxons as CSV

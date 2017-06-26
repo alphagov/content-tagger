@@ -1,0 +1,19 @@
+<%= display_header title: t('navigation.manage_root_taxons'),
+                   breadcrumbs: [t('navigation.manage_root_taxons')] %>
+
+<div class="lead">
+  Add or remove root taxons.
+</div>
+
+
+<%= simple_form_for page, url: root_taxons_path, method: :put do |f| %>
+
+
+    <%= f.input :root_taxons,
+                collection: page.taxons_for_select,
+                placeholder: "Choose root taxons...",
+                input_html: { multiple: true, class: :select2 } %>
+
+    <%= f.submit "Save & publish", class: "btn btn-lg btn-success submit-button" %>
+
+<% end %>
