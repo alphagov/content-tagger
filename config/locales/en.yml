@@ -7,7 +7,6 @@ en:
     bulk_tag: 'Bulk tag'
     tag_migration: 'Bulk tag history'
     tag_importer: 'Bulk tag by upload'
-    manage_root_taxons: 'Manage root taxons'
   errors:
     invalid_taxon: There was a problem with your request. We have been notified of the issue and will fix it as soon as possible.
     invalid_taxon_base_path: A taxon with this slug already exists. If the taxon has been deleted, you can restore it.
