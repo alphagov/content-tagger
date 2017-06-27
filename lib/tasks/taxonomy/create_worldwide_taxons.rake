@@ -213,7 +213,6 @@ namespace :taxonomy do
       { slug: "american-samoa", name: "American Samoa" },
       { slug: "aruba", name: "Aruba" },
       { slug: "bonaire-st-eustatius-saba", name: "Bonaire/St Eustatius/Saba" },
-      { slug: "british-indian-ocean-territory", name: "British Indian Ocean Territory" },
       { slug: "central-african-republic", name: "Central African Republic" },
       { slug: "curacao", name: "Curaçao" },
       { slug: "french-guiana", name: "French Guiana" },
@@ -234,7 +233,6 @@ namespace :taxonomy do
       { slug: "wallis-and-futuna", name: "Wallis and Futuna" },
       { slug: "western-sahara", name: "Western Sahara" },
       { slug: "st-martin", name: "St Martin" },
-      { slug: "saint-barthelemy", name: "Saint-Barthélemy" },
     ]
 
     generic_taxons = [
