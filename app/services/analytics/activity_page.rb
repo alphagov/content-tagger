@@ -7,7 +7,7 @@ module Analytics
     end
 
     def user_names
-      TaggingEvent.uniq.pluck(:user_name).sort
+      TaggingEvent.uniq.pluck(:user_name).compact.sort
     end
 
     def user_organisations
