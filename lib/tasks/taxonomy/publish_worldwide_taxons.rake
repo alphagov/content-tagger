@@ -12,7 +12,11 @@ namespace :taxonomy do
 
     world_taxons = all_taxons.select { |t| t["base_path"].starts_with?("/world") }
     world_taxons.each do |taxon|
-      Services.publishing_api.publish(taxon["content_id"], "major")
+      begin
+        Services.publishing_api.publish(taxon["content_id"], "major")
+      rescue => e
+        puts "Error: #{e.message}"
+      end
     end
   end
 end
