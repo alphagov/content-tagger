@@ -235,6 +235,37 @@ namespace :taxonomy do
       { slug: "st-martin", name: "St Martin" },
     ]
 
+    eu_country_slugs = [
+      "austria",
+      "belgium",
+      "bulgaria",
+      "croatia",
+      "cyprus",
+      "czech-republic",
+      "denmark",
+      "estonia",
+      "finland",
+      "france",
+      "germany",
+      "greece",
+      "hungary",
+      "ireland",
+      "italy",
+      "latvia",
+      "lithuania",
+      "luxembourg",
+      "malta",
+      "netherlands",
+      "poland",
+      "portugal",
+      "romania",
+      "slovakia",
+      "slovenia",
+      "spain",
+      "sweden",
+    ]
+    eu_countries = countries.select { |c| eu_country_slugs.include?(c[:slug]) }
+
     generic_taxons = [
       {
         title: "Emergency help for British nationals",
@@ -298,6 +329,13 @@ namespace :taxonomy do
       },
     ]
 
+    brexit_taxon = {
+      title: "Brexit",
+      description: "Latest information and guidance on the UK exiting the EU.",
+      content_id: "d4c4d91d-fbe7-4eff-bd57-189138c626c9",
+      slug: "brexit",
+    }
+
     all_taxons = Services
       .publishing_api
       .get_content_items(
@@ -306,24 +344,35 @@ namespace :taxonomy do
       ).to_h["results"]
     all_taxon_base_paths = all_taxons.map { |t| t["base_path"] }
 
+    taxons_to_create = []
+
     countries.each do |country|
       generic_taxons.each do |taxon|
         taxon_params = WorldwideTaxonPresenter.new(country, taxon, all_taxons).present
         taxon = Taxon.new(taxon_params)
+        taxons_to_create.push(taxon)
+      end
+    end
 
-        begin
-          if all_taxon_base_paths.include?(taxon.base_path)
-            puts "Skipping taxon for #{taxon.base_path}, already exists"
-          elsif taxon.valid?
-            puts "Creating taxon for #{taxon.base_path}"
-            Taxonomy::UpdateTaxon.call(taxon: taxon)
-          else
-            puts "Error: Invalid taxon for #{taxon.base_path}"
-            puts taxon.errors
-          end
-        rescue => e
-          puts "Error: Failed to create taxon for #{taxon.base_path}, #{e.message}"
+    eu_countries.each do |country|
+      taxon_params = WorldwideTaxonPresenter.new(country, brexit_taxon, all_taxons).present
+      taxon = Taxon.new(taxon_params)
+      taxons_to_create.push(taxon)
+    end
+
+    taxons_to_create.each do |taxon|
+      begin
+        if all_taxon_base_paths.include?(taxon.base_path)
+          puts "Skipping taxon for #{taxon.base_path}, already exists"
+        elsif taxon.valid?
+          puts "Creating taxon for #{taxon.base_path}"
+          Taxonomy::UpdateTaxon.call(taxon: taxon)
+        else
+          puts "Error: Invalid taxon for #{taxon.base_path}"
+          puts taxon.errors
         end
+      rescue => e
+        puts "Error: Failed to create taxon for #{taxon.base_path}, #{e.message}"
       end
     end
   end
