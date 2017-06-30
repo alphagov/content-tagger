@@ -61,6 +61,25 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
     end
 
+    context "when the taxon has nil for associated taxons" do
+      before { @taxon.associated_taxons = nil }
+
+      it "patches the links hash with an empty array" do
+        expect(Services.publishing_api).to receive(:put_content)
+        expect(Services.publishing_api)
+          .to receive(:patch_links)
+          .with(
+            @taxon.content_id,
+            links: {
+              parent_taxons: ['guid'],
+              associated_taxons: [],
+            }
+          )
+
+        expect { publish }.to_not raise_error
+      end
+    end
+
     context 'with an unprocessable entity error from the API' do
       let(:error) do
         GdsApi::HTTPUnprocessableEntity.new(
