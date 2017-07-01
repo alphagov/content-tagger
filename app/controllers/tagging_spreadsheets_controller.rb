@@ -1,6 +1,6 @@
 class TaggingSpreadsheetsController < ApplicationController
   def index
-    render :index, locals: { tagging_spreadsheets: presented_tagging_spreadsheets }
+    render :index, locals: { page: BulkTagging::IndexPage.new }
   end
 
   def new
@@ -79,16 +79,6 @@ private
   def presented_aggregated_tag_mappings
     aggregated_tag_mappings.map do |aggregated_tag_mapping|
       BulkTagging::AggregatedTagMappingPresenter.new(aggregated_tag_mapping)
-    end
-  end
-
-  def tagging_spreadsheets
-    BulkTagging::TaggingSpreadsheet.active.newest_first.includes(:added_by)
-  end
-
-  def presented_tagging_spreadsheets
-    tagging_spreadsheets.map do |tagging_spreadsheet|
-      BulkTagging::TaggingSpreadsheetPresenter.new(tagging_spreadsheet)
     end
   end
 
