@@ -20,8 +20,6 @@ Rails.application.routes.draw do
   get '/analytics/trends(/:query)' => 'analytics#trends', as: :trends
   get '/analytics/:taxon_id' => 'analytics#show', as: :taxon_history
 
-  resources :copy_taxons, only: [:index], path: 'copy-taxons'
-
   resources :taggings, only: %i(show update), param: :content_id do
     get '/lookup', action: 'lookup', on: :collection
     get '/lookup-urls', action: 'lookup_urls', on: :collection

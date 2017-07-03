@@ -1,4 +1,4 @@
-class TaggingEvent < ApplicationRecord
+class TaggingEvent < ActiveRecord::Base
   scope :for_taxon_id, (lambda do |taxon_id|
     where(taxon_content_id: taxon_id)
   end)

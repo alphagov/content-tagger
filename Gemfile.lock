@@ -94,8 +94,6 @@ GEM
     factory_girl_rails (4.8.0)
       factory_girl (~> 4.8.0)
       railties (>= 3.0.0)
-    faker (1.7.3)
-      i18n (~> 0.5)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
     gds-api-adapters (41.5.0)
@@ -363,7 +361,6 @@ DEPENDENCIES
   chartkick
   database_cleaner
   factory_girl_rails
-  faker
   gds-api-adapters (~> 41.5)
   gds-sso (~> 13.2)
   govuk-content-schema-test-helpers
@@ -392,4 +389,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.14.5
+   1.15.0
