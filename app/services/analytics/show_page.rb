@@ -7,7 +7,7 @@ module Analytics
     end
 
     def title
-      @_title ||= TaggingEvent.where(taxon_content_id: id).first.taxon_title
+      @_title ||= taxon.title
     end
 
     def tagging_events
@@ -52,6 +52,10 @@ module Analytics
     end
 
   private
+
+    def taxon
+      @_taxon ||= Taxonomy::BuildTaxon.call(content_id: id)
+    end
 
     def taxon_events_in_week(date_of_start_of_week)
       TaggingEvent
