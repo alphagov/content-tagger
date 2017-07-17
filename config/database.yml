@@ -7,9 +7,11 @@ default: &default
 development:
   <<: *default
   database: content_tagger_development
+  url: <%= ENV["DATABASE_URL"] %>
 
 test:
   <<: *default
   database: content_tagger_test
+  url: <%= ENV["DATABASE_URL"].try(:sub, /([-_]development)?$/, '_test') %>
 
 # In production the `DATABASE_URL` environment variable is automatically used.
