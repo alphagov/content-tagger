@@ -1,16 +1,15 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  template: template0
   pool: 5
 
 development:
   <<: *default
   database: content_tagger_development
-  template: template0
 
 test:
   <<: *default
   database: content_tagger_test
-  template: template0
 
 # In production the `DATABASE_URL` environment variable is automatically used.
