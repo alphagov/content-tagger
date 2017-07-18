@@ -1,4 +1,5 @@
 require 'gds_api/publishing_api_v2'
+require 'gds_api/rummager'
 
 module Services
   def self.publishing_api
@@ -15,5 +16,11 @@ module Services
       statsd_client.namespace = "govuk.app.content-tagger"
       statsd_client
     end
+  end
+
+  def self.search
+    @search ||= GdsApi::Rummager.new(
+      Plek.new.find('rummager'),
+    )
   end
 end
