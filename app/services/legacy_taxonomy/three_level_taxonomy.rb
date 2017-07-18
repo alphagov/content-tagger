@@ -19,7 +19,7 @@ module LegacyTaxonomy
       @taxon = TaxonData.new(
         title: 'Browse',
         description: @title,
-        browse_page_content_id: root_content_id,
+        legacy_content_id: root_content_id,
         path_slug: @base_path,
         path_prefix: path_prefix,
         child_taxons: child_taxons(root_content_id)
@@ -47,7 +47,7 @@ module LegacyTaxonomy
           TaxonData.new(
             title: browse_page['title'],
             description: browse_page['description'],
-            browse_page_content_id: browse_page['content_id'],
+            legacy_content_id: browse_page['content_id'],
             path_slug: browse_page['base_path'],
             path_prefix: path_prefix
           )
@@ -56,7 +56,7 @@ module LegacyTaxonomy
 
     def second_level_taxons(parent_taxon)
       Client::PublishingApi
-        .get_expanded_links(parent_taxon.browse_page_content_id)
+        .get_expanded_links(parent_taxon.legacy_content_id)
         .fetch(@second_level_key, [])
         .map do |browse_page|
           base_path = browse_page['base_path']
@@ -64,7 +64,7 @@ module LegacyTaxonomy
           TaxonData.new(
             title: browse_page['title'],
             description: browse_page['description'],
-            browse_page_content_id: content_id,
+            legacy_content_id: content_id,
             path_slug: base_path,
             path_prefix: path_prefix,
             tagged_pages: Client::SearchApi.content_ids_tagged_to_browse_page(content_id)
@@ -73,7 +73,7 @@ module LegacyTaxonomy
     end
 
     def third_level_taxons(parent_taxon)
-      Client::PublishingApi.get_content_groups(parent_taxon.browse_page_content_id)
+      Client::PublishingApi.get_content_groups(parent_taxon.legacy_content_id)
         .reject { |g| g['name'].empty? || g['contents'].empty? }
         .map do |group|
           path_slug = parent_taxon.path_slug + '/' + group['name'].parameterize
