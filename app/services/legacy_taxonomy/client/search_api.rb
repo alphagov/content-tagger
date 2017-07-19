@@ -58,6 +58,17 @@ module LegacyTaxonomy
           results
         end
 
+        def content_tagged_to_policy(policy_slug)
+          tagged = client.search(
+            fields: %w(content_id),
+            filter_policies: policy_slug,
+            count: 1000
+          )
+
+          tagged['results']
+            .map { |result| result['content_id'] }
+        end
+
         def client
           Services.search
         end
