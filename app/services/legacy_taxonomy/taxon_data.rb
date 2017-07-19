@@ -39,5 +39,14 @@ module LegacyTaxonomy
         content_id: content_id
       }
     end
+
+    def to_stats_hash
+      {
+        title: title,
+        description: description,
+        base_path: base_path,
+        tagged_count: tagged_pages.count
+      }
+    end
   end
 end
