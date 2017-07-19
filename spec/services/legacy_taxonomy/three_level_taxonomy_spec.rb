@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe LegacyTaxonomy::MainstreamBrowseTaxonomy do
+RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
   before do
     stub_publishing_api_root_taxon
   end
