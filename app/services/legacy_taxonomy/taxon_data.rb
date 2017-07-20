@@ -3,7 +3,7 @@ module LegacyTaxonomy
     attr_accessor(
       :title,
       :description,
-      :browse_page_content_id,
+      :legacy_content_id,
       :path_slug,
       :path_prefix,
       :tagged_pages,
