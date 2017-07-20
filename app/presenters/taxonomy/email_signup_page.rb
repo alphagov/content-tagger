@@ -21,6 +21,7 @@ module Taxonomy
           summary: '',
           subscriber_list: { 'taxons' => [] },
         },
+        update_type: 'major',
       }
     end
 

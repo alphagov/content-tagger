@@ -26,7 +26,8 @@ module Taxonomy
         },
         routes: [
           { path: base_path, type: "exact" },
-        ]
+        ],
+        update_type: "major",
       }
     end
 
