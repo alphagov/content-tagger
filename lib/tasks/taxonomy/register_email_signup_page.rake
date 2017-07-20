@@ -7,6 +7,6 @@ namespace :taxonomy do
     signup_page = Taxonomy::EmailSignupPage.new
 
     Services.publishing_api.put_content(signup_page.content_id, signup_page.payload)
-    Services.publishing_api.publish(signup_page.content_id, 'major')
+    Services.publishing_api.publish(signup_page.content_id)
   end
 end

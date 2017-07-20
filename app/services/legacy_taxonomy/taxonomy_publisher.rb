@@ -26,7 +26,7 @@ module LegacyTaxonomy
     def create_remote_taxon(taxon, parent_taxon = nil)
       puts "#{taxon.title} => #{taxon.base_path}"
       Services.publishing_api.put_content(taxon.content_id, taxon_for_publishing_api(taxon))
-      Services.publishing_api.publish(taxon.content_id, 'major')
+      Services.publishing_api.publish(taxon.content_id)
 
       return unless parent_taxon # rubocop
       Services.publishing_api.patch_links(taxon.content_id, links: { parent_taxons: [parent_taxon.content_id] })

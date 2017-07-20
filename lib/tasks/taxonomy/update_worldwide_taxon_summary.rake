@@ -254,7 +254,7 @@ namespace :taxonomy do
       begin
         puts "Updating description for #{taxon.base_path}"
         Taxonomy::UpdateTaxon.call(taxon: taxon)
-        Services.publishing_api.publish(taxon.content_id, "major") if taxon.published?
+        Services.publishing_api.publish(taxon.content_id) if taxon.published?
       rescue => e
         puts "Error for #{taxon.base_path}: #{e.message}"
       end
