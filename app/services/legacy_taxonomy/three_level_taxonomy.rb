@@ -1,20 +1,26 @@
 module LegacyTaxonomy
-  class MainstreamBrowseTaxonomy
+  class ThreeLevelTaxonomy
     attr_accessor :path_prefix
 
-    BASE_PATH = '/browse'.freeze
-
-    def initialize(path_prefix)
+    def initialize(path_prefix,
+                   base_path: '/browse',
+                   title: 'Mainstream Browse Taxonomy',
+                   first_level_key: 'top_level_browse_pages',
+                   second_level_key: 'second_level_browse_pages')
       @path_prefix = path_prefix
+      @base_path = base_path
+      @title = title
+      @first_level_key = first_level_key
+      @second_level_key = second_level_key
     end
 
     def to_taxonomy_branch
-      root_content_id = Client::PublishingApi.content_id_for_base_path(BASE_PATH)
+      root_content_id = Client::PublishingApi.content_id_for_base_path(@base_path)
       @taxon = TaxonData.new(
         title: 'Browse',
-        description: 'Mainstream Browse Taxonomy',
+        description: @title,
         browse_page_content_id: root_content_id,
-        path_slug: BASE_PATH,
+        path_slug: @base_path,
         path_prefix: path_prefix,
         child_taxons: child_taxons(root_content_id)
       )
@@ -36,7 +42,7 @@ module LegacyTaxonomy
     def first_level_taxons(root_content_id)
       Client::PublishingApi
         .get_expanded_links(root_content_id)
-        .fetch("top_level_browse_pages", [])
+        .fetch(@first_level_key, [])
         .map do |browse_page|
           TaxonData.new(
             title: browse_page['title'],
@@ -51,7 +57,7 @@ module LegacyTaxonomy
     def second_level_taxons(parent_taxon)
       Client::PublishingApi
         .get_expanded_links(parent_taxon.browse_page_content_id)
-        .fetch('second_level_browse_pages', [])
+        .fetch(@second_level_key, [])
         .map do |browse_page|
           base_path = browse_page['base_path']
           content_id = browse_page['content_id']
