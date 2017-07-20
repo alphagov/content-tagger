@@ -32,4 +32,10 @@ namespace :legacy_taxonomy do
     taxonomy = LegacyTaxonomy::PolicyAreaTaxonomy.new('/bar').to_taxonomy_branch
     LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').write(taxonomy)
   end
+
+  desc "Generates structure for Policy Areas / Policy"
+  task generate_policy_area_and_policy_taxons: :environment do
+    taxonomy = LegacyTaxonomy::PolicyTaxonomy.new('/baz').to_taxonomy_branch
+    File.write('tmp/policy.yml', YAML.dump(taxonomy))
+  end
 end
