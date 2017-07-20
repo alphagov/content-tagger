@@ -18,13 +18,13 @@ namespace :legacy_taxonomy do
   desc "Send the Mainstream Browse taxonomy to the publishing platform"
   task publish_mainstream_browse_page_taxons: :environment do
     taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').read
-    LegacyTaxonomy::TaxonomyWriter.new(taxonomy_branch).commit
+    LegacyTaxonomy::TaxonomyPublisher.new(taxonomy_branch).commit
   end
 
   desc "Send the Topic taxonomy to the publishing platform"
   task publish_topic_taxons: :environment do
     taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').read
-    LegacyTaxonomy::TaxonomyWriter.new(taxonomy_branch).commit
+    LegacyTaxonomy::TaxonomyPublisher.new(taxonomy_branch).commit
   end
 
   desc "Generates structure for Policy Areas at www.gov.uk/government/topics"

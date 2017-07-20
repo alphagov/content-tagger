@@ -1,5 +1,5 @@
 module LegacyTaxonomy
-  class TaxonomyWriter
+  class TaxonomyPublisher
     attr_reader :root_taxon
 
     def initialize(root_taxon)
