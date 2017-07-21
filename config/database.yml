@@ -1,16 +1,17 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  template: template0
   pool: 5
 
 development:
   <<: *default
   database: content_tagger_development
-  template: template0
+  url: <%= ENV["DATABASE_URL"] %>
 
 test:
   <<: *default
   database: content_tagger_test
-  template: template0
+  url: <%= ENV["DATABASE_URL"].try(:sub, /([-_]development)?$/, '_test') %>
 
 # In production the `DATABASE_URL` environment variable is automatically used.
