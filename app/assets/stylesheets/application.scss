@@ -10,7 +10,7 @@ $red: #b10e1e;
 @import 'taxonomy-tree';
 @import 'related-item-tagging';
 @import 'views/taxon';
-@import 'vendor/datatables.min';
+@import 'datatables.min';
 
 .error-message {
   color: $red;
@@ -62,6 +62,7 @@ $red: #b10e1e;
 // for the experimental tagging history
 .filters {
   margin-bottom: 20px;
+
   a {
     text-decoration: underline;
   }
