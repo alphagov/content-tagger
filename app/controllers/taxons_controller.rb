@@ -48,7 +48,7 @@ class TaxonsController < ApplicationController
       Taxonomy::UpdateTaxon.call(taxon: taxon)
 
       if params[:publish_taxon_on_save] == "true"
-        Services.publishing_api.publish(taxon.content_id, "major")
+        Services.publishing_api.publish(taxon.content_id)
       end
 
       redirect_to taxon_path(taxon.content_id)
@@ -93,7 +93,7 @@ class TaxonsController < ApplicationController
   end
 
   def publish
-    Services.publishing_api.publish(taxon.content_id, "major")
+    Services.publishing_api.publish(taxon.content_id)
     redirect_to taxon_path(taxon.content_id), success: "You have successfully published the taxon"
   end
 

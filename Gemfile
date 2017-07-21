@@ -16,7 +16,7 @@ gem 'unicorn', '~> 5.0.0'
 
 # GDS managed dependencies
 gem 'airbrake', github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
-gem 'gds-api-adapters', '~> 41.5'
+gem 'gds-api-adapters', '~> 47.2'
 gem 'gds-sso', '~> 13.2'
 gem 'govuk_admin_template', '~> 5.0'
 gem 'govuk_sidekiq', '~> 1.0'
