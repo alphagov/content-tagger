@@ -38,4 +38,17 @@ namespace :legacy_taxonomy do
     taxonomy = LegacyTaxonomy::PolicyTaxonomy.new('/baz').to_taxonomy_branch
     File.write('tmp/policy.yml', YAML.dump(taxonomy))
   end
+
+  desc "Generate taxonomy statistics CSV"
+  task generate_statistics: :environment do
+    _ = LegacyTaxonomy::TaxonData
+    %w(msbp policy_area policy).each do |tax|
+      taxonomy = YAML.load_file("tmp/#{tax}.yml")
+      taxons_array = LegacyTaxonomy::Statistics.new(taxonomy).to_a
+      CSV.open("tmp/#{tax}.csv", "wb") do |csv|
+        csv << taxons_array.first.keys
+        taxons_array.each { |hash| csv << hash.values }
+      end
+    end
+  end
 end
