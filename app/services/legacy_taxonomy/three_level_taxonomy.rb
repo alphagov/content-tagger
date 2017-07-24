@@ -16,7 +16,8 @@ module LegacyTaxonomy
 
     def to_taxonomy_branch
       root_content_id = Client::PublishingApi.content_id_for_base_path(@base_path)
-      @taxon = TaxonData.new(
+
+      TaxonData.new(
         title: 'Browse',
         description: @title,
         legacy_content_id: root_content_id,
@@ -67,7 +68,7 @@ module LegacyTaxonomy
             legacy_content_id: content_id,
             path_slug: base_path,
             path_prefix: path_prefix,
-            tagged_pages: Client::SearchApi.content_ids_tagged_to_browse_page(content_id)
+            tagged_pages: tagged_pages(content_id)
           )
         end
     end
@@ -83,9 +84,32 @@ module LegacyTaxonomy
             path_slug: path_slug,
             path_prefix: path_prefix,
             tagged_pages: group['contents']
-              .map { |content_base_path| Client::PublishingApi.content_id_for_base_path(content_base_path) }
-              .compact
+              .map do |content_base_path|
+                {
+                  'link' => content_base_path,
+                  'content_id' => Client::PublishingApi.content_id_for_base_path(content_base_path)
+                }
+              end
           )
+        end
+    end
+
+    def tagged_pages(content_id)
+      (
+        Client::SearchApi.content_tagged_to_browse_page(content_id) +
+          linked_related_topics(content_id)
+      ).uniq
+    end
+
+    def linked_related_topics(content_id)
+      Client::PublishingApi
+        .get_expanded_links(content_id)
+        .fetch('related_topics', [])
+        .map do |topic|
+          {
+            'content_id' => topic['content_id'],
+            'link' => topic['base_path']
+          }
         end
     end
   end

@@ -16,8 +16,8 @@ module LegacyTaxonomy
     def commit_tree(taxon)
       taxon.child_taxons.each do |sub_taxon|
         create_remote_taxon(sub_taxon, taxon)
-        sub_taxon.tagged_pages.each do |taggable_id|
-          tag_content(taggable_id, sub_taxon)
+        sub_taxon.tagged_pages.each do |taggable|
+          tag_content(taggable['content_id'], sub_taxon)
         end
         commit_tree(sub_taxon)
       end

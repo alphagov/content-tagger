@@ -70,7 +70,12 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
       it "has third level taxons" do
         l3_taxon = result.child_taxons.first.child_taxons.first.child_taxons.first
         expect(l3_taxon.title).to eq 'groupo_uno'
-        expect(l3_taxon.tagged_pages).to eq %w(content-id-goes-here)
+        expect(l3_taxon.tagged_pages).to eq [
+          {
+            'link' => '/path-of-group-contents',
+            'content_id' => 'content-id-goes-here'
+          }
+        ]
       end
     end
   end
@@ -107,11 +112,18 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
       .and_return("top_level_browse_pages" => pages_hash)
   end
 
-  def stub_publishing_api_second_level_browse_pages(parent_id, pages_hash)
+  def stub_publishing_api_second_level_browse_pages(parent_id, pages)
     allow(LegacyTaxonomy::Client::PublishingApi)
       .to receive(:get_expanded_links)
       .with(parent_id)
-      .and_return("second_level_browse_pages" => pages_hash)
+      .and_return("second_level_browse_pages" => pages)
+
+    pages.each do |page|
+      allow(LegacyTaxonomy::Client::PublishingApi)
+        .to receive(:get_expanded_links)
+        .with(page['content_id'])
+        .and_return("related_topics" => [])
+    end
   end
 
   def stub_publishing_api_third_level_browse_pages(parent_id, groups)
@@ -127,7 +139,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
 
   def stub_search_api(base_path, pages = [])
     allow(LegacyTaxonomy::Client::SearchApi)
-      .to receive(:content_ids_tagged_to_browse_page)
+      .to receive(:content_tagged_to_browse_page)
       .with(base_path)
       .and_return(pages)
   end
