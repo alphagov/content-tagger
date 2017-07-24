@@ -67,7 +67,7 @@ module LegacyTaxonomy
             legacy_content_id: content_id,
             path_slug: base_path,
             path_prefix: path_prefix,
-            tagged_pages: Client::SearchApi.content_ids_tagged_to_browse_page(content_id)
+            tagged_pages: Client::SearchApi.content_tagged_to_browse_page(content_id)
           )
         end
     end
@@ -83,8 +83,12 @@ module LegacyTaxonomy
             path_slug: path_slug,
             path_prefix: path_prefix,
             tagged_pages: group['contents']
-              .map { |content_base_path| Client::PublishingApi.content_id_for_base_path(content_base_path) }
-              .compact
+              .map do |content_base_path|
+                {
+                  link: content_base_path,
+                  content_id: Client::PublishingApi.content_id_for_base_path(content_base_path)
+                }
+              end
           )
         end
     end

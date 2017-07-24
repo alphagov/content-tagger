@@ -1,17 +1,21 @@
+require 'gds_api/rummager'
+
 module LegacyTaxonomy
   module Client
     class SearchApi
       class << self
-        def content_ids_tagged_to_browse_page(taxon_content_id)
-          tagged = client.search(
-            fields: %w(content_id),
-            filter_mainstream_browse_page_content_ids: [taxon_content_id],
-            count: 1000
+        def content_tagged_to_browse_page(taxon_content_id)
+          content_from_rummager(
+            filter_mainstream_browse_page_content_ids: [taxon_content_id]
           )
+        end
 
-          tagged["results"]
-            .map { |result| result['content_id'] }
-            .compact
+        def content_tagged_to_policy_area(policy_area_slug)
+          content_from_rummager(filter_policy_areas: [policy_area_slug])
+        end
+
+        def content_tagged_to_policy(policy_slug)
+          content_from_rummager(filter_policies: policy_slug)
         end
 
         def policy_areas
@@ -23,54 +27,41 @@ module LegacyTaxonomy
           areas['results']
         end
 
-        def content_ids_tagged_to_policy_area(policy_area_slug)
+        def content_from_rummager(query_params)
           results = []
-
           count = 1000
-          query = proc do |start, slug|
+          start = 0
+          fields = %w(content_id link)
+
+          query = proc do |start, count|
             client
               .search(
-                fields: %w(content_id),
-                filter_policy_areas: [slug],
-                count: count,
-                start: start
+                query_params.merge(
+                  fields: fields,
+                  start: start,
+                  count: count
+                )
               )
               .dig('results')
-              .map { |result| result['content_id'] }
+              .map { |result| result.slice(*fields) }
+              .compact
           end
 
-          start = 0
           loop do
-            begin
-              content_ids = query.call(start, policy_area_slug)
-            rescue GdsApi::TimedOutException
-              puts 'Time out - waiting for 5s'
-              puts "#{start}/#{policy_area_slug}"
-              sleep(5)
-              next
-            end
-
-            break if content_ids.empty?
-            results += content_ids
+            things = query.call(start, count)
+            results += things
             start += count
+            break if things.size.between?(0, count-1)
           end
 
           results
         end
 
-        def content_tagged_to_policy(policy_slug)
-          tagged = client.search(
-            fields: %w(content_id),
-            filter_policies: policy_slug,
-            count: 1000
-          )
-
-          tagged['results']
-            .map { |result| result['content_id'] }
-        end
-
         def client
-          Services.search
+          @search ||= GdsApi::Rummager.new(
+            Plek.new.find('rummager'),
+            timeout: 20
+          )
         end
       end
     end

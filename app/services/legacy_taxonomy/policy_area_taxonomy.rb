@@ -34,7 +34,7 @@ module LegacyTaxonomy
           path_slug: policy_area['link'],
           path_prefix: path_prefix,
           legacy_content_id: Client::PublishingApi.content_id_for_base_path(policy_area['link']),
-          tagged_pages: Client::SearchApi.content_ids_tagged_to_policy_area(policy_area['slug'])
+          tagged_pages: Client::SearchApi.content_tagged_to_policy_area(policy_area['slug'])
         )
       end
     end
