@@ -17,7 +17,7 @@ module LegacyTaxonomy
       taxon.child_taxons.each do |sub_taxon|
         create_remote_taxon(sub_taxon, taxon)
         sub_taxon.tagged_pages.each do |taggable|
-          tag_content(taggable['content_id'], sub_taxon)
+          tag_content(taggable, sub_taxon)
         end
         commit_tree(sub_taxon)
       end
@@ -32,20 +32,16 @@ module LegacyTaxonomy
       Services.publishing_api.patch_links(taxon.content_id, links: { parent_taxons: [parent_taxon.content_id] })
     end
 
-    def tag_content(taggable_content_id, taxon)
-      puts " - Tagging #{base_path_for_content_id(taggable_content_id)}"
+    def tag_content(taggable, taxon)
+      puts " - Tagging #{taggable['link']}"
 
-      links = Services.publishing_api.get_links(taggable_content_id)
+      links = Services.publishing_api.get_links(taggable['content_id'])
       previous_version = links['version'] || 0
       taxons = links.dig('links', 'taxons') || []
       taxons << taxon.content_id
-      Services.publishing_api.patch_links(taggable_content_id, links: { taxons: taxons }, previous_version: previous_version)
+      Services.publishing_api.patch_links(taggable['content_id'], links: { taxons: taxons }, previous_version: previous_version)
     rescue GdsApi::HTTPNotFound
       puts "404 Taggable Not Found"
-    end
-
-    def base_path_for_content_id(content_id)
-      Services.publishing_api.get_content(content_id)['base_path']
     end
 
     def taxon_for_publishing_api(taxon)
