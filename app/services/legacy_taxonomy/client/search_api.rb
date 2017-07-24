@@ -44,7 +44,7 @@ module LegacyTaxonomy
               )
               .dig('results')
               .map { |result| result.slice(*fields) }
-              .compact
+              .delete_if { |_, value| value.empty? }
           end
 
           loop do
