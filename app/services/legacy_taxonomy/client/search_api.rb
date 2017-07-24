@@ -33,13 +33,13 @@ module LegacyTaxonomy
           start = 0
           fields = %w(content_id link)
 
-          query = proc do |start, count|
+          query = proc do |start_from, content_count|
             client
               .search(
                 query_params.merge(
                   fields: fields,
-                  start: start,
-                  count: count
+                  start: start_from,
+                  count: content_count
                 )
               )
               .dig('results')
@@ -51,7 +51,7 @@ module LegacyTaxonomy
             things = query.call(start, count)
             results += things
             start += count
-            break if things.size.between?(0, count-1)
+            break if things.size.between?(0, count - 1)
           end
 
           results

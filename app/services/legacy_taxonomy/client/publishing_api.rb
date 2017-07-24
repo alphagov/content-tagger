@@ -1,3 +1,5 @@
+require 'gds_api/publishing_api_v2'
+
 module LegacyTaxonomy
   module Client
     class PublishingApi
