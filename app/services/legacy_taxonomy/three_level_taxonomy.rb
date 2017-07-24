@@ -68,7 +68,7 @@ module LegacyTaxonomy
             legacy_content_id: content_id,
             path_slug: base_path,
             path_prefix: path_prefix,
-            tagged_pages: tagged_pages(content_id)
+            tagged_pages: second_level_tagged_pages(content_id)
           )
         end
     end
@@ -83,18 +83,24 @@ module LegacyTaxonomy
             description: group['name'],
             path_slug: path_slug,
             path_prefix: path_prefix,
-            tagged_pages: group['contents']
-              .map do |content_base_path|
-                {
-                  'link' => content_base_path,
-                  'content_id' => Client::PublishingApi.content_id_for_base_path(content_base_path)
-                }
-              end
+            tagged_pages: third_level_tagged_pages(group['contents'])
+
           )
         end
     end
 
-    def tagged_pages(content_id)
+    def third_level_tagged_pages(group_contents)
+      group_contents.each_with_object([]) do |content_base_path, memo|
+        content_id = Client::PublishingApi.content_id_for_base_path(content_base_path)
+        next unless content_id
+        memo << {
+          'link' => content_base_path,
+          'content_id' => content_id
+        }
+      end
+    end
+
+    def second_level_tagged_pages(content_id)
       (
         Client::SearchApi.content_tagged_to_browse_page(content_id) +
           linked_related_topics(content_id)
