@@ -4,12 +4,18 @@ module LegacyTaxonomy
   module Client
     class PublishingApi
       class << self
+        delegate :put_content,
+                 :publish,
+                 :patch_links,
+                 :get_links,
+                 to: :client
+
         def new_content_id
           SecureRandom.uuid
         end
 
         def content_id_for_base_path(base_path)
-          Services.publishing_api.lookup_content_id(base_path: base_path)
+          client.lookup_content_id(base_path: base_path)
         end
 
         def get_expanded_links(content_id)
@@ -27,7 +33,7 @@ module LegacyTaxonomy
             Plek.new.find('publishing-api'),
             disable_cache: true,
             bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
-            timeout: 120
+            timeout: 20
           )
         end
       end
