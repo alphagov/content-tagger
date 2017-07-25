@@ -27,7 +27,7 @@ module LegacyTaxonomy
           areas['results']
         end
 
-        def content_from_rummager(query_params)
+        def content_from_rummager(query_params = {})
           results = []
           count = 1000
           start = 0
@@ -44,7 +44,8 @@ module LegacyTaxonomy
               )
               .dig('results')
               .map { |result| result.slice(*fields) }
-              .delete_if { |_, value| value.empty? }
+              .delete_if { |hsh| hsh.any? { |_, v| v.empty? } }
+              .delete_if { |hsh| hsh.keys.sort != fields.sort }
           end
 
           loop do
