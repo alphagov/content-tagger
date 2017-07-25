@@ -25,21 +25,21 @@ module LegacyTaxonomy
 
     def create_remote_taxon(taxon, parent_taxon = nil)
       puts "#{taxon.title} => #{taxon.base_path}"
-      Services.publishing_api.put_content(taxon.content_id, taxon_for_publishing_api(taxon))
-      Services.publishing_api.publish(taxon.content_id)
+      Client::PublishingApi.put_content(taxon.content_id, taxon_for_publishing_api(taxon))
+      Client::PublishingApi.publish(taxon.content_id)
 
       return unless parent_taxon # rubocop
-      Services.publishing_api.patch_links(taxon.content_id, links: { parent_taxons: [parent_taxon.content_id] })
+      Client::PublishingApi.patch_links(taxon.content_id, links: { parent_taxons: [parent_taxon.content_id] })
     end
 
     def tag_content(taggable, taxon)
       puts " - Tagging #{taggable['link']}"
 
-      links = Services.publishing_api.get_links(taggable['content_id'])
+      links = Client::PublishingApi.get_links(taggable['content_id'])
       previous_version = links['version'] || 0
       taxons = links.dig('links', 'taxons') || []
       taxons << taxon.content_id
-      Services.publishing_api.patch_links(taggable['content_id'], links: { taxons: taxons.uniq }, previous_version: previous_version)
+      Client::PublishingApi.patch_links(taggable['content_id'], links: { taxons: taxons.uniq }, previous_version: previous_version)
     rescue GdsApi::HTTPNotFound
       puts "404 Taggable Not Found"
     end
