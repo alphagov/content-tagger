@@ -11,6 +11,12 @@ namespace :legacy_taxonomy do
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').read
       LegacyTaxonomy::TaxonomyPublisher.new(taxonomy_branch).commit
     end
+
+    desc "Generate a visualisation of the Mainstream Browse taxonomy"
+    task visualise: :environment do
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').read
+      LegacyTaxonomy::Graph.new(taxonomy_branch, 'tmp/msbp_graph.png').plot
+    end
   end
 
   namespace :topic do
@@ -29,6 +35,12 @@ namespace :legacy_taxonomy do
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').read
       LegacyTaxonomy::TaxonomyPublisher.new(taxonomy_branch).commit
     end
+
+    desc "Generate a visualisation of the Topic taxonomy"
+    task visualise: :environment do
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').read
+      LegacyTaxonomy::Graph.new(taxonomy_branch, 'tmp/topic_graph.png').plot
+    end
   end
 
   namespace :policy_area do
@@ -37,6 +49,12 @@ namespace :legacy_taxonomy do
       taxonomy = LegacyTaxonomy::PolicyAreaTaxonomy.new('/bar').to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').write(taxonomy)
     end
+
+    desc "Generate a visualisation of the Policy Area taxonomy"
+    task visualise: :environment do
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').read
+      LegacyTaxonomy::Graph.new(taxonomy_branch, 'tmp/policy_area_graph.png').plot
+    end
   end
 
   namespace :policy do
@@ -44,6 +62,12 @@ namespace :legacy_taxonomy do
     task generate_taxons: :environment do
       taxonomy = LegacyTaxonomy::PolicyTaxonomy.new('/baz').to_taxonomy_branch
       File.write('tmp/policy.yml', YAML.dump(taxonomy))
+    end
+
+    desc "Generate a visualisation of the Policy Area => Policy taxonomy"
+    task visualise: :environment do
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy.yml').read
+      LegacyTaxonomy::Graph.new(taxonomy_branch, 'tmp/policy_graph.png').plot
     end
   end
 

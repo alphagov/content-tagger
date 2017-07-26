@@ -36,6 +36,7 @@ end
 
 group :development do
   gem 'better_errors'
+  gem 'ruby-graphviz'
   gem 'web-console'
 end
 
