@@ -87,6 +87,22 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
+  describe '#bulk_publish' do
+    it 'bulk publishes content' do
+      expect(Taxonomy::BulkUpdateTaxon).to receive(:call).with('123')
+      post :bulk_publish, params: { taxon_id: 123 }
+      expect(response).to redirect_to(taxon_path(123))
+    end
+  end
+
+  describe '#confirm_bulk_publish' do
+    it 'renders confirm bulk publish' do
+      expect(Taxonomy::BuildTaxon).to receive(:call).with(content_id: '123').and_return FactoryGirl.build(:taxon)
+      get :confirm_bulk_publish, params: { taxon_id: 123 }
+      expect(response.code).to eql "200"
+    end
+  end
+
   describe "#restore" do
     it "sends a request to Publishing API to mark the taxon as 'draft'" do
       taxon = build(:taxon, publication_state: "unpublished")

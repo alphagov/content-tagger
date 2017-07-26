@@ -6,9 +6,11 @@ Rails.application.routes.draw do
     get :confirm_restore
     get :confirm_discard
     get :confirm_publish
+    get :confirm_bulk_publish
     get :download_tagged
     get :download, on: :collection
     post :publish
+    post :bulk_publish
     post :restore
     get :trash, on: :collection
     get :drafts, on: :collection

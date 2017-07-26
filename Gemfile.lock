@@ -129,7 +129,7 @@ GEM
       sidekiq (~> 4.2.8)
       sidekiq-logging-json (~> 0.0)
       sidekiq-statsd (~> 0.1)
-    govuk_taxonomy_helpers (0.1.0)
+    govuk_taxonomy_helpers (0.1.1)
     hashdiff (0.3.2)
     hashie (3.5.5)
     headless (2.3.1)
@@ -367,7 +367,7 @@ DEPENDENCIES
   govuk-lint
   govuk_admin_template (~> 5.0)
   govuk_sidekiq (~> 1.0)
-  govuk_taxonomy_helpers (~> 0.1.0)
+  govuk_taxonomy_helpers (~> 0.1.1)
   headless
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 0.17)

@@ -92,9 +92,18 @@ class TaxonsController < ApplicationController
     render :confirm_publish, locals: { taxon: taxon }
   end
 
+  def confirm_bulk_publish
+    render :confirm_bulk_publish, locals: { page: Taxonomy::ShowPage.new(taxon) }
+  end
+
+  def bulk_publish
+    Taxonomy::BulkUpdateTaxon.call(content_id)
+    redirect_to taxon_path(content_id), success: "The taxons will be published shortly"
+  end
+
   def publish
-    Services.publishing_api.publish(taxon.content_id)
-    redirect_to taxon_path(taxon.content_id), success: "You have successfully published the taxon"
+    Services.publishing_api.publish(content_id)
+    redirect_to taxon_path(content_id), success: "You have successfully published the taxon"
   end
 
   def confirm_discard
@@ -102,7 +111,7 @@ class TaxonsController < ApplicationController
   end
 
   def discard_draft
-    Services.publishing_api.discard_draft(taxon.content_id)
+    Services.publishing_api.discard_draft(content_id)
     redirect_to taxons_path, success: t("controllers.taxons.discard_draft_success")
   end
 
@@ -134,10 +143,11 @@ private
     )
   end
 
+  def content_id
+    params[:id] || params[:taxon_id]
+  end
+
   def taxon
-    @_taxon ||= begin
-      content_id = params[:id] || params[:taxon_id]
-      Taxonomy::BuildTaxon.call(content_id: content_id)
-    end
+    @_taxon ||= Taxonomy::BuildTaxon.call(content_id: content_id)
   end
 end
