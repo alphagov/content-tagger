@@ -8,8 +8,8 @@ namespace :legacy_taxonomy do
 
     desc "Send the Mainstream Browse taxonomy to the publishing platform"
     task publish_taxons: :environment do
-      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').read
-      LegacyTaxonomy::TaxonomyPublisher.new(taxonomy_branch).commit
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').as_yaml
+      LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
   end
 
@@ -26,8 +26,8 @@ namespace :legacy_taxonomy do
 
     desc "Send the Topic taxonomy to the publishing platform"
     task publish_taxons: :environment do
-      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').read
-      LegacyTaxonomy::TaxonomyPublisher.new(taxonomy_branch).commit
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').as_yaml
+      LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
   end
 
