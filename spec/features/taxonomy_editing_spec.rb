@@ -5,6 +5,8 @@ RSpec.feature "Taxonomy editing" do
   include ContentItemHelper
 
   before do
+    create(:theme, :education)
+
     @taxon_1 = content_item_with_details(
       "I Am A Taxon",
       other_fields: {
@@ -129,6 +131,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def given_there_are_taxons
+    create(:theme, :education)
     publishing_api_has_linkables(
       [@linkable_taxon_1, @linkable_taxon_2, @linkable_taxon_3],
       document_type: 'taxon'

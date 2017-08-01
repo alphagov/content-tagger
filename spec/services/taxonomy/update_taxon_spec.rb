@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Taxonomy::UpdateTaxon do
   before do
+    create(:theme, :education)
+
     @taxon = Taxon.new(
       title: 'A Title',
       description: 'Description',

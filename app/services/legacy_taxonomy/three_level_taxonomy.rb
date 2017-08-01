@@ -2,11 +2,7 @@ module LegacyTaxonomy
   class ThreeLevelTaxonomy
     attr_accessor :path_prefix
 
-    def initialize(path_prefix,
-                   base_path: '/browse',
-                   title: 'Mainstream Browse Taxonomy',
-                   first_level_key: 'top_level_browse_pages',
-                   second_level_key: 'second_level_browse_pages')
+    def initialize(path_prefix, base_path:, title:, first_level_key:, second_level_key:)
       @path_prefix = path_prefix
       @base_path = base_path
       @title = title
@@ -18,8 +14,8 @@ module LegacyTaxonomy
       root_content_id = Client::PublishingApi.content_id_for_base_path(@base_path)
 
       TaxonData.new(
-        title: 'Browse',
-        description: @title,
+        title: @title,
+        description: '',
         legacy_content_id: root_content_id,
         path_slug: @base_path,
         path_prefix: path_prefix,
