@@ -42,6 +42,9 @@
     <%= link_to taxon_confirm_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
       Publish
     <% end %>
+    <%= link_to taxon_confirm_bulk_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
+        Publish Tree
+    <% end %>
     <%= link_to "Delete", taxon_confirm_discard_path(page.taxon_content_id), class: 'delete-link' %>
   <% elsif page.unpublished? %>
     <%= link_to taxon_confirm_restore_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
