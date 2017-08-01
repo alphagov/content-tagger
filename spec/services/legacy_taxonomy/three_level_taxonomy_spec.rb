@@ -48,7 +48,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         stub_publishing_api_second_level_browse_pages(basic_taxon['content_id'], [subtaxon])
         stub_publishing_api_third_level_browse_pages(subtaxon['content_id'], [])
         stub_publishing_api_content_id_lookup("/foo/subpath", 'sub_taxon')
-        stub_search_api subtaxon['content_id'], %w(page_content_id)
+        stub_search_api subtaxon, %w(page_content_id)
       end
 
       it 'has second level taxons' do
@@ -68,7 +68,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         stub_publishing_api_third_level_browse_pages(subtaxon['content_id'], content_groups)
         stub_publishing_api_content_id_lookup('/path-of-group-contents', 'content-id-goes-here')
         stub_publishing_api_content_id_lookup_404('/foo/path/groupo_uno')
-        stub_search_api subtaxon['content_id'], %w(page_content_id)
+        stub_search_api subtaxon, %w(page_content_id)
       end
 
       it "has third level taxons" do
@@ -141,11 +141,16 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
     stub_publishing_api_second_level_browse_pages(parent_id, [])
   end
 
-  def stub_search_api(base_path, pages = [])
+  def stub_search_api(taxon, pages = [])
     allow(LegacyTaxonomy::Client::SearchApi)
       .to receive(:content_tagged_to_browse_page)
-      .with(base_path)
+      .with(taxon['content_id'])
       .and_return(pages)
+
+    allow(LegacyTaxonomy::Client::SearchApi)
+      .to receive(:content_tagged_to_topic)
+      .with(taxon['base_path'])
+      .and_return([])
   end
 
   def basic_taxon

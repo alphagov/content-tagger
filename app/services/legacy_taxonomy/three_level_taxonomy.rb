@@ -64,7 +64,7 @@ module LegacyTaxonomy
             legacy_content_id: content_id,
             path_slug: base_path,
             path_prefix: path_prefix,
-            tagged_pages: second_level_tagged_pages(content_id)
+            tagged_pages: second_level_tagged_pages(content_id, base_path)
           )
         end
     end
@@ -96,10 +96,11 @@ module LegacyTaxonomy
       end
     end
 
-    def second_level_tagged_pages(content_id)
+    def second_level_tagged_pages(content_id, base_path)
       (
         Client::SearchApi.content_tagged_to_browse_page(content_id) +
-          linked_related_topics(content_id)
+          linked_related_topics(content_id) +
+          Client::SearchApi.content_tagged_to_topic(base_path)
       ).uniq
     end
 
