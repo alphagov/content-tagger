@@ -16,7 +16,11 @@ namespace :legacy_taxonomy do
   namespace :mainstream_browse do
     desc "Generates structure for mainstream browse at www.gov.uk/browse"
     task generate_taxons: :environment do
-      taxonomy = LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-browse').to_taxonomy_branch
+      taxonomy = LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-browse',
+                                                        title: 'Imported Mainstream Browse',
+                                                        first_level_key: 'top_level_browse_pages',
+                                                        second_level_key: 'second_level_browse_pages',
+                                                        base_path: '/browse').to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').write(taxonomy)
     end
 

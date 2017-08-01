@@ -2,11 +2,7 @@ module LegacyTaxonomy
   class ThreeLevelTaxonomy
     attr_accessor :path_prefix
 
-    def initialize(path_prefix,
-                   base_path: '/browse',
-                   title: 'Imported Mainstream Browse',
-                   first_level_key: 'top_level_browse_pages',
-                   second_level_key: 'second_level_browse_pages')
+    def initialize(path_prefix, base_path:, title:, first_level_key:, second_level_key:)
       @path_prefix = path_prefix
       @base_path = base_path
       @title = title

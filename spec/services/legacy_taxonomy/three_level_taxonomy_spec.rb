@@ -7,7 +7,11 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
 
   describe "#to_taxonomy_branch" do
     let(:result) do
-      described_class.new('/foo').to_taxonomy_branch
+      described_class.new('/foo',
+                          base_path: '/browse',
+                          title: 'taxonomy title',
+                          first_level_key: 'top_level_browse_pages',
+                          second_level_key: 'second_level_browse_pages').to_taxonomy_branch
     end
 
     context 'there is only one root, no children' do
@@ -16,7 +20,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
       end
 
       it 'returns the root browse taxon' do
-        expect(result.title).to eq 'Browse'
+        expect(result.title).to eq 'taxonomy title'
         expect(result.base_path).to eq '/foo/browse'
         expect(result.child_taxons).to be_empty
       end
