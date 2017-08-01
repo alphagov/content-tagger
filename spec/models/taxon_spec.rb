@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Taxon do
+  before do
+    create(:theme, :education)
+  end
+
   context 'validations' do
     it 'is not valid without a title' do
       taxon = described_class.new
