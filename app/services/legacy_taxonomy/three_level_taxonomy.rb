@@ -4,7 +4,7 @@ module LegacyTaxonomy
 
     def initialize(path_prefix,
                    base_path: '/browse',
-                   title: 'Mainstream Browse Taxonomy',
+                   title: 'Imported Mainstream Browse',
                    first_level_key: 'top_level_browse_pages',
                    second_level_key: 'second_level_browse_pages')
       @path_prefix = path_prefix
@@ -18,8 +18,8 @@ module LegacyTaxonomy
       root_content_id = Client::PublishingApi.content_id_for_base_path(@base_path)
 
       TaxonData.new(
-        title: 'Browse',
-        description: @title,
+        title: @title,
+        description: '',
         legacy_content_id: root_content_id,
         path_slug: @base_path,
         path_prefix: path_prefix,

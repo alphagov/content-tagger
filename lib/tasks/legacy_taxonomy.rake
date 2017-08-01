@@ -35,7 +35,7 @@ namespace :legacy_taxonomy do
                                                         base_path: '/topic',
                                                         first_level_key: 'children',
                                                         second_level_key: 'children',
-                                                        title: 'Topic Taxonomy').to_taxonomy_branch
+                                                        title: 'Imported Topic').to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').write(taxonomy)
     end
 
