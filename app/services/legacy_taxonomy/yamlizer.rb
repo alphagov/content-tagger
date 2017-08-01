@@ -11,8 +11,23 @@ module LegacyTaxonomy
       YAML.load_file(@filename)
     end
 
+    def as_yaml
+      File.read(@filename)
+    end
+
     def write(taxonomy)
       File.write(@filename, YAML.dump(taxonomy))
+    end
+
+    class << self
+      def deserialize(taxon_data)
+        _ = LegacyTaxonomy::TaxonData
+        YAML.load(taxon_data)
+      end
+
+      def serialize(taxon)
+        YAML.dump(taxon)
+      end
     end
   end
 end
