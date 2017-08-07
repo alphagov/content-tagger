@@ -4,7 +4,7 @@ class NewProjectForm
   attr_accessor :name, :remote_url
 
   validates_presence_of :name, :remote_url
-  validates :remote_url, format: URI::regexp(%w(http https))
+  validates :remote_url, format: URI.regexp(%w(http https))
 
   def create
     csv = RemoteCsv.new(remote_url)
