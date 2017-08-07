@@ -27,7 +27,11 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def when_i_visit_the_project_page
-    visit project_path(@project)
+    visit root_path
+    within 'header nav .nav' do
+      click_link 'Projects'
+    end
+    click_link @project.name
   end
 
   def when_i_visit_the_project_index_page
