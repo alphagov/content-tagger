@@ -1,0 +1,24 @@
+<header class="heading-with-actions"/>
+<h1>Projects</h1>
+<nav class="btn-group">
+  <%= link_to new_project_path, class: 'btn btn-default' do %>
+      <i class="glyphicon glyphicon-plus"></i>Add new project
+  <% end %>
+</nav>
+</header>
+
+<table class="table queries-list table-bordered table-striped">
+  <thead>
+  <tr class="table-header">
+    <th>Project</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% projects.each do |project| %>
+      <tr>
+        <td><%= link_to project.name, project_path(project) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

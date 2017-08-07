@@ -1,0 +1,3 @@
+class ProjectContentItem < ActiveRecord::Base
+  belongs_to :project
+end

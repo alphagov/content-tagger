@@ -1,0 +1,15 @@
+<header class="heading-with-actions"/>
+  <h1>New Project</h1>
+</header>
+
+<%= simple_form_for form, url: projects_path do |f| %>
+    <%= f.input :name, input_html: { class: 'form-control' },
+                label: 'Name',
+                hint: 'Name of the new project.' %>
+
+    <%= f.input :remote_url, input_html: { class: 'form-control' },
+                label: 'Remote URL',
+                hint: 'Remote URL with the contents of the project.' %>
+
+    <%= f.submit 'New Project', class: "btn btn-lg btn-success" %>
+<% end %>
