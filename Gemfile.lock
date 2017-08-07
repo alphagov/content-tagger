@@ -96,7 +96,7 @@ GEM
       railties (>= 3.0.0)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
-    gds-api-adapters (47.2.0)
+    gds-api-adapters (47.7.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -361,7 +361,7 @@ DEPENDENCIES
   chartkick
   database_cleaner
   factory_girl_rails
-  gds-api-adapters (~> 47.2)
+  gds-api-adapters (~> 47.6)
   gds-sso (~> 13.2)
   govuk-content-schema-test-helpers
   govuk-lint
@@ -389,4 +389,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.15.0
+   1.15.3

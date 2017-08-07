@@ -18,7 +18,7 @@ module Tagging
 
     # Find the links for a content item by its content ID
     def self.find(content_id)
-      data = Services.publishing_api.get_expanded_links(content_id).to_h
+      data = Services.publishing_api.get_expanded_links(content_id, generate: true).to_h
 
       links = data.fetch('expanded_links', {})
 

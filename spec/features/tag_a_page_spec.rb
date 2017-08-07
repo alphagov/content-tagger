@@ -157,7 +157,7 @@ RSpec.describe "Tagging content", type: :feature do
         title: 'This Is A Content Item',
       }.to_json)
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID")
+    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links: expanded_links,
