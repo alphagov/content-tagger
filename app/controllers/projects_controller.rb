@@ -33,6 +33,6 @@ private
   def new_project_params
     params
       .fetch(:new_project_form)
-      .permit(:name, :remote_url)
+      .permit(:name, :remote_url, :taxonomy_branch)
   end
 end

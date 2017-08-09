@@ -2,18 +2,21 @@ require 'rails_helper'
 
 RSpec.feature "Projects", type: :feature do
   include RemoteCsvHelper
+  include TaxonomyHelper
 
   scenario "viewing a project" do
     given_there_is_a_project_with_content_items
+    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_page
     then_i_can_see_all_the_content_items_for_that_project
   end
 
   scenario "creating a new project" do
     given_there_is_a_remote_spreadsheet
+    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_index_page
     and_i_click_the_new_project_link
-    and_i_fill_in_a_name_and_url
+    and_i_fill_in_a_name_and_url_and_select_a_branch_of_the_taxonomy
     and_i_click_new_project
     then_i_can_see_my_new_project_in_the_list
   end
@@ -24,6 +27,10 @@ RSpec.feature "Projects", type: :feature do
 
   def given_there_is_a_remote_spreadsheet
     stub_remote_csv
+  end
+
+  def and_there_is_a_draft_taxonomy_branch
+    stub_draft_taxonomy_branch
   end
 
   def when_i_visit_the_project_page
@@ -43,8 +50,9 @@ RSpec.feature "Projects", type: :feature do
     expect(page).to have_content 'New Project'
   end
 
-  def and_i_fill_in_a_name_and_url
+  def and_i_fill_in_a_name_and_url_and_select_a_branch_of_the_taxonomy
     fill_in 'new_project_form_name', with: 'my_project'
+    select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
     fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
   end
 
