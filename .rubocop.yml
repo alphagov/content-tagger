@@ -8,6 +8,13 @@ SignalException:
   Enabled: true
   EnforcedStyle: only_raise
 
+# This suggests that we use single character variable names as block params.
+# On GOV.UK we prefer to use more descriptive variable naming to make our
+# code easier to read for future developers.
+SingleLineBlockParams:
+  Description: 'Enforces the names of some block params.'
+  Enabled: false
+
 # Add project-specific rubocop rules here
 
 LineLength:
@@ -167,10 +174,6 @@ CommentIndentation:
 
 CyclomaticComplexity:
   Description: 'Avoid complex methods.'
-  Enabled: true
-
-DeprecatedHashMethods:
-  Description: 'Checks for use of deprecated Hash methods.'
   Enabled: true
 
 # Not every class needs to be documented. Making this mandatory will make
@@ -358,14 +361,6 @@ RedundantSelf:
   Description: "Don't use self where it's not needed."
   Enabled: true
 
-RegexpLiteral:
-  Description: >-
-    Use %r for regular expressions matching more than
-    `MaxSlashes` '/' characters.
-    Use %r only for regular expressions matching more than
-    `MaxSlashes` '/' character.
-  Enabled: true
-
 RescueModifier:
   Description: 'Avoid using rescue in its modifier form.'
   Enabled: true
@@ -376,10 +371,6 @@ SelfAssignment:
 
 Semicolon:
   Description: "Don't use semicolons to terminate expressions."
-  Enabled: true
-
-SingleLineBlockParams:
-  Description: 'Enforces the names of some block params.'
   Enabled: true
 
 SingleLineMethods:
