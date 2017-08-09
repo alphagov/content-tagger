@@ -32,7 +32,7 @@ RSpec.describe ProjectsController, type: :controller do
     it "creates a new (empty) project" do
       stub_remote_csv
       stub_draft_taxonomy_branch
-      post :create, params: { new_project_form: { name: 'myproject', taxonomy_branch: valid_taxon_uuid,remote_url: RemoteCsvHelper::CSV_URL } }
+      post :create, params: { new_project_form: { name: 'myproject', taxonomy_branch: valid_taxon_uuid, remote_url: RemoteCsvHelper::CSV_URL } }
       expect(response).to redirect_to projects_path
     end
     it "fails validation and rerenders the page" do

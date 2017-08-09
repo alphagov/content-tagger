@@ -1,5 +1,37 @@
 <h1><%= project.name %></h1>
 
-<div class='content-list'>
-  <%= render partial: 'content_item', collection: project.content_items %>
+<script type='text/javascript'>
+  var taxon_data = <%=
+    project
+      .taxons
+      .map { |taxon| { id: taxon.content_id, text: taxon.name } }
+      .to_json
+      .to_s
+      .html_safe
+  %>;
+
+  $(document).ready(function() {
+    $(".select2.tagging_project").select2({
+      allowClear: true,
+      data: taxon_data,
+      multiple: true
+    });
+
+    $(".select2.tagging_project").change(function() {
+      $(this).parents('form').trigger('submit.rails');
+    });
+
+    $("form").on('ajax:success', function(event, data, status, xhr) {
+      $(this).removeClass('error-saving');
+      $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
+    });
+
+    $("form").on('ajax:error', function(event, data, status, xhr) {
+      $(this).addClass('error-saving');
+    });
+  });
+</script>
+
+<div class='tagathon-project-content-list'>
+  <%= render partial: 'content_item', collection: project.content_items.uncompleted %>
 </div>

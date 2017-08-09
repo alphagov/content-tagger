@@ -1,2 +1,8 @@
-<div><%= link_to content_item.title, content_item.url, target: '_blank' %></div>
-<div><%= content_item.description %></div>
+<%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true do |f| %>
+  <%= token_tag %>
+  <%= link_to content_item.title, content_item.url, target: '_blank' %>
+  <%= f.input :taxons,
+    placeholder: 'Choose one...',
+    label: false,
+    input_html: { class: [:select2, :tagging_project] } %>
+<% end %>

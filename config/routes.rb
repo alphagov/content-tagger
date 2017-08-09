@@ -32,7 +32,9 @@ Rails.application.routes.draw do
   get '/content/:content_id', to: redirect { |params, _| "/taggings/#{params[:content_id]}" }
   get '/lookup', to: redirect("/taggings/lookup")
 
-  resources :projects, only: %i[index show new create]
+  resources :projects, only: %i(index show new create) do
+    resources :project_content_items, only: [:update], as: 'content_item'
+  end
 
   resources :tagging_spreadsheets, except: %i(update edit), path: '/tag-importer' do
     post 'refetch'
