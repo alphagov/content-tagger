@@ -9,7 +9,8 @@
   <div class="col-md-6">
     <form method="GET">
       <div class="input-group">
-        <input type="text"
+        <input id="project-tagging-content-item-search"
+               type="text"
                class="form-control"
                name="query"
                value="<%= params[:query] %>"
@@ -51,6 +52,24 @@
 
     $("form").on('ajax:error', function(event, data, status, xhr) {
       $(this).addClass('error-saving');
+    });
+
+    var contentItemTitlesToFormElements = {}
+    $(".edit_project_content_item").each(function(index, formElement) {
+      var $formElement = $(formElement);
+      var titleAnchor = $formElement.find("a")[0];
+      contentItemTitlesToFormElements[titleAnchor.innerHTML.toLowerCase()] = $formElement;
+    });
+
+    $("#project-tagging-content-item-search").keyup(function(event) {
+      var query = event.target.value.toLowerCase();
+      $.each(contentItemTitlesToFormElements, function(title, $formElement) {
+        if (title.includes(query)) {
+          $formElement.show();
+        } else {
+          $formElement.hide();
+        }
+      });
     });
   });
 </script>
