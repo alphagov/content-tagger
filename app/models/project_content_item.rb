@@ -19,4 +19,6 @@ class ProjectContentItem < ActiveRecord::Base
   end
 
   scope :uncompleted, -> { where(done: false) }
+
+  scope :matching_search, -> (query) { where("title LIKE ?", "%#{query}%") }
 end
