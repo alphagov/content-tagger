@@ -1,6 +1,27 @@
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
-<h1><%= project.name %></h1>
+<div class="row">
+  <div class="col-md-6">
+    <h1><%= project.name %></h1>
+  </div>
+  <div class="col-md-2"></div>
+
+  <div class="col-md-6">
+    <form method="GET">
+      <div class="input-group">
+        <input type="text"
+               class="form-control"
+               name="query"
+               value="<%= params[:query] %>"
+               placeholder="Filter by title...">
+
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">Search</button>
+        </span>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script type='text/javascript'>
   var taxon_data = <%=
@@ -35,5 +56,5 @@
 </script>
 
 <div class='tagathon-project-content-list'>
-  <%= render partial: 'content_item', collection: project.content_items.uncompleted %>
+  <%= render partial: 'content_item', collection: project_content_items_to_display %>
 </div>

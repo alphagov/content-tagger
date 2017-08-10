@@ -4,7 +4,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    render :show, locals: { project: project }
+    render :show, locals: { project: project,
+                            project_content_items_to_display: project_content_items_to_display }
   end
 
   def new
@@ -30,9 +31,22 @@ private
     @_project ||= Project.find(params[:id])
   end
 
+  def project_content_items_to_display
+    @_project_content_items_to_display = begin
+      items = project.content_items.uncompleted
+      items = items.matching_search(search_query) if search_query
+
+      items
+    end
+  end
+
   def new_project_params
     params
       .fetch(:new_project_form)
       .permit(:name, :remote_url, :taxonomy_branch)
+  end
+
+  def search_query
+    params[:query]
   end
 end
