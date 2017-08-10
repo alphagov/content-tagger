@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
   include RemoteCsvHelper
+  include TaxonomyHelper
+
   describe "#index" do
     it "gets projects" do
+      stub_draft_taxonomy_branch
       create(:project)
       get :index
       expect(response.code).to eql "200"
@@ -28,7 +31,8 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#create" do
     it "creates a new (empty) project" do
       stub_remote_csv
-      post :create, params: { new_project_form: { name: 'myproject', remote_url: RemoteCsvHelper::CSV_URL } }
+      stub_draft_taxonomy_branch
+      post :create, params: { new_project_form: { name: 'myproject', taxonomy_branch: valid_taxon_uuid, remote_url: RemoteCsvHelper::CSV_URL } }
       expect(response).to redirect_to projects_path
     end
     it "fails validation and rerenders the page" do

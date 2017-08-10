@@ -7,6 +7,10 @@
                 label: 'Name',
                 hint: 'Name of the new project.' %>
 
+    <%= f.input :taxonomy_branch, input_html: { class: 'form-control' },
+                label: 'Branch of GOV.UK taxonomy',
+                collection: form.taxonomy_branches_for_select %>
+
     <%= f.input :remote_url, input_html: { class: 'form-control' },
                 label: 'Remote URL',
                 hint: 'Remote URL with the contents of the project.' %>

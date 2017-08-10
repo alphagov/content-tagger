@@ -1,0 +1,21 @@
+.tagathon-project-content-list {
+  form {
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-width:1px 0 0 0;
+
+    a {
+      font-size: 1.2em;
+    }
+
+    .project_content_item_taxons {
+      margin: 20px 0;
+    }
+
+    &.error-saving {
+      background-color: #ffb6b6;
+      transition: background-color 1s;
+    }
+  }
+}
