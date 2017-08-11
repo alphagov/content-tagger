@@ -7,6 +7,10 @@ class ProjectContentItemsController < ApplicationController
     head :bad_request
   end
 
+  def bulk_update
+
+  end
+
 private
 
   def tag_content

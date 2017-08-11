@@ -34,6 +34,7 @@ Rails.application.routes.draw do
 
   resources :projects, only: %i(index show new create) do
     resources :project_content_items, only: [:update], as: 'content_item'
+    post '/bulk_update', to: 'project_content_items#bulk_update', as: 'bulk_update'
   end
 
   resources :tagging_spreadsheets, except: %i(update edit), path: '/tag-importer' do

@@ -19,3 +19,19 @@
     }
   }
 }
+
+.tagathon-project-bulk-tagger {
+  .nav label {
+    margin-bottom: 0;
+  }
+
+  .nav.nav-tabs .active a {
+    background-color: #eee;
+  }
+
+  form {
+    padding: 20px;
+    background-color: #eee;
+    margin-top: -21px;
+  }
+}
