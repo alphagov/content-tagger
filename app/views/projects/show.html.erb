@@ -1,29 +1,61 @@
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-3">
     <h1><%= project.name %></h1>
-  </div>
-  <div class="col-md-2"></div>
 
-  <div class="col-md-6">
+    <h3>Filter</h3>
+
     <form method="GET">
-      <div class="input-group">
-        <input id="project-tagging-content-item-search"
-               type="text"
-               class="form-control"
-               name="query"
-               value="<%= params[:query] %>"
-               placeholder="Filter by title...">
 
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="submit">Search</button>
-        </span>
+      <input id="project-tagging-content-item-search"
+             type="text"
+             class="form-control"
+             name="query"
+             value="<%= params[:query] %>"
+             placeholder="Filter by title...">
+
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="tagged_state"
+                 id="tagged_state_tagged"
+                 value="tagged"
+                 <% if params[:tagged_state] == "tagged" %>checked<% end %>
+          >
+          Tagged
+        </label>
       </div>
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="tagged_state"
+                 id="tagged_state_not_tagged"
+                 value="not_tagged"
+                 <% if params[:tagged_state] == "not_tagged" %>checked<% end %>
+          >
+          Not Tagged
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="tagged_state"
+                 id="tagged_state_all"
+                 value="all"
+                 <% if params[:tagged_state].nil? || params[:tagged_state] == "all" %>
+                 checked
+                 <% end %>
+          >
+          All
+        </label>
+      </div>
+
+      <button class="btn btn-lg btn-default" type="submit">Apply</button>
     </form>
   </div>
-</div>
 
+  <div class="col-md-9">
 <script type='text/javascript'>
   var taxon_data = <%=
     project
@@ -76,4 +108,7 @@
 
 <div class='tagathon-project-content-list'>
   <%= render partial: 'content_item', collection: project_content_items_to_display %>
+</div>
+
+  </div>
 </div>

@@ -33,8 +33,22 @@ private
 
   def project_content_items_to_display
     @_project_content_items_to_display = begin
-      items = project.content_items.uncompleted
-      items = items.matching_search(search_query) if search_query
+      items = project.content_items
+
+      tagged_state_filter = filter_params[:tagged_state]
+      if tagged_state_filter && tagged_state_filter != "all"
+        done = { tagged: true, not_tagged: false }[tagged_state_filter.to_sym]
+
+        if done.nil?
+          raise ActionController::BadRequest,
+                "The value \"#{tagged_state_filter}\" is an invalid tagging state."
+        end
+
+        items = items.where(done: done)
+      end
+
+      query = filter_params[:query]
+      items = items.matching_search(query) if query
 
       items
     end
@@ -46,7 +60,7 @@ private
       .permit(:name, :remote_url, :taxonomy_branch)
   end
 
-  def search_query
-    params[:query]
+  def filter_params
+    params.permit(:query, :tagged_state)
   end
 end
