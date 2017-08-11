@@ -10,6 +10,12 @@ module LegacyTaxonomy
           )
         end
 
+        def content_tagged_to_topic(topic_slug)
+          content_from_rummager(
+            filter_specialist_sectors: [remove_leading_slash(topic_slug)]
+          )
+        end
+
         def content_tagged_to_policy_area(policy_area_slug)
           content_from_rummager(filter_policy_areas: [policy_area_slug])
         end
@@ -63,6 +69,10 @@ module LegacyTaxonomy
             Plek.new.find('rummager'),
             timeout: 20
           )
+        end
+
+        def remove_leading_slash(base_path)
+          base_path.gsub(%r{^\/}, '')
         end
       end
     end
