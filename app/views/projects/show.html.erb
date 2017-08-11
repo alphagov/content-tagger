@@ -47,23 +47,38 @@
       %>;
 
       $(document).ready(function() {
-        $(".select2.tagging_project").select2({
+        var bulk_tagger_selector_class = 'content-selector';
+
+        $(".select2").select2({
           allowClear: true,
           data: taxon_data,
           multiple: true
         });
 
-        $(".select2.tagging_project").change(function() {
-          $(this).parents('form').trigger('submit.rails');
+        $(".tagathon-project .content-list form").on(
+          'ajax:success',
+          function(event, data, status, xhr) {
+            $(this).removeClass('error-saving');
+            $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
+          }
+        ).on(
+          'ajax:error',
+          function(event, data, status, xhr) {
+            $(this).addClass('error-saving');
+          }
+        ).each(function(index, el) {
+          ref = $(el).attr('data-ref')
+          checkbox = "<input \
+            type='checkbox' \
+            id='" + ref + "' \
+            class='" + bulk_tagger_selector_class + "'/>";
+          $('.bulk-tagger form').append(checkbox);
+          top_pos = $(el).position().top;
+          $("#" + ref).css("top", top_pos + 40 + "px");
         });
 
-        $("form").on('ajax:success', function(event, data, status, xhr) {
-          $(this).removeClass('error-saving');
-          $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
-        });
-
-        $("form").on('ajax:error', function(event, data, status, xhr) {
-          $(this).addClass('error-saving');
+        $(".bulk-tagger input[type='checkbox'].select-all").on('change', function() {
+          $("." + bulk_tagger_selector_class).prop('checked', this.checked);
         });
 
         var contentItemTitlesToFormElements = {}
@@ -86,10 +101,10 @@
       });
     </script>
 
-    <div class= 'tagathon-project-bulk-tagger'>
+    <div class= 'bulk-tagger'>
       <ul class='nav nav-tabs'>
         <li class='select_all'>
-          <a><label><input type='checkbox'/> Select all</label></a>
+          <a><label><input type='checkbox' class='select-all'/> Select all</label></a>
         </li>
         <li class='active'><a href='#'>Edit selected</a></li>
       </ul>
