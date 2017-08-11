@@ -56,59 +56,58 @@
   </div>
 
   <div class="col-md-9">
-<script type='text/javascript'>
-  var taxon_data = <%=
-    project
-      .taxons
-      .map { |taxon| { id: taxon.content_id, text: taxon.name } }
-      .to_json
-      .to_s
-      .html_safe
-  %>;
+    <script type='text/javascript'>
+      var taxon_data = <%=
+        project
+          .taxons
+          .map { |taxon| { id: taxon.content_id, text: taxon.name } }
+          .to_json
+          .to_s
+          .html_safe
+      %>;
 
-  $(document).ready(function() {
-    $(".select2.tagging_project").select2({
-      allowClear: true,
-      data: taxon_data,
-      multiple: true
-    });
+      $(document).ready(function() {
+        $(".select2.tagging_project").select2({
+          allowClear: true,
+          data: taxon_data,
+          multiple: true
+        });
 
-    $(".select2.tagging_project").change(function() {
-      $(this).parents('form').trigger('submit.rails');
-    });
+        $(".select2.tagging_project").change(function() {
+          $(this).parents('form').trigger('submit.rails');
+        });
 
-    $("form").on('ajax:success', function(event, data, status, xhr) {
-      $(this).removeClass('error-saving');
-      $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
-    });
+        $("form").on('ajax:success', function(event, data, status, xhr) {
+          $(this).removeClass('error-saving');
+          $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
+        });
 
-    $("form").on('ajax:error', function(event, data, status, xhr) {
-      $(this).addClass('error-saving');
-    });
+        $("form").on('ajax:error', function(event, data, status, xhr) {
+          $(this).addClass('error-saving');
+        });
 
-    var contentItemTitlesToFormElements = {}
-    $(".edit_project_content_item").each(function(index, formElement) {
-      var $formElement = $(formElement);
-      var titleAnchor = $formElement.find("a")[0];
-      contentItemTitlesToFormElements[titleAnchor.innerHTML.toLowerCase()] = $formElement;
-    });
+        var contentItemTitlesToFormElements = {}
+        $(".edit_project_content_item").each(function(index, formElement) {
+          var $formElement = $(formElement);
+          var titleAnchor = $formElement.find("a")[0];
+          contentItemTitlesToFormElements[titleAnchor.innerHTML.toLowerCase()] = $formElement;
+        });
 
-    $("#project-tagging-content-item-search").keyup(function(event) {
-      var query = event.target.value.toLowerCase();
-      $.each(contentItemTitlesToFormElements, function(title, $formElement) {
-        if (title.includes(query)) {
-          $formElement.show();
-        } else {
-          $formElement.hide();
-        }
+        $("#project-tagging-content-item-search").keyup(function(event) {
+          var query = event.target.value.toLowerCase();
+          $.each(contentItemTitlesToFormElements, function(title, $formElement) {
+            if (title.includes(query)) {
+              $formElement.show();
+            } else {
+              $formElement.hide();
+            }
+          });
+        });
       });
-    });
-  });
-</script>
+    </script>
 
-<div class='tagathon-project-content-list'>
-  <%= render partial: 'content_item', collection: project_content_items_to_display %>
-</div>
-
+    <div class='tagathon-project-content-list'>
+      <%= render partial: 'content_item', collection: project_content_items_to_display %>
+    </div>
   </div>
 </div>
