@@ -14,5 +14,9 @@ class ProjectContentItem < ActiveRecord::Base
     update_attributes(done: true)
   end
 
+  def proxied_url
+    url.gsub(%r{https?://(www\.)?gov.uk/}, Proxies::IframeAllowingProxy::PROXY_BASE_PATH)
+  end
+
   scope :uncompleted, -> { where(done: false) }
 end
