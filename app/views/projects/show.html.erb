@@ -1,13 +1,12 @@
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
 <div class="row">
-  <div class="col-md-3">
-    <h1><%= project.name %></h1>
+  <h1><%= project.name %></h1>
 
+  <div class="col-md-3">
     <h3>Filter</h3>
 
     <form method="GET">
-
       <input id="project-tagging-content-item-search"
              type="text"
              class="form-control"
@@ -16,26 +15,25 @@
              placeholder="Filter by title...">
 
       <% ProjectsController::TAGGED_STATES.each do |state|  %>
-      <div class="radio">
-        <label>
-          <input type="radio"
-                 name="tagged_state"
-                 id="tagged_state_<%= state %>"
-                 value="<%= state %>"
-                 <% if params[:tagged_state] == state %>
-                 checked
-                 <% end %>
-          >
-          <%= state.titleize %>
-        </label>
-      </div>
+        <div class="radio">
+          <label>
+            <input type="radio"
+                   name="tagged_state"
+                   id="tagged_state_<%= state %>"
+                   value="<%= state %>"
+                   <% if params[:tagged_state] == state %>
+                   checked
+                   <% end %>
+            >
+            <%= state.titleize %>
+          </label>
+        </div>
       <% end %>
-
       <button class="btn btn-lg btn-default" type="submit">Apply</button>
     </form>
   </div>
 
-  <div class="col-md-9">
+  <div class="col-md-9 tagathon-project">
     <script type='text/javascript'>
       var taxon_data = <%=
         project
@@ -45,6 +43,21 @@
           .to_s
           .html_safe
       %>;
+
+      var taxon_lookup = <%=
+        project
+          .taxons
+          .reduce({}) { |acc, taxon| acc.merge(taxon.content_id => taxon.name) }
+          .to_json
+          .to_s
+          .html_safe
+      %>;
+
+      var lookup_taxons = function(taxon_ids) {
+        return taxon_ids.map(function(taxon_id) {
+          return taxon_lookup[taxon_id];
+        });
+      };
 
       $(document).ready(function() {
         var bulk_tagger_selector_class = 'content-selector';
@@ -67,19 +80,32 @@
             $(this).addClass('error-saving');
           }
         ).each(function(index, el) {
-          ref = $(el).attr('data-ref')
-          checkbox = "<input \
-            type='checkbox' \
-            id='" + ref + "' \
-            class='" + bulk_tagger_selector_class + "'/>";
-          $('.bulk-tagger form').append(checkbox);
-          top_pos = $(el).position().top;
-          $("#" + ref).css("top", top_pos + 40 + "px");
+          ref = $(el).attr('data-ref');
+          top_pos = $(el).position().top - 80 + "px";
+          $('.content-selector[value="'+ ref +'"]').css("top", top_pos).css("display", "inherit");
         });
 
         $(".bulk-tagger input[type='checkbox'].select-all").on('change', function() {
           $("." + bulk_tagger_selector_class).prop('checked', this.checked);
         });
+
+        $(".bulk-tagger form").on(
+          "ajax:success",
+          function(event, data, status, xhr) {
+            data.forEach(function(data_item) {
+              var form = $("form[data-ref='" + data_item.content_id + "']");
+              form.removeClass('error-saving');
+              form.effect("highlight", {color: "#d8f3d8"}, 1000);
+              var input = form.find('input.select2');
+              input.select2('val', data_item.taxons);
+            });
+          }
+        ).on(
+          "ajax:error",
+          function(event, data, status, xhr) {
+            $(this).addClass('error-saving');
+          }
+        );
 
         var contentItemTitlesToFormElements = {}
         $(".edit_project_content_item").each(function(index, formElement) {
@@ -110,15 +136,27 @@
       </ul>
       <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true do |f| %>
         <div class='selected-count'>None selected</div>
+
         <%= f.input :taxons,
           placeholder: 'Tags',
           label: false,
-          input_html: { class: [:select2, :bulk_tagger], autocomplete: 'off' } %>
+          input_html: { class: [:select2, :bulk_tagger], autocomplete: 'off' }
+        %>
+
+        <div class='bulk-selectors'>
+          <%= f.input_field :content_items,
+            collection: project.content_items.uncompleted,
+            as: :check_boxes,
+            include_hidden: false,
+            class: 'content-selector'
+          %>
+        </div>
+
         <%= f.submit 'Apply' %>
       <% end %>
     </div>
 
-    <div class='tagathon-project-content-list'>
+    <div class='content-list'>
       <%= render partial: 'content_item', collection: project_content_items_to_display %>
     </div>
   </div>

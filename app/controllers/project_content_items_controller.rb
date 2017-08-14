@@ -8,10 +8,21 @@ class ProjectContentItemsController < ApplicationController
   end
 
   def bulk_update
-
+    tagger = Projects::BulkTagger.new(bulk_params)
+    tagger.commit
+    render json: tagger.result
   end
 
 private
+
+  def bulk_params
+    params
+      .require(:bulk_tagging)
+      .permit(:taxons, content_items: [])
+      .to_h
+      .symbolize_keys
+      .tap { |hsh| hsh[:taxons] = hsh[:taxons].split(',').compact }
+  end
 
   def tag_content
     Services.publishing_api
@@ -27,6 +38,10 @@ private
       .permit(:taxons)
       .fetch(:taxons, "")
       .split(',')
+  end
+
+  def project
+    @_project ||= Project.find(params[:project_id])
   end
 
   def content_item

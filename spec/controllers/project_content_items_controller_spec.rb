@@ -30,4 +30,36 @@ RSpec.describe ProjectContentItemsController, type: :request do
       expect(response.code).to eql "400"
     end
   end
+
+  describe "#bulk_update" do
+    before do
+      create(:project, :with_content_items)
+      stub_draft_taxonomy_branch
+    end
+
+    let(:project) { Project.first }
+    let(:tagger_service) { instance_double(Projects::BulkTagger, commit: true, result: []) }
+    let(:params) do
+      {
+        bulk_tagging: {
+          taxons: "#{valid_taxon_uuid},#{valid_taxon_uuid}",
+          content_items: project.content_items.map(&:id)
+        }
+      }
+    end
+
+    it "responds with a 200 code if content items are queued for update successfully" do
+      expect(Projects::BulkTagger)
+        .to receive(:new)
+        .with(taxons: [valid_taxon_uuid, valid_taxon_uuid], content_items: project.content_items.map(&:id).map(&:to_s))
+        .and_return(tagger_service)
+
+      post(
+        project_bulk_update_path(project),
+        params: params
+      )
+
+      expect(response.code).to eql "200"
+    end
+  end
 end
