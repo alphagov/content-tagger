@@ -42,15 +42,14 @@ private
       items = project.content_items
 
       tagged_state_filter = filter_params[:tagged_state]
-      if tagged_state_filter && tagged_state_filter != "all"
-        done = { tagged: true, not_tagged: false }[tagged_state_filter.to_sym]
 
-        if done.nil?
+      if tagged_state_filter && tagged_state_filter != TAGGED_STATE_ALL
+        unless TAGGED_STATES.include? tagged_state_filter
           raise ActionController::BadRequest,
                 "The value \"#{tagged_state_filter}\" is an invalid tagging state."
         end
 
-        items = items.where(done: done)
+        items = items.where(done: tagged_state_filter == TAGGED_STATE_TAGGED)
       end
 
       query = filter_params[:query]

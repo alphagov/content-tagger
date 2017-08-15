@@ -15,41 +15,21 @@
              value="<%= params[:query] %>"
              placeholder="Filter by title...">
 
+      <% ProjectsController::TAGGED_STATES.each do |state|  %>
       <div class="radio">
         <label>
           <input type="radio"
                  name="tagged_state"
-                 id="tagged_state_tagged"
-                 value="tagged"
-                 <% if params[:tagged_state] == "tagged" %>checked<% end %>
-          >
-          Tagged
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio"
-                 name="tagged_state"
-                 id="tagged_state_not_tagged"
-                 value="not_tagged"
-                 <% if params[:tagged_state] == "not_tagged" %>checked<% end %>
-          >
-          Not Tagged
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio"
-                 name="tagged_state"
-                 id="tagged_state_all"
-                 value="all"
-                 <% if params[:tagged_state].nil? || params[:tagged_state] == "all" %>
+                 id="tagged_state_<%= state %>"
+                 value="<%= state %>"
+                 <% if params[:tagged_state] == state %>
                  checked
                  <% end %>
           >
-          All
+          <%= state.titleize %>
         </label>
       </div>
+      <% end %>
 
       <button class="btn btn-lg btn-default" type="submit">Apply</button>
     </form>
