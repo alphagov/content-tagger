@@ -1,4 +1,10 @@
 class ProjectsController < ApplicationController
+  TAGGED_STATE_TAGGED = 'tagged'.freeze
+  TAGGED_STATE_NOT_TAGGED = 'not_tagged'.freeze
+  TAGGED_STATE_ALL = 'all'.freeze
+
+  TAGGED_STATES = [TAGGED_STATE_TAGGED, TAGGED_STATE_NOT_TAGGED, TAGGED_STATE_ALL].freeze
+
   def index
     render :index, locals: { projects: project_index }
   end
