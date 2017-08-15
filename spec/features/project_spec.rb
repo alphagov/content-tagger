@@ -21,8 +21,42 @@ RSpec.feature "Projects", type: :feature do
     then_i_can_see_my_new_project_in_the_list
   end
 
+  scenario "filtering for tagged content items" do
+    given_there_is_a_project_with_two_content_items_in_different_states
+    and_there_is_a_draft_taxonomy_branch
+    when_i_visit_the_project_page
+    and_i_filter_by_tagged
+    then_i_only_see_done_content_items
+  end
+
+  scenario "filtering for not tagged content items" do
+    given_there_is_a_project_with_two_content_items_in_different_states
+    and_there_is_a_draft_taxonomy_branch
+    when_i_visit_the_project_page
+    and_i_filter_by_not_tagged
+    then_i_only_see_not_done_content_items
+  end
+
+  scenario "filtering for all content items" do
+    given_there_is_a_project_with_two_content_items_in_different_states
+    and_there_is_a_draft_taxonomy_branch
+    when_i_visit_the_project_page
+    and_i_filter_by_all
+    then_i_can_see_all_the_content_items_for_that_project
+  end
+
   def given_there_is_a_project_with_content_items
     @project = create :project, :with_content_items
+  end
+
+  def given_there_is_a_project_with_two_content_items_in_different_states
+    @project = create :project
+    @done_content_item = create(
+      :project_content_item, title: "Foo", done: true, project_id: @project.id
+    )
+    @not_done_content_item = create(
+      :project_content_item, title: "Bar", done: false, project_id: @project.id
+    )
   end
 
   def given_there_is_a_remote_spreadsheet
@@ -60,6 +94,21 @@ RSpec.feature "Projects", type: :feature do
     click_on 'New Project'
   end
 
+  def and_i_filter_by_tagged
+    choose("Tagged")
+    click_button("Apply")
+  end
+
+  def and_i_filter_by_not_tagged
+    choose("Not Tagged")
+    click_button("Apply")
+  end
+
+  def and_i_filter_by_all
+    choose("All")
+    click_button("Apply")
+  end
+
   def then_i_can_see_my_new_project_in_the_list
     expect(page).to have_content 'my_project'
   end
@@ -68,5 +117,15 @@ RSpec.feature "Projects", type: :feature do
     @project.content_items.each do |content_item|
       expect(page).to have_content content_item.title
     end
+  end
+
+  def then_i_only_see_done_content_items
+    expect(page).to have_content @done_content_item.title
+    expect(page).not_to have_content @not_done_content_item.title
+  end
+
+  def then_i_only_see_not_done_content_items
+    expect(page).not_to have_content @done_content_item.title
+    expect(page).to have_content @not_done_content_item.title
   end
 end
