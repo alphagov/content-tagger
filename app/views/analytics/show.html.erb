@@ -4,6 +4,7 @@
 <% end %>
 
 <% content_for :head do %>
+<%= javascript_include_tag "datatables.min" %>
 <script>$(document).ready(function() { $('table').DataTable(); });</script>
 <% end %>
 

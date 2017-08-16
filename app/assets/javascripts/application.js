@@ -1,12 +1,11 @@
 //= require_tree .
-//= require select2
 //= require js.cookies.js
-//= require_self
-//= require jquery-ui
+//= require jquery-ui/widgets/sortable
+//= require jquery-ui/effects/effect-highlight
 //= require Chart.bundle
 //= require chartkick
-//= require vendor/datatables.min
-//= require jquery_ujs
+//= require select2
+//= require_self
 
 $(document).ready(function() {
   $(".select2:not(.tagging_project)").select2({ allowClear: true });
