@@ -1,39 +1,93 @@
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
-<h1><%= project.name %></h1>
+<div class="row">
+  <div class="col-md-3">
+    <h1><%= project.name %></h1>
 
-<script type='text/javascript'>
-  var taxon_data = <%=
-    project
-      .taxons
-      .map { |taxon| { id: taxon.content_id, text: taxon.name } }
-      .to_json
-      .to_s
-      .html_safe
-  %>;
+    <h3>Filter</h3>
 
-  $(document).ready(function() {
-    $(".select2.tagging_project").select2({
-      allowClear: true,
-      data: taxon_data,
-      multiple: true
-    });
+    <form method="GET">
 
-    $(".select2.tagging_project").change(function() {
-      $(this).parents('form').trigger('submit.rails');
-    });
+      <input id="project-tagging-content-item-search"
+             type="text"
+             class="form-control"
+             name="query"
+             value="<%= params[:query] %>"
+             placeholder="Filter by title...">
 
-    $("form").on('ajax:success', function(event, data, status, xhr) {
-      $(this).removeClass('error-saving');
-      $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
-    });
+      <% ProjectsController::TAGGED_STATES.each do |state|  %>
+      <div class="radio">
+        <label>
+          <input type="radio"
+                 name="tagged_state"
+                 id="tagged_state_<%= state %>"
+                 value="<%= state %>"
+                 <% if params[:tagged_state] == state %>
+                 checked
+                 <% end %>
+          >
+          <%= state.titleize %>
+        </label>
+      </div>
+      <% end %>
 
-    $("form").on('ajax:error', function(event, data, status, xhr) {
-      $(this).addClass('error-saving');
-    });
-  });
-</script>
+      <button class="btn btn-lg btn-default" type="submit">Apply</button>
+    </form>
+  </div>
 
-<div class='tagathon-project-content-list'>
-  <%= render partial: 'content_item', collection: project.content_items.uncompleted %>
+  <div class="col-md-9">
+    <script type='text/javascript'>
+      var taxon_data = <%=
+        project
+          .taxons
+          .map { |taxon| { id: taxon.content_id, text: taxon.name } }
+          .to_json
+          .to_s
+          .html_safe
+      %>;
+
+      $(document).ready(function() {
+        $(".select2.tagging_project").select2({
+          allowClear: true,
+          data: taxon_data,
+          multiple: true
+        });
+
+        $(".select2.tagging_project").change(function() {
+          $(this).parents('form').trigger('submit.rails');
+        });
+
+        $("form").on('ajax:success', function(event, data, status, xhr) {
+          $(this).removeClass('error-saving');
+          $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
+        });
+
+        $("form").on('ajax:error', function(event, data, status, xhr) {
+          $(this).addClass('error-saving');
+        });
+
+        var contentItemTitlesToFormElements = {}
+        $(".edit_project_content_item").each(function(index, formElement) {
+          var $formElement = $(formElement);
+          var titleAnchor = $formElement.find("a")[0];
+          contentItemTitlesToFormElements[titleAnchor.innerHTML.toLowerCase()] = $formElement;
+        });
+
+        $("#project-tagging-content-item-search").keyup(function(event) {
+          var query = event.target.value.toLowerCase();
+          $.each(contentItemTitlesToFormElements, function(title, $formElement) {
+            if (title.includes(query)) {
+              $formElement.show();
+            } else {
+              $formElement.hide();
+            }
+          });
+        });
+      });
+    </script>
+
+    <div class='tagathon-project-content-list'>
+      <%= render partial: 'content_item', collection: project_content_items_to_display %>
+    </div>
+  </div>
 </div>
