@@ -1,6 +1,7 @@
 <%= display_header title: t("views.analytics"), breadcrumbs: [t('views.analytics')] %>
 
 <% content_for :head do %>
+<%= javascript_include_tag "datatables.min" %>
 <script>$(document).ready(function() { $('table').DataTable(); });</script>
 <% end %>
 
