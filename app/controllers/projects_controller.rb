@@ -11,7 +11,8 @@ class ProjectsController < ApplicationController
 
   def show
     render :show, locals: { project: project,
-                            project_content_items_to_display: project_content_items_to_display }
+                            project_content_items_to_display: project_content_items_to_display,
+                            taxons: taxons_json }
   end
 
   def new
@@ -28,6 +29,13 @@ class ProjectsController < ApplicationController
   end
 
 private
+
+  def taxons_json
+    project
+      .taxons
+      .reduce({}) { |acc, taxon| acc.merge(taxon.content_id => taxon.name) }
+      .to_json
+  end
 
   def project_index
     @_project_index = Project.all

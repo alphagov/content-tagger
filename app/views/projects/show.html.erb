@@ -1,6 +1,6 @@
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
-<div class="row">
+<div class="row tagathon-project">
   <h1><%= project.name %></h1>
 
   <div class="col-md-3">
@@ -9,7 +9,7 @@
     <form method="GET">
       <input id="project-tagging-content-item-search"
              type="text"
-             class="form-control"
+             class="form-control js-bulk-tagging-search-filter"
              name="query"
              value="<%= params[:query] %>"
              placeholder="Filter by title...">
@@ -33,122 +33,30 @@
     </form>
   </div>
 
-  <div class="col-md-9 tagathon-project">
-    <script type='text/javascript'>
-      var taxon_data = <%=
-        project
-          .taxons
-          .map { |taxon| { id: taxon.content_id, text: taxon.name } }
-          .to_json
-          .to_s
-          .html_safe
-      %>;
-
-      var taxon_lookup = <%=
-        project
-          .taxons
-          .reduce({}) { |acc, taxon| acc.merge(taxon.content_id => taxon.name) }
-          .to_json
-          .to_s
-          .html_safe
-      %>;
-
-      var lookup_taxons = function(taxon_ids) {
-        return taxon_ids.map(function(taxon_id) {
-          return taxon_lookup[taxon_id];
-        });
-      };
-
-      $(document).ready(function() {
-        var bulk_tagger_selector_class = 'content-selector';
-
-        $(".select2").select2({
-          allowClear: true,
-          data: taxon_data,
-          multiple: true
-        });
-
-        $(".tagathon-project .content-list form").on(
-          'ajax:success',
-          function(event, data, status, xhr) {
-            $(this).removeClass('error-saving');
-            $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
-          }
-        ).on(
-          'ajax:error',
-          function(event, data, status, xhr) {
-            $(this).addClass('error-saving');
-          }
-        ).each(function(index, el) {
-          ref = $(el).attr('data-ref');
-          top_pos = $(el).position().top - 80 + "px";
-          $('.content-selector[value="'+ ref +'"]').css("top", top_pos).css("display", "inherit");
-        });
-
-        $(".bulk-tagger input[type='checkbox'].select-all").on('change', function() {
-          $("." + bulk_tagger_selector_class).prop('checked', this.checked);
-        });
-
-        $(".bulk-tagger form").on(
-          "ajax:success",
-          function(event, data, status, xhr) {
-            data.forEach(function(data_item) {
-              var form = $("form[data-ref='" + data_item.content_id + "']");
-              form.removeClass('error-saving');
-              form.effect("highlight", {color: "#d8f3d8"}, 1000);
-              var input = form.find('input.select2');
-              input.select2('val', data_item.taxons);
-            });
-          }
-        ).on(
-          "ajax:error",
-          function(event, data, status, xhr) {
-            $(this).addClass('error-saving');
-          }
-        );
-
-        var contentItemTitlesToFormElements = {}
-        $(".edit_project_content_item").each(function(index, formElement) {
-          var $formElement = $(formElement);
-          var titleAnchor = $formElement.find("a")[0];
-          contentItemTitlesToFormElements[titleAnchor.innerHTML.toLowerCase()] = $formElement;
-        });
-
-        $("#project-tagging-content-item-search").keyup(function(event) {
-          var query = event.target.value.toLowerCase();
-          $.each(contentItemTitlesToFormElements, function(title, $formElement) {
-            if (title.includes(query)) {
-              $formElement.show();
-            } else {
-              $formElement.hide();
-            }
-          });
-        });
-      });
-    </script>
-
-    <div class= 'bulk-tagger'>
+  <div class="col-md-9">
+    <div class='bulk-tagger'>
       <ul class='nav nav-tabs'>
         <li class='select_all'>
-          <a><label><input type='checkbox' class='select-all'/> Select all</label></a>
+          <a><label><input type='checkbox' class='select-all js-select-all'/> Select all</label></a>
         </li>
         <li class='active'><a href='#'>Edit selected</a></li>
       </ul>
-      <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true do |f| %>
-        <div class='selected-count'>None selected</div>
+
+      <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true, html: { class: 'js-bulk-tagger-form' } do |f| %>
+        <div><span class='js-selected-count'>None</span> selected</div>
 
         <%= f.input :taxons,
           placeholder: 'Tags',
           label: false,
-          input_html: { class: [:select2, :bulk_tagger], autocomplete: 'off' }
+          input_html: { class: [:select2, :bulk_tagger, :js_bulk_tagger_input], autocomplete: 'off' }
         %>
 
         <div class='bulk-selectors'>
           <%= f.input_field :content_items,
-            collection: project.content_items.uncompleted,
+            collection: project_content_items_to_display,
             as: :check_boxes,
             include_hidden: false,
-            class: 'content-selector'
+            class: 'content-selector js-content-selector'
           %>
         </div>
 
@@ -161,3 +69,8 @@
     </div>
   </div>
 </div>
+
+<script>
+  var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
+  bulkTagger.start($('.tagathon-project'));
+</script>
