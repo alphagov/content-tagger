@@ -12,7 +12,7 @@ private
   def tag_content
     Services.publishing_api
       .patch_links(
-        content_item_id,
+        content_item.content_id,
         links: { taxons: submitted_taxons }
       )
   end
@@ -27,9 +27,5 @@ private
 
   def content_item
     @_content_item ||= ProjectContentItem.find(params[:id])
-  end
-
-  def content_item_id
-    Services.publishing_api.lookup_content_id(base_path: content_item.base_path)
   end
 end

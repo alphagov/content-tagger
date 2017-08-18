@@ -9,8 +9,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
     let(:content_item) { project.content_items.first }
 
     it "responds with a 200 code when content item is updated successfully" do
-      id = stub_content_id_lookup(content_item.base_path)
-      stub_tag_content(id)
+      stub_tag_content(content_item.content_id)
 
       patch(
         project_content_item_path(project, content_item),
@@ -21,8 +20,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
     end
 
     it "responds with a 400 code when content item fails to update" do
-      id = stub_content_id_lookup(content_item.base_path)
-      stub_tag_content(id, success: false)
+      stub_tag_content(content_item.content_id, success: false)
 
       patch(
         project_content_item_path(project, content_item),
@@ -31,12 +29,5 @@ RSpec.describe ProjectContentItemsController, type: :request do
 
       expect(response.code).to eql "400"
     end
-  end
-
-  def stub_content_id_lookup(base_path)
-    id = SecureRandom.uuid
-    stub_request(:post, "https://publishing-api.test.gov.uk/lookup-by-base-path")
-      .to_return(status: 200, body: { base_path => id }.to_json)
-    id
   end
 end
