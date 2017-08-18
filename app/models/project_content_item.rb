@@ -19,6 +19,6 @@ class ProjectContentItem < ActiveRecord::Base
   end
 
   scope :uncompleted, -> { where(done: false) }
-
   scope :matching_search, -> (query) { where("title LIKE ?", "%#{query}%") }
+  scope :with_valid_ids, -> { where.not(content_id: nil) }
 end
