@@ -89,18 +89,24 @@ RSpec.feature "Projects", type: :feature do
   alias_method :when_i_visit_the_project_index_page, :and_i_visit_the_project_index_page
 
   def and_i_filter_by_tagged
-    choose("Tagged")
-    click_button("Apply")
+    within '.filter-controls' do
+      choose("Tagged")
+      click_button("Apply")
+    end
   end
 
   def and_i_filter_by_not_tagged
-    choose("Not Tagged")
-    click_button("Apply")
+    within '.filter-controls' do
+      choose("Not Tagged")
+      click_button("Apply")
+    end
   end
 
   def and_i_filter_by_all
-    choose("All")
-    click_button("Apply")
+    within '.filter-controls' do
+      choose("All")
+      click_button("Apply")
+    end
   end
 
   def then_i_can_see_my_new_project_in_the_list

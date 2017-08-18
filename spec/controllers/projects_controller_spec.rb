@@ -15,6 +15,7 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe "#show" do
     it "shows a project" do
+      stub_draft_taxonomy_branch
       project = create(:project)
       get :show, params: { id: project.id }
       expect(response.code).to eql "200"
