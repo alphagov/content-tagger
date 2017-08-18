@@ -14,10 +14,8 @@ RSpec.feature "Projects", type: :feature do
   scenario "creating a new project" do
     given_there_is_a_remote_spreadsheet
     and_there_is_a_draft_taxonomy_branch
+    when_i_create_a_new_project
     when_i_visit_the_project_index_page
-    and_i_click_the_new_project_link
-    and_i_fill_in_a_name_and_url_and_select_a_branch_of_the_taxonomy
-    and_i_click_new_project
     then_i_can_see_my_new_project_in_the_list
   end
 
@@ -67,6 +65,16 @@ RSpec.feature "Projects", type: :feature do
     stub_draft_taxonomy_branch
   end
 
+  def when_i_create_a_new_project
+    visit projects_path
+    click_link 'Add new project'
+    fill_in 'new_project_form_name', with: 'my_project'
+    select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
+    fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
+    allow(LookupContentIdWorker).to receive(:perform_async)
+    click_on 'New Project'
+  end
+
   def when_i_visit_the_project_page
     visit root_path
     within 'header nav .nav' do
@@ -75,24 +83,10 @@ RSpec.feature "Projects", type: :feature do
     click_link @project.name
   end
 
-  def when_i_visit_the_project_index_page
+  def and_i_visit_the_project_index_page
     visit projects_path
   end
-
-  def and_i_click_the_new_project_link
-    click_link 'Add new project'
-    expect(page).to have_content 'New Project'
-  end
-
-  def and_i_fill_in_a_name_and_url_and_select_a_branch_of_the_taxonomy
-    fill_in 'new_project_form_name', with: 'my_project'
-    select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
-    fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
-  end
-
-  def and_i_click_new_project
-    click_on 'New Project'
-  end
+  alias_method :when_i_visit_the_project_index_page, :and_i_visit_the_project_index_page
 
   def and_i_filter_by_tagged
     choose("Tagged")

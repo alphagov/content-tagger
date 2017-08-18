@@ -16,14 +16,15 @@ RSpec.describe NewProjectForm do
 
   describe '#create' do
     context 'with a valid form' do
+      before do
+        expect(ProjectBuilder)
+          .to receive(:call)
+          .and_return(Project.new)
+      end
+
       it 'returns the Project' do
         valid_form = NewProjectForm.new(valid_params)
         expect(valid_form.create).to be_a Project
-      end
-
-      it 'persists the Project' do
-        valid_form = NewProjectForm.new(valid_params)
-        expect { valid_form.create }.to change { Project.count }.by(1)
       end
     end
 
