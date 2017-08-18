@@ -39,7 +39,7 @@ private
 
   def project_content_items_to_display
     @_project_content_items_to_display = begin
-      items = project.content_items
+      items = project.content_items.with_valid_ids
 
       tagged_state_filter = filter_params[:tagged_state]
 

@@ -3,5 +3,6 @@ FactoryGirl.define do
     url "MyString"
     title "MyString"
     description "MyString"
+    content_id { SecureRandom.uuid }
   end
 end
