@@ -11,17 +11,17 @@
              type="text"
              class="form-control js-bulk-tagging-search-filter"
              name="query"
-             value="<%= params[:query] %>"
+             value="<%= bulk_search.query %>"
              placeholder="Filter by title...">
 
-      <% ProjectsController::TAGGED_STATES.each do |state|  %>
+      <% Projects::BulkSearch::TAGGED_STATES.each do |state|  %>
         <div class="radio">
           <label>
             <input type="radio"
                    name="tagged_state"
                    id="tagged_state_<%= state %>"
                    value="<%= state %>"
-                   <% if params[:tagged_state] == state %>
+                   <% if bulk_search.selected_state == state %>
                    checked
                    <% end %>
             >
@@ -34,8 +34,8 @@
   </div>
 
   <div class="col-md-9">
-    <% if project_content_items_to_display.any? %>
-      <%= render 'item_tagging', project: project, project_content_items_to_display: project_content_items_to_display %>
+    <% if bulk_search.project_content_items_to_display.any? %>
+      <%= render 'item_tagging', project: project, project_content_items_to_display: bulk_search.project_content_items_to_display %>
     <% else %>
       <p class="no-content">No pages found!</p>
     <% end %>
