@@ -1,6 +1,5 @@
-<header class="heading-with-actions"/>
-  <h1>New Project</h1>
-</header>
+<%= display_header title: "New project",
+  breadcrumbs: [:projects, "New project"] %>
 
 <%= simple_form_for form, url: projects_path do |f| %>
     <%= f.input :name, input_html: { class: 'form-control' },
