@@ -14,7 +14,7 @@
              value="<%= params[:query] %>"
              placeholder="Filter by title...">
 
-      <% ProjectsController::TAGGED_STATES.each do |state|  %>
+      <% Projects::BulkSearch::TAGGED_STATES.each do |state|  %>
         <div class="radio">
           <label>
             <input type="radio"
@@ -34,8 +34,8 @@
   </div>
 
   <div class="col-md-9">
-    <% if project_content_items_to_display.any? %>
-      <%= render 'item_tagging', project: project, project_content_items_to_display: project_content_items_to_display %>
+    <% if bulk_search.project_content_items_to_display.any? %>
+      <%= render 'item_tagging', project: project, project_content_items_to_display: bulk_search.project_content_items_to_display %>
     <% else %>
       <p class="no-content">No pages found!</p>
     <% end %>
