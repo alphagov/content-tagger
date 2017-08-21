@@ -1,93 +1,76 @@
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
-<div class="row">
-  <div class="col-md-3">
-    <h1><%= project.name %></h1>
+<div class="row tagathon-project">
+  <h1><%= project.name %></h1>
 
+  <div class="col-md-3 filter-controls">
     <h3>Filter</h3>
 
     <form method="GET">
-
       <input id="project-tagging-content-item-search"
              type="text"
-             class="form-control"
+             class="form-control js-bulk-tagging-search-filter"
              name="query"
              value="<%= params[:query] %>"
              placeholder="Filter by title...">
 
       <% ProjectsController::TAGGED_STATES.each do |state|  %>
-      <div class="radio">
-        <label>
-          <input type="radio"
-                 name="tagged_state"
-                 id="tagged_state_<%= state %>"
-                 value="<%= state %>"
-                 <% if params[:tagged_state] == state %>
-                 checked
-                 <% end %>
-          >
-          <%= state.titleize %>
-        </label>
-      </div>
+        <div class="radio">
+          <label>
+            <input type="radio"
+                   name="tagged_state"
+                   id="tagged_state_<%= state %>"
+                   value="<%= state %>"
+                   <% if params[:tagged_state] == state %>
+                   checked
+                   <% end %>
+            >
+            <%= state.titleize %>
+          </label>
+        </div>
       <% end %>
-
       <button class="btn btn-lg btn-default" type="submit">Apply</button>
     </form>
   </div>
 
   <div class="col-md-9">
-    <script type='text/javascript'>
-      var taxon_data = <%=
-        project
-          .taxons
-          .map { |taxon| { id: taxon.content_id, text: taxon.name } }
-          .to_json
-          .to_s
-          .html_safe
-      %>;
+    <div class='bulk-tagger'>
+      <ul class='nav nav-tabs'>
+        <li class='select_all'>
+          <a><label><input type='checkbox' class='select-all js-select-all'/> Select all</label></a>
+        </li>
+        <li class='active'><a href='#'>Edit selected</a></li>
+      </ul>
 
-      $(document).ready(function() {
-        $(".select2.tagging_project").select2({
-          allowClear: true,
-          data: taxon_data,
-          multiple: true
-        });
+      <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true, html: { class: 'js-bulk-tagger-form' } do |f| %>
+        <div><span class='js-selected-count'>None</span> selected</div>
 
-        $(".select2.tagging_project").change(function() {
-          $(this).parents('form').trigger('submit.rails');
-        });
+        <%= f.input :taxons,
+          placeholder: 'Tags',
+          label: false,
+          input_html: { class: [:select2, :bulk_tagger, :js_bulk_tagger_input], autocomplete: 'off' }
+        %>
 
-        $("form").on('ajax:success', function(event, data, status, xhr) {
-          $(this).removeClass('error-saving');
-          $(this).effect("highlight", {color: "#d8f3d8"}, 1000);
-        });
+        <div class='bulk-selectors'>
+          <%= f.input_field :content_items,
+            collection: project_content_items_to_display,
+            as: :check_boxes,
+            include_hidden: false,
+            class: 'content-selector js-content-selector'
+          %>
+        </div>
 
-        $("form").on('ajax:error', function(event, data, status, xhr) {
-          $(this).addClass('error-saving');
-        });
+        <%= f.submit 'Apply' %>
+      <% end %>
+    </div>
 
-        var contentItemTitlesToFormElements = {}
-        $(".edit_project_content_item").each(function(index, formElement) {
-          var $formElement = $(formElement);
-          var titleAnchor = $formElement.find("a")[0];
-          contentItemTitlesToFormElements[titleAnchor.innerHTML.toLowerCase()] = $formElement;
-        });
-
-        $("#project-tagging-content-item-search").keyup(function(event) {
-          var query = event.target.value.toLowerCase();
-          $.each(contentItemTitlesToFormElements, function(title, $formElement) {
-            if (title.includes(query)) {
-              $formElement.show();
-            } else {
-              $formElement.hide();
-            }
-          });
-        });
-      });
-    </script>
-
-    <div class='tagathon-project-content-list'>
+    <div class='content-list'>
       <%= render partial: 'content_item', collection: project_content_items_to_display %>
     </div>
   </div>
 </div>
+
+<script>
+  var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
+  bulkTagger.start($('.tagathon-project'));
+</script>

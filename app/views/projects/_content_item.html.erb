@@ -1,8 +1,10 @@
-<%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true do |f| %>
-  <%= token_tag %>
-  <%= link_to content_item.title, content_item.url, data: {proxy_iframe: 'enabled', modal_url: content_item.proxied_url, toggle: 'modal', target: '#iframe_modal_id'} %>
-  <%= f.input :taxons,
-    placeholder: 'Choose one...',
-    label: false,
-    input_html: { class: [:select2, :tagging_project], autocomplete: 'off' } %>
-<% end %>
+<div class='content-item'>
+  <%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true, html: { data: { ref: content_item.id }, class: 'js-content-item-form' } do |f| %>
+    <%= token_tag %>
+    <%= link_to content_item.title, content_item.url, data: {proxy_iframe: 'enabled', modal_url: content_item.proxied_url, toggle: 'modal', target: '#iframe_modal_id'} %>
+    <%= f.input :taxons,
+      placeholder: 'Choose one...',
+      label: false,
+      input_html: { class: [:select2, :tagging_project, :js_bulk_tagger_input], autocomplete: 'off' } %>
+  <% end %>
+</div>

@@ -8,5 +8,5 @@
 //= require_self
 
 $(document).ready(function() {
-  $(".select2:not(.tagging_project)").select2({ allowClear: true });
+  $(".select2:not(.tagging_project):not(.bulk_tagger)").select2({ allowClear: true });
 });

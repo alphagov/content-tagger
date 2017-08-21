@@ -1,21 +1,60 @@
-.tagathon-project-content-list {
-  form {
-    margin: 20px 0;
-    border: 1px solid #ccc;
-    padding: 20px;
-    border-width:1px 0 0 0;
+.tagathon-project {
+  position: relative;
 
-    a {
-      font-size: 1.2em;
+  input[type='checkbox'] {
+    transform: scale(1.5);
+    margin-right: 5px;
+
+    &.content-selector {
+      position: absolute;
+      left: 15px;
     }
+  }
 
-    .project_content_item_taxons {
+  .bulk-selectors .checkbox *  {
+    display: none;
+  }
+
+  .content-list {
+    form {
       margin: 20px 0;
+      padding: 20px 40px;
+      border: 1px solid #ccc;
+      border-width:1px 0 0 0;
+
+      a {
+        font-size: 1.2em;
+      }
+
+      .project_content_item_taxons {
+        margin: 20px 0;
+      }
+
+      &.error-saving {
+        background-color: #ffb6b6;
+        transition: background-color 1s;
+      }
+    }
+  }
+
+  .bulk-tagger {
+    form {
+      padding: 20px;
+      background-color: #eee;
+      margin-top: -21px;
+
+      &.error-saving {
+        background-color: #ffb6b6;
+        transition: background-color 1s;
+      }
     }
 
-    &.error-saving {
-      background-color: #ffb6b6;
-      transition: background-color 1s;
+    .nav label {
+      margin-bottom: 0;
+    }
+
+    .nav.nav-tabs .active a {
+      background-color: #eee;
     }
   }
 }
