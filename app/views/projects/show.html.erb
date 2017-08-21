@@ -34,7 +34,11 @@
   </div>
 
   <div class="col-md-9">
-    <%= render 'item_tagging', project: project, project_content_items_to_display: project_content_items_to_display %>
+    <% if project_content_items_to_display.any? %>
+      <%= render 'item_tagging', project: project, project_content_items_to_display: project_content_items_to_display %>
+    <% else %>
+      <p class="no-content">No pages found!</p>
+    <% end %>
   </div>
 </div>
 
