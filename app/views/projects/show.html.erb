@@ -11,7 +11,7 @@
              type="text"
              class="form-control js-bulk-tagging-search-filter"
              name="query"
-             value="<%= params[:query] %>"
+             value="<%= bulk_search.query %>"
              placeholder="Filter by title...">
 
       <% Projects::BulkSearch::TAGGED_STATES.each do |state|  %>
@@ -21,7 +21,7 @@
                    name="tagged_state"
                    id="tagged_state_<%= state %>"
                    value="<%= state %>"
-                   <% if params[:tagged_state] == state %>
+                   <% if bulk_search.selected_state == state %>
                    checked
                    <% end %>
             >

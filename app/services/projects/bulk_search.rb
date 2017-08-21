@@ -9,22 +9,29 @@ module Projects
     attr_reader :project, :params
 
     def initialize(project, params)
-      @project, @params = project, params
+      @project = project
+      @params = params
+    end
+
+    def query
+      params[:query]
+    end
+
+    def selected_state
+      filter_params[:tagged_state] || TAGGED_STATE_ALL
     end
 
     def project_content_items_to_display
       @_project_content_items_to_display = begin
         items = project.content_items.with_valid_ids
 
-        tagged_state_filter = filter_params[:tagged_state]
-
-        if tagged_state_filter && tagged_state_filter != TAGGED_STATE_ALL
-          unless TAGGED_STATES.include? tagged_state_filter
+        if selected_state != TAGGED_STATE_ALL
+          unless TAGGED_STATES.include?(selected_state)
             raise ActionController::BadRequest,
-                  "The value \"#{tagged_state_filter}\" is an invalid tagging state."
+                  "The value \"#{selected_state}\" is an invalid tagging state."
           end
 
-          items = items.where(done: tagged_state_filter == TAGGED_STATE_TAGGED)
+          items = items.where(done: selected_state == TAGGED_STATE_TAGGED)
         end
 
         query = filter_params[:query]
