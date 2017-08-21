@@ -1,6 +1,6 @@
 module GoogleSheetHelper
   def google_sheet_url(key:, gid:)
-    "https://docs.google.com/spreadsheets/d/#{key}/pub?gid=#{gid}&single=true&output=tsv"
+    "https://docs.google.com/spreadsheets/d/#{key}/pub?gid=#{gid}&single=true&output=csv"
   end
 
   def google_sheet_fixture(extra_rows = [])
@@ -18,11 +18,11 @@ module GoogleSheetHelper
   end
 
   def google_sheet_row(content_base_path:, link_title:, link_content_id:, link_type:)
-    [content_base_path, link_title, link_content_id, link_type].join("\t")
+    [content_base_path, link_title, link_content_id, link_type].join(",")
   end
 
   def parsed_google_sheet
-    CSV.parse(google_sheet_fixture, col_sep: "\t", headers: true)
+    CSV.parse(google_sheet_fixture, headers: true)
   end
 
   def google_sheet_content_items

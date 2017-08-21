@@ -15,7 +15,7 @@ en:
     invalid_hostname: Is not a Google Docs URL
     invalid_path: Does not have the expected public path /spreadsheets/d/<id>/pub
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
-    missing_output: Is missing the parameter output as TSV
+    missing_output: Is missing the parameter output as csv
     spreadsheet_download_error: There is a problem downloading the spreadsheet, please make sure the URL works.
     circular_dependency:
       on_self: "Includes the taxon being edited - you can't set a taxon as the parent of itself."
