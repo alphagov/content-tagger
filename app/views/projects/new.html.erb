@@ -13,8 +13,8 @@
                     collection: form.taxonomy_branches_for_select %>
 
         <%= f.input :remote_url, input_html: { class: 'form-control' },
-                    label: 'Remote URL',
-                    hint: 'Remote URL with the contents of the project.' %>
+                    label: 'Spreadsheet URL',
+                    hint: 'Spreadsheet URL with the contents of the project. Required columns: url, title and description.' %>
 
         <%= f.submit 'New Project', class: "btn btn-lg btn-success" %>
     <% end %>
