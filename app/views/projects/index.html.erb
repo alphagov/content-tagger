@@ -1,11 +1,8 @@
-<header class="heading-with-actions"/>
-<h1>Projects</h1>
-<nav class="btn-group">
+<%= display_header title: "Projects", breadcrumbs: ["Projects"] do %>
   <%= link_to new_project_path, class: 'btn btn-default' do %>
-      <i class="glyphicon glyphicon-plus"></i>Add new project
+    <i class="glyphicon glyphicon-plus"></i>Add new project
   <% end %>
-</nav>
-</header>
+<% end %>
 
 <table class="table queries-list table-bordered table-striped">
   <thead>
