@@ -28,14 +28,14 @@ RSpec.describe GoogleUrlValidator do
     record = double(url: "https://docs.google.com/path", errors: { url: [] })
     GoogleUrlValidator.new.validate(record)
 
-    expect(record.errors[:url]).to include(/is missing the parameter output as tsv/i)
+    expect(record.errors[:url]).to include(/is missing the parameter output as csv/i)
   end
 
   it 'validates incorrect param output' do
     record = double(url: "https://docs.google.com/path?output=pdf", errors: { url: [] })
     GoogleUrlValidator.new.validate(record)
 
-    expect(record.errors[:url]).to include(/is missing the parameter output as tsv/i)
+    expect(record.errors[:url]).to include(/is missing the parameter output as csv/i)
   end
 
   it 'does not add validation errors for a correct URL' do

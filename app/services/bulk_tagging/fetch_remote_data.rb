@@ -50,7 +50,7 @@ module BulkTagging
     end
 
     def parsed_data
-      CSV.parse(sheet_data, col_sep: "\t", headers: true)
+      CSV.parse(sheet_data, headers: true)
     end
 
     def spreadsheet_download_error
