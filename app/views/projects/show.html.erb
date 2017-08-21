@@ -34,39 +34,11 @@
   </div>
 
   <div class="col-md-9">
-    <div class='bulk-tagger'>
-      <ul class='nav nav-tabs'>
-        <li class='select_all'>
-          <a><label><input type='checkbox' class='select-all js-select-all'/> Select all</label></a>
-        </li>
-        <li class='active'><a href='#'>Edit selected</a></li>
-      </ul>
-
-      <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true, html: { class: 'js-bulk-tagger-form' } do |f| %>
-        <div><span class='js-selected-count'>None</span> selected</div>
-
-        <%= f.input :taxons,
-          placeholder: 'Tags',
-          label: false,
-          input_html: { class: [:select2, :bulk_tagger, :js_bulk_tagger_input], autocomplete: 'off' }
-        %>
-
-        <div class='bulk-selectors'>
-          <%= f.input_field :content_items,
-            collection: project_content_items_to_display,
-            as: :check_boxes,
-            include_hidden: false,
-            class: 'content-selector js-content-selector'
-          %>
-        </div>
-
-        <%= f.submit 'Apply' %>
-      <% end %>
-    </div>
-
-    <div class='content-list'>
-      <%= render partial: 'content_item', collection: project_content_items_to_display %>
-    </div>
+    <% if project_content_items_to_display.any? %>
+      <%= render 'item_tagging', project: project, project_content_items_to_display: project_content_items_to_display %>
+    <% else %>
+      <p class="no-content">No pages found!</p>
+    <% end %>
   </div>
 </div>
 
