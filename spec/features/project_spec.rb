@@ -43,6 +43,14 @@ RSpec.feature "Projects", type: :feature do
     then_i_can_see_all_the_content_items_for_that_project
   end
 
+  scenario "filtering by searching" do
+    given_there_is_a_project_with_two_content_items_in_different_states
+    and_there_is_a_draft_taxonomy_branch
+    when_i_visit_the_project_page
+    and_i_filter_by_text
+    then_i_only_see_done_content_items
+  end
+
   def given_there_is_a_project_with_content_items
     @project = create :project, :with_content_items
   end
@@ -50,7 +58,7 @@ RSpec.feature "Projects", type: :feature do
   def given_there_is_a_project_with_two_content_items_in_different_states
     @project = create :project
     @done_content_item = create(
-      :project_content_item, title: "Foo", done: true, project_id: @project.id
+      :project_content_item, title: "Foo done", done: true, project_id: @project.id
     )
     @not_done_content_item = create(
       :project_content_item, title: "Bar", done: false, project_id: @project.id
@@ -105,6 +113,13 @@ RSpec.feature "Projects", type: :feature do
   def and_i_filter_by_all
     within '.filter-controls' do
       choose("All")
+      click_button("Apply")
+    end
+  end
+
+  def and_i_filter_by_text
+    within '.filter-controls' do
+      fill_in :query, with: "foo"
       click_button("Apply")
     end
   end
