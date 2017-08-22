@@ -8,10 +8,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   before do
     Sidekiq::Testing.inline!
-
-    # We need the gds sso test user to be identifiable by uid in this spec to
-    # find the user who added the spreadsheet.
-    User.first.update(uid: "some-value", name: "Barry Allen")
+    @name = User.first.name
   end
 
   scenario "Importing tags" do
@@ -107,7 +104,7 @@ RSpec.feature "Tag importer", type: :feature do
     fill_in I18n.t('tag_import.sheet_url'), with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
     click_button I18n.t('tag_import.upload')
     expect(BulkTagging::TaggingSpreadsheet.count).to eq 1
-    expect(BulkTagging::TaggingSpreadsheet.first.added_by.name).to eq "Barry Allen"
+    expect(BulkTagging::TaggingSpreadsheet.first.added_by.name).to eq @name
   end
 
   def given_tagging_spreadsheet_exists

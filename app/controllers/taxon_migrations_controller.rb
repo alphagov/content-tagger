@@ -1,4 +1,6 @@
 class TaxonMigrationsController < ApplicationController
+  before_action :ensure_user_can_administer_taxonomy!
+
   def new
     unless params[:source_content_id]
       redirect_to taxons_path

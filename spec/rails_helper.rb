@@ -37,15 +37,6 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
 
-  # Authenticate a test user for controllers.
-  config.before(:each, type: :controller) do
-    request.env['warden'] = double(
-      authenticate!: true,
-      authenticated?: true,
-      user: User.new(permissions: ["signin"])
-    )
-  end
-
   config.before(:each) do
     User.create!
     DatabaseCleaner.start

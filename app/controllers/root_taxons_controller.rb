@@ -1,4 +1,6 @@
 class RootTaxonsController < ApplicationController
+  before_action :ensure_user_can_administer_taxonomy!
+
   def index
     render :index, locals: { page: RootTaxonsForm.new }
   end

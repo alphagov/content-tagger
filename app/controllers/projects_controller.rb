@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  before_action :ensure_user_can_access_tagathon_tools!
+
   def index
     render :index, locals: { projects: project_index }
   end

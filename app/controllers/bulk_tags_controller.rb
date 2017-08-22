@@ -1,4 +1,6 @@
 class BulkTagsController < ApplicationController
+  before_action :ensure_user_can_administer_taxonomy!
+
   def new
     render :new, locals: {
       search_results: BulkTagging::EmptySearchResponse.new,
