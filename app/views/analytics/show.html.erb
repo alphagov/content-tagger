@@ -20,6 +20,7 @@
         <th>Page</th>
         <th>Guidance?</th>
         <th>User</th>
+        <th>Organisation</th>
       </tr>
     </thead>
 
@@ -34,6 +35,7 @@
             <%= tagging_event['taggable_title'] %></td>
           <td><%= tagging_event.guidance? ? 'Guidance' : 'Other' %></td>
           <td><%= User.find_by(uid: tagging_event['user_uid'])&.name || "A Whitehall User" %></td>
+          <td><%= tagging_event.user_organisation || '' %></td>
         </tr>
       <% end %>
     </tbody>
