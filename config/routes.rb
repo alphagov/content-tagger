@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'taggings#lookup'
+  root to: 'application#redirect_to_home_page'
 
   resources :taxons do
     get :confirm_delete

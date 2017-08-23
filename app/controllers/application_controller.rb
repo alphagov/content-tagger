@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def redirect_to_home_page
+    if user_can_administer_taxonomy?
+      redirect_to lookup_taggings_path
+    elsif user_can_access_tagathon_tools?
+      redirect_to projects_path
+    end
+  end
+
 private
 
   helper_method(
@@ -26,15 +34,19 @@ private
            to: :permission_checker
 
   def ensure_user_can_use_application!
-    raise PermissionDeniedException unless user_can_access_application?
+    deny_access_to(:application) unless user_can_access_application?
   end
 
   def ensure_user_can_administer_taxonomy!
-    raise PermissionDeniedException unless user_can_administer_taxonomy?
+    deny_access_to(:feature) unless user_can_administer_taxonomy?
   end
 
   def ensure_user_can_access_tagathon_tools!
-    raise PermissionDeniedException unless user_can_access_tagathon_tools?
+    deny_access_to(:feature) unless user_can_access_tagathon_tools?
+  end
+
+  def deny_access_to(subject)
+    raise PermissionDeniedException, "Sorry, you are not authorised to access this #{subject}."
   end
 
   def permission_checker
