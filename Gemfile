@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.0.2'
 
+gem 'govuk_app_config', '~> 0.2'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'chartkick'
 gem 'jquery-ui-rails', '6.0.1'
@@ -15,11 +16,10 @@ gem 'uglifier', '~> 3.2'
 gem 'unicorn', '~> 5.0.0'
 
 # GDS managed dependencies
-gem 'airbrake', github: 'alphagov/airbrake', branch: 'silence-dep-warnings-for-rails-5'
 gem 'gds-api-adapters', '~> 47.6'
 gem 'gds-sso', '~> 13.2'
 gem 'govuk_admin_template', '~> 5.0'
-gem 'govuk_sidekiq', '~> 1.0'
+gem 'govuk_sidekiq', '~> 2.0'
 gem 'govuk_taxonomy_helpers', '~> 0.1.1'
 gem 'plek', '~> 2.0'
 

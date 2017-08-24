@@ -16,7 +16,7 @@ module BulkTagging
 
     def call
       unless valid_response?
-        Airbrake.notify(RuntimeError.new(response.body))
+        GovukError.notify(RuntimeError.new(response.body))
         return [spreadsheet_download_error]
       end
 

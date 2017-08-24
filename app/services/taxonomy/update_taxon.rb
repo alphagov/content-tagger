@@ -30,7 +30,7 @@ module Taxonomy
       )
 
       if existing_content_item.nil?
-        Airbrake.notify(e)
+        GovukError.notify(e)
         raise(InvalidTaxonError, I18n.t('errors.invalid_taxon'))
       else
         raise(InvalidTaxonError, I18n.t('errors.invalid_taxon_base_path'))

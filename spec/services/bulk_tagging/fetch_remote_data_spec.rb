@@ -96,8 +96,8 @@ module BulkTagging
           )
         end
 
-        it 'notifies airbrake of the error' do
-          expect(Airbrake).to receive(:notify)
+        it 'notifies GovukError of the error' do
+          expect(GovukError).to receive(:notify)
 
           described_class.call(tagging_spreadsheet)
         end
