@@ -77,7 +77,6 @@ RSpec.feature "Delete Taxon", type: :feature do
       },
       unpublished: true
     )
-    list_taxons
 
     stub_requests_for_show_page(@taxon)
 
@@ -199,27 +198,6 @@ private
       [basic_content_item("tagged content")],
       content_id: @taxon_content_id,
       link_type: "taxons"
-    )
-  end
-
-  def list_taxons
-    publishing_api_has_content(
-      [@taxon],
-      document_type: 'taxon',
-      order: '-public_updated_at',
-      page: 1,
-      per_page: 50,
-      q: '',
-      states: ['published']
-    )
-    publishing_api_has_content(
-      [@taxon],
-      document_type: 'taxon',
-      order: '-public_updated_at',
-      page: 1,
-      per_page: 50,
-      q: '',
-      states: ['unpublished']
     )
   end
 end
