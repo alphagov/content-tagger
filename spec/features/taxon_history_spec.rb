@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Taxon history", type: :feature do
   include ContentItemHelper
+  include PublishingApiHelper
 
   scenario "deleting a taxon with no children or tagged content" do
     given_taxon_with_some_tagging_events
@@ -40,29 +41,10 @@ RSpec.feature "Taxon history", type: :feature do
 
   def taxon
     @_taxon ||= begin
-      id = SecureRandom.uuid
-
-      publishing_api_has_item content_item_with_details(
-        "blah",
-        other_fields: { content_id: id }
-      )
-
-      publishing_api_has_links(
-        content_id: id,
-        links: {}
-      )
-
-      publishing_api_has_expanded_links(
-        content_id: id,
-        expanded_links: {}
-      )
-      publishing_api_has_linked_items(
-        [],
-        content_id: id,
-        link_type: "taxons"
-      )
-
-      build(:taxon, content_id: id)
+      content_id = SecureRandom.uuid
+      taxon = content_item_with_details("foo", other_fields: { content_id: content_id })
+      stub_requests_for_show_page(taxon)
+      build(:taxon, content_id: content_id)
     end
   end
 end

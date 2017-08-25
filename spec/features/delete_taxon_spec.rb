@@ -51,21 +51,8 @@ RSpec.feature "Delete Taxon", type: :feature do
       "Taxon 1",
       other_fields: { content_id: @taxon_content_id }
     )
-    publishing_api_has_item(@taxon)
 
-    publishing_api_has_links(
-      content_id: @taxon_content_id,
-      links: {}
-    )
-    publishing_api_has_expanded_links(
-      content_id: @taxon_content_id,
-      expanded_links: {}
-    )
-    publishing_api_has_linked_items(
-      [],
-      content_id: @taxon_content_id,
-      link_type: "taxons"
-    )
+    stub_requests_for_show_page(@taxon)
   end
 
   def given_a_taxon_with_children
@@ -91,7 +78,11 @@ RSpec.feature "Delete Taxon", type: :feature do
       unpublished: true
     )
     list_taxons
-    publishing_api_has_item(@taxon)
+
+    stub_requests_for_show_page(@taxon)
+
+    # Override the `links` call in stub_requests_for_show_page
+    # TODO: extend stub_requests_for_show_page to make this easier
     publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
@@ -99,11 +90,6 @@ RSpec.feature "Delete Taxon", type: :feature do
         associated_taxons: ["1234"],
       }
     )
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon_content_id}")
-      .to_return(status: 200, body: { expanded_links: {} }.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/linked/#{@taxon_content_id}?fields%5B%5D=base_path&fields%5B%5D=content_id&fields%5B%5D=document_type&fields%5B%5D=title&link_type=taxons")
-      .to_return(status: 200, body: {}.to_json)
   end
 
   def when_i_visit_the_taxon_page

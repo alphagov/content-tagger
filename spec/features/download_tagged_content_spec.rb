@@ -19,11 +19,10 @@ RSpec.feature "Download taggings", type: :feature do
       other_fields: { content_id: @content_id }
     )
 
-    publishing_api_has_item(taxon)
-    publishing_api_has_links(content_id: @content_id, links: {})
-    publishing_api_has_expanded_links(content_id: @content_id, expanded_links: {})
+    stub_requests_for_show_page(taxon)
 
     # for the show page
+    # TODO: this overrides `stub_requests_for_show_page`
     publishing_api_has_linked_items(
       [basic_content_item("tagged content")],
       content_id: @content_id,
