@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Bulk tagging", type: :feature do
-  require 'gds_api/test_helpers/publishing_api_v2'
-  include GdsApi::TestHelpers::PublishingApiV2
   include ContentItemHelper
   include PublishingApiHelper
 

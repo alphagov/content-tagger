@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe ContentLookupForm do
-  require 'gds_api/test_helpers/publishing_api_v2'
-  include GdsApi::TestHelpers::PublishingApiV2
-
   describe '#valid?' do
     it "is not valid when path is empty" do
       form = ContentLookupForm.new(base_path: '')
