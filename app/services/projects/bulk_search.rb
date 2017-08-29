@@ -22,7 +22,7 @@ module Projects
     end
 
     def project_content_items_to_display
-      @_project_content_items_to_display = begin
+      @_project_content_items_to_display ||= begin
         items = project.content_items.with_valid_ids
 
         if selected_state != TAGGED_STATE_ALL

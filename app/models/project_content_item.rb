@@ -1,13 +1,10 @@
 class ProjectContentItem < ActiveRecord::Base
   belongs_to :project
 
+  attr_accessor :taxons
+
   def base_path
     url.gsub('https://www.gov.uk', '')
-  end
-
-  # taxons don't exist
-  def taxons
-    []
   end
 
   def mark_complete

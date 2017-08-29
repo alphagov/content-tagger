@@ -34,8 +34,8 @@
   </div>
 
   <div class="col-md-9">
-    <% if bulk_search.project_content_items_to_display.any? %>
-      <%= render 'item_tagging', project: project, project_content_items_to_display: bulk_search.project_content_items_to_display %>
+    <% if content_items.any? %>
+      <%= render 'item_tagging', project: project, content_items: content_items %>
     <% else %>
       <p class="no-content">No pages found!</p>
     <% end %>
