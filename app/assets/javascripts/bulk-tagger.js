@@ -27,7 +27,11 @@
       var self = this;
 
       // Initialise tag input selects
-      $element.find(self.selectors.tag_input_element).select2(self.options_for_select2);
+      $element.find(self.selectors.tag_input_element)
+        .select2(self.options_for_select2)
+        .each(function(index, el) {
+          self.update_select2_with_new_taxons($(el));
+        });
 
       // Contains all the content-item tagging forms
       var $content_item_forms = $element.find(self.selectors.content_item_forms);
@@ -130,9 +134,14 @@
       $form.removeClass(this.form_error_class);
       $form.effect("highlight", { color: this.color_of_success }, 1000);
 
-      if(taxons.length > 0) {
-        $form.find('.select2').select2('val', taxons);
-      }
+      $select2 = $form.find('.select2');
+      $select2.data('taxons', taxons);
+      self.update_select2_with_new_taxons($select);
+    },
+
+    update_select2_with_new_taxons: function($select2) {
+      var taxons = $select2.data('taxons');
+      $select2.select2('val', taxons);
     },
 
     // Red background of failure
