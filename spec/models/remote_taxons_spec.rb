@@ -1,10 +1,8 @@
 require 'rails_helper'
-require 'gds_api/test_helpers/publishing_api_v2'
 
 RSpec.describe RemoteTaxons do
   include ContentItemHelper
   include PublishingApiHelper
-  include GdsApi::TestHelpers::PublishingApiV2
 
   describe '#search' do
     it 'fetches taxons from the publishing api with pagination' do

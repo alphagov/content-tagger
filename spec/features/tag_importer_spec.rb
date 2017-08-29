@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.feature "Tag importer", type: :feature do
-  require 'gds_api/test_helpers/publishing_api_v2'
-  include GdsApi::TestHelpers::PublishingApiV2
   include GoogleSheetHelper
   include PublishingApiHelper
 

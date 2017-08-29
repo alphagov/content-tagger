@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TaxonsController, type: :controller do
   include PublishingApiHelper
+  include ContentItemHelper
 
   describe "#index" do
     it "renders index" do
@@ -144,5 +145,11 @@ RSpec.describe TaxonsController, type: :controller do
       delete :discard_draft, params: { taxon_id: taxon.content_id }
       expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}/discard-draft")
     end
+  end
+
+  def stub_taxon_show_page(content_id)
+    stub_requests_for_show_page(
+      content_item_with_details("Foo", other_fields: { content_id: content_id })
+    )
   end
 end
