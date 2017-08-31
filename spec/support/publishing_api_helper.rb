@@ -1,4 +1,18 @@
 module PublishingApiHelper
+  def stub_empty_bulk_taxons_lookup
+    url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
+    stub_request(:post, url).to_return(body: {}.to_json)
+  end
+
+  def stub_bulk_taxons_lookup(content_ids, taxons)
+    url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
+    body = { content_ids: content_ids }
+    response_hash = content_ids.each_with_object({}) do |content_id, obj|
+      obj[content_id] = { "links" => { "taxons" => taxons } }
+    end
+    stub_request(:post, url).with(body: body).to_return(body: response_hash.to_json)
+  end
+
   def stub_requests_for_show_page(taxon)
     content_id = taxon.fetch("content_id")
 
