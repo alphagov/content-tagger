@@ -4,18 +4,54 @@ class ApplicationController < ActionController::Base
   include GDS::SSO::ControllerMethods
   before_action :require_signin_permission!
   before_action :set_authenticated_user_header
+  before_action :ensure_user_can_use_application!
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+
+  def redirect_to_home_page
+    if user_can_administer_taxonomy?
+      redirect_to lookup_taggings_path
+    elsif user_can_access_tagathon_tools?
+      redirect_to projects_path
+    end
+  end
 
 private
 
   helper_method(
     :active_navigation_item,
     :website_url,
-    :similar_search_results_url
+    :similar_search_results_url,
+    :user_can_administer_taxonomy?,
+    :user_can_access_tagathon_tools?
   )
+
+  delegate :user_can_access_application?,
+           :user_can_administer_taxonomy?,
+           :user_can_access_tagathon_tools?,
+           to: :permission_checker
+
+  def ensure_user_can_use_application!
+    deny_access_to(:application) unless user_can_access_application?
+  end
+
+  def ensure_user_can_administer_taxonomy!
+    deny_access_to(:feature) unless user_can_administer_taxonomy?
+  end
+
+  def ensure_user_can_access_tagathon_tools!
+    deny_access_to(:feature) unless user_can_access_tagathon_tools?
+  end
+
+  def deny_access_to(subject)
+    raise PermissionDeniedException, "Sorry, you are not authorised to access this #{subject}."
+  end
+
+  def permission_checker
+    @permission_checker ||= PermissionChecker.new(current_user)
+  end
 
   def website_url(base_path, draft: false)
     if draft

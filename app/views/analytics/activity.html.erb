@@ -44,11 +44,11 @@
             <% if tagging_event.removed? %>
               <s>
                 <%= link_to tagging_event['taggable_title'], tagging_event['taggable_base_path'] %>
-                removed from  <%= link_to tagging_event.taxon_title, taxon_path(tagging_event.taxon_content_id) %>
+                removed from  <%= link_to tagging_event.taxon_title, taxon_history_path(tagging_event.taxon_content_id) %>
               </s>
             <% else %>
               <%= link_to tagging_event['taggable_title'], tagging_event['taggable_base_path'] %>
-              tagged to  <%= link_to tagging_event.taxon_title, taxon_path(tagging_event.taxon_content_id) %>
+              tagged to  <%= link_to tagging_event.taxon_title, taxon_history_path(tagging_event.taxon_content_id) %>
             <% end %>
           </td>
           <td>

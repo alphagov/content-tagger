@@ -1,4 +1,6 @@
 class ProjectContentItemsController < ApplicationController
+  before_action :ensure_user_can_access_tagathon_tools!
+
   def update
     tag_content
     content_item.mark_complete

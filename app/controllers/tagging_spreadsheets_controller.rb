@@ -1,4 +1,6 @@
 class TaggingSpreadsheetsController < ApplicationController
+  before_action :ensure_user_can_administer_taxonomy!
+
   def index
     render :index, locals: { page: BulkTagging::IndexPage.new }
   end

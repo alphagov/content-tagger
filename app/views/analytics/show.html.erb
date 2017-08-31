@@ -1,6 +1,8 @@
 <%= display_header title: page.title, breadcrumbs: [:analytics, page.title] do %>
-  <%= link_to I18n.t('views.taxons.view'), taxon_path(page.id),
-    class: 'btn btn-md btn-default' %>
+  <% if user_can_administer_taxonomy? %>
+    <%= link_to I18n.t('views.taxons.view'), taxon_path(page.id),
+      class: 'btn btn-md btn-default' %>
+  <% end %>
 <% end %>
 
 <% content_for :head do %>

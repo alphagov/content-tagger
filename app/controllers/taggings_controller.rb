@@ -1,4 +1,6 @@
 class TaggingsController < ApplicationController
+  before_action :ensure_user_can_administer_taxonomy!
+
   def lookup
     render :lookup, locals: { lookup: ContentLookupForm.new }
   end
