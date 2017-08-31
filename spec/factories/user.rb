@@ -5,11 +5,11 @@ FactoryGirl.define do
     permissions { ["signin"] }
 
     trait :gds_editor do
-      permissions { %w(signin gds_editor) }
+      permissions { ["signin", "GDS Editor"] }
     end
 
     trait :tagathon_participant do
-      permissions { %w(signin tagathon_participant) }
+      permissions { ["signin", "Tagathon participant"] }
     end
   end
 end

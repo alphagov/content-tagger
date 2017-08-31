@@ -14,7 +14,7 @@ RSpec.describe PermissionChecker do
     before do
       allow(user)
         .to receive(:has_permission?)
-        .with("gds_editor")
+        .with("GDS Editor")
         .and_return(true)
     end
 
@@ -27,7 +27,7 @@ RSpec.describe PermissionChecker do
     before do
       allow(user)
         .to receive(:has_permission?)
-        .with("tagathon_participant")
+        .with("Tagathon participant")
         .and_return(true)
     end
 

@@ -1,6 +1,6 @@
 class PermissionChecker
-  GDS_EDITOR_PERMISSION = "gds_editor".freeze
-  TAGATHON_PARTICIPANT_PERMISSION = "tagathon_participant".freeze
+  GDS_EDITOR_PERMISSION = "GDS Editor".freeze
+  TAGATHON_PARTICIPANT_PERMISSION = "Tagathon participant".freeze
 
   def initialize(user)
     @user = user
