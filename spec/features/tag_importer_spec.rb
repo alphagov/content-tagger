@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Tag importer", type: :feature do
+RSpec.feature "Tag importer", type: :feature, skip: true do
   include GoogleSheetHelper
   include PublishingApiHelper
 
