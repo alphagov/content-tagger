@@ -38,7 +38,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:each) do
-    User.create!
+    User.create!(permissions: ["signin", "GDS Editor"])
     DatabaseCleaner.start
     WebMock.reset!
   end
