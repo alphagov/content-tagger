@@ -17,7 +17,7 @@
 
     <div class='bulk-selectors'>
       <%= f.input_field :content_items,
-        collection: project_content_items_to_display,
+        collection: content_items,
         as: :check_boxes,
         include_hidden: false,
         class: 'content-selector js-content-selector'
@@ -29,5 +29,5 @@
 </div>
 
 <div class='content-list'>
-  <%= render partial: 'content_item', collection: project_content_items_to_display %>
+  <%= render partial: 'content_item', collection: content_items %>
 </div>

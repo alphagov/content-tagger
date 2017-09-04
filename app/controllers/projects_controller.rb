@@ -7,8 +7,9 @@ class ProjectsController < ApplicationController
 
   def show
     render :show, locals: { project: project,
-                            bulk_search: Projects::BulkSearch.new(project, params),
-                            taxons: taxons_json }
+                            bulk_search: searcher,
+                            taxons: taxons_json,
+                            content_items: content_items }
   end
 
   def new
@@ -25,6 +26,14 @@ class ProjectsController < ApplicationController
   end
 
 private
+
+  def searcher
+    @_search ||= Projects::BulkSearch.new(project, params)
+  end
+
+  def content_items
+    @_content_items ||= Projects::PrepareContentItems.call(searcher.project_content_items_to_display)
+  end
 
   def taxons_json
     project

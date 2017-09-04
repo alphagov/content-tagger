@@ -3,10 +3,10 @@ require 'rails_helper'
 RSpec.feature "Projects", type: :feature do
   include RemoteCsvHelper
   include TaxonomyHelper
+  include PublishingApiHelper
 
   scenario "viewing a project" do
     given_there_is_a_project_with_content_items
-    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_page
     then_i_can_see_all_the_content_items_for_that_project
   end
@@ -21,7 +21,6 @@ RSpec.feature "Projects", type: :feature do
 
   scenario "filtering for tagged content items" do
     given_there_is_a_project_with_two_content_items_in_different_states
-    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_page
     and_i_filter_by_tagged
     then_i_only_see_done_content_items
@@ -29,7 +28,6 @@ RSpec.feature "Projects", type: :feature do
 
   scenario "filtering for not tagged content items" do
     given_there_is_a_project_with_two_content_items_in_different_states
-    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_page
     and_i_filter_by_not_tagged
     then_i_only_see_not_done_content_items
@@ -37,7 +35,6 @@ RSpec.feature "Projects", type: :feature do
 
   scenario "filtering for all content items" do
     given_there_is_a_project_with_two_content_items_in_different_states
-    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_page
     and_i_filter_by_all
     then_i_can_see_all_the_content_items_for_that_project
@@ -45,14 +42,21 @@ RSpec.feature "Projects", type: :feature do
 
   scenario "filtering by searching" do
     given_there_is_a_project_with_two_content_items_in_different_states
-    and_there_is_a_draft_taxonomy_branch
     when_i_visit_the_project_page
     and_i_filter_by_text
     then_i_only_see_done_content_items
   end
 
+  scenario "reviewing previously assigned tags" do
+    given_there_is_a_project_with_a_tagged_content_item
+    when_i_visit_the_project_page
+    then_i_see_the_content_item_and_its_tag_data
+  end
+
   def given_there_is_a_project_with_content_items
     @project = create :project, :with_content_items
+    stub_draft_taxonomy_branch
+    stub_empty_bulk_taxons_lookup
   end
 
   def given_there_is_a_project_with_two_content_items_in_different_states
@@ -63,6 +67,26 @@ RSpec.feature "Projects", type: :feature do
     @not_done_content_item = create(
       :project_content_item, title: "Bar", done: false, project_id: @project.id
     )
+    stub_draft_taxonomy_branch
+    stub_empty_bulk_taxons_lookup
+  end
+
+  def given_there_is_a_project_with_a_tagged_content_item
+    @project = create :project
+    @content_item = create(
+      :project_content_item, title: "Foo", done: true, project_id: @project.id
+    )
+    @taxons = [SecureRandom.uuid]
+    stub_bulk_taxons_lookup([@content_item.content_id], @taxons)
+    stub_draft_taxonomy_branch
+  end
+
+  def then_i_see_the_content_item_and_its_tag_data
+    within('.content-item:first') do
+      expect(page).to have_content @content_item.title
+      on_page_taxons = find('.select2')['data-taxons']
+      expect(on_page_taxons).to eql @taxons.to_s
+    end
   end
 
   def given_there_is_a_remote_spreadsheet
