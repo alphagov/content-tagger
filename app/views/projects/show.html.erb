@@ -35,14 +35,23 @@
 
   <div class="col-md-9">
     <% if content_items.any? %>
-      <%= render 'item_tagging', project: project, content_items: content_items %>
+      <% if project.bulk_tagging_enabled? %>
+        <%= render partial: "bulk_tagging", locals: local_assigns %>
+      <% end %>
+
+      <div class='content-list'>
+        <%= render partial: 'content_item', collection: content_items %>
+      </div>
     <% else %>
       <p class="no-content">No pages found!</p>
     <% end %>
   </div>
 </div>
 
-<script>
-  var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
-  bulkTagger.start($('.tagathon-project'));
-</script>
+<% if project.bulk_tagging_enabled? %>
+  <script>
+    var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
+    bulkTagger.start($('.tagathon-project'));
+  </script>
+<% end %>
+
