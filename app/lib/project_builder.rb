@@ -1,8 +1,8 @@
 class ProjectBuilder
-  def self.call(project_name, taxonomy_branch_content_id, content_item_attributes_enum)
+  def self.call(name:, taxonomy_branch_content_id:, content_item_attributes_enum:, bulk_tagging_enabled:)
     project = ProjectContentItem.transaction do
       Project
-        .create!(name: project_name, taxonomy_branch: taxonomy_branch_content_id)
+        .create!(name: name, taxonomy_branch: taxonomy_branch_content_id, bulk_tagging_enabled: bulk_tagging_enabled)
         .tap do |project|
           content_item_attributes_enum.each do |content_item_attributes|
             ProjectContentItem.create!(
