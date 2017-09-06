@@ -48,10 +48,11 @@
   </div>
 </div>
 
-<% if project.bulk_tagging_enabled? %>
-  <script>
-    var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
-    bulkTagger.start($('.tagathon-project'));
-  </script>
-<% end %>
+<script>
+  var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
+  bulkTagger.start_individual_taggers($('.tagathon-project'));
 
+  <% if project.bulk_tagging_enabled? %>
+    bulkTagger.start_bulk_tagger($('.tagathon-project'));
+  <% end %>
+</script>

@@ -23,39 +23,13 @@
   };
 
   Modules.BulkTagger.prototype = {
-    start: function($element) {
+
+    /*
+     * Initializes the Bulk Tagger interface
+     * Where multiple content-items can be selected and tagged at the same time.
+    **/
+    start_bulk_tagger: function($element) {
       var self = this;
-
-      // Initialise tag input selects
-      $element.find(self.selectors.tag_input_element)
-        .select2(self.options_for_select2)
-        .each(function(index, el) {
-          self.update_select2_with_new_taxons($(el));
-        });
-
-      // Contains all the content-item tagging forms
-      var $content_item_forms = $element.find(self.selectors.content_item_forms);
-
-      // Individual content-item forms save on change
-      $content_item_forms.find('.select2').on(
-        'change',
-        function(event) {
-          $(this).parents('form').trigger('submit.rails');
-        }
-      );
-
-      // Ajax response handlers for individual content-item form submissions
-      $content_item_forms.on(
-        'ajax:success',
-        function() {
-          self.mark_form_as_successfully_updated($(this));
-        }
-      ).on(
-        'ajax:error',
-        function() {
-          self.mark_form_as_failed_to_update($(this));
-        }
-      );
 
       var $bulk_tagger_form = $element.find(self.selectors.bulk_tagger_form);
 
@@ -104,6 +78,44 @@
           self.update_selected_count($selected_count, $content_item_checkboxes);
         }
       )
+    },
+
+    /*
+     * Initializes each content-item tagging form with Select2 and auto-save.
+    **/
+    start_individual_taggers: function($element) {
+      var self = this;
+
+      // Initialise tag input selects
+      $element.find(self.selectors.tag_input_element)
+        .select2(self.options_for_select2)
+        .each(function(index, el) {
+          self.update_select2_with_new_taxons($(el));
+        });
+
+      // Contains all the content-item tagging forms
+      var $content_item_forms = $element.find(self.selectors.content_item_forms);
+
+      // Individual content-item forms save on change
+      $content_item_forms.find('.select2').on(
+        'change',
+        function(event) {
+          $(this).parents('form').trigger('submit.rails');
+        }
+      );
+
+      // Ajax response handlers for individual content-item form submissions
+      $content_item_forms.on(
+        'ajax:success',
+        function() {
+          self.mark_form_as_successfully_updated($(this));
+        }
+      ).on(
+        'ajax:error',
+        function() {
+          self.mark_form_as_failed_to_update($(this));
+        }
+      );
     },
 
     /**
