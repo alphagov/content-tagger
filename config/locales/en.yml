@@ -1,7 +1,8 @@
 en:
   navigation:
     bulk_tag: 'Bulk tag'
-    manage_root_taxons: 'Manage root taxons'
+    root_taxons: 'Root taxons'
+    edit_root_taxons: 'Edit root taxons'
     projects: 'Projects'
     tagging_content: Edit a page
     tagging_title: Which page do you want to edit?

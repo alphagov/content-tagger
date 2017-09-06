@@ -1,19 +1,29 @@
-<%= display_header title: t('navigation.manage_root_taxons'),
-                   breadcrumbs: [t('navigation.manage_root_taxons')] %>
+<%= display_header title: t('navigation.root_taxons'),
+                   breadcrumbs: [t('navigation.root_taxons')] do %>
 
-<div class="lead">
-  Add or remove root taxons.
-</div>
-
-
-<%= simple_form_for page, url: root_taxons_path, method: :put do |f| %>
-
-
-    <%= f.input :root_taxons,
-                collection: page.taxons_for_select,
-                placeholder: "Choose root taxons...",
-                input_html: { multiple: true, class: :select2 } %>
-
-    <%= f.submit "Save & publish", class: "btn btn-lg btn-success submit-button" %>
-
+  <a href="<%= edit_all_root_taxons_path %>"
+     class="btn btn-default btn-lg pull-right"
+     role="button">
+    Edit root taxons
+  </a>
 <% end %>
+
+<table class="table queries-list table-bordered table-striped">
+  <thead>
+    <tr class="table-header">
+      <th>Title</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% GovukTaxonomy::Branches.new.all.each do |taxon| %>
+      <tr>
+        <td>
+          <a href="<%= root_taxon_path(taxon['content_id']) %>">
+             <%= taxon['title'] %>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

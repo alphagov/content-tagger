@@ -1,17 +1,17 @@
 class RootTaxonsController < ApplicationController
   before_action :ensure_user_can_administer_taxonomy!
 
-  def index
-    render :index, locals: { page: RootTaxonsForm.new }
-  end
-
   def show
     @content_item = ContentItem.find!(params[:id])
   end
 
-  def update
+  def edit_all
+    render :edit_all, locals: { form: RootTaxonsForm.new }
+  end
+
+  def update_all
     RootTaxonsForm.new(root_taxons_params).update
-    redirect_to taxons_path
+    redirect_to edit_all_root_taxons_path
   end
 
 private
