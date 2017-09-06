@@ -5,6 +5,10 @@ class RootTaxonsController < ApplicationController
     render :index, locals: { page: RootTaxonsForm.new }
   end
 
+  def show
+    @content_item = ContentItem.find!(params[:id])
+  end
+
   def update
     RootTaxonsForm.new(root_taxons_params).update
     redirect_to taxons_path

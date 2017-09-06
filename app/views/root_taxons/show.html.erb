@@ -1,0 +1,12 @@
+<%= display_header title: @content_item.title,
+                   breadcrumbs: [:root_taxons, @content_item.title] %>
+<p>
+  Taxonomy branches:
+<% GovukTaxonomy::Branches.new.all.each do |root_taxon| %>
+  <% if root_taxon['content_id'] == @content_item.content_id %>
+    <strong><%= root_taxon['title'] %></strong>
+  <% else %>
+    <%= link_to root_taxon['title'], { id: root_taxon['content_id'] } %>
+  <% end %>
+<% end %>
+</p>

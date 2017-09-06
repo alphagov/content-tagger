@@ -58,7 +58,7 @@ Rails.application.routes.draw do
 
   resources :taxonomies, only: %i(show), param: :content_id
 
-  resources :root_taxons, only: [:index]
+  resources :root_taxons, only: [:index, :show]
   resource :root_taxons, only: [:update]
 
   if Rails.env.development?
