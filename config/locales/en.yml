@@ -1,6 +1,5 @@
 en:
   navigation:
-    analytics: Analytics
     bulk_tag: 'Bulk tag'
     manage_root_taxons: 'Manage root taxons'
     projects: 'Projects'
@@ -52,7 +51,6 @@ en:
       imported: Tagging completed
       errored: Errored
   views:
-    analytics: 'Taxonomy analytics'
     tag_update_progress_bar: "%{completed} of %{total} pages updated"
     tag_migrations:
       new:
@@ -78,7 +76,6 @@ en:
       deleted_title: Deleted taxons
       edit: Edit taxon
       view: View taxon
-      history: Taxon history
       add_taxon: Add a taxon
       delete_taxon: Delete taxon
       restore_taxon: Restore taxon

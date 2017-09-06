@@ -17,11 +17,6 @@ Rails.application.routes.draw do
     delete :discard_draft
   end
 
-  get '/analytics' => 'analytics#index'
-  get '/analytics/activity' => 'analytics#activity', as: :activity
-  get '/analytics/trends(/:query)' => 'analytics#trends', as: :trends
-  get '/analytics/:taxon_id' => 'analytics#show', as: :taxon_history
-
   resources :taggings, only: %i(show update), param: :content_id do
     get '/lookup', action: 'lookup', on: :collection
     get '/lookup-urls', action: 'lookup_urls', on: :collection

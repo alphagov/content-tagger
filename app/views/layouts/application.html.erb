@@ -24,12 +24,6 @@
   <% end %>
 
   <% if user_can_access_tagathon_tools? %>
-    <li class='<%= active_navigation_item == 'analytics' ? 'active' : nil %>'>
-      <%= link_to t('navigation.analytics'), analytics_path %>
-    </li>
-  <% end %>
-
-  <% if user_can_access_tagathon_tools? %>
     <li class='<%= active_navigation_item == 'projects' ? 'active' : nil %>'>
       <%= link_to t('navigation.projects'), projects_path %>
     </li>
