@@ -53,6 +53,6 @@ private
   def new_project_params
     params
       .fetch(:new_project_form)
-      .permit(:name, :remote_url, :taxonomy_branch)
+      .permit(:name, :remote_url, :taxonomy_branch, :bulk_tagging_enabled)
   end
 end
