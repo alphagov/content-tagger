@@ -1,7 +1,5 @@
 module GovukTaxonomy
   class Branches
-    HOMEPAGE_CONTENT_ID = "f3bbdec2-0e62-4520-a7fd-6ffd5d36e03a".freeze
-
     def branch_name_for_content_id(content_id)
       get_content_item(content_id).dig('title')
     end
@@ -32,7 +30,7 @@ module GovukTaxonomy
     end
 
     def get_root_taxons(with_drafts:)
-      get_expanded_links_hash(HOMEPAGE_CONTENT_ID, with_drafts: with_drafts)
+      get_expanded_links_hash(ROOT_CONTENT_ID, with_drafts: with_drafts)
         .fetch('expanded_links', {})
         .fetch('root_taxons', [])
     end

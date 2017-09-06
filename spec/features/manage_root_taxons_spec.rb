@@ -41,10 +41,12 @@ RSpec.feature "Manage Root Taxons" do
   end
 
   def given_that_one_link_is_a_root_taxon
-    links = { "content_id" => "f3bbdec2-0e62-4520-a7fd-6ffd5d36e03a",
-              "links" =>
-               { "root_taxons" => @linkable_taxon_hash.first[:content_id] } }
-    publishing_api_has_links(links)
+    publishing_api_has_links(
+      "content_id" => GovukTaxonomy::ROOT_CONTENT_ID,
+      "links" => {
+        "root_taxons" => @linkable_taxon_hash.first[:content_id]
+      }
+    )
   end
 
   def when_i_visit_the_edit_taxonomy_page
@@ -69,7 +71,11 @@ RSpec.feature "Manage Root Taxons" do
   end
 
   def then_the_set_of_root_taxons_is_updated
-    assert_publishing_api_patch_links("f3bbdec2-0e62-4520-a7fd-6ffd5d36e03a", "links" =>
-      { "root_taxons" => @linkable_taxon_hash.map { |t| t[:content_id] } })
+    assert_publishing_api_patch_links(
+      GovukTaxonomy::ROOT_CONTENT_ID,
+      "links" => {
+        "root_taxons" => @linkable_taxon_hash.map { |t| t[:content_id] }
+      }
+    )
   end
 end

@@ -12,7 +12,7 @@ module TaxonomyHelper
   end
 
   def stub_draft_taxonomy_branch
-    content_id = GovukTaxonomy::Branches::HOMEPAGE_CONTENT_ID
+    content_id = GovukTaxonomy::ROOT_CONTENT_ID
 
     draft_root_taxons = {
       'root_taxons' => [

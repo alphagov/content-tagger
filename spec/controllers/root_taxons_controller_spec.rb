@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe RootTaxonsController, type: :controller do
   describe "#index" do
     it "gets root links" do
-      publishing_api_has_links("content_id" => RootTaxonsForm::HOMEPAGE_CONTENT_ID,
+      publishing_api_has_links("content_id" => GovukTaxonomy::ROOT_CONTENT_ID,
                                "links" => { "root_taxons" => [] })
 
       get :index
