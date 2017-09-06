@@ -6,7 +6,7 @@ RSpec.describe RootTaxonsForm do
 
   describe '#taxons_for_select' do
     before :each do
-      publishing_api_has_links("content_id" => RootTaxonsForm::HOMEPAGE_CONTENT_ID,
+      publishing_api_has_links("content_id" => GovukTaxonomy::ROOT_CONTENT_ID,
                                "links" => { "root_taxons" => [""] })
     end
     it 'returns all taxons for the select box' do
@@ -29,12 +29,12 @@ RSpec.describe RootTaxonsForm do
     end
     it 'updates given taxons, ignoring empty strings' do
       RootTaxonsForm.new(root_taxons: ["", "ID-3", "ID-4"]).update
-      assert_publishing_api_patch_links(RootTaxonsForm::HOMEPAGE_CONTENT_ID, "links" =>
+      assert_publishing_api_patch_links(GovukTaxonomy::ROOT_CONTENT_ID, "links" =>
         { "root_taxons" => ["ID-3", "ID-4"] })
     end
     it 'removes all taxons' do
       RootTaxonsForm.new(root_taxons: [""]).update
-      assert_publishing_api_patch_links(RootTaxonsForm::HOMEPAGE_CONTENT_ID, "links" =>
+      assert_publishing_api_patch_links(GovukTaxonomy::ROOT_CONTENT_ID, "links" =>
         { "root_taxons" => [] })
     end
   end
