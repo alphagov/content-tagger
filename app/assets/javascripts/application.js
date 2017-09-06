@@ -2,8 +2,6 @@
 //= require js.cookies.js
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/effects/effect-highlight
-//= require Chart.bundle
-//= require chartkick
 //= require select2
 //= require_self
 

@@ -10,7 +10,6 @@ $red: #b10e1e;
 @import 'taxonomy-tree';
 @import 'related-item-tagging';
 @import 'views/taxon';
-@import 'vendor/datatables.min';
 @import 'tagathon_project';
 
 .error-message {
@@ -58,12 +57,4 @@ $red: #b10e1e;
 
 .nav.nav-tabs {
   margin-bottom: 20px;
-}
-
-// for the experimental tagging history
-.filters {
-  margin-bottom: 20px;
-  a {
-    text-decoration: underline;
-  }
 }
