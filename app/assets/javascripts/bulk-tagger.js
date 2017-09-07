@@ -137,9 +137,12 @@
     taxons_for_select2: function(taxons) {
       var self = this;
       return Object.keys(taxons).reduce(function(acc, taxon_id) {
+        var ancestors = self.taxon_ancestors(taxon_id, taxons);
+        ancestors.shift(); // lose the first ancestor, it's common to all taxons
+
         acc.push({
           "id": taxon_id,
-          "text": self.taxon_ancestors(taxon_id, taxons).join(' > ')
+          "text": ancestors.join(' > ')
         });
         return acc;
       }, []);
