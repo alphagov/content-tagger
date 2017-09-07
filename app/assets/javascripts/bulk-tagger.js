@@ -164,13 +164,14 @@
 
     // Green flash of success
     mark_form_as_successfully_updated: function($form, taxons) {
-      taxons = typeof taxons !== 'undefined' ? taxons : [];
       $form.removeClass(this.form_error_class);
       $form.effect("highlight", { color: this.color_of_success }, 1000);
 
-      $select2 = $form.find('.select2');
-      $select2.data('taxons', taxons);
-      this.update_select2_with_new_taxons($select);
+      if(typeof taxons !== 'undefined') {
+        var $select2 = $form.find('.select2');
+        $select2.data('taxons', taxons);
+        this.update_select2_with_new_taxons($select2);
+      }
     },
 
     update_select2_with_new_taxons: function($select2) {
