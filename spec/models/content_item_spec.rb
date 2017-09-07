@@ -1,75 +1,73 @@
 require 'rails_helper'
 
 RSpec.describe ContentItem do
-  subject(:content_item) { described_class.new(data, blacklist: blacklist) }
-
-  let(:data) do
-    {
-      'base_path' => double,
-      'content_id' => double,
-      'document_type' => document_type,
-      'publishing_app' => publishing_app,
-      'rendering_app' => rendering_app,
-      'title' => double,
-    }
-  end
-
-  let(:blacklist) do
-    {
-      'blacklisted-app' => blacklisted_tag_types,
-    }
-  end
-
-  let(:document_type) { double }
-  let(:publishing_app) { double }
-  let(:rendering_app) { 'frontend' }
-
-  let(:blacklisted_tag_types) do
-    Tagging::ContentItemExpandedLinks::TAG_TYPES.sample(2)
-  end
-
-  before { allow(content_item).to receive(:taxons?) }
-
   describe '#blacklisted_tag_types' do
-    subject { content_item.blacklisted_tag_types }
+    it "includes per-app blacklisted types" do
+      configure_blacklist('blacklisted-app' => %w(foo bar))
 
-    context 'for apps in the blacklist' do
-      let(:publishing_app) { 'blacklisted-app' }
+      content_item = build_content_item(publishing_app: 'blacklisted-app')
 
-      specify 'should include blacklisted tag types' do
-        is_expected.to include(*blacklisted_tag_types)
-      end
+      expect(content_item.blacklisted_tag_types).to include(:foo, :bar)
     end
 
-    context 'for finder blacklisting during specialist-publisher migration' do
-      let(:document_type) { 'finder' }
-      let(:publishing_app) { 'specialist-publisher' }
+    it "includes topics for specialist-publisher docs" do
+      content_item = build_content_item(
+        document_type: 'finder',
+        publishing_app: 'specialist-publisher'
+      )
 
-      it { is_expected.to include(:topics) }
+      expect(content_item.blacklisted_tag_types).to include(:topics)
     end
 
-    context 'for a document type with related items' do
-      let(:document_type) { 'guide' }
+    it "includes related items by default" do
+      content_item = build_content_item(
+        document_type: 'literally-anything',
+      )
 
-      it { is_expected.not_to include(:ordered_related_items) }
+      expect(content_item.blacklisted_tag_types).to include(:ordered_related_items)
     end
 
-    context 'for a document type without related items' do
-      let(:document_type) { 'speech' }
+    it "does not include related items for selected document types" do
+      content_item = build_content_item(
+        document_type: 'guide', # or calculator, answer, etc
+      )
 
-      it { is_expected.to include(:ordered_related_items) }
+      expect(content_item.blacklisted_tag_types).not_to include(:ordered_related_items)
     end
 
-    context 'with taxons' do
-      before { allow(content_item).to receive(:taxons?) { true } }
+    it "includes related item overrides if there's no taxons tagged to the item" do
+      content_item = build_content_item
 
-      it { is_expected.not_to include(:ordered_related_items_overrides) }
+      allow(content_item).to receive(:taxons?) { false }
+
+      expect(content_item.blacklisted_tag_types).to include(:ordered_related_items_overrides)
     end
 
-    context 'without taxons' do
-      before { allow(content_item).to receive(:taxons?) { false } }
+    it "does not includes related item overrides if there's taxons tagged to the item" do
+      content_item = build_content_item
 
-      it { is_expected.to include(:ordered_related_items_overrides) }
+      allow(content_item).to receive(:taxons?) { true }
+
+      expect(content_item.blacklisted_tag_types).not_to include(:ordered_related_items_overrides)
     end
+  end
+
+  def build_content_item(data = {})
+    item = ContentItem.new({
+      base_path: double,
+      content_id: double,
+      document_type: double,
+      publishing_app: double,
+      rendering_app: 'frontend',
+      title: double,
+    }.merge(data).stringify_keys, blacklist: @blacklist || {})
+
+    allow(item).to receive(:taxons?)
+
+    item
+  end
+
+  def configure_blacklist(blacklist)
+    @blacklist = blacklist
   end
 end
