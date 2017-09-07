@@ -18,7 +18,8 @@
     this.options_for_select2 = {
       allowClear: true,
       multiple: true,
-      data: this.taxons_for_select2(taxons)
+      data: this.taxons_for_select2(taxons),
+      formatSelection: this.format_selected_taxon
     }
   };
 
@@ -48,6 +49,9 @@
           self.mark_form_as_failed_to_update($(this));
         }
       );
+
+      // Contains all the content-item tagging forms
+      var $content_item_forms = $element.find(self.selectors.content_item_forms);
 
       // Aligns the content-item selection checkboxes
       $content_item_forms.each(function(index, form) {
@@ -131,13 +135,31 @@
      * }]
     **/
     taxons_for_select2: function(taxons) {
+      var self = this;
       return Object.keys(taxons).reduce(function(acc, taxon_id) {
         acc.push({
           "id": taxon_id,
-          "text": taxons[taxon_id]
+          "text": self.taxon_ancestors(taxon_id, taxons).join(' > ')
         });
         return acc;
       }, []);
+    },
+
+    // Returns the ancestors array of taxon names
+    taxon_ancestors: function(taxon_id, taxons) {
+      var taxon = taxons[taxon_id];
+
+      if(taxon.parent_id !== null) {
+        return this.taxon_ancestors(taxon.parent_id, taxons).concat(taxon.name);
+      }
+      else {
+        return [taxon.name];
+      }
+    },
+
+    // renders the selected tag
+    format_selected_taxon: function(data) {
+      return data.text.split(' > ').pop();
     },
 
     // Green flash of success
@@ -148,7 +170,7 @@
 
       $select2 = $form.find('.select2');
       $select2.data('taxons', taxons);
-      self.update_select2_with_new_taxons($select);
+      this.update_select2_with_new_taxons($select);
     },
 
     update_select2_with_new_taxons: function($select2) {

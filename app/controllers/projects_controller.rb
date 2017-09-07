@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   def show
     render :show, locals: { project: project,
                             bulk_search: searcher,
-                            taxons: taxons_json,
+                            taxons: taxons,
                             content_items: content_items }
   end
 
@@ -35,11 +35,17 @@ private
     @_content_items ||= Projects::PrepareContentItems.call(searcher.project_content_items_to_display)
   end
 
-  def taxons_json
+  def taxons
     project
       .taxons
-      .reduce({}) { |acc, taxon| acc.merge(taxon.content_id => taxon.name) }
-      .to_json
+      .reduce({}) do |acc, taxon|
+        acc.merge(
+          taxon.content_id => {
+            name: taxon.name,
+            parent_id: taxon.parent_node.try(:content_id)
+          }
+        )
+      end
   end
 
   def project_index

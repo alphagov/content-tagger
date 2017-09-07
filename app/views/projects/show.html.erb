@@ -49,7 +49,7 @@
 </div>
 
 <script>
-  var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_s.html_safe %>);
+  var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_json.html_safe %>);
   bulkTagger.start_individual_taggers($('.tagathon-project'));
 
   <% if project.bulk_tagging_enabled? %>
