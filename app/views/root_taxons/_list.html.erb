@@ -1,0 +1,24 @@
+<style media="screen">
+  ul.taxons {
+    padding: 0;
+  }
+
+  ul.taxons li {
+    border-bottom: 1px solid #ccc;
+    height: 21px;
+    vertical-align: middle;
+    list-style: none;
+  }
+
+  .taxon-size-bar {
+    text-indent: -25px;
+    display: inline-block;
+    background-color: #000;
+    height: 20px;
+    float: right;
+  }
+</style>
+
+<ul class='taxons'>
+  <%= render "list_children", children: [@taxonomy_size.nested_tree] %>
+</ul>

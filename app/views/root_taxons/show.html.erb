@@ -1,7 +1,7 @@
 <%= display_header title: @content_item.title,
                    breadcrumbs: [:root_taxons, @content_item.title] do %>
 
-  <% %w[bubbles].each do |viz| %>
+  <% %w[list bubbles].each do |viz| %>
     <a href="<%= root_taxon_path(params[:id], viz: viz) %>"
        class="btn btn-lg <%= viz == params[:viz] ? 'btn-primary' : 'btn-default' %>"
        role="button">
@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<%= render params[:viz] if params[:viz].in?(%w[bubbles])%>
+<%= render params[:viz] if params[:viz].in?(%w[list bubbles])%>
 
 <p>
   Taxonomy branches:

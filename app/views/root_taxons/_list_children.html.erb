@@ -1,0 +1,16 @@
+<% (children || []).each do |child| %>
+  <li>
+    <%= child[:name] %>
+    <span class='taxon-size-bar'
+          <%# Set the width based on the size of the child, and the
+              maximum size across the whole tree, and scale this to be
+              between 0 and 30 percent. -%>
+          style='width: <%= (child[:size] * 30) / @taxonomy_size.max_size %>%'>
+      <%= child[:size] %>
+    </span>
+    <span class='taxon-size'></span>
+  </li>
+  <ul>
+    <%= render "list_children", children: child[:children] %>
+  </ul>
+<% end %>
