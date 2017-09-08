@@ -1,3 +1,4 @@
+//= require d3.v4.min.js
 //= require_tree .
 //= require js.cookies.js
 //= require jquery-ui/widgets/sortable
