@@ -1,5 +1,15 @@
 <%= display_header title: @content_item.title,
-                   breadcrumbs: [:root_taxons, @content_item.title] %>
+                   breadcrumbs: [:root_taxons, @content_item.title] do %>
+
+  <% %w[bubbles].each do |viz| %>
+    <a href="<%= root_taxon_path(params[:id], viz: viz) %>"
+       class="btn btn-lg <%= viz == params[:viz] ? 'btn-primary' : 'btn-default' %>"
+       role="button">
+      <%= viz.titlecase %>
+    </a>
+  <% end %>
+<% end %>
+
 <p>
   Taxonomy branches:
 <% GovukTaxonomy::Branches.new.all.each do |root_taxon| %>
