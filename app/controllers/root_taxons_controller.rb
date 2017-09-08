@@ -3,6 +3,15 @@ class RootTaxonsController < ApplicationController
 
   def show
     @content_item = ContentItem.find!(params[:id])
+
+    @taxonomy_size = Taxonomy::TaxonomySize.new(@content_item)
+
+    respond_to do |format|
+      format.html
+      format.json do
+        render json: @taxonomy_size.nested_tree
+      end
+    end
   end
 
   def edit_all
