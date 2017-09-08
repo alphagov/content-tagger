@@ -1,0 +1,60 @@
+<style>
+ circle {
+     stroke: grey;
+     stroke-width: 1px;
+ }
+
+ text {
+     font: 10px sans-serif;
+     fill: black;
+     text-anchor: middle;
+ }
+</style>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label id="lower_bound_label"
+           for="lower_bound_range_input">
+    </label>
+    <input class="form-control hidden"
+           id="lower_bound_range_input"
+           type="range"
+           min="0">
+  </div>
+  <div class="form-group">
+    <label id="upper_bound_label"
+           for="upper_bound_range_input">
+    </label>
+    <input class="form-control hidden"
+           id="upper_bound_range_input"
+           type="range"
+           min="0">
+  </div>
+</form>
+
+<noscript>
+  <br>
+  <div class="alert alert-danger">
+    <h1>JavaScript required</h1>
+    <p>
+      This visulisation requires JavaScript to work.
+    </p>
+  </div>
+</noscript>
+
+<div id="loading-notification">
+  <h2>Visualisation loading...</h2>
+  <div class="progress">
+    <div class="progress-bar progress-bar-striped active"
+         role="progressbar"
+         style="width: 100%">
+    </div>
+  </div>
+</div>
+
+<svg style="width: 100%;"
+     height="auto"
+     viewBox="0 0 1000 1000"
+     data-url="<%= root_taxon_path(@content_item.content_id, format: "json", cache: params[:cache]) %>"
+     data-module="bubbles-visualisation">
+</svg>

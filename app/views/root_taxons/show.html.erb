@@ -10,6 +10,8 @@
   <% end %>
 <% end %>
 
+<%= render params[:viz] if params[:viz].in?(%w[bubbles])%>
+
 <p>
   Taxonomy branches:
 <% GovukTaxonomy::Branches.new.all.each do |root_taxon| %>
