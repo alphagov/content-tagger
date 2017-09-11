@@ -1,6 +1,11 @@
 class ProjectContentItem < ActiveRecord::Base
   belongs_to :project
 
+  enum flag: {
+    needs_help: 1,
+    missing_topic: 2,
+  }
+
   attr_accessor :taxons
 
   def base_path
