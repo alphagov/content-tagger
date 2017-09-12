@@ -1,0 +1,39 @@
+<%= display_header title: "Tagging activity", breadcrumbs: ["Tagging activity"] %>
+
+<div class="tagged-content">
+  <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
+    <thead>
+    <tr class="table-header">
+      <th style='width: 100px;'>Date</th>
+      <th>Event</th>
+      <th>User</th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+    <% page.link_changes.each do |link_change| %>
+        <tr>
+          <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
+          <td>
+            <% if link_change[:change]=='remove' %>
+                  <%= link_to link_change[:target][:title], link_change[:target][:base_path] %>
+                  removed
+                  from  <%= link_to link_change[:source][:title], link_change[:source][:base_path] %>
+            <% else %>
+                <%= link_to link_change[:target][:title], link_change[:target][:base_path] %>
+                tagged to  <%= link_to link_change[:source][:title], link_change[:source][:base_path] %>
+            <% end %>
+          </td>
+          <td>
+            <% if link_change[:user_name] %>
+                <%= link_change[:user_name] %> (<%= link_change[:organisation] || "No organisation" %>)</td>
+            <% else %>
+                <em>Unknown user</em>
+            <% end %>
+            </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

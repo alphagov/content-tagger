@@ -64,6 +64,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :analytics, only: [:show]
+
   if Rails.env.development?
     mount GovukAdminTemplate::Engine, at: '/style-guide'
 
