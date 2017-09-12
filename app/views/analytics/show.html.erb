@@ -1,5 +1,16 @@
 <%= display_header title: "Tagging activity", breadcrumbs: ["Tagging activity"] %>
 
+
+<div class='filters'>
+  Users:
+  <%= link_to "All users", analytics_path, class: 'filter-link' %>
+
+  <% page.users.each do |user| %>
+      <%= link_to user[:user_name], { users: [user[:user_uid]] }, class: 'filter-link' %>
+  <% end %>
+</div>
+
+
 <div class="tagged-content">
   <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
     <thead>
@@ -18,9 +29,9 @@
           <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
           <td>
             <% if link_change[:change]=='remove' %>
-                  <%= link_to link_change[:target][:title], link_change[:target][:base_path] %>
-                  removed
-                  from  <%= link_to link_change[:source][:title], link_change[:source][:base_path] %>
+                <%= link_to link_change[:target][:title], link_change[:target][:base_path] %>
+                removed
+                from  <%= link_to link_change[:source][:title], link_change[:source][:base_path] %>
             <% else %>
                 <%= link_to link_change[:target][:title], link_change[:target][:base_path] %>
                 tagged to  <%= link_to link_change[:source][:title], link_change[:source][:base_path] %>
