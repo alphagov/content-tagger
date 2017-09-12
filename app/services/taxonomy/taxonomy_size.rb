@@ -17,6 +17,22 @@ module Taxonomy
         }
       end
     end
+
+    def max_size
+      @_max_size ||= begin
+        max_size_in_tree = lambda do |taxon|
+          if taxon[:children].nil?
+            taxon[:size]
+          else
+            [
+              taxon[:children].map(&max_size_in_tree).max,
+              taxon[:size]
+            ].max
+          end
+        end
+
+        max_size_in_tree.call(nested_tree)
+      end
     end
 
   private
