@@ -53,8 +53,12 @@ Rails.application.routes.draw do
 
   resources :taxonomies, only: %i(show), param: :content_id
 
-  resources :root_taxons, only: [:index, :show]
-  resource :root_taxons, only: [:update]
+  resources :root_taxons, only: [:index, :show] do
+    collection do
+      get 'edit_all'
+      put 'update_all'
+    end
+  end
 
   if Rails.env.development?
     mount GovukAdminTemplate::Engine, at: '/style-guide'

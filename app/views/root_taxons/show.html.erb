@@ -6,7 +6,7 @@
   <% if root_taxon['content_id'] == @content_item.content_id %>
     <strong><%= root_taxon['title'] %></strong>
   <% else %>
-    <%= link_to root_taxon['title'], { id: root_taxon['content_id'] } %>
+    <%= link_to root_taxon['title'], root_taxon_path(root_taxon['content_id']) %>
   <% end %>
 <% end %>
 </p>
