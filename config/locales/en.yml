@@ -104,6 +104,10 @@ en:
       visible_to_departmental_editors: 'Visible to departmental editors?'
       visible_to_departmental_editors_hint: 'Affects the visiblity of draft taxonomy root nodes only'
       associated_taxons: Associated taxons
+    projects:
+      flags:
+        help-needed: 'Flagged: needs publisher review'
+        missing-topic: 'Flagged: needs IA review'
   controllers:
     bulk_taggings:
       failure: We could not perform search, please try again.

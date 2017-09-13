@@ -19,8 +19,22 @@ RSpec.describe "flagging a content item" do
     and_there_should_be_an_associated_suggestion
   end
 
+  scenario "flagged content is labelled in table view" do
+    given_there_is_a_project_with_flagged_content_items
+    when_i_visit_the_project_page
+    then_the_flagged_content_items_should_be_labelled_correctly
+  end
+
   def given_there_is_a_project_with_a_content_item
     create(:project, :with_content_item)
+    stub_empty_bulk_taxons_lookup
+    stub_draft_taxonomy_branch
+  end
+
+  def given_there_is_a_project_with_flagged_content_items
+    project = create(:project)
+    create(:project_content_item, :flagged_needs_help, project: project)
+    create(:project_content_item, :flagged_missing_topic, project: project)
     stub_empty_bulk_taxons_lookup
     stub_draft_taxonomy_branch
   end
@@ -52,5 +66,10 @@ RSpec.describe "flagging a content item" do
 
   def and_there_should_be_an_associated_suggestion
     expect(Project.first.content_items.first.suggested_tags).to eql "cool new topic"
+  end
+
+  def then_the_flagged_content_items_should_be_labelled_correctly
+    expect(page).to have_content 'Flagged: needs publisher review'
+    expect(page).to have_content 'Flagged: needs IA review'
   end
 end
