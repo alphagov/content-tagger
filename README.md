@@ -9,6 +9,22 @@ This is a Ruby on Rails application.
 It interacts with the publishing-api to manage the "links hash" for content on GOV.UK.
 It also allows the creation of new taxons, updating taxons and bulk-tagging.
 
+### Permissions
+
+Users need to have either the `GDS Editor` or the `Tagathon participant` permission to access
+this application.
+
+ - **GDS Editor** users will have full unrestricted access to the GOV.UK taxonomy and navigation tools
+ - **Tagathon participant** users have restricted access to the Tagathon Project bulk tagger and analytics tools
+
+### Running the application locally
+
+For the purposes of local development, it's easiest to run this in a Rails console locally to give yourself admin access to the application.
+
+```
+User.first.update permissions: ["signin", "GDS Editor"]
+```
+
 ## Features
 
 ### Bulk Tagging
