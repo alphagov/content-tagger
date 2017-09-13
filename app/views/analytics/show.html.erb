@@ -48,10 +48,11 @@
         <td>
           <% if link_change[:user_name] %>
             <%= link_change[:user_name] %>
-            (<%= link_change[:organisation] || "No organisation" %>)</td>
+            (<%= link_change[:organisation] || "No organisation" %>)
           <% else %>
             <em>Unknown user</em>
           <% end %>
+        </td>
       </tr>
     <% end %>
     </tbody>
