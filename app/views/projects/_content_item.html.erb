@@ -1,7 +1,16 @@
 <div class='content-item'>
   <%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true, html: { data: { ref: content_item.id }, class: 'js-content-item-form' } do |f| %>
     <%= token_tag %>
-    <%= link_to content_item.title, content_item.url, data: {proxy_iframe: 'enabled', modal_url: content_item.proxied_url, toggle: 'modal', target: '#iframe_modal_id'} %>
+    <h4>
+      <%= link_to content_item.title, content_item.url, data: {proxy_iframe: 'enabled', modal_url: content_item.proxied_url, toggle: 'modal', target: '#iframe_modal_id'} %>
+    </h4>
+
+    <% if content_item.needs_help? %>
+      <span class='label label-danger'><%= I18n.t('views.projects.flags.help-needed') %></span>
+    <% elsif content_item.missing_topic? %>
+      <span class='label label-danger'><%= I18n.t('views.projects.flags.missing-topic') %></span>
+    <% end %>
+
     <p><%= content_item.description %></p>
     <%= f.input :taxons,
       placeholder: 'Choose one...',
