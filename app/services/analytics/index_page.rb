@@ -1,6 +1,5 @@
 module Analytics
   class IndexPage
-
     attr_reader :link_changes
 
     def initialize(params = {link_types: ['taxons']})
@@ -29,8 +28,6 @@ module Analytics
       end
 
       results
-
     end
-
   end
 end
