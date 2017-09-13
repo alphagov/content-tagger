@@ -11,5 +11,7 @@
         autocomplete: 'off',
         data: { taxons: content_item.taxons }
       } %>
+
+    <p><%= link_to "Flag for review", flags_project_content_item_path(content_item.project, content_item) %></p>
   <% end %>
 </div>

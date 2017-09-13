@@ -28,7 +28,10 @@ Rails.application.routes.draw do
   get '/lookup', to: redirect("/taggings/lookup")
 
   resources :projects, only: %i(index show new create) do
-    resources :project_content_items, only: [:update], as: 'content_item'
+    resources :project_content_items, only: [:update], as: 'content_item' do
+      get "/flags", on: :member, to: "project_content_items#flags"
+      post "/flags", on: :member, to: "project_content_items#update_flags", as: 'update_flags'
+    end
     post '/bulk_update', to: 'project_content_items#bulk_update', as: 'bulk_update'
   end
 
