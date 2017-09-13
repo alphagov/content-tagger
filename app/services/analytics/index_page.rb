@@ -23,7 +23,9 @@ module Analytics
         if user.present?
           result[:user_uid] = user.uid
           result[:user_name] = user.name
-          result[:organisation] = user.organisation_slug.capitalize.gsub('-', ' ')
+          result[:organisation] = user.organisation_slug.try do |slug|
+            slug.capitalize.gsub('-', ' ')
+          end
         end
       end
 
