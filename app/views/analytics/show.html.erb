@@ -31,7 +31,7 @@
       <tr>
         <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
         <td>
-          <% if link_change[:change]=='remove' %>
+          <% if link_change[:change] == 'remove' %>
             <%= link_to link_change[:target][:title],
                         link_change[:target][:base_path] %>
             removed from
