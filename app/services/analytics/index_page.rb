@@ -29,7 +29,10 @@ module Analytics
         end
       end
 
-      results
+      # The Publishing API returns the results ordered so that the
+      # latest come last. Reverse this so that the latest events are
+      # displayed first.
+      results.reverse
     end
   end
 end
