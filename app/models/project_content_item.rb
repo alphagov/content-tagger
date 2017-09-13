@@ -12,7 +12,7 @@ class ProjectContentItem < ActiveRecord::Base
     url.gsub('https://www.gov.uk', '')
   end
 
-  def mark_complete
+  def done!
     update_attributes(done: true)
   end
 

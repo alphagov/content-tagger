@@ -1,5 +1,5 @@
 <div class='content-item'>
-  <%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true, html: { data: { ref: content_item.id }, class: 'js-content-item-form' } do |f| %>
+  <%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true, html: { data: { ref: content_item.id }, class: 'js-content-item-form content-item-form' } do |f| %>
     <%= token_tag %>
     <h4>
       <%= link_to content_item.title, content_item.url, data: {proxy_iframe: 'enabled', modal_url: content_item.proxied_url, toggle: 'modal', target: '#iframe_modal_id'} %>
@@ -9,6 +9,8 @@
       <span class='label label-danger'><%= I18n.t('views.projects.flags.help-needed') %></span>
     <% elsif content_item.missing_topic? %>
       <span class='label label-danger'><%= I18n.t('views.projects.flags.missing-topic') %></span>
+    <% elsif content_item.done? %>
+      <span class='label label-primary'>Done</span>
     <% end %>
 
     <p><%= content_item.description %></p>
@@ -20,9 +22,10 @@
         autocomplete: 'off',
         data: { taxons: content_item.taxons }
       } %>
-
-    <p>
-      <%= link_to text_for_content_flagging_link(content_item), flags_project_content_item_path(content_item.project, content_item) %>
-    </p>
   <% end %>
+
+  <div class='actions actions-inline'>
+    <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item) %>
+    <%= link_to text_for_content_flagging_link(content_item), flags_project_content_item_path(content_item.project, content_item), class: 'add-left-margin' %>
+  </div>
 </div>

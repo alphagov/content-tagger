@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     resources :project_content_items, only: [:update], as: 'content_item' do
       get "/flags", on: :member, to: "project_content_items#flags"
       post "/flags", on: :member, to: "project_content_items#update_flags", as: 'update_flags'
+      post "/done", on: :member, to: 'project_content_items#mark_as_done', as: 'mark_done'
     end
     post '/bulk_update', to: 'project_content_items#bulk_update', as: 'bulk_update'
   end
