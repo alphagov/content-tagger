@@ -1,0 +1,8 @@
+<%= form_for content_item, url: update_flags_project_content_item_path(project, content_item), method: :post do |f| %>
+  <h1>Mark '<%= content_item.title %>' as resolved</h1>
+
+  <%= f.hidden_field :flag, value: "" %>
+
+  <%= f.submit "Continue", class: 'btn btn-success add-right-margin' %>
+  <%= link_to "Cancel", :back %>
+<% end %>
