@@ -21,6 +21,8 @@
         data: { taxons: content_item.taxons }
       } %>
 
-    <p><%= link_to "Flag for review", flags_project_content_item_path(content_item.project, content_item) %></p>
+    <p>
+      <%= link_to text_for_content_flagging_link(content_item), flags_project_content_item_path(content_item.project, content_item) %>
+    </p>
   <% end %>
 </div>

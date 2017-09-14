@@ -25,6 +25,13 @@ RSpec.describe "flagging a content item" do
     then_the_flagged_content_items_should_be_labelled_correctly
   end
 
+  scenario "removing a flag" do
+    given_there_is_a_project_with_a_flagged_content_item
+    when_i_visit_the_project_page
+    and_i_mark_the_content_item_as_resolved
+    then_the_content_item_should_no_longer_be_flagged
+  end
+
   def given_there_is_a_project_with_a_content_item
     create(:project, :with_content_item)
     stub_empty_bulk_taxons_lookup
@@ -35,6 +42,13 @@ RSpec.describe "flagging a content item" do
     project = create(:project)
     create(:project_content_item, :flagged_needs_help, project: project)
     create(:project_content_item, :flagged_missing_topic, project: project)
+    stub_empty_bulk_taxons_lookup
+    stub_draft_taxonomy_branch
+  end
+
+  def given_there_is_a_project_with_a_flagged_content_item
+    project = create(:project)
+    create(:project_content_item, :flagged_needs_help, project: project)
     stub_empty_bulk_taxons_lookup
     stub_draft_taxonomy_branch
   end
@@ -60,6 +74,11 @@ RSpec.describe "flagging a content item" do
     click_button "Continue"
   end
 
+  def and_i_mark_the_content_item_as_resolved
+    click_link "Mark as resolved"
+    click_button "Continue"
+  end
+
   def then_them_content_item_should_be_flagged_as_missing_topic
     expect(Project.first.content_items.first.missing_topic?).to be true
   end
@@ -71,5 +90,9 @@ RSpec.describe "flagging a content item" do
   def then_the_flagged_content_items_should_be_labelled_correctly
     expect(page).to have_content 'Flagged: needs publisher review'
     expect(page).to have_content 'Flagged: needs IA review'
+  end
+
+  def then_the_content_item_should_no_longer_be_flagged
+    expect(page).not_to have_content 'Flagged: needs publisher review'
   end
 end
