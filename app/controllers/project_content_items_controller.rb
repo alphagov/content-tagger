@@ -3,7 +3,6 @@ class ProjectContentItemsController < ApplicationController
 
   def update
     tag_content
-    content_item.mark_complete
     head :ok
   rescue GdsApi::HTTPClientError
     head :bad_request
@@ -23,6 +22,11 @@ class ProjectContentItemsController < ApplicationController
     content_item.update(flag_params)
     content_item.save
     redirect_to project_path(project)
+  end
+
+  def mark_as_done
+    content_item.done!
+    redirect_back fallback_location: project_path(project)
   end
 
 private

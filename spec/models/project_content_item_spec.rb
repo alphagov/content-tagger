@@ -21,4 +21,13 @@ RSpec.describe ProjectContentItem do
       expect(content_item.proxied_url).to eq("#{proxy_path}/path")
     end
   end
+
+  describe "#done!" do
+    it "updates the content item to 'done' and saves it" do
+      subject = create(:project_content_item, done: false)
+      subject.done!
+      expect(subject.done?).to be true
+      expect(subject.persisted?).to be true
+    end
+  end
 end

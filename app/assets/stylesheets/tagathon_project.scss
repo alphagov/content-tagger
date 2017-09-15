@@ -16,11 +16,15 @@
   }
 
   .content-list {
-    form {
-      margin: 20px 0;
+    .content-item {
       padding: 20px 40px;
+      margin: 20px 0 30px 0;
       border: 1px solid #ccc;
       border-width:1px 0 0 0;
+    }
+
+    form.content-item-form {
+      clear: left;
 
       a {
         font-size: 1.2em;
@@ -34,6 +38,10 @@
         background-color: #ffb6b6;
         transition: background-color 1s;
       }
+    }
+
+    .actions-inline>*{
+      float: left;
     }
   }
 

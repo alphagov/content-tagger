@@ -67,6 +67,13 @@ RSpec.feature "Projects", type: :feature do
     then_i_see_the_content_item_and_its_tag_data
   end
 
+  scenario "marking a content item as done" do
+    given_there_is_a_project_with_a_tagged_content_item
+    when_i_visit_the_project_page
+    and_i_mark_the_content_item_as_done
+    then_the_content_item_should_be_marked_as_done
+  end
+
   def given_there_is_a_project_with_content_items
     @project = create :project, :with_content_items
     stub_draft_taxonomy_branch
@@ -196,6 +203,10 @@ RSpec.feature "Projects", type: :feature do
     end
   end
 
+  def and_i_mark_the_content_item_as_done
+    click_button "Done"
+  end
+
   def then_i_can_see_my_new_project_in_the_list
     expect(page).to have_content 'my_project'
   end
@@ -222,5 +233,11 @@ RSpec.feature "Projects", type: :feature do
 
   def then_there_is_no_bulk_tagging_interface
     expect(page).not_to have_selector '.bulk-tagger'
+  end
+
+  def then_the_content_item_should_be_marked_as_done
+    within('.content-item .label') do
+      expect(page).to have_content 'Done'
+    end
   end
 end
