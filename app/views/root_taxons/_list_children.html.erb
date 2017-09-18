@@ -1,0 +1,13 @@
+<% (children || []).each do |child| %>
+  <li>
+    <%= child[:name] %>
+    <span class='taxon-size-bar'
+          style='width: <%= @taxonomy_size.bar_width_percentage(child[:size]) %>%'>
+      <%= child[:size] %>
+    </span>
+    <span class='taxon-size'></span>
+  </li>
+  <ul>
+    <%= render "list_children", children: child[:children] %>
+  </ul>
+<% end %>
