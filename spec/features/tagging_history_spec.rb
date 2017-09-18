@@ -1,24 +1,24 @@
 require "rails_helper"
 
-RSpec.feature "Analytics", type: :feature do
+RSpec.feature "Tagging History", type: :feature do
   include ContentItemHelper
   include PublishingApiHelper
 
   scenario "Show added link changes" do
     given_there_are_some_added_link_changes
-    when_i_visit_the_analytics_page
+    when_i_visit_the_tagging_history_index__page
     then_i_see_a_list_of_added_link_changes
   end
 
   scenario "Show removed link changes" do
     given_there_are_some_removed_link_changes
-    when_i_visit_the_analytics_page
+    when_i_visit_the_tagging_history_index_page
     then_i_see_a_list_of_removed_link_changes
   end
 
   scenario "Show user and organisation" do
     given_there_are_some_link_changes_with_user_data
-    when_i_visit_the_analytics_page
+    when_i_visit_the_tagging_history_index_page
     then_i_see_the_user_and_organisation
   end
 
@@ -36,8 +36,8 @@ RSpec.feature "Analytics", type: :feature do
     stub_link_changes_request(link_changes_with_user_data)
   end
 
-  def when_i_visit_the_analytics_page
-    visit analytics_path
+  def when_i_visit_the_tagging_history_index_page
+    visit tagging_history_index_path
   end
 
   def then_i_see_a_list_of_added_link_changes

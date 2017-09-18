@@ -1,4 +1,4 @@
-module Analytics
+module TaggingHistory
   class IndexPage
     attr_reader :link_changes, :filter_by_user_options
 

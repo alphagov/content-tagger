@@ -1,8 +1,8 @@
-class AnalyticsController < ApplicationController
+class TaggingHistoryController < ApplicationController
   before_action :ensure_user_can_access_tagathon_tools!
 
   def index
-    render :index, locals: { page: Analytics::IndexPage.new({link_types: ['taxons']}.merge(filter_params))}
+    render :index, locals: { page: TaggingHistory::IndexPage.new({link_types: ['taxons']}.merge(filter_params))}
   end
 
   def show
@@ -11,7 +11,7 @@ class AnalyticsController < ApplicationController
     render :show,
            locals: {
              content_item: content_item,
-             page: Analytics::IndexPage.new(
+             page: TaggingHistory::IndexPage.new(
                {
                  link_types: ['taxons'],
                  target_content_ids: [content_item.content_id],

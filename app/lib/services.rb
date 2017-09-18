@@ -11,7 +11,7 @@ module Services
   end
 
   def self.link_changes_api
-    @link_changes_api ||= Analytics::LinkChangeApi.new(
+    @link_changes_api ||= TaggingHistory::LinkChangeApi.new(
       Plek.new.find('publishing-api'),
       disable_cache: true,
       bearer_token: ENV['PUBLISHING_API_BEARER_TOKEN'] || 'example',
