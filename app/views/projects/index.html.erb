@@ -9,6 +9,10 @@
     <%= branch_projects.first.taxonomy_branch_title %>
   </h2>
 
+  <p>
+    <%= link_to "View suggested topics", project_content_items_path(taxonomy_branch: taxonomy_branch, flagged: "missing_topic") %>
+  </p>
+
   <table class="table queries-list table-bordered table-striped">
     <thead>
     <tr class="table-header">

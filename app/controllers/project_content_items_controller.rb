@@ -1,6 +1,11 @@
 class ProjectContentItemsController < ApplicationController
   before_action :ensure_user_can_access_tagathon_tools!
 
+  def index
+    @project_content_items = ProjectContentItemQuery.new(params)
+    @title = index_page_title
+  end
+
   def update
     tag_content
     head :ok
@@ -30,6 +35,12 @@ class ProjectContentItemsController < ApplicationController
   end
 
 private
+
+  def index_page_title
+    response = Services.publishing_api.get_content(params[:taxonomy_branch])
+    taxonomy_title = response.to_h['title']
+    "Content flagged for #{taxonomy_title}"
+  end
 
   def flag_params
     params.require(:project_content_item).permit(:flag, :suggested_tags)
