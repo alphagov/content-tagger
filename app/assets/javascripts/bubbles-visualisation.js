@@ -33,10 +33,12 @@
       .text(function(d) { return d.data.name + "\n" + format(d.data.size); });
 
     node.append("circle")
+      .attr("class", "bubbles-circle")
       .attr("r", function(d) { return d.r; });
 
     node.filter(function(d) { return !d.children; })
       .append("text")
+      .attr("class", "bubbles-text")
       .attr("dy", "0.3em")
       .text(function(d) { return d.data.name.substring(0, d.r / 3); });
 
