@@ -4,18 +4,24 @@
   <% end %>
 <% end %>
 
-<table class="table queries-list table-bordered table-striped">
-  <thead>
-  <tr class="table-header">
-    <th>Project</th>
-  </tr>
-  </thead>
+<% projects.group_by(&:taxonomy_branch).each do |taxonomy_branch, branch_projects| %>
+  <h2>
+    <%= branch_projects.first.taxonomy_branch_title %>
+  </h2>
 
-  <tbody>
-  <% projects.each do |project| %>
-      <tr>
-        <td><%= link_to project.name, project_path(project) %></td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
+  <table class="table queries-list table-bordered table-striped">
+    <thead>
+    <tr class="table-header">
+      <th>Project</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% branch_projects.each do |project| %>
+        <tr>
+          <td><%= link_to project.name, project_path(project) %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
