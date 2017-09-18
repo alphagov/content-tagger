@@ -1,4 +1,6 @@
 class RootTaxonsController < ApplicationController
+  VISUALISATIONS = %w(list bubbles).freeze
+
   before_action :ensure_user_can_administer_taxonomy!
 
   def show
@@ -28,4 +30,10 @@ private
   def root_taxons_params
     params.require(:root_taxons_form).permit(root_taxons: [])
   end
+
+  def visualisation_to_render
+    params.fetch(:viz, "bubbles")
+  end
+
+  helper_method :visualisation_to_render
 end

@@ -1,16 +1,20 @@
 <%= display_header title: @content_item.title,
                    breadcrumbs: [:root_taxons, @content_item.title] do %>
 
-  <% %w[list bubbles].each do |viz| %>
+  <% RootTaxonsController::VISUALISATIONS.each do |viz| %>
     <a href="<%= root_taxon_path(params[:id], viz: viz) %>"
-       class="btn btn-lg <%= viz == params[:viz] ? 'btn-primary' : 'btn-default' %>"
+       class="btn btn-lg <%= viz == visualisation_to_render ? 'btn-primary' : 'btn-default' %>"
        role="button">
       <%= viz.titlecase %>
     </a>
   <% end %>
 <% end %>
 
-<%= render params[:viz] if params[:viz].in?(%w[list bubbles])%>
+<% if visualisation_to_render.in? RootTaxonsController::VISUALISATIONS %>
+  <%= render visualisation_to_render %>
+<% else %>
+  <h2>Unknown visualisation <%= visualisation_to_render %>
+<% end %>
 
 <p>
   Taxonomy branches:
@@ -18,7 +22,9 @@
   <% if root_taxon['content_id'] == @content_item.content_id %>
     <strong><%= root_taxon['title'] %></strong>
   <% else %>
-    <%= link_to root_taxon['title'], { id: root_taxon['content_id'], viz: params[:viz] } %>
+    <%= link_to root_taxon['title'],
+                id: root_taxon['content_id'],
+                viz: visualisation_to_render %>
   <% end %>
 <% end %>
 </p>
