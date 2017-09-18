@@ -6,7 +6,9 @@ class RootTaxonsController < ApplicationController
   def show
     @content_item = ContentItem.find!(params[:id])
 
-    @taxonomy_size = Taxonomy::TaxonomySize.new(@content_item)
+    @taxonomy_size = Taxonomy::TaxonomySizePresenter.new(
+      Taxonomy::TaxonomySize.new(@content_item)
+    )
 
     respond_to do |format|
       format.html
