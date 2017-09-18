@@ -1,5 +1,6 @@
-<%= display_header title: "Tagging history for #{content_item.title}",
-                   breadcrumbs: ["Tagging history"] do %>
+<%= display_header title: "Tagging history for #{link_to content_item.title, taxon_path(content_item.content_id)}",
+                   page_title: "Tagging history for #{content_item.title}",
+                   breadcrumbs: [link_to("Tagging history", tagging_history_index_path), content_item] do %>
   <%= render partial: "user_filter", locals: local_assigns %>
 <% end %>
 

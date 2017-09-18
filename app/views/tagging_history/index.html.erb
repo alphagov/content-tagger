@@ -29,7 +29,7 @@
             tagged to
           <% end %>
           <%= link_to link_change[:target][:title],
-                      website_url(link_change[:target][:base_path]) %>
+                      tagging_history_path(link_change[:target][:content_id]) %>
         </td>
         <td>
           <% if link_change[:user_name] %>

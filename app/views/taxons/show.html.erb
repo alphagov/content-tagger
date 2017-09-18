@@ -2,6 +2,8 @@
   <% unless page.unpublished? %>
     <%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(page.taxon_content_id), class: "btn btn-default"%>
 
+    <%= link_to I18n.t('views.taxons.tagging_history'), tagging_history_path(page.taxon_content_id), class: "btn btn-default"%>
+
     <%= link_to new_taxon_migration_path(source_content_id: page.taxon_content_id),
       class: 'btn btn-md btn-default' do %>
       <i class="glyphicon glyphicon-move"></i>

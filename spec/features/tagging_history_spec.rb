@@ -6,7 +6,7 @@ RSpec.feature "Tagging History", type: :feature do
 
   scenario "Show added link changes" do
     given_there_are_some_added_link_changes
-    when_i_visit_the_tagging_history_index__page
+    when_i_visit_the_tagging_history_index_page
     then_i_see_a_list_of_added_link_changes
   end
 
@@ -48,7 +48,7 @@ RSpec.feature "Tagging History", type: :feature do
                     )
       expect(tr).to have_link(
                       link_change['target']['title'],
-                      href: Plek.new.website_root + link_change['target']['base_path']
+                      href: tagging_history_path(link_change['target']['content_id'])
                     )
       expect(tr).to have_text('tagged to')
       expect(tr).to have_text('Unknown user')
@@ -64,7 +64,7 @@ RSpec.feature "Tagging History", type: :feature do
                     )
       expect(tr).to have_link(
                       link_change['target']['title'],
-                      href: Plek.new.website_root + link_change['target']['base_path']
+                      href: tagging_history_path(link_change['target']['content_id'])
                     )
       expect(tr).to have_text('removed')
       expect(tr).to have_text('Unknown user')
