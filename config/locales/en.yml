@@ -108,9 +108,7 @@ en:
       flags:
         help-needed: 'Flagged: needs publisher review'
         missing-topic: 'Flagged: needs IA review'
-      flags_link:
-        flagged: Mark as resolved
-        not_flagged: Flag for review
+      flag_for_review: Flag for review
   controllers:
     bulk_taggings:
       failure: We could not perform search, please try again.

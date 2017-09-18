@@ -24,8 +24,12 @@
       } %>
   <% end %>
 
-  <div class='actions actions-inline'>
-    <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item) %>
-    <%= link_to text_for_content_flagging_link(content_item), flags_project_content_item_path(content_item.project, content_item), class: 'add-left-margin' %>
-  </div>
+  <% unless content_item.done? %>
+    <div class='actions actions-inline'>
+      <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item), class: 'btn btn-primary' %>
+      <% unless content_item.flag? %>
+        <%= link_to I18n.t('views.projects.flag_for_review'), flags_project_content_item_path(content_item.project, content_item), class: 'btn btn-link' %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

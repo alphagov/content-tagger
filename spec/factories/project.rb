@@ -15,6 +15,10 @@ FactoryGirl.define do
       content_items { build_list :project_content_item, 1 }
     end
 
+    trait :with_a_content_item do
+      content_items { build_list :project_content_item, 1 }
+    end
+
     trait :with_bulk_tagging_disabled do
       bulk_tagging_enabled false
     end
