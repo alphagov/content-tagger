@@ -1,12 +1,11 @@
 FactoryGirl.define do
   factory :link_change, class: Hash do
-    sequence :id, 1 do |n|
-      "#{n}"
-    end
+    sequence :id, 1, &:to_s
+
     sequence :source, 1 do |n|
-       { title: "source title #{n}",
-         base_path: "source/base/path/#{n}",
-         content_id: SecureRandom.uuid }
+      { title: "source title #{n}",
+        base_path: "source/base/path/#{n}",
+        content_id: SecureRandom.uuid }
     end
     sequence :target, 1 do |n|
       { title: "target title #{n}",

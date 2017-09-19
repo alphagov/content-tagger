@@ -2,7 +2,7 @@ module TaggingHistory
   class IndexPage
     attr_reader :link_changes, :filter_by_user_options
 
-    def initialize(params = {link_types: ['taxons']})
+    def initialize(params = { link_types: ['taxons'] })
       @filter_by_user_options = {}
       @link_changes = get_link_changes(params)
     end
@@ -17,13 +17,12 @@ module TaggingHistory
 
       results.each do |result|
         user = User.find_by_uid(result[:user_uid])
-        if user.present?
-          result[:user_uid] = user.uid
-          result[:user_name] = user.name
-          @filter_by_user_options[user.name] = user.uid
-          result[:organisation] = user.organisation_slug.try do |slug|
-            slug.capitalize.tr('-', ' ')
-          end
+        next unless user.present?
+        result[:user_uid] = user.uid
+        result[:user_name] = user.name
+        @filter_by_user_options[user.name] = user.uid
+        result[:organisation] = user.organisation_slug.try do |slug|
+          slug.capitalize.tr('-', ' ')
         end
       end
 

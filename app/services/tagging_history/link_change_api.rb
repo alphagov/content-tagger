@@ -1,10 +1,10 @@
 module TaggingHistory
   class LinkChangeApi < GdsApi::Base
-    def get_link_changes(params = {link_types: ['taxons']})
+    def get_link_changes(params = { link_types: ['taxons'] })
       get_json(link_changes_url(params))
     end
 
-    private
+  private
 
     def link_changes_url(params = {})
       query = query_string(params)
