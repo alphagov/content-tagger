@@ -9,23 +9,23 @@
     <form method="GET">
       <input id="project-tagging-content-item-search"
              type="text"
-             class="form-control js-bulk-tagging-search-filter"
-             name="query"
-             value="<%= bulk_search.query %>"
+             class="form-control"
+             name="title_search"
+             value="<%= query.params[:title_search] %>"
              placeholder="Filter by title...">
 
-      <% Projects::BulkSearch::TAGGED_STATES.each do |state|  %>
+      <% filters.each do |filter_option|  %>
         <div class="radio">
           <label>
             <input type="radio"
-                   name="tagged_state"
-                   id="tagged_state_<%= state %>"
-                   value="<%= state %>"
-                   <% if bulk_search.selected_state == state %>
+                   name="filter"
+                   id="filter_<%= filter_option %>"
+                   value="<%= filter_option %>"
+                   <% if query.current_filter == filter_option %>
                    checked
                    <% end %>
             >
-            <%= state.titleize %>
+            <%= filter_option.titleize %>
           </label>
         </div>
       <% end %>

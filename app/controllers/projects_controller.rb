@@ -6,10 +6,12 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    render :show, locals: { project: project,
-                            bulk_search: searcher,
+    query = ProjectFilterQuery.new(params, project)
+    render :show, locals: { content_items: Projects::PrepareContentItems.call(query.items),
+                            filters: ProjectFilterQuery::FILTERS,
+                            project: project,
                             taxons: taxons,
-                            content_items: content_items }
+                            query: query }
   end
 
   def new
@@ -26,14 +28,6 @@ class ProjectsController < ApplicationController
   end
 
 private
-
-  def searcher
-    @_search ||= Projects::BulkSearch.new(project, params)
-  end
-
-  def content_items
-    @_content_items ||= Projects::PrepareContentItems.call(searcher.project_content_items_to_display)
-  end
 
   def taxons
     project

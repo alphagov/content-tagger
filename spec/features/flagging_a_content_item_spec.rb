@@ -22,12 +22,14 @@ RSpec.describe "flagging a content item" do
   scenario "flagged content is labelled in table view" do
     given_there_is_a_project_with_flagged_content_items
     when_i_visit_the_project_page
+    and_i_apply_the_flagged_filter
     then_the_flagged_content_items_should_be_labelled_correctly
   end
 
   scenario "removing a flag" do
     given_there_is_a_project_with_a_flagged_content_item
     when_i_visit_the_project_page
+    and_i_apply_the_flagged_filter
     and_i_mark_the_content_item_as_done
     then_the_content_item_should_no_longer_be_flagged
   end
@@ -61,6 +63,11 @@ RSpec.describe "flagging a content item" do
     click_link 'Flag for review'
     choose "I need help tagging this"
     click_button "Continue"
+  end
+
+  def and_i_apply_the_flagged_filter
+    choose "Flagged"
+    click_button "Apply"
   end
 
   def then_the_content_item_should_be_flagged_as_needs_help
