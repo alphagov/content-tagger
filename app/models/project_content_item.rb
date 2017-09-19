@@ -1,5 +1,5 @@
 class ProjectContentItem < ActiveRecord::Base
-  belongs_to :project
+  belongs_to :project, touch: true
 
   enum flag: {
     needs_help: 1,
