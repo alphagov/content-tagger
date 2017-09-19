@@ -28,7 +28,7 @@ RSpec.describe "flagging a content item" do
   scenario "removing a flag" do
     given_there_is_a_project_with_a_flagged_content_item
     when_i_visit_the_project_page
-    and_i_mark_the_content_item_as_resolved
+    and_i_mark_the_content_item_as_done
     then_the_content_item_should_no_longer_be_flagged
   end
 
@@ -74,9 +74,8 @@ RSpec.describe "flagging a content item" do
     click_button "Continue"
   end
 
-  def and_i_mark_the_content_item_as_resolved
-    click_link "Mark as resolved"
-    click_button "Continue"
+  def and_i_mark_the_content_item_as_done
+    click_button "Done"
   end
 
   def then_them_content_item_should_be_flagged_as_missing_topic

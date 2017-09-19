@@ -13,7 +13,7 @@ class ProjectContentItem < ActiveRecord::Base
   end
 
   def done!
-    update_attributes(done: true)
+    update_attributes(done: true, flag: nil)
   end
 
   def proxied_url

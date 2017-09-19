@@ -68,7 +68,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   scenario "marking a content item as done" do
-    given_there_is_a_project_with_a_tagged_content_item
+    given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_mark_the_content_item_as_done
     then_the_content_item_should_be_marked_as_done
@@ -76,6 +76,12 @@ RSpec.feature "Projects", type: :feature do
 
   def given_there_is_a_project_with_content_items
     @project = create :project, :with_content_items
+    stub_draft_taxonomy_branch
+    stub_empty_bulk_taxons_lookup
+  end
+
+  def given_there_is_a_project_with_a_content_item
+    @project = create :project, :with_a_content_item
     stub_draft_taxonomy_branch
     stub_empty_bulk_taxons_lookup
   end
