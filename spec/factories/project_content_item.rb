@@ -11,6 +11,7 @@ FactoryGirl.define do
 
     trait :flagged_missing_topic do
       flag { ProjectContentItem.flags['missing_topic'] }
+      suggested_tags 'have you thought about ...?'
     end
   end
 end

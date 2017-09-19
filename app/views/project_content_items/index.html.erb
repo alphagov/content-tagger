@@ -1,0 +1,21 @@
+<%= display_header title: @title, breadcrumbs: [:projects, @title] %>
+
+<table class="table queries-list table-bordered table-striped">
+  <thead>
+    <tr class="table-header">
+      <th>Suggested Tag</th>
+      <th>Title</th>
+      <th>Last modified</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @project_content_items.each do |project_content_item| %>
+    <tr>
+      <td><%= project_content_item.suggested_tags %></td>
+      <td><%= link_to project_content_item.title, project_content_item.url %></td>
+      <td><%= project_content_item.updated_at.to_s(:govuk_date) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
