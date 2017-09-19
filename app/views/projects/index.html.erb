@@ -1,4 +1,4 @@
-<%= display_header title: "Projects", breadcrumbs: ["Projects"] do %>
+<%= display_header title: "Tagging Projects", breadcrumbs: ["Projects"] do %>
   <%= link_to new_project_path, class: 'btn btn-default' do %>
     <i class="glyphicon glyphicon-plus"></i>Add new project
   <% end %>
@@ -17,6 +17,9 @@
     <thead>
     <tr class="table-header">
       <th>Project</th>
+      <th class='col-md-1'>To Do</th>
+      <th class='col-md-1'>Flagged</th>
+      <th class='col-md-1'>Done</th>
     </tr>
     </thead>
 
@@ -24,6 +27,9 @@
     <% branch_projects.each do |project| %>
         <tr>
           <td><%= link_to project.name, project_path(project) %></td>
+          <td><%= project.content_items.todo.count %></td>
+          <td><%= project.content_items.flagged.count %></td>
+          <td><%= project.content_items.done.count %></td>
         </tr>
     <% end %>
     </tbody>
