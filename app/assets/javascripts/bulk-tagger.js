@@ -41,8 +41,14 @@
               taxons = $this.data('taxons'),
               options = self.options_for_select2;
 
+          // remove 'disabled' attribute from input element
           $this.prop('disabled', false);
+
+          // populate with previously selected taxons, and initialize select2
           $this.val(taxons).select2(options);
+
+          // remove waypoint
+          this.destroy();
         },
         offset: 'bottom-in-view'
       });
