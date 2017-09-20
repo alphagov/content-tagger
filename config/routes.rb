@@ -68,6 +68,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :tagging_history, only: [:index, :show]
+
   if Rails.env.development?
     mount GovukAdminTemplate::Engine, at: '/style-guide'
 

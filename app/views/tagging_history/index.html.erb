@@ -1,0 +1,46 @@
+<%= display_header title: "Tagging history",
+                   breadcrumbs: ["Tagging history"] do %>
+  <%= render partial: "user_filter", locals: local_assigns %>
+<% end %>
+
+<div class="tagged-content">
+  <table class="table queries-list table-bordered table-striped"
+         data-module="filterable-table">
+    <thead>
+    <tr class="table-header">
+      <th style='width: 100px;'>Date</th>
+      <th>Event</th>
+      <th>User</th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+    <% link_changes.changes.each do |link_change| %>
+      <tr>
+        <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
+        <td>
+          <%= link_to link_change[:source][:title],
+                      tagging_path(content_id: link_change[:source][:content_id]) %>
+          <% if link_change[:change] == 'remove' %>
+            removed from
+          <% else %>
+            tagged to
+          <% end %>
+          <%= link_to link_change[:target][:title],
+                      tagging_history_path(link_change[:target][:content_id]) %>
+        </td>
+        <td>
+          <% if link_change[:user_name] %>
+            <%= link_change[:user_name] %>
+            (<%= link_change[:organisation] || "No organisation" %>)
+          <% else %>
+            <em>Unknown user</em>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
