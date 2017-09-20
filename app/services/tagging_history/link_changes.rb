@@ -21,14 +21,10 @@ module TaggingHistory
     end
 
     def filter_by_user_options
-      options = {}
-
-      changes.each do |change|
+      changes.each_with_object({}) do |change, options|
         next unless change.key? :user_uid
         options[change[:user_name]] = change[:user_uid]
       end
-
-      options
     end
 
   private
