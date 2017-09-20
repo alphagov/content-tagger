@@ -1,0 +1,6 @@
+<tr>
+  <td><%= link_to project.name, project_path(project) %></td>
+  <td><%= project.content_items.todo.count %></td>
+  <td><%= project.content_items.flagged.count %></td>
+  <td><%= project.content_items.done.count %></td>
+</tr>

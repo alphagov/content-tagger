@@ -1,5 +1,5 @@
 class ProjectContentItem < ActiveRecord::Base
-  belongs_to :project
+  belongs_to :project, touch: true
 
   enum flag: {
     needs_help: 1,
@@ -29,4 +29,8 @@ class ProjectContentItem < ActiveRecord::Base
   end)
 
   scope :flagged_with, -> (flag) { where(flag: flags[flag]) }
+
+  scope :todo, -> { where(flag: nil, done: false) }
+  scope :flagged, -> { where.not(flag: nil) }
+  scope :done, -> { where(done: true) }
 end
