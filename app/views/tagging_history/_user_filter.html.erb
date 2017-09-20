@@ -1,7 +1,7 @@
 <%= form_tag(tagging_history_index_path, method: "get") do %>
   <div class="input-group" style="min-width: 30em;">
     <%= select_tag :users,
-                   options_for_select(page.filter_by_user_options, params[:users]),
+                   options_for_select(link_changes.filter_by_user_options, params[:users]),
                    multiple: true,
                    placeholder: "Filter by user",
                    class: ['select2', 'form-control'] %>

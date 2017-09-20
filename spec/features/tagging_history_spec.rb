@@ -41,7 +41,7 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def then_i_see_a_list_of_added_link_changes
-    page.all('tbody tr').zip(added_link_changes.reverse).each do |tr, link_change|
+    page.all('tbody tr').zip(added_link_changes).each do |tr, link_change|
       expect(tr).to have_link(
         link_change['source']['title'],
         href: tagging_path(link_change['source']['content_id'])
@@ -56,7 +56,7 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def then_i_see_a_list_of_removed_link_changes
-    page.all('tbody tr').zip(removed_link_changes.reverse).each do |tr, link_change|
+    page.all('tbody tr').zip(removed_link_changes).each do |tr, link_change|
       expect(tr).to have_link(
         link_change['source']['title'],
         href: tagging_path(link_change['source']['content_id'])

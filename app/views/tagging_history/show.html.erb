@@ -20,7 +20,7 @@
     </thead>
 
     <tbody>
-    <% page.link_changes.each do |link_change| %>
+    <% link_changes.changes.each do |link_change| %>
       <tr>
         <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
         <td class="<%= link_change[:change] == 'remove' ? 'bg-danger' : 'bg-success' %>">
