@@ -41,6 +41,7 @@
               taxons = $this.data('taxons'),
               options = self.options_for_select2;
 
+          $this.prop('disabled', false);
           $this.val(taxons).select2(options);
         },
         offset: 'bottom-in-view'

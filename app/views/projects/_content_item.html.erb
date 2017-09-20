@@ -20,7 +20,9 @@
       input_html: {
         class: [:select2, :tagging_project, :js_bulk_tagger_input],
         autocomplete: 'off',
-        data: { taxons: content_item.taxons }
+        data: { taxons: content_item.taxons },
+        value: '',
+        disabled: 'disabled'
       } %>
   <% end %>
 
