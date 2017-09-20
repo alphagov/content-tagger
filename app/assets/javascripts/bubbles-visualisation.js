@@ -94,10 +94,10 @@
     var lowerBoundLabel = $("#lower_bound_label");
     var upperBoundLabel = $("#upper_bound_label");
 
-    lowerBoundInput.val(0);
     lowerBoundInput.attr("max", maxSize + 1);
-    upperBoundInput.val(maxSize + 1);
+    lowerBoundInput.val(0);
     upperBoundInput.attr("max", maxSize + 1);
+    upperBoundInput.val(maxSize + 1);
 
     lowerBoundInput.removeClass("hidden");
     upperBoundInput.removeClass("hidden");
