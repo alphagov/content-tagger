@@ -62,27 +62,14 @@
       $content_item_forms.on(
         'ajax:success',
         function() {
-          display_response_state($(this), "Saved");
           self.mark_form_as_successfully_updated($(this));
         }
       ).on(
         'ajax:error',
         function() {
-          display_response_state($(this), "Failed to save");
           self.mark_form_as_failed_to_update($(this));
         }
       );
-
-      function display_response_state($formEl, message) {
-        $formEl.siblings(".js-save-state")
-          .text(message)
-          .delay(700)
-          .animate({ opacity: 0 }, 300, 'linear', function() {
-            var $textEl = $(this)
-            $textEl.html("&nbsp;");
-            $textEl.css({ opacity: 1 })
-          });
-      }
     },
 
     /*
@@ -187,10 +174,24 @@
       return data.text.split(' > ').pop();
     },
 
+    // display a brief message next to a form
+    display_response_state: function($formEl, message) {
+      $formEl.siblings(".js-save-state")
+        .text(message)
+        .delay(700)
+        .animate({ opacity: 0 }, 300, 'linear', function() {
+          var $textEl = $(this)
+          $textEl.html("&nbsp;");
+          $textEl.css({ opacity: 1 })
+        });
+    },
+
     // Green flash of success
     mark_form_as_successfully_updated: function($form, taxons) {
       $form.removeClass(this.form_error_class);
       $form.effect("highlight", { color: this.color_of_success }, 1000);
+
+      this.display_response_state($form, "Saved");
 
       if(typeof taxons !== 'undefined') {
         var $select2 = $form.find('.select2');
@@ -206,6 +207,7 @@
 
     // Red background of failure
     mark_form_as_failed_to_update: function($form) {
+      this.display_response_state($form, "Failed to save");
       $form.addClass(this.form_error_class);
     },
 
