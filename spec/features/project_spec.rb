@@ -8,7 +8,7 @@ RSpec.feature "Projects", type: :feature do
   scenario "viewing a project" do
     given_there_is_a_project_with_content_items
     when_i_visit_the_project_page
-    then_i_can_see_all_the_content_items_for_that_project
+    then_i_can_see_todo_content_items_for_that_project
   end
 
   scenario "creating a new project" do
@@ -33,32 +33,32 @@ RSpec.feature "Projects", type: :feature do
     then_the_bulk_tagging_interface_is_present
   end
 
-  scenario "filtering for tagged content items" do
-    given_there_is_a_project_with_two_content_items_in_different_states
+  scenario "filtering for to do content items" do
+    given_there_is_a_project_with_content_items_in_all_different_states
     when_i_visit_the_project_page
-    and_i_filter_by_tagged
+    and_i_filter_by_to_do
+    then_i_can_see_todo_content_items
+  end
+
+  scenario "filtering for flagged content items" do
+    given_there_is_a_project_with_content_items_in_all_different_states
+    when_i_visit_the_project_page
+    and_i_filter_by_flagged
+    then_i_only_see_flagged_content_items
+  end
+
+  scenario "filtering for done content items" do
+    given_there_is_a_project_with_content_items_in_all_different_states
+    when_i_visit_the_project_page
+    and_i_filter_by_done
     then_i_only_see_done_content_items
-  end
-
-  scenario "filtering for not tagged content items" do
-    given_there_is_a_project_with_two_content_items_in_different_states
-    when_i_visit_the_project_page
-    and_i_filter_by_not_tagged
-    then_i_only_see_not_done_content_items
-  end
-
-  scenario "filtering for all content items" do
-    given_there_is_a_project_with_two_content_items_in_different_states
-    when_i_visit_the_project_page
-    and_i_filter_by_all
-    then_i_can_see_all_the_content_items_for_that_project
   end
 
   scenario "filtering by searching" do
-    given_there_is_a_project_with_two_content_items_in_different_states
+    given_there_is_a_project_with_content_items_in_all_different_states
     when_i_visit_the_project_page
     and_i_filter_by_text
-    then_i_only_see_done_content_items
+    then_i_only_see_content_items_matching_the_text_search
   end
 
   scenario "reviewing previously assigned tags" do
@@ -71,7 +71,7 @@ RSpec.feature "Projects", type: :feature do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_mark_the_content_item_as_done
-    then_the_content_item_should_be_marked_as_done
+    then_the_content_item_should_not_show_in_the_to_do_list
   end
 
   def given_there_is_a_project_with_content_items
@@ -86,22 +86,25 @@ RSpec.feature "Projects", type: :feature do
     stub_empty_bulk_taxons_lookup
   end
 
-  def given_there_is_a_project_with_two_content_items_in_different_states
-    @project = create :project
-    @done_content_item = create(
-      :project_content_item, title: "Foo done", done: true, project_id: @project.id
-    )
-    @not_done_content_item = create(
-      :project_content_item, title: "Bar", done: false, project_id: @project.id
-    )
+  def given_there_is_a_project_with_content_items_but_no_bulk_tagging
+    @project = create :project, :with_content_items, :with_bulk_tagging_disabled
     stub_draft_taxonomy_branch
     stub_empty_bulk_taxons_lookup
   end
 
-  def given_there_is_a_project_with_content_items_but_no_bulk_tagging
-    @project = create :project, :with_bulk_tagging_disabled
+  def given_there_is_a_project_with_content_items_in_all_different_states
+    @project = create :project
+    @incomplete_content_item = create(
+      :project_content_item, title: "To do item", project_id: @project.id
+    )
     @done_content_item = create(
-      :project_content_item, title: "Foo done", done: true, project_id: @project.id
+      :project_content_item, title: "Done item", done: true, project_id: @project.id
+    )
+    @flagged_content_item = create(
+      :project_content_item, :flagged_needs_help, title: "Flagged item", project_id: @project.id
+    )
+    create(
+      :project_content_item, title: "Foo item", project_id: @project.id
     )
     stub_draft_taxonomy_branch
     stub_empty_bulk_taxons_lookup
@@ -110,7 +113,7 @@ RSpec.feature "Projects", type: :feature do
   def given_there_is_a_project_with_a_tagged_content_item
     @project = create :project
     @content_item = create(
-      :project_content_item, title: "Foo", done: true, project_id: @project.id
+      :project_content_item, title: "Foo", project_id: @project.id
     )
     @taxons = [SecureRandom.uuid]
     stub_bulk_taxons_lookup([@content_item.content_id], @taxons)
@@ -161,7 +164,7 @@ RSpec.feature "Projects", type: :feature do
     click_on 'New Project'
 
     content_item = create(
-      :project_content_item, title: "Foo", done: true, project_id: Project.first.id
+      :project_content_item, title: "Foo", project_id: Project.first.id
     )
     taxons = [SecureRandom.uuid]
     stub_bulk_taxons_lookup([content_item.content_id], taxons)
@@ -181,30 +184,30 @@ RSpec.feature "Projects", type: :feature do
   end
   alias_method :when_i_visit_the_project_index_page, :and_i_visit_the_project_index_page
 
-  def and_i_filter_by_tagged
+  def and_i_filter_by_done
     within '.filter-controls' do
-      choose("Tagged")
+      choose("Done")
       click_button("Apply")
     end
   end
 
-  def and_i_filter_by_not_tagged
+  def and_i_filter_by_flagged
     within '.filter-controls' do
-      choose("Not Tagged")
+      choose("Flagged")
       click_button("Apply")
     end
   end
 
-  def and_i_filter_by_all
+  def and_i_filter_by_to_do
     within '.filter-controls' do
-      choose("All")
+      choose("To Do")
       click_button("Apply")
     end
   end
 
   def and_i_filter_by_text
     within '.filter-controls' do
-      fill_in :query, with: "foo"
+      fill_in "title_search", with: "foo"
       click_button("Apply")
     end
   end
@@ -217,7 +220,7 @@ RSpec.feature "Projects", type: :feature do
     expect(page).to have_content 'my_project'
   end
 
-  def then_i_can_see_all_the_content_items_for_that_project
+  def then_i_can_see_todo_content_items_for_that_project
     @project.content_items.each do |content_item|
       expect(page).to have_content content_item.title
     end
@@ -225,12 +228,27 @@ RSpec.feature "Projects", type: :feature do
 
   def then_i_only_see_done_content_items
     expect(page).to have_content @done_content_item.title
-    expect(page).not_to have_content @not_done_content_item.title
+    expect(page).not_to have_content @flagged_content_item.title
+    expect(page).not_to have_content @incomplete_content_item.title
   end
 
-  def then_i_only_see_not_done_content_items
+  def then_i_only_see_flagged_content_items
     expect(page).not_to have_content @done_content_item.title
-    expect(page).to have_content @not_done_content_item.title
+    expect(page).to have_content @flagged_content_item.title
+    expect(page).not_to have_content @incomplete_content_item.title
+  end
+
+  def then_i_can_see_todo_content_items
+    expect(page).not_to have_content @done_content_item.title
+    expect(page).not_to have_content @flagged_content_item.title
+    expect(page).to have_content @incomplete_content_item.title
+  end
+
+  def then_i_only_see_content_items_matching_the_text_search
+    expect(page).not_to have_content @done_content_item.title
+    expect(page).not_to have_content @flagged_content_item.title
+    expect(page).not_to have_content @incomplete_content_item.title
+    expect(page).to have_content "Foo item"
   end
 
   def then_the_bulk_tagging_interface_is_present
@@ -241,9 +259,7 @@ RSpec.feature "Projects", type: :feature do
     expect(page).not_to have_selector '.bulk-tagger'
   end
 
-  def then_the_content_item_should_be_marked_as_done
-    within('.content-item .label') do
-      expect(page).to have_content 'Done'
-    end
+  def then_the_content_item_should_not_show_in_the_to_do_list
+    expect(page).not_to have_content 'Foo'
   end
 end

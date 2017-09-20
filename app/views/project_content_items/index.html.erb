@@ -1,4 +1,4 @@
-<%= display_header title: @title, breadcrumbs: [:projects, @title] %>
+<%= display_header title: title, breadcrumbs: [:projects, title] %>
 
 <table class="table queries-list table-bordered table-striped">
   <thead>
@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-  <% @project_content_items.each do |project_content_item| %>
+  <% project_content_items.each do |project_content_item| %>
     <tr>
       <td><%= project_content_item.suggested_tags %></td>
       <td><%= link_to project_content_item.title, project_content_item.url %></td>

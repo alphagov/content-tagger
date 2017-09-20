@@ -2,8 +2,8 @@ class ProjectContentItemsController < ApplicationController
   before_action :ensure_user_can_access_tagathon_tools!
 
   def index
-    @project_content_items = ProjectContentItemQuery.new(params)
-    @title = index_page_title
+    render :index, locals: { project_content_items: FlaggedContentQuery.new(params),
+                             title: index_page_title }
   end
 
   def update

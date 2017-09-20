@@ -20,17 +20,13 @@ class ProjectContentItem < ActiveRecord::Base
     url.gsub(%r{https?://(www\.)?gov.uk/}, Proxies::IframeAllowingProxy::PROXY_BASE_PATH)
   end
 
-  scope :uncompleted, -> { where(done: false) }
-  scope :matching_search, -> (query) { where("title ILIKE ?", "%#{query}%") }
-  scope :with_valid_ids, -> { where.not(content_id: nil) }
-
+  scope :done, -> { where(done: true) }
+  scope :flagged_with, ->(flag) { where(flag: flags[flag]) }
+  scope :flagged, -> { where.not(flag: nil) }
   scope :for_taxonomy_branch, (lambda do |branch_id|
     joins(:project).where("projects.taxonomy_branch = ?", branch_id)
   end)
-
-  scope :flagged_with, -> (flag) { where(flag: flags[flag]) }
-
+  scope :matching_search, ->(query) { where("title ILIKE ?", "%#{query}%") }
   scope :todo, -> { where(flag: nil, done: false) }
-  scope :flagged, -> { where.not(flag: nil) }
-  scope :done, -> { where(done: true) }
+  scope :with_valid_ids, -> { where.not(content_id: nil) }
 end

@@ -1,4 +1,4 @@
-class ProjectContentItemQuery
+class FlaggedContentQuery
   attr_reader :params
 
   def initialize(params)
