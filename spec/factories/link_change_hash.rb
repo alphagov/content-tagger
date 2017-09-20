@@ -12,6 +12,7 @@ FactoryGirl.define do
         base_path: "target/base/path/#{n}",
         content_id: SecureRandom.uuid }
     end
+    link_type 'taxons'
     change 'add'
     user_uid SecureRandom.uuid
     created_at DateTime.now.to_s
