@@ -8,6 +8,7 @@ class ProjectContentItemsController < ApplicationController
 
   def update
     tag_content
+    content_item.touch
     head :ok
   rescue GdsApi::HTTPClientError
     head :bad_request

@@ -26,6 +26,66 @@
   Modules.BulkTagger.prototype = {
 
     /*
+     * Initializes each content-item tagging form with Select2 and auto-save.
+    **/
+    start_individual_taggers: function($element) {
+      var self = this;
+
+      /*
+       * Initialise tag input selects, but only once they become
+       * visible aka on-screen.
+       */
+      $element.find(self.selectors.tag_input_element).waypoint({
+        handler: function(_) {
+          var $this = $(this.element),
+              taxons = $this.data('taxons'),
+              options = self.options_for_select2;
+
+          $this.prop('disabled', false);
+          $this.val(taxons).select2(options);
+        },
+        offset: 'bottom-in-view'
+      });
+
+      // Contains all the content-item tagging forms
+      var $content_item_forms = $element.find(self.selectors.content_item_forms);
+
+      // Individual content-item forms save on change
+      $content_item_forms.find('.select2').on(
+        'change',
+        function(event) {
+          $(this).parents('form').trigger('submit.rails');
+        }
+      );
+
+      // Ajax response handlers for individual content-item form submissions
+      $content_item_forms.on(
+        'ajax:success',
+        function() {
+          display_response_state($(this), "Saved");
+          self.mark_form_as_successfully_updated($(this));
+        }
+      ).on(
+        'ajax:error',
+        function() {
+          display_response_state($(this), "Failed to save");
+          self.mark_form_as_failed_to_update($(this));
+        }
+      );
+
+      function display_response_state($formEl, message) {
+        $formEl.siblings(".js-save-state")
+          .text(message)
+          .delay(700)
+          .animate({ opacity: 0 }, 300, 'linear', function() {
+            var $textEl = $(this)
+            $textEl.html("&nbsp;");
+            $textEl.css({ opacity: 1 })
+          });
+      }
+    },
+
+    /*
      * Initializes the Bulk Tagger interface
      * Where multiple content-items can be selected and tagged at the same time.
     **/
@@ -82,57 +142,6 @@
           self.update_selected_count($selected_count, $content_item_checkboxes);
         }
       )
-    },
-
-    /*
-     * Initializes each content-item tagging form with Select2 and auto-save.
-    **/
-    start_individual_taggers: function($element) {
-      var self = this;
-
-      // Initialise tag input selects
-      $element.find(self.selectors.tag_input_element)
-        .select2(self.options_for_select2)
-        .each(function(index, el) {
-          self.update_select2_with_new_taxons($(el));
-        });
-
-      // Contains all the content-item tagging forms
-      var $content_item_forms = $element.find(self.selectors.content_item_forms);
-
-      // Individual content-item forms save on change
-      $content_item_forms.find('.select2').on(
-        'change',
-        function(event) {
-          $(this).parents('form').trigger('submit.rails');
-        }
-      );
-
-      // Ajax response handlers for individual content-item form submissions
-      $content_item_forms.on(
-        'ajax:success',
-        function() {
-          display_response_state($(this), "Saved");
-          self.mark_form_as_successfully_updated($(this));
-        }
-      ).on(
-        'ajax:error',
-        function() {
-          display_response_state($(this), "Failed to save");
-          self.mark_form_as_failed_to_update($(this));
-        }
-      );
-
-      function display_response_state($formEl, message) {
-        $formEl.siblings(".js-save-state")
-          .text(message)
-          .delay(700)
-          .animate({ opacity: 0 }, 300, 'linear', function() {
-            var $textEl = $(this)
-            $textEl.html("&nbsp;");
-            $textEl.css({ opacity: 1 })
-          });
-      }
     },
 
     /**

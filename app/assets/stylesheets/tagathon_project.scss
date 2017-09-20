@@ -34,6 +34,15 @@
 
       .project_content_item_taxons {
         margin: 20px 0 0;
+
+        input.select2 {
+          min-height: 34px;
+          padding-left: 4px;
+
+          &::placeholder {
+            color: #aeada9;
+          }
+        }
       }
 
       &.error-saving {
