@@ -32,7 +32,10 @@ class ProjectContentItemsController < ApplicationController
 
   def mark_as_done
     content_item.done!
-    redirect_back fallback_location: project_path(project)
+    respond_to do |format|
+      format.js { head :ok }
+      format.html { redirect_back fallback_location: project_path(project) }
+    end
   end
 
 private

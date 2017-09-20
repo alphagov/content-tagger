@@ -9,7 +9,8 @@
       content_item_forms: '.js-content-item-form',
       select_all_toggle: '.js-select-all',
       content_item_checkboxes: '.js-content-selector',
-      selected_count: '.js-selected-count'
+      selected_count: '.js-selected-count',
+      done_form_selector: '.js-mark-as-done'
     }
 
     this.form_error_class = 'error-saving';
@@ -74,6 +75,18 @@
         'ajax:error',
         function() {
           self.mark_form_as_failed_to_update($(this));
+        }
+      );
+
+      $element.find(self.selectors.done_form_selector).on(
+        'ajax:success',
+        function() {
+          $(this).parents('.content-item').fadeOut('fast');
+        }
+      ).on(
+        'ajax:error',
+        function() {
+          self.mark_form_as_failed_to_update($(this).parents('.content-item'));
         }
       );
     },
