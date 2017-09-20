@@ -112,14 +112,27 @@
       $content_item_forms.on(
         'ajax:success',
         function() {
+          display_response_state($(this), "Saved");
           self.mark_form_as_successfully_updated($(this));
         }
       ).on(
         'ajax:error',
         function() {
+          display_response_state($(this), "Failed to save");
           self.mark_form_as_failed_to_update($(this));
         }
       );
+
+      function display_response_state($formEl, message) {
+        $formEl.siblings(".js-save-state")
+          .text(message)
+          .delay(700)
+          .animate({ opacity: 0 }, 300, 'linear', function() {
+            var $textEl = $(this)
+            $textEl.html("&nbsp;");
+            $textEl.css({ opacity: 1 })
+          });
+      }
     },
 
     /**

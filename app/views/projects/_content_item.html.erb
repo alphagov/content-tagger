@@ -25,6 +25,9 @@
   <% end %>
 
   <% unless content_item.done? %>
+    <p class='js-save-state'>
+      &nbsp;
+    </p>
     <div class='actions actions-inline'>
       <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item), class: 'btn btn-primary' %>
       <% unless content_item.flag? %>
