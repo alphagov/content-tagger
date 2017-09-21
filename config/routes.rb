@@ -27,7 +27,8 @@ Rails.application.routes.draw do
   get '/content/:content_id', to: redirect { |params, _| "/taggings/#{params[:content_id]}" }
   get '/lookup', to: redirect("/taggings/lookup")
 
-  resources :projects, only: %i(index show new create) do
+  resources :projects, except: %i[edit update] do
+    get :confirm_delete
     collection do
       resources :project_content_items, only: [:index]
     end

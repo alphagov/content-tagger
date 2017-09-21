@@ -19,6 +19,14 @@ RSpec.feature "Projects", type: :feature do
     then_i_can_see_my_new_project_in_the_list
   end
 
+  scenario "deleting an existing project" do
+    given_there_is_a_project_with_content_items
+    and_i_am_logged_in_as_a_gds_editor
+    when_i_visit_the_project_page
+    and_i_click_and_confirm_to_delete_the_project
+    then_i_see_the_project_has_been_deleted
+  end
+
   scenario "viewing a project with no bulk-tagging" do
     given_there_is_a_project_with_content_items_but_no_bulk_tagging
     when_i_visit_the_project_page
@@ -120,6 +128,15 @@ RSpec.feature "Projects", type: :feature do
     stub_draft_taxonomy_branch
   end
 
+  def and_i_am_logged_in_as_a_gds_editor
+    login_as create(:user, :gds_editor)
+  end
+
+  def and_i_click_and_confirm_to_delete_the_project
+    click_link "Delete"
+    click_button "Confirm delete"
+  end
+
   def then_i_see_the_content_item_and_its_tag_data
     within('.content-item:first') do
       expect(page).to have_content @content_item.title
@@ -218,6 +235,11 @@ RSpec.feature "Projects", type: :feature do
 
   def then_i_can_see_my_new_project_in_the_list
     expect(page).to have_content 'my_project'
+  end
+
+  def then_i_see_the_project_has_been_deleted
+    expect(page).to have_content 'You have sucessfully deleted the project'
+    expect(page).not_to have_content 'project title'
   end
 
   def then_i_can_see_todo_content_items_for_that_project

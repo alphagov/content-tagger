@@ -1,5 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :ensure_user_can_access_tagathon_tools!
+  before_action :ensure_user_can_administer_taxonomy!, only: %i[confirm_delete destroy]
 
   def index
     render :index, locals: { projects: project_index }
@@ -27,6 +28,15 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def confirm_delete
+    render :confirm_delete, locals: { project: project }
+  end
+
+  def destroy
+    project.destroy!
+    redirect_to projects_path, success: 'You have sucessfully deleted the project'
+  end
+
 private
 
   def taxons
@@ -47,7 +57,11 @@ private
   end
 
   def project
-    @_project ||= Project.find(params[:id])
+    @_project ||= Project.find(project_id)
+  end
+
+  def project_id
+    params[:id] || params[:project_id]
   end
 
   def new_project_params

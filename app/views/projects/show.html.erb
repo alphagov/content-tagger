@@ -1,4 +1,8 @@
-<%= display_header title: project.name, breadcrumbs: [:projects, project.name] %>
+<%= display_header title: project.name, breadcrumbs: [:projects, project.name] do %>
+  <% if user_can_administer_taxonomy? %>
+    <%= link_to 'Delete', project_confirm_delete_path(project), class: 'btn btn-danger' %>
+  <% end %>
+<% end %>
 
 <%= render partial: 'shared/iframe_proxy_modal' %>
 
