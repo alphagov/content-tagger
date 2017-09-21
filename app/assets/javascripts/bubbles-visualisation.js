@@ -50,7 +50,7 @@
     function rgbInterpolate(start, end, value) {
       var result = [];
       for (var i=0; i<3; i++) {
-        result[i] = start[i] + ((end[i] - start[i]) * value);
+        result[i] = Math.round(start[i] + ((end[i] - start[i]) * value));
       }
       return result;
     }
