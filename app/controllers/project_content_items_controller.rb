@@ -21,13 +21,20 @@ class ProjectContentItemsController < ApplicationController
   end
 
   def flags
-    render :flags, locals: { project: project, content_item: content_item }
+    locals = { project: project, content_item: content_item }
+
+    respond_to do |format|
+      format.js { render layout: false, locals: locals }
+    end
   end
 
   def update_flags
     content_item.update(flag_params)
     content_item.save
-    redirect_to project_path(project)
+
+    respond_to do |format|
+      format.js { render layout: false, locals: { content_item: content_item } }
+    end
   end
 
   def mark_as_done
