@@ -20,29 +20,30 @@
       .sum(function(d) { return d.size; })
       .sort(function(a, b) { return b.value - a.value; });
 
-    var node = g
+    var nodes = g
         .selectAll(".node")
         .data(pack(root).descendants())
         .enter()
-        .append("g")
-        .attr("transform", function(d) {
-          return "translate(" + d.x + "," + d.y + ")";
-        });
+        .append("g");
 
-    node.append("title")
+    nodes.attr("transform", function(d) {
+      return "translate(" + d.x + "," + d.y + ")";
+    });
+
+    nodes.append("title")
       .text(function(d) { return d.data.name + "\n" + format(d.data.size); });
 
-    node.append("circle")
+    nodes.append("circle")
       .attr("class", "bubbles-circle")
       .attr("r", function(d) { return d.r; });
 
-    node.filter(function(d) { return !d.children; })
+    nodes.filter(function(d) { return !d.children; })
       .append("text")
       .attr("class", "bubbles-text")
       .attr("dy", "0.3em")
       .text(function(d) { return d.data.name.substring(0, d.r / 3); });
 
-    return node;
+    return nodes;
   }
 
   function rgbForNode(d, maxSize) {
@@ -65,16 +66,16 @@
     }
   }
 
-  function render(node, maxSize, lowerSizeBound, upperSizeBound) {
+  function render(nodes, maxSize, lowerSizeBound, upperSizeBound) {
     function rgbArrayToFill(rgb) {
       return "fill: rgb(" + rgb[0] + ", " + rgb[1] + ", " + rgb[2] + ");";
     }
 
-    node.attr("style", function(d) {
+    nodes.attr("style", function(d) {
       return rgbArrayToFill(rgbForNode(d, maxSize));
     });
 
-    node.attr("display", function(d) {
+    nodes.attr("display", function(d) {
       var size_in_bounds = ((d.data.size >= lowerSizeBound) &&
                             (d.data.size < upperSizeBound));
       return size_in_bounds ? "block" : "none";
@@ -82,10 +83,10 @@
   }
 
   function startVisualisation(svgElement, data) {
-    var node = initialiseSVG(svgElement, data);
+    var nodes = initialiseSVG(svgElement, data);
 
     var maxSize = 0;
-    node.each(function(d) {
+    nodes.each(function(d) {
       maxSize = Math.max(maxSize, d.data.size);
     });
 
@@ -109,7 +110,7 @@
       lowerBoundLabel.text(lowerBound + " or more tagged items");
       upperBoundLabel.text("Less than " + upperBound + " tagged items");
 
-      render(node, maxSize, lowerBound, upperBound);
+      render(nodes, maxSize, lowerBound, upperBound);
     };
 
     update();
