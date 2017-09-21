@@ -4,14 +4,14 @@ RSpec.describe "flagging a content item" do
   include TaxonomyHelper
   include PublishingApiHelper
 
-  scenario "flagging a content_item as 'I need help'" do
+  scenario "flagging a content_item as 'I need help'", js: true do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_flag_the_first_content_item_as_i_need_help
     then_the_content_item_should_be_flagged_as_needs_help
   end
 
-  scenario "flagging a content item and suggesting a new term" do
+  scenario "flagging a content item and suggesting a new term", js: true do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
@@ -63,6 +63,7 @@ RSpec.describe "flagging a content item" do
     click_link 'Flag for review'
     choose "I need help tagging this"
     click_button "Continue"
+    wait_for_ajax
   end
 
   def and_i_apply_the_flagged_filter
@@ -79,6 +80,7 @@ RSpec.describe "flagging a content item" do
     choose "There's no relevant topic for this"
     fill_in "Suggest a new topic", with: "cool new topic"
     click_button "Continue"
+    wait_for_ajax
   end
 
   def and_i_mark_the_content_item_as_done
