@@ -4,9 +4,9 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <h4 class="modal-title">Flag '<%= content_item.title %>' for review</h4>
     </div>
-    <div class="modal-body flag-for-review">
-      <%= form_for content_item, url: update_flags_project_content_item_path(project, content_item), method: :post, remote: true, html: { data: { module: 'radio-toggle' } } do |f| %>
+    <%= form_for content_item, url: update_flags_project_content_item_path(project, content_item), method: :post, remote: true, html: { data: { module: 'radio-toggle' } } do |f| %>
 
+    <div class="modal-body flag-for-review">
       <div class='radio'>
         <label>
           <%= f.radio_button :flag, "needs_help" %>
@@ -25,11 +25,12 @@
         <%= f.label :suggested_tags, "Suggest a new topic" %>
         <%= f.text_field :suggested_tags, class: 'form-control input-md-4' %>
       </div>
+    </div>
 
-      <div class='modal-footer'>
-        <%= f.submit "Continue", class: 'btn btn-success add-right-margin' %>
-        <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
-      </div>
+    <div class='modal-footer'>
+      <%= f.submit "Continue", class: 'btn btn-success add-right-margin' %>
+      <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+    </div>
     <% end %>
     </div>
   </div><!-- /.modal-content -->
