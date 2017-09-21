@@ -30,8 +30,8 @@ module TaggingHistory
   private
 
     def link_changes_from_publishing_api
-      Services.link_changes_api
-        .get_link_changes(
+      Services.publishing_api
+        .get_links_changes(
           { link_types: ['taxons'] }.merge(@params)
         )
         .to_hash
