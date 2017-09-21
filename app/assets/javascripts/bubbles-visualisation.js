@@ -56,14 +56,9 @@
     }
 
     var highRGB= [247, 157, 0];
-    var lowRGB = [100, 243, 140];
-    var zeroRGB = [100, 243, 255];
+    var lowRGB = [255, 255, 255];
 
-    if (d.data.size === 0) {
-      return zeroRGB;
-    } else {
-      return rgbInterpolate(lowRGB, highRGB, (d.data.size / maxSize));
-    }
+    return rgbInterpolate(lowRGB, highRGB, (d.data.size / maxSize));
   }
 
   function render(nodes, maxSize, lowerSizeBound, upperSizeBound) {
