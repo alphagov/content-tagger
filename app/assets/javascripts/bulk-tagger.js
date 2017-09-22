@@ -5,11 +5,7 @@
   Modules.BulkTagger = function(taxons) {
     this.selectors = {
       tag_input_element: '.js_bulk_tagger_input',
-      bulk_tagger_form: '.js-bulk-tagger-form',
       content_item_forms: '.js-content-item-form',
-      select_all_toggle: '.js-select-all',
-      content_item_checkboxes: '.js-content-selector',
-      selected_count: '.js-selected-count',
       done_form_selector: '.js-mark-as-done'
     }
 
@@ -93,65 +89,6 @@
       );
     },
 
-    /*
-     * Initializes the Bulk Tagger interface
-     * Where multiple content-items can be selected and tagged at the same time.
-    **/
-    start_bulk_tagger: function($element) {
-      var self = this;
-
-      var $bulk_tagger_form = $element.find(self.selectors.bulk_tagger_form);
-
-      // Ajax response handlers for bulk tag form submission
-      $bulk_tagger_form.on(
-        "ajax:success",
-        function(event, result) {
-          result.forEach(function(data_item) {
-            var $form = $("form[data-ref='" + data_item.content_id + "']");
-            self.mark_form_as_successfully_updated($form, data_item.taxons);
-          });
-        }
-      ).on(
-        "ajax:error",
-        function(event, data) {
-          self.mark_form_as_failed_to_update($(this));
-        }
-      );
-
-      // Contains all the content-item tagging forms
-      var $content_item_forms = $element.find(self.selectors.content_item_forms);
-
-      // Aligns the content-item selection checkboxes
-      $content_item_forms.each(function(index, form) {
-        var ref = $(form).attr('data-ref');
-        var top_pos = $(form).position().top - 80 + "px";
-        $('.content-selector[value="'+ ref +'"]').css("top", top_pos).css("display", "inherit");
-      });
-
-      // Contains a reference to every content-item selector
-      var $content_item_checkboxes = $element.find(self.selectors.content_item_checkboxes);
-
-      // This is the display element for the count of selected items
-      var $selected_count = $element.find(self.selectors.selected_count);
-
-      // Select All toggle
-      $element.find(self.selectors.select_all_toggle).on(
-        'change',
-        function() {
-          $content_item_checkboxes.prop('checked', this.checked);
-          self.update_selected_count($selected_count, $content_item_checkboxes);
-        }
-      );
-
-      // Handler to keep track of changes to the count of selected items
-      $content_item_checkboxes.on(
-        'change',
-        function() {
-          self.update_selected_count($selected_count, $content_item_checkboxes);
-        }
-      )
-    },
-
     /**
      * Given:
      * {
@@ -231,31 +168,5 @@
       this.display_response_state($form, "Failed to save");
       $form.addClass(this.form_error_class);
     },
-
-    // Tally of the number of content-items selected for bulk-tagging
-    update_selected_count: function($selected_count, $content_item_checkboxes) {
-      var count = this.count_of_selected_content_items($content_item_checkboxes);
-      if(count == 0) {
-        $selected_count.text('None');
-      } else {
-        $selected_count.text(count);
-      }
-    },
-
-    // Given a $() of checkboxes, returns a count of the number of selected
-    count_of_selected_content_items: function($content_item_checkboxes) {
-      var checkbox_to_scalar = function($checkbox) {
-        return $checkbox.checked ? 1 : 0;
-      };
-
-      var sum = function(total, increment) {
-        return total + increment;
-      };
-
-      return $content_item_checkboxes
-        .toArray()
-        .map(checkbox_to_scalar)
-        .reduce(sum, 0);
-    }
   };
 })(window.GOVUKAdmin.Modules);

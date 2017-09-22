@@ -4,15 +4,6 @@
   input[type='checkbox'] {
     transform: scale(1.5);
     margin-right: 5px;
-
-    &.content-selector {
-      position: absolute;
-      left: 15px;
-    }
-  }
-
-  .bulk-selectors .checkbox *  {
-    display: none;
   }
 
   .content-list {
@@ -58,27 +49,6 @@
 
     .actions-inline>*{
       float: left;
-    }
-  }
-
-  .bulk-tagger {
-    form {
-      padding: 20px;
-      background-color: #eee;
-      margin-top: -21px;
-
-      &.error-saving {
-        background-color: #ffb6b6;
-        transition: background-color 1s;
-      }
-    }
-
-    .nav label {
-      margin-bottom: 0;
-    }
-
-    .nav.nav-tabs .active a {
-      background-color: #eee;
     }
   }
 }

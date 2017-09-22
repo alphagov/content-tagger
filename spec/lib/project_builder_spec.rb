@@ -8,20 +8,17 @@ RSpec.describe ProjectBuilder do
   let(:project_name) { 'project_name' }
   let(:taxonomy_branch_content_id) { SecureRandom.uuid }
   let(:content_item_attributes_enum) { [] }
-  let(:bulk_tagging_enabled) { false }
 
   def build_project(
     name: project_name,
     branch: taxonomy_branch_content_id,
-    content_items: content_item_attributes_enum,
-    bulk_tagging: bulk_tagging_enabled
+    content_items: content_item_attributes_enum
   )
 
     ProjectBuilder.call(
       name: name,
       taxonomy_branch_content_id: branch,
-      content_item_attributes_enum: content_items,
-      bulk_tagging_enabled: bulk_tagging
+      content_item_attributes_enum: content_items
     )
   end
 

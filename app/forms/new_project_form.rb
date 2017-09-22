@@ -1,8 +1,7 @@
 class NewProjectForm
   include ActiveModel::Model
 
-  attr_accessor :name, :remote_url, :taxonomy_branch, :bulk_tagging_enabled
-  alias bulk_tagging_enabled? bulk_tagging_enabled
+  attr_accessor :name, :remote_url, :taxonomy_branch
 
   UUID_REGEX = %r([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
 
@@ -23,7 +22,6 @@ class NewProjectForm
       name: name,
       taxonomy_branch_content_id: taxonomy_branch,
       content_item_attributes_enum: csv.to_enum,
-      bulk_tagging_enabled: bulk_tagging_enabled
     )
   rescue URI::InvalidURIError,
          ActiveRecord::RecordInvalid,
