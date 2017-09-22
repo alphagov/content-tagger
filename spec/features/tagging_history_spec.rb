@@ -64,30 +64,25 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def then_i_see_a_list_of_added_link_changes
-    page.all('tbody tr').zip(added_link_changes).each do |tr, link_change|
-      expect(tr).to have_link(
-        link_change['source']['title'],
-        href: tagging_path(link_change['source']['content_id'])
-      )
-      expect(tr).to have_link(
-        link_change['target']['title'],
-        href: tagging_history_path(link_change['target']['content_id'])
-      )
-      expect(tr).to have_text('tagged to')
-      expect(tr).to have_text('Unknown user')
-    end
+    check_index_page_link_changes_table(added_link_changes)
   end
 
   def then_i_see_a_list_of_removed_link_changes
-    page.all('tbody tr').zip(removed_link_changes).each do |tr, link_change|
+    check_index_page_link_changes_table(removed_link_changes)
+  end
+
+  def check_index_page_link_changes_table(link_changes)
+    page.all('tbody tr').zip(link_changes).each do |tr, link_change|
       expect(tr).to have_link(
         link_change['source']['title'],
         href: tagging_path(link_change['source']['content_id'])
       )
+
       expect(tr).to have_link(
         link_change['target']['title'],
         href: tagging_history_path(link_change['target']['content_id'])
       )
+
       expect(tr).to have_text('removed')
       expect(tr).to have_text('Unknown user')
     end
