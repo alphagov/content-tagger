@@ -81,7 +81,9 @@
       $element.find(self.selectors.done_form_selector).on(
         'ajax:success',
         function() {
-          $(this).parents('.content-item').fadeOut('fast');
+          $(this).parents('.content-item').fadeOut('fast', function() {
+            $(this).remove();
+          });
         }
       ).on(
         'ajax:error',

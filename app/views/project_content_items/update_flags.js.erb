@@ -1,2 +1,4 @@
 $('#flags-modal').modal('toggle');
-$('.content-item form[data-ref="<%= content_item.id %>"]').parent('.content-item').fadeOut('slow');
+$('.content-item form[data-ref="<%= content_item.id %>"]').parent('.content-item').fadeOut('slow', function() {
+  $(this).remove();
+});
