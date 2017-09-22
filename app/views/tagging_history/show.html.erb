@@ -36,8 +36,12 @@
           </span>
         </td>
         <td>
-          <%= link_to link_change[:source][:title],
-                      tagging_path(content_id: link_change[:source][:content_id]) %>
+          <% if link_change[:source] %>
+            <%= link_to link_change[:source][:title],
+                        tagging_path(content_id: link_change[:source][:content_id]) %>
+          <% else %>
+            An unknown document
+          <% end %>
         </td>
         <td>
           <% if link_change[:user_name] %>

@@ -35,6 +35,13 @@ RSpec.feature "Tagging History", type: :feature do
     then_i_see_the_link_changes_for_the_individual_taxon
   end
 
+  scenario "Show changes for an individual taxon with missing source document information" do
+    given_that_the_publishing_api_has_an_individual_taxon
+    given_there_are_some_link_changes_for_an_individual_taxon_with_missing_source_document_information
+    when_i_visit_the_tagging_history_show_page
+    then_i_see_the_link_changes_for_the_individual_taxon_with_missing_source_document_information
+  end
+
   private
 
   def given_there_are_some_added_link_changes
@@ -60,6 +67,14 @@ RSpec.feature "Tagging History", type: :feature do
   def given_there_are_some_link_changes_for_an_individual_taxon
     stub_link_changes_request(
       link_changes_for_an_individual_taxon,
+      link_types: ['taxons'],
+      target_content_ids: [individual_taxon[:content_id]]
+    )
+  end
+
+  def given_there_are_some_link_changes_for_an_individual_taxon_with_missing_source_document_information
+    stub_link_changes_request(
+      link_changes_for_an_individual_taxon_with_missing_source_document_information,
       link_types: ['taxons'],
       target_content_ids: [individual_taxon[:content_id]]
     )
@@ -105,7 +120,7 @@ RSpec.feature "Tagging History", type: :feature do
         expect(tr).to have_text 'unknown taxon'
       end
 
-      expect(tr).to have_text('removed')
+      expect(tr).to have_text(link_change['change'] == 'add' ? 'tagged' : 'removed')
       expect(tr).to have_text('Unknown user')
     end
   end
@@ -123,6 +138,19 @@ RSpec.feature "Tagging History", type: :feature do
         link_change['source']['title'],
         href: tagging_path(link_change['source']['content_id'])
       )
+    end
+  end
+
+  def then_i_see_the_link_changes_for_the_individual_taxon_with_missing_source_document_information
+    page.all('tbody tr').zip(link_changes_for_an_individual_taxon_with_missing_source_document_information).each do |tr, link_change|
+      if link_change['source']
+        expect(tr).to have_link(
+          link_change['source']['title'],
+          href: tagging_path(link_change['source']['content_id'])
+        )
+      else
+        expect(tr).to have_text('unknown document')
+      end
     end
   end
 
@@ -151,6 +179,18 @@ RSpec.feature "Tagging History", type: :feature do
       link_changes[1]['target'] = nil
       link_changes[2]['source'] = nil
       link_changes[2]['target'] = nil
+      link_changes
+    end
+  end
+
+  def link_changes_for_an_individual_taxon_with_missing_source_document_information
+    @_link_changes_with_missing_document_information ||= begin
+      link_changes = FactoryGirl.build_list(
+        :link_change,
+        2,
+        target: { content_id: individual_taxon[:content_id] }
+      )
+      link_changes[1]['source'] = nil
       link_changes
     end
   end
