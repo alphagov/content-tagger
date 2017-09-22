@@ -21,15 +21,25 @@
       <tr>
         <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
         <td>
-          <%= link_to link_change[:source][:title],
-                      tagging_path(content_id: link_change[:source][:content_id]) %>
+          <% if link_change[:source] %>
+            <%= link_to link_change[:source][:title],
+                        tagging_path(content_id: link_change[:source][:content_id]) %>
+          <% else %>
+            An unknown document
+          <% end %>
+
           <% if link_change[:change] == 'remove' %>
             removed from
           <% else %>
             tagged to
           <% end %>
-          <%= link_to link_change[:target][:title],
-                      tagging_history_path(link_change[:target][:content_id]) %>
+
+          <% if link_change[:target] %>
+            <%= link_to link_change[:target][:title],
+                        tagging_history_path(link_change[:target][:content_id]) %>
+          <% else %>
+            an unknown taxon
+          <% end %>
         </td>
         <td>
           <% if link_change[:user_name] %>
