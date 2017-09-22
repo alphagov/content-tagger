@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-  has_many :content_items, class_name: 'ProjectContentItem'
+  has_many :content_items, class_name: 'ProjectContentItem', dependent: :destroy
 
   def taxons
     @_taxons ||= GovukTaxonomy::Branches.new.taxons_for_branch(taxonomy_branch)

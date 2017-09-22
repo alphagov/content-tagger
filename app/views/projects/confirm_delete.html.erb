@@ -1,0 +1,18 @@
+<header class="heading-with-actions">
+  <h1><%= project.name %></h1>
+</header>
+
+<div class="lead">
+  You are about to <strong>delete</strong> this project - this will remove the
+  project and any participant suggested tags that may still be outstanding,
+  and cannot be undone.
+</div>
+
+<div class="confirmation-box">
+  <%= button_to "Confirm delete",
+    project_path(project),
+    method: :delete,
+    class: 'btn btn-danger add-right-margin' %>
+
+  <%= link_to "Cancel", :back, class: "cancel-link" %>
+</div>
