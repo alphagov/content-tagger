@@ -31,9 +31,9 @@
       &nbsp;
     </p>
     <div class='actions actions-inline'>
-      <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item), class: 'btn btn-primary' %>
+      <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item), class: 'btn btn-primary', form_class: 'js-mark-as-done', remote: true %>
       <% unless content_item.flag? %>
-        <%= link_to I18n.t('views.projects.flag_for_review'), flags_project_content_item_path(content_item.project, content_item), class: 'btn btn-link' %>
+        <%= link_to I18n.t('views.projects.flag_for_review'), flags_project_content_item_path(content_item.project, content_item), class: 'btn btn-link', remote: true, data: { toggle: "modal", target: '#flags-modal' } %>
       <% end %>
     </div>
   <% end %>
