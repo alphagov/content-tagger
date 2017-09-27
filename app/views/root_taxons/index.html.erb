@@ -1,11 +1,13 @@
 <%= display_header title: t('navigation.root_taxons'),
                    breadcrumbs: [t('navigation.root_taxons')] do %>
 
-  <a href="<%= edit_all_root_taxons_path %>"
-     class="btn btn-default btn-lg pull-right"
-     role="button">
-    Edit root taxons
-  </a>
+  <% if user_can_administer_taxonomy? %>
+    <a href="<%= edit_all_root_taxons_path %>"
+       class="btn btn-default btn-lg pull-right"
+       role="button">
+      Edit root taxons
+    </a>
+  <% end %>
 <% end %>
 
 <table class="table queries-list table-bordered table-striped">

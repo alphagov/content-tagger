@@ -1,7 +1,8 @@
 class RootTaxonsController < ApplicationController
   VISUALISATIONS = %w(list bubbles).freeze
 
-  before_action :ensure_user_can_administer_taxonomy!
+  before_action :ensure_user_can_use_application!
+  before_action :ensure_user_can_administer_taxonomy!, only: %i[edit_all update_all]
 
   def show
     @content_item = ContentItem.find!(params[:id])
