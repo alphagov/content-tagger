@@ -1,5 +1,5 @@
 class BranchesController < ApplicationController
-  VISUALISATIONS = %w(list bubbles).freeze
+  VISUALISATIONS = %w[list bubbles].freeze
 
   before_action :ensure_user_can_use_application!
   before_action :ensure_user_can_administer_taxonomy!, only: %i[edit_all update_all]
