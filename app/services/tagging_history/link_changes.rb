@@ -32,7 +32,7 @@ module TaggingHistory
     def link_changes_from_publishing_api
       Services.publishing_api
         .get_links_changes(
-          { link_types: ['taxons'] }.merge(@params)
+          { link_types: ['taxons'] }.merge(@params.to_h.symbolize_keys)
         )
         .to_hash
         .deep_symbolize_keys[:link_changes]
