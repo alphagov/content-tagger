@@ -20,19 +20,12 @@ module TaggingHistory
       end
     end
 
-    def filter_by_user_options
-      changes.each_with_object({}) do |change, options|
-        next unless change.key? :user_uid
-        options[change[:user_name]] = change[:user_uid]
-      end
-    end
-
   private
 
     def link_changes_from_publishing_api
       Services.publishing_api
         .get_links_changes(
-          { link_types: ['taxons'] }.merge(@params)
+          { link_types: ['taxons'] }.merge(@params.to_h.symbolize_keys)
         )
         .to_hash
         .deep_symbolize_keys[:link_changes]
