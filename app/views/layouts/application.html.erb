@@ -18,7 +18,7 @@
   <% end %>
 
   <% if user_can_administer_taxonomy? %>
-    <li class='<%= active_navigation_item.in?(%w[taxons taxon_migrations root_taxons]) ? 'active' : nil %>'>
+    <li class='<%= active_navigation_item.in?(%w[taxons taxon_migrations branches]) ? 'active' : nil %>'>
       <%= link_to t('navigation.taxons'), taxons_path %>
     </li>
   <% end %>

@@ -1,11 +1,11 @@
-<%= display_header title: t('navigation.root_taxons'),
-                   breadcrumbs: [t('navigation.root_taxons')] do %>
+<%= display_header title: t('navigation.branches'),
+                   breadcrumbs: [t('navigation.branches')] do %>
 
   <% if user_can_administer_taxonomy? %>
-    <a href="<%= edit_all_root_taxons_path %>"
+    <a href="<%= edit_all_branches_path %>"
        class="btn btn-default btn-lg pull-right"
        role="button">
-      Edit root taxons
+      Edit branches
     </a>
   <% end %>
 <% end %>
@@ -21,7 +21,7 @@
     <% GovukTaxonomy::Branches.new.all.each do |taxon| %>
       <tr>
         <td>
-          <a href="<%= root_taxon_path(taxon['content_id']) %>">
+          <a href="<%= branch_path(taxon['content_id']) %>">
              <%= taxon['title'] %>
           </a>
         </td>

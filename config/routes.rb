@@ -62,7 +62,7 @@ Rails.application.routes.draw do
 
   resources :taxonomies, only: %i(show), param: :content_id
 
-  resources :root_taxons, only: [:index, :show] do
+  resources :branches, only: [:index, :show] do
     collection do
       get 'edit_all'
       put 'update_all'

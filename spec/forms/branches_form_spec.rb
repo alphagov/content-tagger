@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe RootTaxonsForm do
+RSpec.describe BranchesForm do
   include PublishingApiHelper
   include ContentItemHelper
 
@@ -17,7 +17,7 @@ RSpec.describe RootTaxonsForm do
         document_type: 'taxon'
       )
 
-      taxons_for_select = RootTaxonsForm.new.taxons_for_select
+      taxons_for_select = BranchesForm.new.taxons_for_select
 
       expect(taxons_for_select).to eq(@linkable_taxon_hash.map { |l| [l[:internal_name], l[:content_id]] })
     end
@@ -28,12 +28,12 @@ RSpec.describe RootTaxonsForm do
       stub_any_publishing_api_patch_links
     end
     it 'updates given taxons, ignoring empty strings' do
-      RootTaxonsForm.new(root_taxons: ["", "ID-3", "ID-4"]).update
+      BranchesForm.new(branches: ["", "ID-3", "ID-4"]).update
       assert_publishing_api_patch_links(GovukTaxonomy::ROOT_CONTENT_ID, "links" =>
         { "root_taxons" => ["ID-3", "ID-4"] })
     end
     it 'removes all taxons' do
-      RootTaxonsForm.new(root_taxons: [""]).update
+      BranchesForm.new(branches: [""]).update
       assert_publishing_api_patch_links(GovukTaxonomy::ROOT_CONTENT_ID, "links" =>
         { "root_taxons" => [] })
     end
