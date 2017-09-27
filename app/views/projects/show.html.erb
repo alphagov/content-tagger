@@ -46,10 +46,6 @@
 
   <div class="col-md-9">
     <% if content_items.any? %>
-      <% if project.bulk_tagging_enabled? %>
-        <%= render partial: "bulk_tagging", locals: local_assigns %>
-      <% end %>
-
       <div class='content-list'>
         <%= render partial: 'content_item', collection: content_items, cached: true %>
       </div>
@@ -62,8 +58,4 @@
 <script>
   var bulkTagger = new GOVUKAdmin.Modules.BulkTagger(<%= taxons.to_json.html_safe %>);
   bulkTagger.start_individual_taggers($('.tagathon-project'));
-
-  <% if project.bulk_tagging_enabled? %>
-    bulkTagger.start_bulk_tagger($('.tagathon-project'));
-  <% end %>
 </script>

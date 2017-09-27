@@ -27,20 +27,6 @@ RSpec.feature "Projects", type: :feature do
     then_i_see_the_project_has_been_deleted
   end
 
-  scenario "viewing a project with no bulk-tagging" do
-    given_there_is_a_project_with_content_items_but_no_bulk_tagging
-    when_i_visit_the_project_page
-    then_there_is_no_bulk_tagging_interface
-  end
-
-  scenario "creating a new project with bulk-tagging" do
-    given_there_is_a_remote_spreadsheet
-    and_there_is_a_draft_taxonomy_branch
-    when_i_create_a_new_project_with_bulk_tagging
-    and_i_click_my_new_projects_name_in_the_project_list
-    then_the_bulk_tagging_interface_is_present
-  end
-
   scenario "filtering for to do content items" do
     given_there_is_a_project_with_content_items_in_all_different_states
     when_i_visit_the_project_page
@@ -90,12 +76,6 @@ RSpec.feature "Projects", type: :feature do
 
   def given_there_is_a_project_with_a_content_item
     @project = create :project, :with_a_content_item
-    stub_draft_taxonomy_branch
-    stub_empty_bulk_taxons_lookup
-  end
-
-  def given_there_is_a_project_with_content_items_but_no_bulk_tagging
-    @project = create :project, :with_content_items, :with_bulk_tagging_disabled
     stub_draft_taxonomy_branch
     stub_empty_bulk_taxons_lookup
   end
@@ -167,25 +147,6 @@ RSpec.feature "Projects", type: :feature do
     fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
     allow(LookupContentIdWorker).to receive(:perform_async)
     click_on 'New Project'
-  end
-
-  def when_i_create_a_new_project_with_bulk_tagging
-    @project_name = 'my_project'
-    visit projects_path
-    click_link 'Add new project'
-    fill_in 'new_project_form_name', with: @project_name
-    select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
-    fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
-    check 'Bulk tagging'
-    allow(LookupContentIdWorker).to receive(:perform_async)
-    click_on 'New Project'
-
-    content_item = create(
-      :project_content_item, title: "Foo", project_id: Project.first.id
-    )
-    taxons = [SecureRandom.uuid]
-    stub_bulk_taxons_lookup([content_item.content_id], taxons)
-    stub_draft_taxonomy_branch
   end
 
   def when_i_visit_the_project_page
@@ -271,14 +232,6 @@ RSpec.feature "Projects", type: :feature do
     expect(page).not_to have_content @flagged_content_item.title
     expect(page).not_to have_content @incomplete_content_item.title
     expect(page).to have_content "Foo item"
-  end
-
-  def then_the_bulk_tagging_interface_is_present
-    expect(page).to have_selector '.bulk-tagger'
-  end
-
-  def then_there_is_no_bulk_tagging_interface
-    expect(page).not_to have_selector '.bulk-tagger'
   end
 
   def then_the_content_item_should_not_show_in_the_to_do_list

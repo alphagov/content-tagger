@@ -16,12 +16,6 @@
                     label: 'Spreadsheet URL',
                     hint: 'Spreadsheet URL with the contents of the project. Required columns: url, title and description.' %>
 
-        <%= f.input :bulk_tagging_enabled, input_html: { class: 'form-control' },
-                    label: 'Bulk tagging',
-                    hint: 'Enable the bulk tagging interface for this project?',
-                    as: :boolean,
-                    checked_value: true %>
-
         <%= f.submit 'New Project', class: "btn btn-lg btn-success" %>
     <% end %>
   </div>
