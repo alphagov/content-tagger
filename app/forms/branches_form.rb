@@ -1,11 +1,11 @@
-class RootTaxonsForm
+class BranchesForm
   include ActiveModel::Model
 
-  attr_accessor :root_taxons
+  attr_accessor :branches
 
   def initialize(attributes = {})
     super
-    @root_taxons ||= fetch_root_taxons
+    @branches ||= fetch_branches
   end
 
   def taxons_for_select
@@ -15,13 +15,13 @@ class RootTaxonsForm
   def update
     Services.publishing_api.patch_links(
       GovukTaxonomy::ROOT_CONTENT_ID,
-      links: { root_taxons: root_taxons.reject(&:empty?) },
+      links: { root_taxons: branches.reject(&:empty?) },
     )
   end
 
 private
 
-  def fetch_root_taxons
+  def fetch_branches
     homepage_links = Services.publishing_api.get_links(GovukTaxonomy::ROOT_CONTENT_ID)
     homepage_links.dig('links', 'root_taxons') || []
   end

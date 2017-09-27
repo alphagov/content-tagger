@@ -1,16 +1,16 @@
 require "rails_helper"
 
-RSpec.feature "Manage Root Taxons" do
+RSpec.feature "Manage Branches" do
   include PublishingApiHelper
   include ContentItemHelper
 
-  scenario "Update the list of root taxons" do
+  scenario "Update the list of branches" do
     given_that_there_are_two_taxons
     given_that_one_taxon_is_a_root_taxon
     given_that_one_link_is_a_root_taxon
     when_i_visit_the_edit_taxonomy_page
-    and_i_click_the_manage_root_taxons_button
-    and_i_click_the_edit_root_taxons_button
+    and_i_click_the_manage_branches_button
+    and_i_click_the_edit_branches_button
     and_i_add_a_new_taxon
     when_i_click_save
     then_the_set_of_root_taxons_is_updated
@@ -64,12 +64,12 @@ RSpec.feature "Manage Root Taxons" do
     visit taxons_path
   end
 
-  def and_i_click_the_manage_root_taxons_button
-    click_link "Manage root taxons"
+  def and_i_click_the_manage_branches_button
+    click_link "Manage branches"
   end
 
-  def and_i_click_the_edit_root_taxons_button
-    click_link "Edit root taxons"
+  def and_i_click_the_edit_branches_button
+    click_link "Edit branches"
   end
 
   def then_i_see_the_current_root_taxons
@@ -77,7 +77,7 @@ RSpec.feature "Manage Root Taxons" do
   end
 
   def and_i_add_a_new_taxon
-    select @linkable_taxon_hash[1][:internal_name], from: "root_taxons_form_root_taxons"
+    select @linkable_taxon_hash[1][:internal_name], from: "branches_form_branches"
   end
 
   def when_i_click_save

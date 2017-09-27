@@ -1,8 +1,8 @@
 <%= display_header title: @content_item.title,
-                   breadcrumbs: [:root_taxons, @content_item.title] do %>
+                   breadcrumbs: [:branches, @content_item.title] do %>
 
-  <% RootTaxonsController::VISUALISATIONS.each do |viz| %>
-    <a href="<%= root_taxon_path(params[:id], viz: viz) %>"
+  <% BranchesController::VISUALISATIONS.each do |viz| %>
+    <a href="<%= branch_path(params[:id], viz: viz) %>"
        class="btn btn-lg <%= viz == visualisation_to_render ? 'btn-primary' : 'btn-default' %>"
        role="button">
       <%= viz.titlecase %>
@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<% if visualisation_to_render.in? RootTaxonsController::VISUALISATIONS %>
+<% if visualisation_to_render.in? BranchesController::VISUALISATIONS %>
   <%= render visualisation_to_render %>
 <% else %>
   <h2>Unknown visualisation <%= visualisation_to_render %>

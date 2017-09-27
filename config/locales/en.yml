@@ -1,8 +1,8 @@
 en:
   navigation:
     bulk_tag: 'Bulk tag'
-    root_taxons: 'Root taxons'
-    edit_root_taxons: 'Edit root taxons'
+    branches: 'Branches'
+    edit_branches: 'Edit branches'
     tagging_history: 'Tagging history'
     projects: 'Projects'
     tagging_content: Edit a page
