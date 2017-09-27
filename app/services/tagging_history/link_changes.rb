@@ -20,13 +20,6 @@ module TaggingHistory
       end
     end
 
-    def filter_by_user_options
-      changes.each_with_object({}) do |change, options|
-        next unless change.key? :user_uid
-        options[change[:user_name]] = change[:user_uid]
-      end
-    end
-
   private
 
     def link_changes_from_publishing_api
