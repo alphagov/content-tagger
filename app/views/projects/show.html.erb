@@ -9,6 +9,12 @@
 
 <div class="row tagathon-project">
   <div class="col-md-3 filter-controls">
+    <%= link_to "Show #{project.taxonomy_branch_title.downcase} taxonomy",
+                root_taxon_path(project.taxonomy_branch, viz: :list),
+                class: 'btn btn-default btn-lg',
+                target: '_blank'
+    %>
+
     <h3>Filter</h3>
 
     <form method="GET">
