@@ -53,7 +53,7 @@ private
   end
 
   def project_index
-    @_project_index = Project.all
+    @_project_index = Project.all.order(:taxonomy_branch, :name)
   end
 
   def project
