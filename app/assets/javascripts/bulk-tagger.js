@@ -83,6 +83,7 @@
         function() {
           $(this).parents('.content-item').fadeOut('fast', function() {
             $(this).remove();
+            Waypoint.refreshAll();
           });
         }
       ).on(
