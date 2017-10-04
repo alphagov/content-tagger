@@ -28,6 +28,11 @@ module Proxies
       else
         result = body
       end
+
+      # Without this, I get `Rack::Lint::LintError: header must not contain Status`
+      # when testing locally
+      headers.delete('status')
+
       [status, headers.tap { |h| h['x-frame-options'] = 'ALLOWALL' }, result]
     end
   end
