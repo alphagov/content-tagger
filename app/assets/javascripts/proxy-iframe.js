@@ -2,15 +2,19 @@
   "use strict";
 
   Modules.ProxyIframe = function () {
-    this.start = function () {
-      $('[data-proxy-iframe]').click(
-         function (e) {
-           e.preventDefault();
-           $("#iframe_id").contents().find("body").html('');
-           $('#iframe_id').attr('src', $(this).attr('data-modal-url'));
-           $('#iframe_modal_label_id').html($(this).text());
-         }
-      );
+    this.start = function ($modalElement) {
+      $modalElement.on('show.bs.modal', function (e) {
+        var $relatedTarget = $(e.relatedTarget);
+
+        $modalElement.find('iframe').attr('src', $relatedTarget.attr('data-modal-url'));
+        $modalElement.find('h4').text($relatedTarget.text());
+      });
+
+      $modalElement.on('hidden.bs.modal', function(e) {
+        // Once the modal is hidden, clear the contents, to avoid the
+        // old contents showing momentarily when it's opened again.
+        $modalElement.find('iframe').attr('src', 'about:blank');
+      });
     };
   };
 })(window.GOVUKAdmin.Modules);
