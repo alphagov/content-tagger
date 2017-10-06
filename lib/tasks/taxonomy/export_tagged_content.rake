@@ -1,4 +1,5 @@
 require 'csv'
+require_relative '../../tagged_content_exporter'
 
 namespace :taxonomy do
   desc <<-DESC
@@ -36,5 +37,14 @@ namespace :taxonomy do
     end
 
     puts rows
+  end
+
+  desc "Export tagged content items with taxons and tagging metadata"
+  task export_tagged_content_with_taxons: :environment do
+    content_items = TaggedContentExporter.call
+
+    File.open(Rails.root.join("lib", "data", "tagged_content_items_with_taxon.json"), "w") do |f|
+      f.write(content_items.to_json)
+    end
   end
 end
