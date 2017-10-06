@@ -21,7 +21,7 @@ module Proxies
       status, headers, body = triplet
 
       result = []
-      if headers['content-type'].any? { |header| header.include?('text/html') }
+      if headers.fetch('content-type', []).any? { |header| header.include?('text/html') }
         body.each do |body_part|
           result << body_part.gsub(%r{(href|src)=["'](https://(www\.)?gov\.uk)?/([^'"]*)["']}, %(\\1="#{Proxies::IframeAllowingProxy::PROXY_BASE_PATH}\\4"))
         end
