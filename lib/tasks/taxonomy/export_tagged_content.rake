@@ -41,10 +41,18 @@ namespace :taxonomy do
 
   desc "Export tagged content items with taxons and tagging metadata"
   task export_tagged_content_with_taxons: :environment do
-    content_items = TaggedContentExporter.call
+    transport_taxon_id = "a4038b29-b332-4f13-98b1-1c9709e216bc".freeze
+
+    content_items = ProjectContentItem
+                      .for_taxonomy_branch(transport_taxon_id)
+                      .done
+
+    content_items_with_taxons = TaggedContentExporter
+                                  .new(content_items)
+                                  .content_items_with_taxons
 
     File.open(Rails.root.join("lib", "data", "tagged_content_items_with_taxon.json"), "w") do |f|
-      f.write(content_items.to_json)
+      f.write(content_items_with_taxons.to_json)
     end
   end
 end

@@ -1,15 +1,8 @@
 class TaggedContentExporter
-  TRANSPORT_TAXON_ID = "a4038b29-b332-4f13-98b1-1c9709e216bc".freeze
   WEBSITE_ROOT = Plek.new.website_root
 
-  def self.call
-    new.content_items_with_taxons.compact
-  end
-
-  def initialize
-    @content_items = ProjectContentItem
-      .for_taxonomy_branch(TRANSPORT_TAXON_ID)
-      .done
+  def initialize(content_items)
+    @content_items = content_items
   end
 
   def content_items_with_taxons

@@ -11,7 +11,6 @@ RSpec.describe TaggedContentExporter do
       project = create(:project, taxonomy_branch: "a4038b29-b332-4f13-98b1-1c9709e216bc")
 
       create(:project_content_item,
-             done: true,
              project: project,
              content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
              url: "https://www.test.gov.uk/government/publications/great-western-franchise-2013")
@@ -74,8 +73,11 @@ RSpec.describe TaggedContentExporter do
         }
       ]
 
-      content_items = TaggedContentExporter.new.content_items_with_taxons
-      expect(content_items). to eq(expected_content_items)
+      expect(
+        TaggedContentExporter
+          .new(ProjectContentItem.all)
+          .content_items_with_taxons
+      ). to eq(expected_content_items)
     end
   end
 end
