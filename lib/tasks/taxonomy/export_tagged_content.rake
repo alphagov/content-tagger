@@ -1,5 +1,5 @@
 require 'csv'
-require_relative '../../tagged_content_exporter'
+require_relative Rails.root.join('lib', 'tagged_content_exporter')
 
 namespace :taxonomy do
   desc <<-DESC
@@ -42,17 +42,11 @@ namespace :taxonomy do
   desc "Export tagged content items with taxons and tagging metadata"
   task export_tagged_content_with_taxons: :environment do
     transport_taxon_id = "a4038b29-b332-4f13-98b1-1c9709e216bc".freeze
-
-    content_items = ProjectContentItem
-                      .for_taxonomy_branch(transport_taxon_id)
-                      .done
-
-    content_items_with_taxons = TaggedContentExporter
-                                  .new(content_items)
-                                  .content_items_with_taxons
+    items = ProjectContentItem.for_taxonomy_branch(transport_taxon_id).done
+    items_with_taxons = TaggedContentExporter.new(items).content_items_with_taxons
 
     File.open(Rails.root.join("lib", "data", "tagged_content_items_with_taxon.json"), "w") do |f|
-      f.write(content_items_with_taxons.to_json)
+      f.write(items_with_taxons.to_json)
     end
   end
 end
