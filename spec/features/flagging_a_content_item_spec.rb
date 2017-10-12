@@ -15,8 +15,9 @@ RSpec.describe "flagging a content item" do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
-    then_them_content_item_should_be_flagged_as_missing_topic
-    and_there_should_be_an_associated_suggestion
+    and_i_apply_the_flagged_filter
+    then_the_content_item_should_be_flagged_as_missing_topic
+    and_the_suggested_topic_should_be_displayed
   end
 
   scenario "flagged content is labelled in table view" do
@@ -68,7 +69,7 @@ RSpec.describe "flagging a content item" do
 
   def and_i_apply_the_flagged_filter
     choose "Flagged"
-    click_button "Apply"
+    click_button "Apply filter"
   end
 
   def then_the_content_item_should_be_flagged_as_needs_help
@@ -87,12 +88,12 @@ RSpec.describe "flagging a content item" do
     click_button "Done"
   end
 
-  def then_them_content_item_should_be_flagged_as_missing_topic
-    expect(Project.first.content_items.first.missing_topic?).to be true
+  def then_the_content_item_should_be_flagged_as_missing_topic
+    expect(page).to have_content "Flagged: needs IA review"
   end
 
-  def and_there_should_be_an_associated_suggestion
-    expect(Project.first.content_items.first.suggested_tags).to eql "cool new topic"
+  def and_the_suggested_topic_should_be_displayed
+    expect(page).to have_content "Suggested topic: cool new topic"
   end
 
   def then_the_flagged_content_items_should_be_labelled_correctly
