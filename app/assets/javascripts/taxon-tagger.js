@@ -2,7 +2,7 @@
   "use strict";
 
   // Constructor
-  Modules.BulkTagger = function(taxons) {
+  Modules.TaxonTagger = function(taxons) {
     this.selectors = {
       tag_input_element: '.js_bulk_tagger_input',
       bulk_tagger_form: '.js-bulk-tagger-form',
@@ -24,7 +24,7 @@
     }
   };
 
-  Modules.BulkTagger.prototype = {
+  Modules.TaxonTagger.prototype = {
 
     /*
      * Initializes each content-item tagging form with Select2 and auto-save.
