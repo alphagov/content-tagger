@@ -54,7 +54,7 @@ private
   end
 
   def flag_params
-    params.require(:project_content_item).permit(:flag, :suggested_tags)
+    params.require(:project_content_item).permit(:flag, :suggested_tags, :need_help_comment)
   end
 
   def bulk_params
