@@ -48,4 +48,11 @@ module TaxonomyHelper
     stub_request(:patch, "https://publishing-api.test.gov.uk/v2/links/#{content_id}")
       .to_return(status: success ? 200 : 400)
   end
+
+  def stub_tagging_progress
+    stub_request(:get, "https://rummager.test.gov.uk/search.json?aggregate_primary_publishing_organisation=0,scope:all_filters&count=0&start=0")
+      .to_return(status: 200, body: {}.to_json)
+    stub_request(:get, "https://rummager.test.gov.uk/search.json?aggregate_primary_publishing_organisation=0,scope:all_filters&count=0&reject_taxons=_MISSING&start=0")
+      .to_return(status: 200, body: {}.to_json)
+  end
 end

@@ -31,3 +31,25 @@
     </tbody>
   </table>
 <% end %>
+
+<h2>
+  Department tagging progress
+</h2>
+
+<table class="table queries-list table-bordered table-striped">
+  <thead>
+  <tr class="table-header">
+    <th>Organisation</th>
+    <th>Progress</th>
+  </tr>
+  </thead>
+
+  <% percentage_by_organisation.each do |organisation_slug, progress| %>
+  <tbody>
+    <tr>
+      <td><%= organisation_slug %></td>
+      <td><%= number_to_percentage(progress, precision: 2) %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>

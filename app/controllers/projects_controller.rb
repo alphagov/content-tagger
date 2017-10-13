@@ -3,7 +3,10 @@ class ProjectsController < ApplicationController
   before_action :ensure_user_can_administer_taxonomy!, only: %i[confirm_delete destroy]
 
   def index
-    render :index, locals: { projects: project_index }
+    render :index, locals: {
+      percentage_by_organisation: percentage_by_organisation,
+      projects: project_index
+    }
   end
 
   def show
@@ -68,5 +71,10 @@ private
     params
       .fetch(:new_project_form)
       .permit(:name, :remote_url, :taxonomy_branch, :bulk_tagging_enabled)
+  end
+
+  def percentage_by_organisation
+    organisations = User.pluck(:organisation_slug).uniq.compact.sort
+    TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged
   end
 end

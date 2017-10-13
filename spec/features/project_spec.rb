@@ -5,6 +5,10 @@ RSpec.feature "Projects", type: :feature do
   include TaxonomyHelper
   include PublishingApiHelper
 
+  before do
+    stub_tagging_progress
+  end
+
   scenario "viewing a project" do
     given_there_is_a_project_with_content_items
     when_i_visit_the_project_page
@@ -146,7 +150,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def and_i_click_my_new_projects_name_in_the_project_list
-    within 'table' do
+    within 'table:first-of-type' do
       click_on @project_name
     end
   end
