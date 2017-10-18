@@ -1,7 +1,7 @@
 class ChangeExistingMessagesToAnArrayOnTagMappings < ActiveRecord::Migration
   def change
-    TagMapping.transaction do
-      TagMapping.all.each do |tag_mapping|
+    BulkTagging::TagMapping.transaction do
+      BulkTagging::TagMapping.all.each do |tag_mapping|
         current_messages = tag_mapping.messages
         # We have stored messages in the database as strings separated by ".". The
         # reason we are not splitting existing messages by "." here is because we
