@@ -1,6 +1,6 @@
 class SetColumnsToNotNull < ActiveRecord::Migration
   def change
-    TaggingSpreadsheet.delete_all
+    BulkTagging::TaggingSpreadsheet.delete_all
 
     change_column_null :tag_mappings, :tagging_spreadsheet_id, false
     change_column_null :tag_mappings, :content_base_path, false
