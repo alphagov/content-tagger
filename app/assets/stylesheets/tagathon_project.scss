@@ -90,10 +90,10 @@
   }
 }
 
-.flagged-for-needs-help {
+.danger-label-with-text {
   display: flex;
 
-  .needs-help-comment {
+  .additional-text {
     padding-left: 5px;
   }
 }

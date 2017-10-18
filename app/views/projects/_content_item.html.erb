@@ -3,18 +3,17 @@
     <%= token_tag %>
 
     <% if content_item.needs_help? %>
-      <div class='flagged-for-needs-help'>
-        <div>
-          <span class='label label-danger'><%= I18n.t('views.projects.flags.help-needed') %></span>
-        </div>
-
-        <% if content_item.need_help_comment.present? %>
-            <span class="needs-help-comment">Comment: <%= content_item.need_help_comment %></span>
-        <% end %>
-      </div>
+      <%= render partial: "danger_label_with_text", locals: {
+        label_text: I18n.t('views.projects.flags.help-needed'),
+        additional_text_label: "Comment",
+        additional_text: content_item.need_help_comment,
+      } %>
     <% elsif content_item.missing_topic? %>
-      <span class='label label-danger'><%= I18n.t('views.projects.flags.missing-topic') %></span>
-      Suggested topic: <%= content_item.suggested_tags %>
+      <%= render partial: "danger_label_with_text", locals: {
+        label_text: I18n.t('views.projects.flags.missing-topic'),
+        additional_text_label: "Suggested topic",
+        additional_text: content_item.suggested_tags,
+      } %>
     <% elsif content_item.done? %>
       <span class='label label-primary'>Done</span>
     <% end %>
