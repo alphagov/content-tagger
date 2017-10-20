@@ -14,6 +14,11 @@ module LegacyTaxonomy
           SecureRandom.uuid
         end
 
+        def get_linked_items(content_id, link_type)
+          linked_items = client.get_linked_items(content_id, link_type: link_type, fields: %i[base_path content_id])
+          linked_items.map { |item| { 'link' => item['base_path'], 'content_id' => item['content_id'] } }
+        end
+
         def content_id_for_base_path(base_path)
           client.lookup_content_id(base_path: base_path)
         end

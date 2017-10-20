@@ -8,10 +8,8 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
   describe "#to_taxonomy_branch" do
     let(:result) do
       described_class.new('/foo',
-                          base_path: '/browse',
                           title: 'taxonomy title',
-                          first_level_key: 'top_level_browse_pages',
-                          second_level_key: 'second_level_browse_pages').to_taxonomy_branch
+                          type: LegacyTaxonomy::ThreeLevelTaxonomy::MAINSTREAM).to_taxonomy_branch
     end
 
     context 'there is only one root, no children' do
@@ -49,6 +47,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         stub_publishing_api_third_level_browse_pages(subtaxon['content_id'], [])
         stub_publishing_api_content_id_lookup("/foo/subpath", 'sub_taxon')
         stub_search_api subtaxon, %w(page_content_id)
+        stub_linked_items(content_id: subtaxon['content_id'], link_type: 'mainstream_browse_pages', linked_content_ids: [])
       end
 
       it 'has second level taxons' do
@@ -69,6 +68,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         stub_publishing_api_content_id_lookup('/path-of-group-contents', 'content-id-goes-here')
         stub_publishing_api_content_id_lookup_404('/foo/path/groupo_uno')
         stub_search_api subtaxon, %w(page_content_id)
+        stub_linked_items(content_id: subtaxon['content_id'], link_type: 'mainstream_browse_pages', linked_content_ids: ['uncurated_content_id'])
       end
 
       it "has third level taxons" do
@@ -81,12 +81,24 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
           }
         ]
       end
+      it 'adds uncurated content to the second level taxons' do
+        l2_taxon = result.child_taxons.first.child_taxons.first
+        expect(l2_taxon.tagged_pages).to include('link' => '/uncurated/path',
+                                                 'content_id' => 'uncurated_content_id')
+      end
     end
   end
 
   ####################
   #  HELPER METHODS  #
   ####################
+
+  def stub_linked_items(content_id:, link_type: 'topics', linked_content_ids: [])
+    allow(LegacyTaxonomy::Client::PublishingApi)
+      .to receive(:get_linked_items)
+      .with(content_id, link_type)
+      .and_return(linked_content_ids.map { |id| { 'link' => '/uncurated/path', 'content_id' => id } })
+  end
 
   def stub_publishing_api_root_taxon
     allow(LegacyTaxonomy::Client::PublishingApi)

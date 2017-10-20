@@ -18,9 +18,7 @@ namespace :legacy_taxonomy do
     task generate_taxons: :environment do
       taxonomy = LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-browse',
                                                         title: 'Imported Mainstream Browse',
-                                                        first_level_key: 'top_level_browse_pages',
-                                                        second_level_key: 'second_level_browse_pages',
-                                                        base_path: '/browse').to_taxonomy_branch
+                                                        type: LegacyTaxonomy::ThreeLevelTaxonomy::MAINSTREAM).to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').write(taxonomy)
     end
 
@@ -36,10 +34,8 @@ namespace :legacy_taxonomy do
     desc "Generates structure for Topic taxonomy at www.gov.uk/browse"
     task generate_taxons: :environment do
       taxonomy = LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-topic',
-                                                        base_path: '/topic',
-                                                        first_level_key: 'children',
-                                                        second_level_key: 'children',
-                                                        title: 'Imported Topic').to_taxonomy_branch
+                                                        title: 'Topics',
+                                                        type: LegacyTaxonomy::ThreeLevelTaxonomy::TOPIC).to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').write(taxonomy)
     end
 
