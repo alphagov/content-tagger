@@ -9,9 +9,14 @@
     <div class="modal-body flag-for-review">
       <div class='radio'>
         <label>
-          <%= f.radio_button :flag, "needs_help", required: true %>
+          <%= f.radio_button :flag, "needs_help", required: true, data: { target: 'need-help-comment' } %>
           I need help tagging this
         </label>
+      </div>
+
+      <div id='need-help-comment' class='form-group add-top-margin add-left-border'>
+        <%= f.label :need_help_comment, "Comment (optional)" %>
+        <%= f.text_field :need_help_comment, class: 'form-control input-md-4' %>
       </div>
 
       <div class='radio'>

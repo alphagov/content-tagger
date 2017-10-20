@@ -1,0 +1,9 @@
+<div class='danger-label-with-text'>
+  <div>
+    <span class='label label-danger'><%= label_text %></span>
+  </div>
+
+  <% if additional_text.present? %>
+      <span class="additional-text"><%= additional_text_label %>: <%= additional_text %></span>
+  <% end %>
+</div>

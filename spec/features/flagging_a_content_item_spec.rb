@@ -8,7 +8,11 @@ RSpec.describe "flagging a content item" do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_flag_the_first_content_item_as_i_need_help
+    and_i_enter_a_comment_to_explain_why_i_need_help
+    and_i_submit_my_flag_for_review_choice
+    and_i_apply_the_flagged_filter
     then_the_content_item_should_be_flagged_as_needs_help
+    and_the_need_help_comment_should_be_displayed
   end
 
   scenario "flagging a content item and suggesting a new term", js: true do
@@ -63,6 +67,14 @@ RSpec.describe "flagging a content item" do
   def and_i_flag_the_first_content_item_as_i_need_help
     click_link 'Flag for review'
     choose "I need help tagging this"
+  end
+
+  def and_i_enter_a_comment_to_explain_why_i_need_help
+    expect(page).to have_field("Comment (optional)")
+    fill_in "Comment (optional)", with: "I don't know what I'm doing"
+  end
+
+  def and_i_submit_my_flag_for_review_choice
     click_button "Continue"
     wait_for_ajax
   end
@@ -73,7 +85,7 @@ RSpec.describe "flagging a content item" do
   end
 
   def then_the_content_item_should_be_flagged_as_needs_help
-    expect(Project.first.content_items.first.needs_help?).to be true
+    expect(page).to have_content "Flagged: needs publisher review"
   end
 
   def and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
@@ -103,5 +115,9 @@ RSpec.describe "flagging a content item" do
 
   def then_the_content_item_should_no_longer_be_flagged
     expect(page).not_to have_content 'Flagged: needs publisher review'
+  end
+
+  def and_the_need_help_comment_should_be_displayed
+    expect(page).to have_content "Comment: I don't know what I'm doing"
   end
 end

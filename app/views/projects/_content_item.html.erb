@@ -3,10 +3,17 @@
     <%= token_tag %>
 
     <% if content_item.needs_help? %>
-      <span class='label label-danger'><%= I18n.t('views.projects.flags.help-needed') %></span>
+      <%= render partial: "danger_label_with_text", locals: {
+        label_text: I18n.t('views.projects.flags.help-needed'),
+        additional_text_label: "Comment",
+        additional_text: content_item.need_help_comment,
+      } %>
     <% elsif content_item.missing_topic? %>
-      <span class='label label-danger'><%= I18n.t('views.projects.flags.missing-topic') %></span>
-      Suggested topic: <%= content_item.suggested_tags %>
+      <%= render partial: "danger_label_with_text", locals: {
+        label_text: I18n.t('views.projects.flags.missing-topic'),
+        additional_text_label: "Suggested topic",
+        additional_text: content_item.suggested_tags,
+      } %>
     <% elsif content_item.done? %>
       <span class='label label-primary'>Done</span>
     <% end %>
@@ -16,6 +23,7 @@
     </h4>
 
     <p><%= content_item.description %></p>
+
     <%= f.input :taxons,
       placeholder: 'Choose one...',
       label: false,
