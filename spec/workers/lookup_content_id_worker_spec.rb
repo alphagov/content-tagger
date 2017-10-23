@@ -29,5 +29,9 @@ RSpec.describe LookupContentIdWorker do
       content_item.reload
       expect(content_item.content_id).to eql content_item_id
     end
+
+    it "does not raise an error if the content item cannot be found" do
+      expect { LookupContentIdWorker.new.perform(123) }.to_not raise_error
+    end
   end
 end
