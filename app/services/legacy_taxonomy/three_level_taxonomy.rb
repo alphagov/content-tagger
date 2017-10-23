@@ -2,12 +2,27 @@ module LegacyTaxonomy
   class ThreeLevelTaxonomy
     attr_accessor :path_prefix
 
-    def initialize(path_prefix, base_path:, title:, first_level_key:, second_level_key:)
+    MAINSTREAM = {
+      base_path: '/browse',
+      first_level_key: 'top_level_browse_pages',
+      second_level_key: 'second_level_browse_pages',
+      link_type: 'mainstream_browse_pages'
+    }.freeze
+
+    TOPIC = {
+      base_path: '/topic',
+      first_level_key: 'children',
+      second_level_key: 'children',
+      link_type: 'topics'
+    }.freeze
+
+    def initialize(path_prefix, type:, title:)
       @path_prefix = path_prefix
-      @base_path = base_path
+      @base_path = type[:base_path]
       @title = title
-      @first_level_key = first_level_key
-      @second_level_key = second_level_key
+      @first_level_key = type[:first_level_key]
+      @second_level_key = type[:second_level_key]
+      @link_type = type[:link_type]
     end
 
     def to_taxonomy_branch
@@ -31,7 +46,7 @@ module LegacyTaxonomy
           second_level_taxons(first_level_taxon).each do |second_level_taxon|
             second_level_taxon.child_taxons = third_level_taxons(second_level_taxon)
             second_level_taxon.tagged_pages -=
-              second_level_taxon.child_taxons.map(&:tagged_pages).flatten
+              second_level_taxon.child_taxons.flat_map(&:tagged_pages)
           end
       end
     end
@@ -80,7 +95,6 @@ module LegacyTaxonomy
             path_slug: path_slug,
             path_prefix: path_prefix,
             tagged_pages: third_level_tagged_pages(group['contents'])
-
           )
         end
     end
@@ -100,8 +114,13 @@ module LegacyTaxonomy
       (
         Client::SearchApi.content_tagged_to_browse_page(content_id) +
           linked_related_topics(content_id) +
-          Client::SearchApi.content_tagged_to_topic(base_path)
+          Client::SearchApi.content_tagged_to_topic(base_path) +
+          uncurated_links(content_id)
       ).uniq
+    end
+
+    def uncurated_links(content_id)
+      LegacyTaxonomy::Client::PublishingApi.get_linked_items(content_id, @link_type)
     end
 
     def linked_related_topics(content_id)
