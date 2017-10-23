@@ -2,12 +2,12 @@ module LegacyTaxonomy
   class TaxonomyPublisher
     include Sidekiq::Worker
 
-    def perform(taxon_data_yml, parent_taxon_id = nil)
+    def perform(taxon_data_yml, parent_taxon_id = nil, publish = false)
       taxon_data = Yamlizer.deserialize(taxon_data_yml)
       content_id = taxon_data.content_id
 
       Client::PublishingApi.put_content(content_id, taxon_for_publishing_api(taxon_data))
-      Client::PublishingApi.publish(content_id)
+      Client::PublishingApi.publish(content_id) if publish
 
       if parent_taxon_id
         Client::PublishingApi.patch_links(content_id, links: { parent_taxons: [parent_taxon_id] })
