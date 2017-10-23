@@ -2,12 +2,3 @@ $('#flags-modal').html("<%= escape_javascript(render partial: 'flags', locals: l
 
 var radioToggle = new GOVUKAdmin.Modules.RadioToggle;
 radioToggle.start($('#flags-modal'));
-
-$('#flags-modal input[type=radio]').change(function() {
-  var $input = $('#flags-modal input[type=text]#project_content_item_suggested_tags');
-  if(this.value == 'missing_topic') {
-    $input.attr('required', true);
-  } else {
-    $input.attr('required', false);
-  }
-});
