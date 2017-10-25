@@ -5,10 +5,6 @@ RSpec.feature "Projects", type: :feature do
   include TaxonomyHelper
   include PublishingApiHelper
 
-  before do
-    stub_tagging_progress
-  end
-
   scenario "viewing a project" do
     given_there_is_a_project_with_content_items
     when_i_visit_the_project_page
@@ -84,6 +80,35 @@ RSpec.feature "Projects", type: :feature do
     when_i_visit_the_project_page
     and_i_mark_the_content_item_as_done
     then_the_content_item_should_not_show_in_the_to_do_list
+  end
+
+  scenario "viewing tagging progress for organisations" do
+    stub_organisation_tagging_progress
+
+    when_i_visit_the_project_index_page
+    and_i_fill_in_and_submit_the_organisation_progress_form
+    then_the_tagging_progress_for_the_organisations_will_be_shown
+  end
+
+  def and_i_fill_in_and_submit_the_organisation_progress_form
+    organisations = [
+      "department-for-transport",
+      "high-speed-two-limited",
+      "home-office",
+      "maritime-and-coastguard-agency",
+    ]
+
+    fill_in "Organisation slugs", with: organisations.join(", ")
+    click_on "Display progress"
+  end
+
+  def then_the_tagging_progress_for_the_organisations_will_be_shown
+    within "table:last-of-type" do
+      expect(page).to have_content "department-for-transport 18.34%"
+      expect(page).to have_content "high-speed-two-limited 98.80%"
+      expect(page).to have_content "home-office 0.00%"
+      expect(page).to have_content "maritime-and-coastguard-agency 57.27%"
+    end
   end
 
   def given_there_is_a_project_with_content_items

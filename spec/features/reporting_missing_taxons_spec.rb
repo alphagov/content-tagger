@@ -18,7 +18,6 @@ RSpec.describe 'Reporting missing taxons to the IA team' do
 
   def and_there_is_a_draft_branch_of_the_taxonomy
     stub_draft_taxonomy_branch
-    stub_tagging_progress
   end
 
   def and_there_are_content_items_with_suggested_terms

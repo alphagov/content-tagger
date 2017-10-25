@@ -3,10 +3,6 @@ require "rails_helper"
 RSpec.feature "Navigation", type: :feature do
   include TaxonomyHelper
 
-  before do
-    stub_tagging_progress
-  end
-
   scenario "User with no specific permissions" do
     given_i_am_logged_in_as_a_user_with_no_special_permissions
     when_i_visit_the_application

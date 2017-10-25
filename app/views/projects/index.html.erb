@@ -33,23 +33,46 @@
 <% end %>
 
 <h2>
-  Department tagging progress
+  Organisation tagging progress
 </h2>
 
-<table class="table queries-list table-bordered table-striped">
-  <thead>
-  <tr class="table-header">
-    <th>Organisation</th>
-    <th>Progress</th>
-  </tr>
-  </thead>
+<form method="get" class="form">
+  <label for="progress_for_organisations">
+    Organisation slugs
+  </label>
 
-  <% percentage_by_organisation.each do |organisation_slug, progress| %>
-  <tbody>
-    <tr>
-      <td><%= organisation_slug %></td>
-      <td><%= number_to_percentage(progress, precision: 2) %></td>
+  <div class="input-group">
+    <input type="text"
+      class="form-control"
+      id="progress_for_organisations"
+      name="progress_for_organisations"
+      value="<%= params[:progress_for_organisations] %>">
+
+    <div class="input-group-btn">
+      <button class="btn btn-primary" type="submit">Display progress</button>
+    </div>
+  </div>
+
+  <p class="help-block">A comma separated list of organisation slugs, e.g. <code>department-for-transport, high-speed-two-limited</code></p>
+
+</form>
+
+<% if percentage_by_organisation.present? %>
+  <table class="table queries-list table-bordered table-striped">
+    <thead>
+    <tr class="table-header">
+      <th>Organisation</th>
+      <th>Progress</th>
     </tr>
-  </tbody>
-  <% end %>
-</table>
+    </thead>
+
+    <% percentage_by_organisation.each do |organisation_slug, progress| %>
+    <tbody>
+      <tr>
+        <td><%= organisation_slug %></td>
+        <td><%= number_to_percentage(progress, precision: 2) %></td>
+      </tr>
+    </tbody>
+    <% end %>
+  </table>
+<% end %>

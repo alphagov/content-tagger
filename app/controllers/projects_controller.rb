@@ -74,7 +74,9 @@ private
   end
 
   def percentage_by_organisation
-    organisations = User.pluck(:organisation_slug).uniq.compact.sort
+    return if params[:progress_for_organisations].blank?
+
+    organisations = params[:progress_for_organisations].tr(' ', '').split(',')
     TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged
   end
 end

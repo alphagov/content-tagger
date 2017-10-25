@@ -7,7 +7,6 @@ RSpec.describe ProjectsController, type: :controller do
   describe "#index" do
     it "gets projects" do
       stub_draft_taxonomy_branch
-      stub_tagging_progress
       create(:project)
       get :index
       expect(response.code).to eql "200"
