@@ -60,19 +60,24 @@
 <% if percentage_by_organisation.present? %>
   <table class="table queries-list table-bordered table-striped">
     <thead>
-    <tr class="table-header">
-      <th>Organisation</th>
-      <th>Progress</th>
-    </tr>
+      <tr class="table-header">
+        <th>Organisation</th>
+        <th>Progress</th>
+      </tr>
     </thead>
 
-    <% percentage_by_organisation.each do |organisation_slug, progress| %>
     <tbody>
+      <% percentage_by_organisation.each do |organisation, progress| %>
       <tr>
-        <td><%= organisation_slug %></td>
-        <td><%= number_to_percentage(progress, precision: 2) %></td>
+        <td><%= organisation %></td>
+        <td>
+          <% if progress[:total] == 0 %>
+            0 documents
+          <% else %>
+            <%= number_to_percentage(progress[:percentage], precision: 2) %> of <%= progress[:total] %> documents</td>
+          <% end %>
       </tr>
+      <% end %>
     </tbody>
-    <% end %>
   </table>
 <% end %>

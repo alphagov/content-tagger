@@ -73,7 +73,7 @@ private
           "options" => [
             { "value" => { "slug" => "home-office" }, "documents" => 7475 },
             { "value" => { "slug" => "department-for-transport" }, "documents" => 5844 },
-            { "value" => { "slug" => "maritime-and-coastguard-agency" }, "documents" => 1163 },
+            { "value" => { "slug" => "maritime-and-coastguard-agency" }, "documents" => 0 },
             { "value" => { "slug" => "high-speed-two-limited" }, "documents" => 753 }
           ],
           "documents_with_no_value" => 0,
@@ -100,7 +100,7 @@ private
           "options" => [
             { "value" => { "slug" => "home-office" }, "documents" => 0 },
             { "value" => { "slug" => "department-for-transport" }, "documents" => 1072 },
-            { "value" => { "slug" => "maritime-and-coastguard-agency" }, "documents" => 666 },
+            { "value" => { "slug" => "maritime-and-coastguard-agency" }, "documents" => 0 },
             { "value" => { "slug" => "high-speed-two-limited" }, "documents" => 744 }
           ],
           "documents_with_no_value" => 0,

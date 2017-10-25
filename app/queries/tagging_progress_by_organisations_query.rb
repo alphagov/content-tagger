@@ -6,7 +6,11 @@ class TaggingProgressByOrganisationsQuery
   def percentage_tagged
     content_item_counts_grouped_by_organisation.transform_values do |results|
       total_count, tagged_count = results.map { |obj| obj["documents"] }
-      (Float(tagged_count) / Float(total_count)) * 100
+
+      {
+        percentage: (Float(tagged_count) / Float(total_count)) * 100,
+        total: total_count
+      }
     end
   end
 

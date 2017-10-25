@@ -104,10 +104,10 @@ RSpec.feature "Projects", type: :feature do
 
   def then_the_tagging_progress_for_the_organisations_will_be_shown
     within "table:last-of-type" do
-      expect(page).to have_content "department-for-transport 18.34%"
-      expect(page).to have_content "high-speed-two-limited 98.80%"
-      expect(page).to have_content "home-office 0.00%"
-      expect(page).to have_content "maritime-and-coastguard-agency 57.27%"
+      expect(page).to have_content "department-for-transport 18.34% of 5844 documents"
+      expect(page).to have_content "high-speed-two-limited 98.80% of 753 documents"
+      expect(page).to have_content "home-office 0.00% of 7475 documents"
+      expect(page).to have_content "maritime-and-coastguard-agency 0 documents"
     end
   end
 
