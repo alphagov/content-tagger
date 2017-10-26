@@ -21,7 +21,7 @@ module Taxonomy
     def max_size
       @_max_size ||= begin
         max_size_in_tree = lambda do |taxon|
-          if taxon[:children].nil?
+          if taxon[:children].blank?
             taxon[:size]
           else
             [

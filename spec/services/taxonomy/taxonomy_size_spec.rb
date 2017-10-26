@@ -38,6 +38,56 @@ RSpec.describe Taxonomy::TaxonomySize do
     end
   end
 
+  describe '#max_size' do
+    let(:content_item) do
+      double(
+        content_id: 'b92079ac-f1d9-44c8-bc78-772d54377ee2',
+        title: 'title',
+      )
+    end
+
+    it "returns the max size of the tree" do
+      tree = {
+        name: 'title',
+        content_id: 'b92079ac-f1d9-44c8-bc78-772d54377ee2',
+        size: 100,
+        children: [
+          {
+            name: 'foo',
+            content_id: '720f650a-331f-4575-9c56-376d1eaa9ca0',
+            size: 200,
+            children: [
+              {
+                name: 'bar',
+                content_id: 'a544d48b-1e9e-47fb-b427-7a987c658c14',
+                size: 300,
+              }
+            ]
+          }
+        ]
+      }
+
+      size = Taxonomy::TaxonomySize.new(content_item)
+      allow(size).to receive(:nested_tree).and_return(tree)
+
+      expect(size.max_size).to eq(300)
+    end
+
+    it "returns the max size of the tree for no children" do
+      tree = {
+        name: 'title',
+        content_id: 'b92079ac-f1d9-44c8-bc78-772d54377ee2',
+        size: 100,
+        children: [],
+      }
+
+      size = Taxonomy::TaxonomySize.new(content_item)
+      allow(size).to receive(:nested_tree).and_return(tree)
+
+      expect(size.max_size).to eq(100)
+    end
+  end
+
   SEARCH_RESULT_FIXTURE = {
     results: [],
     total: 334_263,
