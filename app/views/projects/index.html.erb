@@ -16,7 +16,7 @@
     <%= link_to "View suggested topics", project_content_items_path(taxonomy_branch: taxonomy_branch, flagged: "missing_topic") %>
   </p>
 
-  <table class="table queries-list table-bordered table-striped">
+  <table class="table queries-list table-bordered table-striped" id="projects">
     <thead>
     <tr class="table-header">
       <th>Project</th>
@@ -58,7 +58,7 @@
 </form>
 
 <% if percentage_by_organisation.present? %>
-  <table class="table queries-list table-bordered table-striped">
+  <table class="table queries-list table-bordered table-striped" id="tagging-progress">
     <thead>
       <tr class="table-header">
         <th>Organisation</th>

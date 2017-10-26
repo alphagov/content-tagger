@@ -90,27 +90,6 @@ RSpec.feature "Projects", type: :feature do
     then_the_tagging_progress_for_the_organisations_will_be_shown
   end
 
-  def and_i_fill_in_and_submit_the_organisation_progress_form
-    organisations = [
-      "department-for-transport",
-      "high-speed-two-limited",
-      "home-office",
-      "maritime-and-coastguard-agency",
-    ]
-
-    fill_in "Organisation slugs", with: organisations.join(", ")
-    click_on "Display progress"
-  end
-
-  def then_the_tagging_progress_for_the_organisations_will_be_shown
-    within "table:last-of-type" do
-      expect(page).to have_content "department-for-transport 18.34% of 5844 documents"
-      expect(page).to have_content "high-speed-two-limited 98.80% of 753 documents"
-      expect(page).to have_content "home-office 0.00% of 7475 documents"
-      expect(page).to have_content "maritime-and-coastguard-agency 0 documents"
-    end
-  end
-
   def given_there_is_a_project_with_content_items
     @project = create :project, :with_content_items
     stub_draft_taxonomy_branch
@@ -175,7 +154,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def and_i_click_my_new_projects_name_in_the_project_list
-    within 'table:first-of-type' do
+    within "table#projects" do
       click_on @project_name
     end
   end
@@ -312,5 +291,26 @@ RSpec.feature "Projects", type: :feature do
 
   def then_the_content_item_should_not_show_in_the_to_do_list
     expect(page).not_to have_content 'Foo'
+  end
+
+  def then_the_tagging_progress_for_the_organisations_will_be_shown
+    within "table#tagging-progress" do
+      expect(page).to have_content "department-for-transport 18.34% of 5844 documents"
+      expect(page).to have_content "high-speed-two-limited 98.80% of 753 documents"
+      expect(page).to have_content "home-office 0.00% of 7475 documents"
+      expect(page).to have_content "maritime-and-coastguard-agency 0 documents"
+    end
+  end
+
+  def and_i_fill_in_and_submit_the_organisation_progress_form
+    organisations = [
+      "department-for-transport",
+      "high-speed-two-limited",
+      "home-office",
+      "maritime-and-coastguard-agency",
+    ]
+
+    fill_in "Organisation slugs", with: organisations.join(", ")
+    click_on "Display progress"
   end
 end
