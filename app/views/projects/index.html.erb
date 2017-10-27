@@ -16,7 +16,7 @@
     <%= link_to "View suggested topics", project_content_items_path(taxonomy_branch: taxonomy_branch, flagged: "missing_topic") %>
   </p>
 
-  <table class="table queries-list table-bordered table-striped">
+  <table class="table queries-list table-bordered table-striped" id="projects">
     <thead>
     <tr class="table-header">
       <th>Project</th>
@@ -28,6 +28,56 @@
 
     <tbody>
       <%= render partial: 'project', collection: branch_projects, cached: true %>
+    </tbody>
+  </table>
+<% end %>
+
+<h2>
+  Organisation tagging progress
+</h2>
+
+<form method="get" class="form">
+  <label for="progress_for_organisations">
+    Organisation slugs
+  </label>
+
+  <div class="input-group">
+    <input type="text"
+      class="form-control"
+      id="progress_for_organisations"
+      name="progress_for_organisations"
+      value="<%= params[:progress_for_organisations] %>">
+
+    <div class="input-group-btn">
+      <button class="btn btn-primary" type="submit">Display progress</button>
+    </div>
+  </div>
+
+  <p class="help-block">A comma separated list of organisation slugs, e.g. <code>department-for-transport, high-speed-two-limited</code></p>
+
+</form>
+
+<% if percentage_by_organisation.present? %>
+  <table class="table queries-list table-bordered table-striped" id="tagging-progress">
+    <thead>
+      <tr class="table-header">
+        <th>Organisation</th>
+        <th>Progress</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% percentage_by_organisation.each do |organisation, progress| %>
+      <tr>
+        <td><%= organisation %></td>
+        <td>
+          <% if progress[:total] == 0 %>
+            0 documents
+          <% else %>
+            <%= number_to_percentage(progress[:percentage], precision: 2) %> of <%= progress[:total] %> documents</td>
+          <% end %>
+      </tr>
+      <% end %>
     </tbody>
   </table>
 <% end %>
