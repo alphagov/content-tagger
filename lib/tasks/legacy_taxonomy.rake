@@ -50,8 +50,15 @@ namespace :legacy_taxonomy do
   namespace :policy_area do
     desc "Generates structure for Policy Areas at www.gov.uk/government/topics"
     task generate_taxons: :environment do
-      taxonomy = LegacyTaxonomy::PolicyAreaTaxonomy.new('/bar').to_taxonomy_branch
+      taxonomy = LegacyTaxonomy::PolicyAreaTaxonomy.new('/imported-policy-areas').to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').write(taxonomy)
+    end
+
+    desc "Send the Topic taxonomy to the publishing platform"
+    task publish_taxons: :environment do
+      Theme.find_or_create_by(name: 'Policy Area', path_prefix: '/imported-policy-areas')
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').as_yaml
+      LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
   end
 
