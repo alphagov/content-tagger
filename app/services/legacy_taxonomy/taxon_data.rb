@@ -2,6 +2,7 @@ module LegacyTaxonomy
   class TaxonData
     attr_accessor(
       :title,
+      :internal_name,
       :description,
       :legacy_content_id,
       :path_slug,
@@ -33,6 +34,7 @@ module LegacyTaxonomy
     def hash_for_publishing_api
       {
         title: title,
+        internal_name: internal_name,
         description: description,
         path_slug: path_slug,
         path_prefix: path_prefix,

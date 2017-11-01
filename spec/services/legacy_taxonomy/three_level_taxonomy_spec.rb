@@ -19,6 +19,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
 
       it 'returns the root browse taxon' do
         expect(result.title).to eq 'taxonomy title'
+        expect(result.internal_name).to eq 'taxonomy title [M]'
         expect(result.base_path).to eq '/foo/browse'
         expect(result.child_taxons).to be_empty
       end
@@ -35,6 +36,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         child_taxon = result.child_taxons.first
         expect(child_taxon.child_taxons).to be_empty
         expect(child_taxon.title).to eq "foo"
+        expect(child_taxon.internal_name).to eq "foo [M]"
         expect(child_taxon.description).to eq "bar"
         expect(child_taxon.base_path).to eq "/foo/path"
       end
@@ -55,6 +57,8 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         expect(result.child_taxons.first.child_taxons).to be_an Array
         child_taxon = result.child_taxons.first.child_taxons.first
         expect(child_taxon.child_taxons).to be_empty
+        expect(child_taxon.title).to eq("baz")
+        expect(child_taxon.internal_name).to eq("baz [M]")
         expect(child_taxon.content_id).to eq subtaxon['content_id']
         expect(child_taxon.tagged_pages).to eq %w(page_content_id)
       end
@@ -74,6 +78,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
       it "has third level taxons" do
         l3_taxon = result.child_taxons.first.child_taxons.first.child_taxons.first
         expect(l3_taxon.title).to eq 'groupo_uno'
+        expect(l3_taxon.internal_name).to eq 'groupo_uno [M]'
         expect(l3_taxon.tagged_pages).to eq [
           {
             'link' => '/path-of-group-contents',
@@ -176,7 +181,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
 
   def subtaxon
     {
-      'title' => 'foo',
+      'title' => 'baz',
       'description' => 'bar',
       'content_id' => 'sub_taxon',
       'base_path' => '/subpath'
