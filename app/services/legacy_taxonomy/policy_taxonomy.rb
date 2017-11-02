@@ -4,6 +4,7 @@ module LegacyTaxonomy
 
     TITLE = 'Policy Areas + Policies'.freeze
     BASE_PATH = '/government/topics'.freeze
+    ABBREVIATION = "P".freeze
 
     def initialize(path_prefix)
       @path_prefix = path_prefix
@@ -12,6 +13,7 @@ module LegacyTaxonomy
     def to_taxonomy_branch
       @taxon = TaxonData.new(
         title: TITLE,
+        internal_name: "#{TITLE} [#{ABBREVIATION}]",
         description: TITLE + ' Taxonomy',
         path_slug: BASE_PATH,
         path_prefix: path_prefix,
@@ -24,6 +26,7 @@ module LegacyTaxonomy
       areas.map do |policy_area|
         TaxonData.new(
           title: policy_area['title'],
+          internal_name: "#{policy_area['title']} [#{ABBREVIATION}]",
           description: policy_area['description'],
           path_slug: policy_area['link'],
           path_prefix: path_prefix,
@@ -40,6 +43,7 @@ module LegacyTaxonomy
         policy_slug = policy_content_item.dig('details', 'filter', 'policies')
         TaxonData.new(
           title: policy_content_item['title'],
+          internal_name: "#{policy_content_item['title']} [#{ABBREVIATION}]",
           description: policy_content_item['description'],
           path_slug: policy_content_item['base_path'],
           path_prefix: path_prefix,
