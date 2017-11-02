@@ -6,14 +6,16 @@ module LegacyTaxonomy
       base_path: '/browse',
       first_level_key: 'top_level_browse_pages',
       second_level_key: 'second_level_browse_pages',
-      link_type: 'mainstream_browse_pages'
+      link_type: 'mainstream_browse_pages',
+      abbreviation: "M",
     }.freeze
 
     TOPIC = {
       base_path: '/topic',
       first_level_key: 'children',
       second_level_key: 'children',
-      link_type: 'topics'
+      link_type: 'topics',
+      abbreviation: "T",
     }.freeze
 
     def initialize(path_prefix, type:, title:)
@@ -23,6 +25,7 @@ module LegacyTaxonomy
       @first_level_key = type[:first_level_key]
       @second_level_key = type[:second_level_key]
       @link_type = type[:link_type]
+      @abbreviation = type[:abbreviation]
     end
 
     def to_taxonomy_branch
@@ -30,6 +33,7 @@ module LegacyTaxonomy
 
       TaxonData.new(
         title: @title,
+        internal_name: "#{@title} [#{@abbreviation}]",
         description: '',
         legacy_content_id: root_content_id,
         path_slug: @base_path,
@@ -58,6 +62,7 @@ module LegacyTaxonomy
         .map do |browse_page|
           TaxonData.new(
             title: browse_page['title'],
+            internal_name: "#{browse_page['title']} [#{@abbreviation}]",
             description: browse_page['description'],
             legacy_content_id: browse_page['content_id'],
             path_slug: browse_page['base_path'],
@@ -75,6 +80,7 @@ module LegacyTaxonomy
           content_id = browse_page['content_id']
           TaxonData.new(
             title: browse_page['title'],
+            internal_name: "#{browse_page['title']} [#{@abbreviation}]",
             description: browse_page['description'],
             legacy_content_id: content_id,
             path_slug: base_path,
@@ -91,6 +97,7 @@ module LegacyTaxonomy
           path_slug = parent_taxon.path_slug + '/' + group['name'].parameterize
           TaxonData.new(
             title: group['name'],
+            internal_name: "#{group['name']} [#{@abbreviation}]",
             description: group['name'],
             path_slug: path_slug,
             path_prefix: path_prefix,
