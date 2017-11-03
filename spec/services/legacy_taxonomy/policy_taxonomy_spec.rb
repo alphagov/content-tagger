@@ -48,18 +48,21 @@ RSpec.describe LegacyTaxonomy::PolicyTaxonomy do
         stub_legacy_content_id(example_policy_area, ['id'])
         stub_policies_from_whitehall(example_policy_area, [example_policy["content_id"]])
         publishing_api_has_item(example_policy)
-        stub_documents_tagged_to_policy(example_policy, [])
+        stub_documents_tagged_to_policy("library-services", [])
       end
 
       it 'returns the policy as child taxon' do
+        parent_taxon = result.child_taxons.first
         child_taxon = result.child_taxons.first.child_taxons.first
 
         expect(child_taxon.title).to eq(example_policy['title'])
         expect(child_taxon.internal_name).to eq("#{example_policy['title']} [P]")
         expect(child_taxon.description).to eq(example_policy['description'])
-        expect(child_taxon.path_slug).to eq(example_policy['base_path'])
         expect(child_taxon.path_prefix).to eq('/foo')
         expect(child_taxon.legacy_content_id).to eq(example_policy['content_id'])
+
+        expected_path_slug = "#{parent_taxon.path_slug}/library-services"
+        expect(child_taxon.path_slug).to eq(expected_path_slug)
       end
 
       context 'there are no tagged pages' do
@@ -71,7 +74,7 @@ RSpec.describe LegacyTaxonomy::PolicyTaxonomy do
 
       context 'there are tagged pages' do
         before do
-          stub_documents_tagged_to_policy(example_policy, [example_attached_document])
+          stub_documents_tagged_to_policy("library-services", [example_attached_document])
         end
 
         it 'returns the tagged pages' do
@@ -112,10 +115,10 @@ RSpec.describe LegacyTaxonomy::PolicyTaxonomy do
         .and_return list
     end
 
-    def stub_documents_tagged_to_policy(policy, list)
+    def stub_documents_tagged_to_policy(policy_slug, list)
       allow(LegacyTaxonomy::Client::SearchApi)
         .to receive(:content_tagged_to_policy)
-        .with(policy['details']['filter']['policies'])
+        .with(policy_slug)
         .and_return list
     end
 
@@ -143,12 +146,7 @@ RSpec.describe LegacyTaxonomy::PolicyTaxonomy do
         "content_id" => "aaaa-bbbb",
         "title" => "Library services",
         "description" => "All things related to borrowing books",
-        "base_path" => "library-services",
-        "details" => {
-          "filter" => {
-            "policies" => "library-services",
-          }
-        }
+        "base_path" => "/government/policies/library-services",
       }
     end
 

@@ -40,12 +40,13 @@ module LegacyTaxonomy
       policies = Client::Whitehall.policies_for_policy_area(policy_area_slug)
       policies.map do |policy_id|
         policy_content_item = Client::PublishingApi.client.get_content(policy_id)
-        policy_slug = policy_content_item.dig('details', 'filter', 'policies')
+        policy_slug = policy_content_item.to_h["base_path"].split("/").last
+        path_slug = "#{BASE_PATH}/#{policy_area_slug}/#{policy_slug}"
         TaxonData.new(
           title: policy_content_item['title'],
           internal_name: "#{policy_content_item['title']} [#{ABBREVIATION}]",
           description: policy_content_item['description'],
-          path_slug: policy_content_item['base_path'],
+          path_slug: path_slug,
           path_prefix: path_prefix,
           legacy_content_id: policy_id,
           tagged_pages: Client::SearchApi.content_tagged_to_policy(policy_slug)
