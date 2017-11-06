@@ -22,10 +22,6 @@ class Taxon
   validates :path_slug, format: { with: %r{\A/[a-zA-Z0-9\-]+\z}, message: "alphanumeric path must begin with /" }
   validates_with CircularDependencyValidator
 
-  def theme
-    "Theme"
-  end
-
   def draft?
     publication_state == "draft"
   end

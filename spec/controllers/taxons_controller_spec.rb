@@ -106,7 +106,6 @@ RSpec.describe TaxonsController, type: :controller do
 
   describe "#restore" do
     it "sends a request to Publishing API to mark the taxon as 'draft'" do
-      create(:theme, :education)
       taxon = build(:taxon, publication_state: "unpublished")
       payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
       links = {

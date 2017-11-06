@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Taxon do
-  before do
-    create(:theme, :education)
-  end
-
   context 'validations' do
     it 'is not valid without a title' do
       taxon = described_class.new
@@ -72,14 +68,6 @@ RSpec.describe Taxon do
 
       expect(taxon.path_prefix).to eq '/childcare-parenting'
       expect(taxon.path_slug).to eq '/childcare-and-early-years'
-    end
-  end
-
-  describe '#theme' do
-    it "returns the theme" do
-      taxon = Taxon.new(base_path: "/education/foo")
-
-      expect(taxon.theme).to eql("Education")
     end
   end
 

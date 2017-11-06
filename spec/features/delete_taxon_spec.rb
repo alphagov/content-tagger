@@ -66,7 +66,6 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def given_a_deleted_taxon
-    create(:theme, :education)
     @taxon_content_id = SecureRandom.uuid
     @taxon = content_item_with_details(
       "Taxon 2",

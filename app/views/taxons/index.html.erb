@@ -39,7 +39,6 @@
 <table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
-      <th>Theme</th>
       <th>Taxon</th>
       <th></th>
     </tr>
@@ -48,7 +47,6 @@
   <tbody>
     <% page.taxons.each do |taxon| %>
       <tr>
-        <td><%= taxon.theme %></td>
         <td><%= taxon.internal_name %></td>
         <td><%= link_to I18n.t('views.taxons.view'), taxon_path(taxon.content_id) %></td>
       </tr>

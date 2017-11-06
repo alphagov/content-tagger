@@ -1,8 +1,6 @@
 task temp_import_transport: :environment do
   data = JSON.parse(File.read('lib/tasks/temp_import_transport.json'))
 
-  Theme.find_or_create_by(name: 'Transport', path_prefix: '/transport')
-
   # Create the root taxon first
   taxon = Taxon.new(
     title: data.fetch('name'),
