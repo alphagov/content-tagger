@@ -12,7 +12,6 @@ RSpec.describe LegacyTaxonomy::PolicyAreaTaxonomy do
 
     context 'there is only one root, no children' do
       before do
-        stub_publishing_api_top_level_topic
         stub_policy_areas([])
       end
 
@@ -50,7 +49,7 @@ RSpec.describe LegacyTaxonomy::PolicyAreaTaxonomy do
         stub_documents(example_policy_area, [example_attached_document])
       end
 
-      it 'returns the child taxon' do
+      it 'returns the tagged pages' do
         child_taxon = result.child_taxons.first
         expect(child_taxon.tagged_pages).to eq([example_attached_document])
       end

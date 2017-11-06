@@ -54,7 +54,7 @@ namespace :legacy_taxonomy do
       LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').write(taxonomy)
     end
 
-    desc "Send the Topic taxonomy to the publishing platform"
+    desc "Send the Policy Area taxonomy to the publishing platform"
     task publish_taxons: :environment do
       Theme.find_or_create_by(name: 'Policy Area', path_prefix: '/imported-policy-areas')
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').as_yaml
@@ -65,8 +65,15 @@ namespace :legacy_taxonomy do
   namespace :policy do
     desc "Generates structure for Policy Areas => Policy"
     task generate_taxons: :environment do
-      taxonomy = LegacyTaxonomy::PolicyTaxonomy.new('/baz').to_taxonomy_branch
+      taxonomy = LegacyTaxonomy::PolicyTaxonomy.new('/imported-policies').to_taxonomy_branch
       File.write('tmp/policy.yml', YAML.dump(taxonomy))
+    end
+
+    desc "Send the 'Policy Area and Policies' taxonomy to the publishing platform"
+    task publish_taxons: :environment do
+      Theme.find_or_create_by(name: 'Policy Area and Policy', path_prefix: '/imported-policies')
+      taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy.yml').as_yaml
+      LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
   end
 
