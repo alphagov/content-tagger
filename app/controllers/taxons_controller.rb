@@ -34,7 +34,10 @@ class TaxonsController < ApplicationController
   end
 
   def show
-    render :show, locals: { page: Taxonomy::ShowPage.new(taxon) }
+    respond_to do |format|
+      format.html { render locals: { page: Taxonomy::ShowPage.new(taxon) } }
+      format.json { render json: taxon }
+    end
   rescue Taxonomy::BuildTaxon::TaxonNotFoundError
     render "taxon_not_found", status: 404
   end
@@ -133,7 +136,6 @@ private
   def taxon_params
     params.require(:taxon).permit(
       :content_id,
-      :path_prefix,
       :path_slug,
       :internal_name,
       :title,
@@ -142,7 +144,15 @@ private
       :notes_for_editors,
       :parent,
       associated_taxons: [],
-    )
+    ).merge(parent_path_prefix)
+  end
+
+  def parent_path_prefix
+    return if params[:taxon][:parent].blank?
+    parent_taxon = Taxonomy::BuildTaxon.call(content_id: params[:taxon][:parent])
+    {
+      path_prefix: parent_taxon.path_prefix
+    }
   end
 
   def content_id

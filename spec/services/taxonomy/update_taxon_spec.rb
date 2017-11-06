@@ -7,8 +7,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
     @taxon = Taxon.new(
       title: 'A Title',
       description: 'Description',
-      path_prefix: "/education",
-      path_slug: '/slug',
+      base_path: '/education/slug',
       parent: 'guid',
       associated_taxons: ['1234']
     )

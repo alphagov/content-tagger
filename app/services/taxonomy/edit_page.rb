@@ -20,10 +20,6 @@ module Taxonomy
       Linkables.new.taxons(exclude_ids: taxon.content_id)
     end
 
-    def path_prefixes_for_select
-      Theme.taxon_path_prefixes
-    end
-
     def show_visibilty_checkbox?
       taxon.draft? && taxon.parent.nil?
     end
