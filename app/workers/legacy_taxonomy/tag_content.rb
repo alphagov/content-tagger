@@ -8,7 +8,10 @@ module LegacyTaxonomy
       taxons = links.dig('links', 'taxons') || []
       taxons << taxon_content_id
 
-      Client::PublishingApi.patch_links(taggable_content_id, links: { taxons: taxons.uniq }, previous_version: previous_version)
+      Client::PublishingApi.patch_links(taggable_content_id,
+                                        links: { taxons: taxons.uniq },
+                                        previous_version: previous_version,
+                                        bulk_publishing: true)
     rescue GdsApi::HTTPNotFound
       puts "404 Taggable Not Found"
     end
