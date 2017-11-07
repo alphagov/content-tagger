@@ -2,8 +2,8 @@ module LegacyTaxonomy
   class PolicyAreaTaxonomy
     attr_accessor :path_prefix, :root_content_id
 
+    TITLE = 'Imported Policy Areas'.freeze
     BASE_PATH = '/government/topics'.freeze
-    TITLE = 'Policy Areas'.freeze
     ABBREVIATION = "PA".freeze
 
     def initialize(path_prefix)

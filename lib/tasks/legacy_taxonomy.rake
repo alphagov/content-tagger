@@ -34,7 +34,7 @@ namespace :legacy_taxonomy do
     desc "Generates structure for Topic taxonomy at www.gov.uk/browse"
     task generate_taxons: :environment do
       taxonomy = LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-topic',
-                                                        title: 'Topics',
+                                                        title: 'Imported Topics',
                                                         type: LegacyTaxonomy::ThreeLevelTaxonomy::TOPIC).to_taxonomy_branch
       LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').write(taxonomy)
     end

@@ -2,7 +2,7 @@ module LegacyTaxonomy
   class PolicyTaxonomy
     attr_reader :path_prefix
 
-    TITLE = 'Policy Areas + Policies'.freeze
+    TITLE = 'Imported Policy Areas + Policies'.freeze
     BASE_PATH = '/government/topics'.freeze
     ABBREVIATION = "P".freeze
 
