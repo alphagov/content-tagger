@@ -16,8 +16,8 @@ RSpec.describe LegacyTaxonomy::PolicyAreaTaxonomy do
       end
 
       it 'returns the root browse taxon' do
-        expect(result.title).to eq 'Policy Areas'
-        expect(result.internal_name).to eq 'Policy Areas [PA]'
+        expect(result.title).to eq 'Imported Policy Areas'
+        expect(result.internal_name).to eq 'Imported Policy Areas [PA]'
         expect(result.base_path).to eq '/foo/government/topics'
         expect(result.child_taxons).to be_empty
       end
