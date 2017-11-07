@@ -10,7 +10,9 @@ module LegacyTaxonomy
       Client::PublishingApi.publish(content_id) if publish
 
       if parent_taxon_id
-        Client::PublishingApi.patch_links(content_id, links: { parent_taxons: [parent_taxon_id] })
+        Client::PublishingApi.patch_links(content_id,
+                                          links: { parent_taxons: [parent_taxon_id] },
+                                          bulk_publishing: true)
       end
 
       taxon_data.tagged_pages
@@ -28,8 +30,7 @@ module LegacyTaxonomy
 
     def taxon_for_publishing_api(taxon)
       taxon_attrs = taxon.hash_for_publishing_api
-      payload = Taxonomy::BuildTaxonPayload.call(taxon: Taxon.new(taxon_attrs))
-      payload.merge(bulk_publishing: true)
+      Taxonomy::BuildTaxonPayload.call(taxon: Taxon.new(taxon_attrs))
     end
   end
 end
