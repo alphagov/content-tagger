@@ -28,7 +28,8 @@ module LegacyTaxonomy
 
     def taxon_for_publishing_api(taxon)
       taxon_attrs = taxon.hash_for_publishing_api
-      Taxonomy::BuildTaxonPayload.call(taxon: Taxon.new(taxon_attrs))
+      payload = Taxonomy::BuildTaxonPayload.call(taxon: Taxon.new(taxon_attrs))
+      payload.merge(bulk_publishing: true)
     end
   end
 end
