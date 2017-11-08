@@ -21,6 +21,7 @@ private
         document_type: 'taxon',
         order: '-public_updated_at',
         q: query || '',
+        search_in: %i[title base_path details.internal_name],
         page: page || 1,
         per_page: per_page || 50,
         states: states || [],

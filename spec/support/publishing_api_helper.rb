@@ -44,6 +44,7 @@ module PublishingApiHelper
       page: 1,
       per_page: 50,
       q: '',
+      search_in: %i[title base_path details.internal_name],
       states: ["published"],
     }
 
@@ -70,6 +71,7 @@ module PublishingApiHelper
       page: 1,
       per_page: 50,
       q: '',
+      search_in: %i[title base_path details.internal_name],
       states: ["unpublished"],
     }
 
