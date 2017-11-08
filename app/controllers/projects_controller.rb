@@ -4,7 +4,8 @@ class ProjectsController < ApplicationController
 
   def index
     render :index, locals: {
-      percentage_by_organisation: percentage_by_organisation,
+      percentage_by_organisation: tagging_progress_query.try(:percentage_tagged),
+      total_counts: tagging_progress_query.try(:total_counts),
       projects: project_index
     }
   end
@@ -73,10 +74,10 @@ private
       .permit(:name, :remote_url, :taxonomy_branch, :bulk_tagging_enabled)
   end
 
-  def percentage_by_organisation
+  def tagging_progress_query
     return if params[:progress_for_organisations].blank?
 
     organisations = params[:progress_for_organisations].tr(' ', '').split(',')
-    TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged
+    @_tagging_query ||= TaggingProgressByOrganisationsQuery.new(organisations)
   end
 end
