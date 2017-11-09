@@ -4,19 +4,35 @@ class TaggingProgressByOrganisationsQuery
   end
 
   def percentage_tagged
-    content_item_counts_grouped_by_organisation.transform_values do |results|
+    @_tagged_counts ||= content_item_counts_grouped_by_organisation.transform_values do |results|
       total_count, tagged_count = results.map { |obj| obj["documents"] }
-
       {
-        percentage: (Float(tagged_count) / Float(total_count)) * 100,
-        total: total_count
+        percentage: percentage(tagged_count, total_count),
+        total: total_count,
+        tagged: tagged_count
       }
     end
+  end
+
+  def total_counts
+    return {} if percentage_tagged.empty?
+    total_count = percentage_tagged.values.map { |v| v[:total] }.sum
+    tagged_count = percentage_tagged.values.map { |v| v[:tagged] }.sum
+    {
+      percentage: percentage(tagged_count, total_count),
+      total: total_count,
+      tagged: tagged_count
+    }
   end
 
 private
 
   attr_reader :organisations
+
+  def percentage(tagged_count, total_count)
+    return 0.0 if total_count.zero?
+    (Float(tagged_count) / Float(total_count)) * 100
+  end
 
   def content_item_counts_grouped_by_organisation
     (Array(total_content_count) + Array(tagged_content_count))

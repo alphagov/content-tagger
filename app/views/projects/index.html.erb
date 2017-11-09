@@ -57,25 +57,37 @@
 
 </form>
 
-<% if percentage_by_organisation.present? %>
+<% if percentage_by_organisation.present?%>
   <table class="table queries-list table-bordered table-striped" id="tagging-progress">
     <thead>
       <tr class="table-header">
         <th>Organisation</th>
-        <th>Progress</th>
+        <th>Content Published</th>
+        <th>Content tagged</th>
+        <th>Percentage</th>
       </tr>
     </thead>
-
+    <tfoot>
+    <tr>
+      <th>Totals</th>
+      <td><%= total_counts[:total] %></td>
+      <td><%= total_counts[:tagged] %></td>
+      <td><%= number_to_percentage(total_counts[:percentage], precision: 2) %></td>
+    </tr>
+    </tfoot>
     <tbody>
       <% percentage_by_organisation.each do |organisation, progress| %>
       <tr>
         <td><%= organisation %></td>
         <td>
-          <% if progress[:total] == 0 %>
-            0 documents
-          <% else %>
-            <%= number_to_percentage(progress[:percentage], precision: 2) %> of <%= progress[:total] %> documents</td>
-          <% end %>
+          <%= progress[:total] %>
+        </td>
+        <td>
+          <%= progress[:tagged] %>
+        </td>
+        <td>
+          <%= number_to_percentage(progress[:percentage], precision: 2) %>
+        </td>
       </tr>
       <% end %>
     </tbody>
