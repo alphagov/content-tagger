@@ -70,7 +70,7 @@ RSpec.describe "flagging a content item" do
   end
 
   def and_i_enter_a_comment_to_explain_why_i_need_help
-    expect(page).to have_field("Comment (optional)")
+    expect(page).to have_field("Comment (optional)"), wait: 10
     fill_in "Comment (optional)", with: "I don't know what I'm doing"
   end
 
@@ -91,7 +91,7 @@ RSpec.describe "flagging a content item" do
   def and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
     click_link 'Flag for review'
     choose "There's no relevant topic for this"
-    expect(page).to have_field("Suggest a new topic")
+    expect(page).to have_field("Suggest a new topic"), wait: 10
     fill_in "Suggest a new topic", with: "cool new topic"
     click_button "Continue"
     wait_for_ajax
