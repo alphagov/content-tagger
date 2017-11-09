@@ -23,6 +23,7 @@ RSpec.describe "Viewing taxons" do
     given_a_taxonomy
     and_the_root_taxon_has_content_tagged_to_it
     when_i_view_the_root_taxon
+    then_i_see_the_count_of_tagged_content
     then_i_see_tagged_content
   end
 
@@ -89,12 +90,20 @@ RSpec.describe "Viewing taxons" do
   def and_the_root_taxon_has_content_tagged_to_it
     stub_request(:get, %r{publishing-api.test.gov.uk/v2/linked/apples})
       .to_return(
-        body: [basic_content_item("Tagged content")].to_json
+        body: [
+          basic_content_item("Green Apples"),
+          basic_content_item("Red Apples"),
+        ].to_json
       )
   end
 
+  def then_i_see_the_count_of_tagged_content
+    expect(page).to have_content("Tagged content items: 2")
+  end
+
   def then_i_see_tagged_content
-    expect(page).to have_content("Tagged content")
+    expect(page).to have_content("Green Apples")
+    expect(page).to have_content("Red Apples")
   end
 
   def when_i_view_the_root_taxon

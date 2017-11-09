@@ -106,6 +106,7 @@ en:
       visible_to_departmental_editors: 'Visible to departmental editors?'
       visible_to_departmental_editors_hint: 'Affects the visiblity of draft taxonomy root nodes only'
       associated_taxons: Associated taxons
+      metadata: Taxon metadata
     projects:
       flags:
         help-needed: 'Flagged: needs publisher review'
