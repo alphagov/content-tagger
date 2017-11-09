@@ -299,6 +299,7 @@ RSpec.feature "Projects", type: :feature do
       expect(page).to have_content "high-speed-two-limited 753 744 98.80%"
       expect(page).to have_content "home-office 7475 0 0.00%"
       expect(page).to have_content "maritime-and-coastguard-agency 0 0 0.00%"
+      expect(page).to have_content "Totals 14072 1816 12.91%"
     end
   end
 

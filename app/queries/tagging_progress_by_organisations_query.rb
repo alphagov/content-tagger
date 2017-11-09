@@ -14,6 +14,17 @@ class TaggingProgressByOrganisationsQuery
     end
   end
 
+  def total_counts
+    return {} if percentage_tagged.empty?
+    total_count = percentage_tagged.values.map { |v| v[:total] }.sum
+    tagged_count = percentage_tagged.values.map { |v| v[:tagged] }.sum
+    {
+      percentage: percentage(tagged_count, total_count),
+      total: total_count,
+      tagged: tagged_count
+    }
+  end
+
 private
 
   attr_reader :organisations

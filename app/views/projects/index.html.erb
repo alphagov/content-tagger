@@ -67,6 +67,14 @@
         <th>Percentage</th>
       </tr>
     </thead>
+    <tfoot>
+    <tr>
+      <th>Totals</th>
+      <td><%= total_counts[:total] %></td>
+      <td><%= total_counts[:tagged] %></td>
+      <td><%= number_to_percentage(total_counts[:percentage], precision: 2) %></td>
+    </tr>
+    </tfoot>
     <tbody>
       <% percentage_by_organisation.each do |organisation, progress| %>
       <tr>

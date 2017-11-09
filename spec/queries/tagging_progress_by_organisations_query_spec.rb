@@ -29,6 +29,27 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
     end
   end
 
+  describe '#total_counts' do
+    it 'returns an empty hash when nothing is returned' do
+      stub_rummager_totals(rummager_empty)
+      stub_rummager_untagged(rummager_empty)
+      expect(TaggingProgressByOrganisationsQuery.new(organisations).total_counts).to be_empty
+    end
+
+    it 'returns zeros when there are no documents' do
+      stub_rummager_totals(rummager_zeros)
+      stub_rummager_untagged(rummager_zeros)
+      expect(TaggingProgressByOrganisationsQuery.new(organisations).total_counts).to eq(percentage: 0.0, total: 0, tagged: 0)
+    end
+
+    it 'returns correct totals' do
+      stub_rummager_totals(rummager_totals)
+      stub_rummager_untagged(rummager_untagged)
+      expect(TaggingProgressByOrganisationsQuery.new(organisations).total_counts)
+        .to eq(percentage: 50.0, total: 100, tagged: 50)
+    end
+  end
+
   # HELPERS #
   def stub_rummager_untagged(return_hash)
     allow(Services.rummager).to receive(:search).with(hash_including(reject_taxons: '_MISSING')).and_return return_hash
