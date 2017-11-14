@@ -11,6 +11,7 @@ RSpec.feature "Draft taxonomy" do
   end
 
   scenario "User can publish draft taxons" do
+    given_there_is_an_education_theme
     given_there_is_a_draft_taxon
     when_i_visit_the_taxon_page
     and_i_click_the_publish_button
@@ -69,6 +70,10 @@ RSpec.feature "Draft taxonomy" do
     expect(page).to have_text(@taxon_3[:title])
   end
 
+  def given_there_is_an_education_theme
+    create(:theme, :education)
+  end
+
   def given_there_is_a_draft_taxon
     @taxon_content_id = SecureRandom.uuid
 
@@ -98,6 +103,9 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def and_i_confirm_that_i_want_to_publish
+    stub_request(:put, "https://publishing-api.test.gov.uk/v2/content/#{@taxon_content_id}")
+    stub_request(:patch, "https://publishing-api.test.gov.uk/v2/links/#{@taxon_content_id}")
+
     @publish_request = stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{@taxon_content_id}/publish")
       .to_return(status: 200, body: "{}")
 

@@ -45,7 +45,7 @@ module Taxonomy
 
     def links
       {
-        parent_taxons: parent.empty? ? [] : Array(parent),
+        parent_taxons: parent.blank? ? [] : Array(parent),
         associated_taxons: associated_taxons.blank? ? [] : Array(associated_taxons.reject(&:blank?)),
       }
     end
