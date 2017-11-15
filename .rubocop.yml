@@ -41,6 +41,9 @@ Metrics/ModuleLength:
 Metrics/PerceivedComplexity:
   Enabled: true
 
+Metrics/BlockLength:
+  Enabled: false
+
 # Rails cops, disabled by default in govuk-lint.
 
 ActionFilter:
