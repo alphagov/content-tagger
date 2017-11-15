@@ -16,7 +16,7 @@ namespace :export_data do
     desc "Export all content items to file"
     task export: :environment do
       exporter = DataExport::ContentExport.new
-      enum = exporter.content_links_enum.lazy.map { |link| exporter.get_content(link) }
+      enum = exporter.content_links_enum.lazy.map { |link| exporter.get_content(link) }.reject(&:empty?)
       head = enum.first
       tail = enum.drop(1)
       File.open('tmp/content.json', 'w') do |f|
