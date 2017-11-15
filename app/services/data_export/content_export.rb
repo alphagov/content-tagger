@@ -64,6 +64,7 @@ module DataExport
       service_manual_service_standard
       service_manual_guide
       service_manual_topic
+      gone
     ].freeze
 
     def content_links_enum(window = 1000, size = Float::INFINITY)
@@ -94,6 +95,9 @@ module DataExport
       end
     rescue GdsApi::ContentStore::ItemNotFound
       Rails.logger.warn("Cannot find content item '#{base_path}' in the content store")
+      {}
+    rescue StandardError => ex
+      Rails.logger.warn("Error processing '#{base_path}': #{ex.message}")
       {}
     end
 
