@@ -11,4 +11,24 @@ namespace :export_data do
       end
     end
   end
+
+  namespace :content do
+    desc "Export all content items to file"
+    task export: :environment do
+      exporter = DataExport::ContentExport.new
+      enum = exporter.content_links_enum.lazy.map { |link| exporter.get_content(link) }
+      head = enum.first
+      tail = enum.drop(1)
+      File.open('tmp/content.json', 'w') do |f|
+        f << "[ "
+        f << JSON.dump(head) if head.present?
+        tail.each_with_index do |taxon, index|
+          f << ",\n"
+          f << JSON.dump(taxon)
+          puts "Documents exported: #{index}" if (index % 1000).zero?
+        end
+        f << "]\n"
+      end
+    end
+  end
 end
