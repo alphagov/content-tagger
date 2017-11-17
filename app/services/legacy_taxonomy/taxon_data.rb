@@ -36,8 +36,7 @@ module LegacyTaxonomy
         title: title,
         internal_name: internal_name,
         description: description,
-        path_slug: path_slug,
-        path_prefix: path_prefix,
+        base_path: base_path,
         content_id: content_id
       }
     end

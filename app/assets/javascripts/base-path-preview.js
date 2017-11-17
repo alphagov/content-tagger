@@ -3,21 +3,33 @@
 
   Modules.BasePathPreview = function () {
     this.start = function() {
-      var basePathWrapper = $('.js-base-path');
-      var basePath = $('.js-base-path .base-path');
-      var pathPrefix = $('select.js-path-prefix');
-      var pathSlug = $('input.js-path-slug');
-
-      pathPrefix.change(updateBasePathPreview);
-      pathSlug.on('keyup', updateBasePathPreview);
+      var $parentSelectEl = $('select.js-parent-taxon');
+      var $pathSlugInputEl = $('input.js-path-slug');
+      var $previewBasePathEl = $('.js-predicted-base-path');
 
       updateBasePathPreview();
-      basePathWrapper.removeClass('hidden');
+      $parentSelectEl.change(updateBasePathPreview);
+
+      // Defer the lookup request when typing
+      // until there has been a pause
+      var timeout = null;
+      $pathSlugInputEl.on('input', function() {
+        clearTimeout(timeout);
+        timeout = setTimeout(updateBasePathPreview, 500);
+      });
 
       function updateBasePathPreview() {
-        basePath.html(pathPrefix.val() + pathSlug.val());
-      }
+        var parentTaxonContentId = $parentSelectEl.val();
+        var url = window.location.origin + '/taxons/' + parentTaxonContentId + '.json';
 
+        if (parentTaxonContentId.length !== 0) {
+          $.getJSON(url, function(taxon) {
+            $previewBasePathEl.text(taxon.path_prefix + $pathSlugInputEl.val());
+          });
+        } else {
+          $previewBasePathEl.text($pathSlugInputEl.val());
+        }
+      }
     };
   };
 })(window.GOVUKAdmin.Modules);

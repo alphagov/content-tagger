@@ -24,7 +24,6 @@ namespace :legacy_taxonomy do
 
     desc "Send the Mainstream Browse taxonomy to the publishing platform"
     task publish_taxons: :environment do
-      Theme.find_or_create_by(name: 'Mainstream Browse', path_prefix: '/imported-browse')
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/msbp.yml').as_yaml
       LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
@@ -41,7 +40,6 @@ namespace :legacy_taxonomy do
 
     desc "Send the Topic taxonomy to the publishing platform"
     task publish_taxons: :environment do
-      Theme.find_or_create_by(name: 'Topic', path_prefix: '/imported-topic')
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/topic.yml').as_yaml
       LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
@@ -56,7 +54,6 @@ namespace :legacy_taxonomy do
 
     desc "Send the Policy Area taxonomy to the publishing platform"
     task publish_taxons: :environment do
-      Theme.find_or_create_by(name: 'Policy Area', path_prefix: '/imported-policy-areas')
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy_area.yml').as_yaml
       LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end
@@ -71,7 +68,6 @@ namespace :legacy_taxonomy do
 
     desc "Send the 'Policy Area and Policies' taxonomy to the publishing platform"
     task publish_taxons: :environment do
-      Theme.find_or_create_by(name: 'Policy Area and Policy', path_prefix: '/imported-policies')
       taxonomy_branch = LegacyTaxonomy::Yamlizer.new('tmp/policy.yml').as_yaml
       LegacyTaxonomy::TaxonomyPublisher.perform_async(taxonomy_branch)
     end

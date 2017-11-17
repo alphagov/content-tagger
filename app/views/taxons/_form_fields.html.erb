@@ -1,21 +1,16 @@
-<div class='row'>
-  <div class='col-md-3'>
-    <%= f.input :path_prefix,
-      input_html: { class: 'js-path-prefix form-control' },
-      label: I18n.t('views.taxons.path_prefix'),
-      collection: page.path_prefixes_for_select,
-      include_blank: false %>
-  </div>
+<div data-module="base-path-preview">
+  <%= f.input :parent, collection: page.taxons_for_select,
+    input_html: { class: 'js-parent-taxon form-control', include_blank: true } %>
 
-  <div class='col-md-9'>
-    <%= f.input :path_slug,
-      input_html: { class: 'js-path-slug form-control' },
-      label: I18n.t('views.taxons.path_slug') %>
-  </div>
-</div>
+  <%= f.input :path_slug, label: I18n.t('views.taxons.path_slug'),
+    input_html: {
+      class: 'js-path-slug form-control',
+      value: page.taxon.path_slug.presence || page.taxon.path_prefix
+    } %>
 
-<div class='js-base-path' data-module='base-path-preview'>
-  <%= I18n.t('views.taxons.preview') %> <strong class='base-path'>asdd</strong>
+  <div class="base-path-hint"'>
+    <%= I18n.t('views.taxons.path_preview') %> <strong class="js-predicted-base-path">...</strong>
+  </div>
 </div>
 
 <%= f.input :internal_name, input_html: { class: 'form-control' },
@@ -41,9 +36,6 @@
 <% end %>
 
 <%= f.input :notes_for_editors, as: :text, input_html: { class: 'form-control' } %>
-
-<%= f.input :parent, collection: page.taxons_for_select,
-  input_html: { class: 'form-control', include_blank: true } %>
 
 <%= f.input :associated_taxons,
     collection: page.taxons_for_select,

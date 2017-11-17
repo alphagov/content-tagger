@@ -2,13 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Taxonomy::UpdateTaxon do
   before do
-    create(:theme, :education)
-
     @taxon = Taxon.new(
       title: 'A Title',
       description: 'Description',
-      path_prefix: "/education",
-      path_slug: '/slug',
+      base_path: '/education/slug',
       parent: 'guid',
       associated_taxons: ['1234']
     )
