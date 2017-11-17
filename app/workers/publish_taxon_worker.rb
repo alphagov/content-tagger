@@ -1,8 +1,8 @@
 class PublishTaxonWorker
   include Sidekiq::Worker
 
-  def perform(taxon_content_id)
-    Services.publishing_api.publish(taxon_content_id)
+  def perform(taxon)
+    Taxonomy::PublishTaxon.call(taxon)
   rescue GdsApi::HTTPConflict => ex # Ignore attempts to publish already published content
     puts "409 #{ex.message}"
   end

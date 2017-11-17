@@ -104,7 +104,7 @@ class TaxonsController < ApplicationController
   end
 
   def publish
-    Services.publishing_api.publish(content_id)
+    Taxonomy::PublishTaxon.call(taxon)
     redirect_to taxon_path(content_id), success: "You have successfully published the taxon"
   end
 
