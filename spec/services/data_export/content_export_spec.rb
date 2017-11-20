@@ -58,50 +58,11 @@ module DataExport
     end
 
     describe '#content_links_enum' do
-      it 'returns an empty enumerator' do
-        expect(Services.rummager).to receive(:search).and_return empty_content
-        expect(ContentExport.new.content_links_enum).to be_a(Enumerator)
-        expect(ContentExport.new.content_links_enum.to_a).to eq([])
+      it 'returns content links in an enumerator' do
+        stub_request(:get, Regexp.new(Plek.new.find('rummager')))
+          .to_return(body: { 'results' => [{ 'link' => '/first/path' }, { 'link' => '/second/path' }] }.to_json)
+        expect(ContentExport.new.content_links_enum.to_a).to eq(['/first/path', '/second/path'])
       end
-      it 'returns two windows' do
-        expect(Services.rummager).to receive(:search).with(hash_including(start: 0)).and_return two_content_items
-        expect(Services.rummager).to receive(:search).with(hash_including(start: 2)).and_return one_content_item
-        expect(ContentExport.new.content_links_enum(2).to_a).to eq(["/first/path", "/second/path", "/one/path"])
-      end
-      it 'returns one window - edge case' do
-        expect(Services.rummager).to receive(:search).with(hash_including(start: 0)).and_return two_content_items
-        expect(Services.rummager).to receive(:search).with(hash_including(start: 2)).and_return empty_content
-        expect(ContentExport.new.content_links_enum(2).to_a).to eq(["/first/path", "/second/path"])
-      end
-    end
-
-    def two_content_items
-      {
-        "results" => [
-          {
-            "link" => "/first/path",
-          },
-          {
-            "link" => "/second/path",
-          },
-        ]
-      }
-    end
-
-    def one_content_item
-      {
-        "results" => [
-          {
-            "link" => "/one/path",
-          }
-        ]
-      }
-    end
-
-    def empty_content
-      {
-        "results" => []
-      }
     end
   end
 end
