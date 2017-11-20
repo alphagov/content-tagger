@@ -19,7 +19,7 @@ RSpec.describe Taxon do
 
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:path_slug)
-      expect(taxon.errors[:path_slug]).to include("alphanumeric path must begin with /")
+      expect(taxon.errors[:path_slug]).to include("path must not contain /")
     end
   end
 
@@ -43,8 +43,8 @@ RSpec.describe Taxon do
     valid_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: "/education",
-      path_slug: '/ab01-cd02',
+      path_prefix: "education",
+      path_slug: 'ab01-cd02',
     )
 
     expect(valid_taxon).to be_valid
@@ -52,8 +52,8 @@ RSpec.describe Taxon do
     invalid_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: "/education",
-      path_slug: '/slug/',
+      path_prefix: "education",
+      path_slug: 'foo/bar',
     )
 
     expect(invalid_taxon).to_not be_valid
@@ -66,8 +66,22 @@ RSpec.describe Taxon do
         base_path: '/childcare-parenting/childcare-and-early-years'
       )
 
-      expect(taxon.path_prefix).to eq '/childcare-parenting'
-      expect(taxon.path_slug).to eq '/childcare-and-early-years'
+      expect(taxon.path_prefix).to eq 'childcare-parenting'
+      expect(taxon.path_slug).to eq 'childcare-and-early-years'
+    end
+  end
+
+  describe '#base_path' do
+    it "returns the base_path for root taxons" do
+      expect(described_class.new(
+        base_path: '/childcare-parenting'
+      ).base_path).to eq '/childcare-parenting'
+    end
+
+    it "returns the base_path for child taxons" do
+      expect(described_class.new(
+        base_path: '/childcare-parenting/childcare-and-early-years'
+      ).base_path).to eq '/childcare-parenting/childcare-and-early-years'
     end
   end
 

@@ -198,7 +198,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "Newly created taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-    fill_in :taxon_path_slug, with: '/newly-created-taxon'
+    fill_in :taxon_path_slug, with: 'newly-created-taxon'
   end
 
   def and_i_select_associated_taxons
@@ -212,7 +212,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_change_the_path
-    fill_in :taxon_path_slug, with: '/new-slug'
+    fill_in :taxon_path_slug, with: 'new-slug'
   end
 
   def when_i_update_the_taxon
@@ -268,7 +268,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    fill_in :taxon_path_slug, with: '/slug'
+    fill_in :taxon_path_slug, with: 'slug'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
@@ -282,7 +282,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    fill_in :taxon_path_slug, with: '/slug'
+    fill_in :taxon_path_slug, with: 'slug'
 
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
