@@ -65,6 +65,7 @@ module DataExport
       service_manual_guide
       service_manual_topic
       gone
+      redirect
     ].freeze
 
     def content_links_enum(window = 1000, size = Float::INFINITY)
