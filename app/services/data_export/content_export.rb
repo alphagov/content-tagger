@@ -95,6 +95,9 @@ module DataExport
       # the Content Store has redirected the request
       return {} if hash.dig('base_path') != base_path
 
+      # Skip anything without a content_id
+      return {} if hash.dig('content_id').nil?
+
       base = hash.slice(*base_fields)
       taxons = hash.dig('links', 'taxons')
       ppo = hash.dig('links', 'primary_publishing_organisation')
