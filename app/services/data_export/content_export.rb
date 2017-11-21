@@ -90,6 +90,11 @@ module DataExport
 
     def get_content(base_path, base_fields: CONTENT_BASE_FIELDS, taxon_fields: CONTENT_TAXON_FIELDS, ppo_fields: CONTENT_PPO_FIELDS)
       hash = get_content_hash(base_path)
+
+      # Skip this if we don't get back the content we expect, e.g. if
+      # the Content Store has redirected the request
+      return {} if hash.dig('base_path') != base_path
+
       base = hash.slice(*base_fields)
       taxons = hash.dig('links', 'taxons')
       ppo = hash.dig('links', 'primary_publishing_organisation')
