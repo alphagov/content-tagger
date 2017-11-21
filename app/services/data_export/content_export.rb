@@ -70,10 +70,13 @@ module DataExport
     def content_links_enum(window = 1000, size = Float::INFINITY)
       Enumerator.new do |yielder|
         (0..size).step(window).each do |index|
-          results = Services.rummager.search(start: index.to_i,
-                                             count: window,
-                                             reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES,
-                                             fields: ['link']).to_h.fetch('results', [])
+          results = Services.rummager.search(
+            start: index.to_i,
+            count: window,
+            reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES,
+            fields: ['link']
+          ).to_h.fetch('results', [])
+
           results.each do |result|
             yielder << result['link']
           end
