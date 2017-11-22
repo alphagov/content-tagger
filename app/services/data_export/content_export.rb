@@ -65,15 +65,19 @@ module DataExport
       service_manual_guide
       service_manual_topic
       gone
+      redirect
     ].freeze
 
     def content_links_enum(window = 1000, size = Float::INFINITY)
       Enumerator.new do |yielder|
         (0..size).step(window).each do |index|
-          results = Services.rummager.search(start: index.to_i,
-                                             count: window,
-                                             reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES,
-                                             fields: ['link']).to_h.fetch('results', [])
+          results = Services.rummager.search(
+            start: index.to_i,
+            count: window,
+            reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES,
+            fields: ['link']
+          ).to_h.fetch('results', [])
+
           results.each do |result|
             yielder << result['link']
           end
@@ -86,6 +90,14 @@ module DataExport
 
     def get_content(base_path, base_fields: CONTENT_BASE_FIELDS, taxon_fields: CONTENT_TAXON_FIELDS, ppo_fields: CONTENT_PPO_FIELDS)
       hash = get_content_hash(base_path)
+
+      # Skip this if we don't get back the content we expect, e.g. if
+      # the Content Store has redirected the request
+      return {} if hash.dig('base_path') != base_path
+
+      # Skip anything without a content_id
+      return {} if hash.dig('content_id').nil?
+
       base = hash.slice(*base_fields)
       taxons = hash.dig('links', 'taxons')
       ppo = hash.dig('links', 'primary_publishing_organisation')
