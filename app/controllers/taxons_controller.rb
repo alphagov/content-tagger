@@ -25,11 +25,11 @@ class TaxonsController < ApplicationController
       redirect_to taxon_path(taxon.content_id), success: t('controllers.taxons.create_success')
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      flash[:danger] = error_messages
+      flash.now[:danger] = error_messages
       render :new, locals: { page: Taxonomy::EditPage.new(taxon) }
     end
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
-    flash[:danger] = e.message
+    flash.now[:danger] = e.message
     render :new, locals: { page: Taxonomy::EditPage.new(taxon) }
   end
 
@@ -59,17 +59,17 @@ class TaxonsController < ApplicationController
       redirect_to taxon_path(taxon.content_id)
     else
       error_messages = taxon.errors.full_messages.join('; ')
-      flash[:danger] = error_messages
+      flash.now[:danger] = error_messages
       render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
     end
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
-    flash[:danger] = e.message
+    flash.now[:danger] = e.message
     render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
   end
 
   def destroy
     if params[:taxon][:redirect_to].empty?
-      flash[:danger] = t("controllers.taxons.destroy_no_redirect")
+      flash.now[:danger] = t("controllers.taxons.destroy_no_redirect")
       render :confirm_delete, locals: { page: Taxonomy::ShowPage.new(taxon) }
     else
       base_path = Services.publishing_api.get_content(params[:taxon][:redirect_to])['base_path']

@@ -24,10 +24,10 @@
 
         if (parentTaxonContentId.length !== 0) {
           $.getJSON(url, function(taxon) {
-            $previewBasePathEl.text(taxon.path_prefix + $pathSlugInputEl.val());
+            $previewBasePathEl.text('/' + taxon.path_prefix + '/' + $pathSlugInputEl.val());
           });
         } else {
-          $previewBasePathEl.text($pathSlugInputEl.val());
+          $previewBasePathEl.text('/' + $pathSlugInputEl.val());
         }
       }
     };

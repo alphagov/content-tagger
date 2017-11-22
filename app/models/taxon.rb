@@ -19,7 +19,7 @@ class Taxon
 
   validates_presence_of :title, :description, :internal_name, :path_slug
   validates_presence_of :path_prefix, if: -> { parent.present? }
-  validates :path_slug, format: { with: %r{\A/[a-zA-Z0-9\-]+\z}, message: "alphanumeric path must begin with /" }
+  validates :path_slug, format: { with: %r{\A[A-z0-9\-]+\z}, message: "path must not contain /" }
   validates_with CircularDependencyValidator
 
   def draft?
@@ -43,7 +43,7 @@ class Taxon
   end
 
   def base_path=(base_path)
-    path_components = %r{(?<prefix>/[^/]+)(?<slug>/.+)?}.match(base_path)
+    path_components = %r{\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?}.match(base_path)
 
     return if path_components.nil?
 
@@ -52,15 +52,7 @@ class Taxon
   end
 
   def base_path
-    @base_path ||= path_prefix + path_slug
-  end
-
-  def path_prefix
-    @path_prefix ||= ''
-  end
-
-  def path_slug
-    @path_slug ||= ''
+    @base_path ||= '/' + [path_prefix, path_slug].compact.join('/')
   end
 
   def link_type
