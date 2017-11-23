@@ -2,15 +2,18 @@ require 'rails_helper'
 include Taxonomy
 
 RSpec.describe Taxonomy::TaxonomyQuery do
+  def query
+    TaxonomyQuery.new(%w[content_id base_path])
+  end
   describe '#root_taxons' do
     it 'returns an empty array' do
       expect(Services.content_store).to receive(:content_item).with('/').and_return no_taxons
-      expect(TaxonomyQuery.new.root_taxons).to be_empty
+      expect(query.root_taxons).to be_empty
     end
 
     it 'returns root taxons' do
       expect(Services.content_store).to receive(:content_item).with('/').and_return root_taxons
-      expect(TaxonomyQuery.new.root_taxons)
+      expect(query.root_taxons)
         .to match_array [{ 'content_id' => 'rrrr_aaaa', 'base_path' => '/taxons/root_taxon_a' },
                          { 'content_id' => 'rrrr_bbbb', 'base_path' => '/taxons/root_taxon_b' }]
     end
@@ -19,17 +22,17 @@ RSpec.describe Taxonomy::TaxonomyQuery do
   describe '#child_taxons' do
     it 'returns an empty array' do
       expect(Services.content_store).to receive(:content_item).with('/taxons/root_taxon').and_return no_taxons
-      expect(TaxonomyQuery.new.child_taxons('/taxons/root_taxon')).to be_empty
+      expect(query.child_taxons('/taxons/root_taxon')).to be_empty
     end
     it 'returns an single level of taxons' do
       expect(Services.content_store).to receive(:content_item).with('/taxons/root_taxon').and_return single_level_child_taxons('rrrr', 'aaaa', 'bbbb')
-      expect(TaxonomyQuery.new.child_taxons('/taxons/root_taxon'))
+      expect(query.child_taxons('/taxons/root_taxon'))
         .to match_array [{ 'content_id' => 'aaaa', 'base_path' => '/taxons/aaaa', 'parent_content_id' => 'rrrr' },
                          { 'content_id' => 'bbbb', 'base_path' => '/taxons/bbbb', 'parent_content_id' => 'rrrr' }]
     end
     it 'returns multiple levels of taxons' do
       expect(Services.content_store).to receive(:content_item).with('/taxons/root_taxon').and_return multi_level_child_taxons
-      expect(TaxonomyQuery.new.child_taxons('/taxons/root_taxon'))
+      expect(query.child_taxons('/taxons/root_taxon'))
         .to match_array [{ 'content_id' => 'aaaa', 'base_path' => '/root_taxon/taxon_a', 'parent_content_id' => 'rrrr' },
                          { 'content_id' => 'aaaa_1111', 'base_path' => '/root_taxon/taxon_1', 'parent_content_id' => 'aaaa' },
                          { 'content_id' => 'aaaa_2222', 'base_path' => '/root_taxon/taxon_2', 'parent_content_id' => 'aaaa' }]

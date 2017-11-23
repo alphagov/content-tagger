@@ -2,9 +2,13 @@ module Taxonomy
   class TaxonomyQuery
     TAXON_FIELDS = %w[content_id base_path title].freeze
 
+    def initialize(fields = TAXON_FIELDS)
+      @taxon_fields = (fields + ['base_path']).uniq
+    end
+
     def root_taxons
       taxons = get_content_hash('/').dig('links', 'root_taxons') || []
-      taxons.map { |taxon| taxon.slice(*TAXON_FIELDS) }
+      taxons.map { |taxon| taxon.slice(*@taxon_fields) }
     end
 
     def child_taxons(base_path)
@@ -16,7 +20,7 @@ module Taxonomy
   private
 
     def recursive_child_taxons(taxons, parent_content_id)
-      results = taxons.map { |taxon| taxon.slice(*TAXON_FIELDS).merge('parent_content_id' => parent_content_id) }
+      results = taxons.map { |taxon| taxon.slice(*@taxon_fields).merge('parent_content_id' => parent_content_id) }
       results + taxons.flat_map do |taxon|
         child_taxons = taxon.dig('links', 'child_taxons') || []
         recursive_child_taxons(child_taxons, taxon['content_id'])
