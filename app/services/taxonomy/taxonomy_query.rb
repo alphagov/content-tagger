@@ -1,5 +1,5 @@
-module DataExport
-  class TaxonExport
+module Taxonomy
+  class TaxonomyQuery
     TAXON_FIELDS = %w[content_id base_path title].freeze
 
     def root_taxons
