@@ -109,6 +109,10 @@ class TaxonsController < ApplicationController
   def publish
     Services.publishing_api.publish(content_id)
     redirect_to taxon_path(content_id), success: "You have successfully published the taxon"
+  rescue GdsApi::HTTPUnprocessableEntity => e
+    GovukError.notify(e, level: "warning")
+    flash.now[:danger] = I18n.t('errors.invalid_taxon')
+    render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
   end
 
   def confirm_discard
