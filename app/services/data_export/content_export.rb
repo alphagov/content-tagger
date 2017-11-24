@@ -68,24 +68,9 @@ module DataExport
       redirect
     ].freeze
 
-    def content_links_enum(window = 1000, size = Float::INFINITY)
-      Enumerator.new do |yielder|
-        (0..size).step(window).each do |index|
-          results = Services.rummager.search(
-            start: index.to_i,
-            count: window,
-            reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES,
-            fields: ['link']
-          ).to_h.fetch('results', [])
-
-          results.each do |result|
-            yielder << result['link']
-          end
-          if results.count < window
-            break
-          end
-        end
-      end
+    def content_links_enum(page_size = 1000)
+      Services.rummager.search_enum({ reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: ['link'] },
+                                    page_size: page_size).lazy.map { |h| h['link'] }
     end
 
     def get_content(base_path, base_fields: CONTENT_BASE_FIELDS, taxon_fields: CONTENT_TAXON_FIELDS, ppo_fields: CONTENT_PPO_FIELDS)
