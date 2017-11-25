@@ -324,10 +324,6 @@ NumericLiterals:
     readability.
   Enabled: true
 
-OpMethod:
-  Description: 'When defining binary operators, name the argument other.'
-  Enabled: true
-
 ParameterLists:
   Description: 'Avoid parameter lists longer than three or four parameters.'
   Enabled: true
@@ -419,7 +415,7 @@ SpecialGlobalVars:
   Description: 'Avoid Perl-style global variables.'
   Enabled: true
 
-Style/VariableNumber:
+Naming/VariableNumber:
   Enabled: false
 
 UnneededCapitalW:
