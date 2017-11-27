@@ -30,5 +30,13 @@ namespace :export_data do
         f << "]\n"
       end
     end
+
+    desc "Get number of documents per document type omitted in the document export"
+    task blacklisted_documents: :environment do
+      blacklisted_content_stats = DataExport::ContentExport.new.blacklisted_content_stats
+      File.open('tmp/blacklisted_content_stats.json', 'w') do |f|
+        f << JSON.dump(blacklisted_content_stats)
+      end
+    end
   end
 end
