@@ -64,5 +64,42 @@ module DataExport
         expect(ContentExport.new.content_links_enum.to_a).to eq(['/first/path', '/second/path'])
       end
     end
+
+    describe '#blacklisted_content_stats' do
+      it 'returns the number of documents in that were blacklisted in content export' do
+        result_hash = {
+          "aggregates" => {
+            "content_store_document_type" => {
+              "options" => [
+                {
+                  "value" => {
+                    "slug" => "taxon"
+                  },
+                  "documents" => 1
+                },
+                {
+                  "value" => {
+                    "slug" => "news_story"
+                  },
+                  "documents" => 2
+                },
+                {
+                  "value" => {
+                    "slug" => "redirect"
+                  },
+                  "documents" => 3
+                }
+              ]
+            }
+          }
+        }
+        stub_request(:get, Regexp.new(Plek.new.find('rummager')))
+          .with(query: hash_including('aggregate_content_store_document_type' => '10000'))
+          .to_return(body: result_hash.to_json)
+
+        expect(ContentExport.new.blacklisted_content_stats(%w[taxon redirect]))
+          .to eq([{ document_type: 'redirect', count: 3 }, { document_type: 'taxon', count: 1 }])
+      end
+    end
   end
 end

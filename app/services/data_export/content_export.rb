@@ -98,7 +98,23 @@ module DataExport
       {}
     end
 
+    def blacklisted_content_stats(document_types = ContentExport::BLACKLIST_DOCUMENT_TYPES)
+      filtered_aggregates = document_aggregates.keep_if do |aggregate|
+        document_types.include?(aggregate.dig('value', 'slug'))
+      end
+      results = filtered_aggregates.map do |aggregate|
+        { document_type: aggregate.dig('value', 'slug'),
+          count: aggregate["documents"] }
+      end
+      results.sort_by { |r| -r[:count] }
+    end
+
   private
+
+    def document_aggregates
+      Services.rummager.search(aggregate_content_store_document_type: 10_000, count: 0)
+        .dig('aggregates', 'content_store_document_type', 'options')
+    end
 
     def get_content_hash(path)
       Services.content_store.content_item(path).to_h
