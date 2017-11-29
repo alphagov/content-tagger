@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Metrics
-  RSpec.describe ContentPerLevelMetric do
+  RSpec.describe ContentDistributionMetrics do
     describe '#level_taggings' do
       before :each do
         allow(Services.content_store).to receive(:content_item).with('/').and_return root_taxon
@@ -20,12 +20,12 @@ module Metrics
         expect(Services.statsd).to receive(:gauge).with("content_tagged.level_2", 12)
         expect(Services.statsd).to receive(:gauge).with("content_tagged.level_3", 3)
 
-        ContentPerLevelMetric.new.count_content_per_level
+        ContentDistributionMetrics.new.count_content_per_level
       end
       it 'calls gauges with the average tagging depth' do
         expect(Services.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
 
-        ContentPerLevelMetric.new.average_tagging_depth
+        ContentDistributionMetrics.new.average_tagging_depth
       end
 
       def content_items_enum(elements)

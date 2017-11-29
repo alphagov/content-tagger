@@ -1,5 +1,5 @@
 module Metrics
-  class ContentPerLevelMetric
+  class ContentDistributionMetrics
     def count_content_per_level
       counts_by_level.each_with_index do |count, level|
         Services.statsd.gauge("content_tagged.level_#{level + 1}", count)
