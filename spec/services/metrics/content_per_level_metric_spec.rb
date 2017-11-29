@@ -15,9 +15,9 @@ module Metrics
         allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: %w[second_level_id_1 second_level_id_2]))
                              .and_return content_items_enum(3)
 
-        expect(Services.statsd).to receive(:gauge).with("govuk.tagging.level_1.content_tagged", 1)
-        expect(Services.statsd).to receive(:gauge).with("govuk.tagging.level_2.content_tagged", 2)
-        expect(Services.statsd).to receive(:gauge).with("govuk.tagging.level_3.content_tagged", 3)
+        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_1", 1)
+        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_2", 2)
+        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_3", 3)
 
         ContentPerLevelMetric.count_content_per_level
       end
