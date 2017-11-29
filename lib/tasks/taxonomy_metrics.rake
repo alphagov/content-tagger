@@ -6,5 +6,9 @@ namespace :metrics do
       m.count_content_per_level
       m.average_tagging_depth
     end
+
+    task record_content_coverage_metrics: :environment do
+      Metrics::ContentCoverageMetrics.new.record_all
+    end
   end
 end
