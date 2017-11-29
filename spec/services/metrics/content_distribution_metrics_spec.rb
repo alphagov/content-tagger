@@ -1,25 +1,31 @@
 require 'rails_helper'
 
 module Metrics
-  RSpec.describe ContentPerLevelMetric do
+  RSpec.describe ContentDistributionMetrics do
     describe '#level_taggings' do
-      it 'calls gauges' do
+      before :each do
         allow(Services.content_store).to receive(:content_item).with('/').and_return root_taxon
         allow(Services.content_store).to receive(:content_item).with('/taxons/root_taxon')
                                            .and_return child_taxons
 
         allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: ['root_id']))
-                             .and_return content_items_enum(1)
+                                      .and_return content_items_enum(5)
         allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: ['first_level_id']))
-                             .and_return content_items_enum(2)
+                                      .and_return content_items_enum(12)
         allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: %w[second_level_id_1 second_level_id_2]))
-                             .and_return content_items_enum(3)
+                                      .and_return content_items_enum(3)
+      end
+      it 'calls gauges with number of content tagged to each level' do
+        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_1", 5)
+        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_2", 12)
+        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_3", 3)
 
-        expect(Services.statsd).to receive(:gauge).with("govuk.tagging.level_1.content_tagged", 1)
-        expect(Services.statsd).to receive(:gauge).with("govuk.tagging.level_2.content_tagged", 2)
-        expect(Services.statsd).to receive(:gauge).with("govuk.tagging.level_3.content_tagged", 3)
+        ContentDistributionMetrics.new.count_content_per_level
+      end
+      it 'calls gauges with the average tagging depth' do
+        expect(Services.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
 
-        ContentPerLevelMetric.count_content_per_level
+        ContentDistributionMetrics.new.average_tagging_depth
       end
 
       def content_items_enum(elements)
