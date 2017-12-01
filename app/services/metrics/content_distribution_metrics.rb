@@ -2,7 +2,7 @@ module Metrics
   class ContentDistributionMetrics
     def count_content_per_level
       counts_by_level.each_with_index do |count, level|
-        Services.statsd.gauge("content_tagged.level_#{level + 1}", count)
+        Metrics.statsd.gauge("content_tagged.level_#{level + 1}", count)
       end
     end
 
@@ -11,7 +11,7 @@ module Metrics
       avg_depth = counts_by_level.to_enum.with_index(1).reduce(0.0) do |result, (count, level)|
         result + (count.to_f / sum) * level
       end
-      Services.statsd.gauge("average_tagging_depth", avg_depth)
+      Metrics.statsd.gauge("average_tagging_depth", avg_depth)
     end
 
   private
