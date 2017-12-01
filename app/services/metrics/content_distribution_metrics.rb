@@ -2,7 +2,7 @@ module Metrics
   class ContentDistributionMetrics
     def count_content_per_level
       counts_by_level.each_with_index do |count, level|
-        Metrics.statsd.gauge("content_tagged.level_#{level + 1}", count)
+        Metrics.statsd.gauge("level_#{level + 1}.content_tagged", count)
       end
     end
 
