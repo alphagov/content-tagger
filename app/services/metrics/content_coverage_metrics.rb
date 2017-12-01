@@ -64,7 +64,9 @@ module Metrics
 
     def blacklisted_document_types
       @_blacklisted_document_types ||=
-        config_for(:blacklisted_document_types)['document_types']
+        ContentTagger::Application.config_for(
+          :blacklisted_document_types
+        )['document_types']
     end
   end
 end
