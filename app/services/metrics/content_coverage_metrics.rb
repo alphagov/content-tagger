@@ -66,8 +66,12 @@ module Metrics
 
     def blacklisted_document_types
       @_blacklisted_document_types ||=
-        ContentTagger::Application.config_for(
-          :blacklisted_document_types
+        YAML.load_file(
+          File.join(
+            Rails.root,
+            'config',
+            'document_types_excluded_from_the_topic_taxonomy.yml'
+          )
         )['document_types']
     end
   end
