@@ -56,23 +56,21 @@ module Metrics
       end
 
       it "sends the correct values to statsd" do
-        coverage_metrics = Metrics::ContentCoverageMetrics.new
+        allow(Metrics.statsd).to receive(:gauge)
 
-        allow(coverage_metrics).to receive(:gauge)
+        Metrics::ContentCoverageMetrics.new.record_all
 
-        coverage_metrics.record_all
+        expect(Metrics.statsd).to have_received(:gauge)
+                                    .with("all_govuk_items", 1000)
 
-        expect(coverage_metrics).to have_received(:gauge)
-                                      .with("all_govuk_items", 1000)
+        expect(Metrics.statsd).to have_received(:gauge)
+                                    .with("items_in_scope", 500)
 
-        expect(coverage_metrics).to have_received(:gauge)
-                                     .with("items_in_scope", 500)
+        expect(Metrics.statsd).to have_received(:gauge)
+                                    .with("tagged_items_in_scope", 400)
 
-        expect(coverage_metrics).to have_received(:gauge)
-                                     .with("tagged_items_in_scope", 400)
-
-        expect(coverage_metrics).to have_received(:gauge)
-                                     .with("untagged_items_in_scope", 100)
+        expect(Metrics.statsd).to have_received(:gauge)
+                                    .with("untagged_items_in_scope", 100)
       end
     end
   end

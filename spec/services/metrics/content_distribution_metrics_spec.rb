@@ -16,14 +16,17 @@ module Metrics
                                       .and_return content_items_enum(3)
       end
       it 'calls gauges with number of content tagged to each level' do
-        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_1", 5)
-        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_2", 12)
-        expect(Services.statsd).to receive(:gauge).with("content_tagged.level_3", 3)
+        expect(Metrics.statsd).to receive(:gauge).with("level_1.content_tagged", 5)
+        expect(Metrics.statsd).to receive(:gauge).with("level_1.level", 1)
+        expect(Metrics.statsd).to receive(:gauge).with("level_2.content_tagged", 12)
+        expect(Metrics.statsd).to receive(:gauge).with("level_2.level", 2)
+        expect(Metrics.statsd).to receive(:gauge).with("level_3.content_tagged", 3)
+        expect(Metrics.statsd).to receive(:gauge).with("level_3.level", 3)
 
         ContentDistributionMetrics.new.count_content_per_level
       end
       it 'calls gauges with the average tagging depth' do
-        expect(Services.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
+        expect(Metrics.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
 
         ContentDistributionMetrics.new.average_tagging_depth
       end
