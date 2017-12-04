@@ -7,6 +7,7 @@ namespace :metrics do
       m.average_tagging_depth
     end
 
+    desc "Record metrics on content coverage for the Topic Taxonomy"
     task record_content_coverage_metrics: :environment do
       Metrics::ContentCoverageMetrics.new.record_all
     end
