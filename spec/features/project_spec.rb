@@ -83,6 +83,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   scenario "viewing tagging progress for organisations" do
+    stub_draft_taxonomy_branch
     stub_organisation_tagging_progress
 
     when_i_visit_the_project_index_page
