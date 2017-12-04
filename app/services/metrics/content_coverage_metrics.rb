@@ -1,3 +1,5 @@
+require_relative '../metrics'
+
 module Metrics
   class ContentCoverageMetrics
     def record_all
