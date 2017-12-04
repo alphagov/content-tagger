@@ -13,7 +13,7 @@ gem 'sass-rails', '~> 5.0'
 gem 'select2-rails', '~> 3.5.9'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '~> 3.2'
-gem 'unicorn', '~> 5.0.0'
+gem 'unicorn', '~> 5.3.1'
 
 # GDS managed dependencies
 gem 'gds-api-adapters', '~> 49.8'
