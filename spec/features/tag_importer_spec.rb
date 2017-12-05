@@ -6,7 +6,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   before do
     Sidekiq::Testing.inline!
-    @name = User.first.name
+    @name = GDS::SSO.test_user.name
   end
 
   scenario "Importing tags" do
