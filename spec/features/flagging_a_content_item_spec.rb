@@ -66,6 +66,7 @@ RSpec.describe "flagging a content item" do
 
   def and_i_flag_the_first_content_item_as_i_need_help
     click_link 'Flag for review'
+    find('#flag_modal_id', wait: 60).visible?
     choose "I need help tagging this"
   end
 
@@ -90,6 +91,7 @@ RSpec.describe "flagging a content item" do
 
   def and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
     click_link 'Flag for review'
+    find('#flag_modal_id', wait: 60).visible?
     choose "There's no relevant topic for this"
     expect(page).to have_field("Suggest a new topic")
     fill_in "Suggest a new topic", with: "cool new topic"
