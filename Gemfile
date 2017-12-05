@@ -2,18 +2,16 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.1.4'
 
-gem 'govuk_app_config', '~> 0.2'
+gem 'govuk_app_config', '~> 1.0'
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'kaminari', '~> 1.1'
-gem 'logstasher', '~> 1.2'
 gem 'pg'
 gem 'rack-proxy'
 gem 'sass-rails', '~> 5.0'
 gem 'select2-rails', '~> 3.5.9'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '~> 4.0'
-gem 'unicorn', '~> 5.3.1'
 
 # GDS managed dependencies
 gem 'gds-api-adapters', '~> 50.3'
