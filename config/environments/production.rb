@@ -68,13 +68,6 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Use Logstasher JSON format logs for Kibana integration
-  config.logstasher.enabled = true
-  config.logstasher.logger = Logger.new(Rails.root.join("log/production.json.log"))
-  config.logstasher.suppress_app_log = true
-  config.logstasher.job_enabled = false
-  config.logstasher.mailer_enabled = false
-
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end

@@ -391,7 +391,6 @@ DEPENDENCIES
   headless
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 1.1)
-  logstasher (~> 1.2)
   pg
   plek (~> 2.0)
   poltergeist
@@ -405,7 +404,6 @@ DEPENDENCIES
   simplecov
   simplecov-rcov
   uglifier (~> 4.0)
-  unicorn (~> 5.3.1)
   web-console
   webmock
 
