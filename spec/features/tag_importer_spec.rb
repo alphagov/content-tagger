@@ -1,12 +1,12 @@
 require "rails_helper"
 
-RSpec.feature "Tag importer", type: :feature, skip: true do
+RSpec.feature "Tag importer", type: :feature do
   include GoogleSheetHelper
   include PublishingApiHelper
 
   before do
     Sidekiq::Testing.inline!
-    @name = User.first.name
+    @name = GDS::SSO.test_user.name
   end
 
   scenario "Importing tags" do
