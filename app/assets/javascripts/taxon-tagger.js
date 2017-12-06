@@ -167,7 +167,10 @@
     **/
     taxons_for_select2: function(taxons) {
       var self = this;
-      return Object.keys(taxons).reduce(function(acc, taxon_id) {
+      var taxon_content_ids = Object.keys(taxons);
+      var root_content_id = taxon_content_ids.shift();
+
+      return taxon_content_ids.reduce(function(acc, taxon_id) {
         var ancestors = self.taxon_ancestors(taxon_id, taxons);
         ancestors.shift(); // lose the first ancestor, it's common to all taxons
 
@@ -176,7 +179,10 @@
           "text": ancestors.join(' > ')
         });
         return acc;
-      }, []);
+      }, [{
+        "id": root_content_id,
+        "text": taxons[root_content_id].name
+      }]);
     },
 
     // Returns the ancestors array of taxon names
