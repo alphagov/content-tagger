@@ -7,11 +7,11 @@ namespace :taxonomy do
     A JSON representation of the output is sent to STDOUT and can be
     redirected to a file if needed.
   DESC
-  task :bulk_tag_document_type, %i[document_type taxon_base_path] => :environment do |_, args|
+  task :bulk_tag_document_type, %i[document_type taxon_content_id] => :environment do |_, args|
     document_type = args[:document_type]
-    taxon_base_path = args[:taxon_base_path]
+    taxon_content_id = args[:taxon_content_id]
 
-    results = BulkTagging::DocumentTypeTagger.call(taxon_base_path: taxon_base_path, document_type: document_type).map do |result|
+    results = BulkTagging::DocumentTypeTagger.call(taxon_content_id: taxon_content_id, document_type: document_type).map do |result|
       STDERR.puts(result)
       result
     end
