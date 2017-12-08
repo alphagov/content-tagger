@@ -50,7 +50,7 @@ module Taxonomy
     end
 
     def associated_taxons
-      taxonomy_tree.root_expanded_links.dig('expanded_links', 'associated_taxons')
+      taxonomy_tree.associated_taxons
     end
   end
 end

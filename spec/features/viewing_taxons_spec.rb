@@ -116,6 +116,7 @@ RSpec.describe "Viewing taxons" do
   def then_i_see_the_entire_taxonomy
     expected_titles = [
       fruits["title"],
+      'Root of the taxonomy',
       apples["title"],
       cox["title"],
     ]
@@ -126,7 +127,7 @@ RSpec.describe "Viewing taxons" do
         expect(page).to have_content expected
       end
     end
-    expect(rendered_titles.count).to eq 3
+    expect(rendered_titles.count).to eq expected_titles.count
   end
 
   def when_i_view_the_parent
@@ -139,7 +140,7 @@ RSpec.describe "Viewing taxons" do
   def then_i_see_the_taxonomy_from_the_parent_downwards
     rendered_titles = all(".taxon-level-title")
 
-    expect(rendered_titles.count).to eq 3
+    expect(rendered_titles.count).to eq 4
     within ".taxon-focus" do
       expect(page).to have_content("Fruits")
     end

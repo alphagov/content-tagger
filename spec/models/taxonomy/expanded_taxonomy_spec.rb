@@ -13,6 +13,17 @@ module Taxonomy
       )
     end
 
+    def home_page
+      {
+        base_path: "/",
+        description: '',
+        details: {},
+        document_type: 'homepage',
+        title: 'GOV.UK homepage',
+        content_id: GovukTaxonomy::ROOT_CONTENT_ID
+      }
+    end
+
     # parent taxons
     let(:food) { fake_taxon("Food") }
     let(:fruits) do
@@ -31,6 +42,15 @@ module Taxonomy
     let(:cox) { fake_taxon("Cox") }
 
     before do
+      publishing_api_has_item(home_page)
+
+      publishing_api_has_expanded_links(
+        content_id: GovukTaxonomy::ROOT_CONTENT_ID,
+        expanded_links: {
+          root_taxons: [apples]
+        },
+      )
+
       publishing_api_has_item(apples)
 
       publishing_api_has_expanded_links(
@@ -56,22 +76,43 @@ module Taxonomy
       )
     end
 
+    describe 'Ask for the Homepage' do
+      before :each do
+        @taxonomy = ExpandedTaxonomy.new(GovukTaxonomy::ROOT_CONTENT_ID).build
+      end
+      it 'has no parent children' do
+        expect(@taxonomy.parent_expansion.children).to be_empty
+      end
+      it 'has apples as direct children' do
+        expect(@taxonomy.child_expansion.children.count).to eq(1)
+        expect(@taxonomy.child_expansion.children.first.internal_name).to eq('i-Apples')
+      end
+      it 'has bramley and cox as grand children' do
+        expect(@taxonomy.child_expansion.children.first.children.count).to eq(2)
+        expect(@taxonomy.child_expansion.children.first.children.map(&:internal_name)).to match_array(%w[i-Bramley i-Cox])
+      end
+      it 'has the correct name for the home page taxon' do
+        expect(@taxonomy.root_node.internal_name).to eq('Root of the taxonomy')
+      end
+    end
+
     describe "#build" do
       it "returns a representation of the taxonomy, with both parent and child taxons expanded" do
         taxonomy = ExpandedTaxonomy.new(apples["content_id"]).build
 
         expect(taxonomy.root_node.internal_name).to eq "i-Apples"
-        expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(
-          i-Apples
-          i-Fruits
-          i-Food
-        )
-        expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2]
-        expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(
+        expect(taxonomy.parent_expansion.map(&:internal_name)).to eq [
+          'i-Apples',
+          'i-Fruits',
+          'i-Food',
+          'Root of the taxonomy'
+        ]
+        expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 3]
+        expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w[
           i-Apples
           i-Bramley
           i-Cox
-        )
+        ]
         expect(taxonomy.child_expansion.map(&:depth)).to eq [0, 1, 1]
       end
     end
@@ -110,7 +151,7 @@ module Taxonomy
 
       context "when the expansion has been built" do
         it "returns the expansion" do
-          taxonomy.build_child_expansion
+          taxonomy.build
 
           expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(i-Apples i-Bramley i-Cox)
           expect(taxonomy.child_expansion.map(&:depth)).to eq [0, 1, 1]
@@ -128,7 +169,7 @@ module Taxonomy
         end
 
         it "ensures the same traversal isn't rendered more than once" do
-          taxonomy.build_child_expansion
+          taxonomy.build
 
           tree = taxonomy.child_expansion.map do |child_node|
             [child_node.depth, child_node.internal_name]
@@ -154,10 +195,10 @@ module Taxonomy
 
       context "when the expansion has been built" do
         it "returns the expansion" do
-          taxonomy.build_parent_expansion
+          taxonomy.build
 
-          expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(i-Apples i-Fruits i-Food)
-          expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2]
+          expect(taxonomy.parent_expansion.map(&:internal_name)).to eq ['i-Apples', 'i-Fruits', 'i-Food', 'Root of the taxonomy']
+          expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 3]
         end
       end
     end
