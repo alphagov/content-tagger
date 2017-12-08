@@ -12,6 +12,10 @@ module Taxonomy
       self
     end
 
+    def associated_taxons
+      root_expanded_links.dig('expanded_links', 'associated_taxons')
+    end
+
     def immediate_parents
       parent_expansion.children
     end
