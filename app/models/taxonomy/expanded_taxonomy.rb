@@ -12,33 +12,6 @@ module Taxonomy
       self
     end
 
-    def root_expanded_links
-      @expanded_links ||= Services.publishing_api.get_expanded_links(
-        @content_id
-      )
-    end
-
-    def build_parent_expansion
-      @parent_expansion = expand_parent_nodes(
-        start_node: root_node,
-        parent: root_expanded_links.dig('expanded_links', 'parent_taxons', 0),
-      )
-      self
-    end
-
-    def build_child_expansion
-      @child_expansion = GovukTaxonomyHelpers::LinkedContentItem.from_publishing_api(
-        content_item: root_content_item,
-        expanded_links: root_expanded_links
-      )
-
-      # We want to work with the child expansion in isolation, so remove
-      # the parent. This makes all depth values relative to the current taxon.
-      @child_expansion.parent = nil
-
-      self
-    end
-
     def immediate_parents
       parent_expansion.children
     end
@@ -109,6 +82,33 @@ module Taxonomy
         base_path: content_item.fetch('base_path'),
         content_id: content_item.fetch('content_id')
       )
+    end
+
+    def root_expanded_links
+      @expanded_links ||= Services.publishing_api.get_expanded_links(
+        @content_id
+      )
+    end
+
+    def build_parent_expansion
+      @parent_expansion = expand_parent_nodes(
+        start_node: root_node,
+        parent: root_expanded_links.dig('expanded_links', 'parent_taxons', 0),
+        )
+      self
+    end
+
+    def build_child_expansion
+      @child_expansion = GovukTaxonomyHelpers::LinkedContentItem.from_publishing_api(
+        content_item: root_content_item,
+        expanded_links: root_expanded_links
+      )
+
+      # We want to work with the child expansion in isolation, so remove
+      # the parent. This makes all depth values relative to the current taxon.
+      @child_expansion.parent = nil
+
+      self
     end
   end
 end

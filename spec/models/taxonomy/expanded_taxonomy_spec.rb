@@ -110,7 +110,7 @@ module Taxonomy
 
       context "when the expansion has been built" do
         it "returns the expansion" do
-          taxonomy.build_child_expansion
+          taxonomy.build
 
           expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(i-Apples i-Bramley i-Cox)
           expect(taxonomy.child_expansion.map(&:depth)).to eq [0, 1, 1]
@@ -128,7 +128,7 @@ module Taxonomy
         end
 
         it "ensures the same traversal isn't rendered more than once" do
-          taxonomy.build_child_expansion
+          taxonomy.build
 
           tree = taxonomy.child_expansion.map do |child_node|
             [child_node.depth, child_node.internal_name]
@@ -154,7 +154,7 @@ module Taxonomy
 
       context "when the expansion has been built" do
         it "returns the expansion" do
-          taxonomy.build_parent_expansion
+          taxonomy.build
 
           expect(taxonomy.parent_expansion.map(&:internal_name)).to eq %w(i-Apples i-Fruits i-Food)
           expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2]
