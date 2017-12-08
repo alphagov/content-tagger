@@ -8,7 +8,12 @@ module Taxonomy
 
     def build
       build_parent_expansion
-      build_child_expansion
+      if @content_id == GovukTaxonomy::ROOT_CONTENT_ID
+        build_child_expansion_for_home_page
+      else
+        build_child_expansion
+        @parent_expansion.tree.last << home_page_linked_content_item
+      end
       self
     end
 
@@ -80,11 +85,24 @@ module Taxonomy
     end
 
     def tree_node_based_on(content_item)
+      if content_item['content_id'] == GovukTaxonomy::ROOT_CONTENT_ID
+        home_page_linked_content_item
+      else
+        GovukTaxonomyHelpers::LinkedContentItem.new(
+          internal_name: content_item.dig('details', 'internal_name'),
+          title: content_item.fetch('title'),
+          base_path: content_item.fetch('base_path'),
+          content_id: content_item.fetch('content_id')
+        )
+      end
+    end
+
+    def home_page_linked_content_item
       GovukTaxonomyHelpers::LinkedContentItem.new(
-        internal_name: content_item.dig('details', 'internal_name'),
-        title: content_item.fetch('title'),
-        base_path: content_item.fetch('base_path'),
-        content_id: content_item.fetch('content_id')
+        internal_name: 'Root of the taxonomy',
+        title: 'Root Taxon',
+        base_path: '/',
+        content_id: GovukTaxonomy::ROOT_CONTENT_ID
       )
     end
 
@@ -113,6 +131,18 @@ module Taxonomy
       @child_expansion.parent = nil
 
       self
+    end
+
+    def build_child_expansion_for_home_page
+      @child_expansion = home_page_linked_content_item.tap do |node|
+        expanded_links = Services.publishing_api.get_expanded_links(GovukTaxonomy::ROOT_CONTENT_ID)
+        expanded_links.dig('expanded_links', 'root_taxons').each do |root_taxon_hash|
+          node << GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+            content_id: root_taxon_hash['content_id'],
+            publishing_api: Services.publishing_api
+          )
+        end
+      end
     end
   end
 end
