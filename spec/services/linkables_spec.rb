@@ -36,13 +36,13 @@ RSpec.describe Linkables do
 
     it 'returns an array of hashes with only valid taxons' do
       expect(linkables.taxons).to eq(
-        [%w(Valid-1! valid-1), %w(Valid-2! valid-2)]
+        [%w[Valid-1! valid-1], %w[Valid-2! valid-2]]
       )
     end
 
     it 'filters out excluded IDs' do
       expect(linkables.taxons(exclude_ids: 'valid-2')).to eq(
-        [%w(Valid-1! valid-1)]
+        [%w[Valid-1! valid-1]]
       )
     end
   end

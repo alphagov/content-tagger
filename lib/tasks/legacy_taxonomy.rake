@@ -2,8 +2,8 @@ namespace :legacy_taxonomy do
   namespace :all do
     desc "Scrape and import legacy taxonomies"
     task import: :environment do
-      taxonomies = %w(mainstream_browse topic)
-      tasks = %w(generate_taxons publish_taxons)
+      taxonomies = %w[mainstream_browse topic]
+      tasks = %w[generate_taxons publish_taxons]
 
       tasks.each do |tsk|
         taxonomies.each do |taxonomy|
@@ -77,7 +77,7 @@ namespace :legacy_taxonomy do
     desc "Generate taxonomy statistics CSV"
     task generate: :environment do
       _ = LegacyTaxonomy::TaxonData
-      %w(msbp policy_area policy).each do |tax|
+      %w[msbp policy_area policy].each do |tax|
         taxonomy = YAML.load_file("tmp/#{tax}.yml")
         taxons_array = LegacyTaxonomy::Statistics.new(taxonomy).to_a
         CSV.open("tmp/#{tax}.csv", "wb") do |csv|

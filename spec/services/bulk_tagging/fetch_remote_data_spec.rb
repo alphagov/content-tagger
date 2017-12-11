@@ -23,8 +23,8 @@ module BulkTagging
         it "creates tag mappings based on the retrieved data" do
           FetchRemoteData.call(tagging_spreadsheet)
 
-          expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-2/))
-          expect(TagMapping.all.map(&:link_type)).to eq(%w(taxons taxons))
+          expect(TagMapping.all.map(&:content_base_path)).to eq(%w[/content-1/ /content-2/])
+          expect(TagMapping.all.map(&:link_type)).to eq(%w[taxons taxons])
         end
 
         it "handles superfluous whitespace when creating tag_mappings" do
@@ -74,7 +74,7 @@ module BulkTagging
           FetchRemoteData.call(tagging_spreadsheet)
 
           expect(TagMapping.count).to eq(2)
-          expect(TagMapping.all.map(&:content_base_path)).to eq(%w(/content-1/ /content-1/))
+          expect(TagMapping.all.map(&:content_base_path)).to eq(%w[/content-1/ /content-1/])
         end
       end
 

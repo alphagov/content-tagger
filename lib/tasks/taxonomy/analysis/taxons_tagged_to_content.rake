@@ -13,7 +13,7 @@ namespace :taxonomy do
       loop do
         results = GdsApi::Rummager.new(Plek.find('rummager')).search(
           filter_part_of_taxonomy_tree: root_taxon_id,
-          fields: %w(link taxons),
+          fields: %w[link taxons],
           start: page * results_per_page,
           count: results_per_page,
         )['results']
@@ -33,7 +33,7 @@ namespace :taxonomy do
         item["base_paths"] = details
       end
 
-      puts %w(Link Number_of_taxons Base_path_1 Taxon_id_1 Base_path_2 Taxon_id_2 Base_path_3 Taxon_id_3).to_csv
+      puts %w[Link Number_of_taxons Base_path_1 Taxon_id_1 Base_path_2 Taxon_id_2 Base_path_3 Taxon_id_3].to_csv
 
       content_items.each do |content_item|
         csv_row = [

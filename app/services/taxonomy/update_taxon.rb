@@ -20,7 +20,6 @@ module Taxonomy
 
       Services.publishing_api.put_content(content_id, payload)
       Services.publishing_api.patch_links(content_id, links: links)
-
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422
       # error code, we do a lookup to see if a content item with the slug

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     delete :discard_draft
   end
 
-  resources :taggings, only: %i(show update), param: :content_id do
+  resources :taggings, only: %i[show update], param: :content_id do
     get '/lookup', action: 'lookup', on: :collection
     get '/lookup-urls', action: 'lookup_urls', on: :collection
     get '/lookup/:slug', action: 'find_by_slug', on: :collection
@@ -41,15 +41,15 @@ Rails.application.routes.draw do
     post '/bulk_update', to: 'project_content_items#bulk_update', as: 'bulk_update'
   end
 
-  resources :tagging_spreadsheets, except: %i(update edit), path: '/tag-importer' do
+  resources :tagging_spreadsheets, except: %i[update edit], path: '/tag-importer' do
     post 'refetch'
     post 'publish_tags'
     get  'progress'
   end
 
-  resources :taxon_migrations, only: [:new, :create]
+  resources :taxon_migrations, only: %i[new create]
 
-  resources :tag_migrations, only: [:index, :new, :create, :show, :destroy] do
+  resources :tag_migrations, only: %i[index new create show destroy] do
     post 'publish_tags'
     get  'progress'
   end
@@ -60,16 +60,16 @@ Rails.application.routes.draw do
 
   get '/healthcheck', to: proc { [200, {}, ['OK']] }
 
-  resources :taxonomies, only: %i(show), param: :content_id
+  resources :taxonomies, only: %i[show], param: :content_id
 
-  resources :branches, only: [:index, :show] do
+  resources :branches, only: %i[index show] do
     collection do
       get 'edit_all'
       put 'update_all'
     end
   end
 
-  resources :tagging_history, only: [:index, :show]
+  resources :tagging_history, only: %i[index show]
 
   if Rails.env.development?
     mount GovukAdminTemplate::Engine, at: '/style-guide'

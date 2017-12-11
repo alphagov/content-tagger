@@ -2,7 +2,7 @@ require 'csv'
 
 module Taxonomy
   class TaxonsExport
-    COLUMNS = %w(title description content_id base_path).freeze
+    COLUMNS = %w[title description content_id base_path].freeze
 
     def to_csv
       CSV.generate(headers: true) do |csv|

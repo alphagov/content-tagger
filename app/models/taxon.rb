@@ -75,7 +75,7 @@ class Taxon
   # In an ideal world we wouldn't have to worry about this
   # but ActiveModel doesn't have decent type coercion yet.
   def visible_to_departmental_editors=(val)
-    @visible_to_departmental_editors = ('true' == val.to_s)
+    @visible_to_departmental_editors = (val.to_s == 'true')
   end
 
   def visible_to_departmental_editors

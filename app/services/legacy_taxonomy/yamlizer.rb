@@ -22,7 +22,7 @@ module LegacyTaxonomy
     class << self
       def deserialize(taxon_data)
         _ = LegacyTaxonomy::TaxonData
-        YAML.load(taxon_data)
+        YAML.safe_load(taxon_data)
       end
 
       def serialize(taxon)

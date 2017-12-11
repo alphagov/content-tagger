@@ -23,7 +23,7 @@ namespace :taxonomy do
       linked_items = Services.publishing_api.get_linked_items(
         taxon[:content_id],
         link_type: "taxons",
-        fields: %w(base_path)
+        fields: %w[base_path]
       ).to_a
       taxon_content = linked_items.map { |item| item.fetch("base_path") }
       output[taxon[:base_path]] = taxon_content

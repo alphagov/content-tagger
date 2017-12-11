@@ -48,7 +48,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         stub_publishing_api_second_level_browse_pages(basic_taxon['content_id'], [subtaxon])
         stub_publishing_api_third_level_browse_pages(subtaxon['content_id'], [])
         stub_publishing_api_content_id_lookup("/foo/subpath", 'sub_taxon')
-        stub_search_api subtaxon, %w(page_content_id)
+        stub_search_api subtaxon, %w[page_content_id]
         stub_linked_items(content_id: subtaxon['content_id'], link_type: 'mainstream_browse_pages', linked_content_ids: [])
       end
 
@@ -60,7 +60,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         expect(child_taxon.title).to eq("baz")
         expect(child_taxon.internal_name).to eq("baz [M]")
         expect(child_taxon.content_id).to eq subtaxon['content_id']
-        expect(child_taxon.tagged_pages).to eq %w(page_content_id)
+        expect(child_taxon.tagged_pages).to eq %w[page_content_id]
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.describe LegacyTaxonomy::ThreeLevelTaxonomy do
         stub_publishing_api_third_level_browse_pages(subtaxon['content_id'], content_groups)
         stub_publishing_api_content_id_lookup('/path-of-group-contents', 'content-id-goes-here')
         stub_publishing_api_content_id_lookup_404('/foo/path/groupo_uno')
-        stub_search_api subtaxon, %w(page_content_id)
+        stub_search_api subtaxon, %w[page_content_id]
         stub_linked_items(content_id: subtaxon['content_id'], link_type: 'mainstream_browse_pages', linked_content_ids: ['uncurated_content_id'])
       end
 

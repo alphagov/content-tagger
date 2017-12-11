@@ -2,7 +2,7 @@ require 'csv'
 
 module Taxonomy
   class TaxonomyExport
-    COLUMNS = %w(title description content_id base_path document_type).freeze
+    COLUMNS = %w[title description content_id base_path document_type].freeze
 
     def initialize(content_id)
       @content_id = content_id

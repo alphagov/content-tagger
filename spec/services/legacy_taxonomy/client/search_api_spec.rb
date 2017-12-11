@@ -37,7 +37,7 @@ RSpec.describe LegacyTaxonomy::Client::SearchApi do
 
     it "each result is a hash of content_id and link" do
       result.each do |res|
-        expect(res.keys).to eq %w(content_id link)
+        expect(res.keys).to eq %w[content_id link]
       end
     end
 

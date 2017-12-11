@@ -27,8 +27,8 @@ module BulkTagging
         document_type: document_type,
         page: page,
         q: query,
-        fields: [:content_id, :document_type, :title, :base_path],
-        search_in: [:title, :base_path, :'details.internal_name']
+        fields: %i[content_id document_type title base_path],
+        search_in: %i[title base_path details.internal_name]
       )
     end
   end
