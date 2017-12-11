@@ -51,10 +51,13 @@ $blue-link: rgb(0, 0, 238);
     font-size: 1.5rem;
   }
 
-  .taxon-parents,
-  .taxon-children {
+  .taxon-parents {
     display: flex;
     justify-content: space-around;
+  }
+
+  .taxon-children {
+    display: flex;
   }
 
   .parent-expansion {

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get :confirm_delete
     get :confirm_restore
     get :confirm_discard
+    get :tagged_content
     get :confirm_publish
     get :confirm_bulk_publish
     get :download_tagged

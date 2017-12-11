@@ -22,7 +22,7 @@ RSpec.describe "Viewing taxons" do
   scenario "Viewing tagged content of a taxon" do
     given_a_taxonomy
     and_the_root_taxon_has_content_tagged_to_it
-    when_i_view_the_root_taxon
+    when_i_view_the_root_taxon_tagged_content
     then_i_see_the_count_of_tagged_content
     then_i_see_tagged_content
   end
@@ -98,7 +98,7 @@ RSpec.describe "Viewing taxons" do
   end
 
   def then_i_see_the_count_of_tagged_content
-    expect(page).to have_content("Tagged content items: 2")
+    expect(page).to have_content("Total tagged pages: 2")
   end
 
   def then_i_see_tagged_content
@@ -112,6 +112,14 @@ RSpec.describe "Viewing taxons" do
 
     visit taxon_path(apples["content_id"])
   end
+
+  def when_i_view_the_root_taxon_tagged_content
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/apples})
+      .to_return(status: 200, body: {}.to_json)
+
+    visit taxon_tagged_content_path(apples["content_id"])
+  end
+
 
   def then_i_see_the_entire_taxonomy
     expected_titles = [
