@@ -54,24 +54,4 @@
       </ul>
     </div>
   <% end %>
-
-  <h3><%= t('views.taxons.metadata') %></h3>
-
-  <p>
-    Tagged content items: <%= page.tagged.count %>
-  </p>
-
-  <h3><%= t('views.taxons.tagged_content') %></h3>
-
-  <p>
-    <%= link_to 'Download as CSV',
-      taxon_download_tagged_path(page.taxon_content_id),
-      class: 'btn btn-md btn-default' %>
-  </p>
-
-  <% if page.tagged.any? %>
-    <%= render 'tagged_content', tagged: page.tagged %>
-  <% else %>
-    <p class="no-content no-content-bordered">No content tagged to this taxon</p>
-  <% end %>
 <% end %>

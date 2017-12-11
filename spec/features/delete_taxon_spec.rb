@@ -27,8 +27,9 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   scenario "deleting a taxon with tagged content" do
     given_a_taxon_with_tagged_content
-    when_i_visit_the_taxon_page
+    when_i_visit_the_taxon_tagged_content_page
     then_i_expect_to_see_the_tagged_content
+    when_i_visit_the_taxon_page
     when_i_click_delete_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
@@ -92,6 +93,10 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def when_i_visit_the_taxon_page
     visit taxon_path(@taxon_content_id)
+  end
+
+  def when_i_visit_the_taxon_tagged_content_page
+    visit taxon_tagged_content_path(@taxon_content_id)
   end
 
   def when_i_click_delete_taxon

@@ -6,7 +6,7 @@ RSpec.feature "Download taggings", type: :feature do
 
   scenario "downloading tagged content" do
     given_a_taxon_with_tagged_content
-    when_i_visit_the_taxon_page
+    when_i_visit_the_taxon_tagged_content_page
     when_i_click_the_download_button
     then_i_should_receive_a_csv_with_tagged_content
   end
@@ -38,8 +38,8 @@ RSpec.feature "Download taggings", type: :feature do
     )
   end
 
-  def when_i_visit_the_taxon_page
-    visit taxon_path(@content_id)
+  def when_i_visit_the_taxon_tagged_content_page
+    visit taxon_tagged_content_path(@content_id)
   end
 
   def when_i_click_the_download_button

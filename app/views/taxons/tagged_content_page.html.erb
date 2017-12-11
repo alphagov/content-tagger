@@ -1,0 +1,25 @@
+<%= display_header title: "Pages tagged to #{link_to page.taxon.internal_name, taxon_path(page.content_id)}",
+                   page_title: "Pages tagged to #{page.taxon.internal_name}",
+                   breadcrumbs: [:taxons, page.taxon] do %>
+  <% unless page.unpublished? %>
+    <%= render 'show_header', taxon_content_id: page.taxon_content_id %>
+  <% end %>
+<% end %>
+
+<% unless page.unpublished? %>
+  <h3>Total tagged pages: <%= page.tagged.count %></h3>
+
+  <p>
+    <%= link_to 'Download as CSV',
+    taxon_download_tagged_path(page.taxon_content_id),
+    class: 'btn btn-md btn-default' %>
+  </p>
+
+  <% if page.tagged.any? %>
+    <%= render 'tagged_content', tagged: page.tagged %>
+  <% else %>
+    <p class="no-content no-content-bordered">
+      No content tagged to this taxon
+    </p>
+  <% end %>
+<% end %>

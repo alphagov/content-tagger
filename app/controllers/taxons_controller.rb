@@ -42,6 +42,10 @@ class TaxonsController < ApplicationController
     render "taxon_not_found", status: 404
   end
 
+  def tagged_content
+    render :tagged_content_page, locals: { page: Taxonomy::TaggedContentPage.new(taxon) }
+  end
+
   def edit
     render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
   end
