@@ -3,17 +3,14 @@ class Taxon
     :title,
     :description,
     :parent,
-    :content_id,
-    :base_path,
     :path_prefix,
     :path_slug,
     :publication_state,
-    :internal_name,
-    :notes_for_editors,
     :document_type,
     :redirect_to,
-    :associated_taxons,
+    :associated_taxons
   )
+  attr_writer :content_id, :notes_for_editors, :internal_name
 
   include ActiveModel::Model
 

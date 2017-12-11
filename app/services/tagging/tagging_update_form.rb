@@ -2,7 +2,8 @@ module Tagging
   # ActiveModel-compliant object that is passed into the tagging form.
   class TaggingUpdateForm
     include ActiveModel::Model
-    attr_accessor :content_item, :previous_version, :related_item_errors, :related_item_overrides_errors, :links
+    attr_accessor :content_item, :previous_version, :links
+    attr_writer :related_item_errors, :related_item_overrides_errors
 
     delegate :content_id, :allowed_tag_types, to: :content_item
 
