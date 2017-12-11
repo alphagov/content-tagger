@@ -1,19 +1,6 @@
 <%= display_header title: page.title, breadcrumbs: [:taxons, page.taxon] do %>
   <% unless page.unpublished? %>
-    <%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(page.taxon_content_id), class: "btn btn-default"%>
-
-    <%= link_to I18n.t('views.taxons.tagging_history'), tagging_history_path(page.taxon_content_id), class: "btn btn-default"%>
-
-    <%= link_to new_taxon_migration_path(source_content_id: page.taxon_content_id),
-      class: 'btn btn-md btn-default' do %>
-      <i class="glyphicon glyphicon-move"></i>
-      <%= I18n.t('views.taxons.move_content') %>
-    <% end %>
-
-    <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
-      <i class="glyphicon glyphicon-download-alt"></i>
-      <%= I18n.t('views.taxons.download_csv') %>
-    <% end %>
+    <%= render 'show_header', taxon_content_id: page.taxon_content_id %>
   <% end %>
 <% end %>
 
