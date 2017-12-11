@@ -25,7 +25,7 @@ namespace :taxonomy do
       taxon_content = Services.publishing_api.get_linked_items(
         taxon.content_id,
         link_type: "taxons",
-        fields: %w(base_path content_id title)
+        fields: %w[base_path content_id title]
       ).to_a
 
       nested_tag_warnings = []

@@ -34,10 +34,8 @@ RSpec.feature "Download taggings", type: :feature do
   end
 
   def then_i_should_receive_a_csv_with_taxons
-    expect(page.body).to eql(<<~doc
-      title,description,content_id,base_path
-      My Taxon,Foo,dfd51e0c-ce3f-4cb5-8c0d-4a726e54ba1e,/path/my-taxon
-    doc
-    )
+    expect(page.body).to eql("title,description,content_id,base_path
+My Taxon,Foo,dfd51e0c-ce3f-4cb5-8c0d-4a726e54ba1e,/path/my-taxon
+")
   end
 end

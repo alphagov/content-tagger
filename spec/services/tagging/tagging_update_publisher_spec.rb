@@ -9,7 +9,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     let(:content_id) { "2797b5f2-7154-411e-9282-7756b78b22d6" }
 
     let(:stubbed_content_item) do
-      double(content_id: content_id, allowed_tag_types: [:ordered_related_items, :ordered_related_items_overrides])
+      double(content_id: content_id, allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides])
     end
 
     it "converts base paths of related items into content IDs" do

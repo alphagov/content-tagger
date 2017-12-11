@@ -121,9 +121,9 @@ module Taxonomy
       it "returns immediate parents of the root node" do
         taxonomy = ExpandedTaxonomy.new(apples["content_id"]).build
 
-        expect(taxonomy.immediate_parents.map(&:internal_name)).to eq %w(
+        expect(taxonomy.immediate_parents.map(&:internal_name)).to eq %w[
           i-Fruits
-        )
+        ]
       end
     end
 
@@ -131,10 +131,10 @@ module Taxonomy
       it "returns immediate children of the root node" do
         taxonomy = ExpandedTaxonomy.new(apples["content_id"]).build
 
-        expect(taxonomy.immediate_children.map(&:internal_name)).to eq %w(
+        expect(taxonomy.immediate_children.map(&:internal_name)).to eq %w[
           i-Bramley
           i-Cox
-        )
+        ]
       end
     end
 
@@ -153,7 +153,7 @@ module Taxonomy
         it "returns the expansion" do
           taxonomy.build
 
-          expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w(i-Apples i-Bramley i-Cox)
+          expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w[i-Apples i-Bramley i-Cox]
           expect(taxonomy.child_expansion.map(&:depth)).to eq [0, 1, 1]
         end
       end

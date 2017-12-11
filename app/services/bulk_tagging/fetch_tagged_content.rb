@@ -29,7 +29,7 @@ module BulkTagging
       results = Services.publishing_api.get_linked_items(
         content_id,
         link_type: "taxons",
-        fields: %w(title content_id base_path document_type state)
+        fields: %w[title content_id base_path document_type state]
       )
 
       results.map { |result| ContentItem.new(result) }

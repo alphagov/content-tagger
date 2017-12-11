@@ -3,17 +3,14 @@ class Taxon
     :title,
     :description,
     :parent,
-    :content_id,
-    :base_path,
     :path_prefix,
     :path_slug,
     :publication_state,
-    :internal_name,
-    :notes_for_editors,
     :document_type,
     :redirect_to,
-    :associated_taxons,
+    :associated_taxons
   )
+  attr_writer :content_id, :notes_for_editors, :internal_name
 
   include ActiveModel::Model
 
@@ -75,7 +72,7 @@ class Taxon
   # In an ideal world we wouldn't have to worry about this
   # but ActiveModel doesn't have decent type coercion yet.
   def visible_to_departmental_editors=(val)
-    @visible_to_departmental_editors = ('true' == val.to_s)
+    @visible_to_departmental_editors = (val.to_s == 'true')
   end
 
   def visible_to_departmental_editors

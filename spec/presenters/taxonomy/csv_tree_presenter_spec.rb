@@ -30,7 +30,7 @@ module Taxonomy
       it "presents the tree in CSV form" do
         presented = CsvTreePresenter.new(root_node).present
 
-        expect(presented.split("\n")).to eq %w(Root ,Child-1 ,,Child-2 ,,Child-3)
+        expect(presented.split("\n")).to eq %w[Root ,Child-1 ,,Child-2 ,,Child-3]
       end
     end
   end

@@ -228,7 +228,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_refetch_the_tags
-    expect { click_link I18n.t('tag_import.refresh') }.to change { BulkTagging::TagMapping.count }.by(1)
+    expect { click_link I18n.t('tag_import.refresh') }.to(change { BulkTagging::TagMapping.count }.by(1))
   end
 
   def then_i_should_see_an_updated_preview
@@ -239,7 +239,7 @@ RSpec.feature "Tag importer", type: :feature do
     visit tagging_spreadsheets_path
     delete_button = first('table tbody a', text: I18n.t('tag_import.delete'))
 
-    expect { delete_button.click }.to_not change { BulkTagging::TaggingSpreadsheet.count }
+    expect { delete_button.click }.to_not(change { BulkTagging::TaggingSpreadsheet.count })
   end
 
   def then_it_is_no_longer_available

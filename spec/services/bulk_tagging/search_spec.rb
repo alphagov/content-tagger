@@ -10,8 +10,8 @@ module BulkTagging
         q: 'tax',
         page: 1,
         document_type: 'taxon',
-        fields: [:content_id, :document_type, :title, :base_path],
-        search_in: [:title, :base_path, :'details.internal_name']
+        fields: %i[content_id document_type title base_path],
+        search_in: %i[title base_path details.internal_name]
       )
     end
 

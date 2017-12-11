@@ -37,7 +37,7 @@ module LegacyTaxonomy
           results = []
           count = 1000
           start = 0
-          fields = %w(content_id link)
+          fields = %w[content_id link]
 
           query = proc do |start_from, content_count|
             client

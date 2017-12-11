@@ -3,7 +3,7 @@ module Tagging
     include ActiveModel::Model
     attr_accessor :content_id, :previous_version
 
-    TAG_TYPES = %i(
+    TAG_TYPES = %i[
       taxons
       ordered_related_items
       ordered_related_items_overrides
@@ -12,7 +12,7 @@ module Tagging
       topics
       organisations
       meets_user_needs
-    ).freeze
+    ].freeze
 
     attr_accessor(*TAG_TYPES)
 

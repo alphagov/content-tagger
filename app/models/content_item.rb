@@ -24,7 +24,7 @@ class ContentItem
 
   def self.find!(content_id)
     content_item = Services.publishing_api.get_content(content_id)
-    raise ItemNotFoundError if content_item['document_type'].in?(%w(redirect gone))
+    raise ItemNotFoundError if content_item['document_type'].in?(%w[redirect gone])
     new(content_item.to_h)
   rescue GdsApi::HTTPNotFound
     raise ItemNotFoundError
@@ -69,7 +69,7 @@ private
   attr_accessor :blacklist
 
   def related_links_are_renderable?
-    %w(
+    %w[
       answer
       calculator
       calendar
@@ -84,7 +84,7 @@ private
       smart_answer
       transaction
       travel_advice
-    ).include?(document_type)
+    ].include?(document_type)
   end
 
   def additional_temporary_blacklist

@@ -2,7 +2,7 @@ module BulkTagging
   class TagMapping < ActiveRecord::Base
     belongs_to :tagging_source, polymorphic: true
 
-    COMPLETED_STATES = %w(tagged errored).freeze
+    COMPLETED_STATES = %w[tagged errored].freeze
 
     scope :completed, -> { where(state: COMPLETED_STATES) }
     scope :errored, -> { where(state: :errored) }
@@ -15,7 +15,7 @@ module BulkTagging
     validates(
       :state,
       presence: true,
-      inclusion: { in: %w(ready_to_tag tagged errored) }
+      inclusion: { in: %w[ready_to_tag tagged errored] }
     )
     validates_with ContentIdValidator, on: :update_links
     validates_with LinkTypeValidator, on: :update_links

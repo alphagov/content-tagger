@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ContentItem do
   describe '#blacklisted_tag_types' do
     it "includes per-app blacklisted types" do
-      configure_blacklist('blacklisted-app' => %w(foo bar))
+      configure_blacklist('blacklisted-app' => %w[foo bar])
 
       content_item = build_content_item(publishing_app: 'blacklisted-app')
 

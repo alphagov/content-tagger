@@ -34,11 +34,11 @@ module BulkTagging
 
     describe "#mark_as_tagged" do
       it "marks a number of tag mappings as tagged" do
-        expect { tag_mapping.mark_as_tagged }.to change { tag_mapping.state }.to("tagged")
+        expect { tag_mapping.mark_as_tagged }.to(change { tag_mapping.state }.to("tagged"))
       end
 
       it "adds a publish_completed_at date" do
-        expect { tag_mapping.mark_as_tagged }.to change { tag_mapping.publish_completed_at }
+        expect { tag_mapping.mark_as_tagged }.to(change { tag_mapping.publish_completed_at })
       end
     end
 
@@ -46,17 +46,17 @@ module BulkTagging
       context "when the links update is valid" do
         it "doesn't change the tag mapping state" do
           expect { tag_mapping.mark_as_errored }
-            .to_not change { tag_mapping.state }
+            .to_not(change { tag_mapping.state })
         end
 
         it "doesn't change the tag mapping messages" do
           expect { tag_mapping.mark_as_errored }
-            .to_not change { tag_mapping.messages }
+            .to_not(change { tag_mapping.messages })
         end
 
         it "doesn't change the state of the tagging source" do
           expect { tag_mapping.mark_as_errored }
-            .to_not change { tag_mapping.tagging_source }
+            .to_not(change { tag_mapping.tagging_source })
         end
       end
 

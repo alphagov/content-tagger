@@ -7,9 +7,8 @@ module LegacyTaxonomy
       :legacy_content_id,
       :path_slug,
       :path_prefix,
-      :tagged_pages,
-      :child_taxons
     )
+    attr_writer(:child_taxons, :tagged_pages)
 
     include ActiveModel::Model
 

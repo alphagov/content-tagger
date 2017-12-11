@@ -1,7 +1,5 @@
 module Taxonomy
   class ExpandedTaxonomy
-    attr_reader :parent_expansion, :child_expansion
-
     def initialize(content_id)
       @content_id = content_id
     end
