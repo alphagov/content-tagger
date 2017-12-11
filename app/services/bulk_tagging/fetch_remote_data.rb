@@ -30,7 +30,7 @@ module BulkTagging
       parsed_data.each do |row|
         save_row(row)
       end
-    rescue => e
+    rescue StandardError => e
       errors << e
     end
 

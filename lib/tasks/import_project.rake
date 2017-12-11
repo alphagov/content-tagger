@@ -5,7 +5,7 @@ namespace :project do
       csv = RemoteCsv.new(args.csv_url)
       project = ProjectBuilder.call(args.project_name, csv.to_enum)
       puts "Created project #{project.name}; Imported #{project.content_items.size} Content Items"
-    rescue => ex
+    rescue StandardError => ex
       puts "Error; #{ex.message}"
     end
   end
