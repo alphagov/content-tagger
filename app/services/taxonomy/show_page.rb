@@ -31,8 +31,8 @@ module Taxonomy
     end
 
     def taxonomy_size
-      @taxonomy_size ||= Taxonomy::TaxonomySizePresenter.new(
-        Taxonomy::TaxonomySize.new(taxon)
+      @taxonomy_size ||= Taxonomy::TaxonsWithContentCountPresenter.new(
+        Taxonomy::TaxonsWithContentCount.new(taxon)
       )
     end
 

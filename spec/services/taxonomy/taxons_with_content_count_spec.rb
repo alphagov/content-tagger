@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Taxonomy::TaxonomySize do
+RSpec.describe Taxonomy::TaxonsWithContentCount do
   describe '#nested_tree' do
     it 'returns a nested tree structure' do
       stub_request(:get, 'https://rummager.test.gov.uk/search.json?count=0&facet_taxons=1000&filter_part_of_taxonomy_tree=b92079ac-f1d9-44c8-bc78-772d54377ee2')
@@ -9,7 +9,12 @@ RSpec.describe Taxonomy::TaxonomySize do
       stub_request(:get, 'https://publishing-api.test.gov.uk/v2/expanded-links/b92079ac-f1d9-44c8-bc78-772d54377ee2')
         .to_return(body: EXPANDED_LINKS_FIXTURE.to_json)
 
-      size = Taxonomy::TaxonomySize.new(
+      publishing_api_has_item(
+        content_id: 'b92079ac-f1d9-44c8-bc78-772d54377ee2',
+        title: 'title'
+      )
+
+      size = Taxonomy::TaxonsWithContentCount.new(
         double(
           content_id: 'b92079ac-f1d9-44c8-bc78-772d54377ee2',
           title: 'title',
@@ -30,6 +35,7 @@ RSpec.describe Taxonomy::TaxonomySize do
                 name: 'bar',
                 content_id: 'a544d48b-1e9e-47fb-b427-7a987c658c14',
                 size: 300,
+                children: []
               }
             ]
           }
@@ -67,7 +73,7 @@ RSpec.describe Taxonomy::TaxonomySize do
         ]
       }
 
-      size = Taxonomy::TaxonomySize.new(content_item)
+      size = Taxonomy::TaxonsWithContentCount.new(content_item)
       allow(size).to receive(:nested_tree).and_return(tree)
 
       expect(size.max_size).to eq(300)
@@ -81,7 +87,7 @@ RSpec.describe Taxonomy::TaxonomySize do
         children: [],
       }
 
-      size = Taxonomy::TaxonomySize.new(content_item)
+      size = Taxonomy::TaxonsWithContentCount.new(content_item)
       allow(size).to receive(:nested_tree).and_return(tree)
 
       expect(size.max_size).to eq(100)
