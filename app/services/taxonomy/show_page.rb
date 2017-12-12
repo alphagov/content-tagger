@@ -3,10 +3,11 @@ module Taxonomy
     delegate :content_id, :draft?, :published?, :unpublished?, :redirected?,
              :redirect_to, :base_path, to: :taxon
 
-    attr_reader :taxon
+    attr_reader :taxon, :visualisation
 
-    def initialize(taxon)
+    def initialize(taxon, visualisation = "taxonomy_tree")
       @taxon = taxon
+      @visualisation = visualisation
     end
 
     def title
@@ -27,6 +28,12 @@ module Taxonomy
 
     def taxonomy_tree
       @taxonomy_tree ||= Taxonomy::ExpandedTaxonomy.new(taxon_content_id).build
+    end
+
+    def taxonomy_size
+      @taxonomy_size ||= Taxonomy::TaxonomySizePresenter.new(
+        Taxonomy::TaxonomySize.new(taxon)
+      )
     end
 
     def children

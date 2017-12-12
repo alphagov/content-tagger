@@ -38,10 +38,6 @@
 </div>
 
 <% unless page.unpublished? %>
-  <h3><%= t('views.taxons.tree') %></h3>
-
-  <%= render 'taxonomy_tree', taxonomy_tree: page.taxonomy_tree %>
-
   <% if page.associated_taxons.present? %>
     <h3><%= t('views.taxons.associated_taxons') %></h3>
     <div class="associated-taxons">
@@ -53,5 +49,23 @@
         <% end %>
       </ul>
     </div>
+  <% end %>
+
+  <div class="btn-group pull-right taxonomy-visualisation-buttons"
+       role="group"
+       aria-label="Taxonomy visualisations">
+    <% TaxonsController::VISUALISATIONS.each do |viz| %>
+      <a href="<%= taxon_path(params[:id], viz: viz) %>"
+         class="btn btn-lg <%= viz == page.visualisation ? 'btn-primary' : 'btn-default' %>"
+         role="button">
+        <%= viz.titlecase %>
+      </a>
+    <% end %>
+  </div>
+
+  <% if page.visualisation.in? TaxonsController::VISUALISATIONS %>
+    <%= render partial: page.visualisation, locals: { page: page } %>
+  <% else %>
+    <h2>Unknown visualisation <%= page.visualisation %>
   <% end %>
 <% end %>
