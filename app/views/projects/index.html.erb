@@ -6,7 +6,7 @@
 
 <% projects.group_by(&:taxonomy_branch).each do |taxonomy_branch, branch_projects| %>
   <%= link_to "Show #{branch_projects.first.taxonomy_branch_title.downcase} taxonomy",
-              branch_path(branch_projects.first.taxonomy_branch, viz: :list),
+              taxon_path(branch_projects.first.taxonomy_branch, viz: :list),
               class: %w(btn btn-default pull-right) %>
   <h2>
     <%= branch_projects.first.taxonomy_branch_title %>
