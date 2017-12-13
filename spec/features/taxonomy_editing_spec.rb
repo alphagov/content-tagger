@@ -287,6 +287,7 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
+      .with(body: hash_including(base_paths: ['/slug'], with_drafts: true))
       .to_return(status: 200, body: {
         '/slug' => SecureRandom.uuid
       }.to_json)
