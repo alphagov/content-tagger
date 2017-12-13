@@ -88,7 +88,7 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.18)
-    gds-api-adapters (50.5.0)
+    gds-api-adapters (50.6.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -383,7 +383,7 @@ DEPENDENCIES
   capybara
   database_cleaner
   factory_girl_rails
-  gds-api-adapters (~> 50.5)
+  gds-api-adapters (~> 50.6)
   gds-sso (~> 13.4)
   govuk-content-schema-test-helpers
   govuk-lint

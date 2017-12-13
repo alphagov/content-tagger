@@ -25,7 +25,8 @@ module Taxonomy
       # error code, we do a lookup to see if a content item with the slug
       # already exists, and if so, provide a more customised error message.
       existing_content_item = Services.publishing_api.lookup_content_id(
-        base_path: taxon.base_path
+        base_path: taxon.base_path,
+        with_drafts: true,
       )
 
       if existing_content_item.nil?
