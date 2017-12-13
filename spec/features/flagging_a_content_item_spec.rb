@@ -18,7 +18,9 @@ RSpec.describe "flagging a content item" do
   scenario "flagging a content item and suggesting a new term", js: true do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
-    and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
+    and_i_flag_the_first_content_item_as_missing_a_relevant_topic
+    and_i_suggest_a_new_topic
+    and_i_submit_my_flag_for_review_choice
     and_i_apply_the_flagged_filter
     then_the_content_item_should_be_flagged_as_missing_topic
     and_the_suggested_topic_should_be_displayed
@@ -66,12 +68,10 @@ RSpec.describe "flagging a content item" do
 
   def and_i_flag_the_first_content_item_as_i_need_help
     click_link 'Flag for review'
-    find('#flag_modal_id', wait: 60).visible?
     choose "I need help tagging this"
   end
 
   def and_i_enter_a_comment_to_explain_why_i_need_help
-    expect(page).to have_field("Comment (optional)")
     fill_in "Comment (optional)", with: "I don't know what I'm doing"
   end
 
@@ -89,14 +89,13 @@ RSpec.describe "flagging a content item" do
     expect(page).to have_content "Flagged: needs publisher review"
   end
 
-  def and_i_flag_the_first_content_item_as_missing_a_relevant_topic_and_i_suggest_a_new_term
+  def and_i_flag_the_first_content_item_as_missing_a_relevant_topic
     click_link 'Flag for review'
-    find('#flag_modal_id', wait: 60).visible?
     choose "There's no relevant topic for this"
-    expect(page).to have_field("Suggest a new topic")
+  end
+
+  def and_i_suggest_a_new_topic
     fill_in "Suggest a new topic", with: "cool new topic"
-    click_button "Continue"
-    wait_for_ajax
   end
 
   def and_i_mark_the_content_item_as_done
