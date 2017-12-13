@@ -4,38 +4,39 @@
   <% end %>
 <% end %>
 
-
-<div class='view-on-site'>
-  <% if page.published? %>
-    View on site: <%= link_to page.base_path, website_url(page.base_path) %>
-  <% elsif page.draft? %>
-    <%= link_to "View draft page", website_url(page.base_path, draft: true) %>
-  <% end %>
-</div>
-
-<div class="well state-box">
-  <div class="state">
-    State: <%= page.publication_state_name %>
-    <% if page.redirected? %>
-      (redirects to <%= page.redirect_to %>)
+<% if user_can_administer_taxonomy? %>
+  <div class='view-on-site'>
+    <% if page.published? %>
+      View on site: <%= link_to page.base_path, website_url(page.base_path) %>
+    <% elsif page.draft? %>
+      <%= link_to "View draft page", website_url(page.base_path, draft: true) %>
     <% end %>
   </div>
-  <% if page.published? %>
-    <%= link_to "Delete", taxon_confirm_delete_path(page.taxon_content_id), class: 'delete-link' %>
-  <% elsif page.draft? %>
-    <%= link_to taxon_confirm_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
-      Publish
+
+  <div class="well state-box">
+    <div class="state">
+      State: <%= page.publication_state_name %>
+      <% if page.redirected? %>
+        (redirects to <%= page.redirect_to %>)
+      <% end %>
+    </div>
+    <% if page.published? %>
+      <%= link_to "Delete", taxon_confirm_delete_path(page.taxon_content_id), class: 'delete-link' %>
+    <% elsif page.draft? %>
+      <%= link_to taxon_confirm_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
+        Publish
+      <% end %>
+      <%= link_to taxon_confirm_bulk_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
+          Publish Tree
+      <% end %>
+      <%= link_to "Delete", taxon_confirm_discard_path(page.taxon_content_id), class: 'delete-link' %>
+    <% elsif page.unpublished? %>
+      <%= link_to taxon_confirm_restore_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
+        Restore
+      <% end %>
     <% end %>
-    <%= link_to taxon_confirm_bulk_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
-        Publish Tree
-    <% end %>
-    <%= link_to "Delete", taxon_confirm_discard_path(page.taxon_content_id), class: 'delete-link' %>
-  <% elsif page.unpublished? %>
-    <%= link_to taxon_confirm_restore_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
-      Restore
-    <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>
 
 <% unless page.unpublished? %>
   <% if page.associated_taxons.present? %>

@@ -1,4 +1,6 @@
-<%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(taxon_content_id), class: "btn btn-default"%>
+<% if user_can_administer_taxonomy? %>
+  <%= link_to I18n.t('views.taxons.edit'), edit_taxon_path(taxon_content_id), class: "btn btn-default"%>
+<% end %>
 
 <%= link_to I18n.t('views.taxons.tagging_history'), tagging_history_path(taxon_content_id), class: "btn btn-default"%>
 
@@ -6,13 +8,15 @@
             taxon_tagged_content_path(taxon_content_id),
             class: 'btn btn-default' %>
 
-<%= link_to new_taxon_migration_path(source_content_id: taxon_content_id),
-class: 'btn btn-md btn-default' do %>
-  <i class="glyphicon glyphicon-move"></i>
-  <%= I18n.t('views.taxons.move_content') %>
-<% end %>
+<% if user_can_administer_taxonomy? %>
+  <%= link_to new_taxon_migration_path(source_content_id: taxon_content_id),
+  class: 'btn btn-md btn-default' do %>
+    <i class="glyphicon glyphicon-move"></i>
+    <%= I18n.t('views.taxons.move_content') %>
+  <% end %>
 
-<%= link_to taxonomy_path(taxon_content_id, format: :csv), class: "btn btn-default" do %>
-  <i class="glyphicon glyphicon-download-alt"></i>
-  <%= I18n.t('views.taxons.download_csv') %>
+  <%= link_to taxonomy_path(taxon_content_id, format: :csv), class: "btn btn-default" do %>
+    <i class="glyphicon glyphicon-download-alt"></i>
+    <%= I18n.t('views.taxons.download_csv') %>
+  <% end %>
 <% end %>

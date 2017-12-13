@@ -1,7 +1,11 @@
 class TaxonsController < ApplicationController
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
 
-  before_action :ensure_user_can_administer_taxonomy!
+  before_action :ensure_user_can_use_application!
+  before_action(
+    :ensure_user_can_administer_taxonomy!,
+    except: %i[index drafts trash show visualisation_data tagged_content]
+  )
 
   def index
     render :index, locals: { page: Taxonomy::IndexPage.new(params, "published") }
