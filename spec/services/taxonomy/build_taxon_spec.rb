@@ -8,6 +8,7 @@ RSpec.describe Taxonomy::BuildTaxon do
         content_id: content_id,
         title: 'A title',
         description: 'A description',
+        document_type: 'taxon',
         base_path: '/foo/bar',
         publication_state: 'State',
         details: {

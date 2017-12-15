@@ -5,7 +5,7 @@ RSpec.feature "Taxonomy editing" do
   include ContentItemHelper
 
   before do
-    @taxon_1 = content_item_with_details(
+    @taxon_1 = taxon_with_details(
       "School planning",
       other_fields: {
         content_id: "ID-1",
@@ -13,7 +13,7 @@ RSpec.feature "Taxonomy editing" do
         publication_state: 'published'
       }
     )
-    @taxon_2 = content_item_with_details(
+    @taxon_2 = taxon_with_details(
       "Starting and attending school (draft)",
       other_fields: {
         content_id: "ID-2",
@@ -21,7 +21,7 @@ RSpec.feature "Taxonomy editing" do
         publication_state: 'draft'
       }
     )
-    @taxon_3 = content_item_with_details(
+    @taxon_3 = taxon_with_details(
       "Rail",
       other_fields: {
         content_id: "ID-3",
@@ -250,6 +250,7 @@ RSpec.feature "Taxonomy editing" do
       .to_return(body: {
         base_path: "/education/newly-created-taxon",
         content_id: "ID-4",
+        document_type: "taxon",
         details: { internal_name: "Newly created taxon" },
         publication_state: "published",
         title: "Newly created taxon",

@@ -27,7 +27,7 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def given_there_are_draft_taxons
-    @taxon_1 = content_item_with_details(
+    @taxon_1 = taxon_with_details(
       "I Am A Taxon 1",
       other_fields: {
         content_id: "ID-1",
@@ -35,7 +35,7 @@ RSpec.feature "Draft taxonomy" do
         publication_state: 'active'
       }
     )
-    @taxon_2 = content_item_with_details(
+    @taxon_2 = taxon_with_details(
       "I Am Another Taxon 2",
       other_fields: {
         content_id: "ID-2",
@@ -43,7 +43,7 @@ RSpec.feature "Draft taxonomy" do
         publication_state: 'active'
       }
     )
-    @taxon_3 = content_item_with_details(
+    @taxon_3 = taxon_with_details(
       "I Am Yet Another Taxon 3",
       other_fields: {
         content_id: "ID-3",
@@ -72,7 +72,7 @@ RSpec.feature "Draft taxonomy" do
   def given_there_is_a_draft_taxon
     @taxon_content_id = SecureRandom.uuid
 
-    @taxon = content_item_with_details(
+    @taxon = taxon_with_details(
       "Taxon 2",
       other_fields: {
         base_path: "/education/taxon-2",

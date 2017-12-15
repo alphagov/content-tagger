@@ -3,11 +3,11 @@ require "rails_helper"
 RSpec.describe "Viewing taxons" do
   include ContentItemHelper
 
-  let(:fruits) { fake_taxon("Fruits") }
-  let(:apples) { fake_taxon("Apples") }
-  let(:pears) { fake_taxon("Pears") }
-  let(:oranges) { fake_taxon("Oranges") }
-  let(:cox) { fake_taxon("Cox") }
+  let(:fruits) { taxon_with_details("Fruits") }
+  let(:apples) { taxon_with_details("Apples") }
+  let(:pears) { taxon_with_details("Pears") }
+  let(:oranges) { taxon_with_details("Oranges") }
+  let(:cox) { taxon_with_details("Cox") }
 
   scenario "Viewing a taxonomy" do
     given_a_taxonomy
@@ -174,11 +174,5 @@ RSpec.describe "Viewing taxons" do
       expect(page).to have_content("Pears")
       expect(page).to have_content("Oranges")
     end
-  end
-
-private
-
-  def fake_taxon(title)
-    content_item_with_details(title)
   end
 end

@@ -14,7 +14,7 @@ RSpec.feature "Download taggings", type: :feature do
   def given_a_taxon_with_tagged_content
     @content_id = SecureRandom.uuid
 
-    taxon = content_item_with_details(
+    taxon = taxon_with_details(
       "Taxon 1",
       other_fields: { content_id: @content_id }
     )

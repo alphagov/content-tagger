@@ -48,7 +48,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def given_a_taxon_with_no_children
     @taxon_content_id = SecureRandom.uuid
-    @taxon = content_item_with_details(
+    @taxon = taxon_with_details(
       "Taxon 1",
       other_fields: { content_id: @taxon_content_id }
     )
@@ -68,7 +68,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def given_a_deleted_taxon
     @taxon_content_id = SecureRandom.uuid
-    @taxon = content_item_with_details(
+    @taxon = taxon_with_details(
       "Taxon 2",
       other_fields: {
         base_path: "/education/taxon-2",
@@ -170,7 +170,7 @@ private
 
   def add_a_child_taxon
     @child_taxon_content_id = SecureRandom.uuid
-    @child_taxon = content_item_with_details(
+    @child_taxon = taxon_with_details(
       "A child taxon",
       other_fields: { content_id: @child_taxon_content_id }
     )
