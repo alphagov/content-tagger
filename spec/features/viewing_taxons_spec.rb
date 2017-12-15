@@ -3,13 +3,18 @@ require "rails_helper"
 RSpec.describe "Viewing taxons" do
   include ContentItemHelper
 
-  let(:fruits) { taxon_with_details("Fruits") }
+  let(:fruits) do
+    content_item_with_details(
+      "Fruits",
+      other_fields: { document_type: "homepage" }
+    )
+  end
   let(:apples) { taxon_with_details("Apples") }
   let(:pears) { taxon_with_details("Pears") }
   let(:oranges) { taxon_with_details("Oranges") }
   let(:cox) { taxon_with_details("Cox") }
 
-  scenario "Viewing a taxonomy" do
+  scenario "Viewing the taxonomy from the homepage" do
     given_a_taxonomy
     given_im_ignoring_tagged_content_for_now
     when_i_view_the_root_taxon
