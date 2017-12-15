@@ -2,6 +2,8 @@ $gray: #bfc1c3;
 $blue-link: rgb(0, 0, 238);
 
 .taxonomy-tree {
+  clear: right;
+
   a,
   a:visited {
     color: $blue-link;

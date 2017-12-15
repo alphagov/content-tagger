@@ -21,7 +21,7 @@
     <% GovukTaxonomy::Branches.new.all.each do |taxon| %>
       <tr>
         <td>
-          <a href="<%= branch_path(taxon['content_id']) %>">
+          <a href="<%= taxon_path(taxon['content_id']) %>">
              <%= taxon['title'] %>
           </a>
         </td>

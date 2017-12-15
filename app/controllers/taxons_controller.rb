@@ -1,5 +1,11 @@
 class TaxonsController < ApplicationController
-  before_action :ensure_user_can_administer_taxonomy!
+  VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
+
+  before_action :ensure_user_can_use_application!
+  before_action(
+    :ensure_user_can_administer_taxonomy!,
+    except: %i[index drafts trash show visualisation_data tagged_content]
+  )
 
   def index
     render :index, locals: { page: Taxonomy::IndexPage.new(params, "published") }
@@ -35,11 +41,20 @@ class TaxonsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { render locals: { page: Taxonomy::ShowPage.new(taxon) } }
+      format.html do
+        render locals: {
+          page: Taxonomy::ShowPage.new(taxon, params.fetch(:viz, 'taxonomy_tree'))
+        }
+      end
+
       format.json { render json: taxon }
     end
   rescue Taxonomy::BuildTaxon::TaxonNotFoundError
     render "taxon_not_found", status: 404
+  end
+
+  def visualisation_data
+    render json: Taxonomy::TaxonsWithContentCount.new(taxon).nested_tree
   end
 
   def tagged_content
@@ -170,4 +185,6 @@ private
   def taxon
     @_taxon ||= Taxonomy::BuildTaxon.call(content_id: content_id)
   end
+
+  helper_method :visualisation_to_render
 end

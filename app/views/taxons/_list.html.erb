@@ -1,6 +1,7 @@
 <style media="screen">
   ul.taxons {
     padding: 0;
+    clear: right;
   }
 
   ul.taxons li {
@@ -20,5 +21,10 @@
 </style>
 
 <ul class='taxons'>
-  <%= render "list_children", children: [@taxonomy_size.nested_tree] %>
+  <%= render partial: "list_children",
+             locals: {
+               page: page,
+               children: [page.taxonomy_size.nested_tree]
+             }
+  %>
 </ul>

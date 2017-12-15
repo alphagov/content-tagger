@@ -1,21 +1,16 @@
 module Taxonomy
-  class TaxonomySize
-    attr_reader :root_taxon
-
-    # @param [ContentItem] root_taxon
+  class TaxonsWithContentCount
     def initialize(root_taxon)
       @root_taxon = root_taxon
     end
 
     def nested_tree
-      @_nested_tree ||= begin
-        {
-          name: root_taxon.title,
-          content_id: root_taxon.content_id,
-          size: tagged_pages_count_by_content_id[root_taxon.content_id] || 0,
-          children: add_children_recursively(taxonomy_tree),
-        }
-      end
+      @_nested_tree ||= process_linked_content_item_tree(
+        GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+          content_id: @root_taxon.content_id,
+          publishing_api: Services.publishing_api
+        )
+      )
     end
 
     def max_size
@@ -37,23 +32,15 @@ module Taxonomy
 
   private
 
-    def add_children_recursively(taxon)
-      child_taxons = (taxon["expanded_links"] || taxon["links"]).dig("child_taxons").to_a
-
-      child_taxons.map do |child_taxon|
-        recursed = add_children_recursively(child_taxon)
-        count = tagged_pages_count_by_content_id[child_taxon["content_id"]] || 0
-
-        out = {
-          name: child_taxon["title"],
-          content_id: child_taxon["content_id"],
-          size: count,
-        }
-
-        out[:children] = recursed if recursed.any?
-
-        out
-      end
+    def process_linked_content_item_tree(linked_content_item)
+      {
+        name: linked_content_item.title,
+        content_id: linked_content_item.content_id,
+        size: tagged_pages_count_by_content_id[linked_content_item.content_id] || 0,
+        children: linked_content_item.children.map do |child_linked_content_item|
+          process_linked_content_item_tree(child_linked_content_item)
+        end
+      }
     end
 
     # Returns a hash of taxon content_ids and the number of pages tagged to the
@@ -61,7 +48,7 @@ module Taxonomy
     def tagged_pages_count_by_content_id
       @tagged_pages_count_by_content_id ||= begin
         search_result = Services.rummager.search(
-          filter_part_of_taxonomy_tree: root_taxon.content_id,
+          filter_part_of_taxonomy_tree: @root_taxon.content_id,
           facet_taxons: 1_000, # We have to specify a number,
           count: 0,
         )
@@ -75,10 +62,6 @@ module Taxonomy
           h[content_id] = document_count
         end
       end
-    end
-
-    def taxonomy_tree
-      Services.publishing_api.get_expanded_links(root_taxon.content_id).to_h
     end
   end
 end
