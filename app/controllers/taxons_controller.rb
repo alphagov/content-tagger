@@ -129,8 +129,21 @@ class TaxonsController < ApplicationController
     Services.publishing_api.publish(content_id)
     redirect_to taxon_path(content_id), success: "You have successfully published the taxon"
   rescue GdsApi::HTTPUnprocessableEntity => e
+    # Perform a lookup on the base path to determine whether there
+    # is already another content item published with the same path
+
+    existing_content_item = Services.publishing_api.lookup_content_id(
+      base_path: taxon.base_path
+    )
+
     GovukError.notify(e, level: "warning")
-    flash.now[:danger] = I18n.t('errors.invalid_taxon')
+
+    flash.now[:danger] = if existing_content_item.present?
+                           I18n.t('errors.invalid_taxon_base_path')
+                         else
+                           I18n.t('errors.invalid_taxon')
+                         end
+
     render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
   end
 

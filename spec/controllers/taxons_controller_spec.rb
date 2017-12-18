@@ -96,6 +96,21 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
+  describe "#publish" do
+    it 'responds with a specific error when the base path is already used' do
+      taxon = build(:taxon, publication_state: "unpublished", content_id: SecureRandom.uuid)
+      stub_publishing_api_publish(taxon.content_id, {}, status: 422)
+      payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+      publishing_api_has_item(payload.merge(content_id: taxon.content_id))
+      publishing_api_has_links(content_id: taxon.content_id)
+      publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
+
+      post :publish, params: { taxon_id: taxon.content_id }
+
+      expect(flash.now[:danger]).to eq I18n.t('errors.invalid_taxon_base_path')
+    end
+  end
+
   describe '#confirm_bulk_publish' do
     it 'renders confirm bulk publish' do
       expect(Taxonomy::BuildTaxon).to receive(:call).with(content_id: '123').and_return FactoryGirl.build(:taxon)
