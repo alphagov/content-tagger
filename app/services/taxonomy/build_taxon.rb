@@ -3,6 +3,7 @@ module Taxonomy
     attr_reader :content_id
 
     class TaxonNotFoundError < StandardError; end
+    class DocumentTypeError < StandardError; end
 
     def initialize(content_id:)
       @content_id = content_id
@@ -13,6 +14,8 @@ module Taxonomy
     end
 
     def build
+      validate_taxon_response!
+
       Taxon.new(
         content_id: content_id,
         title: content_item["title"],
@@ -42,6 +45,11 @@ module Taxonomy
       @content_item ||= Services.publishing_api.get_content(content_id)
     rescue GdsApi::HTTPNotFound => e
       raise(TaxonNotFoundError, e.message)
+    end
+
+    def validate_taxon_response!
+      return if content_item["document_type"].in? %(homepage taxon)
+      raise DocumentTypeError
     end
 
     def links

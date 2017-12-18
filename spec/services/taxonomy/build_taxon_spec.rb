@@ -2,12 +2,14 @@ require 'rails_helper'
 
 RSpec.describe Taxonomy::BuildTaxon do
   describe '.call(content_id:)' do
+    let(:document_type) { 'taxon' }
     let(:content_id) { SecureRandom.uuid }
     let(:content) do
       {
         content_id: content_id,
         title: 'A title',
         description: 'A description',
+        document_type: document_type,
         base_path: '/foo/bar',
         publication_state: 'State',
         details: {
@@ -110,6 +112,16 @@ RSpec.describe Taxonomy::BuildTaxon do
       it 'raises an exception' do
         expect { taxon }.to raise_error(
           Taxonomy::BuildTaxon::TaxonNotFoundError
+        )
+      end
+    end
+
+    context 'with a content item that is not a taxon or homepage' do
+      let(:document_type) { 'guidance' }
+
+      it 'raises an exception' do
+        expect { taxon }.to raise_error(
+          Taxonomy::BuildTaxon::DocumentTypeError
         )
       end
     end

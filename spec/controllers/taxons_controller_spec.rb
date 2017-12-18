@@ -148,7 +148,7 @@ RSpec.describe TaxonsController, type: :controller do
 
   def stub_taxon_show_page(content_id)
     stub_requests_for_show_page(
-      content_item_with_details("Foo", other_fields: { content_id: content_id })
+      content_item_with_details("Foo", other_fields: { content_id: content_id, document_type: "taxon" })
     )
   end
 end

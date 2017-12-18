@@ -1,4 +1,12 @@
 module ContentItemHelper
+  def taxon_with_details(title, other_fields: {}, unpublished: false)
+    content_item_with_details(
+      title,
+      other_fields: other_fields.merge(document_type: "taxon"),
+      unpublished: unpublished
+    )
+  end
+
   def content_item_with_details(title, other_fields: {}, unpublished: false)
     other_fields_with_details = other_fields.merge(
       details: {

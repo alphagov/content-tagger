@@ -81,7 +81,7 @@ RSpec.describe RemoteTaxons do
 
     let(:parent_taxon_id) { SecureRandom.uuid }
     let(:parent_taxon) do
-      content_item_with_details(
+      taxon_with_details(
         'foo',
         other_fields: {
           base_path: '/foo/1',
