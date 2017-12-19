@@ -26,7 +26,7 @@ module GovukTaxonomy
   private
 
     def transform(taxon, status)
-      taxon.slice("content_id", "title").merge("status" => status)
+      taxon.slice("content_id", "title", "base_path").merge("status" => status)
     end
 
     def get_root_taxons(with_drafts:)

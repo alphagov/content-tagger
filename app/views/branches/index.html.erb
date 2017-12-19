@@ -13,7 +13,8 @@
 <table class="table queries-list table-bordered table-striped">
   <thead>
     <tr class="table-header">
-      <th>Title</th>
+      <th>Taxon</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -21,8 +22,13 @@
     <% GovukTaxonomy::Branches.new.all.each do |taxon| %>
       <tr>
         <td>
+           <%= taxon['title'] %>
+          <br>
+          <span class="text-muted"><%= taxon['base_path'] %></span>
+        </td>
+        <td>
           <a href="<%= taxon_path(taxon['content_id']) %>">
-             <%= taxon['title'] %>
+            View taxon
           </a>
         </td>
       </tr>
