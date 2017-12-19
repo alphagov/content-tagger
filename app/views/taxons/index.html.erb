@@ -49,8 +49,14 @@
   <tbody>
     <% page.taxons.each do |taxon| %>
       <tr>
-        <td><%= taxon.internal_name %></td>
-        <td><%= link_to I18n.t('views.taxons.view'), taxon_path(taxon.content_id) %></td>
+        <td>
+          <%= taxon.internal_name %>
+          <br>
+          <span class="text-muted"><%= taxon.base_path %></span>
+        </td>
+        <td>
+          <%= link_to I18n.t('views.taxons.view'), taxon_path(taxon.content_id) %>
+        </td>
       </tr>
     <% end %>
   </tbody>
