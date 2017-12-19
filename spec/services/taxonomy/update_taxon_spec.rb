@@ -105,7 +105,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(SecureRandom.uuid)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
-          /a taxon with this slug already exists/i
+          /<a href="(.+)">taxon<\/a> with this slug already exists/
         )
       end
     end

@@ -24,16 +24,18 @@ module Taxonomy
       # Since we cannot easily differentiate the reasons for getting a 422
       # error code, we do a lookup to see if a content item with the slug
       # already exists, and if so, provide a more customised error message.
-      existing_content_item = Services.publishing_api.lookup_content_id(
+      existing_content_id = Services.publishing_api.lookup_content_id(
         base_path: taxon.base_path,
         with_drafts: true,
       )
 
-      if existing_content_item.nil?
+      if existing_content_id.present?
+        taxon_path = Rails.application.routes.url_helpers.taxon_path(existing_content_id)
+        error_message = I18n.t('errors.invalid_taxon_base_path', taxon_path: taxon_path)
+        raise(InvalidTaxonError, ActionController::Base.helpers.sanitize(error_message))
+      else
         GovukError.notify(e)
         raise(InvalidTaxonError, I18n.t('errors.invalid_taxon'))
-      else
-        raise(InvalidTaxonError, I18n.t('errors.invalid_taxon_base_path'))
       end
     end
 
