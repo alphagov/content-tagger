@@ -107,7 +107,7 @@ RSpec.describe TaxonsController, type: :controller do
 
       post :publish, params: { taxon_id: taxon.content_id }
 
-      expect(flash.now[:danger]).to eq I18n.t('errors.invalid_taxon_base_path')
+      expect(flash.now[:danger]).to match(/<a href="(.+)">taxon<\/a> with this slug already exists/)
     end
   end
 

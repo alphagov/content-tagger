@@ -12,7 +12,7 @@ en:
     taxons: 'Edit taxonomy'
   errors:
     invalid_taxon: There was a problem with your request. We have been notified of the issue and will fix it as soon as possible.
-    invalid_taxon_base_path: A taxon with this slug already exists. If the taxon has been deleted, you can restore it.
+    invalid_taxon_base_path: A <a href="%{taxon_path}">taxon</a> with this slug already exists. If the taxon has been deleted, you can restore it.
     invalid_hostname: Is not a Google Docs URL
     invalid_path: Does not have the expected public path /spreadsheets/d/<id>/pub
     missing_gid: Is missing a Google Spreadsheet ID parameter (gid)
