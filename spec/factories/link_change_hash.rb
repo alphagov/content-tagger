@@ -14,8 +14,8 @@ FactoryGirl.define do
     end
     link_type 'taxons'
     change 'add'
-    user_uid SecureRandom.uuid
-    created_at DateTime.now.to_s
+    user_uid { SecureRandom.uuid }
+    created_at { Time.current }
 
     initialize_with { attributes.deep_stringify_keys }
   end

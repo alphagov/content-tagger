@@ -25,7 +25,7 @@ module BulkTagging
     end
 
     def mark_as_deleted
-      update!(deleted_at: DateTime.current)
+      update!(deleted_at: Time.current)
     end
 
     def error_count
