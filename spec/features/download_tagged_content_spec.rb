@@ -47,10 +47,9 @@ RSpec.feature "Download taggings", type: :feature do
   end
 
   def then_i_should_receive_a_csv_with_tagged_content
-    expect(page.body).to eql(<<~doc
+    expect(page.body).to eql <<~DOC
       title,description,content_id,base_path,document_type
       tagged content,,tagged-content,/path/tagged-content,guidance
-    doc
-    )
+    DOC
   end
 end
