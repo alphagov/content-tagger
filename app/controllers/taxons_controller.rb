@@ -87,7 +87,9 @@ class TaxonsController < ApplicationController
   end
 
   def destroy
-    if params[:taxon][:redirect_to].empty?
+    if content_id == GovukTaxonomy::ROOT_CONTENT_ID
+      redirect_to taxon_path(content_id), danger: t("controllers.taxons.destroy_homepage")
+    elsif params[:taxon][:redirect_to].empty?
       flash.now[:danger] = t("controllers.taxons.destroy_no_redirect")
       render :confirm_delete, locals: { page: Taxonomy::ShowPage.new(taxon) }
     else
