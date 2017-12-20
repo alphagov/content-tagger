@@ -1,8 +1,4 @@
-<%= display_header title: page.title, breadcrumbs: [:taxons, page.taxon] do %>
-  <% unless page.unpublished? %>
-    <%= render 'show_header', taxon_content_id: page.taxon_content_id %>
-  <% end %>
-<% end %>
+<%= display_header title: page.title, breadcrumbs: [:taxons, page.taxon] %>
 
 <% if user_can_administer_taxonomy? %>
   <div class='view-on-site'>
@@ -12,29 +8,50 @@
       View draft page: <%= link_to page.base_path, website_url(page.base_path, draft: true) %>
     <% end %>
   </div>
+<% end %>
 
-  <div class="well state-box">
-    <div class="state">
+<% unless page.unpublished? %>
+  <%= link_to I18n.t('views.taxons.tagged_content'),
+              taxon_tagged_content_path(page.taxon_content_id),
+              class: 'btn btn-default' %>
+<% end %>
+
+<% if user_can_administer_taxonomy? %>
+  <% unless page.unpublished? %>
+    <%= link_to I18n.t('views.taxons.edit'),
+                edit_taxon_path(page.taxon_content_id),
+                class: "btn btn-default" %>
+  <% end %>
+
+  <div class="panel panel-default top-space">
+    <div class="panel-body">
       State: <%= page.publication_state_name %>
       <% if page.redirected? %>
         (redirects to <%= page.redirect_to %>)
       <% end %>
     </div>
-    <% if page.taxon_deletable? && page.published? %>
-      <%= link_to "Delete", taxon_confirm_delete_path(page.taxon_content_id), class: 'delete-link' %>
-    <% elsif page.draft? %>
-      <%= link_to taxon_confirm_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
-        Publish
+
+    <div class="panel-footer">
+      <% if page.taxon_deletable? && page.published? %>
+        <%= link_to "Unpublish",
+                    taxon_confirm_delete_path(page.taxon_content_id),
+                    class: 'btn btn-danger' %>
+      <% elsif page.draft? %>
+        <%= link_to "Publish",
+                    taxon_confirm_publish_path(page.taxon_content_id),
+                    class: 'btn btn-default' %>
+        <%= link_to "Publish tree",
+                    taxon_confirm_bulk_publish_path(page.taxon_content_id),
+                    class: 'btn btn-default' %>
+        <%= link_to "Discard draft",
+                    taxon_confirm_discard_path(page.taxon_content_id),
+                    class: 'btn btn-danger' %>
+      <% elsif page.unpublished? %>
+        <%= link_to "Restore to draft",
+                    taxon_confirm_restore_path(page.taxon_content_id),
+                    class: 'btn btn-warning' %>
       <% end %>
-      <%= link_to taxon_confirm_bulk_publish_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
-          Publish Tree
-      <% end %>
-      <%= link_to "Delete", taxon_confirm_discard_path(page.taxon_content_id), class: 'delete-link' %>
-    <% elsif page.unpublished? %>
-      <%= link_to taxon_confirm_restore_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
-        Restore
-      <% end %>
-    <% end %>
+    </div>
   </div>
 <% end %>
 
@@ -50,6 +67,13 @@
         <% end %>
       </ul>
     </div>
+  <% end %>
+
+  <% if user_can_administer_taxonomy? %>
+    <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
+      <i class="glyphicon glyphicon-download-alt"></i>
+      <%= I18n.t('views.taxons.download_csv') %>
+    <% end %>
   <% end %>
 
   <div class="btn-group pull-right taxonomy-visualisation-buttons"

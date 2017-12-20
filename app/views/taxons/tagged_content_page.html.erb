@@ -1,19 +1,29 @@
-<%= display_header title: "Pages tagged to #{link_to page.taxon.internal_name, taxon_path(page.content_id)}",
-                   page_title: "Pages tagged to #{page.taxon.internal_name}",
-                   breadcrumbs: [:taxons, page.taxon] do %>
-  <% unless page.unpublished? %>
-    <%= render 'show_header', taxon_content_id: page.taxon_content_id %>
-  <% end %>
-<% end %>
+<%= display_header(
+  title: "Pages tagged to #{link_to page.taxon.internal_name, taxon_path(page.content_id)}",
+  page_title: "Pages tagged to #{page.taxon.internal_name}",
+  breadcrumbs: [:taxons, page.taxon]) %>
 
 <% unless page.unpublished? %>
-  <h3>Total tagged pages: <%= page.tagged.count %></h3>
+  <% if user_can_administer_taxonomy? %>
+    <%= link_to taxon_download_tagged_path(page.taxon_content_id), class: 'btn btn-default' do %>
+      <i class="glyphicon glyphicon-download-alt"></i>
+      Download as CSV
+    <% end %>
 
-  <p>
-    <%= link_to 'Download as CSV',
-    taxon_download_tagged_path(page.taxon_content_id),
-    class: 'btn btn-md btn-default' %>
-  </p>
+    <%= link_to "Move content",
+                new_taxon_migration_path(source_content_id: page.taxon_content_id),
+                class: 'btn btn-md btn-default' %>
+  <% end %>
+
+  <%= link_to I18n.t('views.taxons.tagging_history'),
+              tagging_history_path(page.taxon_content_id),
+              class: "btn btn-default"%>
+
+  <div class="panel panel-default top-space">
+    <div class="panel-body">
+      Total tagged pages: <%= page.tagged.count %>
+    </div>
+  </div>
 
   <% if page.tagged.any? %>
     <%= render 'tagged_content', tagged: page.tagged %>
