@@ -85,9 +85,8 @@ module BulkTagging
         end
 
         it 'does not create any taggings' do
-          expect { described_class.call(tagging_spreadsheet) }.to_not change {
-            tagging_spreadsheet.tag_mappings
-          }
+          expect { described_class.call(tagging_spreadsheet) }
+            .to_not(change { tagging_spreadsheet.tag_mappings })
         end
 
         it 'returns the error message' do
