@@ -35,7 +35,7 @@ namespace :taxonomy do
         details[content_id]["guidance"] = guidance
       end
 
-      details.keys.each do |content_id|
+      details.each_key do |content_id|
         resp = Services.publishing_api.get_content(content_id)
         details[content_id]["title"] = resp["title"]
         details[content_id]["base_path"] = resp["base_path"]
@@ -44,7 +44,7 @@ namespace :taxonomy do
       headers = ['Content ID', 'Title', 'Link', 'Guidance Documents', 'Non-Guidance Documents', 'Total no. of documents']
       CSV do |csv|
         csv << headers
-        details.keys.each do |content_id|
+        details.each_key do |content_id|
           csv << [
             content_id,
             details[content_id]["title"],
