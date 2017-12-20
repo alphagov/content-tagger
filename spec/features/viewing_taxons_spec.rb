@@ -125,7 +125,6 @@ RSpec.describe "Viewing taxons" do
     visit taxon_tagged_content_path(apples["content_id"])
   end
 
-
   def then_i_see_the_entire_taxonomy
     expected_titles = [
       fruits["title"],
