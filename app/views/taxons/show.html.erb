@@ -57,15 +57,19 @@
 
 <% unless page.unpublished? %>
   <% if page.associated_taxons.present? %>
-    <h3><%= t('views.taxons.associated_taxons') %></h3>
-    <div class="associated-taxons">
-      <ul>
-        <% page.associated_taxons.each do |t| %>
-          <li>
-            <%= link_to t["title"], taxon_path(t["content_id"]) %>
-          </li>
-        <% end %>
-      </ul>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= t('views.taxons.associated_taxons') %>
+      </div>
+      <div class="panel-body">
+        <ul class="associated-taxons">
+          <% page.associated_taxons.each do |t| %>
+            <li>
+              <%= link_to t["title"], taxon_path(t["content_id"]) %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
