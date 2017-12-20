@@ -59,5 +59,9 @@ module Taxonomy
     def associated_taxons
       taxonomy_tree.associated_taxons
     end
+
+    def taxon_deletable?
+      taxon.content_id != GovukTaxonomy::ROOT_CONTENT_ID
+    end
   end
 end

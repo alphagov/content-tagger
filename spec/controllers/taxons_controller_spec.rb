@@ -86,6 +86,14 @@ RSpec.describe TaxonsController, type: :controller do
       delete :destroy, params: { id: foo_content_id, taxon: { redirect_to: "" } }
       expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
     end
+
+    it "prevents deletion of the homepage" do
+      delete :destroy, params: { id: GovukTaxonomy::ROOT_CONTENT_ID }
+
+      expect(WebMock).to_not have_requested(:any, /publishing-api/)
+      expect(flash[:danger]).to eq "You cannot delete the homepage"
+      expect(request).to redirect_to taxon_path(GovukTaxonomy::ROOT_CONTENT_ID)
+    end
   end
 
   describe '#bulk_publish' do
