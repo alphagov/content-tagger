@@ -3,10 +3,10 @@ class ProjectBuilder
     project = ProjectContentItem.transaction do
       Project
         .create!(name: name, taxonomy_branch: taxonomy_branch_content_id, bulk_tagging_enabled: bulk_tagging_enabled)
-        .tap do |project|
+        .tap do |proj|
           content_item_attributes_enum.each do |content_item_attributes|
             ProjectContentItem.create!(
-              { project: project }.merge(content_item_attributes)
+              { project: proj }.merge(content_item_attributes)
             )
           end
         end
