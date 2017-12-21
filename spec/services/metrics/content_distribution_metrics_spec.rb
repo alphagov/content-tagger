@@ -42,7 +42,7 @@ module Metrics
       def root_taxon
         {
           "links" => {
-            "root_taxons" => [
+            "level_one_taxons" => [
               {
                 "base_path" => "/taxons/root_taxon"
               }

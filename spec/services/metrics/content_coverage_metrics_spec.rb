@@ -41,14 +41,14 @@ module Metrics
         publishing_api_has_expanded_links(
           content_id: GovukTaxonomy::ROOT_CONTENT_ID,
           expanded_links: {
-            root_taxons: @root_taxons
+            level_one_taxons: @root_taxons
           }
         )
         publishing_api_has_expanded_links(
           {
             content_id: GovukTaxonomy::ROOT_CONTENT_ID,
             expanded_links: {
-              root_taxons: [],
+              level_one_taxons: [],
             }
           },
           with_drafts: false

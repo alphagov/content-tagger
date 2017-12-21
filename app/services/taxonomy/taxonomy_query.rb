@@ -7,7 +7,7 @@ module Taxonomy
     end
 
     def root_taxons
-      taxons = get_content_hash('/').dig('links', 'root_taxons') || []
+      taxons = get_content_hash('/').dig('links', 'level_one_taxons') || []
       taxons.map { |taxon| taxon.slice(*@taxon_fields) }
     end
 

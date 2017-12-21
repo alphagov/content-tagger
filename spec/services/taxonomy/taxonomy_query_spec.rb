@@ -169,7 +169,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       "base_path" => "/",
       "content_id" => "hhhh",
       "links" => {
-        "root_taxons" => [
+        "level_one_taxons" => [
           {
             "base_path" => "/taxons/root_taxon_a",
             "content_id" => "rrrr_aaaa"
@@ -186,7 +186,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
   def root_taxon
     {
       "links" => {
-        "root_taxons" => [
+        "level_one_taxons" => [
           {
             "base_path" => "/taxons/root_taxon",
             "content_id" => "rrrr"

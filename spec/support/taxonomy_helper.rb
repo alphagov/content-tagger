@@ -15,7 +15,7 @@ module TaxonomyHelper
     root_content_id = GovukTaxonomy::ROOT_CONTENT_ID
 
     draft_root_taxons = {
-      'root_taxons' => [
+      'level_one_taxons' => [
         {
           'content_id' => valid_taxon_uuid,
           'title' => draft_taxon_title

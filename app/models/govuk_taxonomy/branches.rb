@@ -10,11 +10,11 @@ module GovukTaxonomy
     end
 
     def published
-      @_published_branches ||= get_root_taxons(with_drafts: false)
+      @_published_branches ||= ::Taxonomy::LevelOneTaxonsRetrieval.new.get(with_drafts: false)
     end
 
     def draft
-      @_draft_branches ||= get_root_taxons(with_drafts: true) - published
+      @_draft_branches ||= ::Taxonomy::LevelOneTaxonsRetrieval.new.get(with_drafts: true) - published
     end
 
     def taxons_for_branch(content_id)
@@ -27,12 +27,6 @@ module GovukTaxonomy
 
     def transform(taxon, status)
       taxon.slice("content_id", "title", "base_path").merge("status" => status)
-    end
-
-    def get_root_taxons(with_drafts:)
-      get_expanded_links_hash(ROOT_CONTENT_ID, with_drafts: with_drafts)
-        .fetch('expanded_links', {})
-        .fetch('root_taxons', [])
     end
 
     def get_expanded_links_hash(content_id, with_drafts:)

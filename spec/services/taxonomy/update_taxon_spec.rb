@@ -22,6 +22,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         assert_publishing_api_put_content(@taxon.content_id)
         assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            root_taxon: [],
                                             parent_taxons: ['guid'],
                                             associated_taxons: ['1234'],
                                           })
@@ -37,6 +38,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
         assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            root_taxon: [],
                                             parent_taxons: [],
                                             associated_taxons: ['1234'],
                                           })
@@ -52,6 +54,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
         assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            root_taxon: [],
                                             parent_taxons: ['guid'],
                                             associated_taxons: [],
                                           })
@@ -67,6 +70,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
         assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            root_taxon: [],
                                             parent_taxons: ['guid'],
                                             associated_taxons: [],
                                           })

@@ -33,6 +33,11 @@ RSpec.feature "Manage Branches" do
     publishing_api_has_expanded_links(
       content_id: GovukTaxonomy::ROOT_CONTENT_ID,
       expanded_links: {
+        level_one_taxons: [
+          {
+            content_id: @linkable_taxon_hash.first[:content_id]
+          },
+        ],
         root_taxons: [
           {
             content_id: @linkable_taxon_hash.first[:content_id]
@@ -44,7 +49,7 @@ RSpec.feature "Manage Branches" do
       {
         content_id: GovukTaxonomy::ROOT_CONTENT_ID,
         expanded_links: {
-          root_taxons: [],
+          level_one_taxons: [],
         }
       },
       with_drafts: false
@@ -52,6 +57,12 @@ RSpec.feature "Manage Branches" do
   end
 
   def given_that_one_link_is_a_root_taxon
+    publishing_api_has_links(
+      "content_id" => @linkable_taxon_hash.first[:content_id],
+      "links" => {
+        "root_taxon" => GovukTaxonomy::ROOT_CONTENT_ID
+      }
+    )
     publishing_api_has_links(
       "content_id" => GovukTaxonomy::ROOT_CONTENT_ID,
       "links" => {
