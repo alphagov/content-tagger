@@ -94,7 +94,7 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def and_i_click_the_delete_link
-    click_on "Delete"
+    click_on "Discard draft"
   end
 
   def and_i_confirm_that_i_want_to_publish

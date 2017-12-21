@@ -7,7 +7,7 @@ RSpec.feature "Delete Taxon", type: :feature do
   scenario "deleting a taxon with no children or tagged content" do
     given_a_taxon_with_no_children
     when_i_visit_the_taxon_page
-    when_i_click_delete_taxon
+    when_i_click_unpublish_taxon
     then_i_see_a_basic_prompt_to_delete
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
@@ -18,7 +18,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     given_a_taxon_with_children
     when_i_visit_the_taxon_page
     then_i_expect_to_see_the_child_taxon
-    when_i_click_delete_taxon
+    when_i_click_unpublish_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
@@ -30,7 +30,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     when_i_visit_the_taxon_tagged_content_page
     then_i_expect_to_see_the_tagged_content
     when_i_visit_the_taxon_page
-    when_i_click_delete_taxon
+    when_i_click_unpublish_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
@@ -99,9 +99,9 @@ RSpec.feature "Delete Taxon", type: :feature do
     visit taxon_tagged_content_path(@taxon_content_id)
   end
 
-  def when_i_click_delete_taxon
+  def when_i_click_unpublish_taxon
     @get_linkables_request = publishing_api_has_taxon_linkables("/alpha-taxonomy/vehicle-plating")
-    click_on "Delete"
+    click_on "Unpublish"
   end
 
   def when_i_click_restore_taxon

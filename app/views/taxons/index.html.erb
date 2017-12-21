@@ -6,15 +6,11 @@
       </i>
     <% end %>
 
-    <%= link_to branches_path, class: 'btn btn-default' do %>
-        <i class="glyphicon glyphicon-plus"></i>
-          Manage branches
-        </i>
-    <% end %>
+    <%= link_to 'Manage branches', branches_path, class: 'btn btn-default' %>
   <% end %>
 
   <%= link_to download_taxons_path, class: 'btn btn-md btn-default' do %>
-    <i class="glyphicon glyphicon-download"></i>
+    <i class="glyphicon glyphicon-download-alt"></i>
     Download published taxons as CSV
   <% end %>
 <% end %>

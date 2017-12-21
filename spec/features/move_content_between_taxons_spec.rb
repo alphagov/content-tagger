@@ -100,7 +100,8 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_click_to_move_content_to_another_taxon
-    find_link(I18n.t('views.taxons.move_content')).click
+    click_on "View tagged content"
+    click_on "Move content"
   end
 
   def and_select_a_taxon_to_move_content_to

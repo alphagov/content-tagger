@@ -71,14 +71,14 @@ en:
         title: Deleted
         explain: Search for a deleted taxon to restore it
       tree: Taxon hierarchy
-      tagged_content: Tagged content
+      tagged_content: View tagged content
       pages_tagged_to: Pages tagged to
       edit_tagging: Edit tagging
       move_content: Move content
       title: Taxons
       deleted_title: Deleted taxons
       edit: Edit taxon
-      tagging_history: Tagging history
+      tagging_history: View tagging history
       view: View taxon
       add_taxon: Add a taxon
       delete_taxon: Delete taxon

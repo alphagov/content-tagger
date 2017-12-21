@@ -1,5 +1,5 @@
 <%= form_tag(tagging_history_index_path, method: "get") do %>
-  <div class="input-group" style="min-width: 30em;">
+  <div class="input-group top-space" style="min-width: 30em;">
     <%= select_tag :users,
                    options_from_collection_for_select(User.all, 'uid', 'name', params[:users]),
                    multiple: true,

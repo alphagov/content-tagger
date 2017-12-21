@@ -1,6 +1,6 @@
 <% (children || []).each do |child| %>
   <li>
-    <%= link_to child[:name], tagging_history_path(child[:content_id]) %>
+    <%= link_to child[:name], taxon_path(child[:content_id]) %>
     <span class='taxon-size-bar'
           style='width: <%= page.taxonomy_size.bar_width_percentage(child[:size]) %>%'>
       <%= child[:size] %>
