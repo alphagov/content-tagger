@@ -15,10 +15,16 @@ RSpec.describe Taxonomy::UpdateTaxon do
   describe '.call' do
     context 'with a valid taxon form' do
       it 'publishes the document via the publishing API' do
-        expect(Services.publishing_api).to receive(:put_content)
-        expect(Services.publishing_api).to receive(:patch_links)
+        stub_any_publishing_api_put_content
+        stub_any_publishing_api_patch_links
 
-        expect { publish }.to_not raise_error
+        publish
+
+        assert_publishing_api_put_content(@taxon.content_id)
+        assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            parent_taxons: ['guid'],
+                                            associated_taxons: ['1234'],
+                                          })
       end
     end
 
@@ -26,18 +32,14 @@ RSpec.describe Taxonomy::UpdateTaxon do
       before { @taxon.parent = "" }
 
       it "patches the links hash with an empty array" do
-        expect(Services.publishing_api).to receive(:put_content)
-        expect(Services.publishing_api)
-          .to receive(:patch_links)
-          .with(
-            @taxon.content_id,
-            links: {
-              parent_taxons: [],
-              associated_taxons: ['1234'],
-            }
-          )
+        stub_any_publishing_api_put_content
+        stub_any_publishing_api_patch_links
 
-        expect { publish }.to_not raise_error
+        publish
+        assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            parent_taxons: [],
+                                            associated_taxons: ['1234'],
+                                          })
       end
     end
 
@@ -45,18 +47,14 @@ RSpec.describe Taxonomy::UpdateTaxon do
       before { @taxon.associated_taxons = [] }
 
       it "patches the links hash with an empty array" do
-        expect(Services.publishing_api).to receive(:put_content)
-        expect(Services.publishing_api)
-          .to receive(:patch_links)
-          .with(
-            @taxon.content_id,
-            links: {
-              parent_taxons: ['guid'],
-              associated_taxons: [],
-            }
-          )
+        stub_any_publishing_api_put_content
+        stub_any_publishing_api_patch_links
 
-        expect { publish }.to_not raise_error
+        publish
+        assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            parent_taxons: ['guid'],
+                                            associated_taxons: [],
+                                          })
       end
     end
 
@@ -64,18 +62,14 @@ RSpec.describe Taxonomy::UpdateTaxon do
       before { @taxon.associated_taxons = nil }
 
       it "patches the links hash with an empty array" do
-        expect(Services.publishing_api).to receive(:put_content)
-        expect(Services.publishing_api)
-          .to receive(:patch_links)
-          .with(
-            @taxon.content_id,
-            links: {
-              parent_taxons: ['guid'],
-              associated_taxons: [],
-            }
-          )
+        stub_any_publishing_api_put_content
+        stub_any_publishing_api_patch_links
 
-        expect { publish }.to_not raise_error
+        publish
+        assert_publishing_api_patch_links(@taxon.content_id, links: {
+                                            parent_taxons: ['guid'],
+                                            associated_taxons: [],
+                                          })
       end
     end
 
@@ -93,7 +87,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
 
       it 'raises an error with a generic message and notifies GovukError if it is not a base path conflict' do
-        allow(Services.publishing_api).to receive(:lookup_content_id).and_return(nil)
+        publishing_api_has_lookups('')
         expect(GovukError).to receive(:notify).with(error)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
@@ -102,6 +96,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
 
       it 'raises an error with a specific message if it is a base path conflict' do
+        publishing_api_has_lookups(SecureRandom.uuid)
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(SecureRandom.uuid)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
