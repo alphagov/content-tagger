@@ -10,15 +10,13 @@ class GoogleUrlValidator < ActiveModel::Validator
 private
 
   def validate_host(uri, record)
-    unless uri.host == "docs.google.com"
-      record.errors[:url] << I18n.t('errors.invalid_hostname')
-    end
+    return if uri.host == "docs.google.com"
+    record.errors[:url] << I18n.t('errors.invalid_hostname')
   end
 
   def validate_path(uri, record)
-    unless uri.path =~ %r{spreadsheets\/d\/.+\/pub}
-      record.errors[:url] << I18n.t('errors.invalid_path')
-    end
+    return if uri.path.match?(%r{spreadsheets\/d\/.+\/pub})
+    record.errors[:url] << I18n.t('errors.invalid_path')
   end
 
   def validate_parameters(uri, record)

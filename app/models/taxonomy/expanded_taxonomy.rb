@@ -40,19 +40,13 @@ module Taxonomy
     end
 
     def parent_expansion
-      if instance_variable_defined?(:@parent_expansion)
-        @parent_expansion
-      else
-        raise ExpansionNotBuiltError
-      end
+      raise ExpansionNotBuiltError unless instance_variable_defined?(:@parent_expansion)
+      @parent_expansion
     end
 
     def child_expansion
-      if instance_variable_defined?(:@child_expansion)
-        @child_expansion
-      else
-        raise ExpansionNotBuiltError
-      end
+      raise ExpansionNotBuiltError unless instance_variable_defined?(:@child_expansion)
+      @child_expansion
     end
 
     class ExpansionNotBuiltError < StandardError
