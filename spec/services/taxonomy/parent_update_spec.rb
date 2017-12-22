@@ -19,4 +19,12 @@ RSpec.describe Taxonomy::ParentUpdate do
     ::Taxonomy::ParentUpdate.new.set_parent(content_id, parent_taxon_id: GovukTaxonomy::ROOT_CONTENT_ID, associated_taxon_ids: [associated_id])
     assert_publishing_api_patch_links(content_id, links: { parent_taxons: [], root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID], associated_taxons: [associated_id] })
   end
+  it 'filters empty parent_taxon_id' do
+    ::Taxonomy::ParentUpdate.new.set_parent(content_id, parent_taxon_id: "", associated_taxon_ids: [associated_id])
+    assert_publishing_api_patch_links(content_id, links: { root_taxon: [], parent_taxons: [], associated_taxons: [associated_id] })
+  end
+  it 'filters empty associated_ids' do
+    ::Taxonomy::ParentUpdate.new.set_parent(content_id, parent_taxon_id: "", associated_taxon_ids: [""])
+    assert_publishing_api_patch_links(content_id, links: { root_taxon: [], parent_taxons: [], associated_taxons: [] })
+  end
 end

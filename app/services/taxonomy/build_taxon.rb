@@ -34,7 +34,7 @@ module Taxonomy
   private
 
     def parent
-      links.dig('parent_taxons', 0)
+      links.dig('parent_taxons', 0) || links.dig('root_taxon', 0)
     end
 
     def associated_taxons

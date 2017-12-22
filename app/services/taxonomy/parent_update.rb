@@ -1,10 +1,11 @@
 module Taxonomy
   class ParentUpdate
-    def set_parent(content_id, parent_taxon_id: nil, associated_taxon_ids: nil)
+    def set_parent(content_id, parent_taxon_id: nil, associated_taxon_ids: [])
+      filtered_associated_ids = associated_taxon_ids.select(&:present?)
       if parent_taxon_id == GovukTaxonomy::ROOT_CONTENT_ID
-        update(content_id, parent_taxon_id, nil, associated_taxon_ids)
+        update(content_id, parent_taxon_id, nil, filtered_associated_ids)
       else
-        update(content_id, nil, parent_taxon_id, associated_taxon_ids)
+        update(content_id, nil, parent_taxon_id, filtered_associated_ids)
       end
     end
 

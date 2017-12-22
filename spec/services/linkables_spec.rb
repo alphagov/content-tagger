@@ -5,7 +5,7 @@ RSpec.describe Linkables do
 
   let(:linkables) { Linkables.new }
 
-  describe '.taxons' do
+  context 'there are linkables' do
     before do
       publishing_api_has_linkables(
         [
@@ -33,17 +33,30 @@ RSpec.describe Linkables do
         document_type: 'taxon'
       )
     end
+    describe '.taxons' do
+      it 'returns an array of hashes with only valid taxons' do
+        expect(linkables.taxons).to eq(
+          [%w[Valid-1! valid-1], %w[Valid-2! valid-2]]
+        )
+      end
 
-    it 'returns an array of hashes with only valid taxons' do
-      expect(linkables.taxons).to eq(
-        [%w[Valid-1! valid-1], %w[Valid-2! valid-2]]
-      )
+      it 'filters out excluded IDs' do
+        expect(linkables.taxons(exclude_ids: 'valid-2')).to eq(
+          [%w[Valid-1! valid-1]]
+        )
+      end
     end
-
-    it 'filters out excluded IDs' do
-      expect(linkables.taxons(exclude_ids: 'valid-2')).to eq(
-        [%w[Valid-1! valid-1]]
-      )
+    describe '.taxons_including_root' do
+      it 'returns an array of hashes with only valid taxons including root' do
+        expect(linkables.taxons_including_root).to eq(
+          [['Root of the taxonomy', GovukTaxonomy::ROOT_CONTENT_ID], %w[Valid-1! valid-1], %w[Valid-2! valid-2]]
+        )
+      end
+      it 'filters out excluded IDs' do
+        expect(linkables.taxons_including_root(exclude_ids: 'valid-2')).to eq(
+          [['Root of the taxonomy', GovukTaxonomy::ROOT_CONTENT_ID], %w[Valid-1! valid-1]]
+        )
+      end
     end
   end
 

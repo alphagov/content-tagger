@@ -21,7 +21,7 @@ module Taxonomy
       Services.publishing_api.put_content(content_id, payload)
       ::Taxonomy::ParentUpdate.new.set_parent(content_id,
                                               parent_taxon_id: parent,
-                                              associated_taxon_ids: associated_taxons)
+                                              associated_taxon_ids: associated_taxons || [])
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422
       # error code, we do a lookup to see if a content item with the slug

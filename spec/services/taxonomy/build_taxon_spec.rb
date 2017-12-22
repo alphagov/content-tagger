@@ -104,6 +104,23 @@ RSpec.describe Taxonomy::BuildTaxon do
       end
     end
 
+    context 'root taxon' do
+      before do
+        publishing_api_has_links(
+          content_id: content_id,
+          links: {
+            topics: [],
+            parent_taxons: [],
+            root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
+          }
+        )
+      end
+
+      it 'sets the parent to the root taxon id' do
+        expect(taxon.parent).to eq(GovukTaxonomy::ROOT_CONTENT_ID)
+      end
+    end
+
     context 'with an invalid taxon' do
       before do
         publishing_api_does_not_have_item(content_id)
