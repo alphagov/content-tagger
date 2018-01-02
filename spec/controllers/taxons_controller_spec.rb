@@ -130,20 +130,24 @@ RSpec.describe TaxonsController, type: :controller do
   describe "#restore" do
     it "sends a request to Publishing API to mark the taxon as 'draft'" do
       taxon = build(:taxon, publication_state: "unpublished")
-      payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
-      links = {
-        links: {
-          parent_taxons: ['guid'],
-          associated_taxons: ['1234'],
+
+      Timecop.freeze do
+        payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+        links = {
+          links: {
+            parent_taxons: ['guid'],
+            associated_taxons: ['1234'],
+          }
         }
-      }
 
-      publishing_api_has_item(payload.merge(content_id: taxon.content_id))
-      publishing_api_has_links(links.merge(content_id: taxon.content_id))
-      stub_publishing_api_put_content(taxon.content_id, payload)
-      stub_publishing_api_patch_links(taxon.content_id, links.to_json)
+        publishing_api_has_item(payload.merge(content_id: taxon.content_id))
+        publishing_api_has_links(links.merge(content_id: taxon.content_id))
+        stub_publishing_api_put_content(taxon.content_id, payload)
+        stub_publishing_api_patch_links(taxon.content_id, links.to_json)
 
-      post :restore, params: { taxon_id: taxon.content_id }
+        post :restore, params: { taxon_id: taxon.content_id }
+      end
+
       expect(WebMock).to have_requested(:put, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}")
       expect(WebMock).to have_requested(:patch, "https://publishing-api.test.gov.uk/v2/links/#{taxon.content_id}")
       expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}/publish")
