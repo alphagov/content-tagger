@@ -343,6 +343,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    timecop (0.9.1)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
     uglifier (4.1.2)
@@ -406,6 +407,7 @@ DEPENDENCIES
   simple_form (~> 3.2, >= 3.2.1)
   simplecov
   simplecov-rcov
+  timecop
   uglifier (~> 4.1)
   web-console
   webmock
