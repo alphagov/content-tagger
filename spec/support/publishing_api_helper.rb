@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ModuleLength
 module PublishingApiHelper
   def stub_empty_bulk_taxons_lookup
     url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
