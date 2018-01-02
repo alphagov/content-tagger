@@ -15,7 +15,7 @@ class Taxon
   include ActiveModel::Model
 
   validates_presence_of :title, :description, :internal_name, :path_slug
-  validates_presence_of :path_prefix, if: -> { parent.present? }
+  validates_presence_of :path_prefix, if: -> { parent.present? && parent != GovukTaxonomy::ROOT_CONTENT_ID }
   validates :path_slug, format: { with: %r{\A[A-z0-9\-]+\z}, message: "path must not contain /" }
   validates_with CircularDependencyValidator
 

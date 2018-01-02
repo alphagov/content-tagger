@@ -12,10 +12,10 @@ module TaxonomyHelper
   end
 
   def stub_draft_taxonomy_branch
-    content_id = GovukTaxonomy::ROOT_CONTENT_ID
+    root_content_id = GovukTaxonomy::ROOT_CONTENT_ID
 
     draft_root_taxons = {
-      'root_taxons' => [
+      'level_one_taxons' => [
         {
           'content_id' => valid_taxon_uuid,
           'title' => draft_taxon_title
@@ -31,17 +31,10 @@ module TaxonomyHelper
 
     root_taxon_expanded_links = {}
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{content_id}?with_drafts=false")
-      .to_return(status: 200, body: {}.to_json)
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{content_id}")
-      .to_return(status: 200, body: { expanded_links: draft_root_taxons }.to_json)
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{valid_taxon_uuid}")
-      .to_return(status: 200, body: root_taxon_content.to_json)
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{valid_taxon_uuid}")
-      .to_return(status: 200, body: root_taxon_expanded_links.to_json)
+    publishing_api_has_expanded_links({ content_id: root_content_id }, with_drafts: false)
+    publishing_api_has_expanded_links(content_id: root_content_id, expanded_links: draft_root_taxons)
+    publishing_api_has_item(root_taxon_content)
+    publishing_api_has_expanded_links(content_id: valid_taxon_uuid, expanded_links: root_taxon_expanded_links)
   end
 
   def stub_tag_content(content_id, success: true)

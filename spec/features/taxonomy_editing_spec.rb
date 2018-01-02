@@ -68,6 +68,7 @@ RSpec.feature "Taxonomy editing" do
       .with(
         body: {
           links: {
+            root_taxon: [],
             parent_taxons: ["ID-1"],
             associated_taxons: array_including("ID-2", "ID-3")
           }

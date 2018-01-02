@@ -64,13 +64,6 @@ Rails.application.routes.draw do
 
   resources :taxonomies, only: %i[show], param: :content_id
 
-  resources :branches, only: %i[index] do
-    collection do
-      get 'edit_all'
-      put 'update_all'
-    end
-  end
-
   resources :tagging_history, only: %i[index show]
 
   if Rails.env.development?

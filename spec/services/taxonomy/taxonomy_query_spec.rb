@@ -1,5 +1,8 @@
 require 'rails_helper'
+require 'gds_api/test_helpers/content_store'
+
 include Taxonomy
+include ::GdsApi::TestHelpers::ContentStore
 
 RSpec.describe Taxonomy::TaxonomyQuery do
   def query
@@ -7,12 +10,12 @@ RSpec.describe Taxonomy::TaxonomyQuery do
   end
   describe '#root_taxons' do
     it 'returns an empty array' do
-      expect(Services.content_store).to receive(:content_item).with('/').and_return no_taxons
+      content_store_has_item('/', no_taxons.to_json, draft: true)
       expect(query.root_taxons).to be_empty
     end
 
     it 'returns root taxons' do
-      expect(Services.content_store).to receive(:content_item).with('/').and_return root_taxons
+      content_store_has_item('/', root_taxons.to_json, draft: true)
       expect(query.root_taxons)
         .to match_array [{ 'content_id' => 'rrrr_aaaa', 'base_path' => '/taxons/root_taxon_a' },
                          { 'content_id' => 'rrrr_bbbb', 'base_path' => '/taxons/root_taxon_b' }]
@@ -21,17 +24,17 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
   describe '#child_taxons' do
     it 'returns an empty array' do
-      expect(Services.content_store).to receive(:content_item).with('/taxons/root_taxon').and_return no_taxons
+      content_store_has_item('/taxons/root_taxon', no_taxons.to_json, draft: true)
       expect(query.child_taxons('/taxons/root_taxon')).to be_empty
     end
     it 'returns an single level of taxons' do
-      expect(Services.content_store).to receive(:content_item).with('/taxons/root_taxon').and_return single_level_child_taxons('rrrr', 'aaaa', 'bbbb')
+      content_store_has_item('/taxons/root_taxon', single_level_child_taxons('rrrr', 'aaaa', 'bbbb').to_json, draft: true)
       expect(query.child_taxons('/taxons/root_taxon'))
         .to match_array [{ 'content_id' => 'aaaa', 'base_path' => '/taxons/aaaa', 'parent_content_id' => 'rrrr' },
                          { 'content_id' => 'bbbb', 'base_path' => '/taxons/bbbb', 'parent_content_id' => 'rrrr' }]
     end
     it 'returns multiple levels of taxons' do
-      expect(Services.content_store).to receive(:content_item).with('/taxons/root_taxon').and_return multi_level_child_taxons
+      content_store_has_item('/taxons/root_taxon', multi_level_child_taxons.to_json, draft: true)
       expect(query.child_taxons('/taxons/root_taxon'))
         .to match_array [{ 'content_id' => 'aaaa', 'base_path' => '/root_taxon/taxon_a', 'parent_content_id' => 'rrrr' },
                          { 'content_id' => 'aaaa_1111', 'base_path' => '/root_taxon/taxon_1', 'parent_content_id' => 'aaaa' },
@@ -76,11 +79,13 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
     context 'there are root taxons and one level of children' do
       before :each do
-        allow(Services.content_store).to receive(:content_item).with('/').and_return root_taxons
-        allow(Services.content_store).to receive(:content_item).with('/taxons/root_taxon_a')
-                                           .and_return single_level_child_taxons('root_taxon_a', 'child_a_1', 'child_a_2')
-        allow(Services.content_store).to receive(:content_item).with('/taxons/root_taxon_b')
-                                           .and_return single_level_child_taxons('root_taxon_b', 'child_b_1', 'child_b_2')
+        content_store_has_item('/', root_taxons.to_json, draft: true)
+        content_store_has_item('/taxons/root_taxon_a',
+                               single_level_child_taxons('root_taxon_a', 'child_a_1', 'child_a_2').to_json,
+                               draft: true)
+        content_store_has_item('/taxons/root_taxon_b',
+                               single_level_child_taxons('root_taxon_b', 'child_b_1', 'child_b_2'),
+                               draft: true)
       end
 
       it 'returns root taxons in the first array' do
@@ -100,9 +105,8 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
     context 'there are root taxons and two levels of children' do
       before :each do
-        allow(Services.content_store).to receive(:content_item).with('/').and_return root_taxon
-        allow(Services.content_store).to receive(:content_item).with('/taxons/root_taxon')
-                                           .and_return multi_level_child_taxons
+        content_store_has_item('/', root_taxon.to_json, draft: true)
+        content_store_has_item('/taxons/root_taxon', multi_level_child_taxons.to_json, draft: true)
       end
       it 'returns three levels' do
         expect(query.taxons_per_level.size).to eq(3)
@@ -165,7 +169,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       "base_path" => "/",
       "content_id" => "hhhh",
       "links" => {
-        "root_taxons" => [
+        "level_one_taxons" => [
           {
             "base_path" => "/taxons/root_taxon_a",
             "content_id" => "rrrr_aaaa"
@@ -182,7 +186,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
   def root_taxon
     {
       "links" => {
-        "root_taxons" => [
+        "level_one_taxons" => [
           {
             "base_path" => "/taxons/root_taxon",
             "content_id" => "rrrr"

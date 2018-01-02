@@ -17,7 +17,7 @@ module Taxonomy
     end
 
     def taxons_for_select
-      Linkables.new.taxons(exclude_ids: taxon.content_id)
+      Linkables.new.taxons_including_root(exclude_ids: taxon.content_id)
     end
 
     def show_visibilty_checkbox?

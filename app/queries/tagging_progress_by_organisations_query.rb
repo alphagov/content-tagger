@@ -54,13 +54,7 @@ private
       start: 0,
       aggregate_primary_publishing_organisation: '0,scope:all_filters',
       filter_primary_publishing_organisation: organisations,
-      filter_part_of_taxonomy_tree: root_taxon_content_ids,
+      filter_part_of_taxonomy_tree: Taxonomy::LevelOneTaxonsRetrieval.new.get.map { |t| t['content_id'] },
     ).to_h.dig("aggregates", "primary_publishing_organisation", "options")
-  end
-
-  def root_taxon_content_ids
-    GovukTaxonomy::Branches.new.all.map do |root_taxon|
-      root_taxon['content_id']
-    end
   end
 end

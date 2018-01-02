@@ -128,10 +128,9 @@ module Taxonomy
 
     def build_child_expansion_for_home_page
       @child_expansion = home_page_linked_content_item.tap do |node|
-        expanded_links = Services.publishing_api.get_expanded_links(GovukTaxonomy::ROOT_CONTENT_ID)
-        expanded_links.dig('expanded_links', 'root_taxons').each do |root_taxon_hash|
+        LevelOneTaxonsRetrieval.new.get.each do |level_one_taxon|
           node << GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
-            content_id: root_taxon_hash['content_id'],
+            content_id: level_one_taxon['content_id'],
             publishing_api: Services.publishing_api
           )
         end

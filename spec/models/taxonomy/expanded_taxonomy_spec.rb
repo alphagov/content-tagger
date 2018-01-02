@@ -46,7 +46,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
     publishing_api_has_expanded_links(
       content_id: GovukTaxonomy::ROOT_CONTENT_ID,
       expanded_links: {
-        root_taxons: [apples]
+        level_one_taxons: [apples]
       },
     )
 

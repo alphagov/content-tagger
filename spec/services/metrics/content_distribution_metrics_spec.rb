@@ -1,12 +1,16 @@
 require 'rails_helper'
 
+require 'rails_helper'
+require 'gds_api/test_helpers/content_store'
+
+include ::GdsApi::TestHelpers::ContentStore
+
 module Metrics
   RSpec.describe ContentDistributionMetrics do
     describe '#level_taggings' do
       before :each do
-        allow(Services.content_store).to receive(:content_item).with('/').and_return root_taxon
-        allow(Services.content_store).to receive(:content_item).with('/taxons/root_taxon')
-                                           .and_return child_taxons
+        content_store_has_item('/', root_taxon.to_json, draft: true)
+        content_store_has_item('/taxons/root_taxon', child_taxons.to_json, draft: true)
 
         allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: ['root_id']))
                                       .and_return content_items_enum(5)
@@ -38,7 +42,7 @@ module Metrics
       def root_taxon
         {
           "links" => {
-            "root_taxons" => [
+            "level_one_taxons" => [
               {
                 "base_path" => "/taxons/root_taxon"
               }
