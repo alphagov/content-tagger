@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module DataExport
   class ContentExport
     CONTENT_BASE_FIELDS = %w[base_path content_id document_type first_published_at locale publishing_app title description details].freeze
