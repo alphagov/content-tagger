@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module Taxonomy
   class ExpandedTaxonomy
     def initialize(content_id)
