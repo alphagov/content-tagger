@@ -1,4 +1,4 @@
-desc "Run govuk-lint on files changed since origin/master"
+desc "Run govuk-lint on all files"
 task "lint" do
-  system "govuk-lint-ruby --diff"
+  system "govuk-lint-ruby"
 end
