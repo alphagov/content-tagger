@@ -247,7 +247,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def then_i_see_the_project_has_been_deleted
-    expect(page).to have_content 'You have sucessfully deleted the project'
+    expect(page).to have_content 'You have successfully deleted the project'
     expect(page).not_to have_content 'project title'
   end
 

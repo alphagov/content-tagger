@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     project.destroy!
-    redirect_to projects_path, success: 'You have sucessfully deleted the project'
+    redirect_to projects_path, success: 'You have successfully deleted the project'
   end
 
 private
