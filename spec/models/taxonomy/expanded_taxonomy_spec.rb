@@ -24,7 +24,13 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   end
 
   # parent taxons
-  let(:food) { fake_taxon("Food") }
+  let(:food) do
+    fake_taxon("Food").merge(
+      "links" => {
+        "root_taxon" => [GovukTaxonomy::ROOT_CONTENT_ID]
+      }
+  )
+  end
   let(:fruits) do
     fake_taxon("Fruits").merge(
       "links" => {
@@ -40,8 +46,48 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   let(:bramley) { fake_taxon("Bramley") }
   let(:cox) { fake_taxon("Cox") }
 
+  context 'A child and parent taxon, not attached to the root taxon' do
+    before :each do
+      @rootless_parent = fake_taxon("Rootless Parent")
+      @rootless_child = fake_taxon("Rootless Child")
+
+      publishing_api_has_item(@rootless_parent)
+      publishing_api_has_item(@rootless_child)
+
+      publishing_api_has_expanded_links(
+        content_id: @rootless_parent["content_id"],
+        expanded_links: {
+          child_taxons: [@rootless_child],
+        },
+      )
+
+      publishing_api_has_expanded_links(
+        content_id: @rootless_child["content_id"],
+        expanded_links: {
+          parent_taxons: [@rootless_parent],
+        },
+      )
+    end
+
+    describe 'Rootless taxonomies' do
+      describe 'Build a taxonomy where the selected ("root") taxon is the child' do
+        it 'Only contains the parent taxon' do
+          taxonomy = Taxonomy::ExpandedTaxonomy.new(@rootless_child['content_id']).build
+          expect(taxonomy.parent_expansion.children.map(&:content_id)).to eq([@rootless_parent['content_id']])
+        end
+      end
+      describe 'Build a taxonomy where the selected ("root") taxon is the parent' do
+        it 'has no parents' do
+          taxonomy = Taxonomy::ExpandedTaxonomy.new(@rootless_parent['content_id']).build
+          expect(taxonomy.parent_expansion.children).to be_empty
+        end
+      end
+    end
+  end
+
   before do
     publishing_api_has_item(home_page)
+    publishing_api_has_item(food)
 
     publishing_api_has_expanded_links(
       content_id: GovukTaxonomy::ROOT_CONTENT_ID,

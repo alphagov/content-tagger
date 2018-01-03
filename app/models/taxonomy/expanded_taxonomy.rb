@@ -11,7 +11,7 @@ module Taxonomy
         build_child_expansion_for_home_page
       else
         build_child_expansion
-        @parent_expansion.tree.last << home_page_linked_content_item
+        @parent_expansion.tree.last << home_page_linked_content_item if attached_to_root?(@parent_expansion.tree.last.content_id)
       end
       self
     end
@@ -60,6 +60,10 @@ module Taxonomy
 
     def root_content_item
       @root_content_item ||= Services.publishing_api.get_content(@content_id).to_h
+    end
+
+    def attached_to_root?(content_id)
+      Services.publishing_api.get_content(content_id).dig('links', 'root_taxon').present?
     end
 
     def expand_parent_nodes(start_node:, parent:)

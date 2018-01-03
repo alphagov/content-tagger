@@ -6,7 +6,11 @@ RSpec.describe "Viewing taxons" do
   let(:fruits) do
     content_item_with_details(
       "Fruits",
-      other_fields: { document_type: "homepage" }
+      other_fields: { document_type: "taxon" }
+    ).merge(
+      "links" => {
+        "root_taxon" => [GovukTaxonomy::ROOT_CONTENT_ID]
+      }
     )
   end
   let(:apples) { taxon_with_details("Apples") }
