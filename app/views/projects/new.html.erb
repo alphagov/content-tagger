@@ -4,25 +4,25 @@
 <div class="row">
   <div class="col-md-8">
     <%= simple_form_for form, url: projects_path do |f| %>
-        <%= f.input :name, input_html: { class: 'form-control' },
-                    label: 'Name',
-                    hint: 'Name of the new project.' %>
+      <%= f.input :name, input_html: { class: 'form-control' },
+                  label: 'Name',
+                  hint: 'Name of the new project.' %>
 
-        <%= f.input :taxonomy_branch, input_html: { class: 'form-control' },
-                    label: 'Branch of GOV.UK taxonomy',
-                    collection: form.taxonomy_branches_for_select %>
+      <%= f.input :taxonomy_branch, input_html: { class: 'form-control' },
+                  label: 'Branch of GOV.UK taxonomy',
+                  collection: form.taxonomy_branches_for_select %>
 
-        <%= f.input :remote_url, input_html: { class: 'form-control' },
-                    label: 'Spreadsheet URL',
-                    hint: 'Spreadsheet URL with the contents of the project. Required columns: url, title and description.' %>
+      <%= f.input :remote_url, input_html: { class: 'form-control' },
+                  label: 'Spreadsheet URL',
+                  hint: 'Spreadsheet URL with the contents of the project. Required columns: url, title and description.' %>
 
-        <%= f.input :bulk_tagging_enabled, input_html: { class: 'form-control' },
-                    label: 'Bulk tagging',
-                    hint: 'Enable the bulk tagging interface for this project?',
-                    as: :boolean,
-                    checked_value: true %>
+      <%= f.input :bulk_tagging_enabled, input_html: { class: 'form-control' },
+                  label: 'Bulk tagging',
+                  hint: 'Enable the bulk tagging interface for this project?',
+                  as: :boolean,
+                  checked_value: true %>
 
-        <%= f.submit 'New Project', class: "btn btn-lg btn-success" %>
+      <%= f.submit 'New Project', class: "btn btn-lg btn-success" %>
     <% end %>
   </div>
   <div class="col-md-4">
