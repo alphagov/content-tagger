@@ -1,4 +1,4 @@
-<div data-module="base-path-preview">
+<div data-module="base-path-preview" data-root-content-id="<%= GovukTaxonomy::ROOT_CONTENT_ID %>">
   <%= f.input :parent, collection: page.taxons_for_select,
     input_html: { class: 'js-parent-taxon form-control', include_blank: true } %>
 
