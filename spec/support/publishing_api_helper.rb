@@ -7,7 +7,7 @@ module PublishingApiHelper
 
   def stub_bulk_taxons_lookup(content_ids, taxons)
     url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
-    body = { content_ids: content_ids }
+    body = { content_ids: array_including(content_ids) }
     response_hash = content_ids.each_with_object({}) do |content_id, obj|
       obj[content_id] = { "links" => { "taxons" => taxons } }
     end

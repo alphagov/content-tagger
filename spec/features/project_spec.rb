@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature "Projects", type: :feature do
-  include RemoteCsvHelper
   include TaxonomyHelper
   include PublishingApiHelper
 
@@ -13,10 +12,20 @@ RSpec.feature "Projects", type: :feature do
 
   scenario "creating a new project" do
     given_there_is_a_remote_spreadsheet
+    and_the_publishing_api_can_find_the_content_items_in_the_remote_spreadsheet
     and_there_is_a_draft_taxonomy_branch
     when_i_create_a_new_project
     when_i_visit_the_project_index_page
     then_i_can_see_my_new_project_in_the_list
+  end
+
+  scenario "creating a project with content items that have already been imported" do
+    given_there_is_a_remote_spreadsheet
+    and_the_publishing_api_can_find_the_content_items_in_the_remote_spreadsheet
+    and_there_is_a_draft_taxonomy_branch
+    and_one_of_the_content_items_has_already_been_imported
+    when_i_create_a_new_project
+    then_i_see_an_duplicate_content_error_message
   end
 
   scenario "deleting an existing project" do
@@ -35,6 +44,7 @@ RSpec.feature "Projects", type: :feature do
 
   scenario "creating a new project with bulk-tagging" do
     given_there_is_a_remote_spreadsheet
+    and_the_publishing_api_can_find_the_content_items_in_the_remote_spreadsheet
     and_there_is_a_draft_taxonomy_branch
     when_i_create_a_new_project_with_bulk_tagging
     and_i_click_my_new_projects_name_in_the_project_list
@@ -161,11 +171,31 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def given_there_is_a_remote_spreadsheet
-    stub_remote_csv
+    stub_request(:get, 'http://example.com/sheet.csv').to_return(body: <<~CSV)
+      url,title,description
+      https://www.gov.uk/vat-rates,VAT Rates,Description
+      https://www.gov.uk/passport-fees,Passport Fees,Description
+    CSV
   end
 
   def and_there_is_a_draft_taxonomy_branch
     stub_draft_taxonomy_branch
+  end
+
+  def and_the_publishing_api_can_find_the_content_items_in_the_remote_spreadsheet
+    publishing_api_has_lookups(
+      '/vat-rates' => 'f838c22a-b2aa-49be-bd95-153f593293a3',
+      '/passport-fees' => '8b59b474-9775-4366-97ee-97a66740411c'
+    )
+  end
+
+  def and_one_of_the_content_items_has_already_been_imported
+    create(
+      :project_content_item,
+      title: 'VAT Rates',
+      url: 'https://www.gov.uk/vat-rates',
+      content_id: 'f838c22a-b2aa-49be-bd95-153f593293a3'
+    )
   end
 
   def when_i_create_a_new_project
@@ -173,8 +203,7 @@ RSpec.feature "Projects", type: :feature do
     click_link 'Add new project'
     fill_in 'new_project_form_name', with: 'my_project'
     select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
-    fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
-    allow(LookupContentIdWorker).to receive(:perform_async)
+    fill_in 'new_project_form_remote_url', with: 'http://example.com/sheet.csv'
     click_on 'New Project'
   end
 
@@ -184,16 +213,12 @@ RSpec.feature "Projects", type: :feature do
     click_link 'Add new project'
     fill_in 'new_project_form_name', with: @project_name
     select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
-    fill_in 'new_project_form_remote_url', with: 'http://www.example.com/my_csv'
+    fill_in 'new_project_form_remote_url', with: 'http://example.com/sheet.csv'
     check 'Bulk tagging'
-    allow(LookupContentIdWorker).to receive(:perform_async)
     click_on 'New Project'
 
-    content_item = create(
-      :project_content_item, title: "Foo", project_id: Project.first.id
-    )
     taxons = [SecureRandom.uuid]
-    stub_bulk_taxons_lookup([content_item.content_id], taxons)
+    stub_bulk_taxons_lookup(ProjectContentItem.pluck(:content_id), taxons)
     stub_draft_taxonomy_branch
   end
 
@@ -246,8 +271,13 @@ RSpec.feature "Projects", type: :feature do
     expect(page).to have_content 'my_project'
   end
 
+  def then_i_see_an_duplicate_content_error_message
+    expect(page).to have_content 'Project creation failed. The spreadsheet contains content that may have already been imported'
+    expect(page).to have_content 'https://www.gov.uk/vat-rates'
+  end
+
   def then_i_see_the_project_has_been_deleted
-    expect(page).to have_content 'You have sucessfully deleted the project'
+    expect(page).to have_content 'You have successfully deleted the project'
     expect(page).not_to have_content 'project title'
   end
 

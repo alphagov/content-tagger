@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
 
   def create
     form = NewProjectForm.new(new_project_params)
-    if form.valid? && form.create
+    if form.create
       redirect_to projects_path
     else
       render :new, locals: { form: form }
@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     project.destroy!
-    redirect_to projects_path, success: 'You have sucessfully deleted the project'
+    redirect_to projects_path, success: 'You have successfully deleted the project'
   end
 
 private

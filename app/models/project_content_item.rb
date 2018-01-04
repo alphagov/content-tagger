@@ -6,6 +6,8 @@ class ProjectContentItem < ActiveRecord::Base
     missing_topic: 2,
   }
 
+  validates :content_id, uniqueness: { allow_blank: true }
+
   attr_accessor :taxons
 
   def base_path

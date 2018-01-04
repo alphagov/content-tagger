@@ -18,20 +18,23 @@ class NewProjectForm
 
   def create
     return false unless valid?
+
     csv = RemoteCsv.new(remote_url)
     ProjectBuilder.call(
-      name: name,
-      taxonomy_branch_content_id: taxonomy_branch,
-      content_item_attributes_enum: csv.to_enum,
-      bulk_tagging_enabled: bulk_tagging_enabled
+      content_item_attributes: csv.rows_with_headers,
+      project_attributes: {
+        name: name,
+        taxonomy_branch: taxonomy_branch,
+        bulk_tagging_enabled: bulk_tagging_enabled
+      }
     )
-  rescue URI::InvalidURIError,
-         ActiveRecord::RecordInvalid,
-         Errno::ECONNREFUSED,
-         CSV::MalformedCSVError,
-         ActiveModel::UnknownAttributeError,
-         SocketError => ex
-    errors[:remote_url] << ex.message
+
+    true
+  rescue RemoteCsv::ParsingError, ActiveModel::UnknownAttributeError => e
+    errors[:remote_url] << e.message
+    false
+  rescue ProjectBuilder::DuplicateContentItemsError => e
+    errors[:base] << [e.message, e.conflicting_items_urls]
     false
   end
 end

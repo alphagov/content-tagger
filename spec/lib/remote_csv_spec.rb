@@ -1,17 +1,45 @@
 require "rails_helper"
 
-RSpec.describe RemoteCsv do
-  include RemoteCsvHelper
+RSpec.describe RemoteCsv, "#rows_with_headers" do
+  let(:csv_url) { "http://example.com/sheet.csv" }
 
-  subject { described_class.new(RemoteCsvHelper::CSV_URL) }
+  it "returns an array of hashes" do
+    stub_request(:get, csv_url).to_return(body: <<~CSV.delete(' '))
+      url,     title,     description
+      url_one, title_one, description_one
+      url_two, title_two, description_two
+    CSV
 
-  describe "#to_enum" do
-    it "yields for each row of the CSV" do
-      stub_remote_csv
-      result = subject.to_enum.map do |row|
-        RemoteCsvHelper::CSV_HEADERS.map { |header| row[header] }
-      end
-      expect(result).to eql RemoteCsvHelper::CSV_ROWS
-    end
+    expect(RemoteCsv.new(csv_url).rows_with_headers).to eq [
+      {
+        'url' => 'url_one',
+        'title' => 'title_one',
+        'description' => 'description_one'
+      },
+      {
+        'url' => 'url_two',
+        'title' => 'title_two',
+        'description' => 'description_two'
+      },
+    ]
+  end
+
+  it "raises an error when the URI is invalid" do
+    expect { RemoteCsv.new("not a URL").rows_with_headers }
+      .to raise_error RemoteCsv::ParsingError, "URI::InvalidURIError: bad URI(is not URI?): not a URL"
+  end
+
+  it "raises an error when the connection failed" do
+    stub_request(:get, csv_url).to_timeout
+
+    expect { RemoteCsv.new(csv_url).rows_with_headers }
+      .to raise_error RemoteCsv::ParsingError, "Net::OpenTimeout: execution expired"
+  end
+
+  it "raises an error when the CSV is malformed" do
+    stub_request(:get, csv_url).to_return(body: "1,\"23\"4\"5\", 6")
+
+    expect { RemoteCsv.new(csv_url).rows_with_headers }
+      .to raise_error RemoteCsv::ParsingError, "CSV::MalformedCSVError: Missing or stray quote in line 1"
   end
 end
