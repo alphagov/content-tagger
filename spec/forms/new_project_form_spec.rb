@@ -64,12 +64,7 @@ RSpec.describe NewProjectForm, '#create' do
     form = NewProjectForm.new(valid_params)
 
     expect(form.create).to eq(false)
-    expect(form.errors[:base]).to eq [
-      [
-        "Project creation failed. The spreadsheet contains content that may have already been imported",
-        ["https://www.gov.uk/path"]
-      ]
-    ]
+    expect(form.errors[:base]).to include [/project was not created/, ["https://www.gov.uk/path"]]
   end
 end
 
