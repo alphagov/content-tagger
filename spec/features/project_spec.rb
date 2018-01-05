@@ -272,7 +272,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def then_i_see_an_duplicate_content_error_message
-    expect(page).to have_content 'Project creation failed. The spreadsheet contains content that may have already been imported'
+    expect(page).to have_content 'The project was not created'
     expect(page).to have_content 'https://www.gov.uk/vat-rates'
   end
 

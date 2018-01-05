@@ -34,7 +34,14 @@ class ProjectBuilder
     end
 
     def message
-      'Project creation failed. The spreadsheet contains content that may have already been imported'
+      <<~MSG
+        The project was not created because the spreadsheet contains content
+        that has already been imported to other projects.
+
+        To resolve this, remove the following rows from the spreadsheet before
+        creating the project again. Please note that it may take Google sheets
+        up to 5 minutes for the changes to be republished to the CSV format.
+      MSG
     end
   end
 end
