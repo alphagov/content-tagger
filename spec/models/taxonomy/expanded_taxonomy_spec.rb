@@ -24,13 +24,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   end
 
   # parent taxons
-  let(:food) do
-    fake_taxon("Food").merge(
-      "links" => {
-        "root_taxon" => [GovukTaxonomy::ROOT_CONTENT_ID]
-      }
-  )
-  end
+  let(:food) { fake_taxon("Food") }
   let(:fruits) do
     fake_taxon("Fruits").merge(
       "links" => {
@@ -93,6 +87,13 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       content_id: GovukTaxonomy::ROOT_CONTENT_ID,
       expanded_links: {
         level_one_taxons: [apples]
+      },
+    )
+
+    publishing_api_has_expanded_links(
+      content_id: food['content_id'],
+      expanded_links: {
+        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID]
       },
     )
 

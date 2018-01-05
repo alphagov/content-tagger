@@ -63,7 +63,7 @@ module Taxonomy
     end
 
     def attached_to_root?(content_id)
-      Services.publishing_api.get_content(content_id).dig('links', 'root_taxon').present?
+      Services.publishing_api.get_expanded_links(content_id).dig('expanded_links', 'root_taxon').present?
     end
 
     def expand_parent_nodes(start_node:, parent:)
