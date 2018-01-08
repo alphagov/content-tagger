@@ -5,7 +5,6 @@ RSpec.describe PermissionChecker do
   let(:user) { instance_double(User, has_permission?: false) }
 
   context "when the current_user has no special permissions" do
-    it { is_expected.not_to have_permission(:user_can_access_application?) }
     it { is_expected.not_to have_permission(:user_can_administer_taxonomy?) }
     it { is_expected.not_to have_permission(:user_can_access_tagathon_tools?) }
   end
@@ -18,7 +17,6 @@ RSpec.describe PermissionChecker do
         .and_return(true)
     end
 
-    it { is_expected.to have_permission(:user_can_access_application?) }
     it { is_expected.to have_permission(:user_can_administer_taxonomy?) }
     it { is_expected.to have_permission(:user_can_access_tagathon_tools?) }
   end
@@ -31,7 +29,6 @@ RSpec.describe PermissionChecker do
         .and_return(true)
     end
 
-    it { is_expected.to have_permission(:user_can_access_application?) }
     it { is_expected.not_to have_permission(:user_can_administer_taxonomy?) }
     it { is_expected.to have_permission(:user_can_access_tagathon_tools?) }
   end

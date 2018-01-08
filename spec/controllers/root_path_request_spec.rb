@@ -18,10 +18,10 @@ RSpec.describe "Root Path", type: :request do
   end
 
   describe "as an unprivileged user" do
-    it "denies access" do
+    it "redirects to 'Taxons'" do
       login_as create(:user)
       get root_path
-      expect(response.code).to eql "403"
+      expect(response).to redirect_to taxons_path
     end
   end
 end
