@@ -42,6 +42,7 @@ RSpec.feature 'Bulk publishing', type: :feature do
   end
 
   def when_i_click_confirm_publish
+    stub_any_publishing_api_publish
     click_button 'Confirm publish'
   end
 
