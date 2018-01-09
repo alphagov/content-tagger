@@ -1,4 +1,4 @@
-<%= display_header title: t("views.taxons.#{params[:action]}.title"), breadcrumbs: [t('navigation.taxons')] do %>
+<%= display_header title: t("views.taxons.#{params[:action]}.title"), breadcrumbs: ['Taxons'] do %>
   <% if user_can_administer_taxonomy? %>
     <%= link_to new_taxon_path, class: 'btn btn-default' do %>
       <i class="glyphicon glyphicon-plus"></i>
