@@ -20,14 +20,16 @@
   <li role="presentation" class="<%= current_page?(trash_taxons_path) ? "active" : nil%>"><%= link_to "Deleted", trash_taxons_path(q: page.query) %></li>
 </ul>
 
-<div class="lead">
-  <%= t "views.taxons.#{params[:action]}.explain" %>
-</div>
-
 <%= simple_form_for :taxon_search, url: '', method: :get do |f| %>
   <div class="form-group">
     <%= f.input :query,
-      input_html: { type: :text, class: 'form-control', value: page.query, name: 'q' },
+      input_html: {
+        type: :text,
+        class: 'form-control',
+        value: page.query,
+        name: 'q',
+        placeholder: t("views.taxons.index.search_placeholder")
+      },
       label: false %>
     <%= f.submit "Search", class: "btn btn-md btn-success" %>
   </div>
