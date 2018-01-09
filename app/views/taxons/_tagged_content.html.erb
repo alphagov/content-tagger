@@ -16,14 +16,16 @@
         <tr>
           <td><%= link_to content_item["title"], website_url(content_item["base_path"]) %></td>
           <td><%= content_item["document_type"].humanize %></td>
-          <td>
-            <%=
+          <% if user_can_administer_taxonomy? %>
+            <td>
+              <%=
               link_to(
                 t('views.taxons.edit_tagging'),
                 tagging_url(content_item["content_id"])
               )
-            %>
-          </td>
+              %>
+            </td>
+          <% end %>
           <td>
             <%=
               link_to(
