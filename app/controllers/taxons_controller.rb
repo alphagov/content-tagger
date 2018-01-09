@@ -4,7 +4,7 @@ class TaxonsController < ApplicationController
 
   before_action(
     :ensure_user_can_administer_taxonomy!,
-    except: %i[index drafts trash show visualisation_data tagged_content]
+    except: %i[index drafts trash show visualisation_data tagged_content download]
   )
 
   def index
