@@ -25,13 +25,13 @@
     <%= f.input :query,
       input_html: {
         type: :text,
-        class: 'form-control',
+        class: 'form-control input-lg',
         value: page.query,
         name: 'q',
         placeholder: t("views.taxons.index.search_placeholder")
       },
       label: false %>
-    <%= f.submit "Search", class: "btn btn-md btn-success" %>
+    <%= f.submit "Search", class: "btn btn-lg btn-success" %>
   </div>
 <% end %>
 
