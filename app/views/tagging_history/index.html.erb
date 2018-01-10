@@ -23,7 +23,7 @@
         <td>
           <% if link_change[:source] %>
             <%= link_to link_change[:source][:title],
-                        tagging_path(content_id: link_change[:source][:content_id]) %>
+                        website_url(link_change[:source][:base_path]) %>
           <% else %>
             An unknown document
           <% end %>

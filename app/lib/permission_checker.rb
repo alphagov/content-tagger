@@ -6,10 +6,6 @@ class PermissionChecker
     @user = user
   end
 
-  def user_can_access_application?
-    gds_editor? || tagathon_participant?
-  end
-
   def user_can_administer_taxonomy?
     gds_editor?
   end

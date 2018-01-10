@@ -105,7 +105,7 @@ RSpec.feature "Tagging History", type: :feature do
       if link_change['source']
         expect(tr).to have_link(
           link_change['source']['title'],
-          href: tagging_path(link_change['source']['content_id'])
+          href: website_url(link_change['source']['base_path'])
         )
       else
         expect(tr).to have_text 'unknown document'
@@ -136,7 +136,7 @@ RSpec.feature "Tagging History", type: :feature do
     page.all('tbody tr').zip(link_changes_for_an_individual_taxon).each do |tr, link_change|
       expect(tr).to have_link(
         link_change['source']['title'],
-        href: tagging_path(link_change['source']['content_id'])
+        href: website_url(link_change['source']['base_path'])
       )
     end
   end
@@ -146,7 +146,7 @@ RSpec.feature "Tagging History", type: :feature do
       if link_change['source']
         expect(tr).to have_link(
           link_change['source']['title'],
-          href: tagging_path(link_change['source']['content_id'])
+          href: website_url(link_change['source']['base_path'])
         )
       else
         expect(tr).to have_text('unknown document')
@@ -205,5 +205,9 @@ RSpec.feature "Tagging History", type: :feature do
       3,
       target: { content_id: individual_taxon[:content_id] }
     )
+  end
+
+  def website_url(base_path)
+    Plek.new.website_root + base_path
   end
 end

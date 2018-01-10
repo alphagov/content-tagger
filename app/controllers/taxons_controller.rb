@@ -2,10 +2,9 @@
 class TaxonsController < ApplicationController
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
 
-  before_action :ensure_user_can_use_application!
   before_action(
     :ensure_user_can_administer_taxonomy!,
-    except: %i[index drafts trash show visualisation_data tagged_content]
+    except: %i[index drafts trash show visualisation_data tagged_content download]
   )
 
   def index

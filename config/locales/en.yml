@@ -63,7 +63,7 @@ en:
     taxons:
       index:
         title: Taxons
-        explain: Search for a taxon to see its place in the taxonomy, edit the taxon or move its content
+        search_placeholder: Search for taxons by title, base path or internal name...
       drafts:
         title: Draft
         explain: Search drafts
