@@ -26,14 +26,14 @@ module Metrics
             }
           ).to_return(body: JSON.dump(total: 500))
 
-        @root_taxons = FactoryGirl.build_list(:linkable_taxon_hash, 2)
+        level_one_taxons = FactoryGirl.build_list(:linkable_taxon_hash, 2)
 
         stub_request(:get, "#{Plek.find('rummager')}/search.json")
           .with(
             query: {
               count: 0,
               debug: 'include_withdrawn',
-              filter_part_of_taxonomy_tree: @root_taxons.map { |x| x[:content_id] },
+              filter_part_of_taxonomy_tree: level_one_taxons.map { |x| x[:content_id] },
               reject_content_store_document_type: blacklist
             }
           ).to_return(body: JSON.dump(total: 400))
@@ -41,7 +41,7 @@ module Metrics
         publishing_api_has_expanded_links(
           content_id: GovukTaxonomy::ROOT_CONTENT_ID,
           expanded_links: {
-            level_one_taxons: @root_taxons
+            level_one_taxons: level_one_taxons
           }
         )
         publishing_api_has_expanded_links(

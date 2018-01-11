@@ -3,8 +3,8 @@ namespace :export_data do
     desc "Export all taxons to file"
     task export: :environment do
       query = Taxonomy::TaxonomyQuery.new
-      root_taxons = query.root_taxons
-      result = root_taxons + root_taxons.flat_map { |t| query.child_taxons(t['base_path']) }
+      level_one_taxons = query.level_one_taxons
+      result = level_one_taxons + level_one_taxons.flat_map { |t| query.child_taxons(t['base_path']) }
 
       open('tmp/taxons.json', 'w') do |f|
         f << JSON.dump(result)

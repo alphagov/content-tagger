@@ -14,7 +14,7 @@ module TaxonomyHelper
   def stub_draft_taxonomy_branch
     root_content_id = GovukTaxonomy::ROOT_CONTENT_ID
 
-    draft_root_taxons = {
+    draft_level_one_taxons = {
       'level_one_taxons' => [
         {
           'content_id' => valid_taxon_uuid,
@@ -32,7 +32,7 @@ module TaxonomyHelper
     root_taxon_expanded_links = {}
 
     publishing_api_has_expanded_links({ content_id: root_content_id }, with_drafts: false)
-    publishing_api_has_expanded_links(content_id: root_content_id, expanded_links: draft_root_taxons)
+    publishing_api_has_expanded_links(content_id: root_content_id, expanded_links: draft_level_one_taxons)
     publishing_api_has_item(root_taxon_content)
     publishing_api_has_expanded_links(content_id: valid_taxon_uuid, expanded_links: root_taxon_expanded_links)
   end

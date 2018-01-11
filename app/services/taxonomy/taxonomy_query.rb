@@ -6,7 +6,7 @@ module Taxonomy
       @taxon_fields = (fields.map(&:to_s) + ['base_path']).uniq
     end
 
-    def root_taxons
+    def level_one_taxons
       taxons = get_content_hash('/').dig('links', 'level_one_taxons') || []
       taxons.map { |taxon| taxon.slice(*@taxon_fields) }
     end
@@ -18,7 +18,7 @@ module Taxonomy
     end
 
     def taxons_per_level
-      sibling_hashes = root_taxons.map { |h| get_content_hash(h['base_path']) }
+      sibling_hashes = level_one_taxons.map { |h| get_content_hash(h['base_path']) }
       recursive_taxons_per_level([], sibling_hashes)
     end
 
