@@ -8,15 +8,15 @@ RSpec.describe Taxonomy::TaxonomyQuery do
   def query
     TaxonomyQuery.new(%w[content_id base_path])
   end
-  describe '#root_taxons' do
+  describe '#level_one_taxons' do
     it 'returns an empty array' do
       content_store_has_item('/', no_taxons.to_json, draft: true)
-      expect(query.root_taxons).to be_empty
+      expect(query.level_one_taxons).to be_empty
     end
 
     it 'returns root taxons' do
-      content_store_has_item('/', root_taxons.to_json, draft: true)
-      expect(query.root_taxons)
+      content_store_has_item('/', level_one_taxons.to_json, draft: true)
+      expect(query.level_one_taxons)
         .to match_array [{ 'content_id' => 'rrrr_aaaa', 'base_path' => '/taxons/root_taxon_a' },
                          { 'content_id' => 'rrrr_bbbb', 'base_path' => '/taxons/root_taxon_b' }]
     end
@@ -79,7 +79,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
     context 'there are root taxons and one level of children' do
       before :each do
-        content_store_has_item('/', root_taxons.to_json, draft: true)
+        content_store_has_item('/', level_one_taxons.to_json, draft: true)
         content_store_has_item('/taxons/root_taxon_a',
                                single_level_child_taxons('root_taxon_a', 'child_a_1', 'child_a_2').to_json,
                                draft: true)
@@ -164,7 +164,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     }
   end
 
-  def root_taxons
+  def level_one_taxons
     {
       "base_path" => "/",
       "content_id" => "hhhh",
