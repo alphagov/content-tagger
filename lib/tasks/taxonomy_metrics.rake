@@ -20,7 +20,7 @@ namespace :metrics do
     task record_taxons_per_level_metrics: :environment do
       Statsd.logger = Logger.new(STDOUT)
 
-      Metrics::TaxonsPerLevelMetrics.new.record_all
+      Metrics::TaxonsPerLevelMetrics.new.count_taxons_per_level
     end
 
     desc "Record all metrics about the Topic Taxonomy"
