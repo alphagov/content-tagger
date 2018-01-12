@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     uid { SecureRandom.uuid }
     name "Sammy Hobson"

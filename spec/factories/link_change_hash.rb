@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :link_change, class: Hash do
     sequence :id, 1, &:to_s
 

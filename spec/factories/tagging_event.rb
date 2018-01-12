@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :tagging_event do
     taxon_content_id { SecureRandom.uuid }
     taxon_title 'Test taxon title'

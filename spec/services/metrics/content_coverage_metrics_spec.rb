@@ -26,7 +26,7 @@ module Metrics
             }
           ).to_return(body: JSON.dump(total: 500))
 
-        level_one_taxons = FactoryGirl.build_list(:linkable_taxon_hash, 2)
+        level_one_taxons = FactoryBot.build_list(:linkable_taxon_hash, 2)
 
         stub_request(:get, "#{Plek.find('rummager')}/search.json")
           .with(
