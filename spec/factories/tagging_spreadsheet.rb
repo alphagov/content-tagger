@@ -2,7 +2,7 @@ require_relative '../support/google_sheet_helper.rb'
 
 include GoogleSheetHelper
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :tagging_spreadsheet, class: BulkTagging::TaggingSpreadsheet do
     url google_sheet_url(key: 'mykey', gid: 'mygid')
     user_uid { SecureRandom.uuid }

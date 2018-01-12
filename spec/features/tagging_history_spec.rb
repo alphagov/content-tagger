@@ -160,21 +160,21 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def link_changes_with_user_data
-    user = FactoryGirl.create(:user, name: 'Foo', organisation_slug: 'bar-baz')
-    @_link_changes_with_user_data ||= FactoryGirl.build_list(:link_change, 3, change: 'add', user_uid: user.uid)
+    user = FactoryBot.create(:user, name: 'Foo', organisation_slug: 'bar-baz')
+    @_link_changes_with_user_data ||= FactoryBot.build_list(:link_change, 3, change: 'add', user_uid: user.uid)
   end
 
   def added_link_changes
-    @_added_link_changes ||= FactoryGirl.build_list(:link_change, 3, change: 'add')
+    @_added_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'add')
   end
 
   def removed_link_changes
-    @_removed_link_changes ||= FactoryGirl.build_list(:link_change, 3, change: 'remove')
+    @_removed_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'remove')
   end
 
   def link_changes_with_missing_document_information
     @_link_changes_with_missing_document_information ||= begin
-      link_changes = FactoryGirl.build_list(:link_change, 3)
+      link_changes = FactoryBot.build_list(:link_change, 3)
       link_changes[0]['source'] = nil
       link_changes[1]['target'] = nil
       link_changes[2]['source'] = nil
@@ -185,7 +185,7 @@ RSpec.feature "Tagging History", type: :feature do
 
   def link_changes_for_an_individual_taxon_with_missing_source_document_information
     @_link_changes_with_missing_document_information ||= begin
-      link_changes = FactoryGirl.build_list(
+      link_changes = FactoryBot.build_list(
         :link_change,
         2,
         target: { content_id: individual_taxon[:content_id] }
@@ -200,7 +200,7 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def link_changes_for_an_individual_taxon
-    @_link_changes_for_an_individual_taxon ||= FactoryGirl.build_list(
+    @_link_changes_for_an_individual_taxon ||= FactoryBot.build_list(
       :link_change,
       3,
       target: { content_id: individual_taxon[:content_id] }

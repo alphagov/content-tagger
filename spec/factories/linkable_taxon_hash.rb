@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :linkable_taxon_hash, class: Hash do
     sequence :title, 1 do |n|
       "Title of Taxon #{n}"

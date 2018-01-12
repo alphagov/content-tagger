@@ -8,7 +8,7 @@ module AuthenticationControllerHelpers
   end
 
   def stub_user
-    @stub_user ||= FactoryGirl.create(:user, :gds_editor)
+    @stub_user ||= FactoryBot.create(:user, :gds_editor)
   end
 
   def login_as_stub_user
@@ -22,7 +22,7 @@ module AuthenticationFeatureHelpers
   end
 
   def stub_user
-    @stub_user ||= FactoryGirl.create(:user, :gds_editor)
+    @stub_user ||= FactoryBot.create(:user, :gds_editor)
   end
 
   def login_as_stub_user

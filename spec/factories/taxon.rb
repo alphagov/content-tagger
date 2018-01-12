@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :taxon do
     title 'A taxon'
     description 'A description'
