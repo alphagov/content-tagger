@@ -22,5 +22,12 @@ namespace :metrics do
 
       Metrics::TaxonsPerLevelMetrics.new.record_all
     end
+
+    desc "Record all metrics about the Topic Taxonomy"
+    task record_all: %i[
+      count_content_per_level
+      record_taxons_per_level_metrics
+      record_content_coverage_metrics
+    ]
   end
 end
