@@ -22,26 +22,6 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     end
   end
 
-  describe '#child_taxons' do
-    it 'returns an empty array' do
-      content_store_has_item('/taxons/root_taxon', no_taxons.to_json, draft: true)
-      expect(query.child_taxons('/taxons/root_taxon')).to be_empty
-    end
-    it 'returns an single level of taxons' do
-      content_store_has_item('/taxons/root_taxon', single_level_child_taxons('rrrr', 'aaaa', 'bbbb').to_json, draft: true)
-      expect(query.child_taxons('/taxons/root_taxon'))
-        .to match_array [{ 'content_id' => 'aaaa', 'base_path' => '/taxons/aaaa', 'parent_content_id' => 'rrrr' },
-                         { 'content_id' => 'bbbb', 'base_path' => '/taxons/bbbb', 'parent_content_id' => 'rrrr' }]
-    end
-    it 'returns multiple levels of taxons' do
-      content_store_has_item('/taxons/root_taxon', multi_level_child_taxons.to_json, draft: true)
-      expect(query.child_taxons('/taxons/root_taxon'))
-        .to match_array [{ 'content_id' => 'aaaa', 'base_path' => '/root_taxon/taxon_a', 'parent_content_id' => 'rrrr' },
-                         { 'content_id' => 'aaaa_1111', 'base_path' => '/root_taxon/taxon_1', 'parent_content_id' => 'aaaa' },
-                         { 'content_id' => 'aaaa_2222', 'base_path' => '/root_taxon/taxon_2', 'parent_content_id' => 'aaaa' }]
-    end
-  end
-
   describe '#content_tagged_to_taxons' do
     it 'returns an empty array' do
       expect(TaxonomyQuery.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])

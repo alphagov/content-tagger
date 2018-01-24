@@ -11,12 +11,6 @@ module Taxonomy
       taxons.map { |taxon| taxon.slice(*@taxon_fields) }
     end
 
-    def child_taxons(base_path)
-      root_content_hash = get_content_hash(base_path)
-      taxons = root_content_hash.dig('links', 'child_taxons') || []
-      recursive_child_taxons(taxons, root_content_hash['content_id'])
-    end
-
     def taxons_per_level
       sibling_hashes = level_one_taxons.map { |h| get_content_hash(h['base_path']) }
       recursive_taxons_per_level([], sibling_hashes)
@@ -30,14 +24,6 @@ module Taxonomy
     end
 
   private
-
-    def recursive_child_taxons(taxons, parent_content_id)
-      results = taxons.map { |taxon| taxon.slice(*@taxon_fields).merge('parent_content_id' => parent_content_id) }
-      results + taxons.flat_map do |taxon|
-        child_taxons = taxon.dig('links', 'child_taxons') || []
-        recursive_child_taxons(child_taxons, taxon['content_id'])
-      end
-    end
 
     def recursive_taxons_per_level(partial_results, sibling_hashes)
       return partial_results if sibling_hashes.empty?
