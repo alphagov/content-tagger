@@ -52,7 +52,7 @@ to the Topic Taxonomy. It also supports tagging individual pages.
 
 ### Dependencies
 
-- [alphagov/publishing-api](https://github.com/alphagov/publishing-api) - used to publish links
+- [alphagov/publishing-api](https://github.com/alphagov/publishing-api)
 
 ### Running the application
 
