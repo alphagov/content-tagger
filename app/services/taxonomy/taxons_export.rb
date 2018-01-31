@@ -13,12 +13,14 @@ module Taxonomy
       end
     end
 
+    puts "hello"
+    puts Services.publishing_api.get_content_items(document_type: 'taxon', per_page: 1000)["results"]
+
   private
 
     def taxons
       Services.publishing_api.get_content_items(
         document_type: 'taxon',
-        fields: COLUMNS,
         per_page: 1000,
       )["results"]
     end
