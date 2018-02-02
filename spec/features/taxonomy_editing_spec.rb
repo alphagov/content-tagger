@@ -245,6 +245,10 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def and_i_submit_the_create_form
+    # Before the taxon is created, we compare the old attributes with the new,
+    # to create a diff. In this instance, a previous version does not exist.
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .to_return(status: 404)
     # After the taxon is created we'll be redirected to the taxon's "view" page
     # which needs a bunch of API calls stubbed.
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
@@ -272,6 +276,10 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_internal_name, with: 'My Taxon'
     fill_in :taxon_path_slug, with: 'slug'
 
+    # Before the taxon is created, we compare the old attributes with the new,
+    # to create a diff. In this instance, a previous version does not exist.
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .to_return(status: 404)
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
@@ -286,6 +294,10 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_internal_name, with: 'My Taxon'
     fill_in :taxon_path_slug, with: 'slug'
 
+    # Before the taxon is created, we compare the old attributes with the new,
+    # to create a diff. In this instance, a previous version does not exist.
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .to_return(status: 404)
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})

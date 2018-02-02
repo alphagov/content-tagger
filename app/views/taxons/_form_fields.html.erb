@@ -41,3 +41,11 @@
     collection: page.taxons_for_select,
     placeholder: "Choose associated taxons...",
     input_html: { multiple: true, class: :select2 } %>
+
+<hr>
+
+<div class="form-group">
+  <label class="control-label" for="version_note">Version history note</label>
+  <%= text_area_tag :version_note, nil, class: 'form-control' %>
+  <p class="help-block">Displayed in Content Tagger</p>
+</div>

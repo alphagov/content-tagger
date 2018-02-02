@@ -27,7 +27,7 @@ class TaxonsController < ApplicationController
     taxon = Taxon.new taxon_params
 
     if taxon.valid?
-      Taxonomy::UpdateTaxon.call(taxon: taxon)
+      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:version_note])
       redirect_to taxon_path(taxon.content_id), success: t('controllers.taxons.create_success')
     else
       error_messages = taxon.errors.full_messages.join('; ')
@@ -69,7 +69,7 @@ class TaxonsController < ApplicationController
     taxon = Taxon.new taxon_params
 
     if taxon.valid?
-      Taxonomy::UpdateTaxon.call(taxon: taxon)
+      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:version_note])
 
       if params[:publish_taxon_on_save] == "true"
         Services.publishing_api.publish(taxon.content_id)
@@ -104,7 +104,7 @@ class TaxonsController < ApplicationController
   end
 
   def restore
-    Taxonomy::UpdateTaxon.call(taxon: taxon)
+    Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: 'Restore')
     redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.restore_success")
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     redirect_to trash_taxons_path, danger: e.message
