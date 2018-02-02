@@ -8,6 +8,10 @@
       View draft page: <%= link_to page.base_path, website_url(page.base_path, draft: true) %>
     <% end %>
   </div>
+
+  <%= link_to 'View version history',
+              taxon_version_history_path(page.taxon_content_id),
+              class: "btn btn-default" %>
 <% end %>
 
 <% unless page.unpublished? %>

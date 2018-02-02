@@ -61,6 +61,10 @@ class TaxonsController < ApplicationController
     render :tagged_content_page, locals: { page: Taxonomy::TaggedContentPage.new(taxon) }
   end
 
+  def version_history
+    render :version_history, locals: { page: Taxonomy::VersionHistoryPage.new(taxon) }
+  end
+
   def edit
     render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
   end
