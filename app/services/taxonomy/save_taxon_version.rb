@@ -10,6 +10,8 @@ module Taxonomy
     end
 
     def save
+      return if no_change_to_record
+
       Version.create(
         content_id: content_id,
         object_changes: taxon_changes,
@@ -22,8 +24,14 @@ module Taxonomy
     attr_reader :version_note, :taxon
     delegate :content_id, to: :taxon
 
+    def no_change_to_record
+      version_note.blank? && taxon_changes.blank?
+    end
+
     def taxon_changes
-      TaxonDiffBuilder.new(previous_item: previous_taxon, current_item: taxon).diff
+      @_taxon_changes ||= begin
+        TaxonDiffBuilder.new(previous_item: previous_taxon, current_item: taxon).diff
+      end
     end
 
     def previous_taxon

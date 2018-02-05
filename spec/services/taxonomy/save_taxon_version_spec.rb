@@ -79,6 +79,41 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
     )
   end
 
+  it 'does not saves a change when the old and new are the same' do
+    content_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+
+    previous_fields = {
+      content_id: content_id,
+      title: 'Business Tourism',
+      description: 'Send me a postcard',
+      base_path: '/business/tourism',
+      publication_state: 'draft',
+      document_type: 'taxon',
+      details: {
+        internal_name: 'Business Tourism [internal]',
+        notes_for_editors: '',
+      }
+    }
+
+    current_taxon = Taxon.new(
+      content_id: content_id,
+      path_prefix: 'business',
+      path_slug: 'tourism',
+      title: 'Business Tourism',
+      internal_name: 'Business Tourism [internal]',
+      description: 'Send me a postcard'
+    )
+
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
+      .to_return(body: previous_fields.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{content_id}")
+      .to_return(body: {}.to_json)
+
+    described_class.call(current_taxon, '')
+
+    expect(Version.count).to eq(0)
+  end
+
   it 'saves a restore event when the taxon is restored' do
     content_id = 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
 
