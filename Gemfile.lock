@@ -398,7 +398,7 @@ DEPENDENCIES
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 1.1)
   pg
-  plek (~> 2.0)
+  plek (~> 2.1)
   poltergeist
   pry-byebug
   rack-proxy
