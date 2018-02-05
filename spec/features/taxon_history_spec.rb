@@ -62,4 +62,8 @@ RSpec.feature 'Taxon history' do
     expect(page).to have_content '(#1) User research shows that the title was too generic'
     expect(page).to have_content 'title "Business" → "Business tax"'
   end
+
+  def and_there_will_not_be_an_empty_associated_taxon_change
+    expect(page).to_not have_content 'associated_taxons nil → [""]'
+  end
 end

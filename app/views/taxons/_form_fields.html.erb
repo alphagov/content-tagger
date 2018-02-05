@@ -40,7 +40,8 @@
 <%= f.input :associated_taxons,
     collection: page.taxons_for_select,
     placeholder: "Choose associated taxons...",
-    input_html: { multiple: true, class: :select2 } %>
+    input_html: { multiple: true, class: :select2 },
+    include_hidden: false %>
 
 <hr>
 
