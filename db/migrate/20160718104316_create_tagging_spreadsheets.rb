@@ -1,4 +1,4 @@
-class CreateTaggingSpreadsheets < ActiveRecord::Migration
+class CreateTaggingSpreadsheets < ActiveRecord::Migration[4.2]
   def change
     create_table :tagging_spreadsheets do |t|
       t.string :url, null: false

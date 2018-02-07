@@ -1,4 +1,4 @@
-class SetColumnsToNotNull < ActiveRecord::Migration
+class SetColumnsToNotNull < ActiveRecord::Migration[4.2]
   def change
     BulkTagging::TaggingSpreadsheet.delete_all
 

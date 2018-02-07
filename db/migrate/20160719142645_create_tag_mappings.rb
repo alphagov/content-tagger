@@ -1,4 +1,4 @@
-class CreateTagMappings < ActiveRecord::Migration
+class CreateTagMappings < ActiveRecord::Migration[4.2]
   def change
     create_table :tag_mappings do |t|
       t.references :tagging_spreadsheet, index: true, foreign_key: true
