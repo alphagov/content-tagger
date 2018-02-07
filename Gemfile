@@ -19,7 +19,7 @@ gem 'gds-sso', '~> 13.5'
 gem 'govuk_admin_template', '~> 6.5'
 gem 'govuk_sidekiq', '~> 3.0'
 gem 'govuk_taxonomy_helpers', '~> 0.1.1'
-gem 'plek', '~> 2.0'
+gem 'plek', '~> 2.1'
 
 group :development, :test do
   gem 'awesome_print'
