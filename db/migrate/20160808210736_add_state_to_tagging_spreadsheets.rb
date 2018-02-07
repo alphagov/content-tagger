@@ -1,4 +1,4 @@
-class AddStateToTaggingSpreadsheets < ActiveRecord::Migration
+class AddStateToTaggingSpreadsheets < ActiveRecord::Migration[4.2]
   def change
     # At this point in development we can just clear out all the spreadsheets
     # so we don't have to bother with setting an initial state.

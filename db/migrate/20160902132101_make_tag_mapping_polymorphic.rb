@@ -1,4 +1,4 @@
-class MakeTagMappingPolymorphic < ActiveRecord::Migration
+class MakeTagMappingPolymorphic < ActiveRecord::Migration[4.2]
   def change
     rename_column :tag_mappings, :tagging_spreadsheet_id, :tagging_source_id
     add_column :tag_mappings, :tagging_source_type, :string

@@ -1,4 +1,4 @@
-class ChangeExistingMessagesToAnArrayOnTagMappings < ActiveRecord::Migration
+class ChangeExistingMessagesToAnArrayOnTagMappings < ActiveRecord::Migration[4.2]
   def change
     BulkTagging::TagMapping.transaction do
       BulkTagging::TagMapping.all.each do |tag_mapping|

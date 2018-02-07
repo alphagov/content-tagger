@@ -1,4 +1,4 @@
-class UseSourceDescriptionForTagMigrations < ActiveRecord::Migration
+class UseSourceDescriptionForTagMigrations < ActiveRecord::Migration[4.2]
   def change
     remove_column :tag_migrations, :document_type, :string
     remove_column :tag_migrations, :source_base_path, :string
