@@ -1,5 +1,5 @@
 module Taxonomy
-  class VersionHistoryPage
+  class TaxonHistoryPage
     attr_reader :taxon
 
     def initialize(taxon)
@@ -7,7 +7,7 @@ module Taxonomy
     end
 
     def title
-      "Version history for #{taxon.title}"
+      "History for #{taxon.title}"
     end
 
     def version_history

@@ -38,7 +38,7 @@ RSpec.feature 'Taxon history' do
 
   def and_i_change_the_title_and_fill_the_version_note_field
     fill_in 'taxon_title', with: 'Business tax'
-    fill_in 'version_note', with: 'User research shows that the title was too generic'
+    fill_in 'internal_change_note', with: 'User research shows that the title was too generic'
   end
 
   def and_i_click_save
@@ -55,11 +55,12 @@ RSpec.feature 'Taxon history' do
   end
 
   def and_i_click_view_version_history
-    click_on 'View version history'
+    click_on 'View taxon history'
   end
 
   def then_i_will_see_the_version_history_on_the_taxon_page
-    expect(page).to have_content '(#1) User research shows that the title was too generic'
+    expect(page).to have_content '(#1)'
+    expect(page).to have_content 'internal_change_note User research shows that the title was too generic'
     expect(page).to have_content 'title "Business" → "Business tax"'
   end
 

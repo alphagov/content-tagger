@@ -27,7 +27,7 @@ class TaxonsController < ApplicationController
     taxon = Taxon.new taxon_params
 
     if taxon.valid?
-      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:version_note])
+      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:internal_change_note])
       redirect_to taxon_path(taxon.content_id), success: t('controllers.taxons.create_success')
     else
       error_messages = taxon.errors.full_messages.join('; ')
@@ -61,8 +61,8 @@ class TaxonsController < ApplicationController
     render :tagged_content_page, locals: { page: Taxonomy::TaggedContentPage.new(taxon) }
   end
 
-  def version_history
-    render :version_history, locals: { page: Taxonomy::VersionHistoryPage.new(taxon) }
+  def history
+    render :history, locals: { page: Taxonomy::TaxonHistoryPage.new(taxon) }
   end
 
   def edit
@@ -73,7 +73,7 @@ class TaxonsController < ApplicationController
     taxon = Taxon.new taxon_params
 
     if taxon.valid?
-      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:version_note])
+      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:internal_change_note])
 
       if params[:publish_taxon_on_save] == "true"
         Services.publishing_api.publish(taxon.content_id)
