@@ -1,0 +1,31 @@
+<%= display_header title: page.title,
+      breadcrumbs: [:taxons, link_to(page.taxon.title, taxon_path(page.taxon.content_id)), 'History'] %>
+
+<% page.version_history.each do |version| %>
+  <div class="well well-sm">
+    <p>
+      <%= version.created_at.to_s(:govuk_date) %>
+      <span class="text-muted">(#<%= version.number %>)</span>
+    </p>
+
+
+    <dl class="dl-horizontal">
+      <% if version.note.present? %>
+        <dt>
+          internal_change_note
+        </dt>
+        <dd>
+          <%= version.note %>
+        </dd>
+      <% end %>
+      <% version.changes.each do |attribute, (before, after)| %>
+        <dt>
+          <%= attribute %>
+        </dt>
+        <dd>
+          <code><%= before.inspect %></code> &rarr; <code><%= after.inspect %></code>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+<% end %>

@@ -4,11 +4,13 @@ RSpec.describe Taxonomy::UpdateTaxon do
   before do
     @taxon = Taxon.new(
       title: 'A Title',
+      document_type: 'taxon',
       description: 'Description',
       base_path: '/education/slug',
       parent: 'guid',
       associated_taxons: ['1234']
     )
+    allow(Taxonomy::SaveTaxonVersion).to receive(:call)
   end
   let(:publish) { described_class.call(taxon: @taxon) }
 

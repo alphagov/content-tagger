@@ -5,18 +5,23 @@ module Taxonomy
 
     class InvalidTaxonError < StandardError; end
 
-    def initialize(taxon:)
+    def initialize(taxon:, version_note:)
       @taxon = taxon
+      @version_note = version_note
     end
 
-    def self.call(taxon:, validate: true)
-      new(taxon: taxon).publish(validate: validate)
+    def self.call(taxon:, validate: true, version_note: nil)
+      new(taxon: taxon, version_note: version_note).publish(validate: validate)
     end
 
     def publish(validate: true)
       if validate && !taxon.valid?
         raise "Invalid Taxon passed into UpdateTaxon: #{taxon.errors.full_messages}"
       end
+
+      # We need to get a snapshot of the taxon, before the PUT request is made,
+      # so that we can compare the differences between the two versions.
+      Taxonomy::SaveTaxonVersion.call(taxon, @version_note)
 
       Services.publishing_api.put_content(content_id, payload)
       ::Taxonomy::ParentUpdate.new.set_parent(content_id,

@@ -40,4 +40,13 @@
 <%= f.input :associated_taxons,
     collection: page.taxons_for_select,
     placeholder: "Choose associated taxons...",
-    input_html: { multiple: true, class: :select2 } %>
+    input_html: { multiple: true, class: :select2 },
+    include_hidden: false %>
+
+<hr>
+
+<div class="form-group">
+  <label class="control-label" for="version_note">Internal change note</label>
+  <%= text_area_tag :internal_change_note, nil, class: 'form-control' %>
+  <p class="help-block">Displayed in Content Tagger</p>
+</div>
