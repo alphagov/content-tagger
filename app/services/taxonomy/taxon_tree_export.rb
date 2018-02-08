@@ -1,9 +1,18 @@
+require 'json'
+
 module Taxonomy
   class TaxonTreeExport
     attr_reader :taxon_content_id
 
     def initialize(content_id)
       @taxon_content_id = content_id
+    end
+
+    def build
+      taxonomy = expanded_taxon
+      taxonomy.build
+      flattened_taxonomy = flatten_taxonomy(taxonomy.child_expansion)
+      generate_json(flattened_taxonomy)
     end
 
     def expanded_taxon
@@ -52,6 +61,10 @@ module Taxonomy
     end
 
   private
+
+    def generate_json(taxonomy)
+      JSON.generate(taxonomy)
+    end
 
     def content_struct(content_id)
       OpenStruct.new(Services.publishing_api.get_content(content_id).to_h)
