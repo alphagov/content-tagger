@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '5.1.4'
 
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
+gem 'foreman', '~> 0.84', require: false
 gem 'hashdiff', '~> 0.3.7'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'kaminari', '~> 1.1'
