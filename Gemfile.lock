@@ -398,7 +398,7 @@ DEPENDENCIES
   headless
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 1.1)
-  pg
+  pg (~> 0.21)
   plek (~> 2.1)
   poltergeist
   pry-byebug
