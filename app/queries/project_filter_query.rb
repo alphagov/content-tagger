@@ -29,7 +29,7 @@ class ProjectFilterQuery
     when FILTER_TODO
       items = items
                 .todo
-                .order(id: :asc) # Retain the spreadsheet order
+                .reorder(id: :asc) # Retain the spreadsheet order
     when FILTER_FLAGGED
       items = items.flagged
     when FILTER_DONE
