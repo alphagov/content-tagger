@@ -19,4 +19,4 @@ RUN GOVUK_APP_DOMAIN=www.gov.uk GOVUK_APP_DOMAIN_EXTERNAL=www.gov.uk RAILS_ENV=p
 
 HEALTHCHECK CMD curl --silent --fail localhost:$PORT || exit 1
 
-CMD bash -c "bundle exec unicorn -p $PORT"
+CMD bundle exec foreman run web
