@@ -10,7 +10,7 @@ gem 'kaminari', '~> 1.1'
 gem 'pg'
 gem 'rack-proxy'
 gem 'sass-rails', '~> 5.0'
-gem 'select2-rails', '~> 3.5.9'
+gem 'select2-rails', '~> 4.0.3'
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
 gem 'uglifier', '~> 4.1'
 
