@@ -324,7 +324,7 @@ GEM
       activesupport
       sidekiq (>= 2.6)
       statsd-ruby (>= 1.1.0)
-    simple_form (3.5.0)
+    simple_form (3.5.1)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
     simplecov (0.15.1)
@@ -407,7 +407,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   select2-rails (~> 3.5.9)
-  simple_form (~> 3.2, >= 3.2.1)
+  simple_form (~> 3.5)
   simplecov
   simplecov-rcov
   timecop
