@@ -28,6 +28,7 @@ module Taxonomy
           { path: base_path, type: "exact" },
         ],
         update_type: "major",
+        phase: phase,
       }
     end
 
@@ -36,7 +37,7 @@ module Taxonomy
     attr_reader :taxon
     delegate(
       :base_path, :title, :description, :internal_name, :notes_for_editors,
-      :visible_to_departmental_editors,
+      :phase, :visible_to_departmental_editors,
       to: :taxon
     )
   end

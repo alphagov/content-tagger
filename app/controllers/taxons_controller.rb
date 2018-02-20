@@ -184,6 +184,7 @@ private
       :title,
       :description,
       :visible_to_departmental_editors,
+      :phase,
       :notes_for_editors,
       :parent,
       associated_taxons: [],

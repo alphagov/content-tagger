@@ -258,6 +258,7 @@ RSpec.feature "Taxonomy editing" do
         document_type: "taxon",
         details: { internal_name: "Newly created taxon" },
         publication_state: "published",
+        phase: 'live',
         title: "Newly created taxon",
       }.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})

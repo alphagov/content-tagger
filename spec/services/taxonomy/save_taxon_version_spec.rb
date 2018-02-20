@@ -6,7 +6,8 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
       path_slug: 'business',
       title: 'Business',
       internal_name: 'Business [internal]',
-      description: 'Business as usual'
+      description: 'Business as usual',
+      phase: 'beta'
     )
 
     publishing_api_does_not_have_item(taxon.content_id)
@@ -25,6 +26,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
         ["+", "internal_name", "Business [internal]"],
         ["+", "notes_for_editors", ""],
         ["+", "parent", nil],
+        ["+", "phase", "beta"],
         ["+", "title", "Business"]
       ],
     )
