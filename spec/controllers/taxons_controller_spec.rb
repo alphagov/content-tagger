@@ -98,7 +98,7 @@ RSpec.describe TaxonsController, type: :controller do
 
   describe '#bulk_publish' do
     it 'bulk publishes content' do
-      expect(Taxonomy::BulkUpdateTaxon).to receive(:call).with('123')
+      expect(Taxonomy::BulkPublishTaxon).to receive(:call).with('123')
       post :bulk_publish, params: { taxon_id: 123 }
       expect(response).to redirect_to(taxon_path(123))
     end

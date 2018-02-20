@@ -1,5 +1,5 @@
 module Taxonomy
-  class BulkUpdateTaxon
+  class BulkPublishTaxon
     def initialize(root_taxon_content_id)
       @root_taxon_content_id = root_taxon_content_id
     end

@@ -127,7 +127,7 @@ class TaxonsController < ApplicationController
   end
 
   def bulk_publish
-    Taxonomy::BulkUpdateTaxon.call(content_id)
+    Taxonomy::BulkPublishTaxon.call(content_id)
     redirect_to taxon_path(content_id), success: "The taxons will be published shortly"
   end
 
