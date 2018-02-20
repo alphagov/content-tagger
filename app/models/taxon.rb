@@ -6,6 +6,7 @@ class Taxon
     :path_prefix,
     :path_slug,
     :publication_state,
+    :phase,
     :document_type,
     :redirect_to,
     :associated_taxons

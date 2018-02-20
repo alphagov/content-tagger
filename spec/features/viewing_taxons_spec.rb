@@ -4,7 +4,7 @@ RSpec.describe "Viewing taxons" do
   include ContentItemHelper
 
   let(:fruits) do
-    content_item_with_details(
+    taxon_with_details(
       "Fruits",
       other_fields: { document_type: "taxon" }
     )

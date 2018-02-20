@@ -35,7 +35,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def given_there_are_taxons
-    @source_taxon = content_item_with_details(
+    @source_taxon = taxon_with_details(
       "Source taxon",
       other_fields: {
         document_type: 'taxon'
@@ -46,7 +46,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
       'content_id' => @source_taxon['content_id'],
       'publication_state' => 'live'
     }
-    @dest_taxon = content_item_with_details(
+    @dest_taxon = taxon_with_details(
       "Destination taxon",
       other_fields: {
         document_type: 'taxon'

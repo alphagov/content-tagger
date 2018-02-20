@@ -29,10 +29,16 @@
 
   <div class="panel panel-default top-space">
     <div class="panel-body">
-      State: <%= page.publication_state_name %>
-      <% if page.redirected? %>
-        (redirects to <%= page.redirect_to %>)
-      <% end %>
+      <p>
+        Phase: <%= page.taxon.phase %>
+      </p>
+
+      <p>
+        State: <%= page.publication_state_name %>
+        <% if page.redirected? %>
+          (redirects to <%= page.redirect_to %>)
+        <% end %>
+      </p>
     </div>
 
     <div class="panel-footer">

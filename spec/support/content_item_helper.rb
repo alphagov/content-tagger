@@ -1,5 +1,7 @@
 module ContentItemHelper
   def taxon_with_details(title, other_fields: {}, unpublished: false)
+    other_fields[:phase] = other_fields[:phase] || 'live'
+
     content_item_with_details(
       title,
       other_fields: other_fields.merge(document_type: "taxon"),
