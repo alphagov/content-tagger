@@ -42,6 +42,13 @@
     </div>
 
     <div class="panel-footer">
+      <% if !page.unpublished? %>
+        <p>
+          <%= link_to "Bulk update phase",
+                      taxon_confirm_bulk_update_path(page.taxon_content_id),
+                      class: 'btn btn-default' %>
+        </p>
+      <% end %>
       <% if page.taxon_deletable? && page.published? %>
         <%= link_to "Unpublish",
                     taxon_confirm_delete_path(page.taxon_content_id),

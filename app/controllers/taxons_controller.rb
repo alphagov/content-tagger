@@ -126,9 +126,20 @@ class TaxonsController < ApplicationController
     render :confirm_bulk_publish, locals: { page: Taxonomy::ShowPage.new(taxon) }
   end
 
+  def confirm_bulk_update
+    render :confirm_bulk_update, locals: { page: Taxonomy::ShowPage.new(taxon) }
+  end
+
   def bulk_publish
     Taxonomy::BulkPublishTaxon.call(content_id)
     redirect_to taxon_path(content_id), success: "The taxons will be published shortly"
+  end
+
+  def bulk_update
+    return unless params[:taxon_phase].in? %w[alpha beta live]
+
+    Taxonomy::BulkUpdateTaxon.new(content_id, phase: params[:taxon_phase]).bulk_update
+    redirect_to taxon_path(content_id), success: "The taxons will be updated shortly"
   end
 
   def publish

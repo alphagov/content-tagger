@@ -1,4 +1,5 @@
 <div class="taxonomy-tree">
+  <% unless local_assigns[:hide_parents] %>
   <div class="taxon-parents">
     <% page.taxonomy_tree.immediate_parents.each do |parent_node| %>
       <div class="parent-expansion">
@@ -18,6 +19,7 @@
       </div>
     <% end %>
   </div>
+  <% end %>
 
   <% has_parents = page.taxonomy_tree.immediate_parents.present? ? "taxon-focus--has-parents" : "" %>
   <% has_children = page.taxonomy_tree.immediate_children.present? ? "taxon-focus--has-children" : "" %>
