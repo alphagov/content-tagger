@@ -33,6 +33,34 @@ $red: #b10e1e;
   }
 }
 
+.state-label {
+  font-size: 14px;
+}
+
+.phase-label--alpha {
+  background-color: #D53880;
+}
+
+.phase-label--beta {
+  background-color: #F47738;
+}
+
+.phase-label--live {
+  background-color: $brand-success;
+}
+
+.state-label--draft {
+  background-color: #FFBF47
+}
+
+.state-label--published {
+  background-color: $brand-success;
+}
+
+.state-label--deleted  {
+  background-color: $gray-light;
+}
+
 // taxons page
 
 .nav.nav-tabs {

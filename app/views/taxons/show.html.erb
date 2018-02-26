@@ -30,11 +30,18 @@
   <div class="panel panel-default top-space">
     <div class="panel-body">
       <p>
-        Phase: <%= page.taxon.phase %>
+        Phase:
+        <span class="label label-default state-label phase-label--<%= page.taxon.phase %>">
+          <%= page.taxon.phase %>
+        </span>
       </p>
 
       <p>
-        State: <%= page.publication_state_name %>
+        State:
+        <span class="label label-default state-label state-label--<%= page.publication_state_name %>">
+          <%= page.publication_state_name %>
+        </span>
+
         <% if page.redirected? %>
           (redirects to <%= page.redirect_to %>)
         <% end %>
