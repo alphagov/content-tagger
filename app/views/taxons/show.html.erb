@@ -1,85 +1,146 @@
 <%= display_header title: page.title, breadcrumbs: [:taxons, page.taxon] %>
 
-<% if user_can_administer_taxonomy? %>
-  <div class='view-on-site'>
-    <% if page.published? %>
-      View on site: <%= link_to page.base_path, website_url(page.base_path) %>
-    <% elsif page.draft? %>
-      View draft page: <%= link_to page.base_path, website_url(page.base_path, draft: true) %>
-    <% end %>
-  </div>
+<table class="state-table add-bottom-margin">
+  <thead class="text-muted">
+    <tr>
+      <th>
+        state
+      </th>
+      <th>
+        phase
+      </th>
+      <th>
+        tagged
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span class="label state-label--<%= page.publication_state_name %>">
+          <%= page.publication_state_name %>
+        </span>
+      </td>
+      <td>
+        <span class="label phase-label--<%= page.taxon.phase %>">
+          <%= page.taxon.phase %>
+        </span>
+      </td>
+      <td>
+        <span class="label label-default">
+          <%= page.tagged.count %>
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <%= link_to 'View taxon history',
-              taxon_history_path(page.taxon_content_id),
-              class: "btn btn-default" %>
+<hr>
+
+<% if user_can_administer_taxonomy? %>
+  <p>
+    <% if page.published? %>
+      <%= link_to "View on GOV.UK", website_url(page.base_path) %>
+    <% elsif page.draft? %>
+      <%= link_to "View on GOV.UK", website_url(page.base_path, draft: true) %>
+    <% end %>
+
+    <% unless page.unpublished? %>
+      (<%= page.base_path %>)
+    <% end %>
+  </p>
 <% end %>
 
 <% unless page.unpublished? %>
-  <%= link_to I18n.t('views.taxons.tagged_content'),
-              taxon_tagged_content_path(page.taxon_content_id),
-              class: 'btn btn-default' %>
-
-  <span class="label label-default">
-    <%= page.tagged.count %>
-  </span>
+  <p>
+    <%= link_to I18n.t('views.taxons.tagged_content'),
+                taxon_tagged_content_path(page.taxon_content_id) %>
+  </p>
 <% end %>
 
 <% if user_can_administer_taxonomy? %>
-  <% unless page.unpublished? %>
-    <%= link_to I18n.t('views.taxons.edit'),
-                edit_taxon_path(page.taxon_content_id),
-                class: "btn btn-default" %>
-  <% end %>
+  <p>
+    <%= link_to 'View taxon change history', taxon_history_path(page.taxon_content_id) %>
+  </p>
 
-  <div class="panel panel-default top-space">
-    <div class="panel-body">
-      <p>
-        Phase:
-        <span class="label label-default state-label phase-label--<%= page.taxon.phase %>">
-          <%= page.taxon.phase %>
-        </span>
-      </p>
+  <p>
+    <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
+      <i class="glyphicon glyphicon-download-alt"></i>
+      <%= I18n.t('views.taxons.download_csv') %>
+    <% end %>
+  </p>
 
-      <p>
-        State:
-        <span class="label label-default state-label state-label--<%= page.publication_state_name %>">
-          <%= page.publication_state_name %>
-        </span>
-
-        <% if page.redirected? %>
-          (redirects to <%= page.redirect_to %>)
-        <% end %>
-      </p>
+  <div class="panel panel-default add-top-margin">
+    <div class="panel-heading">
+      <h2 class="panel-title">
+        Tasks
+      </h2>
     </div>
-
-    <div class="panel-footer">
-      <% if !page.unpublished? %>
-        <p>
-          <%= link_to "Bulk update phase",
-                      taxon_confirm_bulk_update_path(page.taxon_content_id),
-                      class: 'btn btn-default' %>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <p class="text-muted">
+          Tasks specific to this taxon only:
         </p>
+
+        <% unless page.unpublished? %>
+          <p>
+            <%= link_to I18n.t('views.taxons.edit'),
+                        edit_taxon_path(page.taxon_content_id),
+                        class: "btn btn-default" %>
+          </p>
+        <% end %>
+
+        <% if page.taxon_deletable? && page.published? %>
+          <p>
+            <%= link_to "Unpublish",
+                        taxon_confirm_delete_path(page.taxon_content_id),
+                        class: 'btn btn-danger add-top-margin' %>
+          </p>
+        <% elsif page.draft? %>
+          <p>
+            <%= link_to "Publish",
+                        taxon_confirm_publish_path(page.taxon_content_id),
+                        class: 'btn btn-default' %>
+          </p>
+
+          <p>
+            <%= link_to "Discard draft",
+                        taxon_confirm_discard_path(page.taxon_content_id),
+                        class: 'btn btn-danger add-top-margin' %>
+          </p>
+        <% elsif page.unpublished? %>
+          <p>
+            <%= link_to "Restore to draft",
+                        taxon_confirm_restore_path(page.taxon_content_id),
+                        class: 'btn btn-warning' %>
+          </p>
+        <% end %>
+      </li>
+
+      <% unless page.unpublished? %>
+      <li class="list-group-item">
+        <p class="text-muted">
+          Tasks for this taxon and its descendants:
+        </p>
+
+        <% if !page.unpublished? %>
+          <p>
+            <%= link_to "Change phase for this taxon and its children",
+                        taxon_confirm_bulk_update_path(page.taxon_content_id),
+                        class: 'btn btn-default' %>
+          </p>
+        <% end %>
+
+        <% if page.draft? %>
+          <p>
+            <%= link_to "Publish tree",
+                        taxon_confirm_bulk_publish_path(page.taxon_content_id),
+                        class: 'btn btn-default' %>
+          </p>
+        <% end %>
+      </li>
       <% end %>
-      <% if page.taxon_deletable? && page.published? %>
-        <%= link_to "Unpublish",
-                    taxon_confirm_delete_path(page.taxon_content_id),
-                    class: 'btn btn-danger' %>
-      <% elsif page.draft? %>
-        <%= link_to "Publish",
-                    taxon_confirm_publish_path(page.taxon_content_id),
-                    class: 'btn btn-default' %>
-        <%= link_to "Publish tree",
-                    taxon_confirm_bulk_publish_path(page.taxon_content_id),
-                    class: 'btn btn-default' %>
-        <%= link_to "Discard draft",
-                    taxon_confirm_discard_path(page.taxon_content_id),
-                    class: 'btn btn-danger' %>
-      <% elsif page.unpublished? %>
-        <%= link_to "Restore to draft",
-                    taxon_confirm_restore_path(page.taxon_content_id),
-                    class: 'btn btn-warning' %>
-      <% end %>
-    </div>
+    </ul>
   </div>
 <% end %>
 
@@ -87,33 +148,27 @@
   <% if page.associated_taxons.present? %>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <%= t('views.taxons.associated_taxons') %>
+        <h2 class="panel-title">
+          <%= t('views.taxons.associated_taxons') %>
+        </h2>
       </div>
-      <div class="panel-body">
-        <ul class="associated-taxons">
-          <% page.associated_taxons.each do |t| %>
-            <li>
-              <%= link_to t["title"], taxon_path(t["content_id"]) %>
-            </li>
-          <% end %>
-        </ul>
+
+      <div class="panel-body associated-taxons">
+        <% page.associated_taxons.each do |t| %>
+          <p>
+            <%= link_to t["title"], taxon_path(t["content_id"]) %>
+          </p>
+        <% end %>
       </div>
     </div>
   <% end %>
 
-  <% if user_can_administer_taxonomy? %>
-    <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
-      <i class="glyphicon glyphicon-download-alt"></i>
-      <%= I18n.t('views.taxons.download_csv') %>
-    <% end %>
-  <% end %>
-
-  <div class="btn-group pull-right taxonomy-visualisation-buttons"
+  <div class="btn-group add-top-margin taxonomy-visualisation-buttons"
        role="group"
        aria-label="Taxonomy visualisations">
     <% TaxonsController::VISUALISATIONS.each do |viz| %>
       <a href="<%= taxon_path(params[:id], viz: viz) %>"
-         class="btn btn-lg <%= viz == page.visualisation ? 'btn-primary' : 'btn-default' %>"
+         class="btn <%= viz == page.visualisation ? 'btn-primary' : 'btn-default' %>"
          role="button">
         <%= viz.titlecase %>
       </a>

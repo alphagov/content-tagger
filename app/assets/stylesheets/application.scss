@@ -33,8 +33,14 @@ $red: #b10e1e;
   }
 }
 
-.state-label {
-  font-size: 14px;
+.state-table {
+  th {
+    font-weight: normal;
+  }
+
+  tbody {
+    font-size: 36px;
+  }
 }
 
 .phase-label--alpha {
