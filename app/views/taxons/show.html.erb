@@ -112,6 +112,8 @@
   <% if page.visualisation.in? TaxonsController::VISUALISATIONS %>
     <%= render partial: page.visualisation, locals: { page: page } %>
   <% else %>
-    <h2>Unknown visualisation <%= page.visualisation %>
+    <p>
+      Unknown visualisation <%= page.visualisation %>
+    </p>
   <% end %>
 <% end %>
