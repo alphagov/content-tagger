@@ -55,7 +55,7 @@ RSpec.feature 'Taxon history' do
   end
 
   def and_i_click_view_version_history
-    click_on 'View taxon history'
+    click_on 'View taxon change history'
   end
 
   def then_i_will_see_the_version_history_on_the_taxon_page
