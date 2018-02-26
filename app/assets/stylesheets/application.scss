@@ -17,23 +17,6 @@ $red: #b10e1e;
   color: $red;
 }
 
-.view-on-site {
-  font-size: 20px;
-  margin-bottom: 10px;
-
-  a:after {
-    content: "\A0\A0\A0";
-    background: url("external-link.png") no-repeat right top;
-    display: inline-block;
-    line-height: 12px;
-    margin-left: 5px;
-  }
-
-  a:hover:after {
-    background-position: right -388px;
-  }
-}
-
 .explain {
   color: $gray;
 }
@@ -48,14 +31,6 @@ $red: #b10e1e;
   label {
     display: none;
   }
-}
-
-.left-space {
-  margin-left: 5px;
-}
-
-.top-space {
-  margin-top: 20px;
 }
 
 // taxons page

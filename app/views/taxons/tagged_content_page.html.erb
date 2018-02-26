@@ -19,7 +19,7 @@
               tagging_history_path(page.taxon_content_id),
               class: "btn btn-default"%>
 
-  <div class="panel panel-default top-space">
+  <div class="panel panel-default add-top-margin">
     <div class="panel-body">
       Total tagged pages: <%= page.tagged.count %>
     </div>
@@ -28,7 +28,7 @@
   <% if page.tagged.any? %>
     <%= render 'tagged_content', tagged: page.tagged %>
   <% else %>
-    <p class="no-content no-content-bordered top-space">
+    <p class="no-content no-content-bordered add-top-margin">
       No content tagged to this taxon
     </p>
   <% end %>
