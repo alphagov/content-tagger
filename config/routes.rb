@@ -9,11 +9,13 @@ Rails.application.routes.draw do
     get :history
     get :confirm_publish
     get :confirm_bulk_publish
+    get :confirm_bulk_update
     get :download_tagged
     get :visualisation_data
     get :download, on: :collection
     post :publish
     post :bulk_publish
+    post :bulk_update
     post :restore
     get :trash, on: :collection
     get :drafts, on: :collection

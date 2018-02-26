@@ -23,6 +23,7 @@ private
       description
       notes_for_editors
       associated_taxons
+      phase
     ].each_with_object({}) do |field, hash|
       hash[field] = taxon.send(field)
     end
