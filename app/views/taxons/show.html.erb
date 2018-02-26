@@ -18,6 +18,10 @@
   <%= link_to I18n.t('views.taxons.tagged_content'),
               taxon_tagged_content_path(page.taxon_content_id),
               class: 'btn btn-default' %>
+
+  <span class="label label-default">
+    <%= page.tagged.count %>
+  </span>
 <% end %>
 
 <% if user_can_administer_taxonomy? %>
