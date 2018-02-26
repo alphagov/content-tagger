@@ -7,7 +7,10 @@ module Taxonomy
 
     def bulk_update
       nested_tree.each do |taxon|
-        UpdateTaxonWorker.perform_async(taxon.content_id, update_payload(taxon))
+        UpdateTaxonWorker.perform_async(
+          taxon.content_id,
+          @attributes.slice(:phase)
+        )
       end
     end
 
@@ -19,16 +22,6 @@ module Taxonomy
           content_id: @root_taxon_content_id,
           publishing_api: Services.publishing_api
         )
-    end
-
-    def update_payload(taxon)
-      {
-        document_type: 'taxon',
-        publishing_app: 'content-tagger',
-        schema_name: 'taxon',
-        title: taxon.title,
-        phase: @attributes.fetch(:phase),
-      }
     end
   end
 end
