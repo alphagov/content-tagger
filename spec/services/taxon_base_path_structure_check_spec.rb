@@ -24,16 +24,9 @@ RSpec.describe TaxonBasePathStructureCheck, '#validate' do
     )
     checker.validate
 
-    expect(checker.invalid_taxons).to eq(
-      [
-        {
-          "base_path" => "/some-other-path/level-two",
-          "content_id" => "CONTENT-ID-LEVEL-TWO",
-          "title" => "Level Two",
-          "parent_content_id" => "CONTENT-ID-LEVEL-ONE"
-        }
-      ]
-    )
+    expect(checker.invalid_taxons.size).to eq(1)
+    expect(checker.invalid_taxons.last.base_path)
+      .to eq("/some-other-path/level-two")
   end
 
   it 'records invalid taxons that do not follow the base path structure' do
@@ -44,16 +37,9 @@ RSpec.describe TaxonBasePathStructureCheck, '#validate' do
     )
     checker.validate
 
-    expect(checker.invalid_taxons).to eq(
-      [
-        {
-          "base_path" => "/imported-topic/topic/level-one/level-two",
-          "content_id" => "CONTENT-ID-LEVEL-TWO",
-          "title" => "Level Two",
-          "parent_content_id" => "CONTENT-ID-LEVEL-ONE"
-        }
-      ]
-    )
+    expect(checker.invalid_taxons.size).to eq(1)
+    expect(checker.invalid_taxons.last.base_path)
+      .to eq("/imported-topic/topic/level-one/level-two")
   end
 
   it 'validates the whole tree even if the level one base path structure is incorrect' do
@@ -64,7 +50,8 @@ RSpec.describe TaxonBasePathStructureCheck, '#validate' do
     )
     checker.validate
 
-    expect(checker.invalid_taxons).to eq [{ "base_path" => "/level-one/taxon" }]
+    expect(checker.invalid_taxons.size).to eq(1)
+    expect(checker.invalid_taxons.last.base_path).to eq("/level-one/taxon")
     expect(checker.path_validation_output).to eq(
       [
         "❌ /level-one/taxon",
