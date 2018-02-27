@@ -3,7 +3,7 @@ class UpdateTaxonWorker
 
   def perform(content_id, attributes)
     taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
-    taxon.phase = attributes.with_indifferent_access.fetch(:phase)
+    taxon.assign_attributes(attributes)
 
     payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
     Services.publishing_api.put_content(content_id, payload)
