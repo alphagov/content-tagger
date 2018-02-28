@@ -45,6 +45,13 @@ RSpec.feature 'Bulk updating', type: :feature do
       }
     )
 
+    publishing_api_has_links(
+      content_id: @child_content_id,
+      links: {
+        parent: [@parent_content_id]
+      }
+    )
+
     publishing_api_has_expanded_links(
       content_id: @parent_content_id,
       expanded_links: {
