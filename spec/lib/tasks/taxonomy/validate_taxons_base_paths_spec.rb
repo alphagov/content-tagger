@@ -1,8 +1,13 @@
+# rubocop:disable Style/BlockDelimiters
+
 require 'rails_helper'
 require 'gds_api/test_helpers/content_store'
 
 RSpec.describe 'taxonomy:validate_taxons_base_paths' do
+  include ActiveSupport::Testing::TimeHelpers
   include ::GdsApi::TestHelpers::ContentStore
+  include PublishingApiHelper
+  include ContentItemHelper
   include RakeTaskHelper
 
   it 'outputs check as all-valid' do
@@ -16,8 +21,21 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     LOG
   end
 
-  it 'records invalid taxons that do not have the same level one prefix' do
+  it 'fixes paths that do not have the correct level one prefix' do
     content_store_has_tree_with_invalid_level_one_prefix
+
+    taxon_attributes = taxon_with_details(
+      'Level Two',
+      other_fields: {
+        content_id: 'CONTENT-ID-LEVEL-TWO',
+        base_path: '/some-other-path/level-two',
+        publication_state: 'draft',
+      }
+    )
+
+    publishing_api_has_item(taxon_attributes)
+    publishing_api_has_links(taxon_attributes.slice(:content_id))
+    stub_any_publishing_api_put_content
 
     expect {
       rake 'taxonomy:validate_taxons_base_paths'
@@ -25,13 +43,32 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
       ✅ /level-one
       ❌    ├── /some-other-path/level-two
       ------------------------------------
-      The following taxons do not follow the taxon URL structure:
+      The following taxons did not match the taxon URL structure. Attempting to fix this...
       CONTENT-ID-LEVEL-TWO /some-other-path/level-two
+        └─ /level-one/level-two
     LOG
+
+    assert_publishing_api_put_content(
+      taxon_attributes['content_id'],
+      request_json_includes(base_path: '/level-one/level-two')
+    )
   end
 
-  it 'records invalid taxons that do not follow the base path structure' do
+  it 'fixes paths that do not have the correct level one prefix' do
     content_store_has_tree_with_long_base_path_structure
+
+    taxon_attributes = taxon_with_details(
+      'Level Two',
+      other_fields: {
+        content_id: 'CONTENT-ID-LEVEL-TWO',
+        base_path: '/imported-topic/topic/level-one/level-two',
+        publication_state: 'draft',
+      }
+    )
+
+    publishing_api_has_item(taxon_attributes)
+    publishing_api_has_links(taxon_attributes.slice(:content_id))
+    stub_any_publishing_api_put_content
 
     expect {
       rake 'taxonomy:validate_taxons_base_paths'
@@ -39,12 +76,18 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
       ✅ /level-one
       ❌    ├── /imported-topic/topic/level-one/level-two
       ------------------------------------
-      The following taxons do not follow the taxon URL structure:
+      The following taxons did not match the taxon URL structure. Attempting to fix this...
       CONTENT-ID-LEVEL-TWO /imported-topic/topic/level-one/level-two
+        └─ /level-one/level-one-level-two
     LOG
+
+    assert_publishing_api_put_content(
+      taxon_attributes['content_id'],
+      request_json_includes(base_path: '/level-one/level-one-level-two')
+    )
   end
 
-  it 'validates the whole tree even if the level one base path structure is incorrect' do
+  it 'skips automatic fix for level one taxons' do
     content_store_has_tree_with_invalid_level_one_base_path
 
     expect {
@@ -53,8 +96,54 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
       ❌ /level-one/taxon
       ✅    ├── /level-one/level-two
       ------------------------------------
-      The following taxons do not follow the taxon URL structure:
-      CONTENT-ID-LEVEL-ONE /level-one/taxon
+      The following taxons did not match the taxon URL structure. Attempting to fix this...
+      CONTENT-ID-LEVEL-ONE /level-one/taxon: skipping
+    LOG
+  end
+
+  it 'captures errors that might occur during updates' do
+    content_store_has_tree_with_invalid_level_one_prefix
+
+    taxon_attributes = taxon_with_details(
+      'Level Two',
+      other_fields: {
+        content_id: 'CONTENT-ID-LEVEL-TWO',
+        base_path: '/some-other-path/level-two',
+        publication_state: 'draft',
+      }
+    )
+
+    publishing_api_has_item(taxon_attributes)
+    publishing_api_has_links(taxon_attributes.slice(:content_id))
+    stub_any_publishing_api_put_content
+      .to_return(status: 422, body:
+        {
+          error: {
+            code: 422,
+            message: "base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en",
+            fields: {
+              base: [
+                "base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en"
+              ]
+            }
+          }
+        }.to_json)
+
+    expect {
+      travel_to '2018-02-28T16:23:32+00:00' do
+        rake 'taxonomy:validate_taxons_base_paths'
+      end
+    }.to output(<<~LOG).to_stdout_from_any_process
+      ✅ /level-one
+      ❌    ├── /some-other-path/level-two
+      ------------------------------------
+      The following taxons did not match the taxon URL structure. Attempting to fix this...
+      CONTENT-ID-LEVEL-TWO /some-other-path/level-two: #<GdsApi::HTTPUnprocessableEntity: URL: https://publishing-api.test.gov.uk/v2/content/CONTENT-ID-LEVEL-TWO
+      Response body:
+      {"error":{"code":422,"message":"base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en","fields":{"base":["base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en"]}}}
+
+      Request body:
+      {:base_path=>"/level-one/level-two", :document_type=>"taxon", :schema_name=>"taxon", :title=>"Level Two", :description=>nil, :publishing_app=>"content-tagger", :rendering_app=>"collections", :public_updated_at=>"2018-02-28T16:23:32+00:00", :locale=>"en", :details=>{:internal_name=>"internal name for Level Two", :notes_for_editors=>"Editor notes for Level Two", :visible_to_departmental_editors=>false}, :routes=>[{:path=>"/level-one/level-two", :type=>"exact"}], :update_type=>"major", :phase=>"live"}>
     LOG
   end
 

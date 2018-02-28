@@ -73,5 +73,23 @@ private
     def path_components
       @_path_components ||= PATH_COMPONENTS_REGEX.match base_path
     end
+
+    def valid_base_path
+      return base_path if valid?
+
+      # Base path is a valid two segment path
+      if path_components.present?
+        "/#{level_one_prefix}/#{path_components['slug']}"
+      else
+        path_slug = @taxon['base_path']
+          .sub('/imported-topic/topic/', '')
+          .sub('/imported-topic/', '')
+          .sub('/imported-browse/browse/', '')
+          .sub('/imported-browse/', '')
+          .sub('/imported-policies/', '')
+          .tr('/', '-')
+        "/#{level_one_prefix}/#{path_slug}"
+      end
+    end
   end
 end
