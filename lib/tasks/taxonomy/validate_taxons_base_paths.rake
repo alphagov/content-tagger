@@ -1,6 +1,10 @@
 namespace :taxonomy do
   desc "Validates taxons against the URL structure (/highest-level-taxon-name/taxon-name)"
   task validate_taxons_base_paths: :environment do
+    # Extend the Publishing API timeout to allow for a
+    # higher chance that the task will complete
+    GdsApi::JsonClient::DEFAULT_TIMEOUT_IN_SECONDS = 10
+
     # [
     #   { "content_id"=>"91b8ef20-74e7-4552-880c-50e6d73c2ff9",
     #     "base_path"=>"/world/all",
