@@ -14,9 +14,20 @@ namespace :taxonomy do
     if base_path_checker.invalid_taxons.any?
       puts "-" * 36
 
-      puts "The following taxons do not follow the taxon URL structure:"
+      puts "The following taxons did not match the taxon URL structure. Attempting to fix this..."
       base_path_checker.invalid_taxons.each do |taxon|
-        puts "#{taxon.content_id} #{taxon.base_path}"
+        print "#{taxon.content_id} #{taxon.base_path}"
+
+        if taxon.level_one_taxon?
+          puts ": skipping"
+        else
+          begin
+            UpdateTaxonWorker.new.perform(taxon.content_id, base_path: taxon.valid_base_path)
+            puts "\n  └─ #{taxon.valid_base_path}"
+          rescue StandardError => e
+            puts ": #{e.inspect}"
+          end
+        end
       end
     end
   end
