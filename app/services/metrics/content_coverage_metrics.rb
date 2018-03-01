@@ -40,7 +40,7 @@ module Metrics
     def items_in_scope_count
       @_items_in_scope_count ||= Services.rummager.search(
         count: 0,
-        reject_content_store_document_type: blacklisted_document_types,
+        reject_content_store_document_type: Tagging.blacklisted_document_types,
         debug: 'include_withdrawn'
       ).to_h.fetch("total")
     end
@@ -49,7 +49,7 @@ module Metrics
       @_tagged_items_in_scope_count ||= Services.rummager.search(
         count: 0,
         filter_part_of_taxonomy_tree: root_taxon_content_ids,
-        reject_content_store_document_type: blacklisted_document_types,
+        reject_content_store_document_type: Tagging.blacklisted_document_types,
         debug: 'include_withdrawn'
       ).to_h.fetch("total")
     end
@@ -62,17 +62,6 @@ module Metrics
 
     def gauge(stat, value)
       Metrics.statsd.gauge(stat, value)
-    end
-
-    def blacklisted_document_types
-      @_blacklisted_document_types ||=
-        YAML.load_file(
-          File.join(
-            Rails.root,
-            'config',
-            'document_types_excluded_from_the_topic_taxonomy.yml'
-          )
-        )['document_types']
     end
   end
 end

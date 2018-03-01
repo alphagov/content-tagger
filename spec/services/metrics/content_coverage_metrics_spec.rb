@@ -5,7 +5,7 @@ module Metrics
     describe '#record_all' do
       before do
         blacklist = %w[taxon redirect]
-        allow_any_instance_of(Metrics::ContentCoverageMetrics)
+        allow(Tagging)
           .to receive(:blacklisted_document_types).and_return(blacklist)
 
         stub_request(:get, "#{Plek.find('rummager')}/search.json")
