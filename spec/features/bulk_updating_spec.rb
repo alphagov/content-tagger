@@ -72,11 +72,11 @@ RSpec.feature 'Bulk updating', type: :feature do
   end
 
   def then_i_can_see_the_bulk_update_button
-    expect(page).to have_link 'Bulk update phase'
+    expect(page).to have_link 'Change phase for this taxon and its children'
   end
 
   def when_i_click_the_bulk_update_button
-    click_link 'Bulk update phase'
+    click_link 'Change phase for this taxon and its children'
   end
 
   def then_i_see_the_confirmation_page

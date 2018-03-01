@@ -16,9 +16,9 @@ module Taxonomy
 
     def publication_state_name
       {
-        "draft" => "Draft",
-        "published" => "Published",
-        "unpublished" => "Deleted",
+        "draft" => "draft",
+        "published" => "published",
+        "unpublished" => "deleted",
       }.fetch(taxon.publication_state)
     end
 

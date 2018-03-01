@@ -20,6 +20,7 @@ RSpec.feature 'Taxon history' do
   end
 
   def when_i_visit_the_taxon_edit_form
+    publishing_api_has_linked_items([], content_id: @taxon['content_id'], link_type: "taxons")
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{@taxon['content_id']}")
       .to_return(body: @taxon.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{@taxon['content_id']}")
@@ -55,7 +56,7 @@ RSpec.feature 'Taxon history' do
   end
 
   def and_i_click_view_version_history
-    click_on 'View taxon history'
+    click_on 'View taxon change history'
   end
 
   def then_i_will_see_the_version_history_on_the_taxon_page
