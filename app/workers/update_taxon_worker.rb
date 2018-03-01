@@ -2,13 +2,16 @@ class UpdateTaxonWorker
   include Sidekiq::Worker
 
   def perform(content_id, attributes)
-    taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
-    taxon.assign_attributes(attributes)
+    previous_taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
+    updated_taxon = previous_taxon.clone
+    updated_taxon.assign_attributes(attributes)
 
-    payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+    Taxonomy::SaveTaxonVersion.call(updated_taxon, 'Bulk update', previous_taxon: previous_taxon)
+
+    payload = Taxonomy::BuildTaxonPayload.call(taxon: updated_taxon)
     Services.publishing_api.put_content(content_id, payload)
 
-    return unless taxon.published?
+    return unless updated_taxon.published?
 
     Services.publishing_api.publish(content_id)
   end

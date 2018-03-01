@@ -1,12 +1,13 @@
 module Taxonomy
   class SaveTaxonVersion
-    def self.call(taxon, version_note)
-      new(taxon, version_note).save
+    def self.call(*args)
+      new(*args).save
     end
 
-    def initialize(taxon, version_note)
+    def initialize(taxon, version_note, previous_taxon: nil)
       @taxon = taxon
       @version_note = version_note
+      @previous_taxon = previous_taxon
     end
 
     def save
@@ -35,7 +36,7 @@ module Taxonomy
     end
 
     def previous_taxon
-      @_previous_taxon ||= begin
+      @previous_taxon ||= begin
         Taxonomy::BuildTaxon.call(content_id: content_id)
       rescue Taxonomy::BuildTaxon::TaxonNotFoundError
         nil
