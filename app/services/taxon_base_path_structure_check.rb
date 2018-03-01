@@ -3,7 +3,6 @@ class TaxonBasePathStructureCheck
 
   def initialize(level_one_taxons:)
     @level_one_taxons = level_one_taxons
-    @path_validation_output = []
     @invalid_taxons = []
   end
 
@@ -18,9 +17,9 @@ private
 
     spacer = n.positive? ? "#{' ' * n * 2} ├── " : ""
     if taxon.valid?
-      @path_validation_output << "✅ #{spacer}#{taxon.base_path}"
+      puts "✅ #{spacer}#{taxon.base_path}"
     else
-      @path_validation_output << "❌ #{spacer}#{taxon.base_path}"
+      puts "❌ #{spacer}#{taxon.base_path}"
       @invalid_taxons << taxon
     end
 
@@ -55,6 +54,10 @@ private
       end
     end
 
+    def content_id
+      @taxon['content_id']
+    end
+
     def base_path
       @taxon['base_path']
     end
@@ -69,6 +72,17 @@ private
 
     def path_components
       @_path_components ||= PATH_COMPONENTS_REGEX.match base_path
+    end
+
+    def valid_base_path
+      return base_path if valid?
+
+      # Base path is a valid two segment path
+      if path_components.present?
+        "/#{level_one_prefix}/#{path_components['slug']}"
+      else
+        "/#{level_one_prefix}/#{@taxon['title'].parameterize}"
+      end
     end
   end
 end
