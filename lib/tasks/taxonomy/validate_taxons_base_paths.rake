@@ -1,6 +1,6 @@
 namespace :taxonomy do
   desc "Validates taxons against the URL structure (/highest-level-taxon-name/taxon-name)"
-  task validate_taxons_base_paths: :environment do
+  task :validate_taxons_base_paths, [:and_fix] => [:environment] do |_task, args|
     # Extend the Publishing API timeout to allow for a
     # higher chance that the task will complete
     GdsApi::JsonClient::DEFAULT_TIMEOUT_IN_SECONDS = 10
@@ -18,10 +18,13 @@ namespace :taxonomy do
     if base_path_checker.invalid_taxons.any?
       puts "-" * 36
 
-      puts "The following taxons did not match the taxon URL structure. Attempting to fix this..."
-      base_path_checker.invalid_taxons.each do |taxon|
-        print "#{taxon.content_id} #{taxon.base_path}"
+      print "The following taxons did not match the taxon URL structure."
+      print " Attempting to fix this..." if args[:and_fix].present?
 
+      base_path_checker.invalid_taxons.each do |taxon|
+        print "\n#{taxon.content_id} #{taxon.base_path}"
+
+        next unless args[:and_fix].present?
         if taxon.level_one_taxon?
           puts ": skipping"
         else

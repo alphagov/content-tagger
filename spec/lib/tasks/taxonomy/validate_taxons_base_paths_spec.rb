@@ -21,7 +21,21 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     LOG
   end
 
-  it 'fixes paths that do not have the correct level one prefix' do
+  it 'does not fix the base paths by default' do
+    content_store_has_tree_with_invalid_level_one_prefix
+
+    expect {
+      rake 'taxonomy:validate_taxons_base_paths'
+    }.to output(<<~LOG.strip).to_stdout_from_any_process
+      ✅ /level-one
+      ❌    ├── /some-other-path/level-two
+      ------------------------------------
+      The following taxons did not match the taxon URL structure.
+      CONTENT-ID-LEVEL-TWO /some-other-path/level-two
+    LOG
+  end
+
+  it 'optionally fixes paths that do not have the correct level one prefix' do
     content_store_has_tree_with_invalid_level_one_prefix
 
     taxon_attributes = taxon_with_details(
@@ -38,7 +52,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     stub_any_publishing_api_put_content
 
     expect {
-      rake 'taxonomy:validate_taxons_base_paths'
+      rake 'taxonomy:validate_taxons_base_paths', 'and_fix'
     }.to output(<<~LOG).to_stdout_from_any_process
       ✅ /level-one
       ❌    ├── /some-other-path/level-two
@@ -54,7 +68,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     )
   end
 
-  it 'fixes paths that do not have the correct level one prefix' do
+  it 'optionally fixes paths that do not have the correct level one prefix' do
     content_store_has_tree_with_long_base_path_structure
 
     taxon_attributes = taxon_with_details(
@@ -71,7 +85,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     stub_any_publishing_api_put_content
 
     expect {
-      rake 'taxonomy:validate_taxons_base_paths'
+      rake 'taxonomy:validate_taxons_base_paths', 'and_fix'
     }.to output(<<~LOG).to_stdout_from_any_process
       ✅ /level-one
       ❌    ├── /imported-topic/topic/level-one/level-two
@@ -91,7 +105,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     content_store_has_tree_with_invalid_level_one_base_path
 
     expect {
-      rake 'taxonomy:validate_taxons_base_paths'
+      rake 'taxonomy:validate_taxons_base_paths', 'and_fix'
     }.to output(<<~LOG).to_stdout_from_any_process
       ❌ /level-one/taxon
       ✅    ├── /level-one/level-two
@@ -131,7 +145,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
 
     expect {
       travel_to '2018-02-28T16:23:32+00:00' do
-        rake 'taxonomy:validate_taxons_base_paths'
+        rake 'taxonomy:validate_taxons_base_paths', 'and_fix'
       end
     }.to output(<<~LOG).to_stdout_from_any_process
       ✅ /level-one
