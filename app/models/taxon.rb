@@ -41,7 +41,9 @@ class Taxon
   end
 
   def base_path=(base_path)
-    path_components = %r{\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?}.match(base_path)
+    @base_path = base_path
+
+    path_components = %r{^\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?$}.match(base_path)
 
     return if path_components.nil?
 
@@ -50,7 +52,11 @@ class Taxon
   end
 
   def base_path
-    @base_path ||= '/' + [path_prefix, path_slug].compact.join('/')
+    if [path_prefix, path_slug].any?
+      '/' + [path_prefix, path_slug].compact.join('/')
+    else
+      @base_path
+    end
   end
 
   def link_type
