@@ -104,7 +104,7 @@ en:
       displayed_on_govuk: 'Displayed on GOV.UK'
       view_similar: 'More like this'
       visible_to_departmental_editors: 'Visible to departmental editors?'
-      visible_to_departmental_editors_hint: 'Affects the visiblity of draft taxonomy root nodes only'
+      visible_to_departmental_editors_hint: 'Affects the visiblity of level one taxons only'
       associated_taxons: Associated taxons
       metadata: Taxon metadata
     projects:

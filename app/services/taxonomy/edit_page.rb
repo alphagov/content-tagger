@@ -21,7 +21,7 @@ module Taxonomy
     end
 
     def show_visibilty_checkbox?
-      taxon.draft? && taxon.parent.nil?
+      taxon.parent == GovukTaxonomy::ROOT_CONTENT_ID
     end
   end
 end
