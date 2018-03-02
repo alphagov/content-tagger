@@ -197,14 +197,15 @@ private
       :visible_to_departmental_editors,
       :phase,
       :notes_for_editors,
-      :parent,
+      :parent_content_id,
       associated_taxons: [],
     ).merge(parent_path_prefix)
   end
 
   def parent_path_prefix
-    return if params[:taxon][:parent].blank?
-    parent_taxon = Taxonomy::BuildTaxon.call(content_id: params[:taxon][:parent])
+    content_id = params[:taxon][:parent_content_id]
+    return if content_id.blank?
+    parent_taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
     {
       path_prefix: parent_taxon.path_prefix
     }

@@ -25,7 +25,7 @@ module Taxonomy
         phase: content_item['phase'],
         internal_name: content_item['details']['internal_name'],
         notes_for_editors: content_item['details']['notes_for_editors'],
-        parent: parent,
+        parent_content_id: parent,
         associated_taxons: associated_taxons,
         redirect_to: content_item.dig('unpublishing', 'alternative_path'),
         visible_to_departmental_editors: content_item.dig('details', 'visible_to_departmental_editors')

@@ -90,7 +90,7 @@ RSpec.describe RemoteTaxons do
       )
     end
 
-    let(:child_taxon) { instance_double(Taxon, parent: parent_taxon_id) }
+    let(:child_taxon) { instance_double(Taxon, parent_content_id: parent_taxon_id) }
 
     before do
       publishing_api_has_item(parent_taxon)
@@ -102,7 +102,7 @@ RSpec.describe RemoteTaxons do
         base_path: parent_taxon[:base_path],
         content_id: parent_taxon[:content_id],
         title: parent_taxon[:title],
-                     )
+      )
     end
   end
 end

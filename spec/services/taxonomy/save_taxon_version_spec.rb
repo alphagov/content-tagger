@@ -25,7 +25,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
         ["+", "description", "Business as usual"],
         ["+", "internal_name", "Business [internal]"],
         ["+", "notes_for_editors", ""],
-        ["+", "parent", nil],
+        ["+", "parent_content_id", nil],
         ["+", "phase", "beta"],
         ["+", "title", "Business"]
       ],
@@ -55,7 +55,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
       title: 'Tourism',
       internal_name: 'Tourism [internal]',
       description: 'Send me a postcard',
-      parent: 'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz',
+      parent_content_id: 'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz',
     )
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
@@ -76,7 +76,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
       object_changes: [
         ["~", "associated_taxons", ["mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm"], nil],
         ["~", "base_path", "/tourism", "/business/tourism"],
-        ["~", "parent", nil, "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"],
+        ["~", "parent_content_id", nil, "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"],
       ],
     )
   end

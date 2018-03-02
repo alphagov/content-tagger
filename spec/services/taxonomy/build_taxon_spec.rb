@@ -36,8 +36,8 @@ RSpec.describe Taxonomy::BuildTaxon do
       expect(taxon).to be_a(Taxon)
     end
 
-    it 'assigns the parent to the taxon' do
-      expect(taxon.parent).to be_nil
+    it 'assigns the parent_content_id to the taxon' do
+      expect(taxon.parent_content_id).to be_nil
     end
 
     it 'assigns the content id correctly' do
@@ -83,7 +83,7 @@ RSpec.describe Taxonomy::BuildTaxon do
       end
 
       it 'has no taxon parent' do
-        expect(taxon.parent).to be_nil
+        expect(taxon.parent_content_id).to be_nil
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.describe Taxonomy::BuildTaxon do
       end
 
       it 'assigns the parent to the taxon' do
-        expect(taxon.parent).to eq(parent_taxon)
+        expect(taxon.parent_content_id).to eq(parent_taxon)
       end
     end
 
@@ -116,8 +116,8 @@ RSpec.describe Taxonomy::BuildTaxon do
         )
       end
 
-      it 'sets the parent to the root taxon id' do
-        expect(taxon.parent).to eq(GovukTaxonomy::ROOT_CONTENT_ID)
+      it 'sets the parent_content_id to the root taxon id' do
+        expect(taxon.parent_content_id).to eq(GovukTaxonomy::ROOT_CONTENT_ID)
       end
     end
 

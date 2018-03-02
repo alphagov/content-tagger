@@ -7,7 +7,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       document_type: 'taxon',
       description: 'Description',
       base_path: '/education/slug',
-      parent: 'guid',
+      parent_content_id: 'guid',
       associated_taxons: ['1234']
     )
     allow(Taxonomy::SaveTaxonVersion).to receive(:call)
@@ -32,7 +32,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
     end
 
     context "when the taxon has no parent" do
-      before { @taxon.parent = "" }
+      before { @taxon.parent_content_id = "" }
 
       it "patches the links hash with an empty array" do
         stub_any_publishing_api_put_content

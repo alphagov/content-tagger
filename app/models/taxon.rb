@@ -2,7 +2,7 @@ class Taxon
   attr_accessor(
     :title,
     :description,
-    :parent,
+    :parent_content_id,
     :path_prefix,
     :path_slug,
     :publication_state,
@@ -16,7 +16,7 @@ class Taxon
   include ActiveModel::Model
 
   validates_presence_of :title, :description, :internal_name, :path_slug
-  validates_presence_of :path_prefix, if: -> { parent.present? && parent != GovukTaxonomy::ROOT_CONTENT_ID }
+  validates_presence_of :path_prefix, if: :level_one_taxon?
   validates :path_slug, format: { with: %r{\A[A-z0-9\-]+\z}, message: "path must not contain /" }
   validates_with CircularDependencyValidator
 
@@ -34,6 +34,11 @@ class Taxon
 
   def redirected?
     publication_state == "unpublished" && !redirect_to.nil?
+  end
+
+  def level_one_taxon?
+    parent_content_id.present? &&
+      parent_content_id == GovukTaxonomy::ROOT_CONTENT_ID
   end
 
   def content_id
