@@ -1,194 +1,48 @@
 require "rails_helper"
-require 'gds_api/test_helpers/content_store'
 
-RSpec.describe TaxonBasePathStructureCheck, '#validate' do
-  include ::GdsApi::TestHelpers::ContentStore
-
-  it 'outputs check as all-valid' do
-    content_store_has_valid_two_level_tree
-
-    checker = TaxonBasePathStructureCheck.new(
-      level_one_taxons: [{ 'base_path' => '/level-one' }]
+RSpec.describe TaxonBasePathStructureCheck::Taxon, "#valid_base_path" do
+  it 'produces a base path for an imported-browse top level page' do
+    klass = described_class.new(
+      { 'base_path' => '/imported-browse/sale-goods-services-data' },
+      level_one_prefix: 'business'
     )
-    checker.validate
 
-    expect(checker.invalid_taxons).to be_empty
-    expect(checker.path_validation_output).to all(start_with('✅'))
+    expect(klass.valid_base_path).to eq '/business/sale-goods-services-data'
   end
 
-  it 'records invalid taxons that do not have the same level one prefix' do
-    content_store_has_tree_with_invalid_level_one_prefix
-
-    checker = TaxonBasePathStructureCheck.new(
-      level_one_taxons: [{ 'base_path' => '/level-one' }]
+  it 'produces a base path for an imported-browse page' do
+    klass = described_class.new(
+      { 'base_path' => '/imported-browse/browse/driving/parking-public-transport-environment/environment-and-emissions' },
+      level_one_prefix: 'environment'
     )
-    checker.validate
 
-    expect(checker.invalid_taxons.size).to eq(1)
-    expect(checker.invalid_taxons.last.base_path)
-      .to eq("/some-other-path/level-two")
+    expect(klass.valid_base_path).to eq '/environment/driving-parking-public-transport-environment-environment-and-emissions'
   end
 
-  it 'records invalid taxons that do not follow the base path structure' do
-    content_store_has_tree_with_long_base_path_structure
-
-    checker = TaxonBasePathStructureCheck.new(
-      level_one_taxons: [{ 'base_path' => '/level-one' }]
+  it 'produces a base path for an imported-topic top level page' do
+    klass = described_class.new(
+      { 'base_path' => '/imported-topic/land-management' },
+      level_one_prefix: 'environment'
     )
-    checker.validate
 
-    expect(checker.invalid_taxons.size).to eq(1)
-    expect(checker.invalid_taxons.last.base_path)
-      .to eq("/imported-topic/topic/level-one/level-two")
+    expect(klass.valid_base_path).to eq '/environment/land-management'
   end
 
-  it 'validates the whole tree even if the level one base path structure is incorrect' do
-    content_store_has_tree_with_invalid_level_one_base_path
-
-    checker = TaxonBasePathStructureCheck.new(
-      level_one_taxons: [{ 'base_path' => '/level-one/taxon' }]
+  it 'produces a base path for an imported-topic page' do
+    klass = described_class.new(
+      { 'base_path' => '/imported-topic/topic/environmental-management/environmental-permits/application-forms' },
+      level_one_prefix: 'environment'
     )
-    checker.validate
 
-    expect(checker.invalid_taxons.size).to eq(1)
-    expect(checker.invalid_taxons.last.base_path).to eq("/level-one/taxon")
-    expect(checker.path_validation_output).to eq(
-      [
-        "❌ /level-one/taxon",
-        "✅    ├── /level-one/level-two"
-      ]
-    )
+    expect(klass.valid_base_path).to eq '/environment/environmental-management-environmental-permits-application-forms'
   end
 
-  # /level-one
-  #   /level-one/level-two
-  def content_store_has_valid_two_level_tree
-    content_store_has_item(
-      '/level-one',
-      {
-        "base_path" => "/level-one",
-        "content_id" => "CONTENT-ID-LEVEL-ONE",
-        "title" => "Level One",
-        "links" => {
-          "child_taxons" => [
-            {
-              "base_path" => "/level-one/level-two",
-              "content_id" => "CONTENT-ID-LEVEL-TWO",
-              "title" => "Level Two",
-              "links" => {}
-            }
-          ]
-        }
-      }.to_json, draft: true
+  it 'produces a base path for an imported-policies page' do
+    klass = described_class.new(
+      { 'base_path' => '/imported-policies/export-controls' },
+      level_one_prefix: 'business'
     )
 
-    content_store_has_item(
-      '/level-one/level-two',
-      {
-        "base_path" => "/level-one/level-two",
-        "content_id" => "CONTENT-ID-LEVEL-TWO",
-        "title" => "Level Two",
-        "links" => {}
-      }.to_json, draft: true
-    )
-  end
-
-  # /level-one
-  #   /some-other-path/level-two
-  def content_store_has_tree_with_invalid_level_one_prefix
-    content_store_has_item(
-      '/level-one',
-      {
-        "base_path" => "/level-one",
-        "content_id" => "CONTENT-ID-LEVEL-ONE",
-        "title" => "Level One",
-        "links" => {
-          "child_taxons" => [
-            {
-              "base_path" => "/some-other-path/level-two",
-              "content_id" => "CONTENT-ID-LEVEL-TWO",
-              "title" => "Level Two",
-              "links" => {}
-            }
-          ]
-        }
-      }.to_json, draft: true
-    )
-
-    content_store_has_item(
-      '/some-other-path/level-two',
-      {
-        "base_path" => "/some-other-path/level-two",
-        "content_id" => "CONTENT-ID-LEVEL-TWO",
-        "title" => "Level Two",
-        "links" => {}
-      }.to_json, draft: true
-    )
-  end
-
-  # /level-one
-  #   /imported-topic/topic/level-one/level-two
-  def content_store_has_tree_with_long_base_path_structure
-    content_store_has_item(
-      '/level-one',
-      {
-        "base_path" => "/level-one",
-        "content_id" => "CONTENT-ID-LEVEL-ONE",
-        "title" => "Level One",
-        "links" => {
-          "child_taxons" => [
-            {
-              "base_path" => "/imported-topic/topic/level-one/level-two",
-              "content_id" => "CONTENT-ID-LEVEL-TWO",
-              "title" => "Level Two",
-              "links" => {}
-            }
-          ]
-        }
-      }.to_json, draft: true
-    )
-
-    content_store_has_item(
-      '/imported-topic/topic/level-one/level-two',
-      {
-        "base_path" => "/imported-topic/topic/level-one/level-two",
-        "content_id" => "CONTENT-ID-LEVEL-TWO",
-        "title" => "Level Two",
-        "links" => {}
-      }.to_json, draft: true
-    )
-  end
-
-  # /level-one/taxon
-  #   /level-one/level-two
-  def content_store_has_tree_with_invalid_level_one_base_path
-    content_store_has_item(
-      '/level-one/taxon',
-      {
-        "base_path" => "/level-one/taxon",
-        "content_id" => "CONTENT-ID-LEVEL-ONE",
-        "title" => "Level One",
-        "links" => {
-          "child_taxons" => [
-            {
-              "base_path" => "/level-one/level-two",
-              "content_id" => "CONTENT-ID-LEVEL-TWO",
-              "title" => "Level Two",
-              "links" => {}
-            }
-          ]
-        }
-      }.to_json, draft: true
-    )
-
-    content_store_has_item(
-      '/level-one/level-two',
-      {
-        "base_path" => "/level-one/level-two",
-        "content_id" => "CONTENT-ID-LEVEL-TWO",
-        "title" => "Level Two",
-        "links" => {}
-      }.to_json, draft: true
-    )
+    expect(klass.valid_base_path).to eq '/business/export-controls'
   end
 end
