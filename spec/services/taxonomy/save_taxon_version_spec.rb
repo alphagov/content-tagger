@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
   it 'saves a new version when the taxon is new' do
     taxon = Taxon.new(
-      path_slug: 'business',
+      base_path: '/business',
       title: 'Business',
       internal_name: 'Business [internal]',
       description: 'Business as usual',
@@ -50,8 +50,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     current_taxon = Taxon.new(
       content_id: content_id,
-      path_prefix: 'business',
-      path_slug: 'tourism',
+      base_path: '/business/tourism',
       title: 'Tourism',
       internal_name: 'Tourism [internal]',
       description: 'Send me a postcard',
@@ -99,8 +98,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     current_taxon = Taxon.new(
       content_id: content_id,
-      path_prefix: 'business',
-      path_slug: 'tourism',
+      base_path: '/business/tourism',
       title: 'Business Tourism',
       internal_name: 'Business Tourism [internal]',
       description: 'Send me a postcard'
@@ -134,7 +132,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     current_taxon = Taxon.new(
       content_id: content_id,
-      path_slug: 'business',
+      base_path: '/business',
       title: 'Business',
       internal_name: 'Business [internal]',
       description: 'Business as usual',

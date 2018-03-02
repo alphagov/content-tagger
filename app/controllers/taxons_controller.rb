@@ -190,7 +190,7 @@ private
   def taxon_params
     params.require(:taxon).permit(
       :content_id,
-      :path_slug,
+      :base_path,
       :internal_name,
       :title,
       :description,
@@ -199,16 +199,7 @@ private
       :notes_for_editors,
       :parent_content_id,
       associated_taxons: [],
-    ).merge(parent_path_prefix)
-  end
-
-  def parent_path_prefix
-    content_id = params[:taxon][:parent_content_id]
-    return if content_id.blank?
-    parent_taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
-    {
-      path_prefix: parent_taxon.path_prefix
-    }
+    )
   end
 
   def content_id
