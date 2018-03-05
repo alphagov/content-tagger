@@ -109,7 +109,7 @@ RSpec.feature "Taxonomy editing" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
-    and_i_submit_the_taxon_with_a_taxon_with_semantic_issues
+    and_i_submit_the_taxon_with_a_taxon_with_semantic_issues_from_the_publishing_api
     then_i_can_see_a_generic_error_message
   end
 
@@ -140,15 +140,16 @@ RSpec.feature "Taxonomy editing" do
   scenario "Taxon base path preview when changing parent taxon", js: true do
     given_there_are_taxons
     and_i_visit_the_taxon_edit_page
-    when_i_change_the_parent_taxon
-    then_the_parent_base_path_text_is_updated
+    when_i_change_the_parent_taxon_to_a_transport_branch
+    then_the_base_path_prefix_hint_is_updated
   end
 
-  scenario "Taxon base path preview when changing path", js: true do
+  scenario "Path prefix is validated to match the parent path prefix" do
     given_there_are_taxons
-    and_i_visit_the_draft_taxon_edit_page
-    when_i_change_the_path
-    then_the_preview_path_text_is_updated
+    and_i_visit_the_taxon_edit_page
+    when_i_change_the_parent_taxon_to_a_transport_branch
+    and_i_change_the_base_path_and_submit_the_form
+    then_the_base_path_shows_as_invalid
   end
 
   def given_there_are_taxons
@@ -199,7 +200,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "Newly created taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-    fill_in :taxon_path_slug, with: 'newly-created-taxon'
+    fill_in :taxon_base_path, with: '/education/newly-created-taxon'
   end
 
   def and_i_select_associated_taxons
@@ -207,13 +208,15 @@ RSpec.feature "Taxonomy editing" do
     select @taxon_3[:title], from: "taxon_associated_taxons"
   end
 
-  def when_i_change_the_parent_taxon
+  def when_i_change_the_parent_taxon_to_a_transport_branch
     select "Rail", from: "Parent"
+    return if Capybara.current_driver != :poltergeist
     wait_for_ajax
   end
 
-  def when_i_change_the_path
-    fill_in :taxon_path_slug, with: 'new-slug'
+  def and_i_change_the_base_path_and_submit_the_form
+    fill_in 'Base path', with: '/education/trains'
+    find('.submit-button').click
   end
 
   def when_i_update_the_taxon
@@ -271,11 +274,11 @@ RSpec.feature "Taxonomy editing" do
     click_on I18n.t('views.taxons.new_button')
   end
 
-  def and_i_submit_the_taxon_with_a_taxon_with_semantic_issues
+  def and_i_submit_the_taxon_with_a_taxon_with_semantic_issues_from_the_publishing_api
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    fill_in :taxon_path_slug, with: 'slug'
+    fill_in :taxon_base_path, with: '/foo/bar'
 
     # Before the taxon is created, we compare the old attributes with the new,
     # to create a diff. In this instance, a previous version does not exist.
@@ -293,7 +296,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_title, with: 'My Taxon'
     fill_in :taxon_description, with: 'Description of my taxon.'
     fill_in :taxon_internal_name, with: 'My Taxon'
-    fill_in :taxon_path_slug, with: 'slug'
+    fill_in :taxon_base_path, with: '/base-path'
 
     # Before the taxon is created, we compare the old attributes with the new,
     # to create a diff. In this instance, a previous version does not exist.
@@ -302,9 +305,9 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
-      .with(body: hash_including(base_paths: ['/slug'], with_drafts: true))
+      .with(body: hash_including(base_paths: ['/base-path'], with_drafts: true))
       .to_return(status: 200, body: {
-        '/slug' => SecureRandom.uuid
+        '/base-path' => SecureRandom.uuid
       }.to_json)
 
     click_on I18n.t('views.taxons.new_button')
@@ -343,12 +346,12 @@ RSpec.feature "Taxonomy editing" do
     expect(@publish_item).not_to have_been_requested
   end
 
-  def then_the_parent_base_path_text_is_updated
-    expect(find(".base-path-hint")).to have_content "The URL of the navigation page will be: /transport/1"
+  def then_the_base_path_prefix_hint_is_updated
+    expect(find(".js-path-prefix-hint")).to have_content "Base path must start with /transport"
   end
 
-  def then_the_preview_path_text_is_updated
-    expect(find(".base-path-hint")).to have_content "The URL of the navigation page will be: /new-slug"
+  def then_the_base_path_shows_as_invalid
+    expect(page).to have_content 'Base path must start with /transport'
   end
 
   def parent_taxon_json

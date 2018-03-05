@@ -16,7 +16,7 @@ private
     return {} if taxon.blank?
 
     %i[
-      parent
+      parent_content_id
       base_path
       internal_name
       title

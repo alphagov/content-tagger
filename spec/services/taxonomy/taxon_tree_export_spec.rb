@@ -56,15 +56,15 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     it "returned flattened tree should include the children and grand-children of a taxon item" do
       expect(@flattened_tree).to include(
         a_hash_including(
-          base_path: "/path/transport",
+          base_path: "/level-one/transport",
           title: "Transport",
           links: a_hash_including(
             child_taxons: [a_hash_including(
-              base_path: "/path/vehicles",
+              base_path: "/level-one/vehicles",
               title: "Vehicles",
               links: a_hash_including(
                 child_taxons: [a_hash_including(
-                  base_path: "/path/car",
+                  base_path: "/level-one/car",
                   title: "Car"
                 )]
               )
@@ -77,11 +77,11 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     it "returned flattened tree should include the parent of a taxon item" do
       expect(@flattened_tree).to include(
         a_hash_including(
-          base_path: "/path/vehicles",
+          base_path: "/level-one/vehicles",
           title: "Vehicles",
           links: a_hash_including(
             parent_taxons: [a_hash_including(
-              base_path: "/path/transport",
+              base_path: "/level-one/transport",
               title: "Transport"
             )]
           )

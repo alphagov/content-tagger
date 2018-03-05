@@ -38,7 +38,6 @@ private
 
   class Taxon
     LEVEL_ONE_URL_REGEX = %r{^\/([A-z0-9\-]+)$}
-    PATH_COMPONENTS_REGEX = %r{^\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?$}
 
     def initialize(taxon, level_one_prefix:)
       @taxon = taxon
@@ -71,7 +70,7 @@ private
     end
 
     def path_components
-      @_path_components ||= PATH_COMPONENTS_REGEX.match base_path
+      @_path_components ||= ::Taxon::PATH_COMPONENTS_REGEX.match base_path
     end
 
     def valid_base_path

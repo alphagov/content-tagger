@@ -1,10 +1,10 @@
 class Taxon
+  PATH_COMPONENTS_REGEX = %r{\A\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?\z}
+
   attr_accessor(
     :title,
     :description,
-    :parent,
-    :path_prefix,
-    :path_slug,
+    :parent_content_id,
     :publication_state,
     :phase,
     :document_type,
@@ -12,13 +12,14 @@ class Taxon
     :associated_taxons
   )
   attr_writer :content_id, :notes_for_editors, :internal_name
+  attr_reader :base_path, :path_prefix, :path_slug
 
   include ActiveModel::Model
 
-  validates_presence_of :title, :description, :internal_name, :path_slug
-  validates_presence_of :path_prefix, if: -> { parent.present? && parent != GovukTaxonomy::ROOT_CONTENT_ID }
-  validates :path_slug, format: { with: %r{\A[A-z0-9\-]+\z}, message: "path must not contain /" }
+  validates_presence_of :title, :description, :internal_name, :base_path
   validates_with CircularDependencyValidator
+  validates :base_path, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/highest-level-taxon-name/taxon-name'" }
+  validates_with TaxonPathPrefixValidator
 
   def draft?
     publication_state == "draft"
@@ -36,6 +37,11 @@ class Taxon
     publication_state == "unpublished" && !redirect_to.nil?
   end
 
+  def level_one_taxon?
+    parent_content_id.present? &&
+      parent_content_id == GovukTaxonomy::ROOT_CONTENT_ID
+  end
+
   def content_id
     @content_id ||= SecureRandom.uuid
   end
@@ -43,20 +49,12 @@ class Taxon
   def base_path=(base_path)
     @base_path = base_path
 
-    path_components = %r{^\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?$}.match(base_path)
+    path_components = PATH_COMPONENTS_REGEX.match(base_path)
 
     return if path_components.nil?
 
     @path_prefix = path_components['prefix']
     @path_slug = path_components['slug']
-  end
-
-  def base_path
-    if [path_prefix, path_slug].any?
-      '/' + [path_prefix, path_slug].compact.join('/')
-    else
-      @base_path
-    end
   end
 
   def link_type

@@ -28,7 +28,7 @@ module ContentItemHelper
     content_item = ActiveSupport::HashWithIndifferentAccess.new(
       content_id: title.parameterize,
       title: title,
-      base_path: title.parameterize.prepend('/path/'),
+      base_path: title.parameterize.prepend('/level-one/'),
       document_type: "guidance",
       publication_state: "published",
       links: {}

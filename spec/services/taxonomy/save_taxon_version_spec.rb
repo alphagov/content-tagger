@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
   it 'saves a new version when the taxon is new' do
     taxon = Taxon.new(
-      path_slug: 'business',
+      base_path: '/business',
       title: 'Business',
       internal_name: 'Business [internal]',
       description: 'Business as usual',
@@ -25,7 +25,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
         ["+", "description", "Business as usual"],
         ["+", "internal_name", "Business [internal]"],
         ["+", "notes_for_editors", ""],
-        ["+", "parent", nil],
+        ["+", "parent_content_id", nil],
         ["+", "phase", "beta"],
         ["+", "title", "Business"]
       ],
@@ -50,12 +50,11 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     current_taxon = Taxon.new(
       content_id: content_id,
-      path_prefix: 'business',
-      path_slug: 'tourism',
+      base_path: '/business/tourism',
       title: 'Tourism',
       internal_name: 'Tourism [internal]',
       description: 'Send me a postcard',
-      parent: 'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz',
+      parent_content_id: 'zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz',
     )
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
@@ -76,7 +75,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
       object_changes: [
         ["~", "associated_taxons", ["mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm"], nil],
         ["~", "base_path", "/tourism", "/business/tourism"],
-        ["~", "parent", nil, "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"],
+        ["~", "parent_content_id", nil, "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"],
       ],
     )
   end
@@ -99,8 +98,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     current_taxon = Taxon.new(
       content_id: content_id,
-      path_prefix: 'business',
-      path_slug: 'tourism',
+      base_path: '/business/tourism',
       title: 'Business Tourism',
       internal_name: 'Business Tourism [internal]',
       description: 'Send me a postcard'
@@ -134,7 +132,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     current_taxon = Taxon.new(
       content_id: content_id,
-      path_slug: 'business',
+      base_path: '/business',
       title: 'Business',
       internal_name: 'Business [internal]',
       description: 'Business as usual',

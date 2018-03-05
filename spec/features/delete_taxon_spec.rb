@@ -71,7 +71,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     @taxon = taxon_with_details(
       "Taxon 2",
       other_fields: {
-        base_path: "/education/taxon-2",
+        base_path: "/level-one/taxon-2",
         content_id: @taxon_content_id,
         description: 'A description of Taxon 2.'
       },
@@ -85,7 +85,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
-        parent_taxons: ["guid"],
+        parent_taxons: ['CONTENT-ID-PARENT'],
         associated_taxons: ["1234"],
       }
     )
@@ -126,6 +126,12 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def when_i_confirm_restoration
+    parent_taxon = taxon_with_details(
+      'root', other_fields: { base_path: '/level-one', content_id: 'CONTENT-ID-PARENT' }
+    )
+    publishing_api_has_item(parent_taxon)
+    publishing_api_has_links(content_id: 'CONTENT-ID-PARENT')
+
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
     @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
     click_on "Confirm restore"

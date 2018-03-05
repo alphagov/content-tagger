@@ -1,7 +1,7 @@
 module Taxonomy
   class UpdateTaxon
     attr_reader :taxon
-    delegate :content_id, :parent, :associated_taxons, to: :taxon
+    delegate :content_id, :parent_content_id, :associated_taxons, to: :taxon
 
     class InvalidTaxonError < StandardError; end
 
@@ -24,9 +24,12 @@ module Taxonomy
       Taxonomy::SaveTaxonVersion.call(taxon, @version_note)
 
       Services.publishing_api.put_content(content_id, payload)
-      ::Taxonomy::ParentUpdate.new.set_parent(content_id,
-                                              parent_taxon_id: parent,
-                                              associated_taxon_ids: associated_taxons || [])
+
+      Taxonomy::ParentUpdate.new.set_parent(
+        content_id,
+        parent_taxon_id: parent_content_id,
+        associated_taxon_ids: associated_taxons || []
+      )
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422
       # error code, we do a lookup to see if a content item with the slug

@@ -100,7 +100,6 @@ en:
       internal_name_hint: 'Displayed in Content Tagger'
       external_name: 'External taxon name'
       path_slug: 'Path'
-      path_preview: 'The URL of the navigation page will be:'
       displayed_on_govuk: 'Displayed on GOV.UK'
       view_similar: 'More like this'
       visible_to_departmental_editors: 'Visible to departmental editors?'

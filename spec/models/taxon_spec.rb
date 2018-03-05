@@ -14,12 +14,25 @@ RSpec.describe Taxon do
       expect(taxon.errors.keys).to include(:description)
     end
 
-    it 'is not valid without a path slug' do
-      taxon = described_class.new(path_slug: '')
+    it 'is not valid without a base path' do
+      taxon = described_class.new(base_path: '')
 
       expect(taxon).to_not be_valid
-      expect(taxon.errors.keys).to include(:path_slug)
-      expect(taxon.errors[:path_slug]).to include("path must not contain /")
+      expect(taxon.errors.keys).to include(:base_path)
+    end
+
+    it 'is not valid when the base path prefix does not match the parent prefix' do
+      parent_taxon = FactoryBot.build(:taxon, base_path: '/level-one/level-two')
+      allow(Taxonomy::BuildTaxon).to receive(:call).and_return(parent_taxon)
+
+      child_taxon = FactoryBot.build(
+        :taxon,
+        base_path: '/foo/level-two',
+        parent_content_id: parent_taxon.content_id
+      )
+
+      expect(child_taxon).to_not be_valid
+      expect(child_taxon.errors[:base_path]).to include("must start with /level-one")
     end
   end
 
@@ -39,25 +52,33 @@ RSpec.describe Taxon do
     end
   end
 
-  it 'must have a slug with alphanumeric characters and dashes only' do
-    valid_taxon = described_class.new(
+  it 'must have a base path with at most two segments' do
+    level_one_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: "education",
-      path_slug: 'ab01-cd02',
+      base_path: '/education',
     )
 
-    expect(valid_taxon).to be_valid
+    level_two_taxon = described_class.new(
+      title: 'Title',
+      description: 'Description',
+      base_path: '/education/ab01-cd02',
+    )
 
     invalid_taxon = described_class.new(
       title: 'Title',
       description: 'Description',
-      path_prefix: "education",
-      path_slug: 'foo/bar',
+      base_path: '/education/foo/bar',
     )
 
-    expect(invalid_taxon).to_not be_valid
-    expect(invalid_taxon.errors.keys).to include(:path_slug)
+    aggregate_failures do
+      expect(level_one_taxon).to be_valid
+      expect(level_two_taxon).to be_valid
+      expect(invalid_taxon).to_not be_valid
+      expect(invalid_taxon.errors[:base_path]).to include(
+        "must be in the format '/highest-level-taxon-name/taxon-name'"
+      )
+    end
   end
 
   describe '#base_path=' do

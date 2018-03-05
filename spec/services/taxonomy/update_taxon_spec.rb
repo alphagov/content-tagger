@@ -1,16 +1,24 @@
 require 'rails_helper'
 
 RSpec.describe Taxonomy::UpdateTaxon do
+  include ContentItemHelper
+
   before do
     @taxon = Taxon.new(
       title: 'A Title',
       document_type: 'taxon',
       description: 'Description',
-      base_path: '/education/slug',
-      parent: 'guid',
+      base_path: '/level-one/slug',
+      parent_content_id: 'CONTENT-ID-PARENT',
       associated_taxons: ['1234']
     )
     allow(Taxonomy::SaveTaxonVersion).to receive(:call)
+
+    parent_taxon = taxon_with_details(
+      'root', other_fields: { base_path: '/level-one', content_id: 'CONTENT-ID-PARENT' }
+    )
+    publishing_api_has_item(parent_taxon)
+    publishing_api_has_links(content_id: 'CONTENT-ID-PARENT')
   end
   let(:publish) { described_class.call(taxon: @taxon) }
 
@@ -25,14 +33,14 @@ RSpec.describe Taxonomy::UpdateTaxon do
         assert_publishing_api_put_content(@taxon.content_id)
         assert_publishing_api_patch_links(@taxon.content_id, links: {
                                             root_taxon: [],
-                                            parent_taxons: ['guid'],
+                                            parent_taxons: ['CONTENT-ID-PARENT'],
                                             associated_taxons: ['1234'],
                                           })
       end
     end
 
     context "when the taxon has no parent" do
-      before { @taxon.parent = "" }
+      before { @taxon.parent_content_id = "" }
 
       it "patches the links hash with an empty array" do
         stub_any_publishing_api_put_content
@@ -57,7 +65,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         publish
         assert_publishing_api_patch_links(@taxon.content_id, links: {
                                             root_taxon: [],
-                                            parent_taxons: ['guid'],
+                                            parent_taxons: ['CONTENT-ID-PARENT'],
                                             associated_taxons: [],
                                           })
       end
@@ -73,7 +81,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         publish
         assert_publishing_api_patch_links(@taxon.content_id, links: {
                                             root_taxon: [],
-                                            parent_taxons: ['guid'],
+                                            parent_taxons: ['CONTENT-ID-PARENT'],
                                             associated_taxons: [],
                                           })
       end

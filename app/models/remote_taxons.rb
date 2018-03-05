@@ -7,7 +7,7 @@ class RemoteTaxons
   end
 
   def parent_for_taxon(taxon_child)
-    Taxonomy::BuildTaxon.call(content_id: taxon_child.parent)
+    Taxonomy::BuildTaxon.call(content_id: taxon_child.parent_content_id)
   end
 
 private
