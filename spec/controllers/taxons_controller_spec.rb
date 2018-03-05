@@ -131,12 +131,18 @@ RSpec.describe TaxonsController, type: :controller do
     it "sends a request to Publishing API to mark the taxon as 'draft'" do
       taxon = build(:taxon, publication_state: "unpublished")
 
+      parent_taxon = taxon_with_details(
+        'root', other_fields: { base_path: '/level-one', content_id: 'CONTENT-ID-PARENT' }
+      )
+      publishing_api_has_item(parent_taxon)
+      publishing_api_has_links(content_id: 'CONTENT-ID-PARENT')
+
       Timecop.freeze do
         payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
         links = {
           links: {
             root_taxon: [],
-            parent_taxons: ['guid'],
+            parent_taxons: ['CONTENT-ID-PARENT'],
             associated_taxons: ['1234'],
           }
         }

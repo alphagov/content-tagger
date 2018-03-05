@@ -140,8 +140,16 @@ RSpec.feature "Taxonomy editing" do
   scenario "Taxon base path preview when changing parent taxon", js: true do
     given_there_are_taxons
     and_i_visit_the_taxon_edit_page
-    when_i_change_the_parent_taxon
+    when_i_change_the_parent_taxon_to_a_transport_branch
     then_the_base_path_prefix_hint_is_updated
+  end
+
+  scenario "Path prefix is validated to match the parent path prefix" do
+    given_there_are_taxons
+    and_i_visit_the_taxon_edit_page
+    when_i_change_the_parent_taxon_to_a_transport_branch
+    and_i_change_the_base_path_and_submit_the_form
+    then_the_base_path_shows_as_invalid
   end
 
   def given_there_are_taxons
@@ -200,9 +208,15 @@ RSpec.feature "Taxonomy editing" do
     select @taxon_3[:title], from: "taxon_associated_taxons"
   end
 
-  def when_i_change_the_parent_taxon
+  def when_i_change_the_parent_taxon_to_a_transport_branch
     select "Rail", from: "Parent"
+    return if Capybara.current_driver != :poltergeist
     wait_for_ajax
+  end
+
+  def and_i_change_the_base_path_and_submit_the_form
+    fill_in 'Base path', with: '/education/trains'
+    find('.submit-button').click
   end
 
   def when_i_update_the_taxon
@@ -334,6 +348,10 @@ RSpec.feature "Taxonomy editing" do
 
   def then_the_base_path_prefix_hint_is_updated
     expect(find(".js-path-prefix-hint")).to have_content "Base path must start with /transport"
+  end
+
+  def then_the_base_path_shows_as_invalid
+    expect(page).to have_content 'Base path must start with /transport'
   end
 
   def parent_taxon_json
