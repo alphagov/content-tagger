@@ -141,14 +141,7 @@ RSpec.feature "Taxonomy editing" do
     given_there_are_taxons
     and_i_visit_the_taxon_edit_page
     when_i_change_the_parent_taxon
-    then_the_parent_base_path_text_is_updated
-  end
-
-  scenario "Taxon base path preview when changing path", js: true do
-    given_there_are_taxons
-    and_i_visit_the_draft_taxon_edit_page
-    when_i_change_the_path
-    then_the_preview_path_text_is_updated
+    then_the_base_path_prefix_hint_is_updated
   end
 
   def given_there_are_taxons
@@ -210,10 +203,6 @@ RSpec.feature "Taxonomy editing" do
   def when_i_change_the_parent_taxon
     select "Rail", from: "Parent"
     wait_for_ajax
-  end
-
-  def when_i_change_the_path
-    fill_in :taxon_base_path, with: '/level-one/new-slug'
   end
 
   def when_i_update_the_taxon
@@ -343,12 +332,8 @@ RSpec.feature "Taxonomy editing" do
     expect(@publish_item).not_to have_been_requested
   end
 
-  def then_the_parent_base_path_text_is_updated
-    expect(find(".base-path-hint")).to have_content "The URL of the navigation page will be: /transport/1"
-  end
-
-  def then_the_preview_path_text_is_updated
-    expect(find(".base-path-hint")).to have_content "The URL of the navigation page will be: /new-slug"
+  def then_the_base_path_prefix_hint_is_updated
+    expect(find(".js-path-prefix-hint")).to have_content "Base path must start with /transport"
   end
 
   def parent_taxon_json

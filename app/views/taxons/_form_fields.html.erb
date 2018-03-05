@@ -1,13 +1,11 @@
-<div data-module="base-path-preview" data-root-content-id="<%= GovukTaxonomy::ROOT_CONTENT_ID %>">
+<div data-module="parent-taxon-prefix-preview">
   <%= f.input :parent_content_id, collection: page.taxons_for_select,
     input_html: { class: 'js-parent-taxon form-control', include_blank: true } %>
 
   <%= f.input :base_path, input_html: { class: 'form-control' },
     placeholder: 'e.g. /highest-level-taxon-name/taxon-name' %>
 
-  <div class="base-path-hint">
-    <%= I18n.t('views.taxons.path_preview') %> <strong class="js-predicted-base-path">...</strong>
-  </div>
+  <div class="alert alert-warning js-path-prefix-hint hidden"></div>
 </div>
 
 <%= f.input :internal_name, input_html: { class: 'form-control' },
