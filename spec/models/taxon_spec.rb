@@ -20,6 +20,20 @@ RSpec.describe Taxon do
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:base_path)
     end
+
+    it 'is not valid when the base path prefix does not match the parent prefix' do
+      parent_taxon = FactoryBot.build(:taxon, base_path: '/level-one/level-two')
+      allow(Taxonomy::BuildTaxon).to receive(:call).and_return(parent_taxon)
+
+      child_taxon = FactoryBot.build(
+        :taxon,
+        base_path: '/foo/level-two',
+        parent_content_id: parent_taxon.content_id
+      )
+
+      expect(child_taxon).to_not be_valid
+      expect(child_taxon.errors[:base_path]).to include("must start with /level-one")
+    end
   end
 
   context 'when internal_name is not set' do

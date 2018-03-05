@@ -146,8 +146,8 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(all("table tbody tr").count).to eq BulkTagging::TagMigration.first.aggregated_tag_mappings.count
     expect(page).to have_text("Taxon 1", count: 2)
     expect(page).to have_text("Taxon 2", count: 2)
-    expect(page).to have_text("/path/tax-doc-1", count: 1)
-    expect(page).to have_text("/path/tax-doc-2", count: 1)
+    expect(page).to have_text("/level-one/tax-doc-1", count: 1)
+    expect(page).to have_text("/level-one/tax-doc-2", count: 1)
     expect(page).to have_text(
       I18n.t('views.tag_update_progress_bar', completed: 0, total: 2)
     )
@@ -162,8 +162,8 @@ RSpec.feature "Bulk tagging", type: :feature do
     publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
     publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
     publishing_api_has_lookups(
-      '/path/tax-doc-1' => 'tax-doc-1',
-      '/path/tax-doc-2' => 'tax-doc-2',
+      '/level-one/tax-doc-1' => 'tax-doc-1',
+      '/level-one/tax-doc-2' => 'tax-doc-2',
     )
     stub_publishing_api_patch_links(
       "tax-doc-1",
