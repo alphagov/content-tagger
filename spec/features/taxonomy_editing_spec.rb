@@ -130,7 +130,8 @@ RSpec.feature "Taxonomy editing" do
 
   scenario "User edits a live taxon" do
     given_there_are_taxons
-    and_i_visit_the_taxon_edit_page
+    when_i_visit_the_taxon_page
+    and_i_click_on_the_edit_taxon_button
     when_i_update_the_taxon
     then_my_taxon_is_updated
     and_my_taxon_is_automatically_published
@@ -138,7 +139,8 @@ RSpec.feature "Taxonomy editing" do
 
   scenario "User edits a draft taxon" do
     given_there_are_taxons
-    and_i_visit_the_draft_taxon_edit_page
+    when_i_visit_the_draft_taxon_page
+    and_i_click_on_the_edit_taxon_button
     when_i_update_the_taxon
     then_my_taxon_is_updated
     and_my_taxon_is_not_published
@@ -146,14 +148,16 @@ RSpec.feature "Taxonomy editing" do
 
   scenario "Taxon base path preview when changing parent taxon", js: true do
     given_there_are_taxons
-    and_i_visit_the_taxon_edit_page
+    when_i_visit_the_taxon_page
+    and_i_click_on_the_edit_taxon_button
     when_i_change_the_parent_taxon_to_a_transport_branch
     then_the_base_path_prefix_hint_is_updated
   end
 
   scenario "Path prefix is validated to match the parent path prefix" do
     given_there_are_taxons
-    and_i_visit_the_taxon_edit_page
+    when_i_visit_the_taxon_page
+    and_i_click_on_the_edit_taxon_button
     when_i_change_the_parent_taxon_to_a_transport_branch
     and_i_change_the_base_path_and_submit_the_form
     then_the_base_path_shows_as_invalid
@@ -197,12 +201,16 @@ RSpec.feature "Taxonomy editing" do
     visit taxon_path("ID-1")
   end
 
-  def and_i_visit_the_taxon_edit_page
-    visit edit_taxon_path("ID-1")
-  end
+  def when_i_visit_the_draft_taxon_page
+    publishing_api_has_expanded_links(
+      content_id: @taxon_2[:content_id],
+      expanded_links: {},
+    )
 
-  def and_i_visit_the_draft_taxon_edit_page
-    visit edit_taxon_path("ID-2")
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(status: 200, body: {}.to_json)
+
+    visit taxon_path("ID-2")
   end
 
   def when_i_visit_the_taxonomy_page
@@ -211,6 +219,10 @@ RSpec.feature "Taxonomy editing" do
 
   def and_i_click_on_the_new_taxon_button
     click_on I18n.t('views.taxons.add_taxon')
+  end
+
+  def and_i_click_on_the_edit_taxon_button
+    click_on I18n.t('views.taxons.edit')
   end
 
   def and_i_click_on_the_add_a_child_taxon_button
@@ -253,16 +265,6 @@ RSpec.feature "Taxonomy editing" do
 
     @publish_item = stub_request(:post, %r{https://publishing-api.test.gov.uk/v2/content/.*/publish})
       .to_return(status: 200, body: "", headers: {})
-
-    [@taxon_1, @taxon_2].each do |taxon|
-      publishing_api_has_expanded_links(
-        content_id: taxon[:content_id],
-        expanded_links: {},
-      )
-    end
-
-    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
-      .to_return(status: 200, body: {}.to_json)
 
     find('.submit-button').click
   end
