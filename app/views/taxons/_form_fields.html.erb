@@ -1,5 +1,5 @@
 <div data-module="parent-taxon-prefix-preview">
-  <%= f.input :parent_content_id, collection: page.taxons_for_select,
+  <%= f.input :parent_content_id, collection: page.taxons_for_select, label: 'Parent',
     input_html: { class: 'js-parent-taxon form-control', include_blank: true } %>
 
   <%= f.input :base_path, input_html: { class: 'form-control' },
