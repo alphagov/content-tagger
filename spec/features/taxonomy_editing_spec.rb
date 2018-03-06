@@ -247,22 +247,19 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "Description of my updated taxon."
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
 
-    @update_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
+    @update_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content})
       .with(body: /details.*#{@dummy_editor_notes}/)
       .to_return(status: 200, body: {}.to_json)
 
-    @publish_item = stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/ID-1/publish")
+    @publish_item = stub_request(:post, %r{https://publishing-api.test.gov.uk/v2/content/.*/publish})
       .to_return(status: 200, body: "", headers: {})
 
-    publishing_api_has_expanded_links(
-      content_id: @taxon_1[:content_id],
-      expanded_links: {},
-    )
-
-    publishing_api_has_expanded_links(
-      content_id: @taxon_2[:content_id],
-      expanded_links: {},
-    )
+    [@taxon_1, @taxon_2].each do |taxon|
+      publishing_api_has_expanded_links(
+        content_id: taxon[:content_id],
+        expanded_links: {},
+      )
+    end
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
