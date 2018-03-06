@@ -86,6 +86,13 @@ RSpec.feature "Taxonomy editing" do
     then_a_taxon_is_created
   end
 
+  scenario "User creates a child taxon from a parent" do
+    given_there_are_taxons
+    when_i_visit_the_taxon_page
+    and_i_click_on_the_add_a_child_taxon_button
+    then_the_parent_is_correctly_prefilled
+  end
+
   scenario "User creates a taxon with associated taxons" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
@@ -178,6 +185,18 @@ RSpec.feature "Taxonomy editing" do
       .to_return(body: @taxon_3.to_json)
   end
 
+  def when_i_visit_the_taxon_page
+    publishing_api_has_expanded_links(
+      content_id: @taxon_1[:content_id],
+      expanded_links: {},
+    )
+
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(status: 200, body: {}.to_json)
+
+    visit taxon_path("ID-1")
+  end
+
   def and_i_visit_the_taxon_edit_page
     visit edit_taxon_path("ID-1")
   end
@@ -192,6 +211,10 @@ RSpec.feature "Taxonomy editing" do
 
   def and_i_click_on_the_new_taxon_button
     click_on I18n.t('views.taxons.add_taxon')
+  end
+
+  def and_i_click_on_the_add_a_child_taxon_button
+    click_on I18n.t('views.taxons.add_child')
   end
 
   def and_i_set_taxon_details
@@ -336,6 +359,10 @@ RSpec.feature "Taxonomy editing" do
   def then_my_taxon_is_updated
     expect(@update_item).to have_been_requested
     expect(@create_links).to have_been_requested
+  end
+
+  def then_the_parent_is_correctly_prefilled
+    expect(find("#taxon_parent_content_id").value).to eq("ID-1")
   end
 
   def and_my_taxon_is_automatically_published

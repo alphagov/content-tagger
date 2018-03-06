@@ -78,6 +78,7 @@ en:
       title: Taxons
       deleted_title: Deleted taxons
       edit: Edit taxon
+      add_child: Add a child taxon
       tagging_history: View tagging history
       view: View taxon
       add_taxon: Add a taxon
