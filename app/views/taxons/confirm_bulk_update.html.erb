@@ -4,12 +4,18 @@
   </header>
 
   <div class="lead">
-    You are about to update the phase of this taxon and its children to
-    <%= select_tag 'taxon_phase', options_for_select(%w[alpha beta live], page.taxon.phase), class: 'form-control' %>
-  </div>
+    <p>
+      You are about to update the phase of this taxon and its children to
+      <%= select_tag 'taxon_phase', options_for_select(%w[alpha beta live], page.taxon.phase), class: 'form-control' %>.
+    </p>
 
-  <%= render 'taxonomy_tree', page: page, hide_parents: true %>
+    <p>
+      These changes may take a while to update and will not be instantly visible. Please refresh the page a few minutes after confirming the update.
+    </p>
+  </div>
 
   <%= submit_tag "Confirm bulk update", class: 'btn btn-lg btn-success' %>
   <%= link_to "Cancel", taxon_path(page.taxon_content_id), class: "cancel-link" %>
+
+  <%= render 'taxonomy_tree', page: page, hide_parents: true %>
 <% end %>
