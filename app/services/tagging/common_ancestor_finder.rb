@@ -11,12 +11,17 @@ module Tagging
       all_results = filtered_content_enum.map do |content_hash|
         content_id = content_hash['content_id']
         title = content_hash['title']
-        expanded_links_hash = Services.publishing_api.get_expanded_links(content_id).to_h
-        {
-          content_id: content_id,
-          title: title,
-          common_ancestors: find_common_ancestors(taxon_paths(expanded_links_hash))
-        }
+        begin
+          expanded_links_hash = Services.publishing_api.get_expanded_links(content_id).to_h
+          {
+            content_id: content_id,
+            title: title,
+            common_ancestors: find_common_ancestors(taxon_paths(expanded_links_hash))
+          }
+        rescue GdsApi::HTTPNotFound
+          puts("Cannot find content with id: #{content_id}")
+          {}
+        end
       end
       all_results.select { |result| result[:common_ancestors].present? }
     end
