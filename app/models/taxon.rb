@@ -9,10 +9,10 @@ class Taxon
     :phase,
     :document_type,
     :redirect_to,
-    :associated_taxons
+    :associated_taxons,
   )
   attr_writer :content_id, :notes_for_editors, :internal_name
-  attr_reader :base_path, :path_prefix, :path_slug
+  attr_reader :base_path, :path_prefix, :path_slug, :legacy_taxons
 
   include ActiveModel::Model
 
@@ -55,6 +55,10 @@ class Taxon
 
     @path_prefix = path_components['prefix']
     @path_slug = path_components['slug']
+  end
+
+  def legacy_taxons=(legacy_taxons)
+    @legacy_taxons = legacy_taxons.select(&:present?)
   end
 
   def link_type

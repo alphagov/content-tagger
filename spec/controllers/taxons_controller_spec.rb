@@ -144,6 +144,7 @@ RSpec.describe TaxonsController, type: :controller do
             root_taxon: [],
             parent_taxons: ['CONTENT-ID-PARENT'],
             associated_taxons: ['1234'],
+            legacy_taxons: [],
           }
         }
 
@@ -156,6 +157,7 @@ RSpec.describe TaxonsController, type: :controller do
             associated_taxons: [
               { content_id: '1234' }
             ],
+            legacy_taxons: []
           }
         }
 
