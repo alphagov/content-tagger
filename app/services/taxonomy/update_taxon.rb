@@ -1,7 +1,7 @@
 module Taxonomy
   class UpdateTaxon
     attr_reader :taxon
-    delegate :content_id, :parent_content_id, :associated_taxons, to: :taxon
+    delegate :content_id, :parent_content_id, :associated_taxons, :legacy_taxons, to: :taxon
 
     class InvalidTaxonError < StandardError; end
 
@@ -28,7 +28,8 @@ module Taxonomy
       Taxonomy::LinksUpdate.new(
         content_id: content_id,
         parent_taxon_id: parent_content_id,
-        associated_taxon_ids: associated_taxons
+        associated_taxon_ids: associated_taxons,
+        legacy_taxon_ids: legacy_taxon_ids,
       ).call
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422
@@ -53,6 +54,13 @@ module Taxonomy
 
     def payload
       Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+    end
+
+    def legacy_taxon_ids
+      return [] if taxon.legacy_taxons.blank?
+      Array(
+        Tagging::BasePathLookup.find_by_base_paths(taxon.legacy_taxons)
+      ).select(&:present?).map(&:content_id)
     end
   end
 end

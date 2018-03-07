@@ -27,6 +27,7 @@ module Taxonomy
         notes_for_editors: content_item['details']['notes_for_editors'],
         parent_content_id: parent,
         associated_taxons: links.dig('associated_taxons'),
+        legacy_taxons: legacy_taxon_paths,
         redirect_to: content_item.dig('unpublishing', 'alternative_path'),
         visible_to_departmental_editors: content_item.dig('details', 'visible_to_departmental_editors')
       )
@@ -60,6 +61,10 @@ module Taxonomy
           .to_h
           .fetch('expanded_links', {})
       end
+    end
+
+    def legacy_taxon_paths
+      expanded_links.fetch('legacy_taxons', []).map { |v| v['base_path'] }
     end
   end
 end
