@@ -39,7 +39,7 @@ module Taxonomy
         with_drafts: true,
       )
 
-      if existing_content_id.present?
+      if existing_content_id.present? && existing_content_id != taxon.content_id
         taxon_path = Rails.application.routes.url_helpers.taxon_path(existing_content_id)
         error_message = I18n.t('errors.invalid_taxon_base_path', taxon_path: taxon_path)
         raise(InvalidTaxonError, ActionController::Base.helpers.sanitize(error_message))

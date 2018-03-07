@@ -15,7 +15,7 @@ RSpec.describe UpdateTaxonWorker, "#perform" do
     )
 
     publishing_api_has_item(taxon)
-    publishing_api_has_links(taxon.slice(:content_id))
+    publishing_api_has_expanded_links(taxon.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect(Version.count).to eq(0)
