@@ -94,7 +94,7 @@ RSpec.describe RemoteTaxons do
 
     before do
       publishing_api_has_item(parent_taxon)
-      publishing_api_has_links(content_id: parent_taxon_id, links: {})
+      publishing_api_has_expanded_links(content_id: parent_taxon_id)
     end
 
     it 'returns the parent taxon for a given taxon' do

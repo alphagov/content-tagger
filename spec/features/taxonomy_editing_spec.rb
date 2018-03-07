@@ -170,14 +170,20 @@ RSpec.feature "Taxonomy editing" do
     )
     publishing_api_has_taxons([@taxon_1, @taxon_2, @taxon_3])
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
-      .to_return(body: { links: { parent_taxons: ['ID-2'] } }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/ID-1")
+      .to_return(body: {
+        expanded_links: {
+          parent_taxons: [
+            { content_id: 'ID-2' }
+          ]
+        }
+      }.to_json)
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-2")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/ID-2")
+      .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-3")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/ID-3")
+      .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
       .to_return(body: @taxon_1.to_json)
