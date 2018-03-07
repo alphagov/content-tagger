@@ -21,6 +21,11 @@ module Tagging
         rescue GdsApi::HTTPNotFound
           puts("Cannot find content with id: #{content_id}")
           {}
+        rescue GdsApi::HTTPGatewayTimeout
+          retries ||= 0
+          raise if retries >= 3
+          retries += 1
+          retry
         end
       end
       all_results.select { |result| result[:common_ancestors].present? }
