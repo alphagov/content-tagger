@@ -137,13 +137,11 @@
           </p>
         <% end %>
 
-        <% if page.draft? %>
-          <p>
-            <%= link_to "Publish tree",
-                        taxon_confirm_bulk_publish_path(page.taxon_content_id),
-                        class: 'btn btn-default' %>
-          </p>
-        <% end %>
+        <p>
+          <%= link_to "Publish tree",
+                      taxon_confirm_bulk_publish_path(page.taxon_content_id),
+                      class: 'btn btn-default' %>
+        </p>
       </li>
       <% end %>
     </ul>
