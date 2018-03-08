@@ -92,7 +92,6 @@ RSpec.feature 'Bulk updating', type: :feature do
     publishing_api_has_item(@parent_taxon)
     publishing_api_has_item(@child_taxon)
     stub_any_publishing_api_put_content
-    stub_any_publishing_api_publish
 
     click_button 'Confirm bulk update'
 
@@ -100,11 +99,6 @@ RSpec.feature 'Bulk updating', type: :feature do
       @parent_content_id,
       request_json_includes(phase: 'beta')
     )
-
-    # When updating a published taxon, a new draft edition is created. We need
-    # to publish this newly created draft edition so that the updates are
-    # reflected in the published state.
-    assert_publishing_api_publish(@parent_content_id)
 
     assert_publishing_api_put_content(
       @child_content_id,
