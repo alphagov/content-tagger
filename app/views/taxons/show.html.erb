@@ -90,6 +90,12 @@
           </p>
         <% end %>
 
+        <p>
+          <%= link_to I18n.t('views.taxons.add_child'),
+          new_taxon_path(taxon: { parent_content_id: page.content_id }),
+          class: "btn btn-default" %>
+        </p>
+
         <% if page.taxon_deletable? && page.published? %>
           <p>
             <%= link_to "Unpublish",

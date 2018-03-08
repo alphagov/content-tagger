@@ -20,7 +20,7 @@ class TaxonsController < ApplicationController
   end
 
   def new
-    render :new, locals: { page: Taxonomy::EditPage.new(Taxon.new) }
+    render :new, locals: { page: Taxonomy::EditPage.new(Taxon.new(taxon_params)) }
   end
 
   def create
@@ -188,7 +188,7 @@ class TaxonsController < ApplicationController
 private
 
   def taxon_params
-    params.require(:taxon).permit(
+    params.fetch(:taxon, {}).permit(
       :content_id,
       :base_path,
       :internal_name,
