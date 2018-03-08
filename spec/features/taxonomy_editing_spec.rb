@@ -134,7 +134,7 @@ RSpec.feature "Taxonomy editing" do
     and_i_click_on_the_edit_taxon_button
     when_i_update_the_taxon
     then_my_taxon_is_updated
-    and_my_taxon_is_automatically_published
+    and_my_taxon_is_not_published
   end
 
   scenario "User edits a draft taxon" do
@@ -362,10 +362,6 @@ RSpec.feature "Taxonomy editing" do
 
   def then_the_parent_is_correctly_prefilled
     expect(find("#taxon_parent_content_id").value).to eq("ID-1")
-  end
-
-  def and_my_taxon_is_automatically_published
-    expect(@publish_item).to have_been_requested
   end
 
   def and_my_taxon_is_not_published

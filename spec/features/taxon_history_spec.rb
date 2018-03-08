@@ -52,7 +52,7 @@ RSpec.feature 'Taxon history' do
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon['content_id']}")
       .to_return(body: { content_id: @taxon['content_id'], expanded_links: {} }.to_json)
 
-    click_on 'Save & publish'
+    click_on 'Save Draft'
   end
 
   def and_i_click_view_version_history

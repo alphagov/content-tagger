@@ -75,10 +75,6 @@ class TaxonsController < ApplicationController
     if taxon.valid?
       Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:internal_change_note])
 
-      if params[:publish_taxon_on_save] == "true"
-        Services.publishing_api.publish(taxon.content_id)
-      end
-
       redirect_to taxon_path(taxon.content_id)
     else
       error_messages = taxon.errors.full_messages.join('; ')

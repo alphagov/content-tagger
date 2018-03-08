@@ -6,10 +6,5 @@
 
   <%= render 'form_fields', f: f, page: page %>
 
-  <% if page.published? %>
-    <input type="hidden" name="publish_taxon_on_save" value="true" />
-    <%= f.submit "Save & publish", class: "btn btn-lg btn-success submit-button" %>
-  <% else %>
-    <%= f.submit "Save draft", class: "btn btn-lg btn-success submit-button" %>
-  <% end %>
+  <%= f.submit "Save draft", class: "btn btn-lg btn-success submit-button" %>
 <% end %>
