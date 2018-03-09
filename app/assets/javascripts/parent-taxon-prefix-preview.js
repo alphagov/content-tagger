@@ -6,9 +6,6 @@
       var $parentSelectEl = $(el).find('select.js-parent-taxon');
       var $pathPrefixEl = $(el).find('.js-path-prefix-hint');
 
-      updateBasePathPreview();
-      $parentSelectEl.change(updateBasePathPreview);
-
       function getParentPathPrefix(callback) {
         var parentTaxonContentId = $parentSelectEl.val();
 
@@ -35,6 +32,9 @@
           }
         });
       }
+
+      updateBasePathPreview();
+      $parentSelectEl.change(updateBasePathPreview);
     };
   };
 })(window.GOVUKAdmin.Modules);
