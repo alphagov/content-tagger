@@ -5,6 +5,7 @@
     this.start = function(el) {
       var $parentSelectEl = $(el).find('select.js-parent-taxon');
       var $pathPrefixEl = $(el).find('.js-path-prefix-hint');
+      var $taxonBasePathEl = $(el).find('#taxon_base_path');
 
       function getParentPathPrefix(callback) {
         var parentTaxonContentId = $parentSelectEl.val();
@@ -32,6 +33,12 @@
           }
         });
       }
+
+      getParentPathPrefix(function (path_prefix) {
+        if (path_prefix) {
+          $taxonBasePathEl.val('/'+ path_prefix + '/');
+        }
+      });
 
       updateBasePathPreview();
       $parentSelectEl.change(updateBasePathPreview);
