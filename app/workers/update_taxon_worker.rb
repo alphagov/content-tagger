@@ -10,9 +10,5 @@ class UpdateTaxonWorker
 
     payload = Taxonomy::BuildTaxonPayload.call(taxon: updated_taxon)
     Services.publishing_api.put_content(content_id, payload)
-
-    return unless updated_taxon.published?
-
-    Services.publishing_api.publish(content_id)
   end
 end
