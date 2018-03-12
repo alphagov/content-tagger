@@ -5,24 +5,27 @@
     this.start = function(el) {
       var $parentSelectEl = $(el).find('select.js-parent-taxon');
       var $pathPrefixEl = $(el).find('.js-path-prefix-hint');
+      var $taxonBasePathEl = $(el).find('#taxon_base_path');
 
-      updateBasePathPreview();
-      $parentSelectEl.change(updateBasePathPreview);
-
-      function updateBasePathPreview() {
+      function getParentPathPrefix(callback) {
         var parentTaxonContentId = $parentSelectEl.val();
 
         if (parentTaxonContentId.length === 0) {
-          $pathPrefixEl.addClass('hidden');
-          $pathPrefixEl.text('');
+          callback();
           return;
         }
 
         $.getJSON(
           window.location.origin + '/taxons/' + parentTaxonContentId + '.json'
         ).done(function(taxon) {
-          if (typeof taxon.path_prefix !== 'undefined') {
-            $pathPrefixEl.html('Base path must start with <b>/' + taxon.path_prefix + '</b>');
+          callback(taxon.path_prefix);
+        });
+      }
+
+      function updateBasePathPreview() {
+        getParentPathPrefix(function (path_prefix) {
+          if (path_prefix) {
+            $pathPrefixEl.html('Base path must start with <b>/' + path_prefix + '</b>');
             $pathPrefixEl.removeClass('hidden');
           } else {
             $pathPrefixEl.addClass('hidden');
@@ -30,6 +33,15 @@
           }
         });
       }
+
+      getParentPathPrefix(function (path_prefix) {
+        if (path_prefix) {
+          $taxonBasePathEl.val('/'+ path_prefix + '/');
+        }
+      });
+
+      updateBasePathPreview();
+      $parentSelectEl.change(updateBasePathPreview);
     };
   };
 })(window.GOVUKAdmin.Modules);
