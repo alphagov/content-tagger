@@ -35,6 +35,10 @@
       }
 
       getParentPathPrefix(function (path_prefix) {
+        if ($taxonBasePathEl.val().length !== 0) {
+          return;
+        }
+
         if (path_prefix) {
           $taxonBasePathEl.val('/'+ path_prefix + '/');
         }
