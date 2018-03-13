@@ -37,19 +37,16 @@
 
 <hr>
 
-<% if user_can_administer_taxonomy? %>
-  <p>
-    <% if page.published? %>
-      <%= link_to "View on GOV.UK", website_url(page.base_path) %>
-    <% elsif page.draft? %>
-      <%= link_to "View on GOV.UK", website_url(page.base_path, draft: true) %>
-    <% end %>
-
-    <% unless page.unpublished? %>
-      (<%= page.base_path %>)
-    <% end %>
-  </p>
-<% end %>
+<p>
+  <% if page.published? %>
+    <%= link_to "View on GOV.UK", website_url(page.base_path) %>
+  <% elsif page.draft? %>
+    <%= link_to "View on GOV.UK", website_url(page.base_path, draft: true) %>
+  <% end %>
+ <% unless page.unpublished? %>
+    (<%= page.base_path %>)
+  <% end %>
+</p>
 
 <% unless page.unpublished? %>
   <p>
