@@ -1,42 +1,9 @@
 <h3>Related content items (new navigation)</h3>
 
-<div class="form-group">
-  <fieldset class="ordered-related-items select2-container select2-container-multi"
-            data-module="related-content-tagger">
-    <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
-      <% tagging_update.ordered_related_items_overrides.each do |base_path| %>
-        <%= render 'related_item_override_tagging_entry',
-          base_path: base_path,
-          is_template: false,
-          tagging_update: tagging_update %>
-      <% end %>
-    </ul>
-
-    <% # Hidden, empty tag used by JS to asynchronously render the related item template %>
-    <div class="related-item-template hide">
-      <%= render 'related_item_override_tagging_entry',
-        base_path: '',
-        is_template: true,
-        tagging_update: tagging_update
-      %>
-    </div>
-
-    <div class="add-sortable-input">
-      <div class="input-group">
-        <input type="text" class="form-control new-base-path" placeholder="URL or path" />
-        <span class="input-group-btn">
-          <button class="btn btn-default lookup-base-path-button" type="button">
-            Add related item
-          </button>
-        </span>
-      </div>
-    </div>
-
-    <div class="error-message related-item-error-message">
-      Not a known URL or path on GOV.UK
-    </div>
-  </fieldset>
-</div>
+<%= render 'shared/path_lookup_entry_field',
+  base_paths: tagging_update.ordered_related_items_overrides,
+  form_field: 'tagging_tagging_update_form[ordered_related_items_overrides][]',
+  field_errors: tagging_update.related_item_overrides_errors %>
 
 <p class="explain">
   Related items override the automatically-generated items in the sidebar for users
