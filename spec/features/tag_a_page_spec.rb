@@ -182,14 +182,14 @@ RSpec.describe "Tagging content", type: :feature do
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    fields = all('.related-item input')
+    fields = all(:xpath, "//input[@name='tagging_tagging_update_form[ordered_related_items][]']")
     values.each do |i, value|
       fields[i].set(value)
     end
   end
 
   def and_the_related_items_should_be_prefilled_with(values)
-    fields = all('.related-item input')
+    fields = all(:xpath, "//input[@name='tagging_tagging_update_form[ordered_related_items][]']")
     values.each do |i, value|
       expect(fields[i].value).to eq(value)
     end

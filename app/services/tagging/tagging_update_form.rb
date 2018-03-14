@@ -17,13 +17,7 @@ module Tagging
         current_tags[tag_type] = links.send(tag_type).map { |links_hash| links_hash["content_id"] }
 
         next unless tag_type.in? %i[ordered_related_items ordered_related_items_overrides]
-        base_paths = links.send(tag_type).map { |links_hash| links_hash["base_path"] }
-
-        # The number of extra empty form fields to add to a link section when the link
-        # section shows an individual form input for each value. This allows users to
-        # append new links to the end of the existing list.
-        empty_entries = [""] * 5
-        current_tags[tag_type] = base_paths + empty_entries
+        current_tags[tag_type] = links.send(tag_type).map { |links_hash| links_hash["base_path"] }
       end
 
       new(
