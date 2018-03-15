@@ -70,7 +70,8 @@ RSpec.feature "Taxonomy editing" do
           links: {
             root_taxon: [],
             parent_taxons: ["ID-1"],
-            associated_taxons: array_including("ID-2", "ID-3")
+            associated_taxons: array_including("ID-2", "ID-3"),
+            legacy_taxons: [],
           }
         }
       )
@@ -163,6 +164,14 @@ RSpec.feature "Taxonomy editing" do
     then_the_base_path_shows_as_invalid
   end
 
+  scenario "User links to a legacy taxon" do
+    given_there_are_taxons
+    when_i_visit_the_taxon_page
+    and_i_click_on_the_edit_taxon_button
+    when_i_add_an_additional_legacy_taxon
+    then_the_legacy_taxons_should_be_saved
+  end
+
   def given_there_are_taxons
     publishing_api_has_linkables(
       [@linkable_taxon_1, @linkable_taxon_2, @linkable_taxon_3],
@@ -170,14 +179,11 @@ RSpec.feature "Taxonomy editing" do
     )
     publishing_api_has_taxons([@taxon_1, @taxon_2, @taxon_3])
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-1")
-      .to_return(body: { links: { parent_taxons: ['ID-2'] } }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/ID-2")
+      .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
 
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-2")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
-
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/ID-3")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/ID-3")
+      .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
       .to_return(body: @taxon_1.to_json)
@@ -192,7 +198,21 @@ RSpec.feature "Taxonomy editing" do
   def when_i_visit_the_taxon_page
     publishing_api_has_expanded_links(
       content_id: @taxon_1[:content_id],
-      expanded_links: {},
+      expanded_links: {
+        parent_taxons: [
+          {
+            content_id: @taxon_2[:content_id],
+            base_path: @taxon_2[:base_path],
+            title: @taxon_2[:title]
+          }
+        ],
+        legacy_taxons: [
+          {
+            content_id: 'CONTENT-ID-LEGACY-TAXON',
+            base_path: '/legacy-taxon'
+          }
+        ]
+      }
     )
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
@@ -265,6 +285,21 @@ RSpec.feature "Taxonomy editing" do
 
     @publish_item = stub_request(:post, %r{https://publishing-api.test.gov.uk/v2/content/.*/publish})
       .to_return(status: 200, body: "", headers: {})
+
+    publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
+
+    publishing_api_has_expanded_links(
+      content_id: @taxon_1[:content_id],
+      expanded_links: {},
+    )
+
+    publishing_api_has_expanded_links(
+      content_id: @taxon_2[:content_id],
+      expanded_links: {},
+    )
+
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(status: 200, body: {}.to_json)
 
     find('.submit-button').click
   end
@@ -378,5 +413,33 @@ RSpec.feature "Taxonomy editing" do
 
   def parent_taxon_json
     '[{ "internal_name": "foo", "content_id": "bar", "publication_state": "baz" }]'
+  end
+
+  def when_i_add_an_additional_legacy_taxon
+    legacy_taxon_fields = all(:xpath, "//input[@name='taxon[legacy_taxons][]']")
+    expect(legacy_taxon_fields[0].value).to eq '/legacy-taxon'
+    legacy_taxon_fields[1].set('/another-legacy-taxon')
+  end
+
+  def then_the_legacy_taxons_should_be_saved
+    stub_any_publishing_api_put_content
+    publishing_api_has_lookups(
+      "/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON",
+      "/another-legacy-taxon" => "CONTENT-ID-ANOTHER-LEGACY-TAXON",
+    )
+
+    links_update_request = stub_publishing_api_patch_links(
+      'ID-1',
+      links: {
+        root_taxon: [],
+        parent_taxons: ['ID-2'],
+        associated_taxons: [],
+        legacy_taxons: ['CONTENT-ID-LEGACY-TAXON', 'CONTENT-ID-ANOTHER-LEGACY-TAXON'],
+      }
+    )
+
+    find('.submit-button').click
+
+    expect(links_update_request).to have_been_requested
   end
 end

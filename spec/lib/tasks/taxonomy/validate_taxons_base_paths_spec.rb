@@ -48,7 +48,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     )
 
     publishing_api_has_item(taxon_attributes)
-    publishing_api_has_links(taxon_attributes.slice(:content_id))
+    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect {
@@ -81,7 +81,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     )
 
     publishing_api_has_item(taxon_attributes)
-    publishing_api_has_links(taxon_attributes.slice(:content_id))
+    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect {
@@ -128,7 +128,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     )
 
     publishing_api_has_item(taxon_attributes)
-    publishing_api_has_links(taxon_attributes.slice(:content_id))
+    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
       .to_return(status: 422, body:
         {
@@ -157,7 +157,7 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
       {"error":{"code":422,"message":"base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en","fields":{"base":["base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en"]}}}
 
       Request body:
-      {:base_path=>"/level-one/level-two", :document_type=>"taxon", :schema_name=>"taxon", :title=>"Level Two", :description=>nil, :publishing_app=>"content-tagger", :rendering_app=>"collections", :public_updated_at=>"2018-02-28T16:23:32+00:00", :locale=>"en", :details=>{:internal_name=>"internal name for Level Two", :notes_for_editors=>"Editor notes for Level Two", :visible_to_departmental_editors=>false}, :routes=>[{:path=>"/level-one/level-two", :type=>"exact"}], :update_type=>"major", :phase=>"live"}>
+      {:base_path=>"/level-one/level-two", :document_type=>"taxon", :schema_name=>"taxon", :title=>"Level Two", :description=>"...", :publishing_app=>"content-tagger", :rendering_app=>"collections", :public_updated_at=>"2018-02-28T16:23:32+00:00", :locale=>"en", :details=>{:internal_name=>"internal name for Level Two", :notes_for_editors=>"Editor notes for Level Two", :visible_to_departmental_editors=>false}, :routes=>[{:path=>"/level-one/level-two", :type=>"exact"}], :update_type=>"major", :phase=>"live"}>
     LOG
   end
 

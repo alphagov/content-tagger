@@ -59,10 +59,12 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
       .to_return(body: previous_fields.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{content_id}")
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{content_id}")
       .to_return(body: {
-        links: {
-          associated_taxons: ['mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm'],
+        expanded_links: {
+          associated_taxons: [
+            { content_id: 'mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm' }
+          ],
         }
       }.to_json)
 
@@ -106,7 +108,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
       .to_return(body: previous_fields.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{content_id}")
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{content_id}")
       .to_return(body: {}.to_json)
 
     described_class.call(current_taxon, '')
@@ -140,7 +142,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{content_id}")
       .to_return(body: previous_fields.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{content_id}")
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{content_id}")
       .to_return(body: {}.to_json)
 
     described_class.call(current_taxon, 'Restoring a taxon')

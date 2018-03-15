@@ -43,6 +43,11 @@
     input_html: { multiple: true, class: :select2 },
     include_hidden: false %>
 
+<label>Legacy taxons</label>
+<%= render 'shared/path_lookup_entry_field',
+  base_paths: page.taxon.legacy_taxons,
+  form_field: 'taxon[legacy_taxons][]' %>
+
 <hr>
 
 <div class="form-group">

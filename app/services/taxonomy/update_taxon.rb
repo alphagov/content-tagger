@@ -1,7 +1,7 @@
 module Taxonomy
   class UpdateTaxon
     attr_reader :taxon
-    delegate :content_id, :parent_content_id, :associated_taxons, to: :taxon
+    delegate :content_id, :parent_content_id, :associated_taxons, :legacy_taxons, to: :taxon
 
     class InvalidTaxonError < StandardError; end
 
@@ -25,11 +25,12 @@ module Taxonomy
 
       Services.publishing_api.put_content(content_id, payload)
 
-      Taxonomy::ParentUpdate.new.set_parent(
-        content_id,
+      Taxonomy::LinksUpdate.new(
+        content_id: content_id,
         parent_taxon_id: parent_content_id,
-        associated_taxon_ids: associated_taxons || []
-      )
+        associated_taxon_ids: associated_taxons,
+        legacy_taxon_ids: legacy_taxon_ids,
+      ).call
     rescue GdsApi::HTTPUnprocessableEntity => e
       # Since we cannot easily differentiate the reasons for getting a 422
       # error code, we do a lookup to see if a content item with the slug
@@ -39,7 +40,7 @@ module Taxonomy
         with_drafts: true,
       )
 
-      if existing_content_id.present?
+      if existing_content_id.present? && existing_content_id != taxon.content_id
         taxon_path = Rails.application.routes.url_helpers.taxon_path(existing_content_id)
         error_message = I18n.t('errors.invalid_taxon_base_path', taxon_path: taxon_path)
         raise(InvalidTaxonError, ActionController::Base.helpers.sanitize(error_message))
@@ -53,6 +54,13 @@ module Taxonomy
 
     def payload
       Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+    end
+
+    def legacy_taxon_ids
+      return [] if taxon.legacy_taxons.blank?
+      Array(
+        Tagging::BasePathLookup.find_by_base_paths(taxon.legacy_taxons)
+      ).select(&:present?).map(&:content_id)
     end
   end
 end

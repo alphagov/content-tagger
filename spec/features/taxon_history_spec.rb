@@ -23,8 +23,8 @@ RSpec.feature 'Taxon history' do
     publishing_api_has_linked_items([], content_id: @taxon['content_id'], link_type: "taxons")
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{@taxon['content_id']}")
       .to_return(body: @taxon.to_json)
-    stub_request(:get, "https://publishing-api.test.gov.uk/v2/links/#{@taxon['content_id']}")
-      .to_return(body: { links: { parent_taxons: [] } }.to_json)
+    stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon['content_id']}")
+      .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
       .to_return(body: [{
         title: @taxon['title'],

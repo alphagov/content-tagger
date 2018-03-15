@@ -67,6 +67,21 @@ $red: #b10e1e;
   background-color: $gray-light;
 }
 
+.field-with-error {
+  border: 2px solid $state-danger-text;
+}
+
+.error-block {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: $state-danger-text;
+}
+
+.vertical-drag {
+  cursor: ns-resize;
+}
+
 // taxons page
 
 .nav.nav-tabs {
