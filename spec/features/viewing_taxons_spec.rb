@@ -39,6 +39,13 @@ RSpec.describe "Viewing taxons" do
     then_i_see_associated_taxons
   end
 
+  scenario "Viewing the lowest level taxon" do
+    given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
+    when_i_view_the_lowest_level_taxon
+    then_i_see_the_taxon_hierarchy_in_chevrons
+  end
+
   def given_a_taxonomy
     publishing_api_has_item(fruits)
     publishing_api_has_expanded_links(
@@ -127,6 +134,36 @@ RSpec.describe "Viewing taxons" do
     visit taxon_tagged_content_path(apples["content_id"])
   end
 
+  def when_i_view_the_lowest_level_taxon
+    publishing_api_has_item(cox)
+    publishing_api_has_links(cox)
+
+    publishing_api_has_expanded_links(
+      content_id: cox["content_id"],
+      expanded_links: {
+        parent_taxons: [
+          apples.merge(
+            'links' => {
+              'parent_taxons' => [fruits]
+            }
+          )
+        ]
+      }
+    )
+
+    publishing_api_has_expanded_links(
+      content_id: apples["content_id"],
+      expanded_links: {
+        parent_taxons: [fruits]
+      }
+    )
+
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/cox})
+      .to_return(status: 200, body: {}.to_json)
+
+    visit taxon_path(cox["content_id"])
+  end
+
   def then_i_see_the_entire_taxonomy
     expected_titles = [
       fruits["title"],
@@ -164,6 +201,10 @@ RSpec.describe "Viewing taxons" do
     within ".taxon-children .taxon-depth-2" do
       expect(page).to have_content("Cox")
     end
+  end
+
+  def then_i_see_the_taxon_hierarchy_in_chevrons
+    expect(page).to have_content "Fruits > Apples > Cox"
   end
 
   def and_i_can_download_the_taxonomy_in_csv_form
