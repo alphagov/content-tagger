@@ -167,7 +167,7 @@ RSpec.describe "Viewing taxons" do
   def then_i_see_the_entire_taxonomy
     expected_titles = [
       fruits["title"],
-      'Root of the taxonomy',
+      'GOV.UK homepage',
       apples["title"],
       cox["title"],
     ]

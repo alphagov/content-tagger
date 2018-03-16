@@ -13,7 +13,7 @@ class Linkables
   end
 
   def taxons_including_root(exclude_ids: [])
-    [['Root of the taxonomy', GovukTaxonomy::ROOT_CONTENT_ID]] + taxons(exclude_ids: exclude_ids)
+    [[GovukTaxonomy::TITLE, GovukTaxonomy::ROOT_CONTENT_ID]] + taxons(exclude_ids: exclude_ids)
   end
 
   def organisations

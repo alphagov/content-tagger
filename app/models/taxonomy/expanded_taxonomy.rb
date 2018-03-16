@@ -96,8 +96,8 @@ module Taxonomy
 
     def home_page_linked_content_item
       GovukTaxonomyHelpers::LinkedContentItem.new(
-        internal_name: 'Root of the taxonomy',
-        title: 'Root Taxon',
+        internal_name: GovukTaxonomy::TITLE,
+        title: GovukTaxonomy::TITLE,
         base_path: '/',
         content_id: GovukTaxonomy::ROOT_CONTENT_ID
       )
