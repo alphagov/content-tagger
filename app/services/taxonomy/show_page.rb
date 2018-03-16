@@ -40,6 +40,10 @@ module Taxonomy
       @children ||= taxonomy_tree.child_expansion.children
     end
 
+    def chevron_hierarchy
+      taxonomy_tree.parent_expansion.map(&:title).reverse.join(" > ")
+    end
+
     def tagged
       @tagged ||= begin
         return [] if taxon.unpublished?
