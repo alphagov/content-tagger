@@ -138,7 +138,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       expect(@taxonomy.child_expansion.children.first.children.map(&:internal_name)).to match_array(%w[i-Bramley i-Cox])
     end
     it 'has the correct name for the home page taxon' do
-      expect(@taxonomy.root_node.internal_name).to eq('Root of the taxonomy')
+      expect(@taxonomy.root_node.internal_name).to eq('GOV.UK homepage')
     end
   end
 
@@ -151,7 +151,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
         'i-Apples',
         'i-Fruits',
         'i-Food',
-        'Root of the taxonomy'
+        'GOV.UK homepage'
       ]
       expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 3]
       expect(taxonomy.child_expansion.map(&:internal_name)).to eq %w[
@@ -243,7 +243,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       it "returns the expansion" do
         taxonomy.build
 
-        expect(taxonomy.parent_expansion.map(&:internal_name)).to eq ['i-Apples', 'i-Fruits', 'i-Food', 'Root of the taxonomy']
+        expect(taxonomy.parent_expansion.map(&:internal_name)).to eq ['i-Apples', 'i-Fruits', 'i-Food', 'GOV.UK homepage']
         expect(taxonomy.parent_expansion.map(&:depth)).to eq [0, 1, 2, 3]
       end
     end
