@@ -12,10 +12,7 @@
       var $inputFields = moduleEl.find("input");
       $inputFields.prop('readonly', true);
       $inputFields.wrap('<div class="input-group"></div>');
-      $inputFields.before('<span class="input-group-addon vertical-drag">&updownarrow;</span>');
       $inputFields.after(buildRemoveRelaltedItemEl());
-
-      $('.js-list-sortable').sortable();
 
       moduleEl.append(buildAddRelatedItemEl())
     }
@@ -62,7 +59,6 @@
     var buildInputGroupEl = function(path) {
       var $listItemEl = $('<li></li>');
       var $inputGroupEl = $('<div class="input-group"></div>');
-      var $dragEl = $('<span class="input-group-addon">↕</span>');
       var $inputEl = $('<input />', {
         type: 'text',
         name: formFieldName,
@@ -72,7 +68,6 @@
       });
 
       $listItemEl.append($inputGroupEl);
-      $inputGroupEl.append($dragEl);
       $inputGroupEl.append($inputEl);
       $inputGroupEl.append(buildRemoveRelaltedItemEl());
 
