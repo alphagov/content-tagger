@@ -27,7 +27,7 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
     @taxon_2 = content_item_with_details(
@@ -35,7 +35,7 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
     @taxon_3 = content_item_with_details(
@@ -43,7 +43,7 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-3",
         base_path: "/bar",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
 
@@ -65,7 +65,7 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
     @taxon_2 = content_item_with_details(
@@ -73,7 +73,7 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'active'
+        publication_state: 'published'
       }
     )
 

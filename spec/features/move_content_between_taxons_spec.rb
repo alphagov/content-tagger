@@ -44,7 +44,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
     @source_taxon_for_select = {
       'internal_name' => @source_taxon['details']['internal_name'],
       'content_id' => @source_taxon['content_id'],
-      'publication_state' => 'live'
+      'publication_state' => 'published'
     }
     @dest_taxon = taxon_with_details(
       "Destination taxon",
@@ -55,7 +55,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
     @dest_taxon_for_select = {
       'internal_name' => @dest_taxon['details']['internal_name'],
       'content_id' => @dest_taxon['content_id'],
-      'publication_state' => 'live'
+      'publication_state' => 'published'
     }
 
     @document_1 = basic_content_item("Tagged content 1")

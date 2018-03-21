@@ -52,7 +52,7 @@ module ContentItemHelper
       internal_name: SecureRandom.hex,
       base_path: "/#{SecureRandom.hex}",
       document_type: SecureRandom.hex,
-      publication_state: %w[live draft].sample,
+      publication_state: %w[published draft].sample,
     }
 
     default.stringify_keys.merge(hash.stringify_keys)
