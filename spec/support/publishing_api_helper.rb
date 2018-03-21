@@ -128,6 +128,14 @@ module PublishingApiHelper
         "base_path" => "/alpha-taxonomy/vehicle-plating",
         "internal_name" => "Vehicle plating"
       },
+      {
+        "public_updated_at" => "2017-02-07 14:22:48",
+        "title" => "Vehicle weights explained",
+        "content_id" => "4b5e77f7-69e5-45a9-9061-348cdce876fb",
+        "publication_state" => "draft",
+        "base_path" => "/alpha-taxonomy/vehicle-weights-explained",
+        "internal_name" => "Vehicle weights explained"
+      },
     ]
   end
 
