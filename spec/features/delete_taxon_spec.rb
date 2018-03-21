@@ -127,7 +127,6 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to have_select "Redirect to", options: [
       '',
       'Vehicle plating',
-      'Vehicle weights explained (draft)',
     ]
   end
 
