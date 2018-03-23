@@ -4,8 +4,8 @@ class Linkables
     @topics ||= for_nested_document_type('topic')
   end
 
-  def taxons(exclude_ids: [])
-    @taxons ||= for_document_type('taxon').tap do |items|
+  def taxons(exclude_ids: [], include_draft: true)
+    @taxons ||= for_document_type('taxon', include_draft: include_draft).tap do |items|
       if Array(exclude_ids).present?
         items.delete_if { |item| item.second.in? Array(exclude_ids) }
       end

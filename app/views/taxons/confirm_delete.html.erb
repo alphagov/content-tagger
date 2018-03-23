@@ -1,4 +1,4 @@
-<h1><%= t('views.taxons.confirm_deletion_title') %> "<%= page.title %>"</h1>
+<h1><%= t('views.taxons.confirm_deletion_title') %> "<%= page.taxon.internal_name %>"</h1>
 
 <div class="lead"><%= t('views.taxons.confirm_deletion_restore') %></div>
 
@@ -14,7 +14,7 @@
 </div>
 <% end %>
 
-<%= simple_form_for page.taxon, url: taxon_path(page.taxon_content_id), method: :delete do |f| %>
+<%= simple_form_for page.taxon, url: taxon_path(page.taxon.content_id), method: :delete do |f| %>
   <%= f.input :redirect_to, collection: page.taxons_for_select,
     input_html: { class: :select2, multiple: false, include_blank: true } %>
 
@@ -23,7 +23,7 @@
     <span><%= t('views.taxons.confirm_deletion') %></span>
   <% end %>
 
-  <%= link_to taxon_path(page.taxon_content_id), class: 'btn btn-md btn-default' do %>
+  <%= link_to taxon_path(page.taxon.content_id), class: 'btn btn-md btn-default' do %>
     <span>
       <%= t('views.taxons.cancel_button') %>
     </span>

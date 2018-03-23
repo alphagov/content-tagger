@@ -9,6 +9,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     when_i_visit_the_taxon_page
     when_i_click_unpublish_taxon
     then_i_see_a_basic_prompt_to_delete
+    then_i_see_a_list_of_taxons_to_redirect_to
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
@@ -20,6 +21,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_i_expect_to_see_the_child_taxon
     when_i_click_unpublish_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
+    then_i_see_a_list_of_taxons_to_redirect_to
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
@@ -32,6 +34,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     when_i_visit_the_taxon_page
     when_i_click_unpublish_taxon
     then_i_see_a_prompt_to_delete_with_a_warning_message
+    then_i_see_a_list_of_taxons_to_redirect_to
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
@@ -100,7 +103,12 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def when_i_click_unpublish_taxon
-    @get_linkables_request = publishing_api_has_taxon_linkables("/alpha-taxonomy/vehicle-plating")
+    publishing_api_has_taxon_linkables(
+      [
+        "/alpha-taxonomy/vehicle-plating",
+        "/alpha-taxonomy/vehicle-weights-explained",
+      ]
+    )
     click_on "Unpublish"
   end
 
@@ -113,6 +121,13 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to_not have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link('Cancel')
     expect(page).to have_button('Delete and redirect')
+  end
+
+  def then_i_see_a_list_of_taxons_to_redirect_to
+    expect(page).to have_select "Redirect to", options: [
+      '',
+      'Vehicle plating',
+    ]
   end
 
   def when_i_choose_a_taxon_to_redirect_to(selection)

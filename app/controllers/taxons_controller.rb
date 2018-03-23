@@ -91,7 +91,7 @@ class TaxonsController < ApplicationController
       redirect_to taxon_path(content_id), danger: t("controllers.taxons.destroy_homepage")
     elsif params[:taxon][:redirect_to].empty?
       flash.now[:danger] = t("controllers.taxons.destroy_no_redirect")
-      render :confirm_delete, locals: { page: Taxonomy::ShowPage.new(taxon) }
+      render :confirm_delete, locals: { page: Taxonomy::DeletePage.new(taxon) }
     else
       base_path = Services.publishing_api.get_content(params[:taxon][:redirect_to])['base_path']
       Services.publishing_api.unpublish(params[:id], type: "redirect", alternative_path: base_path)
@@ -100,7 +100,7 @@ class TaxonsController < ApplicationController
   end
 
   def confirm_delete
-    render :confirm_delete, locals: { page: Taxonomy::ShowPage.new(taxon) }
+    render :confirm_delete, locals: { page: Taxonomy::DeletePage.new(taxon) }
   end
 
   def restore

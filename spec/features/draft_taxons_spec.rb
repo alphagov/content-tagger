@@ -32,7 +32,7 @@ RSpec.feature "Draft taxonomy" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'active'
+        publication_state: 'draft'
       }
     )
     @taxon_2 = taxon_with_details(
@@ -40,7 +40,7 @@ RSpec.feature "Draft taxonomy" do
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'active'
+        publication_state: 'draft'
       }
     )
     @taxon_3 = taxon_with_details(
@@ -48,7 +48,7 @@ RSpec.feature "Draft taxonomy" do
       other_fields: {
         content_id: "ID-3",
         base_path: "/bar",
-        publication_state: 'active'
+        publication_state: 'draft'
       }
     )
 
