@@ -77,14 +77,8 @@ RSpec.describe NewProjectForm, '#taxonomy_branches_for_select' do
       .and_return(
         [
           {
-            'status' => 'published',
-            'title' => 'Published Title',
-            'content_id' => 'published_id'
-          },
-          {
-            'status' => 'draft',
-            'title' => 'Draft Title',
-            'content_id' => 'draft_id'
+            'title' => 'Title',
+            'content_id' => 'content_id'
           }
         ]
       )
@@ -92,11 +86,6 @@ RSpec.describe NewProjectForm, '#taxonomy_branches_for_select' do
 
   it 'returns a hash of title => id' do
     result = NewProjectForm.new.taxonomy_branches_for_select
-    expect(result['Draft Title']).to eq 'draft_id'
-  end
-
-  it 'only returns draft root taxons' do
-    result = NewProjectForm.new.taxonomy_branches_for_select
-    expect(result.size).to eq 1
+    expect(result['Title']).to eq 'content_id'
   end
 end

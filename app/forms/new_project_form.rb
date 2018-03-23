@@ -12,7 +12,6 @@ class NewProjectForm
 
   def taxonomy_branches_for_select
     GovukTaxonomy::Branches.new.all
-      .select { |branch| branch['status'] == 'draft' }
       .reduce({}) { |memo, branch| memo.merge(branch['title'] => branch['content_id']) }
   end
 

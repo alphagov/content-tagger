@@ -5,16 +5,8 @@ module GovukTaxonomy
     end
 
     def all
-      published.map { |taxon| transform(taxon, 'published') } +
-        draft.map { |taxon| transform(taxon, 'draft') }
-    end
-
-    def published
-      @_published_branches ||= ::Taxonomy::LevelOneTaxonsRetrieval.new.get(with_drafts: false)
-    end
-
-    def draft
-      @_draft_branches ||= ::Taxonomy::LevelOneTaxonsRetrieval.new.get(with_drafts: true) - published
+      Taxonomy::LevelOneTaxonsRetrieval.new.get(with_drafts: true)
+        .map { |taxon| taxon.slice("content_id", "title", "base_path") }
     end
 
     def taxons_for_branch(content_id)
@@ -24,10 +16,6 @@ module GovukTaxonomy
     end
 
   private
-
-    def transform(taxon, status)
-      taxon.slice("content_id", "title", "base_path").merge("status" => status)
-    end
 
     def get_expanded_links_hash(content_id, with_drafts:)
       Services.publishing_api
