@@ -39,7 +39,7 @@ module LegacyTaxonomy
     def policies_for_policy_area(policy_area_slug)
       policies = Client::Whitehall.policies_for_policy_area(policy_area_slug)
       policies.map do |policy_id|
-        policy_content_item = Client::PublishingApi.client.get_content(policy_id)
+        policy_content_item = Services.publishing_api.get_content(policy_id)
         policy_slug = policy_content_item.to_h["base_path"].split("/").last
         path_slug = "#{BASE_PATH}/#{policy_area_slug}/#{policy_slug}"
         TaxonData.new(
