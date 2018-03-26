@@ -88,7 +88,7 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
-    gds-api-adapters (52.2.1)
+    gds-api-adapters (52.4.0)
       addressable
       link_header
       lrucache (~> 0.1.1)
@@ -203,7 +203,7 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     parallel (1.12.1)
-    parser (2.5.0.4)
+    parser (2.5.0.5)
       ast (~> 2.4.0)
     pg (0.21.0)
     plek (2.1.1)
@@ -386,7 +386,7 @@ DEPENDENCIES
   capybara
   database_cleaner
   factory_bot_rails
-  gds-api-adapters (~> 52.2)
+  gds-api-adapters (~> 52.4)
   gds-sso (~> 13.6)
   govuk-content-schema-test-helpers
   govuk-lint
