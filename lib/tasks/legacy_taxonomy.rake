@@ -1,4 +1,33 @@
 namespace :legacy_taxonomy do
+  desc "Synchronize tagging. (option: tag='tag')"
+  task :synchronize, [:tag] => :environment do |_, args|
+    taxonomies = []
+    taxonomies << LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-browse',
+                                                         title: 'Imported Mainstream Browse',
+                                                         type: LegacyTaxonomy::ThreeLevelTaxonomy::MAINSTREAM).to_taxonomy_branch
+    puts "Finished reading Mainstream Browse"
+    taxonomies << LegacyTaxonomy::ThreeLevelTaxonomy.new('/imported-topic',
+                                                         title: 'Imported Topics',
+                                                         type: LegacyTaxonomy::ThreeLevelTaxonomy::TOPIC).to_taxonomy_branch
+    puts "Finished reading Topics"
+    taxonomies << LegacyTaxonomy::PolicyAreaTaxonomy.new('/imported-policy-areas').to_taxonomy_branch
+    puts "Finished reading Policy Areas"
+    taxonomies << LegacyTaxonomy::PolicyTaxonomy.new('/imported-policies').to_taxonomy_branch
+    puts "Finished reading Policies"
+    puts "Finished reading all taxonomies"
+
+    results = LegacyTaxonomy::MissingPagesFinder.new.find(taxonomies)
+    results.each do |result|
+      taxon_content_id = result[:taxon_content_id]
+      missing_pages = result[:missing_pages]
+      puts "Taxon #{taxon_content_id}, missing pages: #{missing_pages.join(', ')}"
+      next unless args[:tag] == "tag"
+      missing_pages.each do |missing_page|
+        Tagging::Tagger.add_tags(missing_page, [taxon_content_id])
+      end
+    end
+  end
+
   namespace :all do
     desc "Scrape and import legacy taxonomies"
     task import: :environment do
