@@ -1,5 +1,5 @@
 module LegacyTaxonomy
-  class ThreeLevelTaxonomy
+  class ThreeLevelTaxonomy # rubocop:disable Metrics/ClassLength
     attr_accessor :path_prefix
 
     MAINSTREAM = {
