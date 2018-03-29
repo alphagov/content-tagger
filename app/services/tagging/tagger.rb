@@ -5,7 +5,7 @@ module Tagging
       version = link_content['version']
       taxons = (link_content.dig('links', 'taxons') || []) + taxon_ids
       Services.publishing_api.patch_links(content_id, links: { taxons: taxons.uniq }, previous_version: version, bulk_publishing: true)
-    rescue GdsApi::HTTPConflict, GdsApi::HTTPGatewayTimeout
+    rescue GdsApi::HTTPConflict, GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException
       retries ||= 0
       retry if (retries += 1) < 3
       raise
