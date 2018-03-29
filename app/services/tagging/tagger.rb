@@ -9,6 +9,8 @@ module Tagging
       retries ||= 0
       retry if (retries += 1) < 3
       raise
+    rescue GdsApi::HTTPNotFound
+      Rails.logger.warn("Cannot find content item '#{content_id}' in the publishing api")
     end
   end
 end
