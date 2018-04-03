@@ -1,3 +1,4 @@
+require 'gds_api/base'
 namespace :content do
   desc "Find all content that is tagged to a taxon and its direct ancestor and optionally removes redundant tagging (option: untag='untag')"
   task :tagged_to_ancestor, [:untag] => :environment do |_, args|
