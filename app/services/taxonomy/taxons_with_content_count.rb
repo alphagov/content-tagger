@@ -51,6 +51,7 @@ module Taxonomy
           filter_part_of_taxonomy_tree: @root_taxon.content_id,
           facet_taxons: 1_000, # We have to specify a number,
           count: 0,
+          debug: 'include_withdrawn',
         )
 
         # Rummager will return a pretty odd datastructure for this query:
