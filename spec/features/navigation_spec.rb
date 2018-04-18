@@ -16,6 +16,12 @@ RSpec.feature "Navigation", type: :feature do
     then_i_can_only_see_the_tagathon_options_in_the_nav_bar
   end
 
+  scenario "Managing Editors can access Projects and Analytics only" do
+    given_i_am_logged_in_as_a_managing_editor
+    when_i_visit_the_application
+    then_i_can_only_see_the_tagathon_options_in_the_nav_bar
+  end
+
   scenario "GDS Editors can access all areas" do
     given_i_am_logged_in_as_a_gds_editor
     when_i_visit_the_application
@@ -28,6 +34,10 @@ RSpec.feature "Navigation", type: :feature do
 
   def given_i_am_logged_in_as_a_tagathon_participant
     login_as create(:user, :tagathon_participant)
+  end
+
+  def given_i_am_logged_in_as_a_managing_editor
+    login_as create(:user, :managing_editor)
   end
 
   def given_i_am_logged_in_as_a_gds_editor
