@@ -9,7 +9,9 @@
       <i class="glyphicon glyphicon-download-alt"></i>
       Download as CSV
     <% end %>
+  <% end %>
 
+  <% if user_can_manage_taxonomy? %>
     <%= link_to "Move content",
                 new_taxon_migration_path(source_content_id: page.taxon_content_id),
                 class: 'btn btn-md btn-default' %>
