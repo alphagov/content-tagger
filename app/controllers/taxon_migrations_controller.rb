@@ -1,5 +1,5 @@
 class TaxonMigrationsController < ApplicationController
-  before_action :ensure_user_can_administer_taxonomy!
+  before_action :ensure_user_can_manage_taxonomy!
 
   def new
     unless params[:source_content_id]

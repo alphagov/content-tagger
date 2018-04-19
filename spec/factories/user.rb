@@ -8,6 +8,10 @@ FactoryBot.define do
       permissions { ["signin", "GDS Editor"] }
     end
 
+    trait :managing_editor do
+      permissions { ["signin", "Managing Editor"] }
+    end
+
     trait :tagathon_participant do
       permissions { ["signin", "Tagathon participant"] }
     end

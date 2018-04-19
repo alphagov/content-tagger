@@ -26,15 +26,21 @@ private
     :website_url,
     :similar_search_results_url,
     :user_can_administer_taxonomy?,
+    :user_can_manage_taxonomy?,
     :user_can_access_tagathon_tools?
   )
 
   delegate :user_can_administer_taxonomy?,
+           :user_can_manage_taxonomy?,
            :user_can_access_tagathon_tools?,
            to: :permission_checker
 
   def ensure_user_can_administer_taxonomy!
     deny_access_to(:feature) unless user_can_administer_taxonomy?
+  end
+
+  def ensure_user_can_manage_taxonomy!
+    deny_access_to(:feature) unless user_can_manage_taxonomy?
   end
 
   def ensure_user_can_access_tagathon_tools!

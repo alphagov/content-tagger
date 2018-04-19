@@ -1,5 +1,5 @@
 class TagMigrationsController < ApplicationController
-  before_action :ensure_user_can_administer_taxonomy!
+  before_action :ensure_user_can_manage_taxonomy!
 
   def index
     render :index, locals: { tag_migrations: presented_tag_migrations }
