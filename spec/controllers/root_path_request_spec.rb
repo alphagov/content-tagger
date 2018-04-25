@@ -5,7 +5,7 @@ RSpec.describe "Root Path", type: :request do
     it "redirects to 'Edit a page'" do
       login_as create(:user, :gds_editor)
       get root_path
-      expect(response).to redirect_to lookup_taggings_path
+      expect(response).to redirect_to taxons_path
     end
   end
 

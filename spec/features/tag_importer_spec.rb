@@ -93,6 +93,8 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
+    publishing_api_has_taxons([])
+
     visit root_path
     click_link I18n.t('navigation.bulk_tag')
 

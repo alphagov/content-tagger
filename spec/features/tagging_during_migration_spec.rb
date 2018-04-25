@@ -10,7 +10,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   scenario "User makes a change to a content item which has had some of its link types disabled" do
     given_there_is_an_item_that_can_have_only_one_link_type
 
-    when_i_visit_the_homepage
+    when_i_visit_edit_a_page
     and_i_submit_the_url_of_the_content_item
 
     when_i_add_an_additional_tag
@@ -59,8 +59,8 @@ RSpec.describe "Tagging content during migration", type: :feature do
       }.to_json)
   end
 
-  def when_i_visit_the_homepage
-    visit root_path
+  def when_i_visit_edit_a_page
+    visit lookup_taggings_path
   end
 
   def and_i_submit_the_url_of_the_content_item
