@@ -118,9 +118,9 @@ module Taxonomy
     end
 
     def build_child_expansion
-      @child_expansion = GovukTaxonomyHelpers::LinkedContentItem.from_publishing_api(
-        content_item: root_content_item,
-        expanded_links: root_expanded_links
+      @child_expansion = GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+        content_id: @content_id,
+        publishing_api: Services.publishing_api,
       )
 
       # We want to work with the child expansion in isolation, so remove
