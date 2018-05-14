@@ -29,6 +29,12 @@
     </li>
   <% end %>
 
+  <% if user_can_administer_taxonomy? %>
+    <li class='<%= active_navigation_item.in?(%w[health_warnings]) ? 'active' : nil %>'>
+      <%= link_to t('navigation.taxonomy_health'), taxonomy_health_warnings_path %>
+    </li>
+  <% end %>
+
   <% if user_can_access_tagathon_tools? %>
     <li class='<%= active_navigation_item.in?(%w[projects project_content_items]) ? 'active' : nil %>'>
       <%= link_to t('navigation.projects'), projects_path %>
