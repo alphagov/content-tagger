@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/ClassLength
 class TaxonsController < ApplicationController
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
 
