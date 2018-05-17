@@ -1,0 +1,15 @@
+default: &default
+  metrics:
+    - name: Maximum Taxon Depth
+      class: MaximumDepthMetric
+      arguments:
+        maximum_depth: 5
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

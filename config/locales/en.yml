@@ -4,6 +4,7 @@ en:
     branches: 'Branches'
     edit_branches: 'Edit branches'
     tagging_history: 'Tagging history'
+    taxonomy_health: 'Taxonomy Health'
     projects: 'Projects'
     tagging_content: Edit a page
     tagging_title: Which page do you want to edit?

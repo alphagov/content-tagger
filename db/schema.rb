@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180126094058) do
+ActiveRecord::Schema.define(version: 2018_05_14_134522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,17 @@ ActiveRecord::Schema.define(version: 20180126094058) do
     t.text "error_message"
     t.datetime "deleted_at"
     t.string "description"
+  end
+
+  create_table "taxonomy_health_warnings", force: :cascade do |t|
+    t.uuid "content_id"
+    t.string "title"
+    t.string "internal_name"
+    t.string "path"
+    t.string "metric"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", id: :serial, force: :cascade do |t|

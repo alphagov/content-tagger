@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root to: 'application#redirect_to_home_page'
 
+  namespace :taxonomy do
+    resources :health_warnings, only: [:index]
+  end
+
   resources :taxons do
     get :confirm_delete
     get :confirm_restore

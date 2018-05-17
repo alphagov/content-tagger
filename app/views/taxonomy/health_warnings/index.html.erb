@@ -1,0 +1,31 @@
+<%= display_header title: "Taxonomy Health Warnings",
+                   breadcrumbs: ["Taxonomy Health Warnings"] %>
+
+<div class="tagged-content">
+  <table class="table queries-list table-bordered table-striped"
+         data-module="filterable-table">
+    <thead>
+    <tr class="table-header">
+      <th style='width: 100px;'>Date</th>
+      <th>Taxon</th>
+      <th>Warning message</th>
+    </tr>
+
+    <%= render partial: 'shared/table_filter' %>
+    </thead>
+
+    <tbody>
+    <% @taxonomy_health_warnings.each do |taxonomy_health_warning| %>
+      <tr>
+        <td><%= time_ago_in_words(taxonomy_health_warning.created_at) %></td>
+        <td><%= link_to taxonomy_health_warning.internal_name,
+                    taxon_path(taxonomy_health_warning.content_id) %>
+          <br>
+          <span class="text-muted"><%= taxonomy_health_warning.path %></span>
+        </td>
+        <td><%= taxonomy_health_warning.message %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
