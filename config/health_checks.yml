@@ -8,6 +8,11 @@ default: &default
       class: ContentCountMetric
       arguments:
         maximum: 100
+    - name: Maximum number of child taxons
+      class: ChildTaxonCountMetric
+      arguments:
+        maximum: 12
+        minimum: 2
 
 development:
   <<: *default
