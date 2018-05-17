@@ -4,6 +4,10 @@ default: &default
       class: MaximumDepthMetric
       arguments:
         maximum_depth: 5
+    - name: Maximum number of content item tagged to a taxon
+      class: ContentCountMetric
+      arguments:
+        maximum: 100
 
 development:
   <<: *default
