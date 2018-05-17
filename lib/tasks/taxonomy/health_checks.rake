@@ -1,5 +1,3 @@
-require_relative '../../../app/workers/taxonomy_health/maximum_depth_metric.rb'
-
 namespace :taxonomy do
   desc <<-DESC
     Performs all taxonomy health checks and reports any problems.
