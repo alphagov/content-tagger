@@ -28,20 +28,20 @@ Metrics/AbcSize:
   Exclude:
     - spec/features/**/*
 
-Metrics/ClassLength:
-  # TODO: bring this down to 100
-  Max: 150
-  Enabled: true
-
+# Disable line length checks, and leave it to humans to decide if the
+# length is appropriate.
 Metrics/ModuleLength:
-  # TODO: bring this down to 100
-  Max: 150
-  Enabled: true
+  Enabled: false
 
 Metrics/PerceivedComplexity:
   Enabled: true
 
 Metrics/BlockLength:
+  Enabled: false
+
+# This seems to have snuck in, so disable the check until someone has
+# an opinion
+Style/MixinUsage:
   Enabled: false
 
 # Rails cops, disabled by default in govuk-lint.
@@ -153,9 +153,11 @@ ClassAndModuleChildren:
   Description: 'Checks style of children classes and modules.'
   Enabled: true
 
+# Disable line length checks, and leave it to humans to decide if the
+# length is appropriate.
 ClassLength:
   Description: 'Avoid classes longer than 100 lines of code.'
-  Enabled: true
+  Enabled: false
 
 CollectionMethods:
   Description: 'Preferred collection methods.'

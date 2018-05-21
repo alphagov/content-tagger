@@ -365,3 +365,5 @@ RSpec.describe 'taxonomy:validate_taxons_base_paths' do
     )
   end
 end
+
+# rubocop:enable Style/BlockDelimiters
