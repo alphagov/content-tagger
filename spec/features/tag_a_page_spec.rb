@@ -12,7 +12,7 @@ RSpec.describe "Tagging content", type: :feature do
       topics: [example_topic]
     )
 
-    when_i_visit_the_homepage
+    when_i_visit_edit_a_page
     and_i_submit_the_url_of_the_content_item
     then_i_am_on_the_page_for_an_item
     and_the_expected_navigation_link_is_highlighted
@@ -62,7 +62,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   scenario "User inputs a URL that is not on GOV.UK" do
-    when_i_visit_the_homepage
+    when_i_visit_edit_a_page
     and_i_fill_a_unknown_base_path_to_my_content_item
     then_i_see_that_the_path_was_not_found
   end
@@ -125,8 +125,8 @@ RSpec.describe "Tagging content", type: :feature do
     end
   end
 
-  def when_i_visit_the_homepage
-    visit root_path
+  def when_i_visit_edit_a_page
+    visit lookup_taggings_path
   end
 
   def when_i_type_its_basepath_in_the_url_directly

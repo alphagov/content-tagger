@@ -223,6 +223,8 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def when_i_visit_the_project_page
+    publishing_api_has_taxons([])
+
     visit root_path
     within 'header nav .nav' do
       click_link 'Projects'

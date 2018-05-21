@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def redirect_to_home_page
-    if user_can_administer_taxonomy?
-      redirect_to lookup_taggings_path
+    if user_can_manage_taxonomy?
+      redirect_to taxons_path
     elsif user_can_access_tagathon_tools?
       redirect_to projects_path
     else
