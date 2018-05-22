@@ -7,7 +7,7 @@ default: &default
     - name: Maximum number of content item tagged to a taxon
       class: ContentCountMetric
       arguments:
-        maximum: 100
+        maximum: 300
     - name: Maximum number of child taxons
       class: ChildTaxonCountMetric
       arguments:
