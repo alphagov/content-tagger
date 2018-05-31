@@ -123,6 +123,8 @@ RSpec.describe "Viewing taxons" do
   def when_i_view_the_root_taxon
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/apples})
       .to_return(status: 200, body: {}.to_json)
+    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+      .to_return(body: [].to_json)
 
     visit taxon_path(apples["content_id"])
   end
@@ -160,6 +162,8 @@ RSpec.describe "Viewing taxons" do
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/cox})
       .to_return(status: 200, body: {}.to_json)
+    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+      .to_return(body: [].to_json)
 
     visit taxon_path(cox["content_id"])
   end

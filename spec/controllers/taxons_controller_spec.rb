@@ -121,6 +121,9 @@ RSpec.describe TaxonsController, type: :controller do
 
   describe '#confirm_bulk_publish' do
     it 'renders confirm bulk publish' do
+      stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+        .to_return(body: [].to_json)
+
       expect(Taxonomy::BuildTaxon).to receive(:call).with(content_id: '123').and_return FactoryBot.build(:taxon)
       get :confirm_bulk_publish, params: { taxon_id: 123 }
       expect(response.code).to eql "200"

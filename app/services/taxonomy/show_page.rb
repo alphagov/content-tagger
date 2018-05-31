@@ -67,5 +67,20 @@ module Taxonomy
     def taxon_deletable?
       taxon.content_id != GovukTaxonomy::ROOT_CONTENT_ID
     end
+
+    def email_subscribers
+      @email_subscribers ||= begin
+        email_lists = []
+
+        begin
+          email_lists = Services.email_alert_api.find_subscriber_list(links: { taxon_tree: [taxon.content_id] })
+        rescue GdsApi::BaseError, SocketError => e
+          GovukError.notify(e)
+        end
+
+        subscriptions = email_lists.dig(0, "active_subscriptions_count")
+        subscriptions.present? ? subscriptions : "?"
+      end
+    end
   end
 end

@@ -51,6 +51,8 @@ RSpec.feature 'Taxon history' do
       .to_return(body: {}.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon['content_id']}")
       .to_return(body: { content_id: @taxon['content_id'], expanded_links: {} }.to_json)
+    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+      .to_return(body: [].to_json)
 
     click_on 'Save draft'
   end
