@@ -16,7 +16,7 @@ class Taxon
 
   include ActiveModel::Model
 
-  validates_presence_of :title, :description, :internal_name, :base_path
+  validates_presence_of :title, :internal_name, :base_path
   validates_with CircularDependencyValidator
   validates :base_path, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/highest-level-taxon-name/taxon-name'" }
   validates_with TaxonPathPrefixValidator
