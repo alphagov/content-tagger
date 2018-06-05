@@ -46,6 +46,13 @@ RSpec.describe "Viewing taxons" do
     then_i_see_the_taxon_hierarchy_in_chevrons
   end
 
+  scenario "Checking the number of email subscribers" do
+    given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
+    when_i_view_the_lowest_level_taxon
+    then_i_see_the_number_of_email_subscribers
+  end
+
   def given_a_taxonomy
     publishing_api_has_item(fruits)
     publishing_api_has_expanded_links(
@@ -163,7 +170,7 @@ RSpec.describe "Viewing taxons" do
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/cox})
       .to_return(status: 200, body: {}.to_json)
     stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+      .to_return(body: [{ active_subscriptions_count: 24_601 }].to_json)
 
     visit taxon_path(cox["content_id"])
   end
@@ -209,6 +216,11 @@ RSpec.describe "Viewing taxons" do
 
   def then_i_see_the_taxon_hierarchy_in_chevrons
     expect(page).to have_content "Fruits > Apples > Cox"
+  end
+
+  def then_i_see_the_number_of_email_subscribers
+    expect(page).to have_content "email subscribers"
+    expect(page).to have_content "24601"
   end
 
   def and_i_can_download_the_taxonomy_in_csv_form
