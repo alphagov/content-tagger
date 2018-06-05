@@ -14,10 +14,10 @@
 </div>
 <% end %>
 
-<%= simple_form_for page.taxon, url: taxon_path(page.taxon.content_id), method: :delete do |f| %>
+<%= simple_form_for page, url: taxon_path(page.taxon.content_id), method: :delete do |f| %>
   <%= f.input :redirect_to, collection: page.taxons_for_select,
     input_html: { class: :select2, multiple: false, include_blank: true } %>
-
+  <%= f.input :do_tag, as: :boolean, value: true, label: 'Tag content to parent?' %>
   <%= f.button :button, class: 'btn btn-md btn-danger' do %>
     <span class="glyphicon glyphicon-trash"></span>
     <span><%= t('views.taxons.confirm_deletion') %></span>

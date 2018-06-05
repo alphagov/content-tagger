@@ -40,6 +40,35 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_the_taxon_is_deleted
   end
 
+  scenario "deleting a taxon with tagged content that has a parent" do
+    given_a_taxon_with_a_parent_and_tagged_content
+    when_i_visit_the_taxon_tagged_content_page
+    then_i_expect_to_see_the_tagged_content
+    when_i_visit_the_taxon_page
+    when_i_click_unpublish_taxon
+    then_i_see_a_prompt_to_delete_with_a_warning_message
+    then_i_see_a_list_of_taxons_to_redirect_to
+    when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
+    when_i_confirm_deletion
+    then_the_taxon_is_deleted
+    and_the_tagged_content_is_tagged_to_the_parent
+  end
+
+  scenario "deleting a taxon with tagged content that has a parent and unchecking the tagging checkbox" do
+    given_a_taxon_with_a_parent_and_tagged_content
+    when_i_visit_the_taxon_tagged_content_page
+    then_i_expect_to_see_the_tagged_content
+    when_i_visit_the_taxon_page
+    when_i_click_unpublish_taxon
+    then_i_see_a_prompt_to_delete_with_a_warning_message
+    then_i_see_a_list_of_taxons_to_redirect_to
+    when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
+    uncheck('taxonomy_delete_page_do_tag')
+    when_i_confirm_deletion
+    then_the_taxon_is_deleted
+    and_no_content_is_tagged_to_the_parent
+  end
+
   scenario "restoring a deleted taxon" do
     given_a_deleted_taxon
     when_i_visit_the_taxon_page
@@ -66,7 +95,15 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def given_a_taxon_with_tagged_content
     given_a_taxon_with_no_children
-    add_tagged_content
+    add_tagged_content(fields: %w[base_path content_id document_type title])
+  end
+
+  def given_a_taxon_with_a_parent_and_tagged_content
+    given_a_taxon_with_no_children
+    add_a_parent_taxon
+    add_tagged_content_to_parent
+    add_tagged_content(fields: %w[base_path content_id document_type title])
+    add_tagged_content(fields: ['base_path'])
   end
 
   def given_a_deleted_taxon
@@ -135,9 +172,11 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def when_i_confirm_deletion
-    @get_content_request = publishing_api_has_item(stubbed_taxons[0])
-    @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :redirect, alternative_path: "/alpha-taxonomy/vehicle-plating" }.to_json)
-    click_on "Delete and redirect"
+    Sidekiq::Testing.inline! do
+      @get_content_request = publishing_api_has_item(stubbed_taxons[0])
+      @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :redirect, alternative_path: "/alpha-taxonomy/vehicle-plating" }.to_json)
+      click_on "Delete and redirect"
+    end
   end
 
   def when_i_confirm_restoration
@@ -187,7 +226,45 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(page).to have_text('This topic will become a draft, but the redirect will stay live until this topic is re-published.')
   end
 
-private
+  def and_the_tagged_content_is_tagged_to_the_parent
+    expect(@patch_links_request).to have_been_made
+  end
+
+  def and_no_content_is_tagged_to_the_parent
+    expect(@patch_links_request).to_not have_been_made
+  end
+
+  private
+
+  def add_a_parent_taxon
+    @parent_taxon_content_id = SecureRandom.uuid
+    @parent_taxon = taxon_with_details(
+      "A parent taxon",
+      other_fields: { content_id: @parent_taxon_content_id }
+    )
+    stub_requests_for_show_page(@parent_taxon)
+    #
+    # Stub realistic values for links and expanded links to correctly render
+    # the tree on the taxon show page
+    publishing_api_has_links(
+      content_id: @taxon_content_id,
+      links: {
+        parent_taxons: [@parent_taxon_content_id],
+      }
+    )
+    publishing_api_has_expanded_links(
+      content_id: @taxon_content_id,
+      expanded_links: {
+        parent_taxons: [@parent_taxon],
+      }
+    )
+    publishing_api_has_expanded_links(
+      content_id: @parent_taxon_content_id,
+      expanded_links: {
+        child_taxons: [@taxon]
+      }
+    )
+  end
 
   def add_a_child_taxon
     @child_taxon_content_id = SecureRandom.uuid
@@ -218,11 +295,31 @@ private
     )
   end
 
-  def add_tagged_content
+  def add_tagged_content(fields:)
+    content_item = basic_content_item("tagged content")
     publishing_api_has_linked_items(
-      [basic_content_item("tagged content")],
+      [content_item],
       content_id: @taxon_content_id,
-      link_type: "taxons"
+      link_type: "taxons",
+      fields: fields
+    )
+
+    publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
+
+    publishing_api_has_links(
+      content_id: content_item[:content_id],
+      links: {
+        taxons: [@taxon_content_id],
+      },
+      version: 10
+    )
+  end
+
+  def add_tagged_content_to_parent
+    @patch_links_request = stub_publishing_api_patch_links(
+      'tagged-content',
+      links: { taxons: [@taxon_content_id, @parent_taxon_content_id] },
+      previous_version: 10
     )
   end
 end

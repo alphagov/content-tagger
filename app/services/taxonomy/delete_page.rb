@@ -1,11 +1,14 @@
 module Taxonomy
   class DeletePage
-    delegate :content_id, to: :taxon
+    include ActiveModel::Model
 
+    delegate :content_id, :redirect_to, to: :taxon
+    attr_reader :do_tag
     attr_reader :taxon
 
     def initialize(taxon)
       @taxon = taxon
+      @do_tag = true
     end
 
     def taxonomy_tree
