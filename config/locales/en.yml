@@ -120,7 +120,7 @@ en:
       import_removed: Tag migration import has been removed.
     taxons:
       create_success: You have sucessfully created a taxon
-      destroy_success: You have sucessfully deleted the taxon
+      destroy_success: You have sucessfully deleted the taxon. This may take a few minutes to take effect.
       destroy_alert: It was not possible to delete the taxon
       destroy_no_redirect: Please select a taxon to redirect to
       destroy_homepage: You cannot delete the homepage

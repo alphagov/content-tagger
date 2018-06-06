@@ -88,12 +88,14 @@ class TaxonsController < ApplicationController
   def destroy
     if content_id == GovukTaxonomy::ROOT_CONTENT_ID
       redirect_to taxon_path(content_id), danger: t("controllers.taxons.destroy_homepage")
-    elsif params[:taxon][:redirect_to].empty?
+    elsif params[:taxonomy_delete_page][:redirect_to].empty?
       flash.now[:danger] = t("controllers.taxons.destroy_no_redirect")
       render :confirm_delete, locals: { page: Taxonomy::DeletePage.new(taxon) }
     else
-      base_path = Services.publishing_api.get_content(params[:taxon][:redirect_to])['base_path']
-      Services.publishing_api.unpublish(params[:id], type: "redirect", alternative_path: base_path)
+      Taxonomy::TaxonUnpublisher.call(taxon_content_id: params[:id],
+                                      redirect_to_content_id: params[:taxonomy_delete_page][:redirect_to],
+                                      user: current_user,
+                                      retag: params[:taxonomy_delete_page][:do_tag] == '1')
       redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.destroy_success")
     end
   end

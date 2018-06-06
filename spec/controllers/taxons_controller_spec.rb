@@ -70,8 +70,10 @@ RSpec.describe TaxonsController, type: :controller do
 
       publishing_api_has_taxons([taxon])
 
-      delete :destroy, params: { id: foo_content_id, taxon: { redirect_to: bar_content_id } }
-      expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
+      Sidekiq::Testing.inline! do
+        delete :destroy, params: { id: foo_content_id, taxonomy_delete_page: { redirect_to: bar_content_id } }
+        expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
+      end
     end
 
     it "does not send a request to Publishing API if a taxon to redirect to is not provided" do
@@ -83,7 +85,7 @@ RSpec.describe TaxonsController, type: :controller do
 
       publishing_api_has_taxons([taxon])
 
-      delete :destroy, params: { id: foo_content_id, taxon: { redirect_to: "" } }
+      delete :destroy, params: { id: foo_content_id, taxonomy_delete_page: { redirect_to: "" } }
       expect(WebMock).to_not have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{foo_content_id}/unpublish")
     end
 

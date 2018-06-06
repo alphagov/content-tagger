@@ -29,6 +29,12 @@ module Taxonomy
       content_id_hashes.map { |h| h['content_id'] }.uniq
     end
 
+    def parent(content_id)
+      expanded_links = Services.publishing_api.get_expanded_links(content_id).to_h
+      parent_taxon_hash = expanded_links.dig('expanded_links', 'parent_taxons', 0)
+      parent_taxon_hash.nil? ? nil : parent_taxon_hash.slice(*@taxon_fields)
+    end
+
   private
 
     def recursive_child_taxons(taxons, parent_content_id)

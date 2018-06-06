@@ -3,11 +3,25 @@ require 'gds_api/test_helpers/content_store'
 
 include Taxonomy
 include ::GdsApi::TestHelpers::ContentStore
+include ::GdsApi::TestHelpers::PublishingApiV2
 
 RSpec.describe Taxonomy::TaxonomyQuery do
   def query
     TaxonomyQuery.new(%w[content_id base_path])
   end
+
+  describe '#parent' do
+    it 'returns nil because the taxon is a level one taxon' do
+      publishing_api_has_expanded_links('content_id' => 'llllllll-llll-llll-llll-llllllllllll', 'expanded_links' => {})
+      expect(query.parent('llllllll-llll-llll-llll-llllllllllll')).to be_nil
+    end
+    it 'returns a parent' do
+      publishing_api_has_expanded_links(expanded_links)
+      expect(query.parent('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa')).to eq('base_path' => '/path/base',
+                                                                         'content_id' => 'bbbbbbbb-bbbb-bbbbb-bbbbb-bbbbbbbbbbbb')
+    end
+  end
+
   describe '#level_one_taxons' do
     it 'returns an empty array' do
       content_store_has_item('/', no_taxons.to_json, draft: true)
@@ -112,6 +126,23 @@ RSpec.describe Taxonomy::TaxonomyQuery do
         expect(query.taxons_per_level.size).to eq(3)
       end
     end
+  end
+
+  def expanded_links
+    {
+      "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+      "expanded_links" =>
+        {
+          "parent_taxons" =>
+            [
+              {
+                "base_path" => "/path/base",
+                "content_id" => "bbbbbbbb-bbbb-bbbbb-bbbbb-bbbbbbbbbbbb",
+                "description" => "description"
+              }
+            ]
+        }
+    }
   end
 
   def multi_level_child_taxons
