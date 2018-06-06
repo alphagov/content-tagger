@@ -24,7 +24,7 @@ module BulkTagging
 
     def content_id
       @content_id ||=
-        Services.publishing_api.lookup_content_id(base_path: content_base_path)
+        Services.publishing_api.lookup_content_id(base_path: content_base_path, exclude_unpublishing_types: %w[vanish gone], exclude_document_types: ['gone'])
     end
 
     def mark_as_tagged
