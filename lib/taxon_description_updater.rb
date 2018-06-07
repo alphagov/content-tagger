@@ -18,18 +18,22 @@ private
       search_in: ['description']
     )
     content_items['results'].select { |item| item['description'] == description_to_remove }.each do |taxon|
-      update_description(taxon)
+      update_description(taxon, draft_version_exists?(taxon))
     end
   end
 
-  def update_description(taxon)
+  def update_description(taxon, draft_version_exists)
     content_id = taxon['content_id']
     payload = taxon.except(*EXCLUDE_ATTRIBUTES).merge(
       'description' => nil,
       'update_type' => 'minor'
     )
     publishing_api.put_content(content_id, payload)
-    publishing_api.publish(content_id)
+    publishing_api.publish(content_id) unless draft_version_exists
+  end
+
+  def draft_version_exists?(taxon)
+    taxon['state_history'].values.include? 'draft'
   end
 
   def publishing_api
