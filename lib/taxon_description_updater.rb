@@ -30,6 +30,19 @@ private
     )
     publishing_api.put_content(content_id, payload)
     publishing_api.publish(content_id) unless draft_version_exists
+    log_what_happened(taxon, draft_version_exists)
+  end
+
+  def log_what_happened(taxon, draft_version_exists)
+    if draft_version_exists
+      puts "Draft taxon: #{taxon_details(taxon)} : description cleared but not published"
+    else
+      puts "Published taxon: #{taxon_details(taxon)} : description cleared and published"
+    end
+  end
+
+  def taxon_details(taxon)
+    "title: #{taxon['title']}, content_id: #{taxon['content_id']}"
   end
 
   def draft_version_exists?(taxon)
