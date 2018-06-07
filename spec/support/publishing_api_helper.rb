@@ -1,3 +1,5 @@
+require_relative('email_alert_api_helper')
+
 module PublishingApiHelper
   include EmailAlertApiHelper
 
