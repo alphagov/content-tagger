@@ -15,7 +15,8 @@ private
     content_items = publishing_api.get_content_items(
       per_page: 5000,
       q: description_to_remove,
-      search_in: ['description']
+      search_in: ['description'],
+      states: %w[published draft]
     )
     content_items['results'].select { |item| item['description'] == description_to_remove }.each do |taxon|
       update_description(taxon, draft_version_exists?(taxon))

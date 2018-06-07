@@ -35,8 +35,8 @@ RSpec.describe TaxonDescriptionUpdater do
   end
 
   before do
-    publishing_api_has_content(with_dots, per_page: 5000, q: '...', search_in: ['description'])
-    publishing_api_has_content(with_tbc, per_page: 5000, q: 'tbc', search_in: ['description'])
+    publishing_api_has_content(with_dots, per_page: 5000, q: '...', search_in: ['description'], states: %w[published draft])
+    publishing_api_has_content(with_tbc, per_page: 5000, q: 'tbc', search_in: ['description'], states: %w[published draft])
     stub_any_publishing_api_put_content
     stub_any_publishing_api_publish
 
