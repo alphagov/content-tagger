@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Viewing taxons" do
   include ContentItemHelper
+  include EmailAlertApiHelper
 
   let(:fruits) do
     taxon_with_details(
@@ -86,8 +87,7 @@ RSpec.describe "Viewing taxons" do
       }
     )
 
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [{ active_subscriptions_count: 24_601 }].to_json)
+    stub_email_requests_for_show_page
   end
 
   def given_a_taxonomy_with_associated_taxons
@@ -113,8 +113,7 @@ RSpec.describe "Viewing taxons" do
       }
     )
 
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [{ active_subscriptions_count: 24_601 }].to_json)
+    stub_email_requests_for_show_page
   end
 
   def given_im_ignoring_tagged_content_for_now
@@ -133,8 +132,7 @@ RSpec.describe "Viewing taxons" do
   end
 
   def given_email_alert_api_is_inaccessible
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_raise(SocketError)
+    stub_email_requests_for_show_page_with_error
   end
 
   def then_i_see_the_count_of_tagged_content

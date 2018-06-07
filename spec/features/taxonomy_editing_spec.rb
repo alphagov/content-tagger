@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.feature "Taxonomy editing" do
+  include EmailAlertApiHelper
   include PublishingApiHelper
   include ContentItemHelper
 
@@ -217,8 +218,7 @@ RSpec.feature "Taxonomy editing" do
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+    stub_email_requests_for_show_page
 
     visit taxon_path("ID-1")
   end
@@ -231,15 +231,13 @@ RSpec.feature "Taxonomy editing" do
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+    stub_email_requests_for_show_page
 
     visit taxon_path("ID-2")
   end
 
   def when_i_visit_the_taxonomy_page
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+    stub_email_requests_for_show_page
 
     visit taxons_path
   end
@@ -249,8 +247,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def and_i_click_on_the_edit_taxon_button
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+    stub_email_requests_for_show_page
 
     click_on I18n.t('views.taxons.edit')
   end
@@ -337,8 +334,7 @@ RSpec.feature "Taxonomy editing" do
       .to_return(body: { expanded_links: {} }.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(body: {}.to_json)
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+    stub_email_requests_for_show_page
 
     click_on I18n.t('views.taxons.new_button')
   end

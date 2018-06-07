@@ -1,4 +1,6 @@
 module PublishingApiHelper
+  include EmailAlertApiHelper
+
   def stub_empty_bulk_taxons_lookup
     url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
     stub_request(:post, url).to_return(body: {}.to_json)
@@ -20,9 +22,7 @@ module PublishingApiHelper
     publishing_api_has_links(content_id: content_id, links: {})
     publishing_api_has_expanded_links(content_id: content_id, expanded_links: {})
     publishing_api_has_linked_items([], content_id: content_id, link_type: "taxons")
-
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
+    stub_email_requests_for_show_page
   end
 
   def publishing_api_has_content_items(items, options = {})
