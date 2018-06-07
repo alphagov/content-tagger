@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Taxon history' do
   include ContentItemHelper
+  include EmailAlertApiHelper
   include PublishingApiHelper
 
   scenario 'leaving a version note when updating the taxon' do
@@ -51,6 +52,7 @@ RSpec.feature 'Taxon history' do
       .to_return(body: {}.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon['content_id']}")
       .to_return(body: { content_id: @taxon['content_id'], expanded_links: {} }.to_json)
+    stub_email_requests_for_show_page
 
     click_on 'Save draft'
   end

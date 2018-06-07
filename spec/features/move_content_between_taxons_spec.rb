@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Move content between Taxons", type: :feature do
   include ContentItemHelper
+  include EmailAlertApiHelper
   include PublishingApiHelper
 
   before { Sidekiq::Testing.inline! }
@@ -93,6 +94,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_view_the_first_taxon
+    stub_email_requests_for_show_page
     first_row = first('table tbody tr')
     view_taxon_link = first_row.find('a', text: 'View taxon')
 

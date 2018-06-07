@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe TaxonsController, type: :controller do
+  include EmailAlertApiHelper
   include PublishingApiHelper
   include ContentItemHelper
 
@@ -123,6 +124,7 @@ RSpec.describe TaxonsController, type: :controller do
 
   describe '#confirm_bulk_publish' do
     it 'renders confirm bulk publish' do
+      stub_email_requests_for_show_page
       expect(Taxonomy::BuildTaxon).to receive(:call).with(content_id: '123').and_return FactoryBot.build(:taxon)
       get :confirm_bulk_publish, params: { taxon_id: 123 }
       expect(response.code).to eql "200"

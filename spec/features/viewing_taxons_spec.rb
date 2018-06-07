@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Viewing taxons" do
   include ContentItemHelper
+  include EmailAlertApiHelper
 
   let(:fruits) do
     taxon_with_details(
@@ -46,6 +47,21 @@ RSpec.describe "Viewing taxons" do
     then_i_see_the_taxon_hierarchy_in_chevrons
   end
 
+  scenario "Checking the number of email subscribers" do
+    given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
+    when_i_view_the_lowest_level_taxon
+    then_i_see_the_number_of_email_subscribers
+  end
+
+  scenario "email-alert-api is inaccessible" do
+    given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
+    given_email_alert_api_is_inaccessible
+    when_i_view_the_lowest_level_taxon
+    then_i_do_not_see_the_number_of_email_subscribers
+  end
+
   def given_a_taxonomy
     publishing_api_has_item(fruits)
     publishing_api_has_expanded_links(
@@ -70,6 +86,8 @@ RSpec.describe "Viewing taxons" do
         child_taxons: [cox],
       }
     )
+
+    stub_email_requests_for_show_page
   end
 
   def given_a_taxonomy_with_associated_taxons
@@ -94,6 +112,8 @@ RSpec.describe "Viewing taxons" do
         associated_taxons: [pears, oranges],
       }
     )
+
+    stub_email_requests_for_show_page
   end
 
   def given_im_ignoring_tagged_content_for_now
@@ -109,6 +129,10 @@ RSpec.describe "Viewing taxons" do
           basic_content_item("Red Apples"),
         ].to_json
       )
+  end
+
+  def given_email_alert_api_is_inaccessible
+    stub_email_requests_for_show_page_with_error
   end
 
   def then_i_see_the_count_of_tagged_content
@@ -205,6 +229,17 @@ RSpec.describe "Viewing taxons" do
 
   def then_i_see_the_taxon_hierarchy_in_chevrons
     expect(page).to have_content "Fruits > Apples > Cox"
+  end
+
+  def then_i_see_the_number_of_email_subscribers
+    expect(page).to have_content "email subscribers"
+    expect(page).to have_content "24601"
+  end
+
+  def then_i_do_not_see_the_number_of_email_subscribers
+    expect(page).to have_content "email subscribers"
+    expect(page).to have_content "?"
+    expect(page).to_not have_content "24601"
   end
 
   def and_i_can_download_the_taxonomy_in_csv_form
