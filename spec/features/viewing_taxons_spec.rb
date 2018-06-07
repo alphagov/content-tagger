@@ -53,6 +53,14 @@ RSpec.describe "Viewing taxons" do
     then_i_see_the_number_of_email_subscribers
   end
 
+  scenario "email-alert-api is inaccessible" do
+    given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
+    given_email_alert_api_is_inaccessible
+    when_i_view_the_lowest_level_taxon
+    then_i_do_not_see_the_number_of_email_subscribers
+  end
+
   def given_a_taxonomy
     publishing_api_has_item(fruits)
     publishing_api_has_expanded_links(
@@ -77,6 +85,9 @@ RSpec.describe "Viewing taxons" do
         child_taxons: [cox],
       }
     )
+
+    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+      .to_return(body: [{ active_subscriptions_count: 24_601 }].to_json)
   end
 
   def given_a_taxonomy_with_associated_taxons
@@ -101,6 +112,9 @@ RSpec.describe "Viewing taxons" do
         associated_taxons: [pears, oranges],
       }
     )
+
+    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+      .to_return(body: [{ active_subscriptions_count: 24_601 }].to_json)
   end
 
   def given_im_ignoring_tagged_content_for_now
@@ -118,6 +132,11 @@ RSpec.describe "Viewing taxons" do
       )
   end
 
+  def given_email_alert_api_is_inaccessible
+    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
+      .to_raise(SocketError)
+  end
+
   def then_i_see_the_count_of_tagged_content
     expect(page).to have_content("Total tagged pages: 2")
   end
@@ -130,8 +149,6 @@ RSpec.describe "Viewing taxons" do
   def when_i_view_the_root_taxon
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/apples})
       .to_return(status: 200, body: {}.to_json)
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [].to_json)
 
     visit taxon_path(apples["content_id"])
   end
@@ -169,8 +186,6 @@ RSpec.describe "Viewing taxons" do
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/cox})
       .to_return(status: 200, body: {}.to_json)
-    stub_request(:get, "https://email-alert-api.test.gov.uk/subscriber-lists")
-      .to_return(body: [{ active_subscriptions_count: 24_601 }].to_json)
 
     visit taxon_path(cox["content_id"])
   end
@@ -221,6 +236,12 @@ RSpec.describe "Viewing taxons" do
   def then_i_see_the_number_of_email_subscribers
     expect(page).to have_content "email subscribers"
     expect(page).to have_content "24601"
+  end
+
+  def then_i_do_not_see_the_number_of_email_subscribers
+    expect(page).to have_content "email subscribers"
+    expect(page).to have_content "?"
+    expect(page).to_not have_content "24601"
   end
 
   def and_i_can_download_the_taxonomy_in_csv_form
