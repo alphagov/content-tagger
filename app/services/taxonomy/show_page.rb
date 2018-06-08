@@ -70,7 +70,7 @@ module Taxonomy
 
     def email_subscribers
       @email_subscribers ||= begin
-        email_lists = []
+        email_lists = {}
 
         begin
           email_lists = Services.email_alert_api.find_subscriber_list(links: { taxon_tree: [taxon.content_id] })
@@ -78,8 +78,7 @@ module Taxonomy
           GovukError.notify(e)
         end
 
-        subscriptions = email_lists.dig(0, "active_subscriptions_count")
-        subscriptions.present? ? subscriptions : "?"
+        email_lists.dig("subscriber_list", "active_subscriptions_count") || "?"
       end
     end
   end
