@@ -92,7 +92,7 @@ GEM
     faraday (0.12.2)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.23)
-    gds-api-adapters (52.5.1)
+    gds-api-adapters (52.6.0)
       addressable
       link_header
       lrucache (~> 0.1.1)
@@ -228,7 +228,7 @@ GEM
       pry (~> 0.10)
     public_suffix (3.0.2)
     rack (2.0.5)
-    rack-cache (1.7.1)
+    rack-cache (1.8.0)
       rack (>= 0.4)
     rack-protection (2.0.1)
       rack
@@ -394,7 +394,7 @@ DEPENDENCIES
   capybara
   database_cleaner
   factory_bot_rails
-  gds-api-adapters (~> 52.5)
+  gds-api-adapters (~> 52.6)
   gds-sso (~> 13.6)
   govuk-content-schema-test-helpers
   govuk-lint
