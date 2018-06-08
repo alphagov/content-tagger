@@ -12,6 +12,14 @@ module Services
     )
   end
 
+  def self.publishing_api_with_long_timeout
+    @publishing_api_with_low_timeout ||= begin
+      publishing_api.dup.tap do |client|
+        client.options[:timeout] = 15
+      end
+    end
+  end
+
   def self.content_store
     @content_store ||= GdsApi::ContentStore.new(Plek.current.find("draft-content-store"))
   end
