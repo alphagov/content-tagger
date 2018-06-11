@@ -73,6 +73,8 @@ module Taxonomy
         begin
           email_lists = Services.email_alert_api.find_subscriber_list("links" => { taxon_tree: [taxon.content_id] })
           email_lists.dig("subscriber_list", "active_subscriptions_count")
+        rescue GdsApi::HTTPNotFound
+          "0"
         rescue GdsApi::BaseError, SocketError => e
           GovukError.notify(e)
           "?"
