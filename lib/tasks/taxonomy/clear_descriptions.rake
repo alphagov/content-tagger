@@ -4,6 +4,6 @@ namespace :taxonomy do
     Clears all descriptions containing '...' or 'tbc'.
   DESC
   task clear_descriptions: [:environment] do
-    TaxonDescriptionUpdater.new(%w[... tbc]).call
+    TaxonDescriptionUpdater.new(%w[... tbc TBC ...tbc]).call
   end
 end
