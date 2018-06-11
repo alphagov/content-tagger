@@ -19,6 +19,10 @@ private
       states: %w[published draft]
     )
     content_items['results'].select { |item| item['description'] == description_to_remove }.each do |taxon|
+      if taxon['publication_state'] == 'published' && draft_version_exists?(taxon)
+        puts "Published taxon: #{taxon_details(taxon)} draft has fixed description and cannot be amended"
+        next
+      end
       update_description(taxon, draft_version_exists?(taxon))
     end
   end
