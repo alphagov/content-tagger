@@ -31,6 +31,16 @@ RSpec.describe TaxonDescriptionUpdater do
         }
       ),
       create_taxon('content_id' => 'desc-other-tbc', 'title' => 'title2 other', 'description' => 'other tbc'),
+      create_taxon(
+        'content_id' => 'desc-tbc-pub',
+        'title' => 'title2 ...',
+        'publication_state' => 'published',
+        'description' => 'tbc',
+        'state_history' => {
+          1 => 'published',
+          2 => 'draft'
+        }
+      ),
     ]
   end
 
@@ -64,6 +74,11 @@ RSpec.describe TaxonDescriptionUpdater do
     assert_no_publish 'desc-tbc-draft'
   end
 
+  it 'doesnt update the edition as there is a published and draft edition present' do
+    assert_no_put_content('desc-tbc-pub')
+    assert_no_publish('desc-tbc-pub')
+  end
+
   private
 
   def create_taxon(attributes)
@@ -71,7 +86,7 @@ RSpec.describe TaxonDescriptionUpdater do
       'schema_name' => 'taxon',
       'content_store' => 'live',
       'user_facing_version' => 4,
-      'publication_state' => 'published',
+      'publication_state' => 'draft',
       'lock_version' => 3,
       'updated_at' => Time.now,
       'phase' => 'live',
