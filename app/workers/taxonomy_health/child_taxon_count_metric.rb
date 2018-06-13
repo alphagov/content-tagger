@@ -11,25 +11,20 @@ module TaxonomyHealth
                    .new(GovukTaxonomy::ROOT_CONTENT_ID)
                    .build.child_expansion
 
-      taxon_counts = taxonomy.tree.map do |linked_content_item|
-        {
-          linked_content_item: linked_content_item,
-          count: linked_content_item.children.count
-        }
-      end
+      taxonomy.tree.each do |linked_content_item|
+        children_count = linked_content_item.children.count
 
-      taxon_counts.select { |item| item[:count] > maximum }.each do |item|
-        message = "Taxon has #{pluralize(item[:count], 'child')}, "\
-                  "which exceeds the maximum of #{maximum}"
+        if children_count > maximum
+          message = "Taxon has #{pluralize(children_count, 'child')}, "\
+                    "which exceeds the maximum of #{maximum}"
 
-        create_health_warning(item[:linked_content_item], message)
-      end
+          create_health_warning(linked_content_item, message)
+        elsif children_count != 0 && children_count < minimum
+          message = "Taxon has #{pluralize(children_count, 'child')}, "\
+                    "which is fewer than the minimum of #{minimum}"
 
-      taxon_counts.select { |item| item[:count].positive? && item[:count] < minimum }.each do |item|
-        message = "Taxon has #{pluralize(item[:count], 'child')}, "\
-                  "which is fewer than the minimum of #{minimum}"
-
-        create_health_warning(item[:linked_content_item], message)
+          create_health_warning(linked_content_item, message)
+        end
       end
     end
 
