@@ -26,7 +26,7 @@ RSpec.describe "Taxonomy Health Warnings" do
                                    title: 'title',
                                    internal_name: 'internal name',
                                    path: '/path/to/taxon',
-                                   metric: 'MetricClass',
+                                   metric: 'TaxonomyHealth::ContentCountMetric',
                                    message: 'Taxon fails metric')
   end
 

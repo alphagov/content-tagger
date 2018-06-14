@@ -2,6 +2,8 @@ module TaxonomyHealth
   class MaximumDepthMetric
     include Sidekiq::Worker
 
+    DESCRIPTION = 'Taxon is too deep in the taxonomy'.freeze
+
     def perform(arguments)
       maximum_depth = arguments.symbolize_keys[:maximum_depth]
 

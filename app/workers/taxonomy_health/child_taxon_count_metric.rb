@@ -3,6 +3,8 @@ module TaxonomyHealth
     include Sidekiq::Worker
     include ActionView::Helpers::TextHelper
 
+    DESCRIPTION = 'Taxon has too many, or too few child taxons'.freeze
+
     def perform(arguments)
       maximum = arguments.symbolize_keys[:maximum]
       minimum = arguments.symbolize_keys[:minimum] || 0

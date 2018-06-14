@@ -2,6 +2,8 @@ module TaxonomyHealth
   class ContentCountMetric
     include Sidekiq::Worker
 
+    DESCRIPTION = 'Taxon has too much content tagged to it'.freeze
+
     def perform(arguments)
       maximum = arguments.symbolize_keys[:maximum]
       taxonomy = Taxonomy::ExpandedTaxonomy

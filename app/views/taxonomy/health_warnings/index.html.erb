@@ -1,6 +1,34 @@
 <%= display_header title: "Taxonomy Health Warnings",
                    breadcrumbs: ["Taxonomy Health Warnings"] %>
 
+<table class="table">
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Count</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% taxonomy_health_warning_counts.each do |(metric, count)| %>
+      <tr>
+        <td><%= metric %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <tfoot>
+    <tr>
+      <td></td>
+      <td>
+        <%= taxonomy_health_warning_counts.values.sum %>
+        <strong>in total</strong>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
 <div class="tagged-content">
   <table class="table queries-list table-bordered table-striped"
          data-module="filterable-table">
