@@ -20,6 +20,7 @@ module TaxonomyHealth
           internal_name: linked_content_item.internal_name,
           path: linked_content_item.base_path,
           metric: self.class.to_s,
+          value: content_count,
           message: "Taxon has #{content_count} content items, "\
                    "which exceeds the maximum of #{maximum}"
         )
