@@ -39,4 +39,10 @@ RSpec.describe "Taxonomy Health Warnings" do
     expect(page).to have_text('Taxon fails metric')
     expect(page).to have_link('internal name', href: taxon_path(@taxon_content_id))
   end
+
+  def then_i_see_a_link_to_the_metrics_dashboard
+    Plek.new.stubs(:external_url_for).with('grafana').returns('http://grafana')
+
+    expect(page).to have_link('View taxonomy metrics dashboard', href: 'http://grafana')
+  end
 end

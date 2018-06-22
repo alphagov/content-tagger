@@ -13,6 +13,11 @@ module Taxonomy
       end
     end
 
-    helper_method :taxonomy_health_warning_counts
+    def taxonomy_metrics_dashboard_url
+      Plek.new.external_url_for('grafana') + "/dashboard/file/topic_taxonomy.json"
+    end
+
+    helper_method :taxonomy_health_warning_counts,
+                  :taxonomy_metrics_dashboard_url
   end
 end
