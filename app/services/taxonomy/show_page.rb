@@ -1,7 +1,7 @@
 module Taxonomy
   class ShowPage
     delegate :content_id, :draft?, :published?, :unpublished?, :redirected?,
-             :redirect_to, :base_path, to: :taxon
+             :draft_and_published_editions_exist?, :redirect_to, :base_path, to: :taxon
 
     attr_reader :taxon, :visualisation
 
@@ -15,6 +15,8 @@ module Taxonomy
     end
 
     def publication_state_name
+      return "published_with_new_draft" if draft_and_published_editions_exist?
+
       {
         "draft" => "draft",
         "published" => "published",
