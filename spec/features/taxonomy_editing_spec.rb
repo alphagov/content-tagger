@@ -11,7 +11,10 @@ RSpec.feature "Taxonomy editing" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/education/1",
-        publication_state: 'published'
+        publication_state: 'published',
+        state_history: {
+          "1" => "published"
+        }
       }
     )
     @taxon_2 = taxon_with_details(
@@ -19,7 +22,10 @@ RSpec.feature "Taxonomy editing" do
       other_fields: {
         content_id: "ID-2",
         base_path: "/education/2",
-        publication_state: 'draft'
+        publication_state: 'draft',
+        state_history: {
+          "1" => "draft"
+        }
       }
     )
     @taxon_3 = taxon_with_details(
@@ -27,7 +33,10 @@ RSpec.feature "Taxonomy editing" do
       other_fields: {
         content_id: "ID-3",
         base_path: "/transport/rail",
-        publication_state: 'published'
+        publication_state: 'published',
+        state_history: {
+          "1" => "published"
+        }
       }
     )
     @linkable_taxon_1 = {
@@ -35,21 +44,30 @@ RSpec.feature "Taxonomy editing" do
       content_id: "ID-1",
       base_path: "/education/1",
       internal_name: "School planning",
-      publication_state: 'published'
+      publication_state: 'published',
+      state_history: {
+        "1" => "published"
+      }
     }
     @linkable_taxon_2 = {
       title: "Starting and attending school (draft)",
       content_id: "ID-2",
       base_path: "/education/2",
       internal_name: "Starting and attending school (draft)",
-      publication_state: 'draft'
+      publication_state: 'draft',
+      state_history: {
+        "1" => "draft"
+      }
     }
     @linkable_taxon_3 = {
       title: "Rail",
       content_id: "ID-3",
       base_path: "/transport/rail",
       internal_name: "Rail",
-      publication_state: 'published'
+      publication_state: 'published',
+      state_history: {
+        "1" => "published"
+      }
     }
 
     @dummy_editor_notes = "Some usage notes for this taxon."
@@ -327,6 +345,9 @@ RSpec.feature "Taxonomy editing" do
         publication_state: "published",
         phase: 'live',
         title: "Newly created taxon",
+        state_history: {
+          "1" => "published"
+        }
       }.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
       .to_return(body: {}.to_json)

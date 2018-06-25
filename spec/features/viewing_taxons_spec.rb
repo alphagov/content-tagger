@@ -7,13 +7,52 @@ RSpec.describe "Viewing taxons" do
   let(:fruits) do
     taxon_with_details(
       "Fruits",
-      other_fields: { document_type: "taxon" }
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
     )
   end
-  let(:apples) { taxon_with_details("Apples") }
-  let(:pears) { taxon_with_details("Pears") }
-  let(:oranges) { taxon_with_details("Oranges") }
-  let(:cox) { taxon_with_details("Cox") }
+
+  let(:apples) do
+    taxon_with_details(
+      "Apples",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:pears) do
+    taxon_with_details(
+      "Pears",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:oranges) do
+    taxon_with_details(
+      "Oranges",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:cox) do
+    taxon_with_details(
+      "Cox",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
 
   scenario "Viewing the taxonomy from the homepage" do
     given_a_taxonomy

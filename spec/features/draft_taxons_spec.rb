@@ -79,6 +79,9 @@ RSpec.feature "Draft taxonomy" do
         content_id: @taxon_content_id,
         description: 'A description of Taxon 2.',
         publication_state: 'draft',
+        state_history: {
+          "1" => "draft"
+        }
       },
     )
 
