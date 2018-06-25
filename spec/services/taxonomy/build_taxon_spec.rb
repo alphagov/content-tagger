@@ -12,6 +12,15 @@ RSpec.describe Taxonomy::BuildTaxon do
         document_type: document_type,
         base_path: '/foo/bar',
         publication_state: 'State',
+        state_history: {
+          "4" => "superseded",
+          "5" => "superseded",
+          "2" => "superseded",
+          "7" => "published",
+          "3" => "superseded",
+          "6" => "superseded",
+          "1" => "superseded"
+        },
         details: {
           internal_name: 'Internal name',
           notes_for_editors: 'Notes for editors',
@@ -58,6 +67,10 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     it 'assigns the publication state correctly' do
       expect(taxon.publication_state).to eq(content[:publication_state])
+    end
+
+    it 'assigns state history correctly' do
+      expect(taxon.state_history).to eq(content[:state_history])
     end
 
     it 'assigns the internal_name correctly' do

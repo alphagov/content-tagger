@@ -6,6 +6,7 @@ class Taxon
     :description,
     :parent_content_id,
     :publication_state,
+    :state_history,
     :phase,
     :document_type,
     :redirect_to,

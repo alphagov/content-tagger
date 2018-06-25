@@ -22,6 +22,7 @@ module Taxonomy
         description: content_item["description"],
         base_path: content_item["base_path"],
         publication_state: content_item['publication_state'],
+        state_history: content_item['state_history'],
         phase: content_item['phase'],
         internal_name: content_item['details']['internal_name'],
         notes_for_editors: content_item['details']['notes_for_editors'],
