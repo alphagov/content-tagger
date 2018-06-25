@@ -14,6 +14,10 @@ module Taxonomy
       taxon.internal_name
     end
 
+    def publication_state_display_name
+      publication_state_name.humanize.downcase
+    end
+
     def publication_state_name
       return "published_with_new_draft" if draft_and_published_editions_exist?
 
