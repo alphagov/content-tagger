@@ -14,6 +14,14 @@ module Taxonomy
       taxon.internal_name
     end
 
+    def show_preview_link?
+      draft? || draft_and_published_editions_exist?
+    end
+
+    def show_production_link?
+      published? || draft_and_published_editions_exist?
+    end
+
     def publication_state_display_name
       publication_state_name.humanize.downcase
     end
