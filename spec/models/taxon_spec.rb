@@ -131,7 +131,8 @@ RSpec.describe Taxon do
 
       @taxon = Taxon.new(
         visible_to_departmental_editors: "true",
-        state_history: state_history
+        state_history: state_history,
+        publication_state: "published"
       )
     end
 
@@ -156,6 +157,43 @@ RSpec.describe Taxon do
       ]
 
       expect(@taxon.lastest_two_publication_states).to eq(expected_states)
+    end
+
+    describe "#draft_and_published_editions_exist?" do
+      it "returns true if a draft taxon has been previously published" do
+        expect(@taxon.draft_and_published_editions_exist?).to eq(true)
+      end
+
+      it "returns false the taxon is published" do
+        state_history = {
+          "4" => "superseded",
+          "5" => "superseded",
+          "2" => "superseded",
+          "3" => "superseded",
+          "6" => "published",
+          "1" => "superseded",
+        }
+
+        taxon = Taxon.new(
+          visible_to_departmental_editors: "true",
+          state_history: state_history,
+          publication_state: "published"
+        )
+        expect(taxon.draft_and_published_editions_exist?).to eq(false)
+      end
+
+      it "returns false if a taxon has never been published" do
+        state_history = {
+          "1" => "draft",
+        }
+
+        taxon = Taxon.new(
+          visible_to_departmental_editors: "true",
+          state_history: state_history,
+          publication_state: "draft"
+        )
+        expect(taxon.draft_and_published_editions_exist?).to eq(false)
+      end
     end
   end
 end

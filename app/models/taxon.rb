@@ -38,6 +38,11 @@ class Taxon
     publication_state == "unpublished" && !redirect_to.nil?
   end
 
+  def draft_and_published_editions_exist?
+    previous_state, latest_state = lastest_two_publication_states
+    previous_state && latest_state == "draft"
+  end
+
   def ordered_publication_state_history
     state_history.sort_by(&:first).map(&:second)
   end
