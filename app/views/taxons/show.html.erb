@@ -21,7 +21,7 @@
     <tr>
       <td>
         <span class="label add-right-margin state-label--<%= page.publication_state_name %>">
-          <%= page.publication_state_name %>
+          <%= page.publication_state_display_name %>
         </span>
       </td>
       <td>
@@ -45,16 +45,19 @@
 
 <hr>
 
-<p>
-  <% if page.published? %>
-    <%= link_to "View on GOV.UK", website_url(page.base_path) %>
-  <% elsif page.draft? %>
-    <%= link_to "View on GOV.UK", website_url(page.base_path, draft: true) %>
-  <% end %>
- <% unless page.unpublished? %>
+<% if page.show_preview_link? %>
+  <p>
+    <%= link_to "Preview changes on GOV.UK", website_url(page.base_path, draft: true) %>
     (<%= page.base_path %>)
-  <% end %>
-</p>
+  </p>
+<% end %>
+
+<% if page.show_production_link? %>
+  <p>
+    <%= link_to "View on GOV.UK", website_url(page.base_path) %>
+    (<%= page.base_path %>)
+  </p>
+<% end %>
 
 <% unless page.unpublished? %>
   <p>

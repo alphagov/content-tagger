@@ -67,6 +67,10 @@ $red: #b10e1e;
   background-color: $gray-light;
 }
 
+.state-label--published_with_new_draft  {
+  background-color: #2B8CC4;
+}
+
 .field-with-error {
   border: 2px solid $state-danger-text;
 }

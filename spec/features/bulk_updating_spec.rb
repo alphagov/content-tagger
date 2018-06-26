@@ -24,6 +24,9 @@ RSpec.feature 'Bulk updating', type: :feature do
         content_id: @parent_content_id,
         phase: 'beta',
         publication_state: 'published',
+        state_history: {
+          "1" => "published"
+        }
       }
     )
 
@@ -33,6 +36,9 @@ RSpec.feature 'Bulk updating', type: :feature do
         content_id: @child_content_id,
         phase: 'alpha',
         publication_state: 'draft',
+        state_history: {
+          "1" => "draft"
+        }
       }
     )
 

@@ -82,7 +82,12 @@ RSpec.feature "Delete Taxon", type: :feature do
     @taxon_content_id = SecureRandom.uuid
     @taxon = taxon_with_details(
       "Taxon 1",
-      other_fields: { content_id: @taxon_content_id }
+      other_fields: {
+        content_id: @taxon_content_id,
+        state_history: {
+          "1" => "published"
+        }
+      }
     )
 
     stub_requests_for_show_page(@taxon)
@@ -113,7 +118,10 @@ RSpec.feature "Delete Taxon", type: :feature do
       other_fields: {
         base_path: "/level-one/taxon-2",
         content_id: @taxon_content_id,
-        description: 'A description of Taxon 2.'
+        description: 'A description of Taxon 2.',
+        state_history: {
+          "1" => "unpublished"
+        }
       },
       unpublished: true
     )

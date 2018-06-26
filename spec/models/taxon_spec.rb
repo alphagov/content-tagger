@@ -116,4 +116,84 @@ RSpec.describe Taxon do
       expect(taxon.visible_to_departmental_editors).to be true
     end
   end
+
+  describe "publishing history of taxon" do
+    before do
+      state_history = {
+        "4" => "superseded",
+        "5" => "superseded",
+        "2" => "superseded",
+        "7" => "draft",
+        "3" => "superseded",
+        "6" => "published",
+        "1" => "superseded",
+      }
+
+      @taxon = Taxon.new(
+        visible_to_departmental_editors: "true",
+        state_history: state_history,
+        publication_state: "published"
+      )
+    end
+
+    it "orders state history" do
+      expected_order = %w[
+        superseded
+        superseded
+        superseded
+        superseded
+        superseded
+        published
+        draft
+      ]
+
+      expect(@taxon.ordered_publication_state_history).to eq(expected_order)
+    end
+
+    it "gets the lastest two publication states" do
+      expected_states = %w[
+        published
+        draft
+      ]
+
+      expect(@taxon.lastest_two_publication_states).to eq(expected_states)
+    end
+
+    describe "#draft_and_published_editions_exist?" do
+      it "returns true if a draft taxon has been previously published" do
+        expect(@taxon.draft_and_published_editions_exist?).to eq(true)
+      end
+
+      it "returns false the taxon is published" do
+        state_history = {
+          "4" => "superseded",
+          "5" => "superseded",
+          "2" => "superseded",
+          "3" => "superseded",
+          "6" => "published",
+          "1" => "superseded",
+        }
+
+        taxon = Taxon.new(
+          visible_to_departmental_editors: "true",
+          state_history: state_history,
+          publication_state: "published"
+        )
+        expect(taxon.draft_and_published_editions_exist?).to eq(false)
+      end
+
+      it "returns false if a taxon has never been published" do
+        state_history = {
+          "1" => "draft",
+        }
+
+        taxon = Taxon.new(
+          visible_to_departmental_editors: "true",
+          state_history: state_history,
+          publication_state: "draft"
+        )
+        expect(taxon.draft_and_published_editions_exist?).to eq(false)
+      end
+    end
+  end
 end

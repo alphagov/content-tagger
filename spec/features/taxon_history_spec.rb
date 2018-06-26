@@ -17,7 +17,14 @@ RSpec.feature 'Taxon history' do
   def given_a_taxon_exists
     title = 'Business'
 
-    @taxon = taxon_with_details(title, other_fields: { description: '...' })
+    @taxon = taxon_with_details(
+      title, other_fields: {
+        description: '...',
+        state_history: {
+          "1" => "published"
+        }
+      }
+    )
   end
 
   def when_i_visit_the_taxon_edit_form

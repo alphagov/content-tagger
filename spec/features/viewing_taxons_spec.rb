@@ -7,13 +7,65 @@ RSpec.describe "Viewing taxons" do
   let(:fruits) do
     taxon_with_details(
       "Fruits",
-      other_fields: { document_type: "taxon" }
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
     )
   end
-  let(:apples) { taxon_with_details("Apples") }
-  let(:pears) { taxon_with_details("Pears") }
-  let(:oranges) { taxon_with_details("Oranges") }
-  let(:cox) { taxon_with_details("Cox") }
+
+  let(:apples) do
+    taxon_with_details(
+      "Apples",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:pears) do
+    taxon_with_details(
+      "Pears",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:oranges) do
+    taxon_with_details(
+      "Oranges",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:cox) do
+    taxon_with_details(
+      "Cox",
+      other_fields: {
+        document_type: "taxon",
+        state_history: { "1" => "published" },
+      }
+    )
+  end
+
+  let(:previously_published) do
+    taxon_with_details(
+      "Previously published",
+      other_fields: {
+        document_type: "taxon",
+        state_history: {
+          "1" => "published",
+          "2" => "draft"
+        },
+      }
+    )
+  end
 
   scenario "Viewing the taxonomy from the homepage" do
     given_a_taxonomy
@@ -60,6 +112,13 @@ RSpec.describe "Viewing taxons" do
     given_email_alert_api_is_inaccessible
     when_i_view_the_lowest_level_taxon
     then_i_do_not_see_the_number_of_email_subscribers
+  end
+
+  scenario "Viewing a previously published taxon" do
+    given_a_previously_published_draft_taxon
+    given_im_ignoring_tagged_content_for_now
+    when_i_view_the_previously_published_draft_taxon
+    then_i_see_links_to_view_topic_pages
   end
 
   def given_a_taxonomy
@@ -110,6 +169,18 @@ RSpec.describe "Viewing taxons" do
       expanded_links: {
         parent_taxons: [fruits],
         associated_taxons: [pears, oranges],
+      }
+    )
+
+    stub_email_requests_for_show_page
+  end
+
+  def given_a_previously_published_draft_taxon
+    publishing_api_has_item(previously_published)
+    publishing_api_has_expanded_links(
+      content_id: previously_published["content_id"],
+      expanded_links: {
+        parent_taxons: [fruits],
       }
     )
 
@@ -188,6 +259,13 @@ RSpec.describe "Viewing taxons" do
     visit taxon_path(cox["content_id"])
   end
 
+  def when_i_view_the_previously_published_draft_taxon
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/expanded-links/fruits})
+      .to_return(status: 200, body: {}.to_json)
+
+    visit taxon_path(previously_published["content_id"])
+  end
+
   def then_i_see_the_entire_taxonomy
     expected_titles = [
       fruits["title"],
@@ -256,5 +334,10 @@ RSpec.describe "Viewing taxons" do
       expect(page).to have_content("Pears")
       expect(page).to have_content("Oranges")
     end
+  end
+
+  def then_i_see_links_to_view_topic_pages
+    expect(page).to have_link("Preview changes on GOV.UK")
+    expect(page).to have_link("View on GOV.UK")
   end
 end

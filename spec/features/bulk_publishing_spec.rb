@@ -19,7 +19,10 @@ RSpec.feature 'Bulk publishing', type: :feature do
       'Foo',
       other_fields: {
         content_id: 'single-taxon-content-id',
-        publication_state: 'draft'
+        publication_state: 'draft',
+        state_history: {
+          "1" => "draft"
+        }
       }
     )
     stub_requests_for_show_page(taxon)
