@@ -23,11 +23,19 @@ namespace :metrics do
       Metrics::TaxonsPerLevelMetrics.new.count_taxons_per_level
     end
 
+    desc "Record number of superfluous taggings"
+    task record_number_of_superfluous_taggins_metrics: :environment do
+      Statsd.logger = Logger.new(STDOUT)
+
+      Metrics::SuperfluousTagginsMetrics.new.count
+    end
+
     desc "Record all metrics about the Topic Taxonomy"
     task record_all: %i[
       count_content_per_level
       record_taxons_per_level_metrics
       record_content_coverage_metrics
+      record_number_of_superfluous_taggins_metrics
     ]
   end
 end
