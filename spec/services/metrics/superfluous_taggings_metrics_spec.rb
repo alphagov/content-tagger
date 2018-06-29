@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Metrics
-  RSpec.describe ContentCoverageMetrics do
+  RSpec.describe SuperfluousTaggingsMetrics do
     describe '#count' do
       it "sends the correct values to statsd" do
         allow(Tagging::CommonAncestorFinder).to receive(:call)
@@ -10,7 +10,7 @@ module Metrics
 
         allow(Metrics.statsd).to receive(:gauge)
 
-        Metrics::SuperfluousTagginsMetrics.new.count
+        Metrics::SuperfluousTaggingsMetrics.new.count
 
         expect(Metrics.statsd).to have_received(:gauge)
                                     .with("superfluous_tagging_count", 3)
