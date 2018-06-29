@@ -1,7 +1,7 @@
 require_relative '../metrics'
 
 module Metrics
-  class SuperfluousTagginsMetrics
+  class SuperfluousTaggingsMetrics
     def count
       sum = Tagging::CommonAncestorFinder.call.sum do |ca_result|
         ca_result[:common_ancestors].count

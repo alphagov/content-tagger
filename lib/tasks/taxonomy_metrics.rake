@@ -24,10 +24,10 @@ namespace :metrics do
     end
 
     desc "Record number of superfluous taggings"
-    task record_number_of_superfluous_taggins_metrics: :environment do
+    task record_number_of_superfluous_taggings_metrics: :environment do
       Statsd.logger = Logger.new(STDOUT)
 
-      Metrics::SuperfluousTagginsMetrics.new.count
+      Metrics::SuperfluousTaggingsMetrics.new.count
     end
 
     desc "Record all metrics about the Topic Taxonomy"
