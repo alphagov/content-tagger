@@ -35,7 +35,6 @@ namespace :metrics do
       count_content_per_level
       record_taxons_per_level_metrics
       record_content_coverage_metrics
-      record_number_of_superfluous_taggins_metrics
     ]
   end
 end
