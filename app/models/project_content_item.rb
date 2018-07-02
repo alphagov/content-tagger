@@ -28,7 +28,7 @@ class ProjectContentItem < ActiveRecord::Base
   scope :for_taxonomy_branch, (lambda do |branch_id|
     joins(:project).where("projects.taxonomy_branch = ?", branch_id)
   end)
-  scope :matching_search, ->(query) { where("title ILIKE ?", "%#{query}%") }
+  scope :matching_search, ->(query) { where("title ILIKE ?", "%#{sanitize_sql_like(query)}%") }
   scope :todo, -> { where(flag: nil, done: false) }
   scope :with_valid_ids, -> { where.not(content_id: nil) }
 end
