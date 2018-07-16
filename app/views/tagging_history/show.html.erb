@@ -48,7 +48,9 @@
             <%= link_change[:user_name] %>
             (<%= link_change[:organisation] || "No organisation" %>)
           <% else %>
-            <em>Unknown user</em>
+            <em>
+              Unknown user <!-- UID: <%= link_change[:user_uid] %> -->
+            </em>
           <% end %>
         </td>
       </tr>
