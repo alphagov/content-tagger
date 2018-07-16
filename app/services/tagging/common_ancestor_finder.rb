@@ -21,7 +21,7 @@ module Tagging
         rescue GdsApi::HTTPNotFound
           puts("Cannot find content with id: #{content_id}")
           {}
-        rescue GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException
+        rescue GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException, GdsApi::HTTPBadGateway
           retries ||= 0
           raise if retries >= 3
           retries += 1
