@@ -276,6 +276,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       links: {
         taxons: [tag_mapping.link_content_id]
       },
+      bulk_publishing: true,
       previous_version: 0
     )
   end
