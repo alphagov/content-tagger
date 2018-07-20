@@ -202,7 +202,8 @@ private
     stub_publishing_api_patch_links(
       document[:content_id],
       links: { taxons: [dest[:content_id]] },
-      previous_version: 1
+      previous_version: 1,
+      bulk_publishing: true,
     )
   end
 end

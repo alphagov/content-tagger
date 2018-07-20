@@ -174,13 +174,15 @@ RSpec.feature "Tag importer", type: :feature do
       "content-1-cid",
       links: {
         taxons: ["education-content-id"],
-      }
+      },
+      bulk_publishing: true,
     )
     link_update_2 = stub_publishing_api_patch_links(
       "content-2-cid",
       links: {
         taxons: ["early-years-content-id"],
-      }
+      },
+      bulk_publishing: true,
     )
     taxon_1 = { title: 'Early Years', content_id: 'early-years-content-id' }
     taxon_2 = { title: 'Education', content_id: 'education-content-id' }
@@ -200,7 +202,8 @@ RSpec.feature "Tag importer", type: :feature do
       "content-1-cid",
       links: {
         taxons: ["education-content-id"],
-      }
+      },
+      bulk_publishing: true,
     )
 
     taxon_1 = { title: 'Early Years', content_id: 'early-years-content-id' }

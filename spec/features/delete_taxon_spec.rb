@@ -327,7 +327,8 @@ RSpec.feature "Delete Taxon", type: :feature do
     @patch_links_request = stub_publishing_api_patch_links(
       'tagged-content',
       links: { taxons: [@taxon_content_id, @parent_taxon_content_id] },
-      previous_version: 10
+      previous_version: 10,
+      bulk_publishing: true,
     )
   end
 end

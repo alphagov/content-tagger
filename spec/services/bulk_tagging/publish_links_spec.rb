@@ -28,7 +28,8 @@ module BulkTagging
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
           links: { 'taxons' => ['existing-content-id', tag_mapping.link_content_id] },
-          previous_version: 10
+          previous_version: 10,
+          bulk_publishing: true,
         )
       end
 
@@ -44,7 +45,8 @@ module BulkTagging
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
           links: { 'taxons' => [tag_mapping.link_content_id] },
-          previous_version: 10
+          previous_version: 10,
+          bulk_publishing: true,
         )
       end
 
@@ -60,7 +62,8 @@ module BulkTagging
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
           links: { tag_mapping.link_type => [tag_mapping.link_content_id] },
-          previous_version: 10
+          previous_version: 10,
+          bulk_publishing: true,
         )
       end
 
@@ -80,7 +83,8 @@ module BulkTagging
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
           links: { tag_mapping.link_type => [tag_mapping.link_content_id] },
-          previous_version: 10
+          previous_version: 10,
+          bulk_publishing: true,
         )
       end
     end

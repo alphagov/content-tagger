@@ -14,7 +14,8 @@ module BulkTagging
       Services.publishing_api.patch_links(
         tag_mapping.content_id,
         links: updated_links,
-        previous_version: previous_version
+        previous_version: previous_version,
+        bulk_publishing: true,
       )
     end
 
