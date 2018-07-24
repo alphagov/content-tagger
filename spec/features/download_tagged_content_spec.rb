@@ -20,22 +20,6 @@ RSpec.feature "Download taggings", type: :feature do
     )
 
     stub_requests_for_show_page(taxon)
-
-    # for the show page
-    # TODO: this overrides `stub_requests_for_show_page`
-    publishing_api_has_linked_items(
-      [basic_content_item("tagged content")],
-      content_id: @content_id,
-      link_type: "taxons",
-    )
-
-    # for the tagged item download
-    publishing_api_has_linked_items(
-      [basic_content_item("tagged content")],
-      content_id: @content_id,
-      link_type: "taxons",
-      fields: Taxonomy::TaxonomyExport::COLUMNS,
-    )
   end
 
   def when_i_visit_the_taxon_tagged_content_page
@@ -43,13 +27,45 @@ RSpec.feature "Download taggings", type: :feature do
   end
 
   def when_i_click_the_download_button
+    content_item = basic_content_item(
+      "tagged-content",
+      other_fields: {
+        first_published_at: "2012-01-26T13:10:47Z",
+        public_updated_at: "2012-10-12T15:54:21Z"
+      }
+    )
+
+    publishing_api_has_linked_items(
+      [content_item],
+      content_id: @content_id,
+      link_type: "taxons",
+      fields: Taxonomy::TaxonomyExport::COLUMNS,
+    )
+
+    publishing_api_has_links_for_content_ids(
+      "tagged-content" =>
+       {
+         "links" => {
+           "primary_publishing_organisation" => ["org-content-id"]
+         }
+       },
+    )
+
+    publishing_api_has_content(
+      [{ "content_id" => "org-content-id", "title" => "org title" }],
+      document_type: "organisation",
+      fields: %w[content_id title],
+      page: 1,
+      per_page: 600
+    )
+
     click_link "Download as CSV"
   end
 
   def then_i_should_receive_a_csv_with_tagged_content
     expect(page.body).to eql <<~DOC
-      title,description,content_id,base_path,document_type,first_published_at,public_updated_at
-      tagged content,,tagged-content,/level-one/tagged-content,guidance,,
+      title,description,content_id,base_path,document_type,first_published_at,public_updated_at,primary_publishing_organisation
+      tagged-content,,tagged-content,/level-one/tagged-content,guidance,2012-01-26T13:10:47Z,2012-10-12T15:54:21Z,org title
     DOC
   end
 end
