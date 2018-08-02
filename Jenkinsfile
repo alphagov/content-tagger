@@ -7,6 +7,7 @@ node("postgresql-9.3") {
   govuk.buildProject(
     sassLint: false,
     rubyLintDiff: false,
-    publishingE2ETests: true
+    publishingE2ETests: true,
+    brakeman: true,
   )
 }
