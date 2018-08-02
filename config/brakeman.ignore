@@ -1,0 +1,44 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "3ed7317da1009a6b8b746f4b64001ba2bad5333221c8043db7ccd21bbee3c8a4",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/taxons/show.html.erb",
+      "line": 197,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(partial => Taxonomy::ShowPage.new(taxon, params.fetch(:viz, \"taxonomy_tree\")).visualisation, { :locals => ({ :page => Taxonomy::ShowPage.new(taxon, params.fetch(:viz, \"taxonomy_tree\")) }) })",
+      "render_path": [{"type":"controller","class":"TaxonsController","method":"show","line":44,"file":"app/controllers/taxons_controller.rb"}],
+      "location": {
+        "type": "template",
+        "template": "taxons/show"
+      },
+      "user_input": "params.fetch(:viz, \"taxonomy_tree\")",
+      "confidence": "Weak",
+      "note": "Safe because we check that the visualistion parameter is within a valid list of visualisations before trying to load the template for it."
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "cebddc2d284fc2066c8b68b5212906cea4b93c9e015826350b21ef0417918c60",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in link_to href",
+      "file": "app/views/projects/_content_item.html.erb",
+      "line": 22,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to((Unresolved Model).new.title, (Unresolved Model).new.url, :data => ({ :proxy_iframe => \"enabled\", :modal_url => (Unresolved Model).new.proxied_url, :toggle => \"modal\", :target => \"#iframe_modal_id\" }))",
+      "render_path": [{"type":"template","name":"projects/show","line":48,"file":"app/views/projects/show.html.erb"}],
+      "location": {
+        "type": "template",
+        "template": "projects/_content_item"
+      },
+      "user_input": "(Unresolved Model).new.url",
+      "confidence": "Weak",
+      "note": "Safe because we control the URLs in the database."
+    }
+  ],
+  "updated": "2018-08-02 08:11:26 +0100",
+  "brakeman_version": "4.3.1"
+}
