@@ -12,8 +12,8 @@ FactoryBot.define do
         base_path: "target/base/path/#{n}",
         content_id: SecureRandom.uuid }
     end
-    link_type 'taxons'
-    change 'add'
+    link_type { 'taxons' }
+    change { 'add' }
     user_uid { SecureRandom.uuid }
     created_at { Time.current }
 

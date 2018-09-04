@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
     uid { SecureRandom.uuid }
-    name "Sammy Hobson"
+    name { "Sammy Hobson" }
     permissions { ["signin"] }
 
     trait :gds_editor do
