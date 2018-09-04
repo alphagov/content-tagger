@@ -41,8 +41,8 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
+  gem 'govuk_test'
   gem 'headless'
-  gem 'poltergeist'
   gem 'timecop'
   gem 'webmock'
 end
