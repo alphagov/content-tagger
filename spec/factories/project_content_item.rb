@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :project_content_item do
-    url "MyString"
-    title "MyString"
-    description "MyString"
+    url { "MyString" }
+    title { "MyString" }
+    description { "MyString" }
     content_id { SecureRandom.uuid }
 
     trait :flagged_needs_help do
@@ -11,7 +11,7 @@ FactoryBot.define do
 
     trait :flagged_missing_topic do
       flag { ProjectContentItem.flags['missing_topic'] }
-      suggested_tags 'have you thought about ...?'
+      suggested_tags { 'have you thought about ...?' }
     end
   end
 end

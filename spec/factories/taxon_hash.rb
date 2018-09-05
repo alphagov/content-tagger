@@ -10,24 +10,24 @@ FactoryBot.define do
     sequence :description, 1 do |n|
       "this is taxon #{n}"
     end
-    document_type 'taxon'
-    publication_state 'published'
+    document_type { 'taxon' }
+    publication_state { 'published' }
 
     transient do
-      internal_name nil
-      expanded_links nil
-      links {}
+      internal_name { nil }
+      expanded_links { nil }
+      links { {} }
     end
 
     initialize_with { attributes }
 
     trait :home_page do
-      base_path "/"
-      description ''
-      details {}
-      document_type 'homepage'
-      title 'GOV.UK homepage'
-      content_id GovukTaxonomy::ROOT_CONTENT_ID
+      base_path { "/" }
+      description { '' }
+      details { {} }
+      document_type { 'homepage' }
+      title { 'GOV.UK homepage' }
+      content_id { GovukTaxonomy::ROOT_CONTENT_ID }
     end
 
     after(:build) do |taxon, evaluator|

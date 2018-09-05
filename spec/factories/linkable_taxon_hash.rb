@@ -12,7 +12,7 @@ FactoryBot.define do
     sequence :internal_name, 1 do |n|
       "Internal name of Taxon #{n}"
     end
-    publication_state 'published'
+    publication_state { 'published' }
 
     initialize_with { attributes }
   end
