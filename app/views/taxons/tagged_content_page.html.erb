@@ -25,6 +25,9 @@
     <div class="panel-body">
       Total tagged pages: <%= page.tagged.count %>
     </div>
+    <div class="panel-body">
+      <span id="row-count">Filtered results count: <%= page.tagged.count %></span>
+    </div>
   </div>
 
   <% if page.tagged.any? %>

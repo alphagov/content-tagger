@@ -1,0 +1,30 @@
+.spinner {
+  -webkit-animation: spinner 2s infinite linear;
+  -moz-animation: spinner 2s infinite linear;
+  -o-animation: spinner 2s infinite linear;
+  animation: spinner 2s infinite linear;
+}
+@-moz-keyframes spinner {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spinner {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
