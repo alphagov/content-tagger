@@ -103,7 +103,7 @@ module Taxonomy
     end
 
     def root_expanded_links
-      @expanded_links ||= Services.publishing_api.get_expanded_links(
+      @root_expanded_links ||= Services.publishing_api.get_expanded_links(
         @content_id
       )
     end

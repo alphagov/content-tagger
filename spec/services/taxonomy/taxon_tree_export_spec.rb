@@ -136,8 +136,8 @@ RSpec.describe Taxonomy::TaxonTreeExport do
 
   def valid_json?(json)
     JSON.parse(json)
-    return true
+    true
   rescue JSON::ParserError
-    return false
+    false
   end
 end

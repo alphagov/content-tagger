@@ -67,7 +67,7 @@ RSpec.feature "Tagging History", type: :feature do
   def given_there_are_some_link_changes_for_an_individual_taxon
     stub_link_changes_request(
       link_changes_for_an_individual_taxon,
-      link_types: ['taxons'],
+      link_types: %w[taxons],
       target_content_ids: [individual_taxon[:content_id]]
     )
   end
@@ -75,7 +75,7 @@ RSpec.feature "Tagging History", type: :feature do
   def given_there_are_some_link_changes_for_an_individual_taxon_with_missing_source_document_information
     stub_link_changes_request(
       link_changes_for_an_individual_taxon_with_missing_source_document_information,
-      link_types: ['taxons'],
+      link_types: %w[taxons],
       target_content_ids: [individual_taxon[:content_id]]
     )
   end
@@ -154,26 +154,26 @@ RSpec.feature "Tagging History", type: :feature do
     end
   end
 
-  def stub_link_changes_request(link_changes, params = { link_types: ['taxons'] })
+  def stub_link_changes_request(link_changes, params = { link_types: %w[taxons] })
     stub_request(:get, "#{PUBLISHING_API}/v2/links/changes?#{params.to_query}")
       .to_return(body: { link_changes: link_changes }.to_json)
   end
 
   def link_changes_with_user_data
     user = FactoryBot.create(:user, name: 'Foo', organisation_slug: 'bar-baz')
-    @_link_changes_with_user_data ||= FactoryBot.build_list(:link_change, 3, change: 'add', user_uid: user.uid)
+    @link_changes_with_user_data ||= FactoryBot.build_list(:link_change, 3, change: 'add', user_uid: user.uid)
   end
 
   def added_link_changes
-    @_added_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'add')
+    @added_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'add')
   end
 
   def removed_link_changes
-    @_removed_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'remove')
+    @removed_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'remove')
   end
 
   def link_changes_with_missing_document_information
-    @_link_changes_with_missing_document_information ||= begin
+    @link_changes_with_missing_document_information ||= begin
       link_changes = FactoryBot.build_list(:link_change, 3)
       link_changes[0]['source'] = nil
       link_changes[1]['target'] = nil
@@ -184,7 +184,7 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def link_changes_for_an_individual_taxon_with_missing_source_document_information
-    @_link_changes_with_missing_document_information ||= begin
+    @link_changes_for_an_individual_taxon_with_missing_source_document_information ||= begin
       link_changes = FactoryBot.build_list(
         :link_change,
         2,
@@ -200,7 +200,7 @@ RSpec.feature "Tagging History", type: :feature do
   end
 
   def link_changes_for_an_individual_taxon
-    @_link_changes_for_an_individual_taxon ||= FactoryBot.build_list(
+    @link_changes_for_an_individual_taxon ||= FactoryBot.build_list(
       :link_change,
       3,
       target: { content_id: individual_taxon[:content_id] }

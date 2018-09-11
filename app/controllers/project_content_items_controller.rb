@@ -83,10 +83,10 @@ private
   end
 
   def project
-    @_project ||= Project.find(params[:project_id])
+    @project ||= Project.find(params[:project_id])
   end
 
   def content_item
-    @_content_item ||= ProjectContentItem.find(params[:id])
+    @content_item ||= ProjectContentItem.find(params[:id])
   end
 end

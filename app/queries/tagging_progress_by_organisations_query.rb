@@ -4,7 +4,7 @@ class TaggingProgressByOrganisationsQuery
   end
 
   def percentage_tagged
-    @_tagged_counts ||= content_item_counts_grouped_by_organisation.transform_values do |results|
+    @percentage_tagged ||= content_item_counts_grouped_by_organisation.transform_values do |results|
       total_count, tagged_count = results.map { |obj| obj["documents"] }
       {
         percentage: percentage(tagged_count, total_count),

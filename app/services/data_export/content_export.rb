@@ -69,7 +69,7 @@ module DataExport
     ].freeze
 
     def content_links_enum(page_size = 1000)
-      Services.rummager.search_enum({ reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: ['link'] },
+      Services.rummager.search_enum({ reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: %w[link] },
                                     page_size: page_size).lazy.map { |h| h['link'] }
     end
 

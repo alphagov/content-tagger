@@ -1,6 +1,6 @@
 module Tagging
   def self.blacklisted_document_types
-    @_blacklisted_document_types ||=
+    @blacklisted_document_types ||=
       YAML.load_file(
         File.join(
           Rails.root,

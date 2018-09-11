@@ -16,7 +16,7 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
       publishing_api_has_content([{ content_id: 'c1' }, { content_id: 'c2' }],
                                  page: 1,
                                  document_type: 'document_type',
-                                 fields: ['content_id'])
+                                 fields: %w[content_id])
 
       publishing_api_has_links(
         content_id: 'c1',

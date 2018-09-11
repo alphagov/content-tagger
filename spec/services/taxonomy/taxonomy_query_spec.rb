@@ -63,7 +63,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     it 'returns content tagged to taxons' do
       stub_rummager({ filter_taxons: %w[taxon_id_1 taxon_id_2] },
                     [{ 'content_id' => 'content_id_1' }, { 'content_id' => 'content_id_2' }])
-      stub_rummager({ filter_taxons: ['taxon_id_3'] },
+      stub_rummager({ filter_taxons: %w[taxon_id_3] },
                     [{ 'content_id' => 'content_id_3' }])
 
       expect(query.content_tagged_to_taxons(%w[taxon_id_1 taxon_id_2 taxon_id_3], slice_size: 2))
@@ -71,7 +71,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     end
     it 'removes duplicates' do
       stub_rummager({}, [{ 'content_id' => 'content_id_1' }, { 'content_id' => 'content_id_1' }])
-      expect(query.content_tagged_to_taxons(['id'])).to eq(['content_id_1'])
+      expect(query.content_tagged_to_taxons(%w[id])).to eq(%w[content_id_1])
     end
 
     def stub_rummager(query_hash, return_values)

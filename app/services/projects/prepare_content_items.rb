@@ -23,11 +23,11 @@ module Projects
     end
 
     def content_tags
-      @_tags ||= Services.publishing_api.get_links_for_content_ids(content_ids)
+      @content_tags ||= Services.publishing_api.get_links_for_content_ids(content_ids)
     end
 
     def content_ids
-      @_content_ids ||= content_items.map(&:content_id)
+      @content_ids ||= content_items.map(&:content_id)
     end
   end
 end

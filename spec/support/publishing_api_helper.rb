@@ -50,7 +50,7 @@ module PublishingApiHelper
       per_page: 50,
       q: '',
       search_in: %i[title base_path details.internal_name],
-      states: ["published"],
+      states: %w[published],
     }
 
     publishing_api_has_content(taxons, default_options.merge(options))
@@ -63,7 +63,7 @@ module PublishingApiHelper
       page: 1,
       per_page: 50,
       q: '',
-      states: ["draft"],
+      states: %w[draft],
     }
 
     publishing_api_has_content(taxons, default_options.merge(options))
@@ -77,7 +77,7 @@ module PublishingApiHelper
       per_page: 50,
       q: '',
       search_in: %i[title base_path details.internal_name],
-      states: ["unpublished"],
+      states: %w[unpublished],
     }
 
     publishing_api_has_content(taxons, default_options.merge(options))

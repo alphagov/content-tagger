@@ -28,7 +28,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
         [],
         content_id: taxon_content_id,
         link_type: 'taxons',
-        fields: ['base_path']
+        fields: %w[base_path]
       )
     end
     it 'does not perform a tag migration' do
@@ -45,7 +45,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
          { 'base_path' => '/base/path2' }],
         content_id: taxon_content_id,
         link_type: 'taxons',
-        fields: ['base_path']
+        fields: %w[base_path]
       )
       publishing_api_has_lookups('/base/path1' => tagged_content_id1, '/base/path2' => tagged_content_id2)
 

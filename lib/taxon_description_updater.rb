@@ -15,7 +15,7 @@ private
     content_items = publishing_api.get_content_items(
       per_page: 5000,
       q: description_to_remove,
-      search_in: ['description'],
+      search_in: %w[description],
       states: %w[published draft]
     )
     content_items['results'].select { |item| item['description'] == description_to_remove }.each do |taxon|
@@ -51,7 +51,7 @@ private
   end
 
   def draft_version_exists?(taxon)
-    taxon['state_history'].values.include? 'draft'
+    taxon['state_history'].value?('draft')
   end
 
   def publishing_api

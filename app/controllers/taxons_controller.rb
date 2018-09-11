@@ -205,7 +205,7 @@ private
   end
 
   def taxon
-    @_taxon ||= Taxonomy::BuildTaxon.call(content_id: content_id)
+    @taxon ||= Taxonomy::BuildTaxon.call(content_id: content_id)
   end
 
   helper_method :visualisation_to_render

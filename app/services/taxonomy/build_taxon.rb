@@ -52,11 +52,11 @@ module Taxonomy
     end
 
     def links
-      @_links ||= expanded_links.transform_values { |v| v.map { |h| h['content_id'] } }
+      @links ||= expanded_links.transform_values { |v| v.map { |h| h['content_id'] } }
     end
 
     def expanded_links
-      @_expanded_links ||= begin
+      @expanded_links ||= begin
         Services.publishing_api
           .get_expanded_links(content_id)
           .to_h

@@ -57,11 +57,11 @@ private
   end
 
   def project_index
-    @_project_index = Project.all.order(:taxonomy_branch, :name)
+    @project_index = Project.all.order(:taxonomy_branch, :name)
   end
 
   def project
-    @_project ||= Project.find(project_id)
+    @project ||= Project.find(project_id)
   end
 
   def project_id
@@ -78,6 +78,6 @@ private
     return if params[:progress_for_organisations].blank?
 
     organisations = params[:progress_for_organisations].tr(' ', '').split(',')
-    @_tagging_query ||= TaggingProgressByOrganisationsQuery.new(organisations)
+    @tagging_progress_query ||= TaggingProgressByOrganisationsQuery.new(organisations)
   end
 end

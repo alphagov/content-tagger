@@ -5,7 +5,7 @@ module TaggingHistory
     end
 
     def changes
-      @_changes ||= link_changes_from_publishing_api.map do |change|
+      @changes ||= link_changes_from_publishing_api.map do |change|
         user = User.find_by_uid(change[:user_uid])
 
         if user.present?
@@ -25,7 +25,7 @@ module TaggingHistory
     def link_changes_from_publishing_api
       Services.publishing_api
         .get_links_changes(
-          { link_types: ['taxons'] }.merge(@params.to_h.symbolize_keys)
+          { link_types: %w[taxons] }.merge(@params.to_h.symbolize_keys)
         )
         .to_hash
         .deep_symbolize_keys[:link_changes]

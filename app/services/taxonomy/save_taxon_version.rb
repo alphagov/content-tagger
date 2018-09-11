@@ -30,7 +30,7 @@ module Taxonomy
     end
 
     def taxon_changes
-      @_taxon_changes ||= begin
+      @taxon_changes ||= begin
         TaxonDiffBuilder.new(previous_item: previous_taxon, current_item: taxon).diff
       end
     end

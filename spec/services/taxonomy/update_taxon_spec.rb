@@ -10,7 +10,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       description: 'Description',
       base_path: '/level-one/slug',
       parent_content_id: 'CONTENT-ID-PARENT',
-      associated_taxons: ['1234']
+      associated_taxons: %w[1234]
     )
     allow(Taxonomy::SaveTaxonVersion).to receive(:call)
 
@@ -34,7 +34,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         assert_publishing_api_patch_links(@taxon.content_id, links: {
                                             root_taxon: [],
                                             parent_taxons: ['CONTENT-ID-PARENT'],
-                                            associated_taxons: ['1234'],
+                                            associated_taxons: %w[1234],
                                             legacy_taxons: [],
                                           })
       end
@@ -51,7 +51,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         assert_publishing_api_patch_links(@taxon.content_id, links: {
                                             root_taxon: [],
                                             parent_taxons: [],
-                                            associated_taxons: ['1234'],
+                                            associated_taxons: %w[1234],
                                             legacy_taxons: [],
                                           })
       end

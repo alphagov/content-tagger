@@ -12,7 +12,7 @@ RSpec.describe Tagging::Tagger do
   end
   it 'adds tags from the spreadsheet' do
     expect(Tagging::Tagger).to receive(:add_tags).with('aaa', %w[1 3])
-    expect(Tagging::Tagger).to receive(:add_tags).with('bbb', ['2'])
+    expect(Tagging::Tagger).to receive(:add_tags).with('bbb', %w[2])
 
     Tagging::CsvTagger.do_tagging('http://example.com/sheet.csv')
   end
@@ -23,6 +23,6 @@ RSpec.describe Tagging::Tagger do
       log << b
     end
     expect(log).to match_array([{ content_id: 'aaa', taxon_ids: %w[1 3] },
-                                { content_id: 'bbb', taxon_ids: ['2'] }])
+                                { content_id: 'bbb', taxon_ids: %w[2] }])
   end
 end

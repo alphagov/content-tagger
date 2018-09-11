@@ -50,7 +50,7 @@ RSpec.describe RemoteTaxons do
         per_page: 2
       )
 
-      result = described_class.new.search(page: 2, per_page: 2, states: ['unpublished'])
+      result = described_class.new.search(page: 2, per_page: 2, states: %w[unpublished])
 
       expect(result).to be_a(BulkTagging::TaxonSearchResults)
       expect(result.taxons.length).to eq(1)
