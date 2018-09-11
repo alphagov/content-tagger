@@ -12,7 +12,7 @@ class TaxonBasePathStructureCheck
 
 private
 
-  def validate_tree(taxon:, level_one_prefix: nil, n: 0)
+  def validate_tree(taxon:, level_one_prefix: nil, n: 0) # rubocop:disable Naming/UncommunicativeMethodParamName
     taxon = Taxon.new(taxon, level_one_prefix: level_one_prefix)
 
     spacer = n.positive? ? "#{' ' * n * 2} ├── " : ""
