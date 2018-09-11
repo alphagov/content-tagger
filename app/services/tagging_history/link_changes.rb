@@ -5,7 +5,7 @@ module TaggingHistory
     end
 
     def changes
-      @_changes ||= link_changes_from_publishing_api.map do |change|
+      @changes ||= link_changes_from_publishing_api.map do |change|
         user = User.find_by_uid(change[:user_uid])
 
         if user.present?

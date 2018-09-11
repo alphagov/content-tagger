@@ -5,7 +5,7 @@ module Taxonomy
     end
 
     def nested_tree
-      @_nested_tree ||= process_linked_content_item_tree(
+      @nested_tree ||= process_linked_content_item_tree(
         GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
           content_id: @root_taxon.content_id,
           publishing_api: Services.publishing_api
@@ -14,7 +14,7 @@ module Taxonomy
     end
 
     def max_size
-      @_max_size ||= begin
+      @max_size ||= begin
         max_size_in_tree = lambda do |taxon|
           if taxon[:children].blank?
             taxon[:size]

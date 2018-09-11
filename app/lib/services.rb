@@ -13,7 +13,7 @@ module Services
   end
 
   def self.publishing_api_with_long_timeout
-    @publishing_api_with_low_timeout ||= begin
+    @publishing_api_with_long_timeout ||= begin
       publishing_api.dup.tap do |client|
         client.options[:timeout] = 15
       end
@@ -25,7 +25,7 @@ module Services
   end
 
   def self.statsd
-    @statsd_client ||= begin
+    @statsd ||= begin
       statsd_client = Statsd.new
       statsd_client.namespace = "govuk.app.content-tagger"
       statsd_client
@@ -33,7 +33,7 @@ module Services
   end
 
   def self.rummager
-    @search ||= GdsApi::Rummager.new(
+    @rummager ||= GdsApi::Rummager.new(
       Plek.new.find('rummager'),
     )
   end

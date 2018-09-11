@@ -33,7 +33,7 @@ private
   end
 
   def taxonomy_query
-    @_taxonomy_query ||= Taxonomy::TaxonomyQuery.new
+    @taxonomy_query ||= Taxonomy::TaxonomyQuery.new
   end
 
   class Taxon
@@ -70,7 +70,7 @@ private
     end
 
     def path_components
-      @_path_components ||= ::Taxon::PATH_COMPONENTS_REGEX.match base_path
+      @path_components ||= ::Taxon::PATH_COMPONENTS_REGEX.match base_path
     end
 
     def valid_base_path
