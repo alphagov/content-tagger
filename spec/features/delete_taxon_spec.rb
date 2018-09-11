@@ -108,7 +108,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     add_a_parent_taxon
     add_tagged_content_to_parent
     add_tagged_content(fields: %w[base_path content_id document_type title])
-    add_tagged_content(fields: ['base_path'])
+    add_tagged_content(fields: %w[base_path])
   end
 
   def given_a_deleted_taxon
@@ -134,7 +134,7 @@ RSpec.feature "Delete Taxon", type: :feature do
       content_id: @taxon_content_id,
       links: {
         parent_taxons: ['CONTENT-ID-PARENT'],
-        associated_taxons: ["1234"],
+        associated_taxons: %w[1234],
       }
     )
   end

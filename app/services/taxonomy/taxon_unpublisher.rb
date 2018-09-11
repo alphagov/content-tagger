@@ -36,7 +36,7 @@ module Taxonomy
       Services.publishing_api.get_linked_items(
         content_id,
         link_type: "taxons",
-        fields: ['base_path']
+        fields: %w[base_path]
       ).map { |content| content['base_path'] }
     end
   end

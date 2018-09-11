@@ -8,7 +8,7 @@ end
 ENV['RAILS_ENV'] = 'test'
 ENV['GOVUK_APP_DOMAIN'] = 'test.gov.uk'
 
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'spec_helper'
 require 'rspec/rails'
 require 'govuk_sidekiq/testing'

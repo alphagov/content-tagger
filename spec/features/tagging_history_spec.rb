@@ -67,7 +67,7 @@ RSpec.feature "Tagging History", type: :feature do
   def given_there_are_some_link_changes_for_an_individual_taxon
     stub_link_changes_request(
       link_changes_for_an_individual_taxon,
-      link_types: ['taxons'],
+      link_types: %w[taxons],
       target_content_ids: [individual_taxon[:content_id]]
     )
   end
@@ -75,7 +75,7 @@ RSpec.feature "Tagging History", type: :feature do
   def given_there_are_some_link_changes_for_an_individual_taxon_with_missing_source_document_information
     stub_link_changes_request(
       link_changes_for_an_individual_taxon_with_missing_source_document_information,
-      link_types: ['taxons'],
+      link_types: %w[taxons],
       target_content_ids: [individual_taxon[:content_id]]
     )
   end
@@ -154,7 +154,7 @@ RSpec.feature "Tagging History", type: :feature do
     end
   end
 
-  def stub_link_changes_request(link_changes, params = { link_types: ['taxons'] })
+  def stub_link_changes_request(link_changes, params = { link_types: %w[taxons] })
     stub_request(:get, "#{PUBLISHING_API}/v2/links/changes?#{params.to_query}")
       .to_return(body: { link_changes: link_changes }.to_json)
   end

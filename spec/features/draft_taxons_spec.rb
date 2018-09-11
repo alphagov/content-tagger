@@ -55,7 +55,7 @@ RSpec.feature "Draft taxonomy" do
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2, @taxon_3],
       page: 1,
-      states: ["draft"]
+      states: %w[draft]
     )
   end
 

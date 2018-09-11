@@ -40,7 +40,7 @@ private
     changes = Services
       .publishing_api
       .get_links_changes(source_content_ids: [content_id],
-                         link_types: ["taxons"])
+                         link_types: %w[taxons])
       .to_h["link_changes"]
 
     changes.find { |link| link.dig("target", "content_id") == taxon_id } || {}

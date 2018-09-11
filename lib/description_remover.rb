@@ -31,7 +31,7 @@ private
 
   def published_taxons_with_no_drafts(taxons)
     taxons.reject do |taxon|
-      taxon['state_history'].values.include?('draft')
+      taxon['state_history'].value?('draft')
     end
   end
 

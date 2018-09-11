@@ -147,7 +147,7 @@ RSpec.describe TaxonsController, type: :controller do
           links: {
             root_taxon: [],
             parent_taxons: ['CONTENT-ID-PARENT'],
-            associated_taxons: ['1234'],
+            associated_taxons: %w[1234],
             legacy_taxons: [],
           }
         }

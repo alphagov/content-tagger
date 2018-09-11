@@ -12,7 +12,7 @@ module Taxonomy
       public_updated_at
     ].freeze
 
-    CSV_COLUMNS = COLUMNS + ['primary_publishing_organisation']
+    CSV_COLUMNS = COLUMNS + %w[primary_publishing_organisation]
 
     def initialize(content_id)
       @content_id = content_id

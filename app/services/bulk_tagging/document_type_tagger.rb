@@ -17,7 +17,7 @@ module BulkTagging
         raise
       end
 
-      Services.publishing_api.get_content_items_enum(document_type: @document_type, fields: ['content_id']).lazy.map do |document|
+      Services.publishing_api.get_content_items_enum(document_type: @document_type, fields: %w[content_id]).lazy.map do |document|
         begin
           content_id = document.fetch('content_id')
           new_taxons = add_taxon_link(content_id, @taxon_content_id)

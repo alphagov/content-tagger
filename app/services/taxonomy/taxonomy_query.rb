@@ -3,7 +3,7 @@ module Taxonomy
     TAXON_FIELDS = %w[content_id base_path title].freeze
 
     def initialize(fields = TAXON_FIELDS)
-      @taxon_fields = (fields.map(&:to_s) + ['base_path']).uniq
+      @taxon_fields = (fields.map(&:to_s) + %w[base_path]).uniq
     end
 
     def level_one_taxons
@@ -24,7 +24,7 @@ module Taxonomy
 
     def content_tagged_to_taxons(content_ids, slice_size: 50)
       content_id_hashes = content_ids.each_slice(slice_size).flat_map do |chunk|
-        Services.rummager.search_enum(filter_taxons: chunk, fields: ['content_id']).to_a
+        Services.rummager.search_enum(filter_taxons: chunk, fields: %w[content_id]).to_a
       end
       content_id_hashes.map { |h| h['content_id'] }.uniq
     end
