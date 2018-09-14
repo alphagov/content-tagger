@@ -11,7 +11,7 @@ module Taxonomy
     end
 
     def title
-      taxon.internal_name
+      taxon.title
     end
 
     def show_preview_link?
