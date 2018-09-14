@@ -69,7 +69,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   end
 
   def when_i_add_an_additional_tag
-    select "Business tax / Pension scheme administration", from: "Topics"
+    select "Pension scheme administration", from: "Topics"
   end
 
   def and_i_submit_the_form
@@ -82,7 +82,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   def then_only_that_link_type_is_sent_to_the_publishing_api
     body = {
       links: {
-        topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", "ID-OF-ALREADY-TAGGED"],
+        topics: ["ID-OF-ALREADY-TAGGED", "e1d6b771-a692-4812-a4e7-7562214286ef"],
       },
       previous_version: 54_321,
     }
