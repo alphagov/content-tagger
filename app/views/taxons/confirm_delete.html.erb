@@ -1,4 +1,4 @@
-<h1><%= t('views.taxons.confirm_deletion_title') %> "<%= page.taxon.internal_name %>"</h1>
+<h1><%= t('views.taxons.confirm_deletion_title') %> "<%= page.taxon.title %>"</h1>
 
 <div class="lead"><%= t('views.taxons.confirm_deletion_restore') %></div>
 
@@ -44,7 +44,7 @@
    <tbody>
      <% page.children.each do |child| %>
        <tr>
-         <td><%= link_to child.internal_name, taxon_path(child.content_id) %></td>
+         <td><%= link_to child.title, taxon_path(child.content_id) %></td>
        </tr>
      <% end %>
    </tbody>
