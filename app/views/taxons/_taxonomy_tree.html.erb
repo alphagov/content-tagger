@@ -5,14 +5,14 @@
       <div class="parent-expansion">
         <div class="taxon-level taxon-depth-1">
           <span class="taxon-level-title">
-            <%= link_to parent_node.internal_name, taxon_path(parent_node.content_id) %>
+            <%= link_to parent_node.title, taxon_path(parent_node.content_id) %>
           </span>
         </div>
         <% parent_node.each do |parent_ancestor| %>
           <% next if parent_ancestor.depth == 1 %>
           <div class="taxon-level taxon-depth-<%= parent_ancestor.depth %>">
             <span class="taxon-level-title">
-              <%= link_to parent_ancestor.internal_name, taxon_path(parent_ancestor.content_id) %>
+              <%= link_to parent_ancestor.title, taxon_path(parent_ancestor.content_id) %>
             </span>
           </div>
         <% end %>
@@ -29,7 +29,7 @@
   <div class="taxon-focus <%= has_parents %> <%= has_children %> <%= multiple_parents %> <%= multiple_children %>">
     <div class="taxon-level taxon-depth-0">
        <span class="taxon-level-title">
-         <%= page.taxonomy_tree.root_node.internal_name %>
+         <%= page.taxonomy_tree.root_node.title %>
        </span>
     </div>
   </div>
@@ -39,14 +39,14 @@
       <div class="child-expansion">
         <div class="taxon-level taxon-depth-1">
           <span class="taxon-level-title">
-            <%= link_to child_node.internal_name, taxon_path(child_node.content_id) %>
+            <%= link_to child_node.title, taxon_path(child_node.content_id) %>
           </span>
         </div>
         <% child_node.each do |child_successor| %>
           <% next if child_successor.depth == 1 %>
           <div class="taxon-level taxon-depth-<%= child_successor.depth %>">
             <span class="taxon-level-title">
-              <%= link_to child_successor.internal_name, taxon_path(child_successor.content_id) %>
+              <%= link_to child_successor.title, taxon_path(child_successor.content_id) %>
             </span>
           </div>
         <% end %>
