@@ -20,11 +20,13 @@ RSpec.describe Linkables do
             internal_name: '',
           ),
           build_linkable(
+            title: 'valid-title',
             content_id: 'valid-1',
             publication_state: 'published',
             internal_name: 'Valid-1!',
           ),
           build_linkable(
+            title: 'valid-title-2',
             content_id: 'valid-2',
             publication_state: 'published',
             internal_name: 'Valid-2!',
@@ -36,25 +38,25 @@ RSpec.describe Linkables do
     describe '.taxons' do
       it 'returns an array of hashes with only valid taxons' do
         expect(linkables.taxons).to eq(
-          [%w[Valid-1! valid-1], %w[Valid-2! valid-2]]
+          [%w[valid-title valid-1], %w[valid-title-2 valid-2]]
         )
       end
 
       it 'filters out excluded IDs' do
         expect(linkables.taxons(exclude_ids: 'valid-2')).to eq(
-          [%w[Valid-1! valid-1]]
+          [%w[valid-title valid-1]]
         )
       end
     end
     describe '.taxons_including_root' do
       it 'returns an array of hashes with only valid taxons including root' do
         expect(linkables.taxons_including_root).to eq(
-          [['GOV.UK homepage', GovukTaxonomy::ROOT_CONTENT_ID], %w[Valid-1! valid-1], %w[Valid-2! valid-2]]
+          [['GOV.UK homepage', GovukTaxonomy::ROOT_CONTENT_ID], %w[valid-title valid-1], %w[valid-title-2 valid-2]]
         )
       end
       it 'filters out excluded IDs' do
         expect(linkables.taxons_including_root(exclude_ids: 'valid-2')).to eq(
-          [['GOV.UK homepage', GovukTaxonomy::ROOT_CONTENT_ID], %w[Valid-1! valid-1]]
+          [['GOV.UK homepage', GovukTaxonomy::ROOT_CONTENT_ID], %w[valid-title valid-1]]
         )
       end
     end
@@ -85,8 +87,8 @@ RSpec.describe Linkables do
       )
 
       expected = {
-        "Business tax" => [
-          ["Business tax / Pension scheme administration", "e1d6b771-a692-4812-a4e7-7562214286ef"]
+        "Pension scheme administration" => [
+          ["Pension scheme administration", "e1d6b771-a692-4812-a4e7-7562214286ef"]
         ]
       }
 
