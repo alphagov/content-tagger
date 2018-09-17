@@ -5,18 +5,28 @@
     var that = this;
 
     that.start = function(element) {
-      function addEventListener() {
-        var selectAll = element.find('#select_all');
+      var selectAll = element.find('#select_all');
+
+      function selectAllListener() {
         if (selectAll != undefined) {
           selectAll.on('change', function(e) {
-            var checked = selectAll.prop('checked');
-            var checkboxes = $('.select-content-item');
-            checkboxes.prop('checked', checked);
-          });
-        }
+            var checkBoxes = $('.select-content-item:visible'),
+                checked = selectAll.prop('checked');
+
+            checkBoxes.prop('checked', checked);
+          })
+        };
       }
 
-      addEventListener();
+      function tableInputListner() {
+        $('.js-filter-table-input').on('keyup change', function() {
+          selectAll.prop('checked', false);
+          $('.select-content-item').prop('checked', false);
+        })
+      };
+
+      selectAllListener();
+      tableInputListner();
     }
   };
 })(window.GOVUKAdmin.Modules);
