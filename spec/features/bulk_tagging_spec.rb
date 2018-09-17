@@ -89,9 +89,9 @@ RSpec.feature "Bulk tagging", type: :feature do
     # Used in the dropdown
     publishing_api_has_linkables(
       [
-        build_linkable(title: "Taxon 1", content_id: 'taxon-1'),
-        build_linkable(title: "Taxon 2", content_id: 'taxon-2'),
-        build_linkable(title: "Taxon 3", content_id: 'taxon-3'),
+        build_linkable(internal_name: "Taxon 1", content_id: 'taxon-1'),
+        build_linkable(internal_name: "Taxon 2", content_id: 'taxon-2'),
+        build_linkable(internal_name: "Taxon 3", content_id: 'taxon-3'),
       ],
       document_type: "taxon",
     )

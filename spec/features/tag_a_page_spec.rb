@@ -18,7 +18,7 @@ RSpec.describe "Tagging content", type: :feature do
     and_the_expected_navigation_link_is_highlighted
     and_i_see_the_taxon_form
 
-    when_i_select_an_additional_topic("Pension scheme administration")
+    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
@@ -26,7 +26,7 @@ RSpec.describe "Tagging content", type: :feature do
       ordered_related_items: [],
       mainstream_browse_pages: [],
       parent: [],
-      topics: [example_topic['content_id'], "e1d6b771-a692-4812-a4e7-7562214286ef"],
+      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
       organisations: [],
       meets_user_needs: [],
     )
@@ -36,7 +36,7 @@ RSpec.describe "Tagging content", type: :feature do
     given_there_is_a_content_item_with_no_expanded_links
     and_i_am_on_the_page_for_the_item
 
-    when_i_select_an_additional_topic("Pension scheme administration")
+    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
@@ -54,7 +54,7 @@ RSpec.describe "Tagging content", type: :feature do
     given_there_is_a_content_item_with_expanded_links(topics: [example_topic])
     and_i_am_on_the_page_for_the_item
 
-    when_i_select_an_additional_topic("Pension scheme administration")
+    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
     and_somebody_else_makes_a_change
     and_i_submit_the_form
 

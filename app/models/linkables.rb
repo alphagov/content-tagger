@@ -54,7 +54,7 @@ private
 
   def present_items(items)
     items = items.map do |item|
-      title = item.fetch('title')
+      title = item.fetch('internal_name')
       title = "#{title} (draft)" if item.fetch("publication_state") == "draft"
 
       [title, item.fetch('content_id')]
