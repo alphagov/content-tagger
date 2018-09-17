@@ -1,6 +1,6 @@
 <%= display_header(
-  title: "Pages tagged to #{link_to page.taxon.internal_name, taxon_path(page.content_id)}",
-  page_title: "Pages tagged to #{page.taxon.internal_name}",
+  title: "Pages tagged to #{link_to page.taxon.title, taxon_path(page.content_id)}",
+  page_title: "Pages tagged to #{page.taxon.title}",
   breadcrumbs: [:taxons, page.taxon]) %>
 
 <% unless page.unpublished? %>

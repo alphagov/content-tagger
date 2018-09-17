@@ -46,6 +46,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
       }
     )
     @source_taxon_for_select = {
+      'title' => @source_taxon['title'],
       'internal_name' => @source_taxon['details']['internal_name'],
       'content_id' => @source_taxon['content_id'],
       'publication_state' => 'published',
@@ -63,6 +64,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
       }
     )
     @dest_taxon_for_select = {
+      'title' => @dest_taxon['title'],
       'internal_name' => @dest_taxon['details']['internal_name'],
       'content_id' => @dest_taxon['content_id'],
       'publication_state' => 'published',
@@ -119,7 +121,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_select_a_taxon_to_move_content_to
-    select @dest_taxon_for_select['internal_name']
+    select @dest_taxon_for_select['title']
   end
 
   def and_select_all_content

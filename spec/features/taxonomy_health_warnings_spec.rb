@@ -37,7 +37,7 @@ RSpec.describe "Taxonomy Health Warnings" do
   def then_i_see_the_health_warning
     expect(page).to have_text('/path/to/taxon')
     expect(page).to have_text('Taxon fails metric')
-    expect(page).to have_link('internal name', href: taxon_path(@taxon_content_id))
+    expect(page).to have_link('title', href: taxon_path(@taxon_content_id))
   end
 
   def then_i_see_a_link_to_the_metrics_dashboard

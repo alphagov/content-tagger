@@ -48,7 +48,7 @@
     <% @taxonomy_health_warnings.order(value: :desc).each do |taxonomy_health_warning| %>
       <tr>
         <td><%= time_ago_in_words(taxonomy_health_warning.created_at) %></td>
-        <td><%= link_to taxonomy_health_warning.internal_name,
+        <td><%= link_to taxonomy_health_warning.title,
                     taxon_path(taxonomy_health_warning.content_id) %>
           <br>
           <span class="text-muted"><%= taxonomy_health_warning.path %></span>
