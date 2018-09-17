@@ -402,7 +402,6 @@ DEPENDENCIES
   awesome_print
   better_errors
   bootstrap-kaminari-views (~> 0.0.5)
-  capybara
   database_cleaner
   factory_bot_rails
   gds-api-adapters (~> 53.0)
