@@ -24,6 +24,10 @@ module Services
     @content_store ||= GdsApi::ContentStore.new(Plek.current.find("draft-content-store"))
   end
 
+  def self.live_content_store
+    @live_content_store ||= GdsApi::ContentStore.new(Plek.current.find("content-store"))
+  end
+
   def self.statsd
     @statsd ||= begin
       statsd_client = Statsd.new
