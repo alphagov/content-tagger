@@ -4,7 +4,7 @@ gem 'rails', '5.2.2'
 
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
 gem 'govuk_app_config', '~> 1.10'
-gem 'hashdiff', '~> 0.3.7'
+gem 'hashdiff', '~> 0.3.8'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'kaminari', '~> 1.1'
 gem 'pg'
