@@ -58,6 +58,7 @@ module Taxonomy
 
     def legacy_taxon_ids
       return [] if taxon.legacy_taxons.blank?
+
       Array(
         Tagging::BasePathLookup.find_by_base_paths(taxon.legacy_taxons)
       ).select(&:present?).map(&:content_id)

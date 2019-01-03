@@ -36,12 +36,12 @@ module BulkTagging
 
     def save_row(row)
       TagMapping.create!(
-        tagging_source:     tagging_spreadsheet,
-        content_base_path:  cast_and_strip(row["content_base_path"]),
-        link_title:         cast_and_strip(row["link_title"]),
-        link_content_id:    cast_and_strip(row["link_content_id"]),
-        link_type:          'taxons',
-        state:              'ready_to_tag',
+        tagging_source: tagging_spreadsheet,
+        content_base_path: cast_and_strip(row["content_base_path"]),
+        link_title: cast_and_strip(row["link_title"]),
+        link_content_id: cast_and_strip(row["link_content_id"]),
+        link_type: 'taxons',
+        state: 'ready_to_tag',
       )
     end
 

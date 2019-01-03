@@ -11,11 +11,13 @@ private
 
   def validate_host(uri, record)
     return if uri.host == "docs.google.com"
+
     record.errors[:url] << I18n.t('errors.invalid_hostname')
   end
 
   def validate_path(uri, record)
     return if uri.path.match?(%r{spreadsheets\/d\/.+\/pub})
+
     record.errors[:url] << I18n.t('errors.invalid_path')
   end
 

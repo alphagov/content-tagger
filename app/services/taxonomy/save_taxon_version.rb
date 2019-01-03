@@ -37,10 +37,10 @@ module Taxonomy
 
     def previous_taxon
       @previous_taxon ||= begin
-        Taxonomy::BuildTaxon.call(content_id: content_id)
-      rescue Taxonomy::BuildTaxon::TaxonNotFoundError
-        nil
-      end
+                            Taxonomy::BuildTaxon.call(content_id: content_id)
+                          rescue Taxonomy::BuildTaxon::TaxonNotFoundError
+                            nil
+                          end
     end
   end
 end

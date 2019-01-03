@@ -16,8 +16,10 @@ module Taxonomy
     def tag_to_parent(taxon_content_id, user)
       parent_taxon = Taxonomy::TaxonomyQuery.new.parent(taxon_content_id)
       return if parent_taxon.nil?
+
       content_base_paths = tagged_content_base_paths(taxon_content_id)
       return unless content_base_paths.present?
+
       tag_migration = BulkTagging::BuildTagMigration.call(
         source_content_item: ContentItem.find!(taxon_content_id),
         taxon_content_ids: [parent_taxon['content_id']],

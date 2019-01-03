@@ -25,6 +25,7 @@ namespace :taxonomy do
         print "\n#{taxon.content_id} #{taxon.base_path}"
 
         next unless args[:and_fix].present?
+
         if taxon.level_one_taxon?
           puts ": skipping"
         else

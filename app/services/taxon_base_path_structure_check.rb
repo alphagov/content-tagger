@@ -37,7 +37,7 @@ private
   end
 
   class Taxon
-    LEVEL_ONE_URL_REGEX = %r{^\/([A-z0-9\-]+)$}
+    LEVEL_ONE_URL_REGEX = %r{^\/([A-z0-9\-]+)$}.freeze
 
     def initialize(taxon, level_one_prefix:)
       @taxon = taxon
@@ -49,6 +49,7 @@ private
         LEVEL_ONE_URL_REGEX.match? base_path
       else
         return false if path_components.blank?
+
         level_one_prefix == path_components['prefix']
       end
     end

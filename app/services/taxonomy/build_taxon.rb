@@ -48,6 +48,7 @@ module Taxonomy
 
     def validate_taxon_response!
       return if content_item["document_type"].in? %(homepage taxon)
+
       raise DocumentTypeError
     end
 

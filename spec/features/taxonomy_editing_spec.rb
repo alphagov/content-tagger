@@ -291,6 +291,7 @@ RSpec.feature "Taxonomy editing" do
   def when_i_change_the_parent_taxon_to_a_transport_branch
     select "Rail", from: "Parent"
     return if Capybara.current_driver != :poltergeist
+
     wait_for_ajax
   end
 
