@@ -25,6 +25,7 @@ class ContentItem
   def self.find!(content_id)
     content_item = Services.publishing_api.get_content(content_id)
     raise ItemNotFoundError if content_item['document_type'].in?(%w[redirect gone])
+
     new(content_item.to_h)
   rescue GdsApi::HTTPNotFound
     raise ItemNotFoundError

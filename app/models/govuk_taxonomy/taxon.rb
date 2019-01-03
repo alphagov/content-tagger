@@ -52,6 +52,7 @@ module GovukTaxonomy
 
     def node_depth
       return 0 if root?
+
       1 + parent_node.node_depth
     end
   end

@@ -5,6 +5,7 @@ module Support
         head, *tail = path
 
         return {} if head.nil?
+
         links_hash =
           if tail.empty?
             {}

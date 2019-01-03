@@ -35,6 +35,7 @@ class PublishLinksWorker
         # manually since Sidekiq won't see it. After 5 retries we re-raise the
         # exception and let Sidekiq handle it.
         raise e if attempts >= 5
+
         retry
       end
     else

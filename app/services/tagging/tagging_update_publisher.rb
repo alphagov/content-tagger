@@ -47,11 +47,13 @@ module Tagging
     def valid?
       related_content_items.each do |related_item|
         next if related_item.content_id
+
         @related_item_errors[related_item.base_path] = "Not a known URL on GOV.UK"
       end
 
       related_content_items_overrides.each do |related_item|
         next if related_item.content_id
+
         @related_item_overrides_errors[related_item.base_path] = "Not a known URL on GOV.UK"
       end
 

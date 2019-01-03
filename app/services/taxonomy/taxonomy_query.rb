@@ -47,6 +47,7 @@ module Taxonomy
 
     def recursive_taxons_per_level(partial_results, sibling_hashes)
       return partial_results if sibling_hashes.empty?
+
       sibling_child_hashes = sibling_hashes.flat_map { |h| h.dig('links', 'child_taxons') }.compact
       taxons = sibling_hashes.map { |h| h.slice(*@taxon_fields) }
       recursive_taxons_per_level(partial_results + [taxons], sibling_child_hashes)

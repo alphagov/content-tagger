@@ -49,6 +49,7 @@ private
         LEVEL_ONE_URL_REGEX.match? base_path
       else
         return false if path_components.blank?
+
         level_one_prefix == path_components['prefix']
       end
     end

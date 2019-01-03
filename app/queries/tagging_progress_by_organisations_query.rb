@@ -16,6 +16,7 @@ class TaggingProgressByOrganisationsQuery
 
   def total_counts
     return {} if percentage_tagged.empty?
+
     total_count = percentage_tagged.values.map { |v| v[:total] }.sum
     tagged_count = percentage_tagged.values.map { |v| v[:tagged] }.sum
     {
@@ -31,6 +32,7 @@ private
 
   def percentage(tagged_count, total_count)
     return 0.0 if total_count.zero?
+
     (Float(tagged_count) / Float(total_count)) * 100
   end
 

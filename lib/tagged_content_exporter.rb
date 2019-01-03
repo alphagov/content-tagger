@@ -70,6 +70,7 @@ private
   def title_from_translations(taxon_hash)
     translations = taxon_hash.dig("expanded_links", "available_translations")
     return if translations.blank?
+
     (translations.find { |h| h["title"].present? } || {})["title"]
   end
 end

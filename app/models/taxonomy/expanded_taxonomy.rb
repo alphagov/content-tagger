@@ -41,11 +41,13 @@ module Taxonomy
 
     def parent_expansion
       raise ExpansionNotBuiltError unless instance_variable_defined?(:@parent_expansion)
+
       @parent_expansion
     end
 
     def child_expansion
       raise ExpansionNotBuiltError unless instance_variable_defined?(:@child_expansion)
+
       @child_expansion
     end
 

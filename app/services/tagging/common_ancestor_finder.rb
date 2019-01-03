@@ -24,6 +24,7 @@ module Tagging
         rescue GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException, GdsApi::HTTPBadGateway
           retries ||= 0
           raise if retries >= 3
+
           retries += 1
           retry
         end
@@ -36,6 +37,7 @@ module Tagging
     def taxon_paths(content_hash)
       taxon_path = lambda do |taxon_hash|
         return [] if taxon_hash.nil?
+
         taxon_path.call(taxon_hash.dig('links', 'parent_taxons', 0) ||
                         taxon_hash.dig('links', 'root_taxon', 0)).append(taxon_hash['content_id'])
       end

@@ -24,6 +24,7 @@ private
 
   def content_item_should_have_been_found!
     return true if content_id
+
     errors[:base_path] << "No page found with this path"
     false
   end
