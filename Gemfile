@@ -31,6 +31,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov', require: false
   gem 'simplecov-rcov', require: false
+  gem 'json'
 end
 
 group :development do

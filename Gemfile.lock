@@ -422,6 +422,7 @@ DEPENDENCIES
   hashdiff (~> 0.3.8)
   headless
   jquery-ui-rails (= 6.0.1)
+  json
   kaminari (~> 1.1)
   pg
   plek (~> 2.1)
