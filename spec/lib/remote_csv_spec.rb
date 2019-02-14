@@ -26,7 +26,7 @@ RSpec.describe RemoteCsv, "#rows_with_headers" do
 
   it "raises an error when the URI is invalid" do
     expect { RemoteCsv.new("not a URL").rows_with_headers }
-      .to raise_error RemoteCsv::ParsingError, "URI::InvalidURIError: bad URI(is not URI?): not a URL"
+      .to raise_error RemoteCsv::ParsingError, 'URI::InvalidURIError: bad URI(is not URI?): "not a URL"'
   end
 
   it "raises an error when the connection failed" do
@@ -40,6 +40,6 @@ RSpec.describe RemoteCsv, "#rows_with_headers" do
     stub_request(:get, csv_url).to_return(body: "1,\"23\"4\"5\", 6")
 
     expect { RemoteCsv.new(csv_url).rows_with_headers }
-      .to raise_error RemoteCsv::ParsingError, "CSV::MalformedCSVError: Missing or stray quote in line 1"
+      .to raise_error RemoteCsv::ParsingError, "CSV::MalformedCSVError: Do not allow except col_sep_split_separator after quoted fields in line 1."
   end
 end
