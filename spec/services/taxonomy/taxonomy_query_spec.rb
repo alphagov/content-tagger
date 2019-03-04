@@ -75,7 +75,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     end
 
     def stub_rummager(query_hash, return_values)
-      stub_request(:get, Regexp.new(Plek.new.find('rummager')))
+      stub_request(:get, Regexp.new(Plek.new.find('search')))
         .with(query: hash_including(query_hash))
         .to_return(body: { 'results' => return_values }.to_json)
     end
