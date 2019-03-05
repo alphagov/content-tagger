@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Taxonomy::TaxonsWithContentCount do
   describe '#nested_tree' do
     it 'returns a nested tree structure' do
-      stub_request(:get, 'https://rummager.test.gov.uk/search.json?count=0&debug=include_withdrawn&facet_taxons=1000&filter_part_of_taxonomy_tree=b92079ac-f1d9-44c8-bc78-772d54377ee2')
+      stub_request(:get, 'https://search.test.gov.uk/search.json?count=0&debug=include_withdrawn&facet_taxons=1000&filter_part_of_taxonomy_tree=b92079ac-f1d9-44c8-bc78-772d54377ee2')
         .to_return(body: SEARCH_RESULT_FIXTURE.to_json)
 
       stub_request(:get, 'https://publishing-api.test.gov.uk/v2/expanded-links/b92079ac-f1d9-44c8-bc78-772d54377ee2')

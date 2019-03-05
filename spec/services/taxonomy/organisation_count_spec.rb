@@ -49,7 +49,7 @@ RSpec.describe Taxonomy::OrganisationCount do
     end
 
     def stub_rummager(query_hash, json_body)
-      stub_request(:get, Regexp.new(Plek.new.find('rummager')))
+      stub_request(:get, Regexp.new(Plek.new.find('search')))
         .with(query: hash_including(query_hash))
         .to_return(body: json_body.to_json)
     end

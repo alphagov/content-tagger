@@ -59,7 +59,7 @@ module DataExport
 
     describe '#content_links_enum' do
       it 'returns content links in an enumerator' do
-        stub_request(:get, Regexp.new(Plek.new.find('rummager')))
+        stub_request(:get, Regexp.new(Plek.new.find('search')))
           .to_return(body: { 'results' => [{ 'link' => '/first/path' }, { 'link' => '/second/path' }] }.to_json)
         expect(ContentExport.new.content_links_enum.to_a).to eq(['/first/path', '/second/path'])
       end
@@ -93,7 +93,7 @@ module DataExport
             }
           }
         }
-        stub_request(:get, Regexp.new(Plek.new.find('rummager')))
+        stub_request(:get, Regexp.new(Plek.new.find('search')))
           .with(query: hash_including('aggregate_content_store_document_type' => '10000'))
           .to_return(body: result_hash.to_json)
 

@@ -8,7 +8,7 @@ module Metrics
         allow(Tagging)
           .to receive(:blacklisted_document_types).and_return(blacklist)
 
-        stub_request(:get, "#{Plek.find('rummager')}/search.json")
+        stub_request(:get, "#{Plek.find('search')}/search.json")
           .with(
             query: {
               count: 0,
@@ -17,7 +17,7 @@ module Metrics
           )
           .to_return(body: JSON.dump(total: 1000))
 
-        stub_request(:get, "#{Plek.find('rummager')}/search.json")
+        stub_request(:get, "#{Plek.find('search')}/search.json")
           .with(
             query: {
               count: 0,
@@ -28,7 +28,7 @@ module Metrics
 
         level_one_taxons = FactoryBot.build_list(:linkable_taxon_hash, 2)
 
-        stub_request(:get, "#{Plek.find('rummager')}/search.json")
+        stub_request(:get, "#{Plek.find('search')}/search.json")
           .with(
             query: {
               count: 0,
