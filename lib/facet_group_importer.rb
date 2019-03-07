@@ -18,18 +18,22 @@ class FacetGroupImporter
   end
 
   def discard_draft_group
+    discard_links(facet_group_data[:content_id], %i[facets])
     discard_draft(facet_group_data[:content_id])
+
     facet_group_data[:facets].each do |facet_data|
+      discard_links(facet_data[:content_id], %i[facet_group facet_values])
       discard_draft(facet_data[:content_id])
+
       facet_data[:facet_values].each do |facet_value_data|
+        discard_links(facet_value_data[:content_id], %i[facets])
         discard_draft(facet_value_data[:content_id])
       end
     end
-
-    # TODO: Remove links?
   end
 
 private
+
   attr_reader :import_file_name
 
   def create_draft(type, data)
@@ -38,6 +42,11 @@ private
 
   def discard_draft(content_id)
     publishing_api.discard_draft(content_id)
+  end
+
+  def discard_links(content_id, keys)
+    empty_links = keys.each_with_object({}) { |key, hash| hash[key] = [] }
+    publishing_api.patch_links(content_id, links_payload(empty_links))
   end
 
   def create_facet_group_links
@@ -59,7 +68,7 @@ private
   end
 
   def facet_group_data
-    @facet_group_data ||= YAML.load_file(Rails.root.join("lib", "data", import_file_name)) #.deep_symbolize_keys
+    @facet_group_data ||= YAML.load_file(Rails.root.join("lib", "data", import_file_name))
   end
 
   def publishing_api

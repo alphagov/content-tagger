@@ -48,83 +48,102 @@ RSpec.describe FacetGroupImporter do
 
     it "creates the facet_group content item" do
       expect(publishing_api).to have_received(:put_content)
-        .with(facet_group[:content_id], a_hash_including(
-          document_type: "facet_group",
-          publishing_app: "content-tagger",
-          rendering_app: "finder-frontend",
-          schema_name: "facet_group",
-          title: "A facet group",
-          details: {
-            description: "Test data facet group",
-            name: "A facet group",
-          }
-        ))
+        .with(
+          facet_group[:content_id],
+          a_hash_including(
+            document_type: "facet_group",
+            publishing_app: "content-tagger",
+            rendering_app: "finder-frontend",
+            schema_name: "facet_group",
+            title: "A facet group",
+            details: {
+              description: "Test data facet group",
+              name: "A facet group",
+            }
+          )
+        )
     end
 
     it "creates the facets content items" do
       expect(publishing_api).to have_received(:put_content)
-        .with(facet[:content_id], a_hash_including(
-          document_type: "facet",
-          publishing_app: "content-tagger",
-          rendering_app: "finder-frontend",
-          schema_name: "facet",
-          title: "A facet",
-          details: {
-            filterable: true,
-            key: "a_facet",
-            name: "A facet",
-            type: "text",
-          }
-        ))
+        .with(
+          facet[:content_id],
+          a_hash_including(
+            document_type: "facet",
+            publishing_app: "content-tagger",
+            rendering_app: "finder-frontend",
+            schema_name: "facet",
+            title: "A facet",
+            details: {
+              filterable: true,
+              key: "a_facet",
+              name: "A facet",
+              type: "text",
+            }
+          )
+        )
     end
 
     it "creates the facet_values content items" do
       facet[:facet_values].each do |facet_value|
         expect(publishing_api).to have_received(:put_content)
-          .with(facet_value[:content_id], a_hash_including(
-            document_type: "facet_value",
-            publishing_app: "content-tagger",
-            rendering_app: "finder-frontend",
-            schema_name: "facet_value",
-            title: facet_value[:title],
-            details: {
-              label: facet_value[:title],
-              value: facet_value[:value],
-            }
-        ))
+          .with(
+            facet_value[:content_id],
+            a_hash_including(
+              document_type: "facet_value",
+              publishing_app: "content-tagger",
+              rendering_app: "finder-frontend",
+              schema_name: "facet_value",
+              title: facet_value[:title],
+              details: {
+                label: facet_value[:title],
+                value: facet_value[:value],
+              }
+            )
+          )
       end
     end
 
     it "links the facet_groups to the facets" do
       expect(publishing_api).to have_received(:patch_links)
-        .with(facet_group[:content_id], a_hash_including(
-          links: { facets: [facet[:content_id]] }
-        ))
+        .with(
+          facet_group[:content_id],
+          a_hash_including(
+            links: { facets: [facet[:content_id]] }
+          )
+        )
     end
 
     it "links the facet_values to the facets" do
       facet[:facet_values].each do |facet_value|
         expect(publishing_api).to have_received(:patch_links)
-          .with(facet_value[:content_id], a_hash_including(
-            links: { parent: [facet[:content_id]] }
-          ))
+          .with(
+            facet_value[:content_id],
+            a_hash_including(
+              links: { parent: [facet[:content_id]] }
+            )
+          )
       end
     end
 
     it "links the facets to the facet group and facet values" do
       expect(publishing_api).to have_received(:patch_links)
-        .with(facet[:content_id], a_hash_including(
-          links: {
-            facet_values: facet[:facet_values].map { |v| v[:content_id] },
-            parent: [facet_group[:content_id]],
-          }
-        ))
+        .with(
+          facet[:content_id],
+          a_hash_including(
+            links: {
+              facet_values: facet[:facet_values].map { |v| v[:content_id] },
+              parent: [facet_group[:content_id]],
+            }
+          )
+        )
     end
   end
 
   describe "discard_draft_group" do
     before do
       allow(publishing_api).to receive(:discard_draft)
+      allow(publishing_api).to receive(:patch_links)
       instance.discard_draft_group
     end
 
@@ -140,6 +159,21 @@ RSpec.describe FacetGroupImporter do
       facet[:facet_values].each do |facet_value|
         expect(publishing_api).to have_received(:discard_draft).with(facet_value[:content_id])
       end
+    end
+
+    it "patches empty facet group links" do
+      expect(publishing_api).to have_received(:patch_links)
+        .with(facet_group[:content_id], links: { facets: [] })
+    end
+
+    it "patches empty facet links" do
+      expect(publishing_api).to have_received(:patch_links)
+        .with(facet[:content_id], links: { facet_group: [], facet_values: [] })
+    end
+
+    it "patches empty facet value links" do
+      expect(publishing_api).to have_received(:patch_links)
+        .with(facet_group[:content_id], links: { facets: [] })
     end
   end
 end
