@@ -21,22 +21,10 @@ class FacetDataTagger
     )
   end
 
-  def facet_group_config
-    @facet_group_config ||= YAML.load_file(@facet_config_file_path)
-  end
-
-  def facets_from_config
-    facet_group_config[:facets]
-  end
-
-  def content_id_for_base_path(base_path)
-    paths_mapped_to_content_ids[base_path]
-  end
-
   # Patches facet_values links for each content item denoted by base path
   # in the facet data.
   #
-  def import_facet_data
+  def link_content_to_facet_values
     facet_data.each do |base_path, facet_data|
       content_id = content_id_for_base_path(base_path)
       if content_id
@@ -59,6 +47,16 @@ class FacetDataTagger
     end
   end
 
+private
+
+  def facets_from_config
+    facet_group_config[:facets]
+  end
+
+  def content_id_for_base_path(base_path)
+    paths_mapped_to_content_ids[base_path]
+  end
+
   # Creates a hash of arrays where the key is the facet name
   # and the value is an array of facet_value content_ids
   #
@@ -70,6 +68,10 @@ class FacetDataTagger
       facet_values << stripped_row_data.map { |v| facet[:facet_values].find { |fv| fv[:value] == v } }
     end
     facet_values.flatten.compact.map { |fv| fv[:content_id] }
+  end
+
+  def facet_group_config
+    @facet_group_config ||= YAML.load_file(@facet_config_file_path)
   end
 
   def publishing_api

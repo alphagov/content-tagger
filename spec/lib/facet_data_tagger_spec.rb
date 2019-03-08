@@ -70,8 +70,8 @@ RSpec.describe FacetDataTagger do
     end
   end
 
-  describe "import_facet_data" do
-    before { instance.import_facet_data }
+  describe "link_content_to_facet_values" do
+    before { instance.link_content_to_facet_values }
 
     it "patches links in the Publishing API" do
       expect(publishing_api).to have_received(:patch_links).exactly(3).times
