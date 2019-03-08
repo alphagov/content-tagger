@@ -31,7 +31,7 @@ RSpec.describe FacetGroupImporter do
   end
   let(:facet) { facet_group[:facets].first }
 
-  subject(:instance) { described_class.new("test-facets.yml") }
+  subject(:instance) { described_class.new("/path/to/test-facets.yml") }
 
   before { allow(YAML).to receive(:load_file).and_return(facet_group) }
 
@@ -43,7 +43,7 @@ RSpec.describe FacetGroupImporter do
     end
 
     it "reads facet group definitions from file" do
-      expect(YAML).to have_received(:load_file).with(Rails.root.join("lib", "data", "test-facets.yml"))
+      expect(YAML).to have_received(:load_file).with("/path/to/test-facets.yml")
     end
 
     it "creates the facet_group content item" do

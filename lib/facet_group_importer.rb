@@ -1,6 +1,6 @@
 class FacetGroupImporter
-  def initialize(import_file_name)
-    @import_file_name = import_file_name
+  def initialize(import_file_path)
+    @import_file_path = import_file_path
   end
 
   def import
@@ -34,7 +34,7 @@ class FacetGroupImporter
 
 private
 
-  attr_reader :import_file_name
+  attr_reader :import_file_path
 
   def create_draft(type, data)
     publishing_api.put_content(data[:content_id], send("#{type}_payload", data))
@@ -68,7 +68,7 @@ private
   end
 
   def facet_group_data
-    @facet_group_data ||= YAML.load_file(Rails.root.join("lib", "data", import_file_name))
+    @facet_group_data ||= YAML.load_file(import_file_path)
   end
 
   def publishing_api
