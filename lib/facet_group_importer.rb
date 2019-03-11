@@ -17,6 +17,17 @@ class FacetGroupImporter
     create_facet_group_links
   end
 
+  def publish
+    publishing_api.publish(facet_group_data[:content_id], "minor")
+    facet_group_data[:facets].each do |facet_data|
+      publishing_api.publish(facet_data[:content_id], "minor")
+
+      facet_data[:facet_values].each do |facet_value_data|
+        publishing_api.publish(facet_value_data[:content_id], "minor")
+      end
+    end
+  end
+
   def discard_draft_group
     discard_links(facet_group_data[:content_id], %i[facets])
     discard_draft(facet_group_data[:content_id])

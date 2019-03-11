@@ -13,6 +13,14 @@ namespace :facets do
   end
 
   desc <<-DESC
+    Publishes a facet group defined in a YAML file located at `facet_group_file_path`.
+    This publishes a draft facet group created by the `import_facet_group` task.
+  DESC
+  task :publish_facet_group, [:facet_group_file_path] => :environment do |_, args|
+    FacetGroupImporter.new(args[:facet_group_file_path]).publish
+  end
+
+  desc <<-DESC
     Links the content items at the base paths in the tagging CSV file to the facet values
     matching the facet group definitions. This effectively tags content to facets.
   DESC

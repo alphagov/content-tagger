@@ -176,4 +176,25 @@ RSpec.describe FacetGroupImporter do
         .with(facet_group[:content_id], links: { facets: [] })
     end
   end
+
+  describe "publish_facet_group" do
+    before do
+      allow(publishing_api).to receive(:publish)
+      instance.publish
+    end
+
+    it "publishes the draft facet group" do
+      expect(publishing_api).to have_received(:publish).with(facet_group[:content_id], "minor")
+    end
+
+    it "publishes the draft facets" do
+      expect(publishing_api).to have_received(:publish).with(facet[:content_id], "minor")
+    end
+
+    it "publishes the draft facet values" do
+      facet[:facet_values].each do |facet_value|
+        expect(publishing_api).to have_received(:publish).with(facet_value[:content_id], "minor")
+      end
+    end
+  end
 end
