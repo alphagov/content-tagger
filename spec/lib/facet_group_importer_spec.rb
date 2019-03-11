@@ -30,8 +30,9 @@ RSpec.describe FacetGroupImporter do
     }
   end
   let(:facet) { facet_group[:facets].first }
+  let(:logger) { double(:logger, info: nil, warn: nil) }
 
-  subject(:instance) { described_class.new("/path/to/test-facets.yml") }
+  subject(:instance) { described_class.new("/path/to/test-facets.yml", logger) }
 
   before { allow(YAML).to receive(:load_file).and_return(facet_group) }
 

@@ -1,6 +1,7 @@
 class FacetGroupImporter
-  def initialize(import_file_path)
+  def initialize(import_file_path, logger = Logger.new(STDOUT))
     @import_file_path = import_file_path
+    @logger = logger
   end
 
   def import
@@ -18,12 +19,12 @@ class FacetGroupImporter
   end
 
   def publish
-    publishing_api.publish(facet_group_data[:content_id], "minor")
+    publish_draft(facet_group_data[:content_id])
     facet_group_data[:facets].each do |facet_data|
-      publishing_api.publish(facet_data[:content_id], "minor")
+      publish_draft(facet_data[:content_id])
 
       facet_data[:facet_values].each do |facet_value_data|
-        publishing_api.publish(facet_value_data[:content_id], "minor")
+        publish_draft(facet_value_data[:content_id])
       end
     end
   end
@@ -45,14 +46,24 @@ class FacetGroupImporter
 
 private
 
-  attr_reader :import_file_path
+  attr_reader :import_file_path, :logger
 
   def create_draft(type, data)
     publishing_api.put_content(data[:content_id], send("#{type}_payload", data))
+    logger.info "Draft #{type} (#{data[:content_id]}) created."
+  end
+
+  def publish_draft(content_id)
+    publishing_api.publish(content_id, "minor")
+    logger.info "#{content_id} published."
+  rescue GdsApi::BaseError => e
+    logger.warn "Publishing #{content_id} failed:"
+    logger.warn e
   end
 
   def discard_draft(content_id)
     publishing_api.discard_draft(content_id)
+    logger.info "Draft #{content_id} discarded."
   end
 
   def discard_links(content_id, keys)
