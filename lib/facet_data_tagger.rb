@@ -1,11 +1,12 @@
 require "csv"
 
 class FacetDataTagger
-  attr_reader :facet_data, :paths_mapped_to_content_ids
+  attr_reader :facet_data, :logger, :paths_mapped_to_content_ids
 
-  def initialize(data_file_path, facet_config_file_path)
+  def initialize(data_file_path, facet_config_file_path, logger = Logger.new(STDOUT))
     @facet_config_file_path = facet_config_file_path
     @facet_data = {}
+    @logger = logger
 
     CSV.foreach(data_file_path, converters: ->(v) { v || "" }) do |row|
       base_path = row[0]
@@ -27,9 +28,17 @@ class FacetDataTagger
   def link_content_to_facet_values
     facet_data.each do |base_path, facet_data|
       content_id = content_id_for_base_path(base_path)
-      if content_id
-        publishing_api.patch_links(content_id, links: { facet_values: facet_data })
-      end
+      next unless content_id
+
+      publishing_api.patch_links(
+        content_id,
+        links: {
+          facet_groups: [facet_group_config[:content_id]],
+          facet_values: facet_data
+        }
+      )
+      logger.info "Patched #{content_id} with links:"
+      logger.info "facet_groups: [#{facet_group_config[:content_id]}], facet_values: [#{facet_data.join(',')}]"
     end
   end
 
@@ -41,9 +50,16 @@ class FacetDataTagger
 
     base_paths.each do |base_path|
       content_id = content_id_for_base_path(base_path)
-      if content_id
-        publishing_api.patch_links(content_id, links: { facet_values: [] })
-      end
+      next unless content_id
+
+      publishing_api.patch_links(
+        content_id,
+        links: {
+          facet_groups: [],
+          facet_values: []
+        }
+      )
+      logger.info "Patched empty facet_groups and facet_values links for #{content_id}"
     end
   end
 

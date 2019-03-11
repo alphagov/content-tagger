@@ -44,7 +44,9 @@ RSpec.describe FacetDataTagger do
     }
   end
 
-  subject(:instance) { described_class.new("data.csv", "test-facets.yml") }
+  let(:logger) { double(:logger, info: nil) }
+
+  subject(:instance) { described_class.new("data.csv", "test-facets.yml", logger) }
 
   before do
     allow(YAML).to receive(:load_file).and_return(facet_group)
@@ -73,15 +75,26 @@ RSpec.describe FacetDataTagger do
   describe "link_content_to_facet_values" do
     before { instance.link_content_to_facet_values }
 
-    it "patches links in the Publishing API" do
-      expect(publishing_api).to have_received(:patch_links).exactly(3).times
+    it "patches facet_groups links in the Publishing API" do
+      expect(publishing_api).to have_received(:patch_links)
+        .with("zyx-987-cba-654", links: a_hash_including(facet_groups: %w[abc-123-def-456]))
+      expect(publishing_api).to have_received(:patch_links)
+        .with("cba-654-zyx-987", links: a_hash_including(facet_groups: %w[abc-123-def-456]))
+      expect(publishing_api).to have_received(:patch_links)
+        .with("abc-987-def-654", links: a_hash_including(facet_groups: %w[abc-123-def-456]))
+    end
 
+    it "patches facet_values links in the Publishing API" do
       expect(publishing_api).to have_received(:patch_links)
-        .with("zyx-987-cba-654", links: { facet_values: %w[def-456-ghi-789 efg-567-hij-890] })
+        .with("zyx-987-cba-654", links: a_hash_including(facet_values: %w[def-456-ghi-789 efg-567-hij-890]))
       expect(publishing_api).to have_received(:patch_links)
-        .with("cba-654-zyx-987", links: { facet_values: %w[cde-345-fgh-678] })
+        .with("cba-654-zyx-987", links: a_hash_including(facet_values: %w[cde-345-fgh-678]))
       expect(publishing_api).to have_received(:patch_links)
-        .with("abc-987-def-654", links: { facet_values: %w[cde-345-fgh-678] })
+        .with("abc-987-def-654", links: a_hash_including(facet_values: %w[cde-345-fgh-678]))
+    end
+
+    it "only patches links for valid content" do
+      expect(publishing_api).to have_received(:patch_links).exactly(3).times
     end
   end
 end
