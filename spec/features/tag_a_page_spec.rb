@@ -19,6 +19,7 @@ RSpec.describe "Tagging content", type: :feature do
     and_i_see_the_taxon_form
 
     when_i_select_an_additional_topic("Business tax / Pension scheme administration")
+    when_i_select_an_additional_facet_value("Agriculture")
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
@@ -29,7 +30,7 @@ RSpec.describe "Tagging content", type: :feature do
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
       organisations: [],
       meets_user_needs: [],
-      facet_values: [],
+      facet_values: ["FACET-VALUE-UUID"],
     )
   end
 
@@ -225,6 +226,9 @@ RSpec.describe "Tagging content", type: :feature do
     values.each do |i, value|
       expect(fields[i].value).to eq(value)
     end
+  end
+
+  def and_the_facet_values_should_be_prefilled_with(values)
   end
 
   def then_i_am_on_the_page_for_an_item
