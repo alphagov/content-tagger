@@ -19,7 +19,9 @@ module Facets
     end
 
     def grouped_facet_values
-      facets.map { |f| { id: f.key, text: f.title, children: f.facet_values.map(&:option_data) } }
+      facets.map do |f|
+        [f.title, f.facet_values.map { |fv| [fv.label, fv.content_id] }]
+      end
     end
 
   private

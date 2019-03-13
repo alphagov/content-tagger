@@ -33,6 +33,8 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def and_i_navigate_to_tagging_page_for_item
+    stub_facet_group_lookup
+
     visit "/taggings/MY-CONTENT-ID"
   end
 
@@ -105,6 +107,7 @@ RSpec.describe "Tagging content", type: :feature do
       topics: [],
       organisations: [],
       meets_user_needs: [],
+      facet_values: [],
     )
   end
 end

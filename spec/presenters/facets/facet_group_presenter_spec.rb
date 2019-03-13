@@ -15,7 +15,8 @@ RSpec.describe Facets::FacetGroupPresenter do
             "links" => {
               "facet_values" => [
                 {
-                  "details" => { "label" => "Facet value 1", "value" => "facet_value_1" }
+                  "content_id" => "FACET-VALUE-UUID",
+                  "details" => { "label" => "Facet value 1" }
                 }
               ]
             }
@@ -46,12 +47,7 @@ RSpec.describe Facets::FacetGroupPresenter do
   describe "grouped_facet_values" do
     it "creates a nested facet hash" do
       expect(instance.grouped_facet_values).to eq(
-        [
-          {
-            id: "facet_1", text: "Facet 1",
-            children: [{ id: "facet_value_1", text: "Facet value 1" }],
-          }
-        ]
+        [["Facet 1", [["Facet value 1", "FACET-VALUE-UUID"]]]]
       )
     end
   end

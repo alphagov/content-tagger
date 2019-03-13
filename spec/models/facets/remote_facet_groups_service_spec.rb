@@ -21,7 +21,7 @@ RSpec.describe Facets::RemoteFacetGroupsService do
           search_in: %i[title],
           page: 1,
           per_page: 50,
-          states: %w(published),
+          states: %w[published],
         )
     end
   end

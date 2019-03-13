@@ -29,6 +29,7 @@ RSpec.describe "Tagging content", type: :feature do
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
       organisations: [],
       meets_user_needs: [],
+      facet_values: [],
     )
   end
 
@@ -47,6 +48,7 @@ RSpec.describe "Tagging content", type: :feature do
       topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
       organisations: [],
       meets_user_needs: [],
+      facet_values: [],
     )
   end
 
@@ -74,6 +76,33 @@ RSpec.describe "Tagging content", type: :feature do
     and_the_expected_navigation_link_is_highlighted
   end
 
+  scenario "User tags a content item with facet values" do
+    given_there_is_a_content_item_with_expanded_links(
+      facet_values: [example_facet_value]
+    )
+
+    when_i_visit_edit_a_page
+    and_i_submit_the_url_of_the_content_item
+    then_i_am_on_the_page_for_an_item
+    and_the_expected_navigation_link_is_highlighted
+    and_i_see_the_facet_values_form_prefilled_with("Agriculture")
+
+    when_i_select_an_additional_facet_value("Aerospace")
+
+    and_i_submit_the_form
+
+    then_the_publishing_api_is_sent(
+      taxons: [],
+      ordered_related_items: [],
+      mainstream_browse_pages: [],
+      parent: [],
+      topics: [],
+      organisations: [],
+      meets_user_needs: [],
+      facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+    )
+  end
+
   context "with javascript disabled", type: :feature, js: false do
     scenario "the user sets a new related link" do
       given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
@@ -93,6 +122,7 @@ RSpec.describe "Tagging content", type: :feature do
         topics: [],
         organisations: [],
         meets_user_needs: [],
+        facet_values: [],
       )
     end
 
@@ -163,6 +193,8 @@ RSpec.describe "Tagging content", type: :feature do
         expanded_links: expanded_links,
         version: 54_321,
       }.to_json)
+
+    stub_facet_group_lookup
   end
 
   def and_i_submit_the_url_of_the_content_item
@@ -211,6 +243,11 @@ RSpec.describe "Tagging content", type: :feature do
     expect(taxon_options).to include("Vehicle plating")
   end
 
+  def and_i_see_the_facet_values_form_prefilled_with(option)
+    facet_values_options = all('#tagging_tagging_update_form_facet_values option').map(&:text)
+    expect(facet_values_options).to include(option)
+  end
+
   def then_i_see_that_the_path_was_not_found
     expect(page).to have_content 'No page found with this path'
   end
@@ -224,6 +261,13 @@ RSpec.describe "Tagging content", type: :feature do
       .to_return(status: 200)
 
     select selection, from: "Topics"
+  end
+
+  def when_i_select_an_additional_facet_value(selection)
+    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+      .to_return(status: 200)
+
+    select selection, from: "Facet values"
   end
 
   def and_somebody_else_makes_a_change
@@ -279,6 +323,8 @@ RSpec.describe "Tagging content", type: :feature do
         "/browse/driving/car-tax-discs",
       ]
     )
+
+    publishing_api_has_facet_values_linkables(%w[Agriculture"])
   end
 
   def example_topic
@@ -286,6 +332,17 @@ RSpec.describe "Tagging content", type: :feature do
       "content_id" => "ID-OF-ALREADY-TAGGED",
       "base_path" => "/already-tagged",
       "title" => "Already tagged",
+    }
+  end
+
+  def example_facet_value
+    {
+      "content_id" => "EXISTING-FACET-VALUE-UUID",
+      "title" => "Agriculture",
+      "details" => {
+        "label" => "Agriculture",
+        "value" => "agriculture",
+      }
     }
   end
 end

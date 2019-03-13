@@ -1,10 +1,11 @@
 module Facets
   class FacetValuePresenter < BasePresenter
-    def option_data
-      {
-        id: details["value"],
-        text: details["label"],
-      }
+    def label
+      details["label"]
+    end
+
+    def value
+      details["value"]
     end
   end
 end

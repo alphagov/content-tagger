@@ -73,5 +73,9 @@ module Tagging
         send("#{tag_type}=", params[tag_type])
       end
     end
+
+    def facet_values
+      links.facet_values.map { |fv| fv["content_id"] }
+    end
   end
 end

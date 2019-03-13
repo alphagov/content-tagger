@@ -12,6 +12,7 @@ module Tagging
       topics
       organisations
       meets_user_needs
+      facet_values
     ].freeze
 
     attr_accessor(*TAG_TYPES)
