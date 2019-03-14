@@ -113,13 +113,11 @@ private
     {
       document_type: "facet",
       schema_name: "facet",
-      title: data[:title],
-      details: {
-        filterable: true,
-        key: data[:key],
-        name: data[:title],
-        type: "text",
-      }
+      title: data[:name],
+      details: data.slice(
+        *:combine_mode, :display_as_result_metadata,
+        :filterable, :key, :name, :preposition, :type
+      )
     }.merge(publishing_and_rendering_apps)
   end
 

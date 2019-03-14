@@ -10,9 +10,14 @@ RSpec.describe FacetGroupImporter do
       description: "Test data facet group",
       facets: [
         {
+          combine_mode: "and",
           content_id: "bcd-234-efg-567",
-          title: "A facet",
+          display_as_result_metadata: true,
+          filterable: true,
           key: "a_facet",
+          name: "A facet",
+          preposition: "do something with",
+          type: "content_id",
           facet_values: [
             {
               content_id: "cde-345-fgh-678",
@@ -76,10 +81,13 @@ RSpec.describe FacetGroupImporter do
             schema_name: "facet",
             title: "A facet",
             details: {
+              combine_mode: "and",
+              display_as_result_metadata: true,
               filterable: true,
               key: "a_facet",
               name: "A facet",
-              type: "text",
+              preposition: "do something with",
+              type: "content_id",
             }
           )
         )
