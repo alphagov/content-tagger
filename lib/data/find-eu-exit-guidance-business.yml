@@ -4,8 +4,13 @@
 :description: "Facets for use with content relating to EU Exit business guidance."
 :facets:
   - :content_id: b2f525e8-ba7d-4737-a8b2-e4168c138aea
-    :title: "Sector / Business area"
+    :name: "Sector / Business area"
     :key: sector_business_area
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: and
+    :preposition: "your business is in"
+    :type: content_id
     :facet_values:
       - :content_id: 894a7c88-40bb-4ba6-a234-b7e15d8a0c21
         :title: Accommodation, restaurants and catering services
@@ -137,8 +142,13 @@
         :title: Wholesale (excluding motor vehicles)
         :value: wholesale-excl-motor-vehicles
   - :content_id: e2febfa3-eac9-430b-bc6e-b0dff8876b1f
-    :title: "Business activity"
+    :name: "Business activity"
     :key: business_activity
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: and
+    :preposition: "you"
+    :type: content_id
     :facet_values:
       - :content_id: a55f04df-3877-4c73-bbfe-ad7339cdfccf
         :title: Sell products or goods in the UK
@@ -156,8 +166,13 @@
         :title: Transport goods abroad
         :value: transporting
   - :content_id: b2716a1e-dc24-4566-b8ed-f3ee23a994ec
-    :title: "Who you employ"
+    :name: "Who you employ"
     :key: employ_eu_citizens
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: or
+    :preposition: "you employ"
+    :type: content_id
     :facet_values:
       - :content_id: 5476f0c7-d029-459b-8a17-196374ae3366
         :title: EU citizens
@@ -166,8 +181,13 @@
         :title: No EU citizens
         :value: 'no'
   - :content_id: 6cdb57df-3216-423c-9b7a-b1bde6b65d36
-    :title: "Personal data"
+    :name: "Personal data"
     :key: personal_data
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: or
+    :preposition: "you exchange personal data by"
+    :type: content_id
     :facet_values:
       - :content_id: c9aa5056-77d7-4bdb-af4f-7679dd1d6a2a
         :title: Processing personal data from Europe
@@ -179,8 +199,13 @@
         :title: Providing digital services available to Europe
         :value: digital-service-provider
   - :content_id: a076c93a-cb66-4256-97d3-d038bce60e6a
-    :title: "Intellectual property"
+    :name: "Intellectual property"
     :key: intellectual_property
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: or
+    :preposition: "you use or rely on"
+    :type: content_id
     :facet_values:
       - :content_id: c308aa59-c234-48d4-885d-5d964e710bd1
         :title: Copyright
@@ -198,8 +223,13 @@
         :title: Exhaustion of rights
         :value: exhaustion-of-rights
   - :content_id: 805ab0e4-baf4-49ab-80ff-9ae7e472b074
-    :title: "EU or UK government funding"
+    :name: "EU or UK government funding"
     :key: eu_uk_government_funding
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: or
+    :preposition: "you get"
+    :type: content_id
     :facet_values:
       - :content_id: c1fcd375-897f-4a57-88e6-49d5b9a6799d
         :title: EU funding
@@ -208,8 +238,13 @@
         :title: UK government funding
         :value: receiving-uk-government-funding
   - :content_id: 8152d139-0ccd-46c2-bdb5-4f0771fd3903
-    :title: "Public sector procurement"
+    :name: "Public sector procurement"
     :key: public_sector_procurement
+    :display_as_result_metadata: true
+    :filterable: true
+    :combine_mode: or
+    :preposition: "you apply for"
+    :type: content_id
     :facet_values:
       - :content_id: f165dc7c-7cef-446a-bdfd-8a1ca685d091
         :title: Civil government contracts
