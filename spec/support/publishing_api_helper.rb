@@ -1,4 +1,5 @@
 require_relative('email_alert_api_helper')
+require 'facets/remote_facet_groups_service'
 
 module PublishingApiHelper
   include EmailAlertApiHelper
@@ -129,8 +130,15 @@ module PublishingApiHelper
     tags.select { |tag| base_paths.include?(tag["base_path"]) }
   end
 
-  def stub_facet_group_lookup
-    content_id = Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS.first
+  def stub_facet_groups_lookup
+    stub_request(:get, "#{PUBLISHING_API}/v2/content?document_type=facet_group&order=-public_updated_at&page=1&per_page=50&q=&search_in[]=title&states[]=published")
+    .to_return(body: {
+      results: [example_facet_group],
+    }.to_json)
+  end
+
+  def stub_facet_group_lookup(content_id = "abc-123")
+    stub_const "Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS", [content_id]
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/#{content_id}")
     .to_return(body: {
       content_id: content_id,
@@ -243,9 +251,11 @@ module PublishingApiHelper
 
   def example_facet_group
     {
+      "content_id" => "abc-123",
       "title" => "Example facet group",
       "facets" => [
         {
+          "content_id" => "def-456",
           "title" => "Example facet",
           "links" => {
             "facet_values" => [

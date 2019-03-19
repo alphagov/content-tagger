@@ -1,18 +1,9 @@
-module Tagging
+module Facets
   class ContentItemExpandedLinks
     include ActiveModel::Model
     attr_accessor :content_id, :previous_version
 
-    TAG_TYPES = %i[
-      taxons
-      ordered_related_items
-      ordered_related_items_overrides
-      mainstream_browse_pages
-      parent
-      topics
-      organisations
-      meets_user_needs
-    ].freeze
+    TAG_TYPES = %i[facet_groups facet_values].freeze
 
     attr_accessor(*TAG_TYPES)
 
