@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Linkables do
   include ContentItemHelper
+  include PublishingApiHelper
 
   let(:linkables) { Linkables.new }
 
@@ -111,6 +112,25 @@ RSpec.describe Linkables do
       )
 
       expect(linkables.organisations).to eq [["Student Loans Company", "9a9111aa-1db8-4025-8dd2-e08ec3175e72"]]
+    end
+  end
+
+  describe ".facet_values" do
+    it "returns an array of arrays with title and content id pairs grouped by facet title" do
+      stub_facet_group_lookup
+      publishing_api_has_linkables(
+        stubbed_facet_values,
+        document_type: 'facet_value'
+      )
+
+      expect(linkables.facet_values).to eq(
+        [
+          ["Example facet", [
+            ["Aerospace", "ANOTHER-FACET-VALUE-UUID"],
+            ["Agriculture", "EXISTING-FACET-VALUE-UUID"]
+          ]]
+        ]
+      )
     end
   end
 end
