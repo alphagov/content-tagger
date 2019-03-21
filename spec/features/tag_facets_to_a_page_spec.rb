@@ -5,12 +5,12 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   before do
     stub_facet_groups_lookup
-    stub_finder_get_links_request
     stub_patch_links_request("facets_tagging_request", "MY-CONTENT-ID")
     given_we_can_populate_facets_with_content_from_publishing_api
   end
 
   scenario "User tags a content item with facet values" do
+    stub_finder_get_links_request
     given_there_is_a_content_item_with_expanded_links(
       facet_groups: [example_facet_group],
       facet_values: [example_facet_value],
@@ -38,7 +38,8 @@ RSpec.describe "Tagging content with facets", type: :feature do
   # filtered finder results. This means the item is added to the
   # ordered_related_items links for the finder.
   scenario "User pins a content item" do
-    stub_patch_links_request("finder_pinning_request", "ghi-567")
+    stub_finder_get_links_request
+    stub_patch_links_request("finder_pinning_request", "FINDER-UUID")
 
     given_there_is_a_content_item_with_expanded_links(
       facet_groups: [example_facet_group],
@@ -48,7 +49,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
     and_i_select_the_facet_group("Example facet group")
     and_i_edit_facets_for_the_page("/my-content-item")
 
-    when_i_promote_the_item_in_finder_results
+    when_i_pin_the_item_in_finder_results
 
     and_i_submit_the_facets_tagging_form
 
@@ -63,7 +64,38 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
     then_the_publishing_api_is_sent(
       "finder_pinning_request",
-      links: { ordered_related_items: ["MY-CONTENT-ID"] }
+      links: { ordered_related_items: ["EXISTING-PINNED-ITEM-UUID", "MY-CONTENT-ID"] }
+    )
+  end
+
+  scenario "User unpins a content item" do
+    stub_finder_get_links_request(items: ["EXISTING-PINNED-ITEM-UUID", "MY-CONTENT-ID"])
+    stub_patch_links_request("finder_pinning_request", "FINDER-UUID")
+
+    given_there_is_a_content_item_with_expanded_links(
+      facet_groups: [example_facet_group],
+      facet_values: [example_facet_value],
+    )
+    when_i_visit_facet_groups_page
+    and_i_select_the_facet_group("Example facet group")
+    and_i_edit_facets_for_the_page("/my-content-item")
+
+    when_i_unpin_the_item_in_finder_results
+
+    and_i_submit_the_facets_tagging_form
+
+    then_the_publishing_api_is_sent(
+      "facets_tagging_request",
+      links: {
+        facet_groups: ["FACET-GROUP-UUID"],
+        facet_values: ["EXISTING-FACET-VALUE-UUID"],
+      },
+      previous_version: 54_321,
+    )
+
+    then_the_publishing_api_is_sent(
+      "finder_pinning_request",
+      links: { ordered_related_items: ["EXISTING-PINNED-ITEM-UUID"] }
     )
   end
 
@@ -122,11 +154,15 @@ RSpec.describe "Tagging content with facets", type: :feature do
     select selection, from: "Facet values"
   end
 
-  def when_i_promote_the_item_in_finder_results
+  def when_i_pin_the_item_in_finder_results
     check 'facets_tagging_update_form_promoted'
   end
 
-  def stub_finder_get_links_request(content_id = "ghi-567")
+  def when_i_unpin_the_item_in_finder_results
+    uncheck 'facets_tagging_update_form_promoted'
+  end
+
+  def stub_finder_get_links_request(content_id: "FINDER-UUID", items: ["EXISTING-PINNED-ITEM-UUID"])
     # Set the class as a local var otherwise RSpec confuses the interpreter
     # by defining `Facets::FinderService` as a module here.
     finder_service_class = Facets::FinderService
@@ -136,7 +172,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         status: 200,
         body: {
           links: {
-            ordered_related_items: []
+            ordered_related_items: items
           }
         }.to_json
       )
@@ -154,5 +190,39 @@ RSpec.describe "Tagging content with facets", type: :feature do
     stubbed_request = instance_variable_get("@#{stubbed_request_name}")
 
     expect(stubbed_request.with(body: body.to_json)).to have_been_made
+  end
+
+  def publishing_api_has_facet_values_linkables(labels)
+    publishing_api_has_linkables(
+      stubbed_facet_values.select { |fv| labels.include?(fv["title"]) },
+      document_type: 'facet_value'
+    )
+  end
+
+  def stub_facet_groups_lookup
+    stub_request(:get, "#{PUBLISHING_API}/v2/content")
+      .with(
+        query: {
+          document_type: "facet_group",
+          order: "-public_updated_at",
+          page: 1,
+          per_page: 50,
+          q: '',
+          search_in: %w[title],
+          states: %w[published]
+        }
+      )
+      .to_return(body: { results: [example_facet_group] }.to_json)
+  end
+
+  def stub_finder_lookup(content_id = "FACET-GROUP-UUID")
+    stub_const "Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS", [content_id]
+    stub_request(:get, "#{PUBLISHING_API}/v2/linked/#{content_id}?document_type=finder")
+      .to_return(body: [
+        {
+          content_id: content_id,
+          base_path: "/some-finder",
+        }
+      ].to_json)
   end
 end

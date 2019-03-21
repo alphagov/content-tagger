@@ -119,22 +119,8 @@ module PublishingApiHelper
     )
   end
 
-  def publishing_api_has_facet_values_linkables(labels)
-    publishing_api_has_linkables(
-      stubbed_facet_values.select { |fv| labels.include?(fv["title"]) },
-      document_type: 'facet_value'
-    )
-  end
-
   def select_by_base_path(tags, base_paths)
     tags.select { |tag| base_paths.include?(tag["base_path"]) }
-  end
-
-  def stub_facet_groups_lookup
-    stub_request(:get, "#{PUBLISHING_API}/v2/content?document_type=facet_group&order=-public_updated_at&page=1&per_page=50&q=&search_in[]=title&states[]=published")
-    .to_return(body: {
-      results: [example_facet_group],
-    }.to_json)
   end
 
   def stub_facet_group_lookup(content_id = "FACET-GROUP-UUID")
@@ -148,17 +134,6 @@ module PublishingApiHelper
       expanded_links: example_facet_group,
       version: 54_321,
     }.to_json)
-  end
-
-  def stub_finder_lookup(content_id = "FACET-GROUP-UUID")
-    stub_const "Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS", [content_id]
-    stub_request(:get, "#{PUBLISHING_API}/v2/linked/#{content_id}?document_type=finder")
-      .to_return(body: [
-        {
-          content_id: content_id,
-          base_path: "/some-finder",
-        }
-      ].to_json)
   end
 
   def stubbed_taxons

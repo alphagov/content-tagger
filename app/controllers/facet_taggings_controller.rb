@@ -25,8 +25,6 @@ class FacetTaggingsController < ::TaggingsController
     publisher = Facets::TaggingUpdatePublisher.new(content_item, params[:facets_tagging_update_form])
 
     if publisher.save_to_publishing_api
-      publisher.promote_finder_item if facet_tagging_params[:promoted]
-
       redirect_back(
         fallback_location: facet_group_facet_tagging_path(content_item.content_id),
         success: "Facet values have been updated!"
