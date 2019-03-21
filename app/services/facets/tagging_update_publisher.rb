@@ -4,9 +4,10 @@ module Facets
   class TaggingUpdatePublisher
     attr_reader :content_item, :params
 
-    def initialize(content_item, params)
+    def initialize(content_item, params, facet_group_content_id)
       @content_item = content_item
       @params = params
+      @facet_group_content_id = facet_group_content_id
     end
 
     def save_to_publishing_api
@@ -45,15 +46,25 @@ module Facets
       end
     end
 
-    def generate_links_payload
-      TaggingUpdateForm::TAG_TYPES.reduce({}) do |payload, tag_type|
-        content_ids = fetch_content_ids(tag_type)
-
-        payload.merge(tag_type => content_ids)
-      end
-    end
-
   private
+
+    attr_reader :facet_group_content_id
+
+    def generate_links_payload
+      facet_groups_content_ids = fetch_content_ids(:facet_groups)
+      facet_values_content_ids = fetch_content_ids(:facet_values)
+
+      if facet_values_content_ids.any?
+        facet_groups_content_ids.push(facet_group_content_id)
+      else
+        facet_groups_content_ids.delete(facet_group_content_id)
+      end
+
+      {
+        facet_groups: facet_groups_content_ids.uniq,
+        facet_values: facet_values_content_ids,
+      }
+    end
 
     def fetch_content_ids(tag_type)
       clean_input_array(params[tag_type])

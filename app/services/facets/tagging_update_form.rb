@@ -44,10 +44,6 @@ module Facets
       end
     end
 
-    def facet_group_name
-      links.facet_groups.first["title"]
-    end
-
     def facet_groups
       links.facet_groups.map { |fv| fv["content_id"] }
     end

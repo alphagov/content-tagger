@@ -22,7 +22,11 @@ class FacetTaggingsController < ::TaggingsController
 
   def update
     content_item = ContentItem.find!(params[:content_id])
-    publisher = Facets::TaggingUpdatePublisher.new(content_item, params[:facets_tagging_update_form])
+    publisher = Facets::TaggingUpdatePublisher.new(
+      content_item,
+      params[:facets_tagging_update_form],
+      params[:facet_group_content_id]
+    )
 
     if publisher.save_to_publishing_api
       redirect_back(

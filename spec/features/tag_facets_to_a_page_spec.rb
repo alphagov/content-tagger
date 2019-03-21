@@ -34,6 +34,31 @@ RSpec.describe "Tagging content with facets", type: :feature do
     )
   end
 
+  scenario "User removes all facet values" do
+    stub_finder_get_links_request
+    given_there_is_a_content_item_with_expanded_links(
+      facet_groups: [example_facet_group],
+      facet_values: [example_facet_value],
+    )
+    when_i_visit_facet_groups_page
+    and_i_select_the_facet_group("Example facet group")
+    and_i_edit_facets_for_the_page("/my-content-item")
+    and_i_see_the_facet_values_form_prefilled_with("Agriculture")
+
+    when_i_remove_the_facet_value("Agriculture")
+
+    and_i_submit_the_facets_tagging_form
+
+    then_the_publishing_api_is_sent(
+      "facets_tagging_request",
+      links: {
+        facet_groups: [],
+        facet_values: [],
+      },
+      previous_version: 54_321,
+    )
+  end
+
   # Pinning means the content item will be ordered above others in
   # filtered finder results. This means the item is added to the
   # ordered_related_items links for the finder.
@@ -152,6 +177,10 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   def when_i_select_an_additional_facet_value(selection)
     select selection, from: "Facet values"
+  end
+
+  def when_i_remove_the_facet_value(selection)
+    unselect selection, from: "Facet values"
   end
 
   def when_i_pin_the_item_in_finder_results
