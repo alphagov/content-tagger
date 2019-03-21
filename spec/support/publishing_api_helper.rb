@@ -137,8 +137,11 @@ module PublishingApiHelper
     }.to_json)
   end
 
-  def stub_facet_group_lookup(content_id = "abc-123")
-    stub_const "Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS", [content_id]
+  def stub_facet_group_lookup(content_id = "FACET-GROUP-UUID")
+    # Set the class as a local var otherwise RSpec confuses the interpreter
+    # by defining `Facets::RemoteFacetGroupsService` as a module here.
+    facet_group_service_class = Facets::RemoteFacetGroupsService
+    stub_const "#{facet_group_service_class}::PUBLISHED_FACET_GROUPS", [content_id]
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/#{content_id}")
     .to_return(body: {
       content_id: content_id,
@@ -147,7 +150,7 @@ module PublishingApiHelper
     }.to_json)
   end
 
-  def stub_finder_lookup(content_id = "abc-123")
+  def stub_finder_lookup(content_id = "FACET-GROUP-UUID")
     stub_const "Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS", [content_id]
     stub_request(:get, "#{PUBLISHING_API}/v2/linked/#{content_id}?document_type=finder")
       .to_return(body: [
@@ -262,11 +265,11 @@ module PublishingApiHelper
 
   def example_facet_group
     {
-      "content_id" => "abc-123",
+      "content_id" => "FACET-GROUP-UUID",
       "title" => "Example facet group",
       "facets" => [
         {
-          "content_id" => "def-456",
+          "content_id" => "FACET-UUID",
           "title" => "Example facet",
           "links" => {
             "facet_values" => [

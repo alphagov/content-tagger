@@ -16,10 +16,6 @@ module Facets
       expanded_facet_group(content_id).to_hash
     end
 
-    def finders_for_facet_group(content_id)
-      items_linked_to_facet_group(content_id, 'finder').to_hash
-    end
-
   private
 
     # Returns a facet group from the publishing API.
@@ -34,10 +30,6 @@ module Facets
           per_page: 50,
           states: states,
         )
-    end
-
-    def items_linked_to_facet_group(content_id, document_type)
-      publishing_api.get_linked_items(content_id, document_type: document_type)
     end
 
     def expanded_facet_group(content_id)
