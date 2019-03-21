@@ -2,11 +2,6 @@
   <%= f.hidden_field :content_id %>
   <%= f.hidden_field :previous_version %>
 
-  <%= f.input :promoted,
-              as: :boolean,
-              checked_value: true,
-              unchecked_value: false %> Pin this page to top of finder results.
-
   <% tagging_update.allowed_tag_types.each do |tag_type| %>
     <div class='tag-section'>
       <%= render "form_for_#{tag_type}", {
@@ -16,6 +11,12 @@
       } %>
     </div>
   <% end %>
+
+  <%= f.input :promoted,
+              as: :boolean,
+              checked_value: true,
+              unchecked_value: false,
+              label: "Pin this page to top of finder results" %>
 
   <hr/>
 
