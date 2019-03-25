@@ -59,6 +59,25 @@ RSpec.describe "Tagging content with facets", type: :feature do
     )
   end
 
+  scenario "User makes a conflicting change" do
+    stub_finder_get_links_request
+    given_there_is_a_content_item_with_expanded_links(
+      facet_groups: [example_facet_group],
+      facet_values: [example_facet_value],
+    )
+
+    when_i_visit_facet_groups_page
+    and_i_select_the_facet_group("Example facet group")
+    and_i_edit_facets_for_the_page("/my-content-item")
+
+    when_i_remove_the_facet_value("Agriculture")
+
+    and_somebody_else_makes_a_change
+    and_i_submit_the_facets_tagging_form
+
+    then_i_see_that_there_is_a_conflict
+  end
+
   # Pinning means the content item will be ordered above others in
   # filtered finder results. This means the item is added to the
   # ordered_related_items links for the finder.
@@ -219,6 +238,15 @@ RSpec.describe "Tagging content with facets", type: :feature do
     stubbed_request = instance_variable_get("@#{stubbed_request_name}")
 
     expect(stubbed_request.with(body: body.to_json)).to have_been_made
+  end
+
+  def and_somebody_else_makes_a_change
+    @facets_tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+      .to_return(status: 409)
+  end
+
+  def then_i_see_that_there_is_a_conflict
+    expect(page).to have_content 'Somebody changed the tags before you could'
   end
 
   def publishing_api_has_facet_values_linkables(labels)

@@ -4,7 +4,10 @@ class FacetTaggingsController < ::TaggingsController
     content_lookup = ContentLookupForm.new(lookup_params)
 
     if content_lookup.valid?
-      redirect_to facet_group_facet_tagging_path(content_id: content_lookup.content_id)
+      redirect_to facet_group_facet_tagging_path(
+        facet_group_content_id: params[:facet_group_content_id],
+        content_id: content_lookup.content_id,
+      )
     else
       render :lookup, locals: { lookup: content_lookup }
     end
@@ -30,7 +33,10 @@ class FacetTaggingsController < ::TaggingsController
 
     if publisher.save_to_publishing_api
       redirect_back(
-        fallback_location: facet_group_facet_tagging_path(content_item.content_id),
+        fallback_location: facet_group_facet_tagging_path(
+          facet_group_content_id: params[:facet_group_content_id],
+          content_id: content_item.content_id,
+        ),
         success: "Facet values have been updated!"
       )
     else
@@ -42,7 +48,10 @@ class FacetTaggingsController < ::TaggingsController
     end
   rescue GdsApi::HTTPConflict
     redirect_back(
-      fallback_location: facets_tagging_path(content_item.content_id),
+      fallback_location: facet_group_facet_tagging_path(
+        facet_group_content_id: params[:facet_group_content_id],
+        content_id: content_item.content_id,
+      ),
       danger: "Somebody changed the tags before you could. Your changes have not been saved."
     )
   end
