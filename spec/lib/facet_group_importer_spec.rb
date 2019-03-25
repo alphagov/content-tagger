@@ -18,6 +18,7 @@ RSpec.describe FacetGroupImporter do
           name: "A facet",
           preposition: "do something with",
           type: "content_id",
+          filter_key: 'facet_filter_key',
           facet_values: [
             {
               content_id: "cde-345-fgh-678",
@@ -85,6 +86,7 @@ RSpec.describe FacetGroupImporter do
               display_as_result_metadata: true,
               filterable: true,
               key: "a_facet",
+              filter_key: 'facet_filter_key',
               name: "A facet",
               preposition: "do something with",
               type: "content_id",
