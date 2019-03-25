@@ -245,7 +245,6 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def stub_finder_lookup(content_id = "FACET-GROUP-UUID")
-    stub_const "Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS", [content_id]
     stub_request(:get, "#{PUBLISHING_API}/v2/linked/#{content_id}?document_type=finder")
       .to_return(body: [
         {

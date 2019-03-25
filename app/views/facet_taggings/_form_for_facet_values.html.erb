@@ -2,7 +2,7 @@
 
 <%= f.input :facet_values,
     as: :grouped_select,
-    collection: linkables.facet_values,
+    collection: linkables.facet_values(params[:facet_group_content_id]),
     group_method: :last,
     placeholder: "Choose one...",
     input_html: { multiple: true, class: :select2 } %>

@@ -123,7 +123,7 @@ RSpec.describe Linkables do
         document_type: 'facet_value'
       )
 
-      expect(linkables.facet_values).to eq(
+      expect(linkables.facet_values("FACET-GROUP-UUID")).to eq(
         [
           ["Example facet", [
             ["Aerospace", "ANOTHER-FACET-VALUE-UUID"],

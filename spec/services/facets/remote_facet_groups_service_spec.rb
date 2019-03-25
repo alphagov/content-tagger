@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Facets::RemoteFacetGroupsService do
-  let(:publishing_api) { Services.publishing_api_with_long_timeout }
+  let(:publishing_api) { Services.publishing_api }
 
   describe "find_all" do
     let(:api_response) { double(:response, to_hash: { "results" => "Woo!" }) }

@@ -28,8 +28,8 @@ class Linkables
     @mainstream_browse_pages ||= for_nested_document_type('mainstream_browse_page')
   end
 
-  def facet_values
-    @facet_values ||= for_facet_group
+  def facet_values(facet_group_content_id)
+    @facet_values ||= for_facet_group(facet_group_content_id)
   end
 
 private
@@ -56,7 +56,7 @@ private
     organise_items(present_items(items))
   end
 
-  def for_facet_group(content_id = Facets::RemoteFacetGroupsService::PUBLISHED_FACET_GROUPS.first)
+  def for_facet_group(content_id)
     Facets::FacetGroupPresenter.new(
       Facets::RemoteFacetGroupsService.new.find(content_id)
     ).grouped_facet_values
