@@ -8,6 +8,7 @@
     :key: sector_business_area
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: and
     :preposition: "your business is in"
     :type: content_id
@@ -146,6 +147,7 @@
     :key: business_activity
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: and
     :preposition: "you"
     :type: content_id
@@ -170,6 +172,7 @@
     :key: employ_eu_citizens
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: or
     :preposition: "you employ"
     :type: content_id
@@ -185,6 +188,7 @@
     :key: personal_data
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: or
     :preposition: "you exchange personal data by"
     :type: content_id
@@ -203,6 +207,7 @@
     :key: intellectual_property
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: or
     :preposition: "you use or rely on"
     :type: content_id
@@ -227,6 +232,7 @@
     :key: eu_uk_government_funding
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: or
     :preposition: "you get"
     :type: content_id
@@ -242,6 +248,7 @@
     :key: public_sector_procurement
     :display_as_result_metadata: true
     :filterable: true
+    :filter_key: facet_values
     :combine_mode: or
     :preposition: "you apply for"
     :type: content_id

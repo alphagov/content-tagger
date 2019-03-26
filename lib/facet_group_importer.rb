@@ -116,7 +116,7 @@ private
       title: data[:name],
       details: data.slice(
         *:combine_mode, :display_as_result_metadata,
-        :filterable, :key, :name, :preposition, :type
+        :filterable, :key, :filter_key, :name, :preposition, :type
       )
     }.merge(publishing_and_rendering_apps)
   end
