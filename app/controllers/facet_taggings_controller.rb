@@ -1,5 +1,6 @@
 class FacetTaggingsController < ::TaggingsController
-  # TODO: Check permissions to administer facet values
+  before_action :ensure_user_can_administer_taxonomy!
+
   def find_by_slug
     content_lookup = ContentLookupForm.new(lookup_params)
 
