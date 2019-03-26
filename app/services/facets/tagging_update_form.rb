@@ -44,6 +44,10 @@ module Facets
       end
     end
 
+    def facet_group(facet_group_content_id)
+      links.facet_groups.find { |fg| fg["content_id"] == facet_group_content_id }
+    end
+
     def facet_groups
       links.facet_groups.map { |fv| fv["content_id"] }
     end
