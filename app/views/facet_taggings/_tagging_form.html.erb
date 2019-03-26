@@ -1,0 +1,24 @@
+<%= simple_form_for tagging_update, url: facet_group_facet_tagging_path, method: 'put' do |f| %>
+  <%= f.hidden_field :content_id %>
+  <%= f.hidden_field :previous_version %>
+
+  <% tagging_update.allowed_tag_types.each do |tag_type| %>
+    <div class='tag-section'>
+      <%= render "form_for_#{tag_type}", {
+        f: f,
+        linkables: tagging_update.linkables,
+        tagging_update: tagging_update
+      } %>
+    </div>
+  <% end %>
+
+  <%= f.input :promoted,
+              as: :boolean,
+              checked_value: true,
+              unchecked_value: false,
+              label: "Pin this page to top of finder results" %>
+
+  <hr/>
+
+  <%= f.submit I18n.t('taggings.update_facets'), class: "btn btn-lg btn-success" %>
+<% end %>
