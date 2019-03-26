@@ -2,7 +2,7 @@
   breadcrumbs: [t('navigation.tagging_content')] %>
 
 <div class="lead">
-  Enter the URL or path of a GOV.UK page to edit its tagging or related links.
+  Enter the URL or path of a GOV.UK page to edit the facet values.
 </div>
 
 <%= simple_form_for lookup,
@@ -14,8 +14,8 @@
       input_html: { class: 'form-control' }
     %>
 
-    For example: <%= link_to "https://www.gov.uk/pay-vat", "/taggings/lookup/pay-vat" %>
-    or <%= link_to "/bank-holidays", "/taggings/lookup/bank-holidays" %>
+    For example: <%= link_to "https://www.gov.uk/pay-vat", "#" %>
+    or <%= link_to "/bank-holidays", "#" %>
   </div>
 
   <%= submit_tag I18n.t('taggings.search'), class: 'btn btn-success btn-md' %>
