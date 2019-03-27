@@ -14,41 +14,50 @@
     :type: content_id
     :facet_values:
       - :content_id: 894a7c88-40bb-4ba6-a234-b7e15d8a0c21
-        :title: Accommodation, restaurants and catering services
-        :value: accommodation-restaurants-and-catering-services
+        :title: Accommodation
+        :value: accommodation
       - :content_id: 24fd50fa-6619-46ca-96cd-8ce90fa076ce
         :title: Aerospace
         :value: aerospace
       - :content_id: 94b3cfe2-af89-4744-b8d7-7fc79edcbc85
-        :title: Agriculture
+        :title: Agriculture and forestry (including wholesale)
         :value: agriculture
       - :content_id: 43d328b3-59ee-4d5d-bda0-7c7d4bb301be
-        :title: Air transport (aviation)
-        :value: air-transport-aviation
-      - :content_id: 5faa1741-fc55-4110-b342-de92f6324118
-        :title: Ancillary services
-        :value: ancillary-services
-      - :content_id: 05334231-9be3-4670-a2f5-84bef7e3badd
-        :title: Animal health
-        :value: animal-health
+        :title: Air freight and air passenger services
+        :value: air-freight-air-passenger-services
+      - :content_id: cf341686-c886-42c7-bf8e-cf177b6a2100
+        :title: Arts, culture and heritage
+        :value: arts-culture-heritage
       - :content_id: e53e578a-01d2-4844-b52b-fd375ee4c4b9
         :title: Automotive
         :value: automotive
-      - :content_id: 3880f354-3d74-4441-b40f-d808933a14be
-        :title: Banking, markets and infrastructure
-        :value: banking-market-infrastructure
-      - :content_id: 4c7a04d8-02b8-430c-bfec-f1e1f475ff98
-        :title: Broadcasting
-        :value: broadcasting
+      - :content_id: 5faa1741-fc55-4110-b342-de92f6324118
+        :title: Auxiliary activities
+        :value: auxiliary-activities
+      - :content_id: 05334231-9be3-4670-a2f5-84bef7e3badd
+        :title: Charities
+        :value: charities
       - :content_id: 7620da7a-0427-4b3c-9498-db9dc25209b0
         :title: Chemicals
         :value: chemicals
+      - :content_id: 1e3e8abd-135d-4844-afa8-5c51df3d3c57
+        :title: Clothing and consumer goods
+        :value: clothing-consumer-goods
+      - :content_id: a7263c3b-7ade-4a91-9f51-40ebc57b3f98
+        :title: Clothing and consumer goods manufacture
+        :value: clothing-consumer-goods-manufacturing
       - :content_id: 70e6087f-714e-4922-8e06-72cfff997785
-        :title: Computer services
+        :title: Digital, technology and computer services
         :value: computer-services
       - :content_id: 9eb88205-118b-4f0b-abd9-ac6b469054c5
-        :title: Construction and contracting
+        :title: Construction
         :value: construction-contracting
+      - :content_id: 69f9bfbb-b85e-4898-bee9-9f0e6bb5db7f
+        :title: Creative industries
+        :value: creative-industries
+      - :content_id: 77764805-73e6-4d47-9f20-aedd6de7dab9
+        :title: Defence
+        :value: defence
       - :content_id: 7c980b5d-a7ea-4d6e-aad1-e80e882566c4
         :title: Education
         :value: education
@@ -56,92 +65,143 @@
         :title: Electricity
         :value: electricity
       - :content_id: 01b51981-1ad6-4e45-9b14-b8a57fcb4204
-        :title: Electronics
-        :value: electronics
+        :title: Electronics, parts and machinery
+        :value: electronics-parts-machinery
       - :content_id: 3a8f00ff-f098-4fd1-81bc-7914e963f842
         :title: Environmental services
         :value: environmental-services
+      - :content_id: 8be45b7f-93df-4646-a93f-9ec8c24f4577
+        :title: Financial services
+        :value: financial-services
       - :content_id: c5e26d37-def8-40aa-8b46-d9a23ffaceb1
-        :title: Fisheries
+        :title: Fisheries (including wholesale)
         :value: fisheries
       - :content_id: 53f9ce4c-7cbb-447f-bdf1-a9b022896d3a
-        :title: Food and drink
+        :title: Food, drink and tobacco (retail and wholesale)
         :value: food-and-drink
+      - :content_id: 9f3476e1-8ff0-455d-a14e-003236b2797c
+        :title: Food, drink and tobacco (processing)
+        :value: food-drink-tobacco
       - :content_id: '040649fc-4e2c-4028-b846-77fe3eebd1f7'
-        :title: Furniture and other manufacturing
-        :value: furniture-and-other-manufacturing
-      - :content_id: bc7ac405-cc71-4507-9550-57ba5b78bfb2
-        :title: Gas markets
-        :value: gas-markets
-      - :content_id: b38b45c4-48dd-4307-ae45-8acf7d5929a7
-        :title: Imports
-        :value: imports
-      - :content_id: 34f45412-89d0-46fe-8004-b61c0c152d06
-        :title: Imputed rent
-        :value: imputed-rent
+        :title: Furniture manufacture
+        :value: furniture-manufacture
+      - :content_id: 6ae9d424-6ade-456e-bcbe-6ce72b72ca13
+        :title: Gambling
+        :value: gambling
+      - :content_id: 2665a837-037e-4dba-9859-be1f35a88d1e
+        :title: Health and social care services
+        :value: health-social-care-services
+      - :content_id: 1a647ff3-73bc-4f0d-8b06-d07c62023d35
+        :title: Installation, servicing and repair
+        :value: installation-servicing-repair
       - :content_id: d6cdac38-eab5-4915-8917-b328c18957d8
         :title: Insurance
         :value: insurance
-      - :content_id: b13198f2-775e-4067-858b-93a10b3f9ea1
-        :title: Land transport (excluding rail)
-        :value: land-transport-excl-rail
+      - :content_id: cec78369-d11b-48cb-9a90-ebd4ebb5de37
+        :title: Justice including prisons
+        :value: justice-prisons
+      - :content_id: 18c3892e-8a0e-4884-906e-5938380eceee
+        :title: Marine
+        :value: marine
+      - :content_id: 356f46a0-17d3-4ba4-8952-8c02244f9045
+        :title: Marine transport
+        :value: marine-transport
+      - :content_id: 442e7d39-9ebf-46c5-813a-daa328e135b8
+        :title: Media and broadcasting
+        :value: broadcasting
       - :content_id: 6e019777-9029-414b-b81e-ccb955669f86
-        :title: Medical services
-        :value: medical-services
+        :title: Medical technology
+        :value: medical-technology
+      - :content_id: 5cedc5d2-8e0c-4706-86c6-3e6ac2c3d7ad
+        :title: Metals manufacture
+        :value: metals-manufacture
+      - :content_id: f97da086-4f36-4229-a427-ccdb021ab058
+        :title: Mining
+        :value: mining
       - :content_id: c366fc8d-03d6-417c-9a23-6f1bce72db5c
-        :title: Motor trades
+        :title: Motor trade
         :value: motor-trades
+      - :content_id: cbe95935-13c7-4de8-8d3c-b7c9ef8d69a2
+        :title: Non-metal materials manufacture
+        :value: non-metal-materials-manufacture
+      - :content_id: 45bfb0a2-b60d-40f2-b9af-b5d2b4b91445
+        :title: Nuclear
+        :value: nuclear
+      - :content_id: 14cf2a68-3297-44d3-ba01-a4426845b1b8
+        :title: Other advanced manufacturing
+        :value: other-advanced-manufacturing
       - :content_id: 46ad5a1d-fc2d-4065-a34f-3f7b2fea8e81
-        :title: Oil and gas production
-        :value: oil-and-gas-production
+        :title: Oil, gas and coal
+        :value: oil-gas-coal
+      - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
+        :title: Other energy
+        :value: other-energy
+      - :content_id: 7536c0c4-fb41-43f4-a2c4-08f4fa9f5427
+        :title: Other manufacturing
+        :value: other-manufacturing
       - :content_id: d9da7c7b-b0c9-4757-aa45-9c70dd78df62
-        :title: Other personal services
-        :value: other-personal-services
-      - :content_id: 9c0d1627-0423-4159-a947-e6abab0d0afd
-        :title: Parts and machinery
-        :value: parts-and-machinery
+        :title: Personal services
+        :value: personal-services
       - :content_id: 93f5c156-2449-4e52-9e92-aefc73586ffd
         :title: Pharmaceuticals
         :value: pharmaceuticals
+      - :content_id: 4591ce75-7568-48c6-af5f-3558f89f7f57
+        :title: Ports and airports
+        :value: ports-airports
       - :content_id: 16a9ce39-7786-4ae2-8289-93d924c958a5
-        :title: Post
-        :value: post
+        :title: Postal and courier services
+        :value: postal-courier-services
       - :content_id: f07527f1-e6de-4fe8-b7d9-b197769e1f1f
         :title: Professional and business services
         :value: professional-and-business-services
       - :content_id: '091c0e83-bb54-4727-9b2c-a919510e1e79'
-        :title: Public administration and defence
-        :value: public-administration-and-defence
+        :title: Public administration
+        :value: public-administration
       - :content_id: 53bcfcf0-e22a-416d-91ac-2661e1d6ed04
         :title: Rail
         :value: rail
+      - :content_id: 2e1cf5a9-d410-4cfc-9f54-d94302f8fbd1
+        :title: Rail (passengers and freight)
+        :value: rail-passengers-freight
       - :content_id: dba1b198-1ead-4de4-a961-b11d71fc6f20
-        :title: Real estate (excluding imputed rent)
+        :title: Real estate
         :value: real-estate-excl-imputed-rent
+      - :content_id: c1d8057c-76bf-431c-9ac8-6281a4b7b9ca
+        :title: Repair of computers and consumer goods
+        :value: repair-of-computers-consumer-goods
+      - :content_id: 39771bc2-8b2c-43e9-9cfc-fa3606b67db6
+        :title: Research
+        :value: research
+      - :content_id: a572f853-18bf-41b6-9afa-82c1723e3de9
+        :title: Restaurants, bars and catering
+        :value: restaurants-bars-catering
       - :content_id: 34a6edd0-46ea-4a76-ae80-8c96709d4f59
-        :title: Retail
+        :title: Retail and wholesale (excluding motor trade, food and drink)
         :value: retail
-      - :content_id: a9736af7-4e8b-4b1f-9a4b-9482252f4a4f
-        :title: Social work
-        :value: social-work
-      - :content_id: 99eeb13a-ce9d-49f6-aa5b-68d0e4a45358
-        :title: Steel and other metals or commodities
-        :value: steel-and-other-metals-commodities
+      - :content_id: 6f5f8dbb-3cd3-475d-8f3a-ed6e22d370be
+        :title: Road (passengers and freight)
+        :value: road-passengers-freight
+      - :content_id: b4e507df-f067-4749-9468-3de120775216
+        :title: Space
+        :value: space
+      - :content_id: 4d98ae8d-fd44-4e5d-8cf0-b9b01bd76b1a
+        :title: Sports and recreation
+        :value: sports-recreation
       - :content_id: f4e525fd-3f56-47c7-b4b7-d9c7664027ee
-        :title: Telecoms
+        :title: Telecoms and information services
         :value: telecoms
-      - :content_id: 268d0c41-579c-4bc8-9f1c-7deb1f57352a
-        :title: Textiles and clothing
-        :value: textiles-and-clothing
+      - :content_id: ec2c2efd-4cf1-4a5a-94fb-c905d2f3924b
+        :title: Tourism
+        :value: tourism
+      - :content_id: 5d8c33a5-2c88-4f33-b3c0-73b49b96d81a
+        :title: Veterinary
+        :value: veterinary
+      - :content_id: c66d8196-977f-47a5-806f-885c9cf01412
+        :title: Voluntary and community organistions
+        :value: voluntary-community-organisations
       - :content_id: 15ad9a45-5536-4323-97f9-ed470cdf1e3b
-        :title: Warehousing and support for transportation
-        :value: warehousing-and-support-for-transportation
-      - :content_id: 66c14974-d67e-4361-a14a-01804351ebd7
-        :title: Water transport including maritime and ports
-        :value: water-transport-maritime-ports
-      - :content_id: a788c432-0daa-4514-ab5b-777d013354d6
-        :title: Wholesale (excluding motor vehicles)
-        :value: wholesale-excl-motor-vehicles
+        :title: Warehousing, services and pipelines
+        :value: warehouses-services-pipelines
   - :content_id: e2febfa3-eac9-430b-bc6e-b0dff8876b1f
     :name: "Business activity"
     :key: business_activity
