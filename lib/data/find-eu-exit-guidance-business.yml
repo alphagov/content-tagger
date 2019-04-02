@@ -207,7 +207,7 @@
     :key: business_activity
     :display_as_result_metadata: true
     :filterable: true
-    :filter_key: facet_values
+    :filter_key: and_facet_values
     :combine_mode: and
     :preposition: "you"
     :type: content_id
