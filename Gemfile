@@ -41,7 +41,6 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'govuk_test'
-  gem 'headless'
   gem 'timecop'
   gem 'webmock'
 end

@@ -20,7 +20,6 @@ PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
 
 require 'capybara/rails'
 require 'gds_api/test_helpers/publishing_api_v2'
-require 'headless'
 require 'database_cleaner'
 require 'govuk_test'
 
@@ -50,12 +49,9 @@ RSpec.configure do |config|
   config.around(:each, js: true) do |example|
     DatabaseCleaner.strategy = :truncation
     GovukTest.configure
-    headless = Headless.new
-    headless.start
 
     example.run
 
-    headless.destroy
     Capybara.javascript_driver = :rack_test
     DatabaseCleaner.strategy = :transaction
   end
