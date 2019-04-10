@@ -35,6 +35,16 @@ module Facets
         end
       end
 
+      if params[:notify]
+        Services.publishing_api.notify(
+          content_item.content_id,
+          {
+            publishing_app: "content-tagger",
+            workflow_message: params[:notification_message]
+          }
+        )
+      end
+
       true
     end
 

@@ -34,6 +34,40 @@ RSpec.describe "Tagging content with facets", type: :feature do
     )
   end
 
+  scenario "User tags a content item with facet values and notifies users" do
+    stub_finder_get_links_request
+    stub_notification_request("notification_request", "MY-CONTENT-ID")
+
+    given_there_is_a_content_item_with_expanded_links(
+      facet_groups: [example_facet_group],
+      facet_values: [example_facet_value],
+    )
+    when_i_visit_facet_groups_page
+    and_i_select_the_facet_group("Example facet group")
+    and_i_edit_facets_for_the_page("/my-content-item")
+    and_i_see_the_facet_values_form_prefilled_with("Agriculture")
+
+    when_i_select_an_additional_facet_value("Aerospace")
+    and_i_opt_to_notify_users_with_the_message("Retagged!")
+
+    and_i_submit_the_facets_tagging_form
+
+    then_the_publishing_api_is_sent(
+      "facets_tagging_request",
+      links: {
+        facet_groups: ["FACET-GROUP-UUID"],
+        facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+      },
+      previous_version: 54_321,
+    )
+
+    then_the_publishing_api_is_sent(
+      "notification_request",
+      publishing_app: "content-tagger",
+      workflow_message: "Retagged!",
+    )
+  end
+
   scenario "User removes all facet values" do
     stub_finder_get_links_request
     given_there_is_a_content_item_with_expanded_links(
@@ -234,6 +268,15 @@ RSpec.describe "Tagging content with facets", type: :feature do
     )
   end
 
+  def stub_notification_request(stub_request_name, content_id)
+    instance_variable_set(
+      "@#{stub_request_name}",
+      stub_request(
+      :post, "#{PUBLISHING_API}/v2/content/#{content_id}/notify")
+        .to_return(status: 200)
+    )
+  end
+
   def then_the_publishing_api_is_sent(stubbed_request_name, body)
     stubbed_request = instance_variable_get("@#{stubbed_request_name}")
 
@@ -247,6 +290,11 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   def then_i_see_that_there_is_a_conflict
     expect(page).to have_content 'Somebody changed the tags before you could'
+  end
+
+  def and_i_opt_to_notify_users_with_the_message(message)
+    check "facets_tagging_update_form_notify"
+    fill_in "facets_tagging_update_form_notification_message", with: message
   end
 
   def publishing_api_has_facet_values_linkables(labels)
