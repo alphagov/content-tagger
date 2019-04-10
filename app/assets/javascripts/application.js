@@ -9,4 +9,10 @@
 
 $(document).ready(function() {
   $(".select2:not(.tagging_project):not(.bulk_tagger)").select2({ allowClear: true });
+
+  // Facet tagging form, hide or show notification message.
+  var $notificationMessage = $(".facets_tagging_update_form_notification_message");
+  $("#facets_tagging_update_form_notify").change(function () {
+    $notificationMessage.toggle(this.checked);
+  });
 });

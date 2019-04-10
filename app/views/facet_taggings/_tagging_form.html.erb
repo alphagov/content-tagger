@@ -20,5 +20,27 @@
 
   <hr/>
 
+  <%= f.input :notify,
+              as: :boolean,
+              checked_value: true,
+              unchecked_value: false,
+              label: "Notify email subscribers that this content has been tagged" %>
+
+  <p class="explain">
+    Check this field if you'd like to notify subscribers that this content has been re-tagged.
+    eg. This content is being added to a high priority finder and we wish to notify email
+    subscribers for the finder that new guidance is being made available.
+  </p>
+
+  <%= f.input :notification_message,
+              as: :text,
+              label: "Change note to for email notification",
+              hint: "This message appears in the email body sent to subscribers explaining " +
+                    "why they are receiving the email and what the change is about.",
+              input_html: { cols: 120, rows: 3 } %>
+
+
+  <hr/>
+
   <%= f.submit I18n.t('taggings.update_facets'), class: "btn btn-lg btn-success" %>
 <% end %>

@@ -11,10 +11,12 @@ module Facets
     end
 
     def save_to_publishing_api
+      links_payload = generate_links_payload
+
       Services.statsd.time "patch_links" do
         Services.publishing_api.patch_links(
           content_item.content_id,
-          links: generate_links_payload,
+          links: links_payload,
           previous_version: params[:previous_version].to_i,
         )
       end
@@ -33,6 +35,18 @@ module Facets
             links: { "ordered_related_items": updated_items }
           )
         end
+      end
+
+      if params[:notify]
+        return false if params[:notification_message].blank?
+
+        Services.email_alert_api.send_alert(
+          Facets::FacetsTaggingNotificationPresenter.new(
+            content_item,
+            params[:notification_message],
+            links_payload,
+          ).present
+        )
       end
 
       true

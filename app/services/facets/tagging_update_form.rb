@@ -2,7 +2,8 @@ module Facets
   # ActiveModel-compliant object that is passed into the tagging form.
   class TaggingUpdateForm
     include ActiveModel::Model
-    attr_accessor :content_item, :previous_version, :promoted, :links
+    attr_accessor :content_item, :previous_version, :promoted,
+                  :notify, :notification_message, :links
 
     delegate :content_id, to: :content_item
 
@@ -38,6 +39,8 @@ module Facets
     def update_attributes_from_form(params)
       @previous_version = params[:previous_version]
       @promoted = params[:promoted]
+      @notify = params[:notify]
+      @notification_message = params[:notification_message]
 
       TAG_TYPES.each do |tag_type|
         send("#{tag_type}=", params[tag_type])
