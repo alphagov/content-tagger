@@ -55,6 +55,7 @@ RSpec.feature "Navigation", type: :feature do
       expect(page).not_to have_text "Bulk tag"
       expect(page).not_to have_text "Edit taxonomy"
       expect(page).not_to have_text "Projects"
+      expect(page).not_to have_text "Facets"
     end
   end
 
@@ -63,6 +64,7 @@ RSpec.feature "Navigation", type: :feature do
       expect(page).not_to have_text "Edit a page"
       expect(page).not_to have_text "Bulk tag"
       expect(page).not_to have_text "Edit taxonomy"
+      expect(page).not_to have_text "Facets"
       expect(page).to have_text "Projects"
     end
   end
@@ -73,6 +75,7 @@ RSpec.feature "Navigation", type: :feature do
       expect(page).to have_text "Bulk tag"
       expect(page).to have_text "Edit taxonomy"
       expect(page).to have_text "Projects"
+      expect(page).to have_text "Facets"
     end
   end
 end

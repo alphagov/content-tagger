@@ -1,5 +1,5 @@
 class FacetTaggingsController < ::TaggingsController
-  before_action :ensure_user_can_administer_taxonomy!
+  before_action :ensure_user_can_administer_facet_groups!
 
   def find_by_slug
     content_lookup = ContentLookupForm.new(lookup_params)
