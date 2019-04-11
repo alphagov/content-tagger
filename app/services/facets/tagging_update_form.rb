@@ -3,7 +3,7 @@ module Facets
   class TaggingUpdateForm
     include ActiveModel::Model
     attr_accessor :content_item, :previous_version, :promoted,
-      :notify, :notification_message, :links
+                  :notify, :notification_message, :links
 
     delegate :content_id, to: :content_item
 
@@ -41,10 +41,20 @@ module Facets
       @promoted = params[:promoted]
       @notify = params[:notify]
       @notification_message = params[:notification_message]
+      validate_notification
 
       TAG_TYPES.each do |tag_type|
         send("#{tag_type}=", params[tag_type])
       end
+    end
+
+    def validate_notification
+      return unless notify && notification_message.blank?
+
+      errors.add(
+        :notification_message,
+        "must be present when notifying subscribers"
+      )
     end
 
     def facet_group(facet_group_content_id)

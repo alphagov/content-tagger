@@ -36,12 +36,12 @@ module Facets
       end
 
       if params[:notify]
+        return false if params[:notification_message].blank?
+
         Services.publishing_api.notify(
           content_item.content_id,
-          {
-            publishing_app: "content-tagger",
-            workflow_message: params[:notification_message]
-          }
+          publishing_app: "content-tagger",
+          workflow_message: params[:notification_message]
         )
       end
 
