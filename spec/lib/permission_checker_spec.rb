@@ -8,6 +8,7 @@ RSpec.describe PermissionChecker do
     it { is_expected.not_to have_permission(:user_can_administer_taxonomy?) }
     it { is_expected.not_to have_permission(:user_can_manage_taxonomy?) }
     it { is_expected.not_to have_permission(:user_can_access_tagathon_tools?) }
+    it { is_expected.not_to have_permission(:user_can_administer_facet_groups?) }
   end
 
   context "when the user has the Gds Editor permission" do
@@ -21,6 +22,7 @@ RSpec.describe PermissionChecker do
     it { is_expected.to have_permission(:user_can_administer_taxonomy?) }
     it { is_expected.to have_permission(:user_can_manage_taxonomy?) }
     it { is_expected.to have_permission(:user_can_access_tagathon_tools?) }
+    it { is_expected.to have_permission(:user_can_administer_facet_groups?) }
   end
 
   context "when the user has the Managing Editor permission" do
@@ -31,6 +33,7 @@ RSpec.describe PermissionChecker do
         .and_return(true)
     end
     it { is_expected.not_to have_permission(:user_can_administer_taxonomy?) }
+    it { is_expected.not_to have_permission(:user_can_administer_facet_groups?) }
     it { is_expected.to have_permission(:user_can_manage_taxonomy?) }
     it { is_expected.to have_permission(:user_can_access_tagathon_tools?) }
   end
@@ -45,6 +48,7 @@ RSpec.describe PermissionChecker do
 
     it { is_expected.not_to have_permission(:user_can_administer_taxonomy?) }
     it { is_expected.not_to have_permission(:user_can_manage_taxonomy?) }
+    it { is_expected.not_to have_permission(:user_can_administer_facet_groups?) }
     it { is_expected.to have_permission(:user_can_access_tagathon_tools?) }
   end
 end

@@ -19,6 +19,10 @@ class PermissionChecker
     gds_editor? || managing_editor? || tagathon_participant?
   end
 
+  def user_can_administer_facet_groups?
+    gds_editor?
+  end
+
 private
 
   attr_reader :user
