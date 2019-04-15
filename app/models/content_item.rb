@@ -3,6 +3,7 @@ class ContentItem
     :content_id,
     :title,
     :base_path,
+    :description,
     :publishing_app,
     :rendering_app,
     :document_type,
@@ -16,6 +17,7 @@ class ContentItem
     @content_id = data.fetch('content_id')
     @title = data.fetch('title')
     @base_path = data.fetch('base_path')
+    @description = data.fetch('description', nil)
     @publishing_app = data.fetch('publishing_app', nil)
     @rendering_app = data.fetch('rendering_app', nil)
     @document_type = data.fetch('document_type')

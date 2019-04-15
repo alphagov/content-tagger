@@ -56,6 +56,7 @@ RSpec.describe ContentItem do
     item = ContentItem.new({
       base_path: double,
       content_id: double,
+      description: double,
       document_type: double,
       publishing_app: double,
       rendering_app: 'frontend',
