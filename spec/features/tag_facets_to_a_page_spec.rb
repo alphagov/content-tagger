@@ -36,7 +36,6 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   scenario "User tags a content item with facet values and notifies users" do
     Timecop.freeze("2019-04-12T15:05:59+00:00") do
-
       stub_finder_get_links_request
       stub_notification_request
       expected_links = {
@@ -83,6 +82,35 @@ RSpec.describe "Tagging content with facets", type: :feature do
         urgent: true,
       )
     end
+  end
+
+  scenario "User tags a content item and notifies users without a message" do
+    stub_finder_get_links_request
+    stub_notification_request
+
+    given_there_is_a_content_item_with_expanded_links(
+      facet_groups: [example_facet_group],
+      facet_values: [example_facet_value],
+    )
+    when_i_visit_facet_groups_page
+    and_i_select_the_facet_group("Example facet group")
+    and_i_edit_facets_for_the_page("/my-content-item")
+    and_i_see_the_facet_values_form_prefilled_with("Agriculture")
+
+    when_i_select_an_additional_facet_value("Aerospace")
+    and_i_opt_to_notify_users
+
+    and_i_submit_the_facets_tagging_form
+
+    then_the_publishing_api_is_sent(
+      "facets_tagging_request",
+      links: {
+        facet_groups: ["FACET-GROUP-UUID"],
+        facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+      },
+      previous_version: 54_321,
+    )
+    and_i_see_the_notification_is_invalid
   end
 
   scenario "User removes all facet values" do
@@ -262,6 +290,12 @@ RSpec.describe "Tagging content with facets", type: :feature do
     uncheck 'facets_tagging_update_form_promoted'
   end
 
+  def and_i_see_the_notification_is_invalid
+    within(".facets_tagging_update_form_notification_message") do
+      expect(page).to have_css("#facets_tagging_update_form_notification_message[aria-invalid='true']")
+    end
+  end
+
   def stub_finder_get_links_request(content_id: "FINDER-UUID", items: ["EXISTING-PINNED-ITEM-UUID"])
     # Set the class as a local var otherwise RSpec confuses the interpreter
     # by defining `Facets::FinderService` as a module here.
@@ -284,6 +318,12 @@ RSpec.describe "Tagging content with facets", type: :feature do
       stub_request(:patch, "#{PUBLISHING_API}/v2/links/#{content_id}")
         .to_return(status: 200)
     )
+  end
+
+  def stub_notification_request
+    @notification_request = stub_request(
+      :post, "#{EMAIL_ALERT_API}/notifications"
+    ).to_return(status: 200)
   end
 
   def then_the_publishing_api_is_sent(stubbed_request_name, body)
