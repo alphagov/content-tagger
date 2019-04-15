@@ -1,11 +1,12 @@
 module Facets
   class FacetsTaggingNotificationPresenter
-    attr_reader :document, :change_note, :links
+    attr_reader :document, :change_note, :links, :tags
 
-    def initialize(document, change_note, links)
+    def initialize(document, change_note, links = {}, tags = {})
       @document = document
       @change_note = change_note
       @links = links
+      @tags = tags
     end
 
     def present
@@ -22,7 +23,7 @@ module Facets
         public_updated_at: Time.now.iso8601,
         publishing_app: "content-tagger",
         subject: document.title,
-        tags: links,
+        tags: tags,
         title: document.title,
         urgent: true,
       }

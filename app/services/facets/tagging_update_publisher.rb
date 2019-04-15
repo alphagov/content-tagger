@@ -45,6 +45,7 @@ module Facets
             content_item,
             params[:notification_message],
             links_payload,
+            email_alert_tags_payload,
           ).present
         )
       end
@@ -78,6 +79,13 @@ module Facets
         facet_groups: facet_groups_content_ids.uniq,
         facet_values: facet_values_content_ids,
       }
+    end
+
+    # FIXME: This is a temporary tag set which can be removed once
+    # we've updated finder email signup to handle links based signup config
+    # as we will no longer need to send tags as well as facet group links.
+    def email_alert_tags_payload
+      { "appear_in_find_eu_exit_guidance_business_finder" => "yes" }
     end
 
     def fetch_content_ids(tag_type)

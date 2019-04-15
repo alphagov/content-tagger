@@ -43,6 +43,10 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
       }
 
+      expected_tags = {
+        "appear_in_find_eu_exit_guidance_business_finder" => "yes"
+      }
+
       given_there_is_a_content_item_with_expanded_links(
         facet_groups: [example_facet_group],
         facet_values: [example_facet_value],
@@ -77,7 +81,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         public_updated_at: "2019-04-12T15:05:59+00:00",
         publishing_app: "content-tagger",
         subject: 'This Is A Content Item',
-        tags: expected_links,
+        tags: expected_tags,
         title: 'This Is A Content Item',
         urgent: true,
       )

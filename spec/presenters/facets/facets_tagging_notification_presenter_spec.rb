@@ -21,7 +21,13 @@ RSpec.describe Facets::FacetsTaggingNotificationPresenter do
     }
   end
 
-  subject(:presenter) { described_class.new(content_item, message, links) }
+  let(:tags) do
+    {
+      "appear_in_find_eu_exit_guidance_business_finder" => "yes"
+    }
+  end
+
+  subject(:presenter) { described_class.new(content_item, message, links, tags) }
 
   describe "#present" do
     let(:expected_payload) do
@@ -38,7 +44,7 @@ RSpec.describe Facets::FacetsTaggingNotificationPresenter do
         public_updated_at: "2019-04-12T15:05:59+00:00",
         publishing_app: "content-tagger",
         subject: 'This Is A Content Item',
-        tags: links,
+        tags: tags,
         title: 'This Is A Content Item',
         urgent: true,
       }
