@@ -162,7 +162,7 @@
         :value: rail
       - :content_id: 2e1cf5a9-d410-4cfc-9f54-d94302f8fbd1
         :title: Rail (passengers and freight)
-        :value: rail-passengers-freight
+        :value: rail-passenger-freight
       - :content_id: dba1b198-1ead-4de4-a961-b11d71fc6f20
         :title: Real estate
         :value: real-estate-excl-imputed-rent
