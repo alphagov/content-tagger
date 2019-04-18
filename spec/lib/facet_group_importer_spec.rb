@@ -16,6 +16,7 @@ RSpec.describe FacetGroupImporter do
           filterable: true,
           key: "a_facet",
           name: "A facet",
+          short_name: "Facet",
           preposition: "do something with",
           type: "content_id",
           filter_key: 'facet_filter_key',
@@ -88,6 +89,7 @@ RSpec.describe FacetGroupImporter do
               key: "a_facet",
               filter_key: 'facet_filter_key',
               name: "A facet",
+              short_name: "Facet",
               preposition: "do something with",
               type: "content_id",
             }
