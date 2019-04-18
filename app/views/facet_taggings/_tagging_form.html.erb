@@ -33,11 +33,15 @@
   </p>
 
   <%= f.input :notification_message,
-              as: :text,
               label: "Change note to for email notification",
               hint: "This message appears in the email body sent to subscribers explaining " +
-                    "why they are receiving the email and what the change is about.",
-              input_html: { cols: 120, rows: 3 } %>
+                    "why they are receiving the email and what the change is about. " +
+                    "This field does not accept markdown or HTML.",
+              input_html: {
+                placeholder: " eg. You’re getting this email because you subscribed to " +
+                             "‘EU Exit guidance for your business or organisation’ updates on GOV.UK.",
+                size: 140,
+              } %>
 
 
   <hr/>
