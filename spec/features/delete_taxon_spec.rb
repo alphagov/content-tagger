@@ -242,7 +242,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     expect(@patch_links_request).to_not have_been_made
   end
 
-  private
+private
 
   def add_a_parent_taxon
     @parent_taxon_content_id = SecureRandom.uuid

@@ -79,7 +79,7 @@ RSpec.describe TaxonDescriptionUpdater do
     assert_no_publish('desc-tbc-pub')
   end
 
-  private
+private
 
   def create_taxon(attributes)
     {

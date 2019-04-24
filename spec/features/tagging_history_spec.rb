@@ -42,7 +42,7 @@ RSpec.feature "Tagging History", type: :feature do
     then_i_see_the_link_changes_for_the_individual_taxon_with_missing_source_document_information
   end
 
-  private
+private
 
   def given_there_are_some_added_link_changes
     stub_link_changes_request(added_link_changes)
