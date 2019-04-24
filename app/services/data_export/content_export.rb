@@ -93,8 +93,8 @@ module DataExport
     rescue GdsApi::ContentStore::ItemNotFound
       Rails.logger.warn("Cannot find content item '#{base_path}' in the content store")
       {}
-    rescue StandardError => ex
-      Rails.logger.warn("Error processing '#{base_path}': #{ex.message}")
+    rescue StandardError => e
+      Rails.logger.warn("Error processing '#{base_path}': #{e.message}")
       {}
     end
 

@@ -20,7 +20,7 @@ task :load_legacy_mappings, [:csv_path] => :environment do |_t, args|
                       links: { legacy_taxons: legacy_taxon_ids.values },
                       bulk_publishing: true)
     rescue StandardError => e
-      STDERR.puts "Failed to patch #{topic_taxon_id}: #{e.message}"
+      warn "Failed to patch #{topic_taxon_id}: #{e.message}"
     end
   end
 end
