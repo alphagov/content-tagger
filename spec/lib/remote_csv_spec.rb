@@ -40,6 +40,6 @@ RSpec.describe RemoteCsv, "#rows_with_headers" do
     stub_request(:get, csv_url).to_return(body: "1,\"23\"4\"5\", 6")
 
     expect { RemoteCsv.new(csv_url).rows_with_headers }
-      .to raise_error RemoteCsv::ParsingError, "CSV::MalformedCSVError: Do not allow except col_sep_split_separator after quoted fields in line 1."
+      .to raise_error RemoteCsv::ParsingError, "CSV::MalformedCSVError: Any value after quoted field isn't allowed in line 1."
   end
 end
