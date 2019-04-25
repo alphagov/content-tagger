@@ -229,6 +229,7 @@
         :value: transporting
   - :content_id: b2716a1e-dc24-4566-b8ed-f3ee23a994ec
     :name: "Who you employ"
+    :short_name: "Employing EU citizens"
     :key: employ_eu_citizens
     :display_as_result_metadata: true
     :filterable: true
