@@ -203,7 +203,7 @@
         :title: Warehousing, services and pipelines
         :value: warehouses-services-pipelines
   - :content_id: e2febfa3-eac9-430b-bc6e-b0dff8876b1f
-    :name: "Business activity"
+    :name: "Organisation activity"
     :key: business_activity
     :display_as_result_metadata: true
     :filterable: true
