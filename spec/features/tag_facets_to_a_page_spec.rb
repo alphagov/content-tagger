@@ -279,11 +279,11 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def when_i_select_an_additional_facet_value(selection)
-    select selection, from: "Facet values"
+    select selection, from: "facets_tagging_update_form_facet_values"
   end
 
   def when_i_remove_the_facet_value(selection)
-    unselect selection, from: "Facet values"
+    unselect selection, from: "facets_tagging_update_form_facet_values"
   end
 
   def when_i_pin_the_item_in_finder_results
