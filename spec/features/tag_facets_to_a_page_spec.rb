@@ -270,7 +270,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def and_i_see_the_facet_values_form_prefilled_with(option)
-    facet_values_options = all('#facets_tagging_update_form_facet_values option').map(&:text)
+    facet_values_options = all('#facets_tagging_update_form_example_facet option').map(&:text)
     expect(facet_values_options).to include(option)
   end
 
@@ -279,11 +279,11 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def when_i_select_an_additional_facet_value(selection)
-    select selection, from: "facets_tagging_update_form_facet_values"
+    select selection, from: "facets_tagging_update_form_example_facet"
   end
 
   def when_i_remove_the_facet_value(selection)
-    unselect selection, from: "facets_tagging_update_form_facet_values"
+    unselect selection, from: "facets_tagging_update_form_example_facet"
   end
 
   def when_i_pin_the_item_in_finder_results
