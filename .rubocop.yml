@@ -249,13 +249,13 @@ IfWithSemicolon:
   Description: 'Never use if x; .... Use the ternary operator instead.'
   Enabled: true
 
-IndentArray:
+Layout/IndentFirstArrayElement:
   Description: >-
     Checks the indentation of the first element in an array
     literal.
   Enabled: true
 
-IndentHash:
+Layout/IndentFirstHashElement:
   Description: 'Checks the indentation of the first key in a hash literal.'
   Enabled: true
 
