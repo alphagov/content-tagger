@@ -34,6 +34,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
           links: {
             facet_groups: ["FACET-GROUP-CONTENT-ID"],
             facet_values: ["A-FACET-VALUE-UUID"],
+            finder: [finder_content_id],
           },
           previous_version: 0,
         )

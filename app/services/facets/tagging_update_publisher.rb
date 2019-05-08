@@ -78,6 +78,7 @@ module Facets
       {
         facet_groups: facet_groups_content_ids.uniq,
         facet_values: facet_values_content_ids,
+        finder: [FinderService::LINKED_FINDER_CONTENT_ID],
       }
     end
 
