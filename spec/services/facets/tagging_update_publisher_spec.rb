@@ -25,19 +25,45 @@ RSpec.describe Facets::TaggingUpdatePublisher do
       allow(publishing_api).to receive(:patch_links)
     end
 
-    it "patches content item links" do
-      instance.save_to_publishing_api
+    context "when content is tagged to facets" do
+      it "patches content item links" do
+        instance.save_to_publishing_api
 
-      expect(publishing_api).to have_received(:patch_links)
-        .with(
-          "MY-CONTENT-ID",
-          links: {
-            facet_groups: ["FACET-GROUP-CONTENT-ID"],
-            facet_values: ["A-FACET-VALUE-UUID"],
-            finder: [finder_content_id],
-          },
-          previous_version: 0,
-        )
+        expect(publishing_api).to have_received(:patch_links)
+          .with(
+            "MY-CONTENT-ID",
+            links: {
+              facet_groups: ["FACET-GROUP-CONTENT-ID"],
+              facet_values: ["A-FACET-VALUE-UUID"],
+              finder: [finder_content_id],
+            },
+            previous_version: 0,
+          )
+      end
+    end
+
+    context "when content isn't tagged to any facets" do
+      let(:params) do
+        {
+          facet_groups: [],
+          facet_values: [],
+          promoted: true,
+        }
+      end
+
+      it "doesn't patch any links if the document isn't tagged to a facet" do
+        instance.save_to_publishing_api
+
+        expect(publishing_api).to have_received(:patch_links)
+          .with(
+            "MY-CONTENT-ID",
+            links: {
+              facet_groups: [],
+              facet_values: [],
+            },
+            previous_version: 0,
+          )
+      end
     end
 
     it "returns a truthy result" do

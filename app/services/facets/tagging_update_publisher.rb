@@ -75,11 +75,16 @@ module Facets
         facet_groups_content_ids.delete(facet_group_content_id)
       end
 
-      {
+      links = {
         facet_groups: facet_groups_content_ids.uniq,
         facet_values: facet_values_content_ids,
-        finder: [FinderService::LINKED_FINDER_CONTENT_ID],
       }
+
+      if facet_values_content_ids.any?
+        links.merge!(finder: [FinderService::LINKED_FINDER_CONTENT_ID])
+      end
+
+      links
     end
 
     # FIXME: This is a temporary tag set which can be removed once
