@@ -9,7 +9,7 @@
     :display_as_result_metadata: true
     :filterable: true
     :filter_key: facet_values
-    :combine_mode: and
+    :combine_mode: or
     :preposition: "your business is in"
     :type: content_id
     :facet_values:
@@ -207,8 +207,8 @@
     :key: business_activity
     :display_as_result_metadata: true
     :filterable: true
-    :filter_key: and_facet_values
-    :combine_mode: and
+    :filter_key: facet_values
+    :combine_mode: or
     :preposition: "you"
     :type: content_id
     :facet_values:
