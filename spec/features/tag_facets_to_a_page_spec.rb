@@ -29,6 +29,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       links: {
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+        finder: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -41,6 +42,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       expected_links = {
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+        finder: [stub_linked_finder_content_id],
       }
 
       expected_tags = {
@@ -111,6 +113,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       links: {
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+        finder: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -185,6 +188,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       links: {
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["EXISTING-FACET-VALUE-UUID"],
+        finder: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -216,6 +220,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       links: {
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["EXISTING-FACET-VALUE-UUID"],
+        finder: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -300,12 +305,8 @@ RSpec.describe "Tagging content with facets", type: :feature do
     end
   end
 
-  def stub_finder_get_links_request(content_id: "FINDER-UUID", items: ["EXISTING-PINNED-ITEM-UUID"])
-    # Set the class as a local var otherwise RSpec confuses the interpreter
-    # by defining `Facets::FinderService` as a module here.
-    finder_service_class = Facets::FinderService
-    stub_const "#{finder_service_class}::LINKED_FINDER_CONTENT_ID", content_id
-    stub_request(:get, "#{PUBLISHING_API}/v2/links/#{content_id}")
+  def stub_finder_get_links_request(items: ["EXISTING-PINNED-ITEM-UUID"])
+    stub_request(:get, "#{PUBLISHING_API}/v2/links/#{stub_linked_finder_content_id}")
       .to_return(
         status: 200,
         body: {
@@ -388,5 +389,12 @@ RSpec.describe "Tagging content with facets", type: :feature do
           base_path: "/some-finder",
         }
       ].to_json)
+  end
+
+  def stub_linked_finder_content_id
+    # Set the class as a local var otherwise RSpec confuses the interpreter
+    # by defining `Facets::FinderService` as a module here.
+    finder_service_class = Facets::FinderService
+    stub_const "#{finder_service_class}::LINKED_FINDER_CONTENT_ID", "FINDER-UUID"
   end
 end
