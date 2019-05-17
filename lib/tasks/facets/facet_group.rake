@@ -1,5 +1,6 @@
 require "facet_group_importer"
 require "facet_data_tagger"
+require "facet_data_exporter"
 
 namespace :facets do
   desc <<-DESC
@@ -43,5 +44,14 @@ namespace :facets do
     content_ids.each do |_, content_id|
       Services.publishing_api.patch_links(content_id, links: { finder: [Facets::FinderService::LINKED_FINDER_CONTENT_ID] })
     end
+  end
+
+  desc <<-DESC
+    Exports the facet values tagged to content in the publishing-api in csv format.
+    The csv file can be used by the `tag_content_to_facet_values` task to retag the
+    content.
+  DESC
+  task :export_content_tagged_to_facet_group, %i[facet_group_content_id export_file_path facet_group_file_path] => :environment do |_, args|
+    FacetDataExporter.new(args[:facet_group_content_id], args[:export_file_path], args[:facet_group_file_path]).export
   end
 end
