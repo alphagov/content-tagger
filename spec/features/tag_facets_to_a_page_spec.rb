@@ -140,6 +140,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       links: {
         facet_groups: [],
         facet_values: [],
+        finder: [],
       },
       previous_version: 54_321,
     )

@@ -68,23 +68,20 @@ module Facets
     def generate_links_payload
       facet_groups_content_ids = fetch_content_ids(:facet_groups)
       facet_values_content_ids = fetch_content_ids(:facet_values)
+      finder_content_ids = [FinderService::LINKED_FINDER_CONTENT_ID]
 
       if facet_values_content_ids.any?
         facet_groups_content_ids.push(facet_group_content_id)
       else
         facet_groups_content_ids.delete(facet_group_content_id)
+        finder_content_ids = []
       end
 
-      links = {
+      {
         facet_groups: facet_groups_content_ids.uniq,
         facet_values: facet_values_content_ids,
+        finder: finder_content_ids,
       }
-
-      if facet_values_content_ids.any?
-        links.merge!(finder: [FinderService::LINKED_FINDER_CONTENT_ID])
-      end
-
-      links
     end
 
     # FIXME: This is a temporary tag set which can be removed once

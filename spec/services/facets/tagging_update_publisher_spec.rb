@@ -60,6 +60,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
             links: {
               facet_groups: [],
               facet_values: [],
+              finder: [],
             },
             previous_version: 0,
           )
