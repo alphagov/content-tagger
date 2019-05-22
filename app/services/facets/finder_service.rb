@@ -9,7 +9,7 @@ module Facets
     end
 
     def pinned_item_links(content_id = LINKED_FINDER_CONTENT_ID)
-      finder_links(content_id).to_hash.fetch("links", {})["ordered_related_items"]
+      finder_links(content_id).to_hash.fetch("links", {})["ordered_related_items"] || []
     end
 
   private
