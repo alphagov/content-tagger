@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '5.2.3'
 
 gem 'bootstrap-kaminari-views', '~> 0.0.5'
-gem 'govuk_app_config', '~> 1.16'
+gem 'govuk_app_config', '~> 1.17'
 gem 'hashdiff', '~> 0.3.9'
 gem 'jquery-ui-rails', '6.0.1'
 gem 'kaminari', '~> 1.1'
