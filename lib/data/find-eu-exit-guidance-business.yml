@@ -242,7 +242,7 @@
         :title: EU citizens
         :value: 'yes'
       - :content_id: bbdbda71-b1ec-46b8-a5b8-931d933288e9
-        :title: No EU citizens
+        :title: Non-EU citizens
         :value: 'no'
   - :content_id: 6cdb57df-3216-423c-9b7a-b1bde6b65d36
     :name: "Personal data"
