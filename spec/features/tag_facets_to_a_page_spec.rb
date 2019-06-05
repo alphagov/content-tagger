@@ -5,6 +5,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   before do
     stub_facet_groups_lookup
+    stub_publishing_api_has_links(content_id: "MY-CONTENT-ID", links: { ordered_related_items: [] })
     stub_patch_links_request("facets_tagging_request", "MY-CONTENT-ID")
     given_we_can_populate_facets_with_content_from_publishing_api
   end
@@ -30,6 +31,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
         finder: [stub_linked_finder_content_id],
+        ordered_related_items: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -43,6 +45,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
         finder: [stub_linked_finder_content_id],
+        ordered_related_items: [stub_linked_finder_content_id],
       }
 
       expected_tags = {
@@ -114,6 +117,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
         finder: [stub_linked_finder_content_id],
+        ordered_related_items: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -141,6 +145,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_groups: [],
         facet_values: [],
         finder: [],
+        ordered_related_items: [],
       },
       previous_version: 54_321,
     )
@@ -190,6 +195,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["EXISTING-FACET-VALUE-UUID"],
         finder: [stub_linked_finder_content_id],
+        ordered_related_items: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
@@ -222,6 +228,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         facet_groups: ["FACET-GROUP-UUID"],
         facet_values: ["EXISTING-FACET-VALUE-UUID"],
         finder: [stub_linked_finder_content_id],
+        ordered_related_items: [stub_linked_finder_content_id],
       },
       previous_version: 54_321,
     )
