@@ -69,19 +69,30 @@ module Facets
       facet_groups_content_ids = fetch_content_ids(:facet_groups)
       facet_values_content_ids = fetch_content_ids(:facet_values)
       finder_content_ids = [FinderService::LINKED_FINDER_CONTENT_ID]
+      ordered_related_items_ids = ordered_related_links
 
       if facet_values_content_ids.any?
         facet_groups_content_ids.push(facet_group_content_id)
+        ordered_related_items_ids.unshift(FinderService::LINKED_FINDER_CONTENT_ID)
       else
         facet_groups_content_ids.delete(facet_group_content_id)
         finder_content_ids = []
+        ordered_related_items_ids.delete(FinderService::LINKED_FINDER_CONTENT_ID)
       end
 
       {
         facet_groups: facet_groups_content_ids.uniq,
         facet_values: facet_values_content_ids,
         finder: finder_content_ids,
+        ordered_related_items: ordered_related_items_ids,
       }
+    end
+
+    def ordered_related_links
+      Services.publishing_api.get_links(content_item.content_id)
+        .to_hash
+        .fetch("links")
+        .fetch("ordered_related_items", [])
     end
 
     # FIXME: This is a temporary tag set which can be removed once

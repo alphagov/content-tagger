@@ -9,7 +9,9 @@ RSpec.describe Facets::TaggingUpdatePublisher do
     let(:pinned_item_links) { ["PINNED-ITEM-UUID"] }
     let(:finder_service_class) { Facets::FinderService }
     let(:finder_service) { double(:finder_service, pinned_item_links: pinned_item_links) }
-    let(:content_item) { double(:content_item, content_id: "MY-CONTENT-ID") }
+    let(:links) { { "ordered_related_items": ["RELATED-LINK"] } }
+    let(:content_item) { double(:content_item, content_id: "MY-CONTENT-ID", links: links) }
+    let(:links_item) { { content_id: "MY-CONTENT-ID", links: links } }
     let(:params) do
       {
         facet_groups: [facet_group_content_id],
@@ -21,6 +23,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
 
     before do
       stub_const "#{finder_service_class}::LINKED_FINDER_CONTENT_ID", finder_content_id
+      stub_publishing_api_has_links(links_item)
       allow(finder_service_class).to receive(:new).and_return(finder_service)
       allow(publishing_api).to receive(:patch_links)
     end
@@ -36,6 +39,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
               facet_groups: ["FACET-GROUP-CONTENT-ID"],
               facet_values: ["A-FACET-VALUE-UUID"],
               finder: [finder_content_id],
+              ordered_related_items: [finder_content_id, "RELATED-LINK"],
             },
             previous_version: 0,
           )
@@ -47,6 +51,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
         {
           facet_groups: [],
           facet_values: [],
+          ordered_related_items: ["RELATED-LINK"],
           promoted: true,
         }
       end
@@ -61,6 +66,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
               facet_groups: [],
               facet_values: [],
               finder: [],
+              ordered_related_items: ["RELATED-LINK"],
             },
             previous_version: 0,
           )
@@ -85,6 +91,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
         {
           facet_groups: [facet_group_content_id],
           facet_values: ["A-FACET-VALUE-UUID"],
+          ordered_related_items: [finder_content_id, "RELATED-LINK"],
           promoted: true,
         }
       end
