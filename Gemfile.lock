@@ -142,7 +142,7 @@ GEM
       puma
       selenium-webdriver
       webdrivers
-    hashdiff (0.3.9)
+    hashdiff (0.4.0)
     hashie (3.6.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -417,7 +417,7 @@ DEPENDENCIES
   govuk_sidekiq (~> 3.0)
   govuk_taxonomy_helpers (~> 1.0.0)
   govuk_test
-  hashdiff (~> 0.3.9)
+  hashdiff (~> 0.4.0)
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 1.1)
   pg
