@@ -8,10 +8,6 @@ module Facets
       end
     end
 
-    def pinned_item_links(content_id = LINKED_FINDER_CONTENT_ID)
-      finder_links(content_id).to_hash.fetch("links", {})["ordered_related_items"] || []
-    end
-
   private
 
     def finders_for_facet_group(facet_group_content_id)

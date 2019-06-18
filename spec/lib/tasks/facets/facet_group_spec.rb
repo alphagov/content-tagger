@@ -20,7 +20,7 @@ RSpec.describe 'facets:patch_links_to_facet_group' do
   let(:facet_group_content_id) { "FACET-GROUP-CONTENT-ID" }
   let(:finder_content_id) { "FINDER-CONTENT-ID" }
   let(:finder_service_class) { Facets::FinderService }
-  let(:finder_service) { double(:finder_service, pinned_item_links: []) }
+  let(:finder_service) { double(:finder_service) }
   let(:publishing_api) { Services.publishing_api }
 
   before :each do
