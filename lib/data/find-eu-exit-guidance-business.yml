@@ -43,9 +43,6 @@
       - :content_id: 1e3e8abd-135d-4844-afa8-5c51df3d3c57
         :title: Clothing and consumer goods
         :value: clothing-consumer-goods
-      - :content_id: a7263c3b-7ade-4a91-9f51-40ebc57b3f98
-        :title: Manufacturing of consumer goods
-        :value: clothing-consumer-goods-manufacturing
       - :content_id: 9eb88205-118b-4f0b-abd9-ac6b469054c5
         :title: Construction
         :value: construction-contracting
@@ -100,6 +97,9 @@
       - :content_id: cec78369-d11b-48cb-9a90-ebd4ebb5de37
         :title: Justice including prisons
         :value: justice-prisons
+      - :content_id: a7263c3b-7ade-4a91-9f51-40ebc57b3f98
+        :title: Manufacturing of consumer goods
+        :value: clothing-consumer-goods-manufacturing
       - :content_id: 18c3892e-8a0e-4884-906e-5938380eceee
         :title: Marine and marine transport
         :value: marine
@@ -133,9 +133,6 @@
       - :content_id: 46ad5a1d-fc2d-4065-a34f-3f7b2fea8e81
         :title: Oil, gas and coal
         :value: oil-gas-coal
-      - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
-        :title: Renewable energy
-        :value: other-energy
       - :content_id: 7536c0c4-fb41-43f4-a2c4-08f4fa9f5427
         :title: Other manufacturing
         :value: other-manufacturing
@@ -166,6 +163,9 @@
       - :content_id: dba1b198-1ead-4de4-a961-b11d71fc6f20
         :title: Real estate
         :value: real-estate-excl-imputed-rent
+      - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
+        :title: Renewable energy
+        :value: other-energy
       - :content_id: c1d8057c-76bf-431c-9ac8-6281a4b7b9ca
         :title: Repair of computers and consumer goods
         :value: repair-of-computers-consumer-goods
