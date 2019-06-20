@@ -195,20 +195,23 @@
     :type: content_id
     :facet_values:
       - :content_id: a55f04df-3877-4c73-bbfe-ad7339cdfccf
-        :title: Sell products or goods in the UK
+        :title: Sell goods or provide services in the UK
         :value: products-or-goods
       - :content_id: d422aa2e-59ad-4986-8ef0-973959878912
-        :title: Buy products or goods from abroad
+        :title: Import from the EU
         :value: buying
       - :content_id: 7283b8e1-840f-49da-967f-c0a512a3f531
-        :title: Sell products or goods abroad
+        :title: Export to the EU
         :value: selling
       - :content_id: 7ae8e57c-ea7a-42de-84fc-a084b5f64bca
-        :title: Do other types of business in the EU
+        :title: Provide services or do business in the EU
         :value: other-eu
       - :content_id: 07398027-ee4d-4bda-b53e-2dc655734049
-        :title: Transport goods abroad
+        :title: Haulage of goods across EU borders
         :value: transporting
+      - :content_id: c35c2e8c-f88e-42e0-83ed-62e896aafd92
+        :title: None of these
+        :value: none-of-these
   - :content_id: b2716a1e-dc24-4566-b8ed-f3ee23a994ec
     :name: "Who you employ"
     :short_name: "Employing EU citizens"
