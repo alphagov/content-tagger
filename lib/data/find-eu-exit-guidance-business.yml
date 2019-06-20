@@ -17,7 +17,7 @@
         :title: Accommodation
         :value: accommodation
       - :content_id: 24fd50fa-6619-46ca-96cd-8ce90fa076ce
-        :title: Aerospace
+        :title: Aerospace and space
         :value: aerospace
       - :content_id: 94b3cfe2-af89-4744-b8d7-7fc79edcbc85
         :title: Agriculture and forestry (including wholesale)
@@ -44,7 +44,7 @@
         :title: Clothing and consumer goods
         :value: clothing-consumer-goods
       - :content_id: a7263c3b-7ade-4a91-9f51-40ebc57b3f98
-        :title: Clothing and consumer goods manufacture
+        :title: Manufacturing of consumer goods
         :value: clothing-consumer-goods-manufacturing
       - :content_id: 9eb88205-118b-4f0b-abd9-ac6b469054c5
         :title: Construction
@@ -77,7 +77,7 @@
         :title: Fisheries (including wholesale)
         :value: fisheries
       - :content_id: 53f9ce4c-7cbb-447f-bdf1-a9b022896d3a
-        :title: Food, drink and tobacco (retail and wholesale)
+        :title: Food, drink and tobacco
         :value: food-and-drink
       - :content_id: 9f3476e1-8ff0-455d-a14e-003236b2797c
         :title: Food, drink and tobacco (processing)
@@ -101,7 +101,7 @@
         :title: Justice including prisons
         :value: justice-prisons
       - :content_id: 18c3892e-8a0e-4884-906e-5938380eceee
-        :title: Marine
+        :title: Marine and marine transport
         :value: marine
       - :content_id: 356f46a0-17d3-4ba4-8952-8c02244f9045
         :title: Marine transport
@@ -134,7 +134,7 @@
         :title: Oil, gas and coal
         :value: oil-gas-coal
       - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
-        :title: Other energy
+        :title: Renewable energy
         :value: other-energy
       - :content_id: 7536c0c4-fb41-43f4-a2c4-08f4fa9f5427
         :title: Other manufacturing
@@ -143,7 +143,7 @@
         :title: Personal services
         :value: personal-services
       - :content_id: 93f5c156-2449-4e52-9e92-aefc73586ffd
-        :title: Pharmaceuticals
+        :title: Pharmaceuticals and clinical trials
         :value: pharmaceuticals
       - :content_id: 4591ce75-7568-48c6-af5f-3558f89f7f57
         :title: Ports and airports
@@ -152,13 +152,13 @@
         :title: Postal and courier services
         :value: postal-courier-services
       - :content_id: f07527f1-e6de-4fe8-b7d9-b197769e1f1f
-        :title: Professional and business services
+        :title: Professional, legal and business services
         :value: professional-and-business-services
       - :content_id: '091c0e83-bb54-4727-9b2c-a919510e1e79'
         :title: Public administration
         :value: public-administration
       - :content_id: 53bcfcf0-e22a-416d-91ac-2661e1d6ed04
-        :title: Rail
+        :title: Rail (manufacture)
         :value: rail
       - :content_id: 2e1cf5a9-d410-4cfc-9f54-d94302f8fbd1
         :title: Rail (passengers and freight)
@@ -176,7 +176,7 @@
         :title: Restaurants, bars and catering
         :value: restaurants-bars-catering
       - :content_id: 34a6edd0-46ea-4a76-ae80-8c96709d4f59
-        :title: Retail and wholesale (excluding motor trade, food and drink)
+        :title: Retail and wholesale (excluding food, drink and motors)
         :value: retail
       - :content_id: 6f5f8dbb-3cd3-475d-8f3a-ed6e22d370be
         :title: Road (passengers and freight)
@@ -197,7 +197,7 @@
         :title: Veterinary
         :value: veterinary
       - :content_id: c66d8196-977f-47a5-806f-885c9cf01412
-        :title: Voluntary and community organistions
+        :title: Voluntary and community organisations
         :value: voluntary-community-organisations
       - :content_id: 15ad9a45-5536-4323-97f9-ed470cdf1e3b
         :title: Warehousing, services and pipelines
