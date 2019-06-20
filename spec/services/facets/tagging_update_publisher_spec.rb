@@ -6,9 +6,8 @@ RSpec.describe Facets::TaggingUpdatePublisher do
   describe "save_to_publishing_api" do
     let(:facet_group_content_id) { "FACET-GROUP-CONTENT-ID" }
     let(:finder_content_id) { "FINDER-CONTENT-ID" }
-    let(:pinned_item_links) { ["PINNED-ITEM-UUID"] }
     let(:finder_service_class) { Facets::FinderService }
-    let(:finder_service) { double(:finder_service, pinned_item_links: pinned_item_links) }
+    let(:finder_service) { double(:finder_service) }
     let(:links) { { "ordered_related_items": ["RELATED-LINK"] } }
     let(:content_item) { double(:content_item, content_id: "MY-CONTENT-ID", links: links) }
     let(:links_item) { { content_id: "MY-CONTENT-ID", links: links } }
@@ -52,7 +51,6 @@ RSpec.describe Facets::TaggingUpdatePublisher do
           facet_groups: [],
           facet_values: [],
           ordered_related_items: ["RELATED-LINK"],
-          promoted: true,
         }
       end
 
@@ -75,38 +73,6 @@ RSpec.describe Facets::TaggingUpdatePublisher do
 
     it "returns a truthy result" do
       expect(instance.save_to_publishing_api).to be_truthy
-    end
-
-    context "without pinning the content" do
-      it "does not patch finder links" do
-        instance.save_to_publishing_api
-
-        expect(publishing_api).not_to have_received(:patch_links)
-          .with(finder_content_id, anything)
-      end
-    end
-
-    context "pinning the content" do
-      let(:params) do
-        {
-          facet_groups: [facet_group_content_id],
-          facet_values: ["A-FACET-VALUE-UUID"],
-          ordered_related_items: [finder_content_id, "RELATED-LINK"],
-          promoted: true,
-        }
-      end
-
-      it "patches finder links" do
-        instance.save_to_publishing_api
-
-        expect(publishing_api).to have_received(:patch_links)
-          .with(
-            finder_content_id,
-            links: {
-              ordered_related_items: ["MY-CONTENT-ID", "PINNED-ITEM-UUID"],
-            },
-          )
-      end
     end
   end
 end

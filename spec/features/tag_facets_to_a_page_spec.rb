@@ -170,75 +170,6 @@ RSpec.describe "Tagging content with facets", type: :feature do
     then_i_see_that_there_is_a_conflict
   end
 
-  # Pinning means the content item will be ordered above others in
-  # filtered finder results. This means the item is added to the
-  # ordered_related_items links for the finder.
-  scenario "User pins a content item" do
-    stub_finder_get_links_request
-    stub_patch_links_request("finder_pinning_request", "FINDER-UUID")
-
-    given_there_is_a_content_item_with_expanded_links(
-      facet_groups: [example_facet_group],
-      facet_values: [example_facet_value],
-    )
-    when_i_visit_facet_groups_page
-    and_i_select_the_facet_group("Example facet group")
-    and_i_edit_facets_for_the_page("/my-content-item")
-
-    when_i_pin_the_item_in_finder_results
-
-    and_i_submit_the_facets_tagging_form
-
-    then_the_publishing_api_is_sent(
-      "facets_tagging_request",
-      links: {
-        facet_groups: ["FACET-GROUP-UUID"],
-        facet_values: ["EXISTING-FACET-VALUE-UUID"],
-        finder: [stub_linked_finder_content_id],
-        ordered_related_items: [stub_linked_finder_content_id],
-      },
-      previous_version: 54_321,
-    )
-
-    then_the_publishing_api_is_sent(
-      "finder_pinning_request",
-      links: { ordered_related_items: ["EXISTING-PINNED-ITEM-UUID", "MY-CONTENT-ID"] }
-    )
-  end
-
-  scenario "User unpins a content item" do
-    stub_finder_get_links_request(items: ["EXISTING-PINNED-ITEM-UUID", "MY-CONTENT-ID"])
-    stub_patch_links_request("finder_pinning_request", "FINDER-UUID")
-
-    given_there_is_a_content_item_with_expanded_links(
-      facet_groups: [example_facet_group],
-      facet_values: [example_facet_value],
-    )
-    when_i_visit_facet_groups_page
-    and_i_select_the_facet_group("Example facet group")
-    and_i_edit_facets_for_the_page("/my-content-item")
-
-    when_i_unpin_the_item_in_finder_results
-
-    and_i_submit_the_facets_tagging_form
-
-    then_the_publishing_api_is_sent(
-      "facets_tagging_request",
-      links: {
-        facet_groups: ["FACET-GROUP-UUID"],
-        facet_values: ["EXISTING-FACET-VALUE-UUID"],
-        finder: [stub_linked_finder_content_id],
-        ordered_related_items: [stub_linked_finder_content_id],
-      },
-      previous_version: 54_321,
-    )
-
-    then_the_publishing_api_is_sent(
-      "finder_pinning_request",
-      links: { ordered_related_items: ["EXISTING-PINNED-ITEM-UUID"] }
-    )
-  end
-
   def given_we_can_populate_facets_with_content_from_publishing_api
     publishing_api_has_facet_values_linkables(%w[Agriculture"])
   end
@@ -297,14 +228,6 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   def when_i_remove_the_facet_value(selection)
     unselect selection, from: "facets_tagging_update_form_example_facet"
-  end
-
-  def when_i_pin_the_item_in_finder_results
-    check 'facets_tagging_update_form_promoted'
-  end
-
-  def when_i_unpin_the_item_in_finder_results
-    uncheck 'facets_tagging_update_form_promoted'
   end
 
   def and_i_see_the_notification_is_invalid
