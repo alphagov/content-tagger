@@ -22,9 +22,6 @@
       - :content_id: 9d54c591-f5ca-4d0c-a484-12d5591987cb
         :title: Agriculture and farming
         :value: agriculture-and-farming
-      - :content_id: 94b3cfe2-af89-4744-b8d7-7fc79edcbc85
-        :title: Agriculture and forestry (including wholesale)
-        :value: agriculture
       - :content_id: 43d328b3-59ee-4d5d-bda0-7c7d4bb301be
         :title: Air freight and air passenger services
         :value: air-freight-air-passenger-services
@@ -37,18 +34,12 @@
       - :content_id: e53e578a-01d2-4844-b52b-fd375ee4c4b9
         :title: Automotive
         :value: automotive
-      - :content_id: 5faa1741-fc55-4110-b342-de92f6324118
-        :title: Auxiliary activities
-        :value: auxiliary-activities
       - :content_id: 05334231-9be3-4670-a2f5-84bef7e3badd
         :title: Charities
         :value: charities
       - :content_id: 7620da7a-0427-4b3c-9498-db9dc25209b0
         :title: Chemicals
         :value: chemicals
-      - :content_id: 1e3e8abd-135d-4844-afa8-5c51df3d3c57
-        :title: Clothing and consumer goods
-        :value: clothing-consumer-goods
       - :content_id: 9eb88205-118b-4f0b-abd9-ac6b469054c5
         :title: Construction
         :value: construction-contracting
@@ -85,12 +76,6 @@
       - :content_id: 53f9ce4c-7cbb-447f-bdf1-a9b022896d3a
         :title: Food, drink and tobacco
         :value: food-and-drink
-      - :content_id: 9f3476e1-8ff0-455d-a14e-003236b2797c
-        :title: Food, drink and tobacco (processing)
-        :value: food-drink-tobacco
-      - :content_id: 040649fc-4e2c-4028-b846-77fe3eebd1f7
-        :title: Furniture manufacture
-        :value: furniture-manufacture
       - :content_id: 6ae9d424-6ade-456e-bcbe-6ce72b72ca13
         :title: Gambling
         :value: gambling
@@ -112,9 +97,6 @@
       - :content_id: 18c3892e-8a0e-4884-906e-5938380eceee
         :title: Marine and marine transport
         :value: marine
-      - :content_id: 356f46a0-17d3-4ba4-8952-8c02244f9045
-        :title: Marine transport
-        :value: marine-transport
       - :content_id: 442e7d39-9ebf-46c5-813a-daa328e135b8
         :title: Media and broadcasting
         :value: broadcasting
@@ -136,15 +118,9 @@
       - :content_id: 45bfb0a2-b60d-40f2-b9af-b5d2b4b91445
         :title: Nuclear
         :value: nuclear
-      - :content_id: 14cf2a68-3297-44d3-ba01-a4426845b1b8
-        :title: Other advanced manufacturing
-        :value: other-advanced-manufacturing
       - :content_id: 46ad5a1d-fc2d-4065-a34f-3f7b2fea8e81
         :title: Oil, gas and coal
         :value: oil-gas-coal
-      - :content_id: 7536c0c4-fb41-43f4-a2c4-08f4fa9f5427
-        :title: Other manufacturing
-        :value: other-manufacturing
       - :content_id: d9da7c7b-b0c9-4757-aa45-9c70dd78df62
         :title: Personal services
         :value: personal-services
@@ -178,9 +154,6 @@
       - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
         :title: Renewable energy
         :value: other-energy
-      - :content_id: c1d8057c-76bf-431c-9ac8-6281a4b7b9ca
-        :title: Repair of computers and consumer goods
-        :value: repair-of-computers-consumer-goods
       - :content_id: 39771bc2-8b2c-43e9-9cfc-fa3606b67db6
         :title: Research
         :value: research
@@ -193,9 +166,6 @@
       - :content_id: 6f5f8dbb-3cd3-475d-8f3a-ed6e22d370be
         :title: Road (passengers and freight)
         :value: road-passengers-freight
-      - :content_id: b4e507df-f067-4749-9468-3de120775216
-        :title: Space
-        :value: space
       - :content_id: 4d98ae8d-fd44-4e5d-8cf0-b9b01bd76b1a
         :title: Sports and recreation
         :value: sports-recreation
