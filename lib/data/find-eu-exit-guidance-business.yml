@@ -82,7 +82,7 @@
       - :content_id: 9f3476e1-8ff0-455d-a14e-003236b2797c
         :title: Food, drink and tobacco (processing)
         :value: food-drink-tobacco
-      - :content_id: '040649fc-4e2c-4028-b846-77fe3eebd1f7'
+      - :content_id: 040649fc-4e2c-4028-b846-77fe3eebd1f7
         :title: Furniture manufacture
         :value: furniture-manufacture
       - :content_id: 6ae9d424-6ade-456e-bcbe-6ce72b72ca13
@@ -154,7 +154,7 @@
       - :content_id: f07527f1-e6de-4fe8-b7d9-b197769e1f1f
         :title: Professional, legal and business services
         :value: professional-and-business-services
-      - :content_id: '091c0e83-bb54-4727-9b2c-a919510e1e79'
+      - :content_id: 091c0e83-bb54-4727-9b2c-a919510e1e79
         :title: Public administration
         :value: public-administration
       - :content_id: 53bcfcf0-e22a-416d-91ac-2661e1d6ed04
@@ -224,7 +224,7 @@
       - :content_id: 7ae8e57c-ea7a-42de-84fc-a084b5f64bca
         :title: Do other types of business in the EU
         :value: other-eu
-      - :content_id: '07398027-ee4d-4bda-b53e-2dc655734049'
+      - :content_id: 07398027-ee4d-4bda-b53e-2dc655734049
         :title: Transport goods abroad
         :value: transporting
   - :content_id: b2716a1e-dc24-4566-b8ed-f3ee23a994ec
