@@ -19,12 +19,18 @@
       - :content_id: 24fd50fa-6619-46ca-96cd-8ce90fa076ce
         :title: Aerospace and space
         :value: aerospace
+      - :content_id: 9d54c591-f5ca-4d0c-a484-12d5591987cb
+        :title: Agriculture and farming
+        :value: agriculture-and-farming
       - :content_id: 94b3cfe2-af89-4744-b8d7-7fc79edcbc85
         :title: Agriculture and forestry (including wholesale)
         :value: agriculture
       - :content_id: 43d328b3-59ee-4d5d-bda0-7c7d4bb301be
         :title: Air freight and air passenger services
         :value: air-freight-air-passenger-services
+      - :content_id: 769b6a0c-9d64-45a4-850a-a8f7cfd5b60e
+        :title: Animals and animal products (excluding food)
+        :value: animals-and-animal-products
       - :content_id: cf341686-c886-42c7-bf8e-cf177b6a2100
         :title: Arts, culture and heritage
         :value: arts-culture-heritage
@@ -52,6 +58,9 @@
       - :content_id: 77764805-73e6-4d47-9f20-aedd6de7dab9
         :title: Defence
         :value: defence
+      - :content_id: a68e08f2-6728-4f1d-bb90-514e733db8de
+        :title: Diamonds
+        :value: diamonds
       - :content_id: 70e6087f-714e-4922-8e06-72cfff997785
         :title: Digital, technology and computer services
         :value: computer-services
@@ -142,6 +151,9 @@
       - :content_id: 93f5c156-2449-4e52-9e92-aefc73586ffd
         :title: Pharmaceuticals and clinical trials
         :value: pharmaceuticals
+      - :content_id: afd45eef-743a-417d-9245-3eab8322116d
+        :title: Plants and forestry
+        :value: plants-and-forestry
       - :content_id: 4591ce75-7568-48c6-af5f-3558f89f7f57
         :title: Ports and airports
         :value: ports-airports
