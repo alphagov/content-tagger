@@ -59,6 +59,21 @@ Read [How the topic taxonomy works](https://docs.publishing.service.gov.uk/manua
 Content Tagger has a "Projects" function for tagging content in bulk
 to the Topic Taxonomy. It also supports tagging individual pages.
 
+### Facets
+
+Content tagger can create, edit and publish facet groups. It also allows
+you to tag content to a facet group.
+
+There is a ['facet group' link associated with the 'business finder'](https://content-tagger.integration.publishing.service.gov.uk/facet_groups).
+The facet group has a number of possible facets (e.g. "Sector / Business Area"),
+each of which have a number of possible facet values (e.g. "Accommodation"),
+which is a [manually curated list in YAML](https://github.com/alphagov/content-tagger/blob/master/lib/data/find-eu-exit-guidance-business.yml).
+
+Content designers follow the [How to tag content with facet values](https://docs.publishing.service.gov.uk/manual/tag-content-with-facet-values.html)
+instructions to tag a particular piece of content (e.g.
+"/government/publications/workplace-rights-if-theres-no-brexit-deal") with a
+particular facet value (e.g. "Accommodation").
+
 ## Screenshots
 
 ### Tagging content
