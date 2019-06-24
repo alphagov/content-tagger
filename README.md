@@ -30,6 +30,21 @@ application.
 User.first.update permissions: ["signin", "GDS Editor"]
 ```
 
+Then from `govuk/govuk-puppet/development-vm`, run:
+
+```
+$ bowl content-tagger
+```
+
+If you're using the VM, the app should appear on
+[http://content-tagger.dev.gov.uk/](http://content-tagger.dev.gov.uk/).
+
+### Running the test suite
+
+```
+$ bundle exec rspec
+```
+
 ## Features
 
 ### Managing the Topic Taxonomy
@@ -52,24 +67,9 @@ to the Topic Taxonomy. It also supports tagging individual pages.
 ![Editing a taxon](docs/screenshots/education-taxon-edit.png)
 ![Tagging projects](docs/screenshots/projects.png)
 
-### Dependencies
+## Dependencies
 
 - [alphagov/publishing-api](https://github.com/alphagov/publishing-api)
-
-### Running the application
-
-```
-$ bowl content-tagger
-```
-
-If you're using the VM, the app should appear on
-[http://content-tagger.dev.gov.uk/](http://content-tagger.dev.gov.uk/).
-
-### Running the test suite
-
-```
-$ bundle exec rspec
-```
 
 ## Licence
 
