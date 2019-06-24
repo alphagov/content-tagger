@@ -59,12 +59,32 @@ to the Topic Taxonomy. It also supports tagging individual pages.
 
 ## Screenshots
 
+### Tagging content
+
 ![Tagging content](docs/screenshots/taggings.png)
+
+### Taxons
+
 ![Taxons](docs/screenshots/taxons.png)
+
+### Education taxon
+
 ![Education taxon](docs/screenshots/education-taxon.png)
+
+### Bubbles visualisation
+
 ![Bubbles visualisation](docs/screenshots/education-taxon-bubbles.png)
+
+### List visualisation
+
 ![List visualisation](docs/screenshots/education-taxon-list.png)
+
+### Editing a taxon
+
 ![Editing a taxon](docs/screenshots/education-taxon-edit.png)
+
+### Tagging projects
+
 ![Tagging projects](docs/screenshots/projects.png)
 
 ## Dependencies
