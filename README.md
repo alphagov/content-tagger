@@ -52,6 +52,8 @@ $ bundle exec rspec
 Content Tagger can create, edit and unpublish taxons. It also can view
 the content tagged to a taxon, and how this has changed over time.
 
+Read [How the topic taxonomy works](https://docs.publishing.service.gov.uk/manual/taxonomy.html).
+
 ### Tagging content
 
 Content Tagger has a "Projects" function for tagging content in bulk
