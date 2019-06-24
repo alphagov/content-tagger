@@ -36,8 +36,8 @@ module Taxonomy
     end
 
     def tagging_count_per_organisation_for_taxon(taxon)
-      rummager_result = Services.rummager.search(aggregate_primary_publishing_organisation: 100_000, count: 0, filter_taxons: [taxon['content_id']])
-      rummager_result
+      search_api_result = Services.search_api.search(aggregate_primary_publishing_organisation: 100_000, count: 0, filter_taxons: [taxon['content_id']])
+      search_api_result
         .dig('aggregates', 'primary_publishing_organisation', 'options')
         .each_with_object({}) do |result, total|
         total[result.dig('value', 'slug')] = result['documents']

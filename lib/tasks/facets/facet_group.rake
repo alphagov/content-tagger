@@ -35,7 +35,7 @@ namespace :facets do
   task :patch_links_to_facet_group, [:facet_group_content_id] => :environment do |_, args|
     facet_group_content_id = args[:facet_group_content_id]
 
-    content_items_enum = Services.rummager.search_enum(
+    content_items_enum = Services.search_api.search_enum(
       filter_facet_groups: facet_group_content_id
     )
 

@@ -19,7 +19,7 @@ namespace :govuk do
       title
     ]
 
-    content_items_enum = Services.rummager.search_enum(
+    content_items_enum = Services.search_api.search_enum(
       fields: fields,
       filter_content_store_document_type: content_types
     )

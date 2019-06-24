@@ -61,20 +61,20 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       expect(TaxonomyQuery.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])
     end
     it 'returns content tagged to taxons' do
-      stub_rummager({ filter_taxons: %w[taxon_id_1 taxon_id_2] },
-                    [{ 'content_id' => 'content_id_1' }, { 'content_id' => 'content_id_2' }])
-      stub_rummager({ filter_taxons: %w[taxon_id_3] },
-                    [{ 'content_id' => 'content_id_3' }])
+      stub_search_api({ filter_taxons: %w[taxon_id_1 taxon_id_2] },
+                      [{ 'content_id' => 'content_id_1' }, { 'content_id' => 'content_id_2' }])
+      stub_search_api({ filter_taxons: %w[taxon_id_3] },
+                      [{ 'content_id' => 'content_id_3' }])
 
       expect(query.content_tagged_to_taxons(%w[taxon_id_1 taxon_id_2 taxon_id_3], slice_size: 2))
         .to eq(%w[content_id_1 content_id_2 content_id_3])
     end
     it 'removes duplicates' do
-      stub_rummager({}, [{ 'content_id' => 'content_id_1' }, { 'content_id' => 'content_id_1' }])
+      stub_search_api({}, [{ 'content_id' => 'content_id_1' }, { 'content_id' => 'content_id_1' }])
       expect(query.content_tagged_to_taxons(%w[id])).to eq(%w[content_id_1])
     end
 
-    def stub_rummager(query_hash, return_values)
+    def stub_search_api(query_hash, return_values)
       stub_request(:get, Regexp.new(Plek.new.find('search')))
         .with(query: hash_including(query_hash))
         .to_return(body: { 'results' => return_values }.to_json)

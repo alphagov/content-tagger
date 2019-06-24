@@ -42,7 +42,7 @@ private
   end
 
   def total_content_count
-    Services.rummager.search(
+    Services.search_api.search(
       count: 0,
       start: 0,
       aggregate_primary_publishing_organisation: '0,scope:all_filters',
@@ -51,7 +51,7 @@ private
   end
 
   def tagged_content_count
-    Services.rummager.search(
+    Services.search_api.search(
       count: 0,
       start: 0,
       aggregate_primary_publishing_organisation: '0,scope:all_filters',

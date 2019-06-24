@@ -1,6 +1,6 @@
 require 'rails_helper'
-require 'gds_api/test_helpers/rummager'
-include ::GdsApi::TestHelpers::Rummager
+require 'gds_api/test_helpers/search'
+include ::GdsApi::TestHelpers::Search
 
 RSpec.describe Tagging::CommonAncestorFinder do
   context 'there is one taxon' do
@@ -9,7 +9,7 @@ RSpec.describe Tagging::CommonAncestorFinder do
     end
 
     before :each do
-      stub_any_rummager_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
+      stub_any_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
     end
 
     it 'returns nothing' do
@@ -55,14 +55,14 @@ RSpec.describe Tagging::CommonAncestorFinder do
   end
 
   it 'rejects empty content_ids' do
-    stub_any_rummager_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }, {}] }.to_json)
+    stub_any_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }, {}] }.to_json)
     publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', [[1], [1, 2]]))
     expect(Tagging::CommonAncestorFinder.new.find_all.force.length).to eq(1)
   end
 
   it 'includes title and content_id' do
-    stub_any_rummager_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
-                                                               'title' => 'my title' }] }.to_json)
+    stub_any_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+                                                      'title' => 'my title' }] }.to_json)
     publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', [[1], [1, 2]]))
     result_hash = Tagging::CommonAncestorFinder.new.find_all.force.first
     expect(result_hash[:title]).to eq('my title')
@@ -70,13 +70,13 @@ RSpec.describe Tagging::CommonAncestorFinder do
   end
 
   it 'rejects empty results' do
-    stub_any_rummager_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
+    stub_any_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
     publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', [[]]))
     expect(Tagging::CommonAncestorFinder.new.find_all.force).to be_empty
   end
 
   it 'tries again if timed out' do
-    stub_any_rummager_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
+    stub_any_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
     stub_any_publishing_api_call.to_return({ status: 504 },
                                            { status: 504 },
                                            status: 200,
@@ -86,7 +86,7 @@ RSpec.describe Tagging::CommonAncestorFinder do
   end
 
   it 'only tries 3 times' do
-    stub_any_rummager_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
+    stub_any_search.to_return(body: { 'results' => [{ 'content_id' => 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }] }.to_json)
     stub_any_publishing_api_call.to_return({ status: 504 },
                                            { status: 504 },
                                            status: 504)

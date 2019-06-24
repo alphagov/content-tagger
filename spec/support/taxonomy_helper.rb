@@ -43,16 +43,16 @@ module TaxonomyHelper
   end
 
   def stub_organisation_tagging_progress
-    stub_request(:get, rummager_url_for_all_document_counts_url)
+    stub_request(:get, search_api_url_for_all_document_counts_url)
       .to_return(body: all_document_counts_response.to_json)
 
-    stub_request(:get, rummager_url_for_tagged_document_counts_url)
+    stub_request(:get, search_api_url_for_tagged_document_counts_url)
       .to_return(body: tagged_documents_counts_response.to_json)
   end
 
 private
 
-  def rummager_url_for_all_document_counts_url
+  def search_api_url_for_all_document_counts_url
     "https://search.test.gov.uk/search.json?aggregate_primary_publishing_organisation=0,scope:all_filters&count=0&filter_primary_publishing_organisation%5B%5D=department-for-transport&filter_primary_publishing_organisation%5B%5D=high-speed-two-limited&filter_primary_publishing_organisation%5B%5D=home-office&filter_primary_publishing_organisation%5B%5D=maritime-and-coastguard-agency&start=0"
   end
 
@@ -79,7 +79,7 @@ private
     }
   end
 
-  def rummager_url_for_tagged_document_counts_url
+  def search_api_url_for_tagged_document_counts_url
     "https://search.test.gov.uk/search.json?aggregate_primary_publishing_organisation=0,scope:all_filters&count=0&filter_part_of_taxonomy_tree%5B%5D=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa&filter_primary_publishing_organisation%5B%5D=department-for-transport&filter_primary_publishing_organisation%5B%5D=high-speed-two-limited&filter_primary_publishing_organisation%5B%5D=home-office&filter_primary_publishing_organisation%5B%5D=maritime-and-coastguard-agency&start=0"
   end
 

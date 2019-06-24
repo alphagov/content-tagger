@@ -47,14 +47,14 @@ module Taxonomy
     # taxon, scope to the current root taxon.
     def tagged_pages_count_by_content_id
       @tagged_pages_count_by_content_id ||= begin
-        search_result = Services.rummager.search(
+        search_result = Services.search_api.search(
           filter_part_of_taxonomy_tree: @root_taxon.content_id,
           facet_taxons: 1_000, # We have to specify a number,
           count: 0,
           debug: 'include_withdrawn',
         )
 
-        # Rummager will return a pretty odd datastructure for this query:
+        # Search API will return a pretty odd datastructure for this query:
         # https://www.gov.uk/api/search.json?count=0&facet_taxons=1000
         search_result["facets"]["taxons"]["options"].each_with_object({}) do |o, h|
           content_id = o["value"]["slug"]

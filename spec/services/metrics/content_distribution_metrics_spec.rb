@@ -12,11 +12,11 @@ module Metrics
         content_store_has_item('/', root_taxon.to_json, draft: true)
         content_store_has_item('/taxons/root_taxon', child_taxons.to_json, draft: true)
 
-        allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: %w[root_id]))
+        allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[root_id]))
                                       .and_return content_items_enum(5)
-        allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: %w[first_level_id]))
+        allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[first_level_id]))
                                       .and_return content_items_enum(12)
-        allow(Services.rummager).to receive(:search_enum).with(include(filter_taxons: %w[second_level_id_1 second_level_id_2]))
+        allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[second_level_id_1 second_level_id_2]))
                                       .and_return content_items_enum(3)
       end
       it 'calls gauges with number of content tagged to each level' do
