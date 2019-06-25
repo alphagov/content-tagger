@@ -31,14 +31,14 @@ module Metrics
   private
 
     def all_govuk_items_count
-      @all_govuk_items_count ||= Services.rummager.search(
+      @all_govuk_items_count ||= Services.search_api.search(
         count: 0,
         debug: 'include_withdrawn'
       ).to_h.fetch("total")
     end
 
     def items_in_scope_count
-      @items_in_scope_count ||= Services.rummager.search(
+      @items_in_scope_count ||= Services.search_api.search(
         count: 0,
         reject_content_store_document_type: Tagging.blacklisted_document_types,
         debug: 'include_withdrawn'
@@ -46,7 +46,7 @@ module Metrics
     end
 
     def tagged_items_in_scope_count
-      @tagged_items_in_scope_count ||= Services.rummager.search(
+      @tagged_items_in_scope_count ||= Services.search_api.search(
         count: 0,
         filter_part_of_taxonomy_tree: root_taxon_content_ids,
         reject_content_store_document_type: Tagging.blacklisted_document_types,

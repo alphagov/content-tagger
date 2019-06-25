@@ -1,8 +1,8 @@
 require "rails_helper"
-require 'gds_api/test_helpers/rummager'
+require 'gds_api/test_helpers/search'
 
 RSpec.describe TaxonomyHealth::ContentCountMetric do
-  include GdsApi::TestHelpers::Rummager
+  include GdsApi::TestHelpers::Search
   let(:home_page) { FactoryBot.build(:taxon_hash, :home_page, expanded_links: { level_one_taxons: [food] }) }
   let(:food) do
     FactoryBot.build(:taxon_hash,

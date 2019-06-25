@@ -1,8 +1,8 @@
 require 'rails_helper'
-require 'gds_api/test_helpers/rummager'
+require 'gds_api/test_helpers/search'
 require 'gds_api/test_helpers/content_store'
 
-include ::GdsApi::TestHelpers::Rummager
+include ::GdsApi::TestHelpers::Search
 include ::GdsApi::TestHelpers::ContentStore
 
 RSpec.describe Taxonomy::OrganisationCount do
@@ -12,13 +12,13 @@ RSpec.describe Taxonomy::OrganisationCount do
     before :each do
       content_store_has_item('/', level_one_taxons.to_json, draft: true)
       content_store_has_item('/taxons/level_one', single_level_child_taxons.to_json, draft: true)
-      stub_rummager({ 'aggregate_primary_publishing_organisation' => %r{\d+},  'filter_taxons' => [taxon_ids.first] },
-                    rummager_body([{ slug: 'organisation1', count: 1 },
-                                   { slug: 'organisation2', count: 2 },
-                                   { slug: 'organisation3', count: 3 }]))
-      stub_rummager({ 'aggregate_primary_publishing_organisation' => %r{\d+},  'filter_taxons' => [taxon_ids.second] },
-                    rummager_body([{ slug: 'organisation2', count: 4 },
-                                   { slug: 'organisation1', count: 5 }]))
+      stub_search_api({ 'aggregate_primary_publishing_organisation' => %r{\d+},  'filter_taxons' => [taxon_ids.first] },
+                      search_api_body([{ slug: 'organisation1', count: 1 },
+                                       { slug: 'organisation2', count: 2 },
+                                       { slug: 'organisation3', count: 3 }]))
+      stub_search_api({ 'aggregate_primary_publishing_organisation' => %r{\d+},  'filter_taxons' => [taxon_ids.second] },
+                      search_api_body([{ slug: 'organisation2', count: 4 },
+                                       { slug: 'organisation1', count: 5 }]))
     end
 
     it 'counts all tags to taxons per organisation' do
@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::OrganisationCount do
       expect(results.first[:title]).to eq('taxon_title')
     end
 
-    def rummager_body(slug_counts)
+    def search_api_body(slug_counts)
       {
         'aggregates' => {
           'primary_publishing_organisation' => {
@@ -48,7 +48,7 @@ RSpec.describe Taxonomy::OrganisationCount do
       }
     end
 
-    def stub_rummager(query_hash, json_body)
+    def stub_search_api(query_hash, json_body)
       stub_request(:get, Regexp.new(Plek.new.find('search')))
         .with(query: hash_including(query_hash))
         .to_return(body: json_body.to_json)

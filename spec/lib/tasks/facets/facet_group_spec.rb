@@ -1,11 +1,11 @@
 require 'rake'
 require 'rails_helper'
 require 'gds_api/test_helpers/publishing_api_v2'
-require 'gds_api/test_helpers/rummager'
+require 'gds_api/test_helpers/search'
 
 RSpec.describe 'facets:patch_links_to_facet_group' do
   include GdsApi::TestHelpers::PublishingApiV2
-  include GdsApi::TestHelpers::Rummager
+  include GdsApi::TestHelpers::Search
   include ContentItemHelper
   include PublishingApiHelper
 
@@ -25,7 +25,7 @@ RSpec.describe 'facets:patch_links_to_facet_group' do
 
   before :each do
     Rails.application.load_tasks
-    stub_any_rummager_search.to_return(body: { 'results' => results }.to_json)
+    stub_any_search.to_return(body: { 'results' => results }.to_json)
     stub_publishing_api_has_lookups(
       "/link/one" => "11111-11111-11111",
       "/link/two" => "22222-22222-22222",
