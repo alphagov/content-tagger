@@ -30,33 +30,7 @@ application.
 User.first.update permissions: ["signin", "GDS Editor"]
 ```
 
-## Features
-
-### Managing the Topic Taxonomy
-
-Content Tagger can create, edit and unpublish taxons. It also can view
-the content tagged to a taxon, and how this has changed over time.
-
-### Tagging content
-
-Content Tagger has a "Projects" function for tagging content in bulk
-to the Topic Taxonomy. It also supports tagging individual pages.
-
-## Screenshots
-
-![Tagging content](docs/screenshots/taggings.png)
-![Taxons](docs/screenshots/taxons.png)
-![Education taxon](docs/screenshots/education-taxon.png)
-![Bubbles visualisation](docs/screenshots/education-taxon-bubbles.png)
-![List visualisation](docs/screenshots/education-taxon-list.png)
-![Editing a taxon](docs/screenshots/education-taxon-edit.png)
-![Tagging projects](docs/screenshots/projects.png)
-
-### Dependencies
-
-- [alphagov/publishing-api](https://github.com/alphagov/publishing-api)
-
-### Running the application
+Then from `govuk/govuk-puppet/development-vm`, run:
 
 ```
 $ bowl content-tagger
@@ -70,6 +44,69 @@ If you're using the VM, the app should appear on
 ```
 $ bundle exec rspec
 ```
+
+## Features
+
+### Managing the Topic Taxonomy
+
+Content Tagger can create, edit and unpublish taxons. It also can view
+the content tagged to a taxon, and how this has changed over time.
+
+Read [How the topic taxonomy works](https://docs.publishing.service.gov.uk/manual/taxonomy.html).
+
+### Tagging content
+
+Content Tagger has a "Projects" function for tagging content in bulk
+to the Topic Taxonomy. It also supports tagging individual pages.
+
+### Facets
+
+Content tagger can create, edit and publish facet groups. It also allows
+you to tag content to a facet group.
+
+There is a ['facet group' link associated with the 'business finder'](https://content-tagger.integration.publishing.service.gov.uk/facet_groups).
+The facet group has a number of possible facets (e.g. "Sector / Business Area"),
+each of which have a number of possible facet values (e.g. "Accommodation"),
+which is a [manually curated list in YAML](https://github.com/alphagov/content-tagger/blob/master/lib/data/find-eu-exit-guidance-business.yml).
+
+Content designers follow the [How to tag content with facet values](https://docs.publishing.service.gov.uk/manual/tag-content-with-facet-values.html)
+instructions to tag a particular piece of content (e.g.
+"/government/publications/workplace-rights-if-theres-no-brexit-deal") with a
+particular facet value (e.g. "Accommodation").
+
+## Screenshots
+
+### Tagging content
+
+![Tagging content](docs/screenshots/taggings.png)
+
+### Taxons
+
+![Taxons](docs/screenshots/taxons.png)
+
+### Education taxon
+
+![Education taxon](docs/screenshots/education-taxon.png)
+
+### Bubbles visualisation
+
+![Bubbles visualisation](docs/screenshots/education-taxon-bubbles.png)
+
+### List visualisation
+
+![List visualisation](docs/screenshots/education-taxon-list.png)
+
+### Editing a taxon
+
+![Editing a taxon](docs/screenshots/education-taxon-edit.png)
+
+### Tagging projects
+
+![Tagging projects](docs/screenshots/projects.png)
+
+## Dependencies
+
+- [alphagov/publishing-api](https://github.com/alphagov/publishing-api)
 
 ## Licence
 
