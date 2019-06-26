@@ -98,8 +98,6 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
   end
 
   before :each do
-    Rails.application.load_tasks
-
     allow(EuExitBusinessRakeMethods).to receive(:facet_values_to_replace).and_return(facet_values_to_replace)
     allow(EuExitBusinessRakeMethods).to receive(:content_to_update_facet_values).and_return(content_to_update_facet_values)
     allow(EuExitBusinessRakeMethods).to receive(:facet_values_to_untag).and_return(facet_values_to_untag)
