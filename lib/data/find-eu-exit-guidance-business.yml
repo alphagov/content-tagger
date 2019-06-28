@@ -224,10 +224,10 @@
     :type: content_id
     :facet_values:
       - :content_id: 5476f0c7-d029-459b-8a17-196374ae3366
-        :title: EU citizens
+        :title: EU or EEA citizens
         :value: 'yes'
       - :content_id: bbdbda71-b1ec-46b8-a5b8-931d933288e9
-        :title: Non-EU citizens
+        :title: No EU or EEA citizens
         :value: 'no'
   - :content_id: 6cdb57df-3216-423c-9b7a-b1bde6b65d36
     :name: "Personal data"
