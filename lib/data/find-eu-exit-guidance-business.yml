@@ -17,35 +17,29 @@
         :title: Accommodation
         :value: accommodation
       - :content_id: 24fd50fa-6619-46ca-96cd-8ce90fa076ce
-        :title: Aerospace
+        :title: Aerospace and space
         :value: aerospace
-      - :content_id: 94b3cfe2-af89-4744-b8d7-7fc79edcbc85
-        :title: Agriculture and forestry (including wholesale)
-        :value: agriculture
+      - :content_id: 9d54c591-f5ca-4d0c-a484-12d5591987cb
+        :title: Agriculture and farming
+        :value: agriculture-and-farming
       - :content_id: 43d328b3-59ee-4d5d-bda0-7c7d4bb301be
         :title: Air freight and air passenger services
         :value: air-freight-air-passenger-services
+      - :content_id: 769b6a0c-9d64-45a4-850a-a8f7cfd5b60e
+        :title: Animals and animal products (excluding food)
+        :value: animals-and-animal-products
       - :content_id: cf341686-c886-42c7-bf8e-cf177b6a2100
         :title: Arts, culture and heritage
         :value: arts-culture-heritage
       - :content_id: e53e578a-01d2-4844-b52b-fd375ee4c4b9
         :title: Automotive
         :value: automotive
-      - :content_id: 5faa1741-fc55-4110-b342-de92f6324118
-        :title: Auxiliary activities
-        :value: auxiliary-activities
       - :content_id: 05334231-9be3-4670-a2f5-84bef7e3badd
         :title: Charities
         :value: charities
       - :content_id: 7620da7a-0427-4b3c-9498-db9dc25209b0
         :title: Chemicals
         :value: chemicals
-      - :content_id: 1e3e8abd-135d-4844-afa8-5c51df3d3c57
-        :title: Clothing and consumer goods
-        :value: clothing-consumer-goods
-      - :content_id: a7263c3b-7ade-4a91-9f51-40ebc57b3f98
-        :title: Clothing and consumer goods manufacture
-        :value: clothing-consumer-goods-manufacturing
       - :content_id: 9eb88205-118b-4f0b-abd9-ac6b469054c5
         :title: Construction
         :value: construction-contracting
@@ -55,6 +49,9 @@
       - :content_id: 77764805-73e6-4d47-9f20-aedd6de7dab9
         :title: Defence
         :value: defence
+      - :content_id: a68e08f2-6728-4f1d-bb90-514e733db8de
+        :title: Diamonds
+        :value: diamonds
       - :content_id: 70e6087f-714e-4922-8e06-72cfff997785
         :title: Digital, technology and computer services
         :value: computer-services
@@ -77,14 +74,8 @@
         :title: Fisheries (including wholesale)
         :value: fisheries
       - :content_id: 53f9ce4c-7cbb-447f-bdf1-a9b022896d3a
-        :title: Food, drink and tobacco (retail and wholesale)
+        :title: Food, drink and tobacco
         :value: food-and-drink
-      - :content_id: 9f3476e1-8ff0-455d-a14e-003236b2797c
-        :title: Food, drink and tobacco (processing)
-        :value: food-drink-tobacco
-      - :content_id: '040649fc-4e2c-4028-b846-77fe3eebd1f7'
-        :title: Furniture manufacture
-        :value: furniture-manufacture
       - :content_id: 6ae9d424-6ade-456e-bcbe-6ce72b72ca13
         :title: Gambling
         :value: gambling
@@ -100,12 +91,12 @@
       - :content_id: cec78369-d11b-48cb-9a90-ebd4ebb5de37
         :title: Justice including prisons
         :value: justice-prisons
+      - :content_id: a7263c3b-7ade-4a91-9f51-40ebc57b3f98
+        :title: Manufacturing of consumer goods
+        :value: clothing-consumer-goods-manufacturing
       - :content_id: 18c3892e-8a0e-4884-906e-5938380eceee
-        :title: Marine
+        :title: Marine and marine transport
         :value: marine
-      - :content_id: 356f46a0-17d3-4ba4-8952-8c02244f9045
-        :title: Marine transport
-        :value: marine-transport
       - :content_id: 442e7d39-9ebf-46c5-813a-daa328e135b8
         :title: Media and broadcasting
         :value: broadcasting
@@ -127,24 +118,18 @@
       - :content_id: 45bfb0a2-b60d-40f2-b9af-b5d2b4b91445
         :title: Nuclear
         :value: nuclear
-      - :content_id: 14cf2a68-3297-44d3-ba01-a4426845b1b8
-        :title: Other advanced manufacturing
-        :value: other-advanced-manufacturing
       - :content_id: 46ad5a1d-fc2d-4065-a34f-3f7b2fea8e81
         :title: Oil, gas and coal
         :value: oil-gas-coal
-      - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
-        :title: Other energy
-        :value: other-energy
-      - :content_id: 7536c0c4-fb41-43f4-a2c4-08f4fa9f5427
-        :title: Other manufacturing
-        :value: other-manufacturing
       - :content_id: d9da7c7b-b0c9-4757-aa45-9c70dd78df62
         :title: Personal services
         :value: personal-services
       - :content_id: 93f5c156-2449-4e52-9e92-aefc73586ffd
-        :title: Pharmaceuticals
+        :title: Pharmaceuticals and clinical trials
         :value: pharmaceuticals
+      - :content_id: afd45eef-743a-417d-9245-3eab8322116d
+        :title: Plants and forestry
+        :value: plants-and-forestry
       - :content_id: 4591ce75-7568-48c6-af5f-3558f89f7f57
         :title: Ports and airports
         :value: ports-airports
@@ -152,13 +137,13 @@
         :title: Postal and courier services
         :value: postal-courier-services
       - :content_id: f07527f1-e6de-4fe8-b7d9-b197769e1f1f
-        :title: Professional and business services
+        :title: Professional, legal and business services
         :value: professional-and-business-services
-      - :content_id: '091c0e83-bb54-4727-9b2c-a919510e1e79'
+      - :content_id: 091c0e83-bb54-4727-9b2c-a919510e1e79
         :title: Public administration
         :value: public-administration
       - :content_id: 53bcfcf0-e22a-416d-91ac-2661e1d6ed04
-        :title: Rail
+        :title: Rail (manufacture)
         :value: rail
       - :content_id: 2e1cf5a9-d410-4cfc-9f54-d94302f8fbd1
         :title: Rail (passengers and freight)
@@ -166,9 +151,9 @@
       - :content_id: dba1b198-1ead-4de4-a961-b11d71fc6f20
         :title: Real estate
         :value: real-estate-excl-imputed-rent
-      - :content_id: c1d8057c-76bf-431c-9ac8-6281a4b7b9ca
-        :title: Repair of computers and consumer goods
-        :value: repair-of-computers-consumer-goods
+      - :content_id: 2c562ab5-7891-4a00-8510-a5ebdb4001c8
+        :title: Renewable energy
+        :value: other-energy
       - :content_id: 39771bc2-8b2c-43e9-9cfc-fa3606b67db6
         :title: Research
         :value: research
@@ -176,14 +161,11 @@
         :title: Restaurants, bars and catering
         :value: restaurants-bars-catering
       - :content_id: 34a6edd0-46ea-4a76-ae80-8c96709d4f59
-        :title: Retail and wholesale (excluding motor trade, food and drink)
+        :title: Retail and wholesale (excluding food, drink and motors)
         :value: retail
       - :content_id: 6f5f8dbb-3cd3-475d-8f3a-ed6e22d370be
         :title: Road (passengers and freight)
         :value: road-passengers-freight
-      - :content_id: b4e507df-f067-4749-9468-3de120775216
-        :title: Space
-        :value: space
       - :content_id: 4d98ae8d-fd44-4e5d-8cf0-b9b01bd76b1a
         :title: Sports and recreation
         :value: sports-recreation
@@ -197,7 +179,7 @@
         :title: Veterinary
         :value: veterinary
       - :content_id: c66d8196-977f-47a5-806f-885c9cf01412
-        :title: Voluntary and community organistions
+        :title: Voluntary and community organisations
         :value: voluntary-community-organisations
       - :content_id: 15ad9a45-5536-4323-97f9-ed470cdf1e3b
         :title: Warehousing, services and pipelines
@@ -213,20 +195,23 @@
     :type: content_id
     :facet_values:
       - :content_id: a55f04df-3877-4c73-bbfe-ad7339cdfccf
-        :title: Sell products or goods in the UK
+        :title: Sell goods or provide services in the UK
         :value: products-or-goods
       - :content_id: d422aa2e-59ad-4986-8ef0-973959878912
-        :title: Buy products or goods from abroad
+        :title: Import from the EU
         :value: buying
       - :content_id: 7283b8e1-840f-49da-967f-c0a512a3f531
-        :title: Sell products or goods abroad
+        :title: Export to the EU
         :value: selling
       - :content_id: 7ae8e57c-ea7a-42de-84fc-a084b5f64bca
-        :title: Do other types of business in the EU
+        :title: Provide services or do business in the EU
         :value: other-eu
-      - :content_id: '07398027-ee4d-4bda-b53e-2dc655734049'
-        :title: Transport goods abroad
+      - :content_id: 07398027-ee4d-4bda-b53e-2dc655734049
+        :title: Haulage of goods across EU borders
         :value: transporting
+      - :content_id: c35c2e8c-f88e-42e0-83ed-62e896aafd92
+        :title: None of these
+        :value: none-of-these
   - :content_id: b2716a1e-dc24-4566-b8ed-f3ee23a994ec
     :name: "Who you employ"
     :short_name: "Employing EU citizens"
@@ -315,7 +300,7 @@
     :type: content_id
     :facet_values:
       - :content_id: f165dc7c-7cef-446a-bdfd-8a1ca685d091
-        :title: Civil government contracts
+        :title: Public sector contracts
         :value: civil-government-contracts
       - :content_id: 33fc20d7-6a45-40c9-b31f-e4678f962ff1
         :title: Defence contracts

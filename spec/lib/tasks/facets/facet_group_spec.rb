@@ -24,7 +24,6 @@ RSpec.describe 'facets:patch_links_to_facet_group' do
   let(:publishing_api) { Services.publishing_api }
 
   before :each do
-    Rails.application.load_tasks
     stub_any_search.to_return(body: { 'results' => results }.to_json)
     stub_publishing_api_has_lookups(
       "/link/one" => "11111-11111-11111",

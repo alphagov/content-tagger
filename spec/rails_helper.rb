@@ -37,6 +37,8 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
 
+  Rails.application.load_tasks
+
   config.before(:each) do
     User.create!(permissions: ["signin", "GDS Editor"])
     DatabaseCleaner.start
