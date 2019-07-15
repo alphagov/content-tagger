@@ -28,9 +28,25 @@ module Taxonomy
       end
 
       it "presents the tree in CSV form" do
+        document_counts = {
+          'facets' => {
+            'taxons' => {
+              'options' => [
+                { 'value' => { 'slug' => 'Root' }, 'documents' => 1 },
+                { 'value' => { 'slug' => 'Child-1' }, 'documents' => 2 },
+                { 'value' => { 'slug' => 'Child-2' }, 'documents' => 3 },
+                { 'value' => { 'slug' => 'Child-3' }, 'documents' => 4 },
+              ]
+            }
+          }
+        }
+
+        stub_request(:get, "https://search.test.gov.uk/search.json?count=0&facet_taxons=4000")
+            .to_return(body: document_counts.to_json)
+
         presented = CsvTreePresenter.new(root_node).present
 
-        expect(presented.split("\n")).to eq %w[Root ,Child-1 ,,Child-2 ,,Child-3]
+        expect(presented.split("\n")).to eq %w[Root,1 ,Child-1,2 ,,Child-2,3 ,,Child-3,4]
       end
     end
   end
