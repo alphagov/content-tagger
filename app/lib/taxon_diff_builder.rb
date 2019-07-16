@@ -5,7 +5,7 @@ class TaxonDiffBuilder
   end
 
   def diff
-    HashDiff.diff(previous_fields, current_fields)
+    Hashdiff.diff(previous_fields, current_fields)
   end
 
 private
