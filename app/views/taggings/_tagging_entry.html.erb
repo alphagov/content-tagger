@@ -11,21 +11,21 @@
 
       <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>
 
-      <% if tagging_update.related_item_errors[base_path].present? %>
+      <% if tagging_update.get_errors_for(link_type)[base_path].present? %>
         <span class="label label-danger">
-          <%= tagging_update.related_item_errors[base_path] %>
+          <%= tagging_update.get_errors_for(link_type)[base_path] %>
         </span>
       <% end %>
     </div>
   <% end %>
 
-  <div class="related-item value <%= tagging_update.related_item_errors[base_path] ? 'has-error' : '' %>">
-    <%= text_field_tag "tagging_tagging_update_form[ordered_related_items][]",
-      base_path,
-      class: "form-control related-item-path" %>
+  <div class="related-item value <%= tagging_update.get_errors_for(link_type)[base_path] ? 'has-error' : '' %>">
+    <%= text_field_tag "tagging_tagging_update_form[#{link_type.to_s}][]",
+                       base_path,
+                       class: "form-control related-item-path" %>
 
     <span class="help-block">
-      <%= tagging_update.related_item_errors[base_path] %>
+      <%= tagging_update.get_errors_for(link_type)[base_path] %>
     </span>
   </div>
 </li>
