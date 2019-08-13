@@ -14,10 +14,10 @@
     :type: content_id
     :facet_values:
       - :content_id: 63cdb6b6-bfc9-4923-b165-abbba51fbf92
-        :title: Yes
+        :title: "Yes"
         :value: national-yes
       - :content_id: a9ca783e-d02b-426c-956b-44050084c540
-        :title: No
+        :title: "No"
         :value: national-no
   - :content_id: 5a17ca01-bdbb-4f1d-a783-1eed8a654db2
     :name: "Organisation activity"
