@@ -1,0 +1,49 @@
+---
+:content_id: e6dc1c00-453a-4fac-96ec-66a2f11ae327
+:title: "Find EU Exit dynamic lists"
+:description: "Facets for use with content relating to EU Exit dynamic lists."
+:facets:
+  - :content_id: 6f155613-6481-477c-a9df-274bd83e4fba
+    :name: "Are you an EU national living in the uk"
+    :key: business-owned
+    :display_as_result_metadata: true
+    :filterable: true
+    :filter_key: facet_values
+    :preposition: "are you an eu national in the uk"
+    :combine_mode: or
+    :type: content_id
+    :facet_values:
+      - :content_id: 63cdb6b6-bfc9-4923-b165-abbba51fbf92
+        :title: Yes
+        :value: national-yes
+      - :content_id: a9ca783e-d02b-426c-956b-44050084c540
+        :title: No
+        :value: national-no
+  - :content_id: 5a17ca01-bdbb-4f1d-a783-1eed8a654db2
+    :name: "Organisation activity"
+    :key: business_activity
+    :display_as_result_metadata: true
+    :filterable: true
+    :filter_key: facet_values
+    :combine_mode: or
+    :preposition: "you"
+    :type: content_id
+    :facet_values:
+      - :content_id: d2f4d296-bc2f-4e97-aad8-ebb45637ebca
+        :title: Sell goods or provide services in the UK
+        :value: products-or-goods
+      - :content_id: 0e6d71e8-6d7f-451f-a199-4740541cf68b
+        :title: Import from the EU
+        :value: buying
+      - :content_id: 05e5dd6c-df4b-40be-83ea-d6e38add1664
+        :title: Export to the EU
+        :value: selling
+      - :content_id: 71e4e107-ec19-4aa6-acfa-88f8dc1f5c2c
+        :title: Provide services or do business in the EU
+        :value: other-eu
+      - :content_id: 20996ce0-7612-4fbb-9875-218e7a36fcf0
+        :title: Haulage of goods across EU borders
+        :value: transporting
+      - :content_id: 374f587a-271c-4b7c-b968-c33ffc5409d2
+        :title: None of these
+        :value: none-of-these
