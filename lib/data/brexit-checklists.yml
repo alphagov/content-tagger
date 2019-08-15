@@ -44,3 +44,8 @@
       - :content_id: 20996ce0-7612-4fbb-9875-218e7a36fcf0
         :title: You need to do this if you do haulage of goods across EU borders
         :value: transporting
+  - :content_id: 6b50fc67-08b7-47a9-a6bc-fadc594541a3
+    :name: "When the action is due"
+    :facet_values:
+      - :content_id: b266dfa4-0e65-4aee-ba1c-e2d128ea6a2d
+        :title: Do this before 31 October 2019
