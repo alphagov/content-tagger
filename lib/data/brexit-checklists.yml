@@ -1,7 +1,7 @@
 ---
 :content_id: e6dc1c00-453a-4fac-96ec-66a2f11ae327
-:title: "Find EU Exit dynamic lists"
-:description: "Facets for use with content relating to EU Exit dynamic lists."
+:title: "Facets for Brexit checklists" # Not shown to users
+:description: "These facets are used to generate personalised checklists relating to Brexit" # Not shown to users
 :facets:
   - :content_id: 6f155613-6481-477c-a9df-274bd83e4fba
     :name: "Are you an EU national living in the uk"
