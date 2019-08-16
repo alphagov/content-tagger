@@ -30,19 +30,19 @@
     :type: content_id
     :facet_values:
       - :content_id: d2f4d296-bc2f-4e97-aad8-ebb45637ebca
-        :title: You need to do this if you sell goods or provide services in the UK
+        :title: "You need to do this if you sell goods or provide services in the UK"
         :value: products-or-goods
       - :content_id: 0e6d71e8-6d7f-451f-a199-4740541cf68b
-        :title: You need to do this if you import from the EU
+        :title: "You need to do this if you import from the EU"
         :value: buying
       - :content_id: 05e5dd6c-df4b-40be-83ea-d6e38add1664
-        :title: You need to do this if you export to the EU
+        :title: "You need to do this if you export to the EU"
         :value: selling
       - :content_id: 71e4e107-ec19-4aa6-acfa-88f8dc1f5c2c
-        :title: You need to do this if you provide services or do business in the EU
+        :title: "You need to do this if you provide services or do business in the EU"
         :value: other-eu
       - :content_id: 20996ce0-7612-4fbb-9875-218e7a36fcf0
-        :title: You need to do this if you do haulage of goods across EU borders
+        :title: "You need to do this if you do haulage of goods across EU borders"
         :value: transporting
   - :content_id: 6b50fc67-08b7-47a9-a6bc-fadc594541a3
     :name: "When the action is due"
