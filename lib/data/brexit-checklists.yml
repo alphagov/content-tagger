@@ -5,7 +5,7 @@
 :facets:
   - :content_id: 6f155613-6481-477c-a9df-274bd83e4fba
     :name: "Actions that depend on nationality"
-    :key: business-owned
+    :key: nationality
     :display_as_result_metadata: true
     :filterable: true
     :filter_key: facet_values
