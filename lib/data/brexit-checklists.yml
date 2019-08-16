@@ -46,6 +46,12 @@
         :value: transporting
   - :content_id: 6b50fc67-08b7-47a9-a6bc-fadc594541a3
     :name: "When the action is due"
+    :key: due_date
+    :display_as_result_metadata: true
+    :filterable: true
+    :filter_key: facet_values
+    :combine_mode: or
+    :type: content_id
     :facet_values:
       - :content_id: b266dfa4-0e65-4aee-ba1c-e2d128ea6a2d
         :title: "31 October 2019"
