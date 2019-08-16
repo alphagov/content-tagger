@@ -2,8 +2,7 @@ module Tagging
   # ActiveModel-compliant object that is passed into the tagging form.
   class TaggingUpdateForm
     include ActiveModel::Model
-    attr_accessor :content_item, :previous_version, :links
-    attr_writer :related_item_errors, :related_item_overrides_errors
+    attr_accessor :content_item, :previous_version, :links, :related_item_errors
 
     delegate :content_id, :allowed_tag_types, to: :content_item
 
@@ -16,14 +15,15 @@ module Tagging
       tag_values = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
         current_tags[tag_type] = links.send(tag_type).map { |links_hash| links_hash["content_id"] }
 
-        next unless tag_type.in? %i[ordered_related_items ordered_related_items_overrides]
+        next unless tag_type.in? %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items]
 
         base_paths = links.send(tag_type).map { |links_hash| links_hash["base_path"] }
 
         # The number of extra empty form fields to add to a link section when the link
         # section shows an individual form input for each value. This allows users to
         # append new links to the end of the existing list.
-        empty_entries = [""] * 5
+        empty_entries = tag_type == :suggested_ordered_related_items ? [] : [""] * 5
+
         current_tags[tag_type] = base_paths + empty_entries
       end
 
@@ -31,6 +31,7 @@ module Tagging
         links: links,
         content_item: content_item,
         previous_version: links.previous_version,
+        related_item_errors: {},
         **tag_values
       )
     end
@@ -39,16 +40,16 @@ module Tagging
       @linkables ||= Linkables.new
     end
 
-    def related_item_errors
-      @related_item_errors ||= {}
+    def add_errors_for(related_item_type, errors_to_add)
+      related_item_errors[related_item_type] = errors_to_add
     end
 
-    def related_item_overrides_errors
-      @related_item_overrides_errors ||= {}
+    def get_errors_for(related_item_type)
+      related_item_errors.fetch(related_item_type, {})
     end
 
     def title_for_related_link(base_path)
-      items = links.ordered_related_items + links.ordered_related_items_overrides
+      items = links.ordered_related_items + links.ordered_related_items_overrides + links.suggested_ordered_related_items
       link = items.find { |related_item| related_item.fetch("base_path") == base_path }
 
       if link.nil?

@@ -49,6 +49,10 @@ class ContentItem
     link_set.taxons.present?
   end
 
+  def suggested_related_links?
+    link_set.suggested_ordered_related_items.present?
+  end
+
   def blacklisted_tag_types
     document_blacklist = Array(blacklist[publishing_app]).map(&:to_sym)
     document_blacklist += additional_temporary_blacklist
@@ -59,6 +63,10 @@ class ContentItem
 
     unless taxons?
       document_blacklist += [:ordered_related_items_overrides]
+    end
+
+    unless suggested_related_links?
+      document_blacklist += [:suggested_ordered_related_items]
     end
 
     document_blacklist
