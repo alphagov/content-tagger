@@ -17,4 +17,13 @@ namespace :taxonomy do
       Tagging::Untagger.call(content['content_id'], [taxon_content_id]) if args[:untag] == "untag"
     end
   end
+
+  desc "Bulk untag documents, one row per document and tagging. (options: 'url': url of CSV)"
+  task :bulk_untag, %i[content_id untag] => :environment do |_, args|
+    untaggings = RemoteCsv.new(args[:url]).rows_with_headers
+    untaggings.each do |content|
+      puts "Untagging #{content['content_to_untag_base_path']} from #{content['current_taxon_name']}"
+      Tagging::Untagger.call(content['content_id'], [content['current_taxon_content_id']])
+    end
+  end
 end
