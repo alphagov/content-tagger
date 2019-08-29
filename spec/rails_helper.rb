@@ -16,7 +16,6 @@ require 'govuk_sidekiq/testing'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 Dir[Rails.root.join('spec/matchers/**/*.rb')].each { |f| require f }
 
-EMAIL_ALERT_API = "https://email-alert-api.test.gov.uk".freeze
 PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
 
 require 'capybara/rails'

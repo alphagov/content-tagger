@@ -24,7 +24,7 @@ module Facets
       if params[:notify]
         return false if params[:notification_message].blank?
 
-        Services.email_alert_api.send_alert(
+        Services.email_alert_api.create_content_change(
           Facets::FacetsTaggingNotificationPresenter.new(
             content_item,
             params[:notification_message],

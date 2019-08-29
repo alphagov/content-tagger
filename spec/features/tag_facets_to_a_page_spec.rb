@@ -257,9 +257,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def stub_notification_request
-    @notification_request = stub_request(
-      :post, "#{EMAIL_ALERT_API}/notifications"
-    ).to_return(status: 200)
+    @notification_request = stub_email_alert_api_accepts_content_change
   end
 
   def then_the_publishing_api_is_sent(stubbed_request_name, body)
