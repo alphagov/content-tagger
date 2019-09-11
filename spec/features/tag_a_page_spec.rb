@@ -44,7 +44,7 @@ RSpec.describe "Tagging content", type: :feature do
       ordered_related_items: [],
       mainstream_browse_pages: [],
       parent: [],
-      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef"],
+      topics: %w[e1d6b771-a692-4812-a4e7-7562214286ef],
       organisations: [],
       meets_user_needs: [],
     )

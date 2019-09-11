@@ -32,8 +32,8 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
   end
 
   let(:facet_values_to_untag) do
-    [
-      "another-facet-value"
+    %w[
+      another-facet-value
     ]
   end
 
@@ -61,10 +61,10 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
       "links":
       {
         "facet_values" =>
-          [
-            "some-facet-value",
-            "old-facet-value",
-            "another-facet-value"
+          %w[
+            some-facet-value
+            old-facet-value
+            another-facet-value
           ]
       }
     }
@@ -73,10 +73,10 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
   let(:updated_content_item_links) do
     {
       "facet_values" =>
-        [
-          "some-facet-value",
-          "another-facet-value",
-          "new-facet-value"
+        %w[
+          some-facet-value
+          another-facet-value
+          new-facet-value
         ]
     }
   end
@@ -84,9 +84,9 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
   let(:deleted_content_item_links) do
     {
       "facet_values" =>
-        [
-          "some-facet-value",
-          "old-facet-value"
+        %w[
+          some-facet-value
+          old-facet-value
         ]
     }
   end

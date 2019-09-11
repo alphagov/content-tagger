@@ -11,21 +11,21 @@ RSpec.describe Tagging::Untagger do
       "content_id" => @content_id,
       "version" => 5,
       "links" => {
-        "taxons" => ['aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb']
+        "taxons" => %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb]
       },
     )
 
     stub_any_publishing_api_patch_links
-    Tagging::Untagger.call(@content_id, ['aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'])
-    assert_publishing_api_patch_links(@content_id, 'previous_version' => 5, 'links' => { 'taxons' => ['bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb'] })
+    Tagging::Untagger.call(@content_id, %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa])
+    assert_publishing_api_patch_links(@content_id, 'previous_version' => 5, 'links' => { 'taxons' => %w[bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb] })
   end
   it 'retries 3 times' do
     publishing_api_has_links(content_id: @content_id, links: { taxons: %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa] }, version: 5)
 
     stub_any_publishing_api_patch_links.and_raise(GdsApi::HTTPConflict).times(2).then.to_return(body: '{}')
-    expect { Tagging::Untagger.call(@content_id, ['aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']) }.to_not raise_error
+    expect { Tagging::Untagger.call(@content_id, %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa]) }.to_not raise_error
 
     stub_any_publishing_api_patch_links.and_raise(GdsApi::HTTPConflict).times(3).then.to_return(body: '{}')
-    expect { Tagging::Untagger.call(@content_id, ['aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa']) }.to raise_error(GdsApi::HTTPConflict)
+    expect { Tagging::Untagger.call(@content_id, %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa]) }.to raise_error(GdsApi::HTTPConflict)
   end
 end

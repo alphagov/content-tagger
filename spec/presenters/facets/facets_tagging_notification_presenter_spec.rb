@@ -16,8 +16,8 @@ RSpec.describe Facets::FacetsTaggingNotificationPresenter do
 
   let(:links) do
     {
-      facet_groups: ["FACET-GROUP-UUID"],
-      facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+      facet_groups: %w[FACET-GROUP-UUID],
+      facet_values: %w[ANOTHER-FACET-VALUE-UUID EXISTING-FACET-VALUE-UUID],
     }
   end
 

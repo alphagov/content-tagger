@@ -25,7 +25,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
 
       publisher = Tagging::TaggingUpdatePublisher.new(
         stubbed_content_item,
-        taxons: ["0ffd5e18-af20-4413-a215-8511cf7628b5"],
+        taxons: %w[0ffd5e18-af20-4413-a215-8511cf7628b5],
         ordered_related_items: ["/my-page"],
         ordered_related_items_overrides: ["/my-page"],
         suggested_ordered_related_items: ["/my-page"]

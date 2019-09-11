@@ -8,7 +8,7 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
   end
 
   let(:name) do
-    ['department-for-transport', 'high-speed-two-limited']
+    %w[department-for-transport high-speed-two-limited]
   end
 
   describe '#percentage_tagged' do
@@ -70,7 +70,7 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
   end
 
   def organisations
-    ['department-for-transport', 'high-speed-two-limited']
+    %w[department-for-transport high-speed-two-limited]
   end
 
   def search_api_empty

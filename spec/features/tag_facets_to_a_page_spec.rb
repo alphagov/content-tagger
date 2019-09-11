@@ -28,8 +28,8 @@ RSpec.describe "Tagging content with facets", type: :feature do
     then_the_publishing_api_is_sent(
       "facets_tagging_request",
       links: {
-        facet_groups: ["FACET-GROUP-UUID"],
-        facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+        facet_groups: %w[FACET-GROUP-UUID],
+        facet_values: %w[ANOTHER-FACET-VALUE-UUID EXISTING-FACET-VALUE-UUID],
         finder: [stub_linked_finder_content_id],
         ordered_related_items: [stub_linked_finder_content_id],
       },
@@ -42,8 +42,8 @@ RSpec.describe "Tagging content with facets", type: :feature do
       stub_finder_get_links_request
       stub_notification_request
       expected_links = {
-        facet_groups: ["FACET-GROUP-UUID"],
-        facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+        facet_groups: %w[FACET-GROUP-UUID],
+        facet_values: %w[ANOTHER-FACET-VALUE-UUID EXISTING-FACET-VALUE-UUID],
         finder: [stub_linked_finder_content_id],
         ordered_related_items: [stub_linked_finder_content_id],
       }
@@ -114,8 +114,8 @@ RSpec.describe "Tagging content with facets", type: :feature do
     then_the_publishing_api_is_sent(
       "facets_tagging_request",
       links: {
-        facet_groups: ["FACET-GROUP-UUID"],
-        facet_values: ["ANOTHER-FACET-VALUE-UUID", "EXISTING-FACET-VALUE-UUID"],
+        facet_groups: %w[FACET-GROUP-UUID],
+        facet_values: %w[ANOTHER-FACET-VALUE-UUID EXISTING-FACET-VALUE-UUID],
         finder: [stub_linked_finder_content_id],
         ordered_related_items: [stub_linked_finder_content_id],
       },
@@ -236,7 +236,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
     end
   end
 
-  def stub_finder_get_links_request(items: ["EXISTING-PINNED-ITEM-UUID"])
+  def stub_finder_get_links_request(items: %w[EXISTING-PINNED-ITEM-UUID])
     stub_request(:get, "#{PUBLISHING_API}/v2/links/#{stub_linked_finder_content_id}")
       .to_return(
         status: 200,

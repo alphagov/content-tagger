@@ -75,7 +75,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, '.call' do
       content_id: content_id,
       note: 'An update note',
       object_changes: [
-        ["~", "associated_taxons", ["mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm"], nil],
+        ["~", "associated_taxons", %w[mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm], nil],
         ["~", "base_path", "/tourism", "/business/tourism"],
         ["~", "parent_content_id", nil, "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz"],
       ],

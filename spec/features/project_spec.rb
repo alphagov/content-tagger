@@ -337,11 +337,11 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def and_i_fill_in_and_submit_the_organisation_progress_form
-    organisations = [
-      "department-for-transport",
-      "high-speed-two-limited",
-      "home-office",
-      "maritime-and-coastguard-agency",
+    organisations = %w[
+      department-for-transport
+      high-speed-two-limited
+      home-office
+      maritime-and-coastguard-agency
     ]
 
     fill_in "Organisation slugs", with: organisations.join(", ")
