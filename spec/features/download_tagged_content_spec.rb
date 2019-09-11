@@ -46,7 +46,7 @@ RSpec.feature "Download taggings", type: :feature do
       "tagged-content" =>
        {
          "links" => {
-           "primary_publishing_organisation" => ["org-content-id"]
+           "primary_publishing_organisation" => %w[org-content-id]
          }
        },
     )

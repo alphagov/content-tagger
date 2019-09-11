@@ -26,7 +26,7 @@ module BulkTagging
       let(:tag_migration) do
         described_class.call(
           source_content_item: stub_content_item,
-          taxon_content_ids: ['taxon-1'],
+          taxon_content_ids: %w[taxon-1],
           content_base_paths: []
         )
       end
@@ -48,7 +48,7 @@ module BulkTagging
       let(:tag_migration) do
         described_class.call(
           source_content_item: stub_content_item,
-          taxon_content_ids: ['taxon-1', 'taxon-2'],
+          taxon_content_ids: %w[taxon-1 taxon-2],
           content_base_paths: ['/content-1', '/content-2']
         )
       end

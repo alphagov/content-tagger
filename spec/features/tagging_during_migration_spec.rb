@@ -82,7 +82,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   def then_only_that_link_type_is_sent_to_the_publishing_api
     body = {
       links: {
-        topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", "ID-OF-ALREADY-TAGGED"],
+        topics: %w[e1d6b771-a692-4812-a4e7-7562214286ef ID-OF-ALREADY-TAGGED],
       },
       previous_version: 54_321,
     }

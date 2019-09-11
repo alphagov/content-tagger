@@ -19,7 +19,7 @@ module BulkTagging
       it 'adds the new links to the existing list of links' do
         publishing_api_has_links(
           content_id: content_id,
-          links: { taxons: ['existing-content-id'] },
+          links: { taxons: %w[existing-content-id] },
           version: 10
         )
 
@@ -74,7 +74,7 @@ module BulkTagging
 
         publishing_api_has_links(
           content_id: content_id,
-          links: { taxons: ['source-content-id'] },
+          links: { taxons: %w[source-content-id] },
           version: 10
         )
 

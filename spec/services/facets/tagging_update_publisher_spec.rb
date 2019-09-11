@@ -8,13 +8,13 @@ RSpec.describe Facets::TaggingUpdatePublisher do
     let(:finder_content_id) { "FINDER-CONTENT-ID" }
     let(:finder_service_class) { Facets::FinderService }
     let(:finder_service) { double(:finder_service) }
-    let(:links) { { "ordered_related_items": ["RELATED-LINK"] } }
+    let(:links) { { "ordered_related_items": %w[RELATED-LINK] } }
     let(:content_item) { double(:content_item, content_id: "MY-CONTENT-ID", links: links) }
     let(:links_item) { { content_id: "MY-CONTENT-ID", links: links } }
     let(:params) do
       {
         facet_groups: [facet_group_content_id],
-        facet_values: ["A-FACET-VALUE-UUID"]
+        facet_values: %w[A-FACET-VALUE-UUID]
       }
     end
 
@@ -35,8 +35,8 @@ RSpec.describe Facets::TaggingUpdatePublisher do
           .with(
             "MY-CONTENT-ID",
             links: {
-              facet_groups: ["FACET-GROUP-CONTENT-ID"],
-              facet_values: ["A-FACET-VALUE-UUID"],
+              facet_groups: %w[FACET-GROUP-CONTENT-ID],
+              facet_values: %w[A-FACET-VALUE-UUID],
               finder: [finder_content_id],
               ordered_related_items: [finder_content_id, "RELATED-LINK"],
             },
@@ -50,7 +50,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
         {
           facet_groups: [],
           facet_values: [],
-          ordered_related_items: ["RELATED-LINK"],
+          ordered_related_items: %w[RELATED-LINK],
         }
       end
 
@@ -64,7 +64,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
               facet_groups: [],
               facet_values: [],
               finder: [],
-              ordered_related_items: ["RELATED-LINK"],
+              ordered_related_items: %w[RELATED-LINK],
             },
             previous_version: 0,
           )

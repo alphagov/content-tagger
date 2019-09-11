@@ -126,8 +126,8 @@ RSpec.describe Linkables do
       expect(linkables.facet_values("FACET-GROUP-UUID")).to eq(
         [
           ["Example facet", [
-            ["Aerospace", "ANOTHER-FACET-VALUE-UUID"],
-            ["Agriculture", "EXISTING-FACET-VALUE-UUID"]
+            %w[Aerospace ANOTHER-FACET-VALUE-UUID],
+            %w[Agriculture EXISTING-FACET-VALUE-UUID]
           ]]
         ]
       )

@@ -18,8 +18,8 @@ RSpec.describe TaggedContentExporter do
       publishing_api_has_links(
         content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
         links: {
-          taxons: [
-            "taxon-123"
+          taxons: %w[
+            taxon-123
           ]
         }
       )

@@ -21,7 +21,7 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
       publishing_api_has_links(
         content_id: 'c1',
         links: {
-          taxons: ["569a9ee5-c195-4b7f-b9dc-edc17a09113f"]
+          taxons: %w[569a9ee5-c195-4b7f-b9dc-edc17a09113f]
         },
         version: 6
       )

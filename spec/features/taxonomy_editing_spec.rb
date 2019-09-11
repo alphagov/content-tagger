@@ -88,7 +88,7 @@ RSpec.feature "Taxonomy editing" do
         body: {
           links: {
             root_taxon: [],
-            parent_taxons: ["ID-1"],
+            parent_taxons: %w[ID-1],
             associated_taxons: array_including("ID-2", "ID-3"),
             legacy_taxons: [],
           }
@@ -462,9 +462,9 @@ RSpec.feature "Taxonomy editing" do
       'ID-1',
       links: {
         root_taxon: [],
-        parent_taxons: ['ID-2'],
+        parent_taxons: %w[ID-2],
         associated_taxons: [],
-        legacy_taxons: ['CONTENT-ID-LEGACY-TAXON', 'CONTENT-ID-ANOTHER-LEGACY-TAXON'],
+        legacy_taxons: %w[CONTENT-ID-LEGACY-TAXON CONTENT-ID-ANOTHER-LEGACY-TAXON],
       }
     )
 

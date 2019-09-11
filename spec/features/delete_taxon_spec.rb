@@ -133,7 +133,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
-        parent_taxons: ['CONTENT-ID-PARENT'],
+        parent_taxons: %w[CONTENT-ID-PARENT],
         associated_taxons: %w[1234],
       }
     )

@@ -74,12 +74,12 @@ module EuExitBusinessRakeMethods
   def self.facet_values_to_untag
     # For each item in the array:
     # All content tagged to that facet value will be untagged
-    [
-      "7536c0c4-fb41-43f4-a2c4-08f4fa9f5427",
-      "5faa1741-fc55-4110-b342-de92f6324118",
-      "14cf2a68-3297-44d3-ba01-a4426845b1b8",
-      "040649fc-4e2c-4028-b846-77fe3eebd1f7",
-      "94b3cfe2-af89-4744-b8d7-7fc79edcbc85"
+    %w[
+      7536c0c4-fb41-43f4-a2c4-08f4fa9f5427
+      5faa1741-fc55-4110-b342-de92f6324118
+      14cf2a68-3297-44d3-ba01-a4426845b1b8
+      040649fc-4e2c-4028-b846-77fe3eebd1f7
+      94b3cfe2-af89-4744-b8d7-7fc79edcbc85
     ]
   end
 

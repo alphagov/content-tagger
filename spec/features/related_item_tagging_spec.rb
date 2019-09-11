@@ -99,7 +99,7 @@ RSpec.describe "Tagging content", type: :feature do
   def then_the_publishing_api_is_sent_the_related_item
     then_the_publishing_api_is_sent(
       taxons: [],
-      ordered_related_items: ['a484eaea-eeb6-48fa-92a7-b67c6cd414f6'],
+      ordered_related_items: %w[a484eaea-eeb6-48fa-92a7-b67c6cd414f6],
       mainstream_browse_pages: [],
       parent: [],
       topics: [],
