@@ -1,32 +1,32 @@
 module TaxonomyHelper
   def draft_taxon_title
-    'Test Taxon'
+    "Test Taxon"
   end
 
   def valid_taxon_uuid
-    'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
+    "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
   end
 
   def invalid_taxon_uuid
-    'nope'
+    "nope"
   end
 
   def stub_draft_taxonomy_branch
     root_content_id = GovukTaxonomy::ROOT_CONTENT_ID
 
     draft_level_one_taxons = {
-      'level_one_taxons' => [
+      "level_one_taxons" => [
         {
-          'content_id' => valid_taxon_uuid,
-          'title' => draft_taxon_title
-        }
-      ]
+          "content_id" => valid_taxon_uuid,
+          "title" => draft_taxon_title,
+        },
+      ],
     }
 
     root_taxon_content = {
-      'title' => draft_taxon_title,
-      'base_path' => '/foo',
-      'content_id' => valid_taxon_uuid
+      "title" => draft_taxon_title,
+      "base_path" => "/foo",
+      "content_id" => valid_taxon_uuid,
     }
 
     root_taxon_expanded_links = {}
@@ -67,15 +67,15 @@ private
             { "value" => { "slug" => "home-office" }, "documents" => 7475 },
             { "value" => { "slug" => "department-for-transport" }, "documents" => 5844 },
             { "value" => { "slug" => "maritime-and-coastguard-agency" }, "documents" => 0 },
-            { "value" => { "slug" => "high-speed-two-limited" }, "documents" => 753 }
+            { "value" => { "slug" => "high-speed-two-limited" }, "documents" => 753 },
           ],
           "documents_with_no_value" => 0,
           "total_options" => 4,
           "missing_options" => 4,
-          "scope" => "all_filters"
-        }
+          "scope" => "all_filters",
+        },
       },
-      "suggested_queries" => []
+      "suggested_queries" => [],
     }
   end
 
@@ -94,15 +94,15 @@ private
             { "value" => { "slug" => "home-office" }, "documents" => 0 },
             { "value" => { "slug" => "department-for-transport" }, "documents" => 1072 },
             { "value" => { "slug" => "maritime-and-coastguard-agency" }, "documents" => 0 },
-            { "value" => { "slug" => "high-speed-two-limited" }, "documents" => 744 }
+            { "value" => { "slug" => "high-speed-two-limited" }, "documents" => 744 },
           ],
           "documents_with_no_value" => 0,
           "total_options" => 4,
           "missing_options" => 4,
-          "scope" => "all_filters"
-        }
+          "scope" => "all_filters",
+        },
       },
-      "suggested_queries" => []
+      "suggested_queries" => [],
     }
   end
 end

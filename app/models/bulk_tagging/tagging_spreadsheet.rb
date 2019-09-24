@@ -4,7 +4,7 @@ module BulkTagging
     validates(
       :state,
       presence: true,
-      inclusion: { in: %w[uploaded errored ready_to_import imported] }
+      inclusion: { in: %w[uploaded errored ready_to_import imported] },
     )
     validates_with GoogleUrlValidator
 

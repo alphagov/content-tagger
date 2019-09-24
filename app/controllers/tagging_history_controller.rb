@@ -12,8 +12,8 @@ class TaggingHistoryController < ApplicationController
              content_item: content_item,
              link_changes: TaggingHistory::LinkChanges.new(
                filter_params
-                 .merge(target_content_ids: [content_item.content_id])
-             )
+                 .merge(target_content_ids: [content_item.content_id]),
+             ),
            }
   end
 

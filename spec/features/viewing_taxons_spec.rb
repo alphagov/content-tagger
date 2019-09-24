@@ -10,7 +10,7 @@ RSpec.describe "Viewing taxons" do
       other_fields: {
         document_type: "taxon",
         state_history: { "1" => "published" },
-      }
+      },
     )
   end
 
@@ -20,7 +20,7 @@ RSpec.describe "Viewing taxons" do
       other_fields: {
         document_type: "taxon",
         state_history: { "1" => "published" },
-      }
+      },
     )
   end
 
@@ -30,7 +30,7 @@ RSpec.describe "Viewing taxons" do
       other_fields: {
         document_type: "taxon",
         state_history: { "1" => "published" },
-      }
+      },
     )
   end
 
@@ -40,7 +40,7 @@ RSpec.describe "Viewing taxons" do
       other_fields: {
         document_type: "taxon",
         state_history: { "1" => "published" },
-      }
+      },
     )
   end
 
@@ -50,7 +50,7 @@ RSpec.describe "Viewing taxons" do
       other_fields: {
         document_type: "taxon",
         state_history: { "1" => "published" },
-      }
+      },
     )
   end
 
@@ -61,9 +61,9 @@ RSpec.describe "Viewing taxons" do
         document_type: "taxon",
         state_history: {
           "1" => "published",
-          "2" => "draft"
+          "2" => "draft",
         },
-      }
+      },
     )
   end
 
@@ -130,11 +130,11 @@ RSpec.describe "Viewing taxons" do
           apples.merge(
             "links" => {
               child_taxons: [cox],
-            }
-          )
+            },
+          ),
         ],
-        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID]
-      }
+        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
+      },
     )
 
     publishing_api_has_item(apples)
@@ -143,7 +143,7 @@ RSpec.describe "Viewing taxons" do
       expanded_links: {
         parent_taxons: [fruits],
         child_taxons: [cox],
-      }
+      },
     )
 
     stub_email_requests_for_show_page
@@ -155,10 +155,10 @@ RSpec.describe "Viewing taxons" do
       content_id: fruits["content_id"],
       expanded_links: {
         child_taxons: [
-          apples
+          apples,
         ],
-        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID]
-      }
+        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
+      },
     )
 
     publishing_api_has_item(apples)
@@ -169,7 +169,7 @@ RSpec.describe "Viewing taxons" do
       expanded_links: {
         parent_taxons: [fruits],
         associated_taxons: [pears, oranges],
-      }
+      },
     )
 
     stub_email_requests_for_show_page
@@ -181,7 +181,7 @@ RSpec.describe "Viewing taxons" do
       content_id: previously_published["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
-      }
+      },
     )
 
     stub_email_requests_for_show_page
@@ -198,7 +198,7 @@ RSpec.describe "Viewing taxons" do
         body: [
           basic_content_item("Green Apples"),
           basic_content_item("Red Apples"),
-        ].to_json
+        ].to_json,
       )
   end
 
@@ -238,19 +238,19 @@ RSpec.describe "Viewing taxons" do
       expanded_links: {
         parent_taxons: [
           apples.merge(
-            'links' => {
-              'parent_taxons' => [fruits]
-            }
-          )
-        ]
-      }
+            "links" => {
+              "parent_taxons" => [fruits],
+            },
+          ),
+        ],
+      },
     )
 
     publishing_api_has_expanded_links(
       content_id: apples["content_id"],
       expanded_links: {
-        parent_taxons: [fruits]
-      }
+        parent_taxons: [fruits],
+      },
     )
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/cox})
@@ -269,7 +269,7 @@ RSpec.describe "Viewing taxons" do
   def then_i_see_the_entire_taxonomy
     expected_titles = [
       fruits["title"],
-      'GOV.UK homepage',
+      "GOV.UK homepage",
       apples["title"],
       cox["title"],
     ]
@@ -322,24 +322,24 @@ RSpec.describe "Viewing taxons" do
 
   def and_i_can_download_the_taxonomy_in_csv_form
     document_counts = {
-      'facets' => {
-        'taxons' => {
-          'options' => [
-            { 'value' => { 'slug' => 'Root' }, 'documents' => 1 },
-            { 'value' => { 'slug' => 'Child-1' }, 'documents' => 2 },
-            { 'value' => { 'slug' => 'Child-2' }, 'documents' => 3 },
-            { 'value' => { 'slug' => 'Child-3' }, 'documents' => 4 },
-          ]
-        }
-      }
+      "facets" => {
+        "taxons" => {
+          "options" => [
+            { "value" => { "slug" => "Root" }, "documents" => 1 },
+            { "value" => { "slug" => "Child-1" }, "documents" => 2 },
+            { "value" => { "slug" => "Child-2" }, "documents" => 3 },
+            { "value" => { "slug" => "Child-3" }, "documents" => 4 },
+          ],
+        },
+      },
     }
 
     stub_request(:get, "https://search.test.gov.uk/search.json").with(query: { "count" => 0, "facet_taxons" => 4000 })
         .to_return(body: document_counts.to_json)
-    click_link I18n.t('views.taxons.download_csv')
-    expect(page.response_headers['Content-Type']).to match(/csv/)
-    expect(page.response_headers['Content-Disposition']).to match(/attachment/)
-    expect(page.response_headers['Content-Disposition']).to match(/Fruits.*.csv/)
+    click_link I18n.t("views.taxons.download_csv")
+    expect(page.response_headers["Content-Type"]).to match(/csv/)
+    expect(page.response_headers["Content-Disposition"]).to match(/attachment/)
+    expect(page.response_headers["Content-Disposition"]).to match(/Fruits.*.csv/)
   end
 
   def then_i_see_associated_taxons

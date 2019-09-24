@@ -52,7 +52,7 @@ class TagMigrationsController < ApplicationController
       completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
       total_tag_mappings: aggregated_tag_mappings.count,
       progress_path: tag_migration_progress_path(tag_migration),
-      source_content_item: source_content_item
+      source_content_item: source_content_item,
     }
   end
 
@@ -69,7 +69,7 @@ class TagMigrationsController < ApplicationController
     tag_migration.mark_as_deleted
     redirect_to(
       tag_migrations_path,
-      success: I18n.t('controllers.tag_migrations.import_removed')
+      success: I18n.t("controllers.tag_migrations.import_removed"),
     )
   end
 

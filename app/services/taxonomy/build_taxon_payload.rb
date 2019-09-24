@@ -11,14 +11,14 @@ module Taxonomy
     def build
       {
         base_path: base_path,
-        document_type: 'taxon',
-        schema_name: 'taxon',
+        document_type: "taxon",
+        schema_name: "taxon",
         title: title,
         description: description,
-        publishing_app: 'content-tagger',
-        rendering_app: 'collections',
+        publishing_app: "content-tagger",
+        rendering_app: "collections",
         public_updated_at: Time.now.iso8601,
-        locale: 'en',
+        locale: "en",
         details: {
           internal_name: internal_name,
           notes_for_editors: notes_for_editors,

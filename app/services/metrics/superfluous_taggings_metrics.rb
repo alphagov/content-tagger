@@ -1,4 +1,4 @@
-require_relative '../metrics'
+require_relative "../metrics"
 
 module Metrics
   class SuperfluousTaggingsMetrics

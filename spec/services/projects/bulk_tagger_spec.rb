@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Projects::BulkTagger do
   let(:params) { { content_items: content_item_ids, taxons: taxons } }
@@ -29,8 +29,8 @@ RSpec.describe Projects::BulkTagger do
       expect(result).to eql [
         {
           content_id: content_items[0].id,
-          taxons: taxons
-        }
+          taxons: taxons,
+        },
       ]
     end
   end

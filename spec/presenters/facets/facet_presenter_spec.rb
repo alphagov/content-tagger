@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Facets::FacetPresenter do
   let(:raw_data) do
@@ -8,9 +8,9 @@ RSpec.describe Facets::FacetPresenter do
       "details" => { "key" => "facet_1" },
       "links" => {
         "facet_values" => [
-          { "title" => "Facet value 1" }
-        ]
-      }
+          { "title" => "Facet value 1" },
+        ],
+      },
     }
   end
 

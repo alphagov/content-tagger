@@ -5,7 +5,7 @@ module BulkTagging
     describe "#source_names" do
       it "returns the names of all supported link types" do
         expect(BulkTaggingSource.new.source_names).to eq(
-          %i[document_collection topic mainstream_browse_page taxon]
+          %i[document_collection topic mainstream_browse_page taxon],
         )
       end
     end

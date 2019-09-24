@@ -2,7 +2,7 @@ module TaxonomyHealth
   class MaximumDepthMetric
     include Sidekiq::Worker
 
-    DESCRIPTION = 'Taxon is too deep in the taxonomy'.freeze
+    DESCRIPTION = "Taxon is too deep in the taxonomy".freeze
 
     def perform(arguments)
       maximum_depth = arguments.symbolize_keys[:maximum_depth]
@@ -13,7 +13,7 @@ module TaxonomyHealth
 
       children_with_depth_exceeding(
         taxonomy,
-        maximum_depth
+        maximum_depth,
       ).each do |linked_content_item|
         Taxonomy::HealthWarning.create(
           content_id: linked_content_item.content_id,
@@ -21,7 +21,7 @@ module TaxonomyHealth
           internal_name: linked_content_item.internal_name,
           path: linked_content_item.base_path,
           metric: self.class.to_s,
-          message: "Taxon exceeds depth of #{maximum_depth}"
+          message: "Taxon exceeds depth of #{maximum_depth}",
         )
       end
     end

@@ -1,16 +1,16 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Taxonomy::BuildTaxonPayload do
   let(:taxon) do
     instance_double(
       Taxon,
-      title: 'My Title',
+      title: "My Title",
       base_path: "/taxons/my-taxon",
       description: "This is a taxon.",
       internal_name: "Internal title",
       notes_for_editors: "Use this taxon wisely.",
       visible_to_departmental_editors: true,
-      phase: 'live',
+      phase: "live",
     )
   end
 
@@ -18,11 +18,11 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
     let(:payload) { described_class.call(taxon: taxon) }
 
     it "generates a valid payload" do
-      expect(payload).to be_valid_against_schema('taxon')
+      expect(payload).to be_valid_against_schema("taxon")
     end
 
-    it 'assigns the expected rendering app' do
-      expect(payload[:publishing_app]).to eq('content-tagger')
+    it "assigns the expected rendering app" do
+      expect(payload[:publishing_app]).to eq("content-tagger")
     end
   end
 end

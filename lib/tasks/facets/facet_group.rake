@@ -36,7 +36,7 @@ namespace :facets do
     facet_group_content_id = args[:facet_group_content_id]
 
     content_items_enum = Services.search_api.search_enum(
-      filter_facet_groups: facet_group_content_id
+      filter_facet_groups: facet_group_content_id,
     )
 
     content_ids = Services.publishing_api.lookup_content_ids(base_paths: content_items_enum.pluck("link"))

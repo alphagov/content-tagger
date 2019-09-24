@@ -11,63 +11,63 @@ RSpec.feature "Taxonomy editing" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/education/1",
-        publication_state: 'published',
+        publication_state: "published",
         state_history: {
-          "1" => "published"
-        }
-      }
+          "1" => "published",
+        },
+      },
     )
     @taxon_2 = taxon_with_details(
       "Starting and attending school (draft)",
       other_fields: {
         content_id: "ID-2",
         base_path: "/education/2",
-        publication_state: 'draft',
+        publication_state: "draft",
         state_history: {
-          "1" => "draft"
-        }
-      }
+          "1" => "draft",
+        },
+      },
     )
     @taxon_3 = taxon_with_details(
       "Rail",
       other_fields: {
         content_id: "ID-3",
         base_path: "/transport/rail",
-        publication_state: 'published',
+        publication_state: "published",
         state_history: {
-          "1" => "published"
-        }
-      }
+          "1" => "published",
+        },
+      },
     )
     @linkable_taxon_1 = {
       title: "School planning",
       content_id: "ID-1",
       base_path: "/education/1",
       internal_name: "School planning",
-      publication_state: 'published',
+      publication_state: "published",
       state_history: {
-        "1" => "published"
-      }
+        "1" => "published",
+      },
     }
     @linkable_taxon_2 = {
       title: "Starting and attending school (draft)",
       content_id: "ID-2",
       base_path: "/education/2",
       internal_name: "Starting and attending school (draft)",
-      publication_state: 'draft',
+      publication_state: "draft",
       state_history: {
-        "1" => "draft"
-      }
+        "1" => "draft",
+      },
     }
     @linkable_taxon_3 = {
       title: "Rail",
       content_id: "ID-3",
       base_path: "/transport/rail",
       internal_name: "Rail",
-      publication_state: 'published',
+      publication_state: "published",
       state_history: {
-        "1" => "published"
-      }
+        "1" => "published",
+      },
     }
 
     @dummy_editor_notes = "Some usage notes for this taxon."
@@ -75,8 +75,8 @@ RSpec.feature "Taxonomy editing" do
     @create_item = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .with(
         body: hash_including(
-          base_path: "/education/newly-created-taxon"
-        )
+          base_path: "/education/newly-created-taxon",
+        ),
       )
       .to_return(status: 200, body: {}.to_json)
 
@@ -91,8 +91,8 @@ RSpec.feature "Taxonomy editing" do
             parent_taxons: %w[ID-1],
             associated_taxons: array_including("ID-2", "ID-3"),
             legacy_taxons: [],
-          }
-        }
+          },
+        },
       )
       .to_return(status: 200, body: {}.to_json)
   end
@@ -194,7 +194,7 @@ RSpec.feature "Taxonomy editing" do
   def given_there_are_taxons
     publishing_api_has_linkables(
       [@linkable_taxon_1, @linkable_taxon_2, @linkable_taxon_3],
-      document_type: 'taxon'
+      document_type: "taxon",
     )
     publishing_api_has_taxons([@taxon_1, @taxon_2, @taxon_3])
 
@@ -222,16 +222,16 @@ RSpec.feature "Taxonomy editing" do
           {
             content_id: @taxon_2[:content_id],
             base_path: @taxon_2[:base_path],
-            title: @taxon_2[:title]
-          }
+            title: @taxon_2[:title],
+          },
         ],
         legacy_taxons: [
           {
-            content_id: 'CONTENT-ID-LEGACY-TAXON',
-            base_path: '/legacy-taxon'
-          }
-        ]
-      }
+            content_id: "CONTENT-ID-LEGACY-TAXON",
+            base_path: "/legacy-taxon",
+          },
+        ],
+      },
     )
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
@@ -261,17 +261,17 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def and_i_click_on_the_new_taxon_button
-    click_on I18n.t('views.taxons.add_taxon')
+    click_on I18n.t("views.taxons.add_taxon")
   end
 
   def and_i_click_on_the_edit_taxon_button
     stub_email_requests_for_show_page
 
-    click_on I18n.t('views.taxons.edit')
+    click_on I18n.t("views.taxons.edit")
   end
 
   def and_i_click_on_the_add_a_child_taxon_button
-    click_on I18n.t('views.taxons.add_child')
+    click_on I18n.t("views.taxons.add_child")
   end
 
   def and_i_set_taxon_details
@@ -280,7 +280,7 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_description, with: "A description of my lovely taxon."
     fill_in :taxon_internal_name, with: "Newly created taxon"
     fill_in :taxon_notes_for_editors, with: @dummy_editor_notes
-    fill_in :taxon_base_path, with: '/education/newly-created-taxon'
+    fill_in :taxon_base_path, with: "/education/newly-created-taxon"
   end
 
   def and_i_select_associated_taxons
@@ -296,8 +296,8 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def and_i_change_the_base_path_and_submit_the_form
-    fill_in 'Base path', with: '/education/trains'
-    find('.submit-button').click
+    fill_in "Base path", with: "/education/trains"
+    find(".submit-button").click
   end
 
   def when_i_update_the_taxon
@@ -327,7 +327,7 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
 
-    find('.submit-button').click
+    find(".submit-button").click
   end
 
   def and_i_submit_the_create_form
@@ -344,11 +344,11 @@ RSpec.feature "Taxonomy editing" do
         document_type: "taxon",
         details: { internal_name: "Newly created taxon" },
         publication_state: "published",
-        phase: 'live',
+        phase: "live",
         title: "Newly created taxon",
         state_history: {
-          "1" => "published"
-        }
+          "1" => "published",
+        },
       }.to_json)
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
       .to_return(body: {}.to_json)
@@ -358,14 +358,14 @@ RSpec.feature "Taxonomy editing" do
       .to_return(body: {}.to_json)
     stub_email_requests_for_show_page
 
-    click_on I18n.t('views.taxons.new_button')
+    click_on I18n.t("views.taxons.new_button")
   end
 
   def and_i_submit_the_taxon_with_a_taxon_with_semantic_issues_from_the_publishing_api
-    fill_in :taxon_title, with: 'My Taxon'
-    fill_in :taxon_description, with: 'Description of my taxon.'
-    fill_in :taxon_internal_name, with: 'My Taxon'
-    fill_in :taxon_base_path, with: '/foo/bar'
+    fill_in :taxon_title, with: "My Taxon"
+    fill_in :taxon_description, with: "Description of my taxon."
+    fill_in :taxon_internal_name, with: "My Taxon"
+    fill_in :taxon_base_path, with: "/foo/bar"
 
     # Before the taxon is created, we compare the old attributes with the new,
     # to create a diff. In this instance, a previous version does not exist.
@@ -376,14 +376,14 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
       .to_return(status: 200, body: {}.to_json)
 
-    click_on I18n.t('views.taxons.new_button')
+    click_on I18n.t("views.taxons.new_button")
   end
 
   def and_i_submit_the_taxon_with_a_taxon_with_a_duplicate_base_path
-    fill_in :taxon_title, with: 'My Taxon'
-    fill_in :taxon_description, with: 'Description of my taxon.'
-    fill_in :taxon_internal_name, with: 'My Taxon'
-    fill_in :taxon_base_path, with: '/base-path'
+    fill_in :taxon_title, with: "My Taxon"
+    fill_in :taxon_description, with: "Description of my taxon."
+    fill_in :taxon_internal_name, with: "My Taxon"
+    fill_in :taxon_base_path, with: "/base-path"
 
     # Before the taxon is created, we compare the old attributes with the new,
     # to create a diff. In this instance, a previous version does not exist.
@@ -392,32 +392,32 @@ RSpec.feature "Taxonomy editing" do
     stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
       .to_return(status: 422, body: {}.to_json)
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
-      .with(body: hash_including(base_paths: ['/base-path'], with_drafts: true))
+      .with(body: hash_including(base_paths: ["/base-path"], with_drafts: true))
       .to_return(status: 200, body: {
-        '/base-path' => SecureRandom.uuid
+        "/base-path" => SecureRandom.uuid,
       }.to_json)
 
-    click_on I18n.t('views.taxons.new_button')
+    click_on I18n.t("views.taxons.new_button")
   end
 
   def then_i_can_see_a_generic_error_message
-    expect(page).to have_selector('.alert', text: /there was a problem with your request/i)
+    expect(page).to have_selector(".alert", text: /there was a problem with your request/i)
   end
 
   def then_i_can_see_a_specific_error_message
-    expect(page).to have_selector('.alert', text: /a taxon with this slug already exists/i)
+    expect(page).to have_selector(".alert", text: /a taxon with this slug already exists/i)
   end
 
   def then_a_taxon_is_created
     expect(@create_item).to have_been_requested
     expect(@create_links).to have_been_requested
-    expect(page).to have_content I18n.t('controllers.taxons.create_success')
+    expect(page).to have_content I18n.t("controllers.taxons.create_success")
   end
 
   def then_a_taxon_with_associated_taxons_is_created
     expect(@create_item).to have_been_requested
     expect(@create_links_with_associated_taxons).to have_been_requested
-    expect(page).to have_content I18n.t('controllers.taxons.create_success')
+    expect(page).to have_content I18n.t("controllers.taxons.create_success")
   end
 
   def then_my_taxon_is_updated
@@ -438,7 +438,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def then_the_base_path_shows_as_invalid
-    expect(page).to have_content 'Base path must start with /transport'
+    expect(page).to have_content "Base path must start with /transport"
   end
 
   def parent_taxon_json
@@ -447,8 +447,8 @@ RSpec.feature "Taxonomy editing" do
 
   def when_i_add_an_additional_legacy_taxon
     legacy_taxon_fields = all(:xpath, "//input[@name='taxon[legacy_taxons][]']")
-    expect(legacy_taxon_fields[0].value).to eq '/legacy-taxon'
-    legacy_taxon_fields[1].set('/another-legacy-taxon')
+    expect(legacy_taxon_fields[0].value).to eq "/legacy-taxon"
+    legacy_taxon_fields[1].set("/another-legacy-taxon")
   end
 
   def then_the_legacy_taxons_should_be_saved
@@ -459,16 +459,16 @@ RSpec.feature "Taxonomy editing" do
     )
 
     links_update_request = stub_publishing_api_patch_links(
-      'ID-1',
+      "ID-1",
       links: {
         root_taxon: [],
         parent_taxons: %w[ID-2],
         associated_taxons: [],
         legacy_taxons: %w[CONTENT-ID-LEGACY-TAXON CONTENT-ID-ANOTHER-LEGACY-TAXON],
-      }
+      },
     )
 
-    find('.submit-button').click
+    find(".submit-button").click
 
     expect(links_update_request).to have_been_requested
   end

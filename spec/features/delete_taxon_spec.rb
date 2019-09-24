@@ -63,7 +63,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     then_i_see_a_prompt_to_delete_with_a_warning_message
     then_i_see_a_list_of_taxons_to_redirect_to
     when_i_choose_a_taxon_to_redirect_to("Vehicle plating")
-    uncheck('taxonomy_delete_page_do_tag')
+    uncheck("taxonomy_delete_page_do_tag")
     when_i_confirm_deletion
     then_the_taxon_is_deleted
     and_no_content_is_tagged_to_the_parent
@@ -85,9 +85,9 @@ RSpec.feature "Delete Taxon", type: :feature do
       other_fields: {
         content_id: @taxon_content_id,
         state_history: {
-          "1" => "published"
-        }
-      }
+          "1" => "published",
+        },
+      },
     )
 
     stub_requests_for_show_page(@taxon)
@@ -118,12 +118,12 @@ RSpec.feature "Delete Taxon", type: :feature do
       other_fields: {
         base_path: "/level-one/taxon-2",
         content_id: @taxon_content_id,
-        description: 'A description of Taxon 2.',
+        description: "A description of Taxon 2.",
         state_history: {
-          "1" => "unpublished"
-        }
+          "1" => "unpublished",
+        },
       },
-      unpublished: true
+      unpublished: true,
     )
 
     stub_requests_for_show_page(@taxon)
@@ -135,7 +135,7 @@ RSpec.feature "Delete Taxon", type: :feature do
       links: {
         parent_taxons: %w[CONTENT-ID-PARENT],
         associated_taxons: %w[1234],
-      }
+      },
     )
   end
 
@@ -152,7 +152,7 @@ RSpec.feature "Delete Taxon", type: :feature do
       [
         "/alpha-taxonomy/vehicle-plating",
         "/alpha-taxonomy/vehicle-weights-explained",
-      ]
+      ],
     )
     click_on "Unpublish"
   end
@@ -164,14 +164,14 @@ RSpec.feature "Delete Taxon", type: :feature do
   def then_i_see_a_basic_prompt_to_delete
     expect(page).to have_text('You are about to delete "Taxon 1"')
     expect(page).to_not have_text("Before you delete this taxon, make sure you've")
-    expect(page).to have_link('Cancel')
-    expect(page).to have_button('Delete and redirect')
+    expect(page).to have_link("Cancel")
+    expect(page).to have_button("Delete and redirect")
   end
 
   def then_i_see_a_list_of_taxons_to_redirect_to
     expect(page).to have_select "Redirect to", options: [
-      '',
-      'Vehicle plating',
+      "",
+      "Vehicle plating",
     ]
   end
 
@@ -189,10 +189,10 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def when_i_confirm_restoration
     parent_taxon = taxon_with_details(
-      'root', other_fields: { base_path: '/level-one', content_id: 'CONTENT-ID-PARENT' }
+      "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
     publishing_api_has_item(parent_taxon)
-    publishing_api_has_links(content_id: 'CONTENT-ID-PARENT')
+    publishing_api_has_links(content_id: "CONTENT-ID-PARENT")
 
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
     @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
@@ -213,25 +213,25 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def then_i_expect_to_see_the_child_taxon
     within(".taxonomy-tree") do
-      expect(page).to have_text('A child taxon')
+      expect(page).to have_text("A child taxon")
     end
   end
 
   def then_i_expect_to_see_the_tagged_content
     within(".tagged-content") do
-      expect(page).to have_text('tagged content')
+      expect(page).to have_text("tagged content")
     end
   end
 
   def then_i_see_a_prompt_to_delete_with_a_warning_message
     expect(page).to have_text('You are about to delete "Taxon 1"')
     expect(page).to have_text("Before you delete this taxon, make sure you've")
-    expect(page).to have_link('Cancel')
-    expect(page).to have_button('Delete and redirect')
+    expect(page).to have_link("Cancel")
+    expect(page).to have_button("Delete and redirect")
   end
 
   def then_i_see_a_prompt_to_restore_with_an_informative_message
-    expect(page).to have_text('This topic will become a draft, but the redirect will stay live until this topic is re-published.')
+    expect(page).to have_text("This topic will become a draft, but the redirect will stay live until this topic is re-published.")
   end
 
   def and_the_tagged_content_is_tagged_to_the_parent
@@ -248,7 +248,7 @@ private
     @parent_taxon_content_id = SecureRandom.uuid
     @parent_taxon = taxon_with_details(
       "A parent taxon",
-      other_fields: { content_id: @parent_taxon_content_id }
+      other_fields: { content_id: @parent_taxon_content_id },
     )
     stub_requests_for_show_page(@parent_taxon)
     #
@@ -258,19 +258,19 @@ private
       content_id: @taxon_content_id,
       links: {
         parent_taxons: [@parent_taxon_content_id],
-      }
+      },
     )
     publishing_api_has_expanded_links(
       content_id: @taxon_content_id,
       expanded_links: {
         parent_taxons: [@parent_taxon],
-      }
+      },
     )
     publishing_api_has_expanded_links(
       content_id: @parent_taxon_content_id,
       expanded_links: {
-        child_taxons: [@taxon]
-      }
+        child_taxons: [@taxon],
+      },
     )
   end
 
@@ -278,7 +278,7 @@ private
     @child_taxon_content_id = SecureRandom.uuid
     @child_taxon = taxon_with_details(
       "A child taxon",
-      other_fields: { content_id: @child_taxon_content_id }
+      other_fields: { content_id: @child_taxon_content_id },
     )
     #
     # Stub realistic values for links and expanded links to correctly render
@@ -287,19 +287,19 @@ private
       content_id: @taxon_content_id,
       links: {
         child_taxons: [@child_taxon_content_id],
-      }
+      },
     )
     publishing_api_has_expanded_links(
       content_id: @taxon_content_id,
       expanded_links: {
         child_taxons: [@child_taxon],
-      }
+      },
     )
     publishing_api_has_expanded_links(
       content_id: @child_taxon_content_id,
       expanded_links: {
-        parent_taxons: [@taxon]
-      }
+        parent_taxons: [@taxon],
+      },
     )
   end
 
@@ -309,7 +309,7 @@ private
       [content_item],
       content_id: @taxon_content_id,
       link_type: "taxons",
-      fields: fields
+      fields: fields,
     )
 
     publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
@@ -319,13 +319,13 @@ private
       links: {
         taxons: [@taxon_content_id],
       },
-      version: 10
+      version: 10,
     )
   end
 
   def add_tagged_content_to_parent
     @patch_links_request = stub_publishing_api_patch_links(
-      'tagged-content',
+      "tagged-content",
       links: { taxons: [@taxon_content_id, @parent_taxon_content_id] },
       previous_version: 10,
       bulk_publishing: true,

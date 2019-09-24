@@ -1,5 +1,5 @@
-require 'csv'
-require_relative Rails.root.join('lib', 'tagged_content_exporter')
+require "csv"
+require_relative Rails.root.join("lib", "tagged_content_exporter")
 
 namespace :taxonomy do
   desc <<-DESC

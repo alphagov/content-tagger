@@ -23,7 +23,7 @@ module BulkTagging
           :content_base_path,
           :messages,
           :link_content_id,
-          :state
+          :state,
         ).group_by(&:content_base_path)
     end
   end

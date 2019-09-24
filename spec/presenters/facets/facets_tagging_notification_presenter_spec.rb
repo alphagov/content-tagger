@@ -8,7 +8,7 @@ RSpec.describe Facets::FacetsTaggingNotificationPresenter do
       content_id: "MY-CONTENT-ID",
       description: "This describes my content item",
       document_type: "guide",
-      title: 'This Is A Content Item',
+      title: "This Is A Content Item",
     )
   end
 
@@ -23,7 +23,7 @@ RSpec.describe Facets::FacetsTaggingNotificationPresenter do
 
   let(:tags) do
     {
-      "appear_in_find_eu_exit_guidance_business_finder" => "yes"
+      "appear_in_find_eu_exit_guidance_business_finder" => "yes",
     }
   end
 
@@ -43,9 +43,9 @@ RSpec.describe Facets::FacetsTaggingNotificationPresenter do
         priority: "high",
         public_updated_at: "2019-04-12T15:05:59+00:00",
         publishing_app: "content-tagger",
-        subject: 'This Is A Content Item',
+        subject: "This Is A Content Item",
         tags: tags,
-        title: 'This Is A Content Item',
+        title: "This Is A Content Item",
         urgent: true,
       }
     end

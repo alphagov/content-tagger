@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 module Taxonomy
   class TaxonsExport
@@ -17,7 +17,7 @@ module Taxonomy
 
     def taxons
       Services.publishing_api.get_content_items(
-        document_type: 'taxon',
+        document_type: "taxon",
         fields: COLUMNS,
         per_page: 1000,
       )["results"]

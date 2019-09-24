@@ -29,9 +29,9 @@ RSpec.describe FacetDataTagger do
               title: "Yet another facet value",
               value: "yet-another-facet-value",
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     }
   end
 

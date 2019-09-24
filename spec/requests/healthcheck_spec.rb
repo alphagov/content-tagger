@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "GET /healthcheck", type: :request do
   it "should respond with 'OK'" do

@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.feature 'Bulk updating', type: :feature do
+RSpec.feature "Bulk updating", type: :feature do
   include ContentItemHelper
   include PublishingApiHelper
 
-  scenario 'Update the phase of decedent taxons' do
+  scenario "Update the phase of decedent taxons" do
     given_a_published_taxon_with_draft_children
     when_i_visit_the_show_taxon_page
     then_i_can_see_the_bulk_update_button
@@ -15,31 +15,31 @@ RSpec.feature 'Bulk updating', type: :feature do
   end
 
   def given_a_published_taxon_with_draft_children
-    @parent_content_id = 'PARENT-TAXON-CONTENT-ID'
-    @child_content_id = 'CHILD-TAXON-CONTENT-ID'
+    @parent_content_id = "PARENT-TAXON-CONTENT-ID"
+    @child_content_id = "CHILD-TAXON-CONTENT-ID"
 
     @parent_taxon = taxon_with_details(
-      'Parent taxon',
+      "Parent taxon",
       other_fields: {
         content_id: @parent_content_id,
-        phase: 'beta',
-        publication_state: 'published',
+        phase: "beta",
+        publication_state: "published",
         state_history: {
-          "1" => "published"
-        }
-      }
+          "1" => "published",
+        },
+      },
     )
 
     @child_taxon = taxon_with_details(
       "Child taxon",
       other_fields: {
         content_id: @child_content_id,
-        phase: 'alpha',
-        publication_state: 'draft',
+        phase: "alpha",
+        publication_state: "draft",
         state_history: {
-          "1" => "draft"
-        }
-      }
+          "1" => "draft",
+        },
+      },
     )
 
     stub_requests_for_show_page(@parent_taxon)
@@ -48,28 +48,28 @@ RSpec.feature 'Bulk updating', type: :feature do
       content_id: @parent_content_id,
       links: {
         child_taxons: [@child_content_id],
-      }
+      },
     )
 
     publishing_api_has_links(
       content_id: @child_content_id,
       links: {
-        parent: [@parent_content_id]
-      }
+        parent: [@parent_content_id],
+      },
     )
 
     publishing_api_has_expanded_links(
       content_id: @parent_content_id,
       expanded_links: {
         child_taxons: [@child_taxon],
-      }
+      },
     )
 
     publishing_api_has_expanded_links(
       content_id: @child_content_id,
       expanded_links: {
-        parent_taxons: [@parent_taxon]
-      }
+        parent_taxons: [@parent_taxon],
+      },
     )
   end
 
@@ -78,16 +78,16 @@ RSpec.feature 'Bulk updating', type: :feature do
   end
 
   def then_i_can_see_the_bulk_update_button
-    expect(page).to have_link 'Change phase for this taxon and its children'
+    expect(page).to have_link "Change phase for this taxon and its children"
   end
 
   def when_i_click_the_bulk_update_button
-    click_link 'Change phase for this taxon and its children'
+    click_link "Change phase for this taxon and its children"
   end
 
   def then_i_see_the_confirmation_page
-    expect(page).to have_text 'You are about to update the phase of this taxon and its children to'
-    expect(page).to have_select('taxon_phase', selected: 'beta')
+    expect(page).to have_text "You are about to update the phase of this taxon and its children to"
+    expect(page).to have_select("taxon_phase", selected: "beta")
   end
 
   def when_i_click_confirm_update
@@ -99,20 +99,20 @@ RSpec.feature 'Bulk updating', type: :feature do
     publishing_api_has_item(@child_taxon)
     stub_any_publishing_api_put_content
 
-    click_button 'Confirm bulk update'
+    click_button "Confirm bulk update"
 
     assert_publishing_api_put_content(
       @parent_content_id,
-      request_json_includes(phase: 'beta')
+      request_json_includes(phase: "beta"),
     )
 
     assert_publishing_api_put_content(
       @child_content_id,
-      request_json_includes(phase: 'beta')
+      request_json_includes(phase: "beta"),
     )
   end
 
   def then_i_see_the_confirmation_message
-    expect(page).to have_text 'The taxons will be updated shortly'
+    expect(page).to have_text "The taxons will be updated shortly"
   end
 end

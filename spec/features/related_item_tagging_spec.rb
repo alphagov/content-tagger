@@ -38,7 +38,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   def given_a_content_item_exists
     publishing_api_has_lookups(
-      '/my-content-item' => 'MY-CONTENT-ID'
+      "/my-content-item" => "MY-CONTENT-ID",
     )
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
@@ -46,9 +46,9 @@ RSpec.describe "Tagging content", type: :feature do
         publishing_app: "a-migrated-app",
         rendering_app: "frontend",
         content_id: "MY-CONTENT-ID",
-        base_path: '/my-content-item',
-        document_type: 'guide',
-        title: 'This Is A Content Item',
+        base_path: "/my-content-item",
+        document_type: "guide",
+        title: "This Is A Content Item",
       }.to_json)
 
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
@@ -93,7 +93,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def and_i_submit_the_form
-    click_on I18n.t('taggings.update_tags')
+    click_on I18n.t("taggings.update_tags")
   end
 
   def then_the_publishing_api_is_sent_the_related_item

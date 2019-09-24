@@ -6,7 +6,7 @@ RSpec.describe Facets::FacetTaggingsController do
       allow(ContentLookupForm).to receive(:new).and_return(lookup)
       post :find_by_slug, params: {
         facet_group_content_id: "FACET-GROUP-UUID",
-        slug: "/foo"
+        slug: "/foo",
       }
     end
 
@@ -14,7 +14,7 @@ RSpec.describe Facets::FacetTaggingsController do
       let(:lookup) { double(:lookup, content_id: "MY-CONTENT-ID", valid?: true) }
       it "redirects to the tagging path" do
         expect(response).to redirect_to(
-          facet_group_facet_tagging_path(content_id: "MY-CONTENT-ID")
+          facet_group_facet_tagging_path(content_id: "MY-CONTENT-ID"),
         )
       end
     end
@@ -84,7 +84,7 @@ RSpec.describe Facets::FacetTaggingsController do
           facet_group_facet_tagging_path(
             facet_group_content_id: "FACET-GROUP-UUID",
             content_id: "MY-CONTENT-ID",
-          )
+          ),
         )
       end
     end
@@ -110,7 +110,7 @@ RSpec.describe Facets::FacetTaggingsController do
           facet_group_facet_tagging_path(
             facet_group_content_id: "FACET-GROUP-UUID",
             content_id: "MY-CONTENT-ID",
-          )
+          ),
         )
       end
     end

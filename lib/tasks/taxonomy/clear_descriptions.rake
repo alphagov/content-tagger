@@ -1,5 +1,5 @@
-require 'taxon_description_updater'
-require 'description_remover'
+require "taxon_description_updater"
+require "description_remover"
 
 namespace :taxonomy do
   desc <<-DESC

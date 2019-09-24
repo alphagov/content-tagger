@@ -1,8 +1,8 @@
 # TODO: Split this up and move it into the BulkTagging & Taxonomy namespaces.
 class RemoteTaxons
-  def search(page: 1, per_page: 50, query: '', states: %w[published])
+  def search(page: 1, per_page: 50, query: "", states: %w[published])
     BulkTagging::TaxonSearchResults.new(
-      taxon_content_items(page: page, per_page: per_page, query: query, states: states)
+      taxon_content_items(page: page, per_page: per_page, query: query, states: states),
     )
   end
 
@@ -18,9 +18,9 @@ private
     Services
       .publishing_api
       .get_content_items(
-        document_type: 'taxon',
-        order: '-public_updated_at',
-        q: query || '',
+        document_type: "taxon",
+        order: "-public_updated_at",
+        q: query || "",
         search_in: %i[title base_path details.internal_name],
         page: page || 1,
         per_page: per_page || 50,

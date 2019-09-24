@@ -16,7 +16,7 @@ RSpec.feature "Download taggings", type: :feature do
 
     taxon = taxon_with_details(
       "Taxon 1",
-      other_fields: { content_id: @content_id }
+      other_fields: { content_id: @content_id },
     )
 
     stub_requests_for_show_page(taxon)
@@ -31,8 +31,8 @@ RSpec.feature "Download taggings", type: :feature do
       "tagged-content",
       other_fields: {
         first_published_at: "2012-01-26T13:10:47Z",
-        public_updated_at: "2012-10-12T15:54:21Z"
-      }
+        public_updated_at: "2012-10-12T15:54:21Z",
+      },
     )
 
     publishing_api_has_linked_items(
@@ -46,8 +46,8 @@ RSpec.feature "Download taggings", type: :feature do
       "tagged-content" =>
        {
          "links" => {
-           "primary_publishing_organisation" => %w[org-content-id]
-         }
+           "primary_publishing_organisation" => %w[org-content-id],
+         },
        },
     )
 
@@ -56,7 +56,7 @@ RSpec.feature "Download taggings", type: :feature do
       document_type: "organisation",
       fields: %w[content_id title],
       page: 1,
-      per_page: 600
+      per_page: 600,
     )
 
     click_link "Download as CSV"

@@ -1,27 +1,27 @@
-if ENV['USE_COVERAGE']
-  require 'simplecov'
-  require 'simplecov-rcov'
+if ENV["USE_COVERAGE"]
+  require "simplecov"
+  require "simplecov-rcov"
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-  SimpleCov.start 'rails'
+  SimpleCov.start "rails"
 end
 
-ENV['RAILS_ENV'] = 'test'
-ENV['GOVUK_APP_DOMAIN'] = 'test.gov.uk'
+ENV["RAILS_ENV"] = "test"
+ENV["GOVUK_APP_DOMAIN"] = "test.gov.uk"
 
-require File.expand_path('../config/environment', __dir__)
-require 'spec_helper'
-require 'rspec/rails'
-require 'govuk_sidekiq/testing'
+require File.expand_path("../config/environment", __dir__)
+require "spec_helper"
+require "rspec/rails"
+require "govuk_sidekiq/testing"
 
-Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-Dir[Rails.root.join('spec/matchers/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/matchers/**/*.rb")].each { |f| require f }
 
 PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
 
-require 'capybara/rails'
-require 'gds_api/test_helpers/publishing_api_v2'
-require 'database_cleaner'
-require 'govuk_test'
+require "capybara/rails"
+require "gds_api/test_helpers/publishing_api_v2"
+require "database_cleaner"
+require "govuk_test"
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -59,9 +59,9 @@ RSpec.configure do |config|
   end
 end
 
-require 'govuk-content-schema-test-helpers/rspec_matchers'
+require "govuk-content-schema-test-helpers/rspec_matchers"
 RSpec.configuration.include GovukContentSchemaTestHelpers::RSpecMatchers
 GovukContentSchemaTestHelpers.configure do |config|
-  config.schema_type = 'publisher_v2'
+  config.schema_type = "publisher_v2"
   config.project_root = Rails.root
 end

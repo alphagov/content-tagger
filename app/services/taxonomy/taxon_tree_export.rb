@@ -1,4 +1,4 @@
-require 'json'
+require "json"
 
 module Taxonomy
   class TaxonTreeExport
@@ -40,11 +40,11 @@ module Taxonomy
         content_id: taxon.content_id,
         title: taxon.title,
         description: taxon_content.description,
-        document_type: 'taxon',
-        publishing_app: 'content-tagger',
-        rendering_app: 'collections',
-        schema_name: 'taxon',
-        user_journey_document_supertype: 'finding',
+        document_type: "taxon",
+        publishing_app: "content-tagger",
+        rendering_app: "collections",
+        schema_name: "taxon",
+        user_journey_document_supertype: "finding",
         links: {},
       }
 

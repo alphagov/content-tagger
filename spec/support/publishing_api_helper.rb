@@ -1,16 +1,16 @@
-require_relative('email_alert_api_helper')
-require 'facets/remote_facet_groups_service'
+require_relative("email_alert_api_helper")
+require "facets/remote_facet_groups_service"
 
 module PublishingApiHelper
   include EmailAlertApiHelper
 
   def stub_empty_bulk_taxons_lookup
-    url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
+    url = Plek.current.find("publishing-api") + "/v2/links/by-content-id"
     stub_request(:post, url).to_return(body: {}.to_json)
   end
 
   def stub_bulk_taxons_lookup(content_ids, taxons)
-    url = Plek.current.find('publishing-api') + "/v2/links/by-content-id"
+    url = Plek.current.find("publishing-api") + "/v2/links/by-content-id"
     body = { content_ids: array_including(content_ids) }
     response_hash = content_ids.each_with_object({}) do |content_id, obj|
       obj[content_id] = { "links" => { "taxons" => taxons } }
@@ -32,24 +32,24 @@ module PublishingApiHelper
     default_options = {
       document_type: BulkTagging::Search.default_document_types,
       page: 1,
-      q: '',
+      q: "",
       fields: %i[content_id document_type title base_path],
-      search_in: %i[title base_path details.internal_name]
+      search_in: %i[title base_path details.internal_name],
     }
 
     publishing_api_has_content(
       items,
-      default_options.merge(options)
+      default_options.merge(options),
     )
   end
 
   def publishing_api_has_taxons(taxons, options = {})
     default_options = {
       document_type: "taxon",
-      order: '-public_updated_at',
+      order: "-public_updated_at",
       page: 1,
       per_page: 50,
-      q: '',
+      q: "",
       search_in: %i[title base_path details.internal_name],
       states: %w[published],
     }
@@ -60,10 +60,10 @@ module PublishingApiHelper
   def publishing_api_has_draft_taxons(taxons, options = {})
     default_options = {
       document_type: "taxon",
-      order: '-public_updated_at',
+      order: "-public_updated_at",
       page: 1,
       per_page: 50,
-      q: '',
+      q: "",
       states: %w[draft],
     }
 
@@ -73,10 +73,10 @@ module PublishingApiHelper
   def publishing_api_has_deleted_taxons(taxons, options = {})
     default_options = {
       document_type: "taxon",
-      order: '-public_updated_at',
+      order: "-public_updated_at",
       page: 1,
       per_page: 50,
-      q: '',
+      q: "",
       search_in: %i[title base_path details.internal_name],
       states: %w[unpublished],
     }
@@ -87,35 +87,35 @@ module PublishingApiHelper
   def publishing_api_has_taxon_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_taxons, base_paths),
-      document_type: 'taxon'
+      document_type: "taxon",
     )
   end
 
   def publishing_api_has_topic_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_topics, base_paths),
-      document_type: 'topic'
+      document_type: "topic",
     )
   end
 
   def publishing_api_has_organisation_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_organisations, base_paths),
-      document_type: 'organisation'
+      document_type: "organisation",
     )
   end
 
   def publishing_api_has_need_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_needs, base_paths),
-      document_type: 'need'
+      document_type: "need",
     )
   end
 
   def publishing_api_has_mainstream_browse_page_linkables(base_paths)
     publishing_api_has_linkables(
       select_by_base_path(stubbed_mainstream_browse_pages, base_paths),
-      document_type: 'mainstream_browse_page'
+      document_type: "mainstream_browse_page",
     )
   end
 
@@ -140,7 +140,7 @@ module PublishingApiHelper
         "content_id" => "17f91fdf-a36f-48f0-989c-a056d56876ee",
         "publication_state" => "published",
         "base_path" => "/alpha-taxonomy/vehicle-plating",
-        "internal_name" => "Vehicle plating"
+        "internal_name" => "Vehicle plating",
       },
       {
         "public_updated_at" => "2017-02-07 14:22:48",
@@ -148,7 +148,7 @@ module PublishingApiHelper
         "content_id" => "4b5e77f7-69e5-45a9-9061-348cdce876fb",
         "publication_state" => "draft",
         "base_path" => "/alpha-taxonomy/vehicle-weights-explained",
-        "internal_name" => "Vehicle weights explained"
+        "internal_name" => "Vehicle weights explained",
       },
     ]
   end
@@ -161,7 +161,7 @@ module PublishingApiHelper
         "content_id" => "ID-OF-ALREADY-TAGGED",
         "publication_state" => "published",
         "base_path" => "/topic/id-of-already-tagged",
-        "internal_name" => "Test / Id of already tagged"
+        "internal_name" => "Test / Id of already tagged",
       },
       {
         "public_updated_at" => "2016-04-07 10:34:05",
@@ -169,7 +169,7 @@ module PublishingApiHelper
         "content_id" => "e1d6b771-a692-4812-a4e7-7562214286ef",
         "publication_state" => "published",
         "base_path" => "/topic/business-tax/pension-scheme-administration",
-        "internal_name" => "Business tax / Pension scheme administration"
+        "internal_name" => "Business tax / Pension scheme administration",
       },
     ]
   end
@@ -182,7 +182,7 @@ module PublishingApiHelper
         "content_id" => "9a9111aa-1db8-4025-8dd2-e08ec3175e72",
         "publication_state" => "published",
         "base_path" => "/government/organisations/student-loans-company",
-        "internal_name" => "Student Loans Company"
+        "internal_name" => "Student Loans Company",
       },
     ]
   end
@@ -194,8 +194,8 @@ module PublishingApiHelper
         "content_id" => "29e9fb40-69af-4c4c-bd56-02e3c825a63b",
         "publication_state" => "published",
         "base_path" => "/needs/apply-for-a-copy-of-a-marriage-certificate",
-        "internal_name" => "As a user, I need to apply for a copy of a marriage certificate, so that I can prove identity and have a record of the marriage, or research my family history (100569)"
-      }
+        "internal_name" => "As a user, I need to apply for a copy of a marriage certificate, so that I can prove identity and have a record of the marriage, or research my family history (100569)",
+      },
     ]
   end
 
@@ -207,7 +207,7 @@ module PublishingApiHelper
         "content_id" => "d93d0cff-a035-4c49-8bc2-eaf6e040c42d",
         "publication_state" => "published",
         "base_path" => "/browse/driving/car-tax-discs",
-        "internal_name" => "Driving and transport / Vehicle tax and SORN"
+        "internal_name" => "Driving and transport / Vehicle tax and SORN",
       },
     ]
   end
@@ -219,7 +219,7 @@ module PublishingApiHelper
         "title" => "Agriculture",
         "content_id" => "FACET-VALUE-UUID",
         "publication_state" => "published",
-      }
+      },
     ]
   end
 
@@ -230,7 +230,7 @@ module PublishingApiHelper
       "details" => {
         "label" => "Agriculture",
         "value" => "agriculture",
-      }
+      },
     }
   end
 
@@ -250,13 +250,13 @@ module PublishingApiHelper
                 "details" => {
                   "label" => "Aerospace",
                   "value" => "aerospace",
-                }
+                },
               },
-              example_facet_value
-            ]
-          }
-        }
-      ]
+              example_facet_value,
+            ],
+          },
+        },
+      ],
     }
   end
 end

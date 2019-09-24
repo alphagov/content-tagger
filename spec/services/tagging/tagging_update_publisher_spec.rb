@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Tagging::TaggingUpdatePublisher do
-  describe '#save_to_publishing_api' do
+  describe "#save_to_publishing_api" do
     before do
       stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links/*}).to_return(status: 200)
     end
@@ -28,10 +28,10 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
         taxons: %w[0ffd5e18-af20-4413-a215-8511cf7628b5],
         ordered_related_items: ["/my-page"],
         ordered_related_items_overrides: ["/my-page"],
-        suggested_ordered_related_items: ["/my-page"]
+        suggested_ordered_related_items: ["/my-page"],
       )
 
-      expect(links: publisher.generate_links_payload).to be_valid_against_links_schema('publication')
+      expect(links: publisher.generate_links_payload).to be_valid_against_links_schema("publication")
     end
 
     it "converts absolute paths of related items into content IDs" do
@@ -47,7 +47,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
 
       response = Tagging::TaggingUpdatePublisher.new(
         stubbed_content_item,
-        ordered_related_items: ["/my-page"]
+        ordered_related_items: ["/my-page"],
       )
 
       expect(response.save_to_publishing_api).to eql(false)

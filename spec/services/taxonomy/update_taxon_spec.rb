@@ -1,30 +1,30 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Taxonomy::UpdateTaxon do
   include ContentItemHelper
 
   before do
     @taxon = Taxon.new(
-      title: 'A Title',
-      document_type: 'taxon',
-      description: 'Description',
-      base_path: '/level-one/slug',
-      parent_content_id: 'CONTENT-ID-PARENT',
-      associated_taxons: %w[1234]
+      title: "A Title",
+      document_type: "taxon",
+      description: "Description",
+      base_path: "/level-one/slug",
+      parent_content_id: "CONTENT-ID-PARENT",
+      associated_taxons: %w[1234],
     )
     allow(Taxonomy::SaveTaxonVersion).to receive(:call)
 
     parent_taxon = taxon_with_details(
-      'root', other_fields: { base_path: '/level-one', content_id: 'CONTENT-ID-PARENT' }
+      "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
     publishing_api_has_item(parent_taxon)
-    publishing_api_has_expanded_links(content_id: 'CONTENT-ID-PARENT')
+    publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
   end
   let(:publish) { described_class.call(taxon: @taxon) }
 
-  describe '.call' do
-    context 'with a valid taxon form' do
-      it 'publishes the document via the publishing API' do
+  describe ".call" do
+    context "with a valid taxon form" do
+      it "publishes the document via the publishing API" do
         stub_any_publishing_api_put_content
         stub_any_publishing_api_patch_links
 
@@ -91,12 +91,12 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
     end
 
-    context 'with an unprocessable entity error from the API' do
+    context "with an unprocessable entity error from the API" do
       let(:error) do
         GdsApi::HTTPUnprocessableEntity.new(
           422,
           "An internal error message",
-          'error' => { 'message' => 'Some backend error' }
+          "error" => { "message" => "Some backend error" },
         )
       end
 
@@ -104,21 +104,21 @@ RSpec.describe Taxonomy::UpdateTaxon do
         allow(Services.publishing_api).to receive(:put_content).and_raise(error)
       end
 
-      it 'raises an error with a generic message and notifies GovukError if it is not a base path conflict' do
-        publishing_api_has_lookups('')
+      it "raises an error with a generic message and notifies GovukError if it is not a base path conflict" do
+        publishing_api_has_lookups("")
         expect(GovukError).to receive(:notify).with(error)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
-          /there was a problem with your request/i
+          /there was a problem with your request/i,
         )
       end
 
-      it 'raises an error with a specific message if it is a base path conflict' do
+      it "raises an error with a specific message if it is a base path conflict" do
         publishing_api_has_lookups(SecureRandom.uuid)
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(SecureRandom.uuid)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
-          /<a href="(.+)">taxon<\/a> with this slug already exists/
+          /<a href="(.+)">taxon<\/a> with this slug already exists/,
         )
       end
     end

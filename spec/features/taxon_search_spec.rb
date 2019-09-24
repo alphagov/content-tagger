@@ -27,35 +27,35 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'published'
-      }
+        publication_state: "published",
+      },
     )
     @taxon_2 = content_item_with_details(
       "I Am Another Taxon 2",
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'published'
-      }
+        publication_state: "published",
+      },
     )
     @taxon_3 = content_item_with_details(
       "I Am Yet Another Taxon 3",
       other_fields: {
         content_id: "ID-3",
         base_path: "/bar",
-        publication_state: 'published'
-      }
+        publication_state: "published",
+      },
     )
 
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2, @taxon_3],
       page: 1,
-      per_page: 2
+      per_page: 2,
     )
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2, @taxon_3],
       page: 2,
-      per_page: 2
+      per_page: 2,
     )
   end
 
@@ -65,31 +65,31 @@ RSpec.feature "Taxon Search" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'published'
-      }
+        publication_state: "published",
+      },
     )
     @taxon_2 = content_item_with_details(
       "Taxon 2",
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'published'
-      }
+        publication_state: "published",
+      },
     )
 
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2],
-      document_type: 'taxon',
+      document_type: "taxon",
       page: 1,
       per_page: 2,
     )
 
     publishing_api_has_taxons(
       [@taxon_2],
-      document_type: 'taxon',
+      document_type: "taxon",
       page: 1,
       per_page: 50,
-      q: 'Taxon 2'
+      q: "Taxon 2",
     )
   end
 
@@ -105,29 +105,29 @@ RSpec.feature "Taxon Search" do
   end
 
   def and_i_can_see_pagination_links
-    pagination_list = find('.pagination')
-    page_links = pagination_list.all('li.page').map(&:text)
+    pagination_list = find(".pagination")
+    page_links = pagination_list.all("li.page").map(&:text)
 
     # We can see 2 pages
-    expect(page_links).to include('1')
-    expect(page_links).to include('2')
+    expect(page_links).to include("1")
+    expect(page_links).to include("2")
 
     # There is no 3rd page
-    expect(page_links).to_not include('3')
+    expect(page_links).to_not include("3")
 
     # We start on the first page
-    expect(find('li.page.active').text).to eq('1')
+    expect(find("li.page.active").text).to eq("1")
 
     # We also have Next and Last links
-    expect(pagination_list).to have_selector('li.next_page', text: /next/i)
-    expect(pagination_list).to have_selector('li.last', text: /last/i)
+    expect(pagination_list).to have_selector("li.next_page", text: /next/i)
+    expect(pagination_list).to have_selector("li.last", text: /last/i)
   end
 
   def when_i_visit_the_next_page
-    pagination_list = find('.pagination')
+    pagination_list = find(".pagination")
 
     within pagination_list do
-      click_link 'Next'
+      click_link "Next"
     end
   end
 
@@ -144,8 +144,8 @@ RSpec.feature "Taxon Search" do
   end
 
   def when_i_search_for_taxons
-    find('#taxon_search_query').set('Taxon 2')
-    click_button 'Search'
+    find("#taxon_search_query").set("Taxon 2")
+    click_button "Search"
   end
 
   def then_i_can_see_my_search_results

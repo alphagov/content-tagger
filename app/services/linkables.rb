@@ -1,11 +1,11 @@
 # Used by Tagging & Bulk Tagging to populate the available tags.
 class Linkables
   def topics
-    @topics ||= for_nested_document_type('topic')
+    @topics ||= for_nested_document_type("topic")
   end
 
   def taxons(exclude_ids: [], include_draft: true)
-    @taxons ||= for_document_type('taxon', include_draft: include_draft).tap do |items|
+    @taxons ||= for_document_type("taxon", include_draft: include_draft).tap do |items|
       if Array(exclude_ids).present?
         items.delete_if { |item| item.second.in? Array(exclude_ids) }
       end
@@ -17,15 +17,15 @@ class Linkables
   end
 
   def organisations
-    @organisations ||= for_document_type('organisation')
+    @organisations ||= for_document_type("organisation")
   end
 
   def needs
-    @needs ||= for_document_type('need', include_draft: false)
+    @needs ||= for_document_type("need", include_draft: false)
   end
 
   def mainstream_browse_pages
-    @mainstream_browse_pages ||= for_nested_document_type('mainstream_browse_page')
+    @mainstream_browse_pages ||= for_nested_document_type("mainstream_browse_page")
   end
 
   def facet_values(facet_group_content_id)
@@ -37,7 +37,7 @@ private
   def for_document_type(document_type, include_draft: true)
     items = get_tags_of_type(document_type)
     unless include_draft
-      items = items.reject { |x| x['publication_state'] == 'draft' }
+      items = items.reject { |x| x["publication_state"] == "draft" }
     end
     present_items(items)
   end
@@ -51,30 +51,30 @@ private
     # pages here. This of course is temporary, until we've introduced a
     # global taxonomy that will allow editors to tag to any level.
     items = get_tags_of_type(document_type)
-      .select { |item| item.fetch('internal_name').include?(' / ') }
+      .select { |item| item.fetch("internal_name").include?(" / ") }
 
     organise_items(present_items(items))
   end
 
   def for_facet_group(content_id)
     Facets::FacetGroupPresenter.new(
-      Facets::RemoteFacetGroupsService.new.find(content_id)
+      Facets::RemoteFacetGroupsService.new.find(content_id),
     ).grouped_facet_values
   end
 
   def present_items(items)
     items = items.map do |item|
-      title = item.fetch('internal_name')
+      title = item.fetch("internal_name")
       title = "#{title} (draft)" if item.fetch("publication_state") == "draft"
 
-      [title, item.fetch('content_id')]
+      [title, item.fetch("content_id")]
     end
 
     items.sort_by(&:first)
   end
 
   def organise_items(items)
-    items.group_by { |entry| entry.first.split(' / ').first }
+    items.group_by { |entry| entry.first.split(" / ").first }
   end
 
   def get_tags_of_type(document_type)
@@ -84,6 +84,6 @@ private
 
     # We only are interested in linkables that have an internal name and not
     # redirects or similar
-    items.select { |item| item['internal_name'].present? }
+    items.select { |item| item["internal_name"].present? }
   end
 end

@@ -67,8 +67,8 @@ class Taxon
 
     return if path_components.nil?
 
-    @path_prefix = path_components['prefix']
-    @path_slug = path_components['slug']
+    @path_prefix = path_components["prefix"]
+    @path_slug = path_components["slug"]
   end
 
   def legacy_taxons=(legacy_taxons)
@@ -76,7 +76,7 @@ class Taxon
   end
 
   def link_type
-    'taxons'
+    "taxons"
   end
 
   def internal_name
@@ -95,7 +95,7 @@ class Taxon
   # In an ideal world we wouldn't have to worry about this
   # but ActiveModel doesn't have decent type coercion yet.
   def visible_to_departmental_editors=(val)
-    @visible_to_departmental_editors = (val.to_s == 'true')
+    @visible_to_departmental_editors = (val.to_s == "true")
   end
 
   def visible_to_departmental_editors

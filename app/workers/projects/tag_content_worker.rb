@@ -6,7 +6,7 @@ module Projects
       Services.publishing_api
         .patch_links(
           content_item_id,
-          links: { taxons: taxon_content_ids }
+          links: { taxons: taxon_content_ids },
         )
     end
   end

@@ -49,7 +49,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
       }
 
       expected_tags = {
-        "appear_in_find_eu_exit_guidance_business_finder" => "yes"
+        "appear_in_find_eu_exit_guidance_business_finder" => "yes",
       }
 
       given_there_is_a_content_item_with_expanded_links(
@@ -85,9 +85,9 @@ RSpec.describe "Tagging content with facets", type: :feature do
         priority: "high",
         public_updated_at: "2019-04-12T15:05:59+00:00",
         publishing_app: "content-tagger",
-        subject: 'This Is A Content Item',
+        subject: "This Is A Content Item",
         tags: expected_tags,
-        title: 'This Is A Content Item',
+        title: "This Is A Content Item",
         urgent: true,
       )
     end
@@ -176,7 +176,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
 
   def given_there_is_a_content_item_with_expanded_links(**expanded_links)
     publishing_api_has_lookups(
-      '/my-content-item' => 'MY-CONTENT-ID'
+      "/my-content-item" => "MY-CONTENT-ID",
     )
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
@@ -184,10 +184,10 @@ RSpec.describe "Tagging content with facets", type: :feature do
         publishing_app: "a-migrated-app",
         rendering_app: "frontend",
         content_id: "MY-CONTENT-ID",
-        base_path: '/my-content-item',
-        document_type: 'guide',
-        description: 'Describes my content item',
-        title: 'This Is A Content Item',
+        base_path: "/my-content-item",
+        document_type: "guide",
+        description: "Describes my content item",
+        title: "This Is A Content Item",
       }.to_json)
 
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
@@ -209,17 +209,17 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def and_i_edit_facets_for_the_page(path)
-    fill_in 'content_lookup_form_base_path', with: path
-    click_on 'Edit page'
+    fill_in "content_lookup_form_base_path", with: path
+    click_on "Edit page"
   end
 
   def and_i_see_the_facet_values_form_prefilled_with(option)
-    facet_values_options = all('#facets_tagging_update_form_example_facet option').map(&:text)
+    facet_values_options = all("#facets_tagging_update_form_example_facet option").map(&:text)
     expect(facet_values_options).to include(option)
   end
 
   def and_i_submit_the_facets_tagging_form
-    click_on I18n.t('taggings.update_facets')
+    click_on I18n.t("taggings.update_facets")
   end
 
   def when_i_select_an_additional_facet_value(selection)
@@ -242,9 +242,9 @@ RSpec.describe "Tagging content with facets", type: :feature do
         status: 200,
         body: {
           links: {
-            ordered_related_items: items
-          }
-        }.to_json
+            ordered_related_items: items,
+          },
+        }.to_json,
       )
   end
 
@@ -252,7 +252,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
     instance_variable_set(
       "@#{stub_request_name}",
       stub_request(:patch, "#{PUBLISHING_API}/v2/links/#{content_id}")
-        .to_return(status: 200)
+        .to_return(status: 200),
     )
   end
 
@@ -276,7 +276,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def then_i_see_that_there_is_a_conflict
-    expect(page).to have_content 'Somebody changed the tags before you could'
+    expect(page).to have_content "Somebody changed the tags before you could"
   end
 
   def and_i_opt_to_notify_users
@@ -290,7 +290,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   def publishing_api_has_facet_values_linkables(labels)
     publishing_api_has_linkables(
       stubbed_facet_values.select { |fv| labels.include?(fv["title"]) },
-      document_type: 'facet_value'
+      document_type: "facet_value",
     )
   end
 
@@ -302,10 +302,10 @@ RSpec.describe "Tagging content with facets", type: :feature do
           order: "-public_updated_at",
           page: 1,
           per_page: 50,
-          q: '',
+          q: "",
           search_in: %w[title],
-          states: %w[published]
-        }
+          states: %w[published],
+        },
       )
       .to_return(body: { results: [example_facet_group] }.to_json)
   end
@@ -316,7 +316,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
         {
           content_id: content_id,
           base_path: "/some-finder",
-        }
+        },
       ].to_json)
   end
 

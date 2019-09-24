@@ -75,7 +75,7 @@ RSpec.feature "Tag importer", type: :feature do
 
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet
-    click_link I18n.t('tag_import.refresh')
+    click_link I18n.t("tag_import.refresh")
   end
 
   def given_tagging_data_is_present_in_a_google_spreadsheet
@@ -89,28 +89,28 @@ RSpec.feature "Tag importer", type: :feature do
 
   def given_no_tagging_data_is_available_at_a_spreadsheet_url
     stub_request(:get, google_sheet_url(key: SHEET_KEY, gid: SHEET_GID))
-      .to_return(status: 404, body: 'uh-oh')
+      .to_return(status: 404, body: "uh-oh")
   end
 
   def when_i_provide_the_public_uri_of_this_spreadsheet
     publishing_api_has_taxons([])
 
     visit root_path
-    click_link I18n.t('navigation.bulk_tag')
+    click_link I18n.t("navigation.bulk_tag")
 
     click_link I18n.t("navigation.tag_importer")
-    click_link I18n.t('tag_import.upload_sheet')
+    click_link I18n.t("tag_import.upload_sheet")
     expect(page).to have_text(/how to generate a google spreadsheet url/i)
-    fill_in I18n.t('tag_import.sheet_url'), with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
-    click_button I18n.t('tag_import.upload')
+    fill_in I18n.t("tag_import.sheet_url"), with: google_sheet_url(key: SHEET_KEY, gid: SHEET_GID)
+    click_button I18n.t("tag_import.upload")
     expect(BulkTagging::TaggingSpreadsheet.count).to eq 1
     expect(BulkTagging::TaggingSpreadsheet.first.added_by.name).to eq @name
   end
 
   def given_tagging_spreadsheet_exists
     tagging_spreadsheet = build(:tagging_spreadsheet)
-    tagging_spreadsheet.tag_mappings << build(:tag_mapping, link_content_id: 'a-content-id-1', link_title: 'Education')
-    tagging_spreadsheet.tag_mappings << build(:tag_mapping, link_content_id: 'a-content-id-2', link_title: 'Early Years')
+    tagging_spreadsheet.tag_mappings << build(:tag_mapping, link_content_id: "a-content-id-1", link_title: "Education")
+    tagging_spreadsheet.tag_mappings << build(:tag_mapping, link_content_id: "a-content-id-2", link_title: "Early Years")
 
     tagging_spreadsheet.save!
   end
@@ -120,7 +120,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def then_i_expect_tag_mappings_to_be_grouped_by_base_path
-    rows = all('table tbody tr')
+    rows = all("table tbody tr")
     expect(rows.count).to eq(1)
 
     first_row = rows.first
@@ -134,7 +134,7 @@ RSpec.feature "Tag importer", type: :feature do
   def then_i_can_preview_which_taggings_will_be_imported
     expect_page_to_contain_details_of(tag_mappings: BulkTagging::TagMapping.all)
     expect(page).to have_text(
-      I18n.t('views.tag_update_progress_bar', completed: 0, total: 2)
+      I18n.t("views.tag_update_progress_bar", completed: 0, total: 2),
     )
     expect_tag_mapping_statuses_to_be("Ready to tag")
   end
@@ -184,11 +184,11 @@ RSpec.feature "Tag importer", type: :feature do
       },
       bulk_publishing: true,
     )
-    taxon_1 = { title: 'Early Years', content_id: 'early-years-content-id' }
-    taxon_2 = { title: 'Education', content_id: 'education-content-id' }
+    taxon_1 = { title: "Early Years", content_id: "early-years-content-id" }
+    taxon_2 = { title: "Education", content_id: "education-content-id" }
     publishing_api_has_taxons([taxon_1, taxon_2])
 
-    click_link I18n.t('tag_import.start_tagging')
+    click_link I18n.t("tag_import.start_tagging")
     expect(link_update_1).to have_been_requested
     expect(link_update_2).to have_been_requested
     expect_tag_mapping_statuses_to_be("Tagged")
@@ -206,11 +206,11 @@ RSpec.feature "Tag importer", type: :feature do
       bulk_publishing: true,
     )
 
-    taxon_1 = { title: 'Early Years', content_id: 'early-years-content-id' }
-    taxon_2 = { title: 'Education', content_id: 'education-content-id' }
+    taxon_1 = { title: "Early Years", content_id: "early-years-content-id" }
+    taxon_2 = { title: "Education", content_id: "education-content-id" }
     publishing_api_has_taxons([taxon_1, taxon_2])
 
-    click_link I18n.t('tag_import.start_tagging')
+    click_link I18n.t("tag_import.start_tagging")
     expect(link_update_1).to have_been_requested
     expect_different_tag_mapping_statuses_to_be("Error", "Tagged")
   end
@@ -233,7 +233,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_refetch_the_tags
-    expect { click_link I18n.t('tag_import.refresh') }.to(change { BulkTagging::TagMapping.count }.by(1))
+    expect { click_link I18n.t("tag_import.refresh") }.to(change { BulkTagging::TagMapping.count }.by(1))
   end
 
   def then_i_should_see_an_updated_preview
@@ -242,13 +242,13 @@ RSpec.feature "Tag importer", type: :feature do
 
   def and_i_delete_the_tagging_spreadsheet
     visit tagging_spreadsheets_path
-    delete_button = first('table tbody a', text: I18n.t('tag_import.delete'))
+    delete_button = first("table tbody a", text: I18n.t("tag_import.delete"))
 
     expect { delete_button.click }.to_not(change { BulkTagging::TaggingSpreadsheet.count })
   end
 
   def then_it_is_no_longer_available
-    rows = all('table tbody tr')
+    rows = all("table tbody tr")
     expect(rows.count).to eq(0)
   end
 
@@ -263,9 +263,9 @@ RSpec.feature "Tag importer", type: :feature do
     state = tagging_spreadsheet.state
     state_message = I18n.t("bulk_tagging.state.#{state}")
 
-    row = first('table tbody tr')
+    row = first("table tbody tr")
 
-    expect(row).to have_selector('.label-warning', text: state_message)
+    expect(row).to have_selector(".label-warning", text: state_message)
     visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
@@ -273,41 +273,41 @@ RSpec.feature "Tag importer", type: :feature do
     visit tagging_spreadsheets_path
     tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
     state = tagging_spreadsheet.state.humanize
-    row = first('table tbody tr')
+    row = first("table tbody tr")
 
-    expect(row).to have_selector('.label-danger', text: state)
+    expect(row).to have_selector(".label-danger", text: state)
     visit tagging_spreadsheet_path(tagging_spreadsheet)
   end
 
   def then_the_state_of_the_import_is_successful
     tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
-    expect_spreadsheet_label(tagging_spreadsheet, '.label-success')
+    expect_spreadsheet_label(tagging_spreadsheet, ".label-success")
   end
 
   def then_the_state_of_the_import_is_unsuccessful
     tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
-    expect_spreadsheet_label(tagging_spreadsheet, '.label-danger')
+    expect_spreadsheet_label(tagging_spreadsheet, ".label-danger")
   end
 
   def expect_spreadsheet_label(tagging_spreadsheet, label_class)
     state = tagging_spreadsheet.state
     state_message = I18n.t("bulk_tagging.state.#{state}")
-    row = first('table tbody tr')
+    row = first("table tbody tr")
 
     expect(row).to have_selector(label_class, text: state_message)
   end
 
   def and_i_visit_the_bulk_tag_by_upload_page
     visit root_path
-    click_link I18n.t('navigation.bulk_tag')
+    click_link I18n.t("navigation.bulk_tag")
 
     click_link I18n.t("navigation.tag_importer")
   end
 
   def when_the_last_tag_mapping_has_errored
     tag_mapping = BulkTagging::TagMapping.last
-    tag_mapping.state = 'errored'
-    tag_mapping.messages = ['An error message']
+    tag_mapping.state = "errored"
+    tag_mapping.messages = ["An error message"]
     tag_mapping.save!
   end
 
@@ -318,8 +318,8 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def then_the_erroneous_tag_mappings_are_at_the_top
-    tag_mapping = BulkTagging::TagMapping.where(state: 'errored').first
-    first_row = find('table tbody').first('tr')
+    tag_mapping = BulkTagging::TagMapping.where(state: "errored").first
+    first_row = find("table tbody").first("tr")
 
     expect(first_row.text).to match(tag_mapping.content_base_path)
     expect(first_row.text).to match(tag_mapping.link_title)

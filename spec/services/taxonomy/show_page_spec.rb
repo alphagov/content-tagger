@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Taxonomy::ShowPage do
   describe "#publication_state_name" do
@@ -7,7 +7,7 @@ RSpec.describe Taxonomy::ShowPage do
       show_page = Taxonomy::ShowPage.new(taxon)
       taxon.state_history = {
         "1" => "superseded",
-        "2" => "published"
+        "2" => "published",
       }
 
       expect(show_page.publication_state_name).to eq("published")
@@ -16,7 +16,7 @@ RSpec.describe Taxonomy::ShowPage do
     it "shows when a taxon is in draft" do
       taxon = build(:draft_taxon)
       taxon.state_history = {
-        "1" => "draft"
+        "1" => "draft",
       }
       show_page = Taxonomy::ShowPage.new(taxon)
 

@@ -19,11 +19,11 @@ module BulkTagging
 
       Services.publishing_api.get_content_items_enum(document_type: @document_type, fields: %w[content_id]).lazy.map do |document|
         begin
-          content_id = document.fetch('content_id')
+          content_id = document.fetch("content_id")
           new_taxons = add_taxon_link(content_id, @taxon_content_id)
-          { status: 'success', message: 'success', content_id: content_id, new_taxons: new_taxons }
+          { status: "success", message: "success", content_id: content_id, new_taxons: new_taxons }
         rescue StandardError => e
-          { status: 'error', message: e.message, content_id: content_id, new_taxons: [] }
+          { status: "error", message: e.message, content_id: content_id, new_taxons: [] }
         end
       end
     end
@@ -32,8 +32,8 @@ module BulkTagging
 
     def add_taxon_link(content_id, taxon_content_id)
       response_hash = Services.publishing_api.get_links(content_id).to_h
-      version = response_hash['version']
-      new_taxons = (Array.wrap(response_hash.dig('links', 'taxons')) + [taxon_content_id]).uniq
+      version = response_hash["version"]
+      new_taxons = (Array.wrap(response_hash.dig("links", "taxons")) + [taxon_content_id]).uniq
       Services.publishing_api.patch_links(content_id, links: { taxons: new_taxons }, previous_version: version)
       new_taxons
     end

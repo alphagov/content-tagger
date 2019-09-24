@@ -117,12 +117,12 @@ RSpec.feature "Navigation", type: :feature do
     stubbed_request_data = {
       "Facets" => {
         url: "https://publishing-api.test.gov.uk/v2/content?document_type=facet_group&order=-public_updated_at&page=1&per_page=50&q=&search_in%5B%5D=title&states%5B%5D=published",
-        body: { results: [] }
+        body: { results: [] },
       },
       "Tagging history" => {
         url: "https://publishing-api.test.gov.uk/v2/links/changes?link_types%5B%5D=taxons",
-        body: { link_changes: [] }
-      }
+        body: { link_changes: [] },
+      },
     }
 
     stub_request(:get, stubbed_request_data[option][:url]).to_return(status: 200, body: stubbed_request_data[option][:body].to_json) unless stubbed_request_data[option].nil?

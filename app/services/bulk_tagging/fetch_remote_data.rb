@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 module BulkTagging
   class FetchRemoteData
@@ -40,8 +40,8 @@ module BulkTagging
         content_base_path: cast_and_strip(row["content_base_path"]),
         link_title: cast_and_strip(row["link_title"]),
         link_content_id: cast_and_strip(row["link_content_id"]),
-        link_type: 'taxons',
-        state: 'ready_to_tag',
+        link_type: "taxons",
+        state: "ready_to_tag",
       )
     end
 
@@ -54,11 +54,11 @@ module BulkTagging
     end
 
     def spreadsheet_download_error
-      I18n.t('errors.spreadsheet_download_error')
+      I18n.t("errors.spreadsheet_download_error")
     end
 
     def valid_response?
-      response.code == '200'
+      response.code == "200"
     end
 
     def response

@@ -14,7 +14,7 @@ module BulkTagging
       new(
         source_content_item: source_content_item,
         taxon_content_ids: taxon_content_ids,
-        content_base_paths: content_base_paths
+        content_base_paths: content_base_paths,
       ).call
     end
 
@@ -35,18 +35,18 @@ module BulkTagging
     def validate_taxons
       return if taxon_content_ids.present?
 
-      raise InvalidArgumentError, I18n.t('bulk_tagging.update_tags.no_taxons')
+      raise InvalidArgumentError, I18n.t("bulk_tagging.update_tags.no_taxons")
     end
 
     def validate_content_items
       return if content_base_paths.present?
 
-      raise InvalidArgumentError, I18n.t('bulk_tagging.update_tags.no_content_items')
+      raise InvalidArgumentError, I18n.t("bulk_tagging.update_tags.no_content_items")
     end
 
     def tag_migration
       @tag_migration ||= TagMigration.new(
-        state: 'ready_to_import',
+        state: "ready_to_import",
         source_content_id: source_content_item.content_id,
         source_title: source_content_item.title,
         source_document_type: source_content_item.document_type.humanize,
@@ -57,7 +57,7 @@ module BulkTagging
       content_base_paths.each do |content_base_path|
         tag_mapping = BulkTagging::BuildTagMapping.call(
           taxon: taxon,
-          content_base_path: content_base_path
+          content_base_path: content_base_path,
         )
 
         tag_migration.tag_mappings << tag_mapping

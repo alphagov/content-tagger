@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Facets::TaggingUpdatePublisher do
   let(:publishing_api) { Services.publishing_api }
@@ -14,7 +14,7 @@ RSpec.describe Facets::TaggingUpdatePublisher do
     let(:params) do
       {
         facet_groups: [facet_group_content_id],
-        facet_values: %w[A-FACET-VALUE-UUID]
+        facet_values: %w[A-FACET-VALUE-UUID],
       }
     end
 

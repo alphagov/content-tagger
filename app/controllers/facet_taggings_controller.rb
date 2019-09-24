@@ -18,7 +18,7 @@ class FacetTaggingsController < ::TaggingsController
     content_item = ContentItem.find!(params[:content_id])
 
     render :show, locals: {
-      tagging_update: Facets::TaggingUpdateForm.from_content_item(content_item)
+      tagging_update: Facets::TaggingUpdateForm.from_content_item(content_item),
     }
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
@@ -29,7 +29,7 @@ class FacetTaggingsController < ::TaggingsController
     publisher = Facets::TaggingUpdatePublisher.new(
       content_item,
       params[:facets_tagging_update_form],
-      params[:facet_group_content_id]
+      params[:facet_group_content_id],
     )
 
     if publisher.save_to_publishing_api
@@ -38,7 +38,7 @@ class FacetTaggingsController < ::TaggingsController
           facet_group_content_id: params[:facet_group_content_id],
           content_id: content_item.content_id,
         ),
-        success: "Facet values have been updated!"
+        success: "Facet values have been updated!",
       )
     else
       tagging_update = Facets::TaggingUpdateForm.from_content_item(content_item)
@@ -53,7 +53,7 @@ class FacetTaggingsController < ::TaggingsController
         facet_group_content_id: params[:facet_group_content_id],
         content_id: content_item.content_id,
       ),
-      danger: "Somebody changed the tags before you could. Your changes have not been saved."
+      danger: "Somebody changed the tags before you could. Your changes have not been saved.",
     )
   end
 

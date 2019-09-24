@@ -11,7 +11,7 @@ module Facets
     def self.find(content_id)
       data = Services.publishing_api_with_long_timeout.get_expanded_links(content_id, generate: true).to_h
 
-      links = data.fetch('expanded_links', {})
+      links = data.fetch("expanded_links", {})
 
       tags = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
         current_tags[tag_type] = links.fetch(tag_type.to_s, [])
@@ -19,8 +19,8 @@ module Facets
 
       new(
         content_id: content_id,
-        previous_version: data.fetch('version', 0),
-        **tags
+        previous_version: data.fetch("version", 0),
+        **tags,
       )
     end
   end

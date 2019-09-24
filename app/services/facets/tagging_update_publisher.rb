@@ -30,7 +30,7 @@ module Facets
             params[:notification_message],
             links_payload,
             email_alert_tags_payload,
-          ).present
+          ).present,
         )
       end
 

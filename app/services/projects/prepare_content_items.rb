@@ -19,7 +19,7 @@ module Projects
     attr_reader :content_items
 
     def taxons_for(content_item)
-      content_tags.dig(content_item.content_id, 'links', 'taxons') || []
+      content_tags.dig(content_item.content_id, "links", "taxons") || []
     end
 
     def content_tags

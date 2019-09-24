@@ -16,10 +16,10 @@ private
       per_page: 5000,
       q: description_to_remove,
       search_in: %w[description],
-      states: %w[published draft]
+      states: %w[published draft],
     )
-    content_items['results'].select { |item| item['description'] == description_to_remove }.each do |taxon|
-      if taxon['publication_state'] == 'published' && draft_version_exists?(taxon)
+    content_items["results"].select { |item| item["description"] == description_to_remove }.each do |taxon|
+      if taxon["publication_state"] == "published" && draft_version_exists?(taxon)
         puts "Published taxon: #{taxon_details(taxon)} draft has fixed description and cannot be amended"
         next
       end
@@ -28,10 +28,10 @@ private
   end
 
   def update_description(taxon, draft_version_exists)
-    content_id = taxon['content_id']
+    content_id = taxon["content_id"]
     payload = taxon.except(*EXCLUDE_ATTRIBUTES).merge(
-      'description' => nil,
-      'update_type' => 'minor'
+      "description" => nil,
+      "update_type" => "minor",
     )
     publishing_api.put_content(content_id, payload)
     publishing_api.publish(content_id) unless draft_version_exists
@@ -51,7 +51,7 @@ private
   end
 
   def draft_version_exists?(taxon)
-    taxon['state_history'].value?('draft')
+    taxon["state_history"].value?("draft")
   end
 
   def publishing_api

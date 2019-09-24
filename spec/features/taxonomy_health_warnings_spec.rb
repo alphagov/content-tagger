@@ -15,7 +15,7 @@ RSpec.describe "Taxonomy Health Warnings" do
     @taxon_content_id = SecureRandom.uuid
     @taxon = taxon_with_details(
       "Taxon 1",
-      other_fields: { content_id: @taxon_content_id }
+      other_fields: { content_id: @taxon_content_id },
     )
 
     stub_requests_for_show_page(@taxon)
@@ -23,11 +23,11 @@ RSpec.describe "Taxonomy Health Warnings" do
 
   def given_a_health_warning
     Taxonomy::HealthWarning.create(content_id: @taxon_content_id,
-                                   title: 'title',
-                                   internal_name: 'internal name',
-                                   path: '/path/to/taxon',
-                                   metric: 'TaxonomyHealth::ContentCountMetric',
-                                   message: 'Taxon fails metric')
+                                   title: "title",
+                                   internal_name: "internal name",
+                                   path: "/path/to/taxon",
+                                   metric: "TaxonomyHealth::ContentCountMetric",
+                                   message: "Taxon fails metric")
   end
 
   def when_i_visit_the_health_warnings_page
@@ -35,14 +35,14 @@ RSpec.describe "Taxonomy Health Warnings" do
   end
 
   def then_i_see_the_health_warning
-    expect(page).to have_text('/path/to/taxon')
-    expect(page).to have_text('Taxon fails metric')
-    expect(page).to have_link('title', href: taxon_path(@taxon_content_id))
+    expect(page).to have_text("/path/to/taxon")
+    expect(page).to have_text("Taxon fails metric")
+    expect(page).to have_link("title", href: taxon_path(@taxon_content_id))
   end
 
   def then_i_see_a_link_to_the_metrics_dashboard
-    Plek.new.stubs(:external_url_for).with('grafana').returns('http://grafana')
+    Plek.new.stubs(:external_url_for).with("grafana").returns("http://grafana")
 
-    expect(page).to have_link('View taxonomy metrics dashboard', href: 'http://grafana')
+    expect(page).to have_link("View taxonomy metrics dashboard", href: "http://grafana")
   end
 end

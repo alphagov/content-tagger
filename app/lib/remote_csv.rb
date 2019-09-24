@@ -1,5 +1,5 @@
-require 'csv'
-require 'net/http'
+require "csv"
+require "net/http"
 
 class RemoteCsv
   class ParsingError < StandardError

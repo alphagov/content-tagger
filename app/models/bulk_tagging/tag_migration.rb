@@ -6,7 +6,7 @@ module BulkTagging
     validates(
       :state,
       presence: true,
-      inclusion: { in: %w[ready_to_import imported errored] }
+      inclusion: { in: %w[ready_to_import imported errored] },
     )
 
     scope :newest_first, -> { order(created_at: :desc) }
@@ -33,7 +33,7 @@ module BulkTagging
     end
 
     def ready_to_import?
-      state == 'ready_to_import'
+      state == "ready_to_import"
     end
 
     def errored?

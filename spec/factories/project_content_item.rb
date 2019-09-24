@@ -6,12 +6,12 @@ FactoryBot.define do
     content_id { SecureRandom.uuid }
 
     trait :flagged_needs_help do
-      flag { ProjectContentItem.flags['needs_help'] }
+      flag { ProjectContentItem.flags["needs_help"] }
     end
 
     trait :flagged_missing_topic do
-      flag { ProjectContentItem.flags['missing_topic'] }
-      suggested_tags { 'have you thought about ...?' }
+      flag { ProjectContentItem.flags["missing_topic"] }
+      suggested_tags { "have you thought about ...?" }
     end
   end
 end

@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 module Taxonomy
   class TaxonomyExport
@@ -36,20 +36,20 @@ module Taxonomy
     end
 
     def add_primary_publishing_organisation(item)
-      item.merge('primary_publishing_organisation' => primary_publishing_organisation_name(item['content_id']))
+      item.merge("primary_publishing_organisation" => primary_publishing_organisation_name(item["content_id"]))
     end
 
     def linked_items
       @linked_items ||= Services.publishing_api.get_linked_items(
         @content_id,
-        link_type: 'taxons',
-        fields: COLUMNS
+        link_type: "taxons",
+        fields: COLUMNS,
       )
     end
 
     def tagged_content_ids
       linked_items.map do |content_item|
-        content_item['content_id']
+        content_item["content_id"]
       end
     end
 
@@ -63,7 +63,7 @@ module Taxonomy
 
     def primary_organisation_ids
       links_for_tagged_content_ids.each_with_object({}) do |(content_id, links), result|
-        result[content_id] = links.dig('links', 'primary_publishing_organisation', 0)
+        result[content_id] = links.dig("links", "primary_publishing_organisation", 0)
       end
     end
 
@@ -76,14 +76,14 @@ module Taxonomy
 
     def all_organisations
       Services.publishing_api.get_content_items_enum(
-        document_type: 'organisation',
+        document_type: "organisation",
         fields: %w[content_id title],
-        per_page: 600
+        per_page: 600,
       )
     end
 
     def organisations_cache
-      @organisations_cache ||= Hash[all_organisations.map { |org| [org['content_id'], org['title']] }]
+      @organisations_cache ||= Hash[all_organisations.map { |org| [org["content_id"], org["title"]] }]
     end
   end
 end

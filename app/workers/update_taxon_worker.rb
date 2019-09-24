@@ -6,7 +6,7 @@ class UpdateTaxonWorker
     updated_taxon = previous_taxon.clone
     updated_taxon.assign_attributes(attributes)
 
-    Taxonomy::SaveTaxonVersion.call(updated_taxon, 'Bulk update', previous_taxon: previous_taxon)
+    Taxonomy::SaveTaxonVersion.call(updated_taxon, "Bulk update", previous_taxon: previous_taxon)
 
     payload = Taxonomy::BuildTaxonPayload.call(taxon: updated_taxon)
     Services.publishing_api.put_content(content_id, payload)

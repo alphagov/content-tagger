@@ -5,7 +5,7 @@ class ProjectBuilder
       project_content_items = project.content_items.new(content_item_attributes)
 
       content_ids = Services.publishing_api.lookup_content_ids(
-        base_paths: project_content_items.map(&:base_path)
+        base_paths: project_content_items.map(&:base_path),
       )
 
       invalid_content_items = []
