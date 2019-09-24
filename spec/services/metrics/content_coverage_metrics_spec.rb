@@ -1,8 +1,8 @@
-require 'rails_helper'
+require "rails_helper"
 
 module Metrics
   RSpec.describe ContentCoverageMetrics do
-    describe '#record_all' do
+    describe "#record_all" do
       before do
         blacklist = %w[taxon redirect]
         allow(Tagging)
@@ -12,8 +12,8 @@ module Metrics
           .with(
             query: {
               count: 0,
-              debug: 'include_withdrawn'
-            }
+              debug: "include_withdrawn",
+            },
           )
           .to_return(body: JSON.dump(total: 1000))
 
@@ -21,9 +21,9 @@ module Metrics
           .with(
             query: {
               count: 0,
-              debug: 'include_withdrawn',
-              reject_content_store_document_type: blacklist
-            }
+              debug: "include_withdrawn",
+              reject_content_store_document_type: blacklist,
+            },
           ).to_return(body: JSON.dump(total: 500))
 
         level_one_taxons = FactoryBot.build_list(:linkable_taxon_hash, 2)
@@ -32,26 +32,26 @@ module Metrics
           .with(
             query: {
               count: 0,
-              debug: 'include_withdrawn',
+              debug: "include_withdrawn",
               filter_part_of_taxonomy_tree: level_one_taxons.map { |x| x[:content_id] },
-              reject_content_store_document_type: blacklist
-            }
+              reject_content_store_document_type: blacklist,
+            },
           ).to_return(body: JSON.dump(total: 400))
 
         publishing_api_has_expanded_links(
           content_id: GovukTaxonomy::ROOT_CONTENT_ID,
           expanded_links: {
-            level_one_taxons: level_one_taxons
-          }
+            level_one_taxons: level_one_taxons,
+          },
         )
         publishing_api_has_expanded_links(
           {
             content_id: GovukTaxonomy::ROOT_CONTENT_ID,
             expanded_links: {
               level_one_taxons: [],
-            }
+            },
           },
-          with_drafts: false
+          with_drafts: false,
         )
       end
 

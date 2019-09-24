@@ -1,9 +1,9 @@
-require 'rake'
-require 'rails_helper'
-require 'gds_api/test_helpers/publishing_api_v2'
-require 'gds_api/test_helpers/search'
+require "rake"
+require "rails_helper"
+require "gds_api/test_helpers/publishing_api_v2"
+require "gds_api/test_helpers/search"
 
-RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
+RSpec.describe "eu_exit_business_finder:retag_documents_to_facet_values" do
   include GdsApi::TestHelpers::PublishingApiV2
   include GdsApi::TestHelpers::Search
   include PublishingApiHelper
@@ -14,7 +14,7 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
     [
       {
         "old_facet_value": "old-facet-value",
-        "new_facet_value": "new-facet-value"
+        "new_facet_value": "new-facet-value",
       },
     ]
   end
@@ -23,11 +23,11 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
     [
       {
         "base_paths": [
-          "/guidance/some-document-about-brexit"
+          "/guidance/some-document-about-brexit",
         ],
         "old_facet_value": "old-facet-value",
-        "new_facet_value": "new-facet-value"
-      }
+        "new_facet_value": "new-facet-value",
+      },
     ]
   end
 
@@ -41,9 +41,9 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
     {
       "results": [
         {
-          "link": "/a-document-about-brexit"
-        }
-      ]
+          "link": "/a-document-about-brexit",
+        },
+      ],
     }
   end
 
@@ -51,8 +51,8 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
     {
       "raw_source":
         {
-          "content_id": "content-id-to-update"
-        }
+          "content_id": "content-id-to-update",
+        },
     }
   end
 
@@ -65,8 +65,8 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
             some-facet-value
             old-facet-value
             another-facet-value
-          ]
-      }
+          ],
+      },
     }
   end
 
@@ -77,7 +77,7 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
           some-facet-value
           another-facet-value
           new-facet-value
-        ]
+        ],
     }
   end
 
@@ -87,13 +87,13 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
         %w[
           some-facet-value
           old-facet-value
-        ]
+        ],
     }
   end
 
   let(:content_id_from_base_path) do
     {
-      "/guidance/some-document-about-brexit": "content-id-to-update"
+      "/guidance/some-document-about-brexit": "content-id-to-update",
     }
   end
 
@@ -117,7 +117,7 @@ RSpec.describe 'eu_exit_business_finder:retag_documents_to_facet_values' do
   end
 
   it "updates relevant content items" do
-    Rake::Task['eu_exit_business_finder:retag_documents_to_facet_values'].invoke
+    Rake::Task["eu_exit_business_finder:retag_documents_to_facet_values"].invoke
     expect(publishing_api).to have_received(:patch_links).with("content-id-to-update", links: updated_content_item_links).exactly(2).times
     expect(publishing_api).to have_received(:patch_links).with("content-id-to-update", links: deleted_content_item_links)
   end

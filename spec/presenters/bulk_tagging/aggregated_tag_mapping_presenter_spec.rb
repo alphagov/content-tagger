@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module BulkTagging
   RSpec.describe AggregatedTagMappingPresenter do
@@ -6,15 +6,15 @@ module BulkTagging
     let(:aggregated_tag_mapping) { TaggingSpreadsheet.first.aggregated_tag_mappings.first }
     let(:presenter) { described_class.new(aggregated_tag_mapping) }
 
-    describe '#errored?' do
+    describe "#errored?" do
       it 'should return true when any tag mapping state is "errored"' do
-        tag_mappings.first.update(state: 'errored')
+        tag_mappings.first.update(state: "errored")
 
         expect(presenter.errored?).to be_truthy
       end
 
       it 'should return false when none of the tag mappings state is not "errored"' do
-        tag_mappings.first.update(state: 'tagged')
+        tag_mappings.first.update(state: "tagged")
 
         expect(presenter.errored?).to be_falsey
       end

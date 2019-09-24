@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'facet_group_importer'
+require "rails_helper"
+require "facet_group_importer"
 
 RSpec.describe FacetGroupImporter do
   let(:publishing_api) { Services.publishing_api_with_long_timeout }
@@ -19,7 +19,7 @@ RSpec.describe FacetGroupImporter do
           short_name: "Facet",
           preposition: "do something with",
           type: "content_id",
-          filter_key: 'facet_filter_key',
+          filter_key: "facet_filter_key",
           facet_values: [
             {
               content_id: "cde-345-fgh-678",
@@ -31,9 +31,9 @@ RSpec.describe FacetGroupImporter do
               title: "Another facet value",
               value: "another-facet-value",
             },
-          ]
-        }
-      ]
+          ],
+        },
+      ],
     }
   end
   let(:facet) { facet_group[:facets].first }
@@ -67,8 +67,8 @@ RSpec.describe FacetGroupImporter do
             details: {
               description: "Test data facet group",
               name: "A facet group",
-            }
-          )
+            },
+          ),
         )
     end
 
@@ -87,13 +87,13 @@ RSpec.describe FacetGroupImporter do
               display_as_result_metadata: true,
               filterable: true,
               key: "a_facet",
-              filter_key: 'facet_filter_key',
+              filter_key: "facet_filter_key",
               name: "A facet",
               short_name: "Facet",
               preposition: "do something with",
               type: "content_id",
-            }
-          )
+            },
+          ),
         )
     end
 
@@ -111,8 +111,8 @@ RSpec.describe FacetGroupImporter do
               details: {
                 label: facet_value[:title],
                 value: facet_value[:value],
-              }
-            )
+              },
+            ),
           )
       end
     end
@@ -122,8 +122,8 @@ RSpec.describe FacetGroupImporter do
         .with(
           facet_group[:content_id],
           a_hash_including(
-            links: { facets: [facet[:content_id]] }
-          )
+            links: { facets: [facet[:content_id]] },
+          ),
         )
     end
 
@@ -133,8 +133,8 @@ RSpec.describe FacetGroupImporter do
           .with(
             facet_value[:content_id],
             a_hash_including(
-              links: { parent: [facet[:content_id]] }
-            )
+              links: { parent: [facet[:content_id]] },
+            ),
           )
       end
     end
@@ -147,8 +147,8 @@ RSpec.describe FacetGroupImporter do
             links: {
               facet_values: facet[:facet_values].map { |v| v[:content_id] },
               parent: [facet_group[:content_id]],
-            }
-          )
+            },
+          ),
         )
     end
   end

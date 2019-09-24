@@ -29,7 +29,7 @@ module BulkTagging
       results = Services.publishing_api.get_linked_items(
         content_id,
         link_type: "taxons",
-        fields: %w[title content_id base_path document_type state]
+        fields: %w[title content_id base_path document_type state],
       )
 
       results.map { |result| ContentItem.new(result) }
@@ -37,7 +37,7 @@ module BulkTagging
 
     def request_tagged_content_items
       api_response = Services.publishing_api.get_expanded_links(content_id)
-      results = api_response['expanded_links'].fetch(
+      results = api_response["expanded_links"].fetch(
         BulkTaggingSource.new.content_key_for(document_type), []
       )
       results.map { |result| ContentItem.new(result) }

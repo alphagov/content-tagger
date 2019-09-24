@@ -9,15 +9,15 @@ module BulkTagging
     end
 
     def results
-      gds_api_response_hash['results'].map { |result| ContentItem.new(result) }
+      gds_api_response_hash["results"].map { |result| ContentItem.new(result) }
     end
 
     def current_page
-      gds_api_response_hash['current_page']
+      gds_api_response_hash["current_page"]
     end
 
     def total_pages
-      gds_api_response_hash['pages']
+      gds_api_response_hash["pages"]
     end
 
     def limit_value

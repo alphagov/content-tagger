@@ -4,7 +4,7 @@ RSpec.describe RemoteCsv, "#rows_with_headers" do
   let(:csv_url) { "http://example.com/sheet.csv" }
 
   it "returns an array of hashes" do
-    stub_request(:get, csv_url).to_return(body: <<~CSV.delete(' '))
+    stub_request(:get, csv_url).to_return(body: <<~CSV.delete(" "))
       url,     title,     description
       url_one, title_one, description_one
       url_two, title_two, description_two
@@ -12,14 +12,14 @@ RSpec.describe RemoteCsv, "#rows_with_headers" do
 
     expect(RemoteCsv.new(csv_url).rows_with_headers).to eq [
       {
-        'url' => 'url_one',
-        'title' => 'title_one',
-        'description' => 'description_one'
+        "url" => "url_one",
+        "title" => "title_one",
+        "description" => "description_one",
       },
       {
-        'url' => 'url_two',
-        'title' => 'title_two',
-        'description' => 'description_two'
+        "url" => "url_two",
+        "title" => "title_two",
+        "description" => "description_two",
       },
     ]
   end

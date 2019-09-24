@@ -46,7 +46,7 @@ RSpec.feature "Bulk tagging", type: :feature do
 
     publishing_api_has_content_items(
       [document_collection],
-      q: "Tax"
+      q: "Tax",
     )
 
     publishing_api_has_item(document_collection)
@@ -58,7 +58,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         base_path: "/a-topic",
         document_type: "topic",
       }],
-      q: "topic"
+      q: "topic",
     )
 
     publishing_api_has_content_items(
@@ -68,7 +68,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         base_path: "/a-maintstream-browse-page",
         document_type: "mainstream_browse_page",
       }],
-      q: "browse"
+      q: "browse",
     )
 
     publishing_api_has_expanded_links(
@@ -77,8 +77,8 @@ RSpec.feature "Bulk tagging", type: :feature do
         documents: [
           basic_content_item("Tax doc 1"),
           basic_content_item("Tax doc 2"),
-        ]
-      }
+        ],
+      },
     )
   end
 
@@ -89,9 +89,9 @@ RSpec.feature "Bulk tagging", type: :feature do
     # Used in the dropdown
     publishing_api_has_linkables(
       [
-        build_linkable(internal_name: "Taxon 1", content_id: 'taxon-1'),
-        build_linkable(internal_name: "Taxon 2", content_id: 'taxon-2'),
-        build_linkable(internal_name: "Taxon 3", content_id: 'taxon-3'),
+        build_linkable(internal_name: "Taxon 1", content_id: "taxon-1"),
+        build_linkable(internal_name: "Taxon 2", content_id: "taxon-2"),
+        build_linkable(internal_name: "Taxon 3", content_id: "taxon-3"),
       ],
       document_type: "taxon",
     )
@@ -101,20 +101,20 @@ RSpec.feature "Bulk tagging", type: :feature do
     visit new_bulk_tag_path
 
     fill_in "bulk_tag_query", with: "topic"
-    click_button I18n.t('bulk_tag.search_button')
+    click_button I18n.t("bulk_tag.search_button")
     expect(page).to have_text("A Topic")
 
     fill_in "bulk_tag_query", with: "browse"
-    click_button I18n.t('bulk_tag.search_button')
+    click_button I18n.t("bulk_tag.search_button")
     expect(page).to have_text("A Mainstream Browse Page")
 
     fill_in "bulk_tag_query", with: "Tax"
-    click_button I18n.t('bulk_tag.search_button')
+    click_button I18n.t("bulk_tag.search_button")
     expect(page).to have_text("Tax documents")
-    expect(page).to have_text('Document collection')
+    expect(page).to have_text("Document collection")
     expect(page).to have_link(
       "View tagged pages",
-      href: new_tag_migration_path(source_content_id: "collection-id")
+      href: new_tag_migration_path(source_content_id: "collection-id"),
     )
   end
 
@@ -149,7 +149,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     expect(page).to have_text("/level-one/tax-doc-1", count: 1)
     expect(page).to have_text("/level-one/tax-doc-2", count: 1)
     expect(page).to have_text(
-      I18n.t('views.tag_update_progress_bar', completed: 0, total: 2)
+      I18n.t("views.tag_update_progress_bar", completed: 0, total: 2),
     )
 
     within("table") do
@@ -162,8 +162,8 @@ RSpec.feature "Bulk tagging", type: :feature do
     publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
     publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
     publishing_api_has_lookups(
-      '/level-one/tax-doc-1' => 'tax-doc-1',
-      '/level-one/tax-doc-2' => 'tax-doc-2',
+      "/level-one/tax-doc-1" => "tax-doc-1",
+      "/level-one/tax-doc-2" => "tax-doc-2",
     )
     stub_publishing_api_patch_links(
       "tax-doc-1",
@@ -213,7 +213,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def then_i_see_an_error_about_taxons
-    expect(page).to have_text 'No taxons selected.'
+    expect(page).to have_text "No taxons selected."
   end
 
   def when_i_submit_the_form
@@ -221,7 +221,7 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def then_i_see_an_error_about_content_items
-    expect(page).to have_text 'No content items selected.'
+    expect(page).to have_text "No content items selected."
   end
 
   def when_i_select_taxons
@@ -233,12 +233,12 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def then_i_can_see_it_has_been_imported
-    expect(all('table tbody tr').count).to eq(1)
+    expect(all("table tbody tr").count).to eq(1)
 
-    row = first('table tbody tr')
+    row = first("table tbody tr")
 
     expect(row).to have_text(/Tagging completed/i)
-    expect(row).to have_text('Tax documents (Document collection)')
+    expect(row).to have_text("Tax documents (Document collection)")
   end
 
   def given_a_tag_migration_exists
@@ -249,35 +249,35 @@ RSpec.feature "Bulk tagging", type: :feature do
 
     publishing_api_has_item(
       content_id: tag_migration.source_content_id,
-      title: 'Source content',
-      document_type: 'taxon',
-      base_path: '/source-content'
+      title: "Source content",
+      document_type: "taxon",
+      base_path: "/source-content",
     )
 
-    publishing_api_has_lookups(tag_mapping.content_base_path => 'content-id')
+    publishing_api_has_lookups(tag_mapping.content_base_path => "content-id")
     publishing_api_has_taxons(
       [
         basic_content_item(
           tag_mapping.link_title,
           other_fields: {
             content_id: tag_mapping.link_content_id,
-            document_type: tag_mapping.link_type
-          }
-        )
-      ]
+            document_type: tag_mapping.link_type,
+          },
+        ),
+      ],
     )
     publishing_api_has_links(
-      content_id: 'content-id',
+      content_id: "content-id",
       links: { taxons: [] },
-      version: 0
+      version: 0,
     )
     stub_publishing_api_patch_links(
-      'content-id',
+      "content-id",
       links: {
-        taxons: [tag_mapping.link_content_id]
+        taxons: [tag_mapping.link_content_id],
       },
       bulk_publishing: true,
-      previous_version: 0
+      previous_version: 0,
     )
   end
 
@@ -291,11 +291,11 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def then_i_can_see_a_progress_bar
-    expect(page).to have_selector('.progress-bar')
+    expect(page).to have_selector(".progress-bar")
 
-    bar = find('.progress-bar')
-    max_value = bar['aria-valuemax']
-    current_value = bar['aria-valuenow']
+    bar = find(".progress-bar")
+    max_value = bar["aria-valuemax"]
+    current_value = bar["aria-valuenow"]
 
     expect(current_value).to eq(max_value)
   end

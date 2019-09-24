@@ -1,7 +1,7 @@
 module GovukTaxonomy
   class Branches
     def branch_name_for_content_id(content_id)
-      get_content_item(content_id).dig('title')
+      get_content_item(content_id).dig("title")
     end
 
     def all
@@ -11,7 +11,7 @@ module GovukTaxonomy
 
     def taxons_for_branch(content_id)
       taxon = get_content_item(content_id)
-      taxon['expanded_links_hash'] = get_expanded_links_hash(content_id, with_drafts: true)
+      taxon["expanded_links_hash"] = get_expanded_links_hash(content_id, with_drafts: true)
       Tree.new(taxon).root_taxon.tree
     end
 

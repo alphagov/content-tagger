@@ -2,7 +2,7 @@ module TaxonomyHealth
   class ContentCountMetric
     include Sidekiq::Worker
 
-    DESCRIPTION = 'Taxon has too much content tagged to it'.freeze
+    DESCRIPTION = "Taxon has too much content tagged to it".freeze
 
     def perform(arguments)
       maximum = arguments.symbolize_keys[:maximum]
@@ -24,7 +24,7 @@ module TaxonomyHealth
           metric: self.class.to_s,
           value: content_count,
           message: "Taxon has #{content_count} content items, "\
-                   "which exceeds the maximum of #{maximum}"
+                   "which exceeds the maximum of #{maximum}",
         )
       end
     end

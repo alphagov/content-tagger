@@ -19,7 +19,7 @@ module BulkTagging
         tagging_source.update!(
           last_published_at: Time.zone.now,
           last_published_by: user.uid,
-          state: "imported"
+          state: "imported",
         )
 
         tag_mappings.update_all(publish_requested_at: Time.zone.now)

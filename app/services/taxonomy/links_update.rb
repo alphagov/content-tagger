@@ -16,7 +16,7 @@ module Taxonomy
             parent_taxons: [],
             associated_taxons: @associated_taxon_ids,
             legacy_taxons: @legacy_taxon_ids,
-          }
+          },
         )
 
       else
@@ -27,7 +27,7 @@ module Taxonomy
             parent_taxons: Array(@parent_taxon_id),
             associated_taxons: @associated_taxon_ids,
             legacy_taxons: @legacy_taxon_ids,
-          }
+          },
         )
       end
     end

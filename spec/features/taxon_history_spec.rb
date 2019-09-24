@@ -1,11 +1,11 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.feature 'Taxon history' do
+RSpec.feature "Taxon history" do
   include ContentItemHelper
   include EmailAlertApiHelper
   include PublishingApiHelper
 
-  scenario 'leaving a version note when updating the taxon' do
+  scenario "leaving a version note when updating the taxon" do
     given_a_taxon_exists
     when_i_visit_the_taxon_edit_form
     and_i_change_the_title_and_fill_the_version_note_field
@@ -15,39 +15,39 @@ RSpec.feature 'Taxon history' do
   end
 
   def given_a_taxon_exists
-    title = 'Business'
+    title = "Business"
 
     @taxon = taxon_with_details(
       title, other_fields: {
-        description: '...',
+        description: "...",
         state_history: {
-          "1" => "published"
-        }
+          "1" => "published",
+        },
       }
     )
   end
 
   def when_i_visit_the_taxon_edit_form
-    publishing_api_has_linked_items([], content_id: @taxon['content_id'], link_type: "taxons")
+    publishing_api_has_linked_items([], content_id: @taxon["content_id"], link_type: "taxons")
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/#{@taxon['content_id']}")
       .to_return(body: @taxon.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon['content_id']}")
       .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/linkables?document_type=taxon")
       .to_return(body: [{
-        title: @taxon['title'],
-        content_id: @taxon['content_id'],
-        base_path: @taxon['base_path'],
-        internal_name: @taxon['title'],
-        publication_state: @taxon['publication_state']
+        title: @taxon["title"],
+        content_id: @taxon["content_id"],
+        base_path: @taxon["base_path"],
+        internal_name: @taxon["title"],
+        publication_state: @taxon["publication_state"],
       }].to_json)
 
-    visit edit_taxon_path(@taxon['content_id'])
+    visit edit_taxon_path(@taxon["content_id"])
   end
 
   def and_i_change_the_title_and_fill_the_version_note_field
-    fill_in 'taxon_title', with: 'Business tax'
-    fill_in 'internal_change_note', with: 'User research shows that the title was too generic'
+    fill_in "taxon_title", with: "Business tax"
+    fill_in "internal_change_note", with: "User research shows that the title was too generic"
   end
 
   def and_i_click_save
@@ -58,19 +58,19 @@ RSpec.feature 'Taxon history' do
     stub_request(:post, "https://publishing-api.test.gov.uk/v2/content/#{@taxon['content_id']}/publish")
       .to_return(body: {}.to_json)
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/#{@taxon['content_id']}")
-      .to_return(body: { content_id: @taxon['content_id'], expanded_links: {} }.to_json)
+      .to_return(body: { content_id: @taxon["content_id"], expanded_links: {} }.to_json)
     stub_email_requests_for_show_page
 
-    click_on 'Save draft'
+    click_on "Save draft"
   end
 
   def and_i_click_view_version_history
-    click_on 'View taxon change history'
+    click_on "View taxon change history"
   end
 
   def then_i_will_see_the_version_history_on_the_taxon_page
-    expect(page).to have_content '(#1)'
-    expect(page).to have_content 'internal_change_note User research shows that the title was too generic'
+    expect(page).to have_content "(#1)"
+    expect(page).to have_content "internal_change_note User research shows that the title was too generic"
     expect(page).to have_content 'title "Business" → "Business tax"'
   end
 

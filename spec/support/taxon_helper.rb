@@ -13,21 +13,21 @@ module Support
             {
               "links" =>
                {
-                 tail.length == 1 ? "root_taxon" : "parent_taxons" => [path_converter.call(tail)]
-               }
+                 tail.length == 1 ? "root_taxon" : "parent_taxons" => [path_converter.call(tail)],
+               },
             }
           end
         {
-          "content_id" => head
+          "content_id" => head,
         }.merge(links_hash)
       end
 
       {
-        'content_id' => content_id,
-        'expanded_links' =>
+        "content_id" => content_id,
+        "expanded_links" =>
           {
-            'taxons' => paths.map { |path| path_converter.call(path.reverse) }
-          }
+            "taxons" => paths.map { |path| path_converter.call(path.reverse) },
+          },
       }
     end
   end

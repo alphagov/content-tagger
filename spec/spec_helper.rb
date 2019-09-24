@@ -1,4 +1,4 @@
-require 'webmock/rspec'
+require "webmock/rspec"
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -19,7 +19,7 @@ RSpec.configure do |config|
 
   config.disable_monkey_patching!
 
-  config.default_formatter = 'doc'
+  config.default_formatter = "doc"
 
   config.order = :random
 

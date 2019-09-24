@@ -105,7 +105,7 @@ private
       details: {
         description: data[:description],
         name: data[:title],
-      }
+      },
     }.merge(publishing_and_rendering_apps)
   end
 
@@ -118,7 +118,7 @@ private
         *:combine_mode, :display_as_result_metadata,
         :filterable, :key, :filter_key, :name, :short_name,
         :preposition, :type
-      )
+      ),
     }.merge(publishing_and_rendering_apps)
   end
 
@@ -130,7 +130,7 @@ private
       details: {
         label: data[:title],
         value: data[:value],
-      }
+      },
     }.merge(publishing_and_rendering_apps)
   end
 

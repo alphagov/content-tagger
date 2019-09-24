@@ -7,16 +7,16 @@ module Tagging
     def find_all
       content_enum = Services.search_api.search_enum({ reject_content_store_document_type: Tagging.blacklisted_document_types,
                                                        fields: %w[content_id title] }, page_size: 100)
-      filtered_content_enum = content_enum.lazy.select { |c| c.has_key?('content_id') }
+      filtered_content_enum = content_enum.lazy.select { |c| c.has_key?("content_id") }
       all_results = filtered_content_enum.map do |content_hash|
-        content_id = content_hash['content_id']
-        title = content_hash['title']
+        content_id = content_hash["content_id"]
+        title = content_hash["title"]
         begin
           expanded_links_hash = Services.publishing_api.get_expanded_links(content_id).to_h
           {
             content_id: content_id,
             title: title,
-            common_ancestors: find_common_ancestors(taxon_paths(expanded_links_hash))
+            common_ancestors: find_common_ancestors(taxon_paths(expanded_links_hash)),
           }
         rescue GdsApi::HTTPNotFound
           puts("Cannot find content with id: #{content_id}")
@@ -38,11 +38,11 @@ module Tagging
       taxon_path = lambda do |taxon_hash|
         return [] if taxon_hash.nil?
 
-        taxon_path.call(taxon_hash.dig('links', 'parent_taxons', 0) ||
-                        taxon_hash.dig('links', 'root_taxon', 0)).append(taxon_hash['content_id'])
+        taxon_path.call(taxon_hash.dig("links", "parent_taxons", 0) ||
+                        taxon_hash.dig("links", "root_taxon", 0)).append(taxon_hash["content_id"])
       end
 
-      taxon_hashes = content_hash.dig('expanded_links', 'taxons') || []
+      taxon_hashes = content_hash.dig("expanded_links", "taxons") || []
       taxon_hashes.map do |taxon_hash|
         taxon_path.call(taxon_hash)
       end

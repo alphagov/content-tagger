@@ -18,7 +18,7 @@ class FacetDataTagger
 
     @paths_mapped_to_content_ids = publishing_api.lookup_content_ids(
       base_paths: @facet_data.keys,
-      with_drafts: true
+      with_drafts: true,
     )
   end
 
@@ -34,8 +34,8 @@ class FacetDataTagger
         content_id,
         links: {
           facet_groups: [facet_group_config[:content_id]],
-          facet_values: facet_data
-        }
+          facet_values: facet_data,
+        },
       )
       logger.info "Patched #{content_id} with links:"
       logger.info "facet_groups: [#{facet_group_config[:content_id]}], facet_values: [#{facet_data.join(',')}]"
@@ -56,8 +56,8 @@ class FacetDataTagger
         content_id,
         links: {
           facet_groups: [],
-          facet_values: []
-        }
+          facet_values: [],
+        },
       )
       logger.info "Patched empty facet_groups and facet_values links for #{content_id}"
     end

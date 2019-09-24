@@ -1,6 +1,6 @@
-require 'rails_helper'
-require 'description_remover'
-require 'gds_api/test_helpers/content_store'
+require "rails_helper"
+require "description_remover"
+require "gds_api/test_helpers/content_store"
 
 include ::GdsApi::TestHelpers::ContentStore
 include ::GdsApi::TestHelpers::PublishingApiV2
@@ -44,73 +44,73 @@ RSpec.describe DescriptionRemover do
           published_child_taxon,
           published_child_taxon_with_draft,
           draft_taxon,
-        ]
-      }
+        ],
+      },
     }
   end
 
   def published_child_taxon
     {
-      'schema_name' => 'taxon',
-      'content_store' => 'live',
-      'user_facing_version' => "4",
-      'publication_state' => 'published',
-      'lock_version' => "3",
-      'updated_at' => Time.now,
-      'phase' => 'live',
+      "schema_name" => "taxon",
+      "content_store" => "live",
+      "user_facing_version" => "4",
+      "publication_state" => "published",
+      "lock_version" => "3",
+      "updated_at" => Time.now,
+      "phase" => "live",
       "title" => "taxon-a",
       "description" => "taxons-a-description",
       "base_path" => "/work/taxon_a",
       "content_id" => "pub-taxon",
       "state_history" => {
         "1" => "superseded",
-        "2" => "published"
-      }
+        "2" => "published",
+      },
     }
   end
 
   def published_child_taxon_with_draft
     {
-      'schema_name' => 'taxon',
-      'content_store' => 'live',
-      'user_facing_version' => "4",
-      'publication_state' => 'published',
-      'lock_version' => "3",
-      'updated_at' => Time.now,
-      'phase' => 'live',
+      "schema_name" => "taxon",
+      "content_store" => "live",
+      "user_facing_version" => "4",
+      "publication_state" => "published",
+      "lock_version" => "3",
+      "updated_at" => Time.now,
+      "phase" => "live",
       "title" => "taxon-b",
       "base_path" => "/work/taxon_b",
       "content_id" => "pub-and-draft-taxon",
       "state_history" => {
         "1" => "published",
-        "2" => "draft"
-      }
+        "2" => "draft",
+      },
     }
   end
 
   def draft_taxon
     {
-      'schema_name' => 'taxon',
-      'content_store' => 'draft',
-      'user_facing_version' => "4",
-      'publication_state' => 'draft',
-      'lock_version' => "3",
-      'updated_at' => Time.now,
-      'phase' => 'live',
+      "schema_name" => "taxon",
+      "content_store" => "draft",
+      "user_facing_version" => "4",
+      "publication_state" => "draft",
+      "lock_version" => "3",
+      "updated_at" => Time.now,
+      "phase" => "live",
       "title" => "taxon-c",
       "base_path" => "/work/taxon_c",
       "content_id" => "draft-taxon",
       "state_history" => {
-        "1" => "draft"
-      }
+        "1" => "draft",
+      },
     }
   end
 
   def assert_put_content(content_id, params)
     param_defaults = {
       description: nil,
-      schema_name: 'taxon',
-      update_type: 'minor'
+      schema_name: "taxon",
+      update_type: "minor",
     }
     assert_publishing_api_put_content(content_id, param_defaults.merge(params), 1)
   end

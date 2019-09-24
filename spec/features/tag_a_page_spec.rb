@@ -9,7 +9,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   scenario "User looks up and tags a content item" do
     given_there_is_a_content_item_with_expanded_links(
-      topics: [example_topic]
+      topics: [example_topic],
     )
 
     when_i_visit_edit_a_page
@@ -26,7 +26,7 @@ RSpec.describe "Tagging content", type: :feature do
       ordered_related_items: [],
       mainstream_browse_pages: [],
       parent: [],
-      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic['content_id']],
+      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic["content_id"]],
       organisations: [],
       meets_user_needs: [],
     )
@@ -189,7 +189,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   def given_there_is_a_content_item_with_expanded_links(**expanded_links)
     publishing_api_has_lookups(
-      '/my-content-item' => 'MY-CONTENT-ID'
+      "/my-content-item" => "MY-CONTENT-ID",
     )
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
@@ -197,9 +197,9 @@ RSpec.describe "Tagging content", type: :feature do
         publishing_app: "a-migrated-app",
         rendering_app: "frontend",
         content_id: "MY-CONTENT-ID",
-        base_path: '/my-content-item',
-        document_type: 'guide',
-        title: 'This Is A Content Item',
+        base_path: "/my-content-item",
+        document_type: "guide",
+        title: "This Is A Content Item",
       }.to_json)
 
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
@@ -211,61 +211,61 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def and_i_submit_the_url_of_the_content_item
-    fill_in 'content_lookup_form_base_path', with: '/my-content-item'
-    click_on I18n.t('taggings.search')
+    fill_in "content_lookup_form_base_path", with: "/my-content-item"
+    click_on I18n.t("taggings.search")
   end
 
   def and_i_fill_a_unknown_base_path_to_my_content_item
     # Publishing API returns nothing if the content item doesn't exist.
     publishing_api_has_lookups({})
 
-    fill_in 'content_lookup_form_base_path', with: '/an-unknown-content-item'
-    click_on I18n.t('taggings.search')
+    fill_in "content_lookup_form_base_path", with: "/an-unknown-content-item"
+    click_on I18n.t("taggings.search")
   end
 
   def when_i_fill_in_related_items(values)
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    fields = all('.related-item input')
+    fields = all(".related-item input")
     values.each do |i, value|
       fields[i].set(value)
     end
   end
 
   def and_the_related_items_should_be_prefilled_with(values)
-    fields = all('.related-item input')
+    fields = all(".related-item input")
     values.each do |i, value|
       expect(fields[i].value).to eq(value)
     end
   end
 
   def then_the_suggested_related_items_component_should_not_be_shown
-    expect(page).to_not have_content 'Suggested related content items'
+    expect(page).to_not have_content "Suggested related content items"
   end
 
   def then_i_am_on_the_page_for_an_item
-    expect(page).to have_content 'This Is A Content Item'
+    expect(page).to have_content "This Is A Content Item"
   end
   alias_method :then_i_am_on_the_page_for_the_item, :then_i_am_on_the_page_for_an_item
 
   def and_the_expected_navigation_link_is_highlighted
-    active_nav_link = find('.navbar-nav li.active')
+    active_nav_link = find(".navbar-nav li.active")
 
-    expect(active_nav_link.text).to match(I18n.t('navigation.tagging_content'))
+    expect(active_nav_link.text).to match(I18n.t("navigation.tagging_content"))
   end
 
   def and_i_see_the_taxon_form
-    taxon_options = all('#tagging_tagging_update_form_taxons option').map(&:text)
+    taxon_options = all("#tagging_tagging_update_form_taxons option").map(&:text)
     expect(taxon_options).to include("Vehicle plating")
   end
 
   def then_i_see_that_the_path_was_not_found
-    expect(page).to have_content 'No page found with this path'
+    expect(page).to have_content "No page found with this path"
   end
 
   def and_i_see_the_url_is_invalid
-    expect(page).to have_content 'Not a known URL on GOV.UK'
+    expect(page).to have_content "Not a known URL on GOV.UK"
   end
 
   def when_i_select_an_additional_topic(selection)
@@ -281,11 +281,11 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def then_i_see_that_there_is_a_conflict
-    expect(page).to have_content 'Somebody changed the tags before you could'
+    expect(page).to have_content "Somebody changed the tags before you could"
   end
 
   def and_i_submit_the_form
-    click_on I18n.t('taggings.update_tags')
+    click_on I18n.t("taggings.update_tags")
   end
 
   def then_the_publishing_api_is_sent(**links)
@@ -302,31 +302,31 @@ RSpec.describe "Tagging content", type: :feature do
       [
         "/topic/id-of-already-tagged",
         "/topic/business-tax/pension-scheme-administration",
-      ]
+      ],
     )
 
     publishing_api_has_taxon_linkables(
       [
         "/alpha-taxonomy/vehicle-plating",
-      ]
+      ],
     )
 
     publishing_api_has_organisation_linkables(
       [
         "/government/organisations/student-loans-company",
-      ]
+      ],
     )
 
     publishing_api_has_need_linkables(
       [
         "/needs/apply-for-a-copy-of-a-marriage-certificate",
-      ]
+      ],
     )
 
     publishing_api_has_mainstream_browse_page_linkables(
       [
         "/browse/driving/car-tax-discs",
-      ]
+      ],
     )
   end
 

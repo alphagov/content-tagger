@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.feature "Projects", type: :feature do
   include TaxonomyHelper
@@ -157,9 +157,9 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def then_i_see_the_content_item_and_its_tag_data
-    within('.content-item:first') do
+    within(".content-item:first") do
       expect(page).to have_content @content_item.title
-      on_page_taxons = find('.select2')['data-taxons']
+      on_page_taxons = find(".select2")["data-taxons"]
       expect(on_page_taxons).to eql @taxons.to_s
     end
   end
@@ -171,7 +171,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def given_there_is_a_remote_spreadsheet
-    stub_request(:get, 'http://example.com/sheet.csv').to_return(body: <<~CSV)
+    stub_request(:get, "http://example.com/sheet.csv").to_return(body: <<~CSV)
       url,title,description
       https://www.gov.uk/vat-rates,VAT Rates,Description
       https://www.gov.uk/passport-fees,Passport Fees,Description
@@ -184,38 +184,38 @@ RSpec.feature "Projects", type: :feature do
 
   def and_the_publishing_api_can_find_the_content_items_in_the_remote_spreadsheet
     publishing_api_has_lookups(
-      '/vat-rates' => 'f838c22a-b2aa-49be-bd95-153f593293a3',
-      '/passport-fees' => '8b59b474-9775-4366-97ee-97a66740411c'
+      "/vat-rates" => "f838c22a-b2aa-49be-bd95-153f593293a3",
+      "/passport-fees" => "8b59b474-9775-4366-97ee-97a66740411c",
     )
   end
 
   def and_one_of_the_content_items_has_already_been_imported
     create(
       :project_content_item,
-      title: 'VAT Rates',
-      url: 'https://www.gov.uk/vat-rates',
-      content_id: 'f838c22a-b2aa-49be-bd95-153f593293a3'
+      title: "VAT Rates",
+      url: "https://www.gov.uk/vat-rates",
+      content_id: "f838c22a-b2aa-49be-bd95-153f593293a3",
     )
   end
 
   def when_i_create_a_new_project
     visit projects_path
-    click_link 'Add new project'
-    fill_in 'new_project_form_name', with: 'my_project'
-    select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
-    fill_in 'new_project_form_remote_url', with: 'http://example.com/sheet.csv'
-    click_on 'New Project'
+    click_link "Add new project"
+    fill_in "new_project_form_name", with: "my_project"
+    select draft_taxon_title, from: "Branch of GOV.UK taxonomy"
+    fill_in "new_project_form_remote_url", with: "http://example.com/sheet.csv"
+    click_on "New Project"
   end
 
   def when_i_create_a_new_project_with_bulk_tagging
-    @project_name = 'my_project'
+    @project_name = "my_project"
     visit projects_path
-    click_link 'Add new project'
-    fill_in 'new_project_form_name', with: @project_name
-    select draft_taxon_title, from: 'Branch of GOV.UK taxonomy'
-    fill_in 'new_project_form_remote_url', with: 'http://example.com/sheet.csv'
-    check 'Bulk tagging'
-    click_on 'New Project'
+    click_link "Add new project"
+    fill_in "new_project_form_name", with: @project_name
+    select draft_taxon_title, from: "Branch of GOV.UK taxonomy"
+    fill_in "new_project_form_remote_url", with: "http://example.com/sheet.csv"
+    check "Bulk tagging"
+    click_on "New Project"
 
     taxons = [SecureRandom.uuid]
     stub_bulk_taxons_lookup(ProjectContentItem.pluck(:content_id), taxons)
@@ -226,8 +226,8 @@ RSpec.feature "Projects", type: :feature do
     publishing_api_has_taxons([])
 
     visit root_path
-    within 'header nav .nav' do
-      click_link 'Projects'
+    within "header nav .nav" do
+      click_link "Projects"
     end
     click_link @project.name
   end
@@ -238,28 +238,28 @@ RSpec.feature "Projects", type: :feature do
   alias_method :when_i_visit_the_project_index_page, :and_i_visit_the_project_index_page
 
   def and_i_filter_by_done
-    within '.filter-controls' do
+    within ".filter-controls" do
       choose("Done")
       click_button("Apply")
     end
   end
 
   def and_i_filter_by_flagged
-    within '.filter-controls' do
+    within ".filter-controls" do
       choose("Flagged")
       click_button("Apply")
     end
   end
 
   def and_i_filter_by_to_do
-    within '.filter-controls' do
+    within ".filter-controls" do
       choose("To Do")
       click_button("Apply")
     end
   end
 
   def and_i_filter_by_text
-    within '.filter-controls' do
+    within ".filter-controls" do
       fill_in "title_search", with: "foo"
       click_button("Apply")
     end
@@ -270,17 +270,17 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def then_i_can_see_my_new_project_in_the_list
-    expect(page).to have_content 'my_project'
+    expect(page).to have_content "my_project"
   end
 
   def then_i_see_an_duplicate_content_error_message
-    expect(page).to have_content 'The project was not created'
-    expect(page).to have_content 'https://www.gov.uk/vat-rates'
+    expect(page).to have_content "The project was not created"
+    expect(page).to have_content "https://www.gov.uk/vat-rates"
   end
 
   def then_i_see_the_project_has_been_deleted
-    expect(page).to have_content 'You have successfully deleted the project'
-    expect(page).not_to have_content 'project title'
+    expect(page).to have_content "You have successfully deleted the project"
+    expect(page).not_to have_content "project title"
   end
 
   def then_i_can_see_todo_content_items_for_that_project
@@ -315,15 +315,15 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def then_the_bulk_tagging_interface_is_present
-    expect(page).to have_selector '.bulk-tagger'
+    expect(page).to have_selector ".bulk-tagger"
   end
 
   def then_there_is_no_bulk_tagging_interface
-    expect(page).not_to have_selector '.bulk-tagger'
+    expect(page).not_to have_selector ".bulk-tagger"
   end
 
   def then_the_content_item_should_not_show_in_the_to_do_list
-    expect(page).not_to have_content 'Foo'
+    expect(page).not_to have_content "Foo"
   end
 
   def then_the_tagging_progress_for_the_organisations_will_be_shown

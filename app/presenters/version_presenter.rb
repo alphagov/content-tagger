@@ -2,9 +2,9 @@ class VersionPresenter < SimpleDelegator
   def changes
     object_changes.map do |modifier, attribute, *values|
       case modifier
-      when '+'
+      when "+"
         values.unshift(nil)
-      when '-'
+      when "-"
         values.push(nil)
       end
 

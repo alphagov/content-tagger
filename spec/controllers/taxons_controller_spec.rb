@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe TaxonsController, type: :controller do
   include EmailAlertApiHelper
@@ -99,16 +99,16 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
-  describe '#bulk_publish' do
-    it 'bulk publishes content' do
-      expect(Taxonomy::BulkPublishTaxon).to receive(:call).with('123')
+  describe "#bulk_publish" do
+    it "bulk publishes content" do
+      expect(Taxonomy::BulkPublishTaxon).to receive(:call).with("123")
       post :bulk_publish, params: { taxon_id: 123 }
       expect(response).to redirect_to(taxon_path(123))
     end
   end
 
   describe "#publish" do
-    it 'responds with a specific error when the base path is already used' do
+    it "responds with a specific error when the base path is already used" do
       taxon = build(:taxon, publication_state: "unpublished", content_id: SecureRandom.uuid)
       stub_publishing_api_publish(taxon.content_id, {}, status: 422)
       payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
@@ -122,10 +122,10 @@ RSpec.describe TaxonsController, type: :controller do
     end
   end
 
-  describe '#confirm_bulk_publish' do
-    it 'renders confirm bulk publish' do
+  describe "#confirm_bulk_publish" do
+    it "renders confirm bulk publish" do
       stub_email_requests_for_show_page
-      expect(Taxonomy::BuildTaxon).to receive(:call).with(content_id: '123').and_return FactoryBot.build(:taxon)
+      expect(Taxonomy::BuildTaxon).to receive(:call).with(content_id: "123").and_return FactoryBot.build(:taxon)
       get :confirm_bulk_publish, params: { taxon_id: 123 }
       expect(response.code).to eql "200"
     end
@@ -136,10 +136,10 @@ RSpec.describe TaxonsController, type: :controller do
       taxon = build(:taxon, publication_state: "unpublished")
 
       parent_taxon = taxon_with_details(
-        'root', other_fields: { base_path: '/level-one', content_id: 'CONTENT-ID-PARENT' }
+        "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
       )
       publishing_api_has_item(parent_taxon)
-      publishing_api_has_expanded_links(content_id: 'CONTENT-ID-PARENT')
+      publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
 
       Timecop.freeze do
         payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
@@ -149,20 +149,20 @@ RSpec.describe TaxonsController, type: :controller do
             parent_taxons: %w[CONTENT-ID-PARENT],
             associated_taxons: %w[1234],
             legacy_taxons: [],
-          }
+          },
         }
 
         expanded_links = {
           expanded_links: {
             root_taxon: [],
             parent_taxons: [
-              { content_id: 'CONTENT-ID-PARENT' }
+              { content_id: "CONTENT-ID-PARENT" },
             ],
             associated_taxons: [
-              { content_id: '1234' }
+              { content_id: "1234" },
             ],
-            legacy_taxons: []
-          }
+            legacy_taxons: [],
+          },
         }
 
         publishing_api_has_item(payload.merge(content_id: taxon.content_id))
@@ -200,7 +200,7 @@ RSpec.describe TaxonsController, type: :controller do
 
   def stub_taxon_show_page(content_id)
     stub_requests_for_show_page(
-      content_item_with_details("Foo", other_fields: { content_id: content_id, document_type: "taxon" })
+      content_item_with_details("Foo", other_fields: { content_id: content_id, document_type: "taxon" }),
     )
   end
 end

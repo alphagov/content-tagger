@@ -8,8 +8,8 @@ module Taxonomy
       @nested_tree ||= process_linked_content_item_tree(
         GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
           content_id: @root_taxon.content_id,
-          publishing_api: Services.publishing_api
-        )
+          publishing_api: Services.publishing_api,
+        ),
       )
     end
 
@@ -21,7 +21,7 @@ module Taxonomy
           else
             [
               taxon[:children].map(&max_size_in_tree).max,
-              taxon[:size]
+              taxon[:size],
             ].max
           end
         end
@@ -39,7 +39,7 @@ module Taxonomy
         size: tagged_pages_count_by_content_id[linked_content_item.content_id] || 0,
         children: linked_content_item.children.map do |child_linked_content_item|
           process_linked_content_item_tree(child_linked_content_item)
-        end
+        end,
       }
     end
 
@@ -51,7 +51,7 @@ module Taxonomy
           filter_part_of_taxonomy_tree: @root_taxon.content_id,
           facet_taxons: 1_000, # We have to specify a number,
           count: 0,
-          debug: 'include_withdrawn',
+          debug: "include_withdrawn",
         )
 
         # Search API will return a pretty odd datastructure for this query:

@@ -24,7 +24,7 @@ class TaggingsController < ApplicationController
       render json: {
         base_path: content_item.base_path,
         content_id: content_item.content_id,
-        title: content_item.title
+        title: content_item.title,
       }
     else
       render json: { errors: content_lookup.errors }, status: 404
@@ -35,7 +35,7 @@ class TaggingsController < ApplicationController
     content_item = ContentItem.find!(params[:content_id])
 
     render :show, locals: {
-      tagging_update: Tagging::TaggingUpdateForm.from_content_item(content_item)
+      tagging_update: Tagging::TaggingUpdateForm.from_content_item(content_item),
     }
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: 404
@@ -48,7 +48,7 @@ class TaggingsController < ApplicationController
     if publisher.save_to_publishing_api
       redirect_back(
         fallback_location: tagging_path(content_item.content_id),
-        success: "Tags have been updated!"
+        success: "Tags have been updated!",
       )
     else
       tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
@@ -63,7 +63,7 @@ class TaggingsController < ApplicationController
   rescue GdsApi::HTTPConflict
     redirect_back(
       fallback_location: tagging_path(content_item.content_id),
-      danger: "Somebody changed the tags before you could. Your changes have not been saved."
+      danger: "Somebody changed the tags before you could. Your changes have not been saved.",
     )
   end
 

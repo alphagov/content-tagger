@@ -32,30 +32,30 @@ RSpec.feature "Draft taxonomy" do
       other_fields: {
         content_id: "ID-1",
         base_path: "/foo",
-        publication_state: 'draft'
-      }
+        publication_state: "draft",
+      },
     )
     @taxon_2 = taxon_with_details(
       "I Am Another Taxon 2",
       other_fields: {
         content_id: "ID-2",
         base_path: "/bar",
-        publication_state: 'draft'
-      }
+        publication_state: "draft",
+      },
     )
     @taxon_3 = taxon_with_details(
       "I Am Yet Another Taxon 3",
       other_fields: {
         content_id: "ID-3",
         base_path: "/bar",
-        publication_state: 'draft'
-      }
+        publication_state: "draft",
+      },
     )
 
     publishing_api_has_taxons(
       [@taxon_1, @taxon_2, @taxon_3],
       page: 1,
-      states: %w[draft]
+      states: %w[draft],
     )
   end
 
@@ -77,11 +77,11 @@ RSpec.feature "Draft taxonomy" do
       other_fields: {
         base_path: "/education/taxon-2",
         content_id: @taxon_content_id,
-        description: 'A description of Taxon 2.',
-        publication_state: 'draft',
+        description: "A description of Taxon 2.",
+        publication_state: "draft",
         state_history: {
-          "1" => "draft"
-        }
+          "1" => "draft",
+        },
       },
     )
 

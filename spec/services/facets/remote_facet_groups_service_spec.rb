@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Facets::RemoteFacetGroupsService do
   let(:publishing_api) { Services.publishing_api }

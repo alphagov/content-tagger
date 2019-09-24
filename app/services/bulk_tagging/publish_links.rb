@@ -27,7 +27,7 @@ module BulkTagging
 
     def links_to_update
       {
-        tag_mapping.link_type => [tag_mapping.link_content_id]
+        tag_mapping.link_type => [tag_mapping.link_content_id],
       }
     end
 
@@ -45,11 +45,11 @@ module BulkTagging
     end
 
     def existing_links
-      links_response['links']
+      links_response["links"]
     end
 
     def previous_version
-      links_response['version']
+      links_response["version"]
     end
 
     def links_response

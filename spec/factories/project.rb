@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :project do
-    name { 'project title' }
+    name { "project title" }
 
     # TaxonomyHelper.valid_taxon_uuid
-    taxonomy_branch { 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa' }
+    taxonomy_branch { "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }
 
     bulk_tagging_enabled { true }
 

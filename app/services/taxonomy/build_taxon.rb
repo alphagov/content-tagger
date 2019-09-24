@@ -21,23 +21,23 @@ module Taxonomy
         title: content_item["title"],
         description: content_item["description"],
         base_path: content_item["base_path"],
-        publication_state: content_item['publication_state'],
-        state_history: content_item['state_history'],
-        phase: content_item['phase'],
-        internal_name: content_item['details']['internal_name'],
-        notes_for_editors: content_item['details']['notes_for_editors'],
+        publication_state: content_item["publication_state"],
+        state_history: content_item["state_history"],
+        phase: content_item["phase"],
+        internal_name: content_item["details"]["internal_name"],
+        notes_for_editors: content_item["details"]["notes_for_editors"],
         parent_content_id: parent,
-        associated_taxons: links.dig('associated_taxons'),
+        associated_taxons: links.dig("associated_taxons"),
         legacy_taxons: legacy_taxon_paths,
-        redirect_to: content_item.dig('unpublishing', 'alternative_path'),
-        visible_to_departmental_editors: content_item.dig('details', 'visible_to_departmental_editors')
+        redirect_to: content_item.dig("unpublishing", "alternative_path"),
+        visible_to_departmental_editors: content_item.dig("details", "visible_to_departmental_editors"),
       )
     end
 
   private
 
     def parent
-      links.dig('parent_taxons', 0) || links.dig('root_taxon', 0)
+      links.dig("parent_taxons", 0) || links.dig("root_taxon", 0)
     end
 
     def content_item
@@ -53,7 +53,7 @@ module Taxonomy
     end
 
     def links
-      @links ||= expanded_links.transform_values { |v| v.map { |h| h['content_id'] } }
+      @links ||= expanded_links.transform_values { |v| v.map { |h| h["content_id"] } }
     end
 
     def expanded_links
@@ -61,12 +61,12 @@ module Taxonomy
         Services.publishing_api
           .get_expanded_links(content_id)
           .to_h
-          .fetch('expanded_links', {})
+          .fetch("expanded_links", {})
       end
     end
 
     def legacy_taxon_paths
-      expanded_links.fetch('legacy_taxons', []).map { |v| v['base_path'] }
+      expanded_links.fetch("legacy_taxons", []).map { |v| v["base_path"] }
     end
   end
 end

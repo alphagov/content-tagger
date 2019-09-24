@@ -1,14 +1,14 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/content_store'
+require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 include ::GdsApi::TestHelpers::ContentStore
 
 module Metrics
   RSpec.describe TaxonsPerLevelMetrics do
-    describe '#count_taxons_per_level' do
+    describe "#count_taxons_per_level" do
       before do
-        content_store_has_item('/', root_taxon.to_json, draft: true)
-        content_store_has_item('/taxons/level_one_taxon', multi_level_child_taxons.to_json, draft: true)
+        content_store_has_item("/", root_taxon.to_json, draft: true)
+        content_store_has_item("/taxons/level_one_taxon", multi_level_child_taxons.to_json, draft: true)
       end
       it "sends the correct values to statsd" do
         expect(Metrics.statsd).to receive(:gauge)
@@ -34,18 +34,18 @@ module Metrics
                     {
                       "base_path" => "/root_taxon/taxon_1",
                       "content_id" => "aaaa_1111",
-                      "links" => {}
+                      "links" => {},
                     },
                     {
                       "base_path" => "/root_taxon/taxon_2",
                       "content_id" => "aaaa_2222",
-                      "links" => {}
-                    }
-                  ]
-                }
-              }
-            ]
-          }
+                      "links" => {},
+                    },
+                  ],
+                },
+              },
+            ],
+          },
         }
       end
 
@@ -55,10 +55,10 @@ module Metrics
             "level_one_taxons" => [
               {
                 "base_path" => "/taxons/level_one_taxon",
-                "content_id" => "rrrr"
-              }
-            ]
-          }
+                "content_id" => "rrrr",
+              },
+            ],
+          },
         }
       end
     end

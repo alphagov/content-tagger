@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Taxonomy::LinksUpdate do
   include PublishingApiHelper
@@ -9,11 +9,11 @@ RSpec.describe Taxonomy::LinksUpdate do
   let(:legacy_taxon_id) { SecureRandom.uuid }
 
   before :each do
-    publishing_api_has_item(content_id: content_id, title: 'content')
+    publishing_api_has_item(content_id: content_id, title: "content")
     stub_any_publishing_api_patch_links
   end
 
-  it 'updates a taxon with a new non-root taxon' do
+  it "updates a taxon with a new non-root taxon" do
     described_class.new(
       content_id: content_id,
       parent_taxon_id: parent_id,
@@ -28,11 +28,11 @@ RSpec.describe Taxonomy::LinksUpdate do
         parent_taxons: [parent_id],
         associated_taxons: [associated_id],
         legacy_taxons: [legacy_taxon_id],
-      }
+      },
     )
   end
 
-  it 'updates a parent taxon with a root taxon' do
+  it "updates a parent taxon with a root taxon" do
     described_class.new(
       content_id: content_id,
       parent_taxon_id: GovukTaxonomy::ROOT_CONTENT_ID,
@@ -47,7 +47,7 @@ RSpec.describe Taxonomy::LinksUpdate do
         root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
         associated_taxons: [associated_id],
         legacy_taxons: [legacy_taxon_id],
-      }
+      },
     )
   end
 end

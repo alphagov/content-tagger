@@ -3,7 +3,7 @@ class TaxonsController < ApplicationController
 
   before_action(
     :ensure_user_can_administer_taxonomy!,
-    except: %i[index drafts trash show visualisation_data tagged_content download]
+    except: %i[index drafts trash show visualisation_data tagged_content download],
   )
 
   def index
@@ -27,9 +27,9 @@ class TaxonsController < ApplicationController
 
     if taxon.valid?
       Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:internal_change_note])
-      redirect_to taxon_path(taxon.content_id), success: t('controllers.taxons.create_success')
+      redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.create_success")
     else
-      error_messages = taxon.errors.full_messages.join('; ')
+      error_messages = taxon.errors.full_messages.join("; ")
       flash.now[:danger] = error_messages
       render :new, locals: { page: Taxonomy::EditPage.new(taxon) }
     end
@@ -42,7 +42,7 @@ class TaxonsController < ApplicationController
     respond_to do |format|
       format.html do
         render locals: {
-          page: Taxonomy::ShowPage.new(taxon, params.fetch(:viz, 'taxonomy_tree'))
+          page: Taxonomy::ShowPage.new(taxon, params.fetch(:viz, "taxonomy_tree")),
         }
       end
 
@@ -76,7 +76,7 @@ class TaxonsController < ApplicationController
 
       redirect_to taxon_path(taxon.content_id)
     else
-      error_messages = taxon.errors.full_messages.join('; ')
+      error_messages = taxon.errors.full_messages.join("; ")
       flash.now[:danger] = error_messages
       render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
     end
@@ -95,7 +95,7 @@ class TaxonsController < ApplicationController
       Taxonomy::TaxonUnpublisher.call(taxon_content_id: params[:id],
                                       redirect_to_content_id: params[:taxonomy_delete_page][:redirect_to],
                                       user: current_user,
-                                      retag: params[:taxonomy_delete_page][:do_tag] == '1')
+                                      retag: params[:taxonomy_delete_page][:do_tag] == "1")
       redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.destroy_success")
     end
   end
@@ -105,7 +105,7 @@ class TaxonsController < ApplicationController
   end
 
   def restore
-    Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: 'Restore')
+    Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: "Restore")
     redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.restore_success")
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     redirect_to trash_taxons_path, danger: e.message
@@ -147,16 +147,16 @@ class TaxonsController < ApplicationController
     # is already another content item published with the same path
 
     existing_content_id = Services.publishing_api.lookup_content_id(
-      base_path: taxon.base_path
+      base_path: taxon.base_path,
     )
 
     if existing_content_id.present?
       flash.now[:danger] = ActionController::Base.helpers.sanitize(
-        I18n.t('errors.invalid_taxon_base_path', taxon_path: taxon_path(existing_content_id))
+        I18n.t("errors.invalid_taxon_base_path", taxon_path: taxon_path(existing_content_id)),
       )
     else
       GovukError.notify(e, level: "warning")
-      flash.now[:danger] = I18n.t('errors.invalid_taxon')
+      flash.now[:danger] = I18n.t("errors.invalid_taxon")
     end
 
     render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }

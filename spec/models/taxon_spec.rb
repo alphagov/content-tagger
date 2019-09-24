@@ -1,28 +1,28 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Taxon do
-  context 'validations' do
-    it 'is not valid without a title' do
+  context "validations" do
+    it "is not valid without a title" do
       taxon = described_class.new
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:title)
     end
 
-    it 'is not valid without a base path' do
-      taxon = described_class.new(base_path: '')
+    it "is not valid without a base path" do
+      taxon = described_class.new(base_path: "")
 
       expect(taxon).to_not be_valid
       expect(taxon.errors.keys).to include(:base_path)
     end
 
-    it 'is not valid when the base path prefix does not match the parent prefix' do
-      parent_taxon = FactoryBot.build(:taxon, base_path: '/level-one/level-two')
+    it "is not valid when the base path prefix does not match the parent prefix" do
+      parent_taxon = FactoryBot.build(:taxon, base_path: "/level-one/level-two")
       allow(Taxonomy::BuildTaxon).to receive(:call).and_return(parent_taxon)
 
       child_taxon = FactoryBot.build(
         :taxon,
-        base_path: '/foo/level-two',
-        parent_content_id: parent_taxon.content_id
+        base_path: "/foo/level-two",
+        parent_content_id: parent_taxon.content_id,
       )
 
       expect(child_taxon).to_not be_valid
@@ -30,39 +30,39 @@ RSpec.describe Taxon do
     end
   end
 
-  context 'when internal_name is not set' do
-    it 'uses the title value' do
-      taxon = described_class.new(title: 'I Title')
+  context "when internal_name is not set" do
+    it "uses the title value" do
+      taxon = described_class.new(title: "I Title")
 
       expect(taxon.internal_name).to eql(taxon.title)
     end
   end
 
-  context 'without notes_for_editors set' do
-    it 'returns an empty string to comply with the schema definition' do
+  context "without notes_for_editors set" do
+    it "returns an empty string to comply with the schema definition" do
       taxon = described_class.new
 
-      expect(taxon.notes_for_editors).to eq('')
+      expect(taxon.notes_for_editors).to eq("")
     end
   end
 
-  it 'must have a base path with at most two segments' do
+  it "must have a base path with at most two segments" do
     level_one_taxon = described_class.new(
-      title: 'Title',
-      description: 'Description',
-      base_path: '/education',
+      title: "Title",
+      description: "Description",
+      base_path: "/education",
     )
 
     level_two_taxon = described_class.new(
-      title: 'Title',
-      description: 'Description',
-      base_path: '/education/ab01-cd02',
+      title: "Title",
+      description: "Description",
+      base_path: "/education/ab01-cd02",
     )
 
     invalid_taxon = described_class.new(
-      title: 'Title',
-      description: 'Description',
-      base_path: '/education/foo/bar',
+      title: "Title",
+      description: "Description",
+      base_path: "/education/foo/bar",
     )
 
     aggregate_failures do
@@ -70,37 +70,37 @@ RSpec.describe Taxon do
       expect(level_two_taxon).to be_valid
       expect(invalid_taxon).to_not be_valid
       expect(invalid_taxon.errors[:base_path]).to include(
-        "must be in the format '/highest-level-taxon-name/taxon-name'"
+        "must be in the format '/highest-level-taxon-name/taxon-name'",
       )
     end
   end
 
-  describe '#base_path=' do
-    it 'separates the prefix and slug values' do
+  describe "#base_path=" do
+    it "separates the prefix and slug values" do
       taxon = described_class.new(
-        base_path: '/childcare-parenting/childcare-and-early-years'
+        base_path: "/childcare-parenting/childcare-and-early-years",
       )
 
-      expect(taxon.path_prefix).to eq 'childcare-parenting'
-      expect(taxon.path_slug).to eq 'childcare-and-early-years'
+      expect(taxon.path_prefix).to eq "childcare-parenting"
+      expect(taxon.path_slug).to eq "childcare-and-early-years"
     end
   end
 
-  describe '#base_path' do
+  describe "#base_path" do
     it "returns the base_path for root taxons" do
       expect(described_class.new(
-        base_path: '/childcare-parenting'
-      ).base_path).to eq '/childcare-parenting'
+        base_path: "/childcare-parenting",
+      ).base_path).to eq "/childcare-parenting"
     end
 
     it "returns the base_path for child taxons" do
       expect(described_class.new(
-        base_path: '/childcare-parenting/childcare-and-early-years'
-      ).base_path).to eq '/childcare-parenting/childcare-and-early-years'
+        base_path: "/childcare-parenting/childcare-and-early-years",
+      ).base_path).to eq "/childcare-parenting/childcare-and-early-years"
     end
   end
 
-  describe '#visible_to_departmental_editors' do
+  describe "#visible_to_departmental_editors" do
     it "defaults to false if it's not set" do
       taxon = Taxon.new
       expect(taxon.visible_to_departmental_editors).to be false
@@ -132,7 +132,7 @@ RSpec.describe Taxon do
       @taxon = Taxon.new(
         visible_to_departmental_editors: "true",
         state_history: state_history,
-        publication_state: "published"
+        publication_state: "published",
       )
     end
 
@@ -177,7 +177,7 @@ RSpec.describe Taxon do
         taxon = Taxon.new(
           visible_to_departmental_editors: "true",
           state_history: state_history,
-          publication_state: "published"
+          publication_state: "published",
         )
         expect(taxon.draft_and_published_editions_exist?).to eq(false)
       end
@@ -190,7 +190,7 @@ RSpec.describe Taxon do
         taxon = Taxon.new(
           visible_to_departmental_editors: "true",
           state_history: state_history,
-          publication_state: "draft"
+          publication_state: "draft",
         )
         expect(taxon.draft_and_published_editions_exist?).to eq(false)
       end

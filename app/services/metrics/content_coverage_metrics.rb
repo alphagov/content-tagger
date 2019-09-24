@@ -1,4 +1,4 @@
-require_relative '../metrics'
+require_relative "../metrics"
 
 module Metrics
   class ContentCoverageMetrics
@@ -24,7 +24,7 @@ module Metrics
     def untagged_items_in_scope
       gauge(
         "untagged_items_in_scope",
-        items_in_scope_count - tagged_items_in_scope_count
+        items_in_scope_count - tagged_items_in_scope_count,
       )
     end
 
@@ -33,7 +33,7 @@ module Metrics
     def all_govuk_items_count
       @all_govuk_items_count ||= Services.search_api.search(
         count: 0,
-        debug: 'include_withdrawn'
+        debug: "include_withdrawn",
       ).to_h.fetch("total")
     end
 
@@ -41,7 +41,7 @@ module Metrics
       @items_in_scope_count ||= Services.search_api.search(
         count: 0,
         reject_content_store_document_type: Tagging.blacklisted_document_types,
-        debug: 'include_withdrawn'
+        debug: "include_withdrawn",
       ).to_h.fetch("total")
     end
 
@@ -50,13 +50,13 @@ module Metrics
         count: 0,
         filter_part_of_taxonomy_tree: root_taxon_content_ids,
         reject_content_store_document_type: Tagging.blacklisted_document_types,
-        debug: 'include_withdrawn'
+        debug: "include_withdrawn",
       ).to_h.fetch("total")
     end
 
     def root_taxon_content_ids
       GovukTaxonomy::Branches.new.all.map do |root_taxon|
-        root_taxon['content_id']
+        root_taxon["content_id"]
       end
     end
 

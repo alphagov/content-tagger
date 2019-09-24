@@ -11,12 +11,12 @@ module Facets
   private
 
     # Returns a facet group from the publishing API.
-    def facet_group_content_items(query = '', states = %w[published])
+    def facet_group_content_items(query = "", states = %w[published])
       publishing_api
         .get_content_items(
-          document_type: 'facet_group',
-          order: '-public_updated_at',
-          q: query || '',
+          document_type: "facet_group",
+          order: "-public_updated_at",
+          q: query || "",
           search_in: %i[title],
           page: 1,
           per_page: 50,

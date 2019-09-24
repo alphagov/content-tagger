@@ -29,7 +29,7 @@ RSpec.describe FacetDataExporter do
               title: "Yet another facet value",
               value: "yet-another-facet-value",
             },
-          ]
+          ],
         },
         {
           content_id: "gbh-123-gef-000",
@@ -46,10 +46,10 @@ RSpec.describe FacetDataExporter do
               title: "This facet value",
               value: "this-facet-value",
             },
-          ]
-        }
+          ],
+        },
 
-      ]
+      ],
     }
   end
 
@@ -109,21 +109,21 @@ RSpec.describe FacetDataExporter do
           "/foo",
           "a-facet-value,another-facet-value",
           "some-facet-value,this-facet-value",
-        ]
+        ],
       )
       expect(csv).to have_received(:<<).with(
         [
           "/bar",
           "a-facet-value,yet-another-facet-value",
           "some-facet-value",
-        ]
+        ],
       )
       expect(csv).to have_received(:<<).with(
         [
           "/meh",
           "another-facet-value",
           "",
-        ]
+        ],
       )
     end
   end

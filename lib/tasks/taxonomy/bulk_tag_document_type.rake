@@ -1,5 +1,5 @@
-require 'csv'
-require_relative Rails.root.join('lib', 'tagged_content_exporter')
+require "csv"
+require_relative Rails.root.join("lib", "tagged_content_exporter")
 
 namespace :taxonomy do
   desc <<-DESC
@@ -13,7 +13,7 @@ namespace :taxonomy do
 
     # STDERR and STDOUT are the same stream. Open this new FD to allow separate logging to the screen.
     fd = IO.sysopen("/dev/tty", "w")
-    io_stream = IO.new(fd, 'w')
+    io_stream = IO.new(fd, "w")
 
     results = BulkTagging::DocumentTypeTagger.call(taxon_content_id: taxon_content_id, document_type: document_type).map do |result|
       io_stream.puts(result)

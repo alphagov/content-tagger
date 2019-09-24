@@ -14,19 +14,19 @@ class ContentItem
 
   def initialize(data, blacklist: Rails.configuration.blacklisted_tag_types)
     @blacklist = blacklist
-    @content_id = data.fetch('content_id')
-    @title = data.fetch('title')
-    @base_path = data.fetch('base_path')
-    @description = data.fetch('description', nil)
-    @publishing_app = data.fetch('publishing_app', nil)
-    @rendering_app = data.fetch('rendering_app', nil)
-    @document_type = data.fetch('document_type')
-    @state = data.fetch('state', nil)
+    @content_id = data.fetch("content_id")
+    @title = data.fetch("title")
+    @base_path = data.fetch("base_path")
+    @description = data.fetch("description", nil)
+    @publishing_app = data.fetch("publishing_app", nil)
+    @rendering_app = data.fetch("rendering_app", nil)
+    @document_type = data.fetch("document_type")
+    @state = data.fetch("state", nil)
   end
 
   def self.find!(content_id)
     content_item = Services.publishing_api.get_content(content_id)
-    raise ItemNotFoundError if content_item['document_type'].in?(%w[redirect gone])
+    raise ItemNotFoundError if content_item["document_type"].in?(%w[redirect gone])
 
     new(content_item.to_h)
   rescue GdsApi::HTTPNotFound
@@ -34,7 +34,7 @@ class ContentItem
   end
 
   def draft?
-    state == 'draft'
+    state == "draft"
   end
 
   def link_set
@@ -161,6 +161,6 @@ private
   end
 
   def additional_temporary_blacklist
-    publishing_app == 'specialist-publisher' && document_type == 'finder' ? [:topics] : []
+    publishing_app == "specialist-publisher" && document_type == "finder" ? [:topics] : []
   end
 end

@@ -68,7 +68,7 @@ private
     stub_link_changes_request(
       link_changes_for_an_individual_taxon,
       link_types: %w[taxons],
-      target_content_ids: [individual_taxon[:content_id]]
+      target_content_ids: [individual_taxon[:content_id]],
     )
   end
 
@@ -76,7 +76,7 @@ private
     stub_link_changes_request(
       link_changes_for_an_individual_taxon_with_missing_source_document_information,
       link_types: %w[taxons],
-      target_content_ids: [individual_taxon[:content_id]]
+      target_content_ids: [individual_taxon[:content_id]],
     )
   end
 
@@ -101,55 +101,55 @@ private
   end
 
   def check_index_page_link_changes_table(link_changes)
-    page.all('tbody tr').zip(link_changes).each do |tr, link_change|
-      if link_change['source']
+    page.all("tbody tr").zip(link_changes).each do |tr, link_change|
+      if link_change["source"]
         expect(tr).to have_link(
-          link_change['source']['title'],
-          href: website_url(link_change['source']['base_path'])
+          link_change["source"]["title"],
+          href: website_url(link_change["source"]["base_path"]),
         )
       else
-        expect(tr).to have_text 'unknown document'
+        expect(tr).to have_text "unknown document"
       end
 
-      if link_change['target']
+      if link_change["target"]
         expect(tr).to have_link(
-          link_change['target']['title'],
-          href: tagging_history_path(link_change['target']['content_id'])
+          link_change["target"]["title"],
+          href: tagging_history_path(link_change["target"]["content_id"]),
         )
       else
-        expect(tr).to have_text 'unknown taxon'
+        expect(tr).to have_text "unknown taxon"
       end
 
-      expect(tr).to have_text(link_change['change'] == 'add' ? 'tagged' : 'removed')
-      expect(tr).to have_text('Unknown user')
+      expect(tr).to have_text(link_change["change"] == "add" ? "tagged" : "removed")
+      expect(tr).to have_text("Unknown user")
     end
   end
 
   def then_i_see_the_user_and_organisation
-    page.all('tbody tr').each do |tr|
-      expect(tr).to have_text('Foo')
-      expect(tr).to have_text('Bar baz')
+    page.all("tbody tr").each do |tr|
+      expect(tr).to have_text("Foo")
+      expect(tr).to have_text("Bar baz")
     end
   end
 
   def then_i_see_the_link_changes_for_the_individual_taxon
-    page.all('tbody tr').zip(link_changes_for_an_individual_taxon).each do |tr, link_change|
+    page.all("tbody tr").zip(link_changes_for_an_individual_taxon).each do |tr, link_change|
       expect(tr).to have_link(
-        link_change['source']['title'],
-        href: website_url(link_change['source']['base_path'])
+        link_change["source"]["title"],
+        href: website_url(link_change["source"]["base_path"]),
       )
     end
   end
 
   def then_i_see_the_link_changes_for_the_individual_taxon_with_missing_source_document_information
-    page.all('tbody tr').zip(link_changes_for_an_individual_taxon_with_missing_source_document_information).each do |tr, link_change|
-      if link_change['source']
+    page.all("tbody tr").zip(link_changes_for_an_individual_taxon_with_missing_source_document_information).each do |tr, link_change|
+      if link_change["source"]
         expect(tr).to have_link(
-          link_change['source']['title'],
-          href: website_url(link_change['source']['base_path'])
+          link_change["source"]["title"],
+          href: website_url(link_change["source"]["base_path"]),
         )
       else
-        expect(tr).to have_text('unknown document')
+        expect(tr).to have_text("unknown document")
       end
     end
   end
@@ -160,25 +160,25 @@ private
   end
 
   def link_changes_with_user_data
-    user = FactoryBot.create(:user, name: 'Foo', organisation_slug: 'bar-baz')
-    @link_changes_with_user_data ||= FactoryBot.build_list(:link_change, 3, change: 'add', user_uid: user.uid)
+    user = FactoryBot.create(:user, name: "Foo", organisation_slug: "bar-baz")
+    @link_changes_with_user_data ||= FactoryBot.build_list(:link_change, 3, change: "add", user_uid: user.uid)
   end
 
   def added_link_changes
-    @added_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'add')
+    @added_link_changes ||= FactoryBot.build_list(:link_change, 3, change: "add")
   end
 
   def removed_link_changes
-    @removed_link_changes ||= FactoryBot.build_list(:link_change, 3, change: 'remove')
+    @removed_link_changes ||= FactoryBot.build_list(:link_change, 3, change: "remove")
   end
 
   def link_changes_with_missing_document_information
     @link_changes_with_missing_document_information ||= begin
       link_changes = FactoryBot.build_list(:link_change, 3)
-      link_changes[0]['source'] = nil
-      link_changes[1]['target'] = nil
-      link_changes[2]['source'] = nil
-      link_changes[2]['target'] = nil
+      link_changes[0]["source"] = nil
+      link_changes[1]["target"] = nil
+      link_changes[2]["source"] = nil
+      link_changes[2]["target"] = nil
       link_changes
     end
   end
@@ -188,9 +188,9 @@ private
       link_changes = FactoryBot.build_list(
         :link_change,
         2,
-        target: { content_id: individual_taxon[:content_id] }
+        target: { content_id: individual_taxon[:content_id] },
       )
-      link_changes[1]['source'] = nil
+      link_changes[1]["source"] = nil
       link_changes
     end
   end
@@ -203,7 +203,7 @@ private
     @link_changes_for_an_individual_taxon ||= FactoryBot.build_list(
       :link_change,
       3,
-      target: { content_id: individual_taxon[:content_id] }
+      target: { content_id: individual_taxon[:content_id] },
     )
   end
 

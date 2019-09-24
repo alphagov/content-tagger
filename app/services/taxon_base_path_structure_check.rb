@@ -50,16 +50,16 @@ private
       else
         return false if path_components.blank?
 
-        level_one_prefix == path_components['prefix']
+        level_one_prefix == path_components["prefix"]
       end
     end
 
     def content_id
-      @taxon['content_id']
+      @taxon["content_id"]
     end
 
     def base_path
-      @taxon['base_path']
+      @taxon["base_path"]
     end
 
     def level_one_taxon?
@@ -67,7 +67,7 @@ private
     end
 
     def level_one_prefix
-      @level_one_prefix || path_components['prefix']
+      @level_one_prefix || path_components["prefix"]
     end
 
     def path_components
@@ -81,13 +81,13 @@ private
       if path_components.present?
         "/#{level_one_prefix}/#{path_components['slug']}"
       else
-        path_slug = @taxon['base_path']
-          .sub('/imported-topic/topic/', '')
-          .sub('/imported-topic/', '')
-          .sub('/imported-browse/browse/', '')
-          .sub('/imported-browse/', '')
-          .sub('/imported-policies/', '')
-          .tr('/', '-')
+        path_slug = @taxon["base_path"]
+          .sub("/imported-topic/topic/", "")
+          .sub("/imported-topic/", "")
+          .sub("/imported-browse/browse/", "")
+          .sub("/imported-browse/", "")
+          .sub("/imported-policies/", "")
+          .tr("/", "-")
         "/#{level_one_prefix}/#{path_slug}"
       end
     end

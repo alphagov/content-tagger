@@ -1,9 +1,9 @@
-require 'rake'
-require 'rails_helper'
-require 'gds_api/test_helpers/publishing_api_v2'
-require 'gds_api/test_helpers/search'
+require "rake"
+require "rails_helper"
+require "gds_api/test_helpers/publishing_api_v2"
+require "gds_api/test_helpers/search"
 
-RSpec.describe 'facets:patch_links_to_facet_group' do
+RSpec.describe "facets:patch_links_to_facet_group" do
   include GdsApi::TestHelpers::PublishingApiV2
   include GdsApi::TestHelpers::Search
   include ContentItemHelper
@@ -11,9 +11,9 @@ RSpec.describe 'facets:patch_links_to_facet_group' do
 
   let(:results) do
     [
-      { 'link' =>  "/link/one" },
-      { 'link' =>  "/link/two" },
-      { 'link' =>  "/link/three" },
+      { "link" =>  "/link/one" },
+      { "link" =>  "/link/two" },
+      { "link" =>  "/link/three" },
     ]
   end
 
@@ -24,7 +24,7 @@ RSpec.describe 'facets:patch_links_to_facet_group' do
   let(:publishing_api) { Services.publishing_api }
 
   before :each do
-    stub_any_search.to_return(body: { 'results' => results }.to_json)
+    stub_any_search.to_return(body: { "results" => results }.to_json)
     stub_publishing_api_has_lookups(
       "/link/one" => "11111-11111-11111",
       "/link/two" => "22222-22222-22222",
@@ -37,7 +37,7 @@ RSpec.describe 'facets:patch_links_to_facet_group' do
   end
 
   it "updates all content tagged to a facet group" do
-    Rake::Task['facets:patch_links_to_facet_group'].invoke(facet_group_content_id)
+    Rake::Task["facets:patch_links_to_facet_group"].invoke(facet_group_content_id)
     expect(publishing_api).to have_received(:patch_links).exactly(3).times
   end
 end

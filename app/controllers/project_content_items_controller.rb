@@ -49,7 +49,7 @@ private
 
   def index_page_title
     response = Services.publishing_api.get_content(params[:taxonomy_branch])
-    taxonomy_title = response.to_h['title']
+    taxonomy_title = response.to_h["title"]
     "Content flagged for #{taxonomy_title}"
   end
 
@@ -63,14 +63,14 @@ private
       .permit(:taxons, content_items: [])
       .to_h
       .symbolize_keys
-      .tap { |hsh| hsh[:taxons] = hsh[:taxons].split(',').compact }
+      .tap { |hsh| hsh[:taxons] = hsh[:taxons].split(",").compact }
   end
 
   def tag_content
     Services.publishing_api
       .patch_links(
         content_item.content_id,
-        links: { taxons: submitted_taxons }
+        links: { taxons: submitted_taxons },
       )
   end
 
@@ -79,7 +79,7 @@ private
       .require(:project_content_item)
       .permit(:taxons)
       .fetch(:taxons, "")
-      .split(',')
+      .split(",")
   end
 
   def project

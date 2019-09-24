@@ -16,7 +16,7 @@ module Taxonomy
       Version.create(
         content_id: content_id,
         object_changes: taxon_changes,
-        note: version_note
+        note: version_note,
       )
     end
 

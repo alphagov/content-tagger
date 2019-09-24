@@ -17,7 +17,7 @@ module Taxonomy
       GovukTaxonomyHelpers::LinkedContentItem
         .from_content_id(
           content_id: @root_taxon_content_id,
-          publishing_api: Services.publishing_api
+          publishing_api: Services.publishing_api,
         )
     end
   end

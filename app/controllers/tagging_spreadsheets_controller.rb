@@ -17,7 +17,7 @@ class TaggingSpreadsheetsController < ApplicationController
     if tagging_spreadsheet.valid?
       tagging_spreadsheet.save!
       InitialTaggingImport.perform_async(tagging_spreadsheet.id)
-      redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t('tag_import.import_created')
+      redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t("tag_import.import_created")
     else
       render :new, locals: { tagging_spreadsheet: tagging_spreadsheet }
     end
@@ -47,7 +47,7 @@ class TaggingSpreadsheetsController < ApplicationController
     tagging_spreadsheet.update_attributes!(state: "uploaded")
     InitialTaggingImport.perform_async(tagging_spreadsheet.id)
 
-    redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t('tag_import.import_refetched')
+    redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t("tag_import.import_refetched")
   end
 
   def publish_tags
@@ -58,7 +58,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def destroy
     tagging_spreadsheet.mark_as_deleted
-    redirect_to tagging_spreadsheets_path, success: I18n.t('tag_import.import_removed')
+    redirect_to tagging_spreadsheets_path, success: I18n.t("tag_import.import_removed")
   end
 
 private

@@ -1,16 +1,16 @@
-require 'rails_helper'
+require "rails_helper"
 
-require 'rails_helper'
-require 'gds_api/test_helpers/content_store'
+require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 include ::GdsApi::TestHelpers::ContentStore
 
 module Metrics
   RSpec.describe ContentDistributionMetrics do
-    describe '#level_taggings' do
+    describe "#level_taggings" do
       before :each do
-        content_store_has_item('/', root_taxon.to_json, draft: true)
-        content_store_has_item('/taxons/root_taxon', child_taxons.to_json, draft: true)
+        content_store_has_item("/", root_taxon.to_json, draft: true)
+        content_store_has_item("/taxons/root_taxon", child_taxons.to_json, draft: true)
 
         allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[root_id]))
                                       .and_return content_items_enum(5)
@@ -19,7 +19,7 @@ module Metrics
         allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[second_level_id_1 second_level_id_2]))
                                       .and_return content_items_enum(3)
       end
-      it 'calls gauges with number of content tagged to each level' do
+      it "calls gauges with number of content tagged to each level" do
         expect(Metrics.statsd).to receive(:gauge).with("level_1.content_tagged", 5)
         expect(Metrics.statsd).to receive(:gauge).with("level_1.level", 1)
         expect(Metrics.statsd).to receive(:gauge).with("level_2.content_tagged", 12)
@@ -29,14 +29,14 @@ module Metrics
 
         ContentDistributionMetrics.new.count_content_per_level
       end
-      it 'calls gauges with the average tagging depth' do
+      it "calls gauges with the average tagging depth" do
         expect(Metrics.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
 
         ContentDistributionMetrics.new.average_tagging_depth
       end
 
       def content_items_enum(elements)
-        (Array.new(elements) { { 'content_id' => SecureRandom.uuid } }).to_enum
+        (Array.new(elements) { { "content_id" => SecureRandom.uuid } }).to_enum
       end
 
       def root_taxon
@@ -44,10 +44,10 @@ module Metrics
           "links" => {
             "level_one_taxons" => [
               {
-                "base_path" => "/taxons/root_taxon"
-              }
-            ]
-          }
+                "base_path" => "/taxons/root_taxon",
+              },
+            ],
+          },
         }
       end
 
@@ -62,17 +62,17 @@ module Metrics
                   "child_taxons" => [
                     {
                       "content_id" => "second_level_id_1",
-                      "links" => {}
+                      "links" => {},
                     },
                     {
                       "content_id" => "second_level_id_2",
-                      "links" => {}
-                    }
-                  ]
-                }
-              }
-            ]
-          }
+                      "links" => {},
+                    },
+                  ],
+                },
+              },
+            ],
+          },
         }
       end
     end

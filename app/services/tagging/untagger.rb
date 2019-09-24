@@ -6,8 +6,8 @@ module Tagging
 
     def untag(content_id, taxon_content_ids)
       response = Services.publishing_api.get_links(content_id)
-      existing_taxons_ids = response.dig('links', 'taxons')
-      version = response['version']
+      existing_taxons_ids = response.dig("links", "taxons")
+      version = response["version"]
 
       Services.publishing_api.patch_links(content_id,
                                           previous_version: version,

@@ -6,7 +6,7 @@ class ProjectsController < ApplicationController
     render :index, locals: {
       percentage_by_organisation: tagging_progress_query.try(:percentage_tagged),
       total_counts: tagging_progress_query.try(:total_counts),
-      projects: project_index
+      projects: project_index,
     }
   end
 
@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     project.destroy!
-    redirect_to projects_path, success: 'You have successfully deleted the project'
+    redirect_to projects_path, success: "You have successfully deleted the project"
   end
 
 private
@@ -50,8 +50,8 @@ private
         acc.merge(
           taxon.content_id => {
             name: taxon.name,
-            parent_id: taxon.parent_node.try(:content_id)
-          }
+            parent_id: taxon.parent_node.try(:content_id),
+          },
         )
       end
   end
@@ -77,7 +77,7 @@ private
   def tagging_progress_query
     return if params[:progress_for_organisations].blank?
 
-    organisations = params[:progress_for_organisations].tr(' ', '').split(',')
+    organisations = params[:progress_for_organisations].tr(" ", "").split(",")
     @tagging_progress_query ||= TaggingProgressByOrganisationsQuery.new(organisations)
   end
 end

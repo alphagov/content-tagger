@@ -8,7 +8,7 @@ class TaggedContentExporter
       {
         content_id: content_item.content_id,
         url: content_item.url.gsub("https://www.gov.uk", ""),
-        taxons: taxons_for(content_item).compact
+        taxons: taxons_for(content_item).compact,
       }
     end
   end
@@ -19,7 +19,7 @@ private
     links = Services.publishing_api.get_links(content_item.content_id).to_h
     (links.dig("links", "taxons") || []).map do |taxon_id|
       {
-        content_id: taxon_id
+        content_id: taxon_id,
       }.merge(metadata_for_taxon(taxon_id, content_item.content_id))
     end
   end

@@ -1,7 +1,7 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe FlaggedContentQuery do
-  describe '#items' do
+  describe "#items" do
     let(:project) { create(:project) }
     let!(:item_needs_help) do
       create(:project_content_item,

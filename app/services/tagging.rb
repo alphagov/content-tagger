@@ -4,9 +4,9 @@ module Tagging
       YAML.load_file(
         File.join(
           Rails.root,
-          'config',
-          'document_types_excluded_from_the_topic_taxonomy.yml'
-        )
-      )['document_types']
+          "config",
+          "document_types_excluded_from_the_topic_taxonomy.yml",
+        ),
+      )["document_types"]
   end
 end

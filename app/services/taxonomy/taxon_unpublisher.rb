@@ -22,8 +22,8 @@ module Taxonomy
 
       tag_migration = BulkTagging::BuildTagMigration.call(
         source_content_item: ContentItem.find!(taxon_content_id),
-        taxon_content_ids: [parent_taxon['content_id']],
-        content_base_paths: content_base_paths
+        taxon_content_ids: [parent_taxon["content_id"]],
+        content_base_paths: content_base_paths,
       )
       tag_migration.save!
       BulkTagging::QueueLinksForPublishing.call(tag_migration, user: user)
@@ -31,15 +31,15 @@ module Taxonomy
 
     def unpublish_taxon(taxon_content_id, redirect_to_content_id)
       redirect_to_taxon = Services.publishing_api.get_content(redirect_to_content_id)
-      Services.publishing_api.unpublish(taxon_content_id, type: "redirect", alternative_path: redirect_to_taxon['base_path'])
+      Services.publishing_api.unpublish(taxon_content_id, type: "redirect", alternative_path: redirect_to_taxon["base_path"])
     end
 
     def tagged_content_base_paths(content_id)
       Services.publishing_api.get_linked_items(
         content_id,
         link_type: "taxons",
-        fields: %w[base_path]
-      ).map { |content| content['base_path'] }
+        fields: %w[base_path],
+      ).map { |content| content["base_path"] }
     end
   end
 end

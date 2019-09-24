@@ -11,7 +11,7 @@ class ProjectContentItem < ActiveRecord::Base
   attr_accessor :taxons
 
   def base_path
-    url.gsub('https://www.gov.uk', '')
+    url.gsub("https://www.gov.uk", "")
   end
 
   def done!

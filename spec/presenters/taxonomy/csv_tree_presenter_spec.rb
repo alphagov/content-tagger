@@ -29,16 +29,16 @@ module Taxonomy
 
       it "presents the tree in CSV form" do
         document_counts = {
-          'facets' => {
-            'taxons' => {
-              'options' => [
-                { 'value' => { 'slug' => 'Root' }, 'documents' => 1 },
-                { 'value' => { 'slug' => 'Child-1' }, 'documents' => 2 },
-                { 'value' => { 'slug' => 'Child-2' }, 'documents' => 3 },
-                { 'value' => { 'slug' => 'Child-3' }, 'documents' => 4 },
-              ]
-            }
-          }
+          "facets" => {
+            "taxons" => {
+              "options" => [
+                { "value" => { "slug" => "Root" }, "documents" => 1 },
+                { "value" => { "slug" => "Child-1" }, "documents" => 2 },
+                { "value" => { "slug" => "Child-2" }, "documents" => 3 },
+                { "value" => { "slug" => "Child-3" }, "documents" => 4 },
+              ],
+            },
+          },
         }
 
         stub_request(:get, "https://search.test.gov.uk/search.json?count=0&facet_taxons=4000")

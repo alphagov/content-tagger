@@ -28,7 +28,7 @@ private
     :user_can_administer_taxonomy?,
     :user_can_manage_taxonomy?,
     :user_can_access_tagathon_tools?,
-    :user_can_administer_facet_groups?
+    :user_can_administer_facet_groups?,
   )
 
   delegate :user_can_administer_taxonomy?,
@@ -63,14 +63,14 @@ private
 
   def website_url(base_path, draft: false)
     if draft
-      Plek.new.external_url_for('draft-origin') + base_path
+      Plek.new.external_url_for("draft-origin") + base_path
     else
       Plek.new.website_root + base_path
     end
   end
 
   def similar_search_results_url(base_path)
-    Plek.new.external_url_for('search-admin') +
+    Plek.new.external_url_for("search-admin") +
       "/similar-search-results/result?base_path=#{base_path}"
   end
 

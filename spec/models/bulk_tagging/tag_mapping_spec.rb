@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module BulkTagging
   RSpec.describe TagMapping do
@@ -20,14 +20,14 @@ module BulkTagging
       end
     end
 
-    context '#messages' do
-      it 'serializes the messages as an array' do
-        expect { subject.messages = ['a message'] }.to_not raise_error
+    context "#messages" do
+      it "serializes the messages as an array" do
+        expect { subject.messages = ["a message"] }.to_not raise_error
       end
 
       it "doesn't allow other types in the messages field" do
-        expect { subject.messages = 'a message' }.to raise_error(
-          ActiveRecord::SerializationTypeMismatch
+        expect { subject.messages = "a message" }.to raise_error(
+          ActiveRecord::SerializationTypeMismatch,
         )
       end
     end
@@ -78,13 +78,13 @@ module BulkTagging
             .to(["Broken.", "Rubbish."])
         end
 
-        it 'changes the state of the tagging source to errored' do
+        it "changes the state of the tagging source to errored" do
           expect { tag_mapping.mark_as_errored }
             .to change { tag_mapping.tagging_source.state }
-            .to('errored')
+            .to("errored")
         end
 
-        it 'changes the error message of the tagging source' do
+        it "changes the error message of the tagging source" do
           expect { tag_mapping.mark_as_errored }
             .to change { tag_mapping.tagging_source.error_message }
             .to(/we could not tag all items/i)

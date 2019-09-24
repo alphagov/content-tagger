@@ -39,38 +39,38 @@ RSpec.feature "Move content between Taxons", type: :feature do
     @source_taxon = taxon_with_details(
       "Source taxon",
       other_fields: {
-        document_type: 'taxon',
+        document_type: "taxon",
         state_history: {
-          "1" => "published"
-        }
-      }
+          "1" => "published",
+        },
+      },
     )
     @source_taxon_for_select = {
-      'title' => @source_taxon['title'],
-      'internal_name' => @source_taxon['details']['internal_name'],
-      'content_id' => @source_taxon['content_id'],
-      'publication_state' => 'published',
-      'state_history' => {
-        "1" => "published"
-      }
+      "title" => @source_taxon["title"],
+      "internal_name" => @source_taxon["details"]["internal_name"],
+      "content_id" => @source_taxon["content_id"],
+      "publication_state" => "published",
+      "state_history" => {
+        "1" => "published",
+      },
     }
     @dest_taxon = taxon_with_details(
       "Destination taxon",
       other_fields: {
-        document_type: 'taxon',
+        document_type: "taxon",
         state_history: {
-          "1" => "published"
-        }
-      }
+          "1" => "published",
+        },
+      },
     )
     @dest_taxon_for_select = {
-      'title' => @dest_taxon['title'],
-      'internal_name' => @dest_taxon['details']['internal_name'],
-      'content_id' => @dest_taxon['content_id'],
-      'publication_state' => 'published',
-      'state_history' => {
-        "1" => "published"
-      }
+      "title" => @dest_taxon["title"],
+      "internal_name" => @dest_taxon["details"]["internal_name"],
+      "content_id" => @dest_taxon["content_id"],
+      "publication_state" => "published",
+      "state_history" => {
+        "1" => "published",
+      },
     }
 
     @document_1 = basic_content_item("Tagged content 1")
@@ -79,7 +79,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
     publishing_api_has_links(
       content_id: @source_taxon[:content_id],
       links: {},
-      version: 1
+      version: 1,
     )
     publishing_api_has_expanded_links(
       content_id: @source_taxon[:content_id],
@@ -88,9 +88,9 @@ RSpec.feature "Move content between Taxons", type: :feature do
 
     stub_request(
       :get,
-      %r{publishing-api.test.gov.uk/v2/linked/#{@source_taxon[:content_id]}}
+      %r{publishing-api.test.gov.uk/v2/linked/#{@source_taxon[:content_id]}},
     ).to_return(
-      body: [@document_1, @document_2].to_json
+      body: [@document_1, @document_2].to_json,
     )
 
     publishing_api_has_taxons([@source_taxon, @dest_taxon])
@@ -99,7 +99,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
 
     publishing_api_has_linkables(
       [@source_taxon_for_select, @dest_taxon_for_select],
-      document_type: 'taxon'
+      document_type: "taxon",
     )
   end
 
@@ -109,8 +109,8 @@ RSpec.feature "Move content between Taxons", type: :feature do
 
   def and_view_the_first_taxon
     stub_email_requests_for_show_page
-    first_row = first('table tbody tr')
-    view_taxon_link = first_row.find('a', text: 'View taxon')
+    first_row = first("table tbody tr")
+    view_taxon_link = first_row.find("a", text: "View taxon")
 
     view_taxon_link.click
   end
@@ -121,11 +121,11 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_select_a_taxon_to_move_content_to
-    select @dest_taxon_for_select['title']
+    select @dest_taxon_for_select["title"]
   end
 
   def and_select_all_content
-    all('table tbody input[type=checkbox]').each do |checkbox|
+    all("table tbody input[type=checkbox]").each do |checkbox|
       checkbox.set(true)
     end
   end
@@ -139,9 +139,9 @@ RSpec.feature "Move content between Taxons", type: :feature do
 
     expect(page).to have_text(
       I18n.t(
-        'views.tag_migrations.move_message',
-        taxon_name: tag_migration.source_title
-      )
+        "views.tag_migrations.move_message",
+        taxon_name: tag_migration.source_title,
+      ),
     )
   end
 
@@ -149,45 +149,45 @@ RSpec.feature "Move content between Taxons", type: :feature do
     # Lookups to fetch the content ID based on existing base paths
     publishing_api_has_lookups(
       @document_1[:base_path] => @document_1[:content_id],
-      @document_2[:base_path] => @document_2[:content_id]
+      @document_2[:base_path] => @document_2[:content_id],
     )
 
     # Make sure we assert the correct API calls are made
     assert_content_items_have_been_moved_for_document(
       @document_1,
       @source_taxon,
-      @dest_taxon
+      @dest_taxon,
     )
     assert_content_items_have_been_moved_for_document(
       @document_2,
       @source_taxon,
-      @dest_taxon
+      @dest_taxon,
     )
   end
 
   def and_only_published_content_can_be_moved_when_i_start_the_content_move
     publishing_api_has_lookups(
-      @document_2[:base_path] => @document_2[:content_id]
+      @document_2[:base_path] => @document_2[:content_id],
     )
 
     # Make sure we assert the correct API calls are made
     assert_content_items_have_been_moved_for_document(
       @document_2,
       @source_taxon,
-      @dest_taxon
+      @dest_taxon,
     )
   end
 
   def then_i_should_see_both_of_the_pages_have_been_moved
-    expect(page).to have_text('2 of 2 pages updated')
+    expect(page).to have_text("2 of 2 pages updated")
   end
 
   def then_i_should_see_that_the_url_couldnt_be_found
-    expect(page).to have_text('We could not find this URL on GOV.UK.')
+    expect(page).to have_text("We could not find this URL on GOV.UK.")
   end
 
   def and_i_start_tagging
-    click_link I18n.t('bulk_tagging.start_tagging')
+    click_link I18n.t("bulk_tagging.start_tagging")
   end
 
 private
@@ -197,7 +197,7 @@ private
     publishing_api_has_links(
       content_id: document[:content_id],
       links: { taxons: [source[:content_id]] },
-      version: 1
+      version: 1,
     )
     # Then we patch them with the new link minus the old link
     # Note that 'source[:content_id]' dissapeared

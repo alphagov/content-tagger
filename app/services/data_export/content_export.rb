@@ -70,7 +70,7 @@ module DataExport
 
     def content_links_enum(page_size = 1000)
       Services.search_api.search_enum({ reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: %w[link] },
-                                      page_size: page_size).lazy.map { |h| h['link'] }
+                                      page_size: page_size).lazy.map { |h| h["link"] }
     end
 
     def get_content(base_path, base_fields: CONTENT_BASE_FIELDS, taxon_fields: CONTENT_TAXON_FIELDS, ppo_fields: CONTENT_PPO_FIELDS)
@@ -78,17 +78,17 @@ module DataExport
 
       # Skip this if we don't get back the content we expect, e.g. if
       # the Content Store has redirected the request
-      return {} if hash.dig('base_path') != base_path
+      return {} if hash.dig("base_path") != base_path
 
       # Skip anything without a content_id
-      return {} if hash.dig('content_id').nil?
+      return {} if hash.dig("content_id").nil?
 
       base = hash.slice(*base_fields)
-      taxons = hash.dig('links', 'taxons')
-      ppo = hash.dig('links', 'primary_publishing_organisation')
+      taxons = hash.dig("links", "taxons")
+      ppo = hash.dig("links", "primary_publishing_organisation")
       base.tap do |result|
-        result['taxons'] = taxons.map { |t| t.slice(*taxon_fields) } if taxons.present?
-        result['primary_publishing_organisation'] = ppo.first.slice(*ppo_fields) if ppo.present?
+        result["taxons"] = taxons.map { |t| t.slice(*taxon_fields) } if taxons.present?
+        result["primary_publishing_organisation"] = ppo.first.slice(*ppo_fields) if ppo.present?
       end
     rescue GdsApi::ContentStore::ItemNotFound
       Rails.logger.warn("Cannot find content item '#{base_path}' in the content store")
@@ -100,10 +100,10 @@ module DataExport
 
     def blacklisted_content_stats(document_types = ContentExport::BLACKLIST_DOCUMENT_TYPES)
       filtered_aggregates = document_aggregates.keep_if do |aggregate|
-        document_types.include?(aggregate.dig('value', 'slug'))
+        document_types.include?(aggregate.dig("value", "slug"))
       end
       results = filtered_aggregates.map do |aggregate|
-        { document_type: aggregate.dig('value', 'slug'),
+        { document_type: aggregate.dig("value", "slug"),
           count: aggregate["documents"] }
       end
       results.sort_by { |r| -r[:count] }
@@ -113,7 +113,7 @@ module DataExport
 
     def document_aggregates
       Services.search_api.search(aggregate_content_store_document_type: 10_000, count: 0)
-        .dig('aggregates', 'content_store_document_type', 'options')
+        .dig("aggregates", "content_store_document_type", "options")
     end
 
     def get_content_hash(path)

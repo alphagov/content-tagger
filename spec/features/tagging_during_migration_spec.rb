@@ -24,18 +24,18 @@ RSpec.describe "Tagging content during migration", type: :feature do
       [
         "/topic/id-of-already-tagged",
         "/topic/business-tax/pension-scheme-administration",
-      ]
+      ],
     )
     publishing_api_has_need_linkables(
       [
         "/needs/apply-for-a-copy-of-a-marriage-certificate",
-      ]
+      ],
     )
   end
 
   def given_there_is_an_item_that_can_have_only_one_link_type
     publishing_api_has_lookups(
-      '/my-content-item' => 'MY-CONTENT-ID'
+      "/my-content-item" => "MY-CONTENT-ID",
     )
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
@@ -43,9 +43,9 @@ RSpec.describe "Tagging content during migration", type: :feature do
         # see blacklisted_tag_types.yml for this
         publishing_app: "test-app-that-can-be-tagged-to-topics-only",
         content_id: "MY-CONTENT-ID",
-        base_path: '/my-content-item',
-        document_type: 'mainstream_browse_page',
-        title: 'This Is A Content Item',
+        base_path: "/my-content-item",
+        document_type: "mainstream_browse_page",
+        title: "This Is A Content Item",
       }.to_json)
 
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
@@ -64,8 +64,8 @@ RSpec.describe "Tagging content during migration", type: :feature do
   end
 
   def and_i_submit_the_url_of_the_content_item
-    fill_in 'content_lookup_form_base_path', with: '/my-content-item'
-    click_on I18n.t('taggings.search')
+    fill_in "content_lookup_form_base_path", with: "/my-content-item"
+    click_on I18n.t("taggings.search")
   end
 
   def when_i_add_an_additional_tag
@@ -76,7 +76,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
     @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    click_on I18n.t('taggings.update_tags')
+    click_on I18n.t("taggings.update_tags")
   end
 
   def then_only_that_link_type_is_sent_to_the_publishing_api

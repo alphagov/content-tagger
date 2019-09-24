@@ -1,7 +1,7 @@
 class ProjectFilterQuery
-  FILTER_TODO = 'to do'.freeze
-  FILTER_FLAGGED = 'flagged'.freeze
-  FILTER_DONE = 'done'.freeze
+  FILTER_TODO = "to do".freeze
+  FILTER_FLAGGED = "flagged".freeze
+  FILTER_DONE = "done".freeze
   FILTERS = [FILTER_TODO, FILTER_FLAGGED, FILTER_DONE].freeze
 
   attr_reader :params

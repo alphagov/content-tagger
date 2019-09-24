@@ -3,7 +3,7 @@ module Taxonomy
     def all_taggings_per_organisation
       level_one_taxons = taxonomy_query.level_one_taxons
       level_one_taxons.map do |level_one_taxon|
-        { title: level_one_taxon['title'], sheet: taggings_per_organisation(level_one_taxon) }
+        { title: level_one_taxon["title"], sheet: taggings_per_organisation(level_one_taxon) }
       end
     end
 
@@ -30,22 +30,22 @@ module Taxonomy
     def tagging_count_per_organisation(taxons)
       taxons.each_with_object(Hash.new { |h, k| h[k] = [] }) do |taxon, result|
         tagging_count_per_organisation_for_taxon(taxon).each do |organisation, count|
-          result[organisation] << [count, taxon['base_path']]
+          result[organisation] << [count, taxon["base_path"]]
         end
       end
     end
 
     def tagging_count_per_organisation_for_taxon(taxon)
-      search_api_result = Services.search_api.search(aggregate_primary_publishing_organisation: 100_000, count: 0, filter_taxons: [taxon['content_id']])
+      search_api_result = Services.search_api.search(aggregate_primary_publishing_organisation: 100_000, count: 0, filter_taxons: [taxon["content_id"]])
       search_api_result
-        .dig('aggregates', 'primary_publishing_organisation', 'options')
+        .dig("aggregates", "primary_publishing_organisation", "options")
         .each_with_object({}) do |result, total|
-        total[result.dig('value', 'slug')] = result['documents']
+        total[result.dig("value", "slug")] = result["documents"]
       end
     end
 
     def child_taxons(level_one_taxon)
-      taxonomy_query.child_taxons(level_one_taxon['base_path']) << level_one_taxon
+      taxonomy_query.child_taxons(level_one_taxon["base_path"]) << level_one_taxon
     end
 
     def taxonomy_query

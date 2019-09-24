@@ -18,8 +18,8 @@ namespace :govuk do
       puts organisation_slug
 
       content_items_enum = Services.search_api.search_enum(
-        fields: fields.join(','),
-        filter_primary_publishing_organisation: organisation_slug
+        fields: fields.join(","),
+        filter_primary_publishing_organisation: organisation_slug,
       )
 
       print "- saving items to CSV"
@@ -39,11 +39,11 @@ namespace :govuk do
 
           content_item["organisations"] = begin
             # Only keep the slug for organisations
-            content_item["organisations"].map { |org| org['slug'] }.join(',')
+            content_item["organisations"].map { |org| org["slug"] }.join(",")
           end
 
           csv << content_item.slice(*fields)
-          print '.'
+          print "."
         end
       end
 

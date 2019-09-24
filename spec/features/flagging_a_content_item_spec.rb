@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe "flagging a content item" do
   include TaxonomyHelper
@@ -67,7 +67,7 @@ RSpec.describe "flagging a content item" do
   end
 
   def and_i_flag_the_first_content_item_as_i_need_help
-    click_link 'Flag for review'
+    click_link "Flag for review"
     choose "I need help tagging this"
   end
 
@@ -90,7 +90,7 @@ RSpec.describe "flagging a content item" do
   end
 
   def and_i_flag_the_first_content_item_as_missing_a_relevant_topic
-    click_link 'Flag for review'
+    click_link "Flag for review"
     choose "There's no relevant topic for this"
   end
 
@@ -111,12 +111,12 @@ RSpec.describe "flagging a content item" do
   end
 
   def then_the_flagged_content_items_should_be_labelled_correctly
-    expect(page).to have_content 'Flagged: needs publisher review'
-    expect(page).to have_content 'Flagged: needs IA review'
+    expect(page).to have_content "Flagged: needs publisher review"
+    expect(page).to have_content "Flagged: needs IA review"
   end
 
   def then_the_content_item_should_no_longer_be_flagged
-    expect(page).not_to have_content 'Flagged: needs publisher review'
+    expect(page).not_to have_content "Flagged: needs publisher review"
   end
 
   def and_the_need_help_comment_should_be_displayed

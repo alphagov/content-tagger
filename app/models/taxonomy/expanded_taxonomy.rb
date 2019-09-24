@@ -16,7 +16,7 @@ module Taxonomy
     end
 
     def associated_taxons
-      root_expanded_links.dig('expanded_links', 'associated_taxons')
+      root_expanded_links.dig("expanded_links", "associated_taxons")
     end
 
     def immediate_parents
@@ -64,7 +64,7 @@ module Taxonomy
     end
 
     def attached_to_root?(content_id)
-      Services.publishing_api.get_expanded_links(content_id).dig('expanded_links', 'root_taxon').present?
+      Services.publishing_api.get_expanded_links(content_id).dig("expanded_links", "root_taxon").present?
     end
 
     def expand_parent_nodes(start_node:, parent:)
@@ -76,21 +76,21 @@ module Taxonomy
 
       expand_parent_nodes(
         start_node: parent_node,
-        parent: parent.dig('links', 'parent_taxons', 0),
+        parent: parent.dig("links", "parent_taxons", 0),
       )
 
       start_node
     end
 
     def tree_node_based_on(content_item)
-      if content_item['content_id'] == GovukTaxonomy::ROOT_CONTENT_ID
+      if content_item["content_id"] == GovukTaxonomy::ROOT_CONTENT_ID
         home_page_linked_content_item
       else
         GovukTaxonomyHelpers::LinkedContentItem.new(
-          internal_name: content_item.dig('details', 'internal_name'),
-          title: content_item.fetch('title'),
-          base_path: content_item.fetch('base_path'),
-          content_id: content_item.fetch('content_id')
+          internal_name: content_item.dig("details", "internal_name"),
+          title: content_item.fetch("title"),
+          base_path: content_item.fetch("base_path"),
+          content_id: content_item.fetch("content_id"),
         )
       end
     end
@@ -99,21 +99,21 @@ module Taxonomy
       GovukTaxonomyHelpers::LinkedContentItem.new(
         internal_name: GovukTaxonomy::TITLE,
         title: GovukTaxonomy::TITLE,
-        base_path: '/',
-        content_id: GovukTaxonomy::ROOT_CONTENT_ID
+        base_path: "/",
+        content_id: GovukTaxonomy::ROOT_CONTENT_ID,
       )
     end
 
     def root_expanded_links
       @root_expanded_links ||= Services.publishing_api.get_expanded_links(
-        @content_id
+        @content_id,
       )
     end
 
     def build_parent_expansion
       @parent_expansion = expand_parent_nodes(
         start_node: root_node,
-        parent: root_expanded_links.dig('expanded_links', 'parent_taxons', 0),
+        parent: root_expanded_links.dig("expanded_links", "parent_taxons", 0),
         )
       self
     end
@@ -135,8 +135,8 @@ module Taxonomy
       @child_expansion = home_page_linked_content_item.tap do |node|
         LevelOneTaxonsRetrieval.new.get.each do |level_one_taxon|
           node << GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
-            content_id: level_one_taxon['content_id'],
-            publishing_api: Services.publishing_api
+            content_id: level_one_taxon["content_id"],
+            publishing_api: Services.publishing_api,
           )
         end
       end

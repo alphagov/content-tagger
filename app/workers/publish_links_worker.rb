@@ -4,7 +4,7 @@ class PublishLinksWorker
   sidekiq_options retry: 5
 
   sidekiq_retries_exhausted do |msg, _e|
-    tag_mapping_id = msg['args'].first
+    tag_mapping_id = msg["args"].first
 
     BulkTagging::TagMapping.connection_pool.with_connection do |_conn|
       tag_mapping = BulkTagging::TagMapping.find_by_id(tag_mapping_id)

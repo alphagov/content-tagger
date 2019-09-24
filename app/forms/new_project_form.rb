@@ -12,7 +12,7 @@ class NewProjectForm
 
   def taxonomy_branches_for_select
     GovukTaxonomy::Branches.new.all
-      .reduce({}) { |memo, branch| memo.merge(branch['title'] => branch['content_id']) }
+      .reduce({}) { |memo, branch| memo.merge(branch["title"] => branch["content_id"]) }
   end
 
   def create
@@ -24,8 +24,8 @@ class NewProjectForm
       project_attributes: {
         name: name,
         taxonomy_branch: taxonomy_branch,
-        bulk_tagging_enabled: bulk_tagging_enabled
-      }
+        bulk_tagging_enabled: bulk_tagging_enabled,
+      },
     )
 
     true

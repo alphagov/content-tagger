@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe ProjectContentItemsController, type: :request do
   include TaxonomyHelper
@@ -13,7 +13,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
 
       patch(
         project_content_item_path(project, content_item),
-        params: { project_content_item: { taxons: valid_taxon_uuid } }
+        params: { project_content_item: { taxons: valid_taxon_uuid } },
       )
 
       expect(response.code).to eql "200"
@@ -24,7 +24,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
 
       patch(
         project_content_item_path(project, content_item),
-        params: { project_content_item: { taxons: invalid_taxon_uuid } }
+        params: { project_content_item: { taxons: invalid_taxon_uuid } },
       )
 
       expect(response.code).to eql "400"
@@ -43,8 +43,8 @@ RSpec.describe ProjectContentItemsController, type: :request do
       {
         bulk_tagging: {
           taxons: "#{valid_taxon_uuid},#{valid_taxon_uuid}",
-          content_items: project.content_items.map(&:id)
-        }
+          content_items: project.content_items.map(&:id),
+        },
       }
     end
 
@@ -56,7 +56,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
 
       post(
         project_bulk_update_path(project),
-        params: params
+        params: params,
       )
 
       expect(response.code).to eql "200"

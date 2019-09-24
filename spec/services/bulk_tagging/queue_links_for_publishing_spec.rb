@@ -1,4 +1,4 @@
-require 'rails_helper'
+require "rails_helper"
 
 module BulkTagging
   RSpec.describe QueueLinksForPublishing do
@@ -6,7 +6,7 @@ module BulkTagging
       create(
         :tagging_spreadsheet,
         state: "uploaded",
-        tag_mappings: [tag_mapping_1, tag_mapping_2, tag_mapping_3]
+        tag_mappings: [tag_mapping_1, tag_mapping_2, tag_mapping_3],
       )
     end
     let(:user) { double(uid: "user-123") }
@@ -16,7 +16,7 @@ module BulkTagging
         content_base_path: "/content-1",
         link_title: "GDS",
         link_content_id: "gds-ID",
-        link_type: "organisations"
+        link_type: "organisations",
       )
     end
     let(:tag_mapping_2) do
@@ -25,7 +25,7 @@ module BulkTagging
         content_base_path: "/content-1",
         link_title: "Education",
         link_content_id: "education-ID",
-        link_type: "taxons"
+        link_type: "taxons",
       )
     end
     let(:tag_mapping_3) do
@@ -34,7 +34,7 @@ module BulkTagging
         content_base_path: "/content-2",
         link_title: "Education",
         link_content_id: "education-ID",
-        link_type: "taxons"
+        link_type: "taxons",
       )
     end
 

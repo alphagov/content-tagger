@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 module Taxonomy
   class CsvTreePresenter
@@ -27,11 +27,11 @@ module Taxonomy
       @taxonomy_tree_counts ||= begin
         params = {
           count: 0,
-          facet_taxons: 4000
+          facet_taxons: 4000,
         }
         results = Services.search_api.search(params).to_hash
-        results.dig('facets', 'taxons', 'options').each_with_object({}) do |option, taxon_content_count|
-          taxon_content_count[option['value']['slug']] = option['documents']
+        results.dig("facets", "taxons", "options").each_with_object({}) do |option, taxon_content_count|
+          taxon_content_count[option["value"]["slug"]] = option["documents"]
         end
       end
     end

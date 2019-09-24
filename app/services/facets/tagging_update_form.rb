@@ -21,7 +21,7 @@ module Facets
         links: links,
         content_item: content_item,
         previous_version: links.previous_version,
-        **tag_values
+        **tag_values,
       )
     end
 
@@ -49,7 +49,7 @@ module Facets
 
       errors.add(
         :notification_message,
-        "must be present when notifying subscribers"
+        "must be present when notifying subscribers",
       )
     end
 

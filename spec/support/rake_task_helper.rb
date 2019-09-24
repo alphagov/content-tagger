@@ -6,7 +6,7 @@ module RakeTaskHelper
 private
 
   def application_tasks
-    Rails.application.paths['lib/tasks'].to_a
+    Rails.application.paths["lib/tasks"].to_a
   end
 
   def invoke(task, args)

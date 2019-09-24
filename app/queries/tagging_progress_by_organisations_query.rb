@@ -9,7 +9,7 @@ class TaggingProgressByOrganisationsQuery
       {
         percentage: percentage(tagged_count, total_count),
         total: total_count,
-        tagged: tagged_count
+        tagged: tagged_count,
       }
     end
   end
@@ -22,7 +22,7 @@ class TaggingProgressByOrganisationsQuery
     {
       percentage: percentage(tagged_count, total_count),
       total: total_count,
-      tagged: tagged_count
+      tagged: tagged_count,
     }
   end
 
@@ -45,7 +45,7 @@ private
     Services.search_api.search(
       count: 0,
       start: 0,
-      aggregate_primary_publishing_organisation: '0,scope:all_filters',
+      aggregate_primary_publishing_organisation: "0,scope:all_filters",
       filter_primary_publishing_organisation: organisations,
     ).to_h.dig("aggregates", "primary_publishing_organisation", "options")
   end
@@ -54,9 +54,9 @@ private
     Services.search_api.search(
       count: 0,
       start: 0,
-      aggregate_primary_publishing_organisation: '0,scope:all_filters',
+      aggregate_primary_publishing_organisation: "0,scope:all_filters",
       filter_primary_publishing_organisation: organisations,
-      filter_part_of_taxonomy_tree: Taxonomy::LevelOneTaxonsRetrieval.new.get.map { |t| t['content_id'] },
+      filter_part_of_taxonomy_tree: Taxonomy::LevelOneTaxonsRetrieval.new.get.map { |t| t["content_id"] },
     ).to_h.dig("aggregates", "primary_publishing_organisation", "options")
   end
 end

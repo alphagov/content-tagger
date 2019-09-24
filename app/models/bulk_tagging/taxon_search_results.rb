@@ -9,18 +9,18 @@ module BulkTagging
     def taxons
       @taxons ||=
         begin
-          results = search_response['results'].map do |taxon_hash|
-            details = taxon_hash['details'] || {}
+          results = search_response["results"].map do |taxon_hash|
+            details = taxon_hash["details"] || {}
             Taxon.new(
-              document_type: taxon_hash['document_type'],
-              content_id: taxon_hash['content_id'],
+              document_type: taxon_hash["document_type"],
+              content_id: taxon_hash["content_id"],
               title: taxon_hash["title"],
               description: taxon_hash["description"],
               base_path: taxon_hash["base_path"],
-              publication_state: taxon_hash['publication_state'],
-              internal_name: details['internal_name'],
-              notes_for_editors: details['notes_for_editors'],
-              redirect_to: taxon_hash.dig('unpublishing', 'alternative_path')
+              publication_state: taxon_hash["publication_state"],
+              internal_name: details["internal_name"],
+              notes_for_editors: details["notes_for_editors"],
+              redirect_to: taxon_hash.dig("unpublishing", "alternative_path"),
             )
           end
 
@@ -29,11 +29,11 @@ module BulkTagging
     end
 
     def current_page
-      search_response['current_page']
+      search_response["current_page"]
     end
 
     def total_pages
-      search_response['pages']
+      search_response["pages"]
     end
 
     def limit_value

@@ -1,5 +1,5 @@
-require 'rails_helper'
-require 'gds_api/test_helpers/content_store'
+require "rails_helper"
+require "gds_api/test_helpers/content_store"
 
 RSpec.describe Taxonomy::TaxonTreeExport do
   include PublishingApiHelper
@@ -13,15 +13,15 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     fake_taxon("Vehicles").merge(
       "links" => {
         "parent_taxons" => [transport],
-        "child_taxons" => [car]
-      }
+        "child_taxons" => [car],
+      },
     )
   end
 
   # level 3 taxon
   let(:car) { fake_taxon("Car") }
 
-  let(:subject) { described_class.new(transport['content_id']) }
+  let(:subject) { described_class.new(transport["content_id"]) }
   let(:taxon_id) { "123456" }
 
   describe "#initialize" do
@@ -37,7 +37,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     subject { described_class.new(taxon_id) }
 
     it "should return a ExpandedTaxonomy instance" do
-      publishing_api_has_item(content_id: taxon_id, title: 'content')
+      publishing_api_has_item(content_id: taxon_id, title: "content")
       expect(subject.expanded_taxon).to be_an_instance_of(ExpandedTaxonomy)
     end
   end
@@ -65,12 +65,12 @@ RSpec.describe Taxonomy::TaxonTreeExport do
               links: a_hash_including(
                 child_taxons: [a_hash_including(
                   base_path: "/level-one/car",
-                  title: "Car"
-                )]
-              )
-            )]
-          )
-        )
+                  title: "Car",
+                )],
+              ),
+            )],
+          ),
+        ),
       )
     end
 
@@ -82,10 +82,10 @@ RSpec.describe Taxonomy::TaxonTreeExport do
           links: a_hash_including(
             parent_taxons: [a_hash_including(
               base_path: "/level-one/transport",
-              title: "Transport"
-            )]
-          )
-        )
+              title: "Transport",
+            )],
+          ),
+        ),
       )
     end
   end
@@ -111,11 +111,11 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     publishing_api_has_item(level_3_taxon)
 
     publishing_api_has_expanded_links(
-      content_id: level_1_taxon['content_id'],
+      content_id: level_1_taxon["content_id"],
       expanded_links: {
         root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
-        child_taxons: [level_2_taxon]
-      }
+        child_taxons: [level_2_taxon],
+      },
     )
 
     publishing_api_has_expanded_links(
@@ -123,14 +123,14 @@ RSpec.describe Taxonomy::TaxonTreeExport do
       expanded_links: {
         parent_taxons: [level_1_taxon],
         child_taxons: [level_3_taxon],
-      }
+      },
     )
 
     publishing_api_has_expanded_links(
       content_id: level_3_taxon["content_id"],
       expanded_links: {
-        parent_taxons: [level_2_taxon]
-      }
+        parent_taxons: [level_2_taxon],
+      },
     )
   end
 
