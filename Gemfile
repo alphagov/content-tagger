@@ -12,7 +12,7 @@ gem 'rack-proxy'
 gem 'sass-rails', '~> 6.0'
 gem 'select2-rails', '~> 3.5.9'
 gem 'simple_form', '~> 4.1'
-gem 'uglifier', '~> 4.1'
+gem 'uglifier', '~> 4.2'
 
 # GDS managed dependencies
 gem 'gds-api-adapters', '~> 60.1'
