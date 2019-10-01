@@ -11,7 +11,7 @@ gem 'pg'
 gem 'rack-proxy'
 gem 'sass-rails', '~> 6.0'
 gem 'select2-rails', '~> 3.5.9'
-gem 'simple_form', '~> 4.1'
+gem 'simple_form', '~> 5.0'
 gem 'uglifier', '~> 4.2'
 
 # GDS managed dependencies
