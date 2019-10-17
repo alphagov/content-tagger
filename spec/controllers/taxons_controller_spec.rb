@@ -207,6 +207,16 @@ RSpec.describe TaxonsController, type: :controller do
       delete :discard_draft, params: { taxon_id: taxon.content_id }
       expect(WebMock).to have_requested(:post, "https://publishing-api.test.gov.uk/v2/content/#{taxon.content_id}/discard-draft")
     end
+
+    it "sends a request to Publishing API to delete a draft Brexit taxon with 'cy' locale" do
+      brexit_taxon_content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
+      taxon = build(:taxon, publication_state: "draft", content_id: brexit_taxon_content_id)
+      publishing_api_has_taxons([taxon])
+      stub_any_publishing_api_discard_draft
+
+      delete :discard_draft, params: { taxon_id: brexit_taxon_content_id }
+      assert_publishing_api_discard_draft(brexit_taxon_content_id, locale: "cy")
+    end
   end
 
   def stub_taxon_show_page(content_id)

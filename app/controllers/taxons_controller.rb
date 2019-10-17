@@ -173,6 +173,11 @@ class TaxonsController < ApplicationController
 
   def discard_draft
     Services.publishing_api.discard_draft(content_id)
+
+    if content_id == BREXIT_TAXON_CONTENT_ID
+      Services.publishing_api.discard_draft(content_id, locale: "cy")
+    end
+
     redirect_to taxons_path, success: t("controllers.taxons.discard_draft_success")
   end
 
