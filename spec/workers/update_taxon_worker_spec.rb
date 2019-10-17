@@ -30,4 +30,24 @@ RSpec.describe UpdateTaxonWorker, "#perform" do
       ],
     )
   end
+
+  it "makes a PUT content request to Publishing API for the Brexit taxon with 'cy' and 'en' locales" do
+    brexit_taxon_content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
+    taxon = taxon_with_details(
+      "Transport",
+      other_fields: {
+        content_id: brexit_taxon_content_id,
+        base_path: "/imported-topic/topic/transport",
+        publication_state: "draft",
+      },
+    )
+    publishing_api_has_item(taxon)
+    publishing_api_has_expanded_links(taxon.slice(:content_id))
+    stub_any_publishing_api_put_content
+
+    UpdateTaxonWorker.new.perform(brexit_taxon_content_id, base_path: "/base-path")
+
+    assert_publishing_api_put_content(brexit_taxon_content_id, request_json_includes(locale: "en"))
+    assert_publishing_api_put_content(brexit_taxon_content_id, request_json_includes(locale: "cy"))
+  end
 end
