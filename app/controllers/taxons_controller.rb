@@ -1,6 +1,7 @@
 class TaxonsController < ApplicationController
+  include BrexitTaxon
+
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
-  BREXIT_TAXON_CONTENT_ID = "d6c2de5d-ef90-45d1-82d4-5f2438369eea".freeze
 
   before_action(
     :ensure_user_can_administer_taxonomy!,
@@ -142,7 +143,7 @@ class TaxonsController < ApplicationController
 
   def publish
     Services.publishing_api.publish(content_id)
-    if content_id == BREXIT_TAXON_CONTENT_ID
+    if brexit_taxon?(content_id)
       Services.publishing_api.publish(content_id, nil, locale: "cy")
     end
 
@@ -174,7 +175,7 @@ class TaxonsController < ApplicationController
   def discard_draft
     Services.publishing_api.discard_draft(content_id)
 
-    if content_id == BREXIT_TAXON_CONTENT_ID
+    if brexit_taxon?(content_id)
       Services.publishing_api.discard_draft(content_id, locale: "cy")
     end
 

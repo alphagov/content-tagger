@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe Taxonomy::UpdateTaxon do
   include ContentItemHelper
+  include BrexitTaxon
 
   before do
     @taxon = Taxon.new(
@@ -128,7 +129,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         stub_any_publishing_api_put_content
         stub_any_publishing_api_patch_links
 
-        @taxon.content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
+        @taxon.content_id = BrexitTaxon::BREXIT_TAXON_CONTENT_ID
 
         described_class.call(taxon: @taxon)
 

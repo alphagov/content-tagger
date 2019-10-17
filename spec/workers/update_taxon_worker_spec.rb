@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe UpdateTaxonWorker, "#perform" do
   include PublishingApiHelper
   include ContentItemHelper
+  include BrexitTaxon
 
   it "records the changes that have been made" do
     taxon = taxon_with_details(
@@ -32,7 +33,7 @@ RSpec.describe UpdateTaxonWorker, "#perform" do
   end
 
   it "makes a PUT content request to Publishing API for the Brexit taxon with 'cy' and 'en' locales" do
-    brexit_taxon_content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
+    brexit_taxon_content_id = BrexitTaxon::BREXIT_TAXON_CONTENT_ID
     taxon = taxon_with_details(
       "Transport",
       other_fields: {

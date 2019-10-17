@@ -4,6 +4,9 @@ RSpec.describe TaxonsController, type: :controller do
   include EmailAlertApiHelper
   include PublishingApiHelper
   include ContentItemHelper
+  include BrexitTaxon
+
+  let(:brexit_taxon_content_id) { BrexitTaxon::BREXIT_TAXON_CONTENT_ID }
 
   describe "#index" do
     it "renders index" do
@@ -122,7 +125,6 @@ RSpec.describe TaxonsController, type: :controller do
     end
 
     it "sends additional publish request to Publishing API for the Brexit taxon with 'cy' locale" do
-      brexit_taxon_content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
       build(:taxon, publication_state: "unpublished", content_id: brexit_taxon_content_id)
       stub_any_publishing_api_publish
 
@@ -209,7 +211,6 @@ RSpec.describe TaxonsController, type: :controller do
     end
 
     it "sends a request to Publishing API to delete a draft Brexit taxon with 'cy' locale" do
-      brexit_taxon_content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
       taxon = build(:taxon, publication_state: "draft", content_id: brexit_taxon_content_id)
       publishing_api_has_taxons([taxon])
       stub_any_publishing_api_discard_draft

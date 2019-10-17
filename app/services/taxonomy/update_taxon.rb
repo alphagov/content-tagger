@@ -1,9 +1,9 @@
 module Taxonomy
   class UpdateTaxon
+    include BrexitTaxon
+
     attr_reader :taxon
     delegate :content_id, :parent_content_id, :associated_taxons, :legacy_taxons, to: :taxon
-
-    BREXIT_TAXON_CONTENT_ID = "d6c2de5d-ef90-45d1-82d4-5f2438369eea".freeze
 
     class InvalidTaxonError < StandardError; end
 
@@ -68,7 +68,7 @@ module Taxonomy
 
     def publishing_api_put_content_request(content_id)
       Services.publishing_api.put_content(content_id, payload)
-      return unless content_id == BREXIT_TAXON_CONTENT_ID
+      return unless brexit_taxon?(content_id)
 
       Services.publishing_api.put_content(content_id, payload("cy"))
     end
