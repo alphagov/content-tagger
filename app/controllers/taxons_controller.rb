@@ -1,5 +1,6 @@
 class TaxonsController < ApplicationController
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
+  BREXIT_TAXON_CONTENT_ID = "d6c2de5d-ef90-45d1-82d4-5f2438369eea".freeze
 
   before_action(
     :ensure_user_can_administer_taxonomy!,
@@ -141,6 +142,10 @@ class TaxonsController < ApplicationController
 
   def publish
     Services.publishing_api.publish(content_id)
+    if content_id == BREXIT_TAXON_CONTENT_ID
+      Services.publishing_api.publish(content_id, nil, locale: "cy")
+    end
+
     redirect_to taxon_path(content_id), success: "You have successfully published the taxon"
   rescue GdsApi::HTTPUnprocessableEntity => e
     # Perform a lookup on the base path to determine whether there

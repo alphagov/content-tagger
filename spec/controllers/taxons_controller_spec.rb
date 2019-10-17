@@ -120,6 +120,17 @@ RSpec.describe TaxonsController, type: :controller do
 
       expect(flash.now[:danger]).to match(/<a href="(.+)">taxon<\/a> with this slug already exists/)
     end
+
+    it "sends additional publish request to Publishing API for the Brexit taxon with 'cy' locale" do
+      brexit_taxon_content_id = "d6c2de5d-ef90-45d1-82d4-5f2438369eea"
+      build(:taxon, publication_state: "unpublished", content_id: brexit_taxon_content_id)
+      stub_any_publishing_api_publish
+
+      post :publish, params: { taxon_id: brexit_taxon_content_id }
+
+      assert_publishing_api_publish(brexit_taxon_content_id, update_type: nil)
+      assert_publishing_api_publish(brexit_taxon_content_id, update_type: nil, locale: "cy")
+    end
   end
 
   describe "#confirm_bulk_publish" do
