@@ -9,12 +9,11 @@ module Taxonomy
     end
 
     def build(locale)
-      {
+      payload = {
         base_path: path(locale),
         document_type: "taxon",
         schema_name: "taxon",
         title: title,
-        description: locale == "en" ? description : nil,
         publishing_app: "content-tagger",
         rendering_app: "collections",
         public_updated_at: Time.now.iso8601,
@@ -30,6 +29,9 @@ module Taxonomy
         update_type: "major",
         phase: phase,
       }
+      payload[:description] = description if locale == "en"
+
+      payload
     end
 
   private

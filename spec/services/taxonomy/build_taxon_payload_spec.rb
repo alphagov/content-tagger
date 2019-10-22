@@ -44,8 +44,8 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
         expect(payload[:routes][0][:path]).to eq("#{taxon.base_path}.fr")
       end
 
-      it "sets description to nil" do
-        expect(payload[:description]).to be nil
+      it "does not include description" do
+        expect(payload).not_to include(:description)
       end
     end
   end
