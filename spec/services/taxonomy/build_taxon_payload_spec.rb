@@ -24,5 +24,29 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
     it "assigns the expected rendering app" do
       expect(payload[:publishing_app]).to eq("content-tagger")
     end
+
+    it "sets locale to 'en' default" do
+      expect(payload[:locale]).to eq("en")
+    end
+
+    context "non-'en' locale" do
+      let(:payload) { described_class.call(taxon: taxon, locale: "fr") }
+
+      it "sets locale to non-'en' locale" do
+        expect(payload[:locale]).to eq("fr")
+      end
+
+      it "appends non-'en' locale to the base_path" do
+        expect(payload[:base_path]).to eq("#{taxon.base_path}.fr")
+      end
+
+      it "appends non-'en' locale to routes path" do
+        expect(payload[:routes][0][:path]).to eq("#{taxon.base_path}.fr")
+      end
+
+      it "does not include description" do
+        expect(payload).not_to include(:description)
+      end
+    end
   end
 end

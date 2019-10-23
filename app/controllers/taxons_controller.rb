@@ -1,4 +1,6 @@
 class TaxonsController < ApplicationController
+  include BrexitTaxon
+
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
 
   before_action(
@@ -141,6 +143,10 @@ class TaxonsController < ApplicationController
 
   def publish
     Services.publishing_api.publish(content_id)
+    if brexit_taxon?(content_id)
+      Services.publishing_api.publish(content_id, nil, locale: "cy")
+    end
+
     redirect_to taxon_path(content_id), success: "You have successfully published the taxon"
   rescue GdsApi::HTTPUnprocessableEntity => e
     # Perform a lookup on the base path to determine whether there
@@ -168,6 +174,11 @@ class TaxonsController < ApplicationController
 
   def discard_draft
     Services.publishing_api.discard_draft(content_id)
+
+    if brexit_taxon?(content_id)
+      Services.publishing_api.discard_draft(content_id, locale: "cy")
+    end
+
     redirect_to taxons_path, success: t("controllers.taxons.discard_draft_success")
   end
 

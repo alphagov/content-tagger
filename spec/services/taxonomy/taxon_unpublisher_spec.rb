@@ -1,6 +1,7 @@
 require "rails_helper"
 
 include ::GdsApi::TestHelpers::PublishingApiV2
+include BrexitTaxon
 
 RSpec.describe Taxonomy::TaxonUnpublisher do
   let(:taxon_content_id) { SecureRandom.uuid }
@@ -85,6 +86,19 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
         unpublish(taxon_content_id, redirect_content_id, false)
         expect(patch_request).to_not have_been_made
       end
+    end
+  end
+
+  context "Brexit taxon" do
+    it "unpublishes the Brexit taxon with 'cy' locale" do
+      brexit_content_id = BrexitTaxon::BREXIT_TAXON_CONTENT_ID
+      publishing_api_has_expanded_links("content_id" => brexit_content_id, "expanded_links" => {})
+
+      unpublish(brexit_content_id, redirect_content_id)
+      assert_publishing_api_unpublish(brexit_content_id,
+                                      type: "redirect",
+                                      alternative_path: "/path/to/redirect",
+                                      locale: "cy")
     end
   end
 
