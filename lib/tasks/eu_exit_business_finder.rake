@@ -4,6 +4,33 @@ namespace :eu_exit_business_finder do
     EuExitBusinessRakeMethods.retag_content_facet_values
     EuExitBusinessRakeMethods.delete_facet_values_from_content
   end
+
+  task get_content_with_business_finder_related_link: [:environment] do
+    facet_group_content_id = "52435175-82ed-4a04-adef-74c0199d0f46"
+    finder_content_id = "42ce66de-04f3-4192-bf31-8394538e0734"
+
+    content_ids = Services.publishing_api.get_linked_items(
+      facet_group_content_id, link_type: "facet_groups", fields: %w[content_id]
+    ).pluck('content_id')
+
+    content_item_count = 0
+
+    content_ids.uniq.each do |content_id|
+      ordered_links = Services.publishing_api.get_links(content_id)
+        .to_hash
+        .fetch("links")
+        .fetch("ordered_related_items", [])
+
+      if ordered_links.include?("42ce66de-04f3-4192-bf31-8394538e0734")
+        url = Services.publishing_api.get_content(content_id).to_hash.fetch("base_path")
+        puts url
+        content_item_count = content_item_count + 1
+      end
+    end
+
+    puts "Number of content items: "
+    puts content_item_count
+  end
 end
 
 module EuExitBusinessRakeMethods
