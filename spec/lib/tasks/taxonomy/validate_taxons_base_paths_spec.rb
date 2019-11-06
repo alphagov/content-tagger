@@ -1,5 +1,3 @@
-# rubocop:disable Style/BlockDelimiters
-
 require "rails_helper"
 require "gds_api/test_helpers/content_store"
 
@@ -365,5 +363,3 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
     )
   end
 end
-
-# rubocop:enable Style/BlockDelimiters

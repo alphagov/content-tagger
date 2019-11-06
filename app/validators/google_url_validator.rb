@@ -27,10 +27,8 @@ private
       record.errors[:url] << I18n.t("errors.missing_gid")
     end
 
-    # rubocop:disable Style/GuardClause
     unless parameters["output"].present? && parameters["output"].include?("csv")
       record.errors[:url] << I18n.t("errors.missing_output")
     end
-    # rubocop:enable Style/GuardClause
   end
 end
