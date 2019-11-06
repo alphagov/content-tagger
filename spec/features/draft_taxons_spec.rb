@@ -27,7 +27,7 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def given_there_are_draft_taxons
-    @taxon_1 = taxon_with_details(
+    @taxon1 = taxon_with_details(
       "I Am A Taxon 1",
       other_fields: {
         content_id: "ID-1",
@@ -35,7 +35,7 @@ RSpec.feature "Draft taxonomy" do
         publication_state: "draft",
       },
     )
-    @taxon_2 = taxon_with_details(
+    @taxon2 = taxon_with_details(
       "I Am Another Taxon 2",
       other_fields: {
         content_id: "ID-2",
@@ -43,7 +43,7 @@ RSpec.feature "Draft taxonomy" do
         publication_state: "draft",
       },
     )
-    @taxon_3 = taxon_with_details(
+    @taxon3 = taxon_with_details(
       "I Am Yet Another Taxon 3",
       other_fields: {
         content_id: "ID-3",
@@ -53,7 +53,7 @@ RSpec.feature "Draft taxonomy" do
     )
 
     publishing_api_has_taxons(
-      [@taxon_1, @taxon_2, @taxon_3],
+      [@taxon1, @taxon2, @taxon3],
       page: 1,
       states: %w[draft],
     )
@@ -64,9 +64,9 @@ RSpec.feature "Draft taxonomy" do
   end
 
   def then_i_can_see_the_draft_taxons
-    expect(page).to have_text(@taxon_1[:title])
-    expect(page).to have_text(@taxon_2[:title])
-    expect(page).to have_text(@taxon_3[:title])
+    expect(page).to have_text(@taxon1[:title])
+    expect(page).to have_text(@taxon2[:title])
+    expect(page).to have_text(@taxon3[:title])
   end
 
   def given_there_is_a_draft_taxon

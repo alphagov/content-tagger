@@ -170,27 +170,27 @@ RSpec.feature "Tag importer", type: :feature do
     publishing_api_has_lookups(google_sheet_content_items)
     publishing_api_has_links(content_id: "content-2-cid", links: { taxons: [] })
     publishing_api_has_links(content_id: "content-1-cid", links: { taxons: [] })
-    link_update_1 = stub_publishing_api_patch_links(
+    link_update1 = stub_publishing_api_patch_links(
       "content-1-cid",
       links: {
         taxons: %w[education-content-id],
       },
       bulk_publishing: true,
     )
-    link_update_2 = stub_publishing_api_patch_links(
+    link_update2 = stub_publishing_api_patch_links(
       "content-2-cid",
       links: {
         taxons: %w[early-years-content-id],
       },
       bulk_publishing: true,
     )
-    taxon_1 = { title: "Early Years", content_id: "early-years-content-id" }
-    taxon_2 = { title: "Education", content_id: "education-content-id" }
-    publishing_api_has_taxons([taxon_1, taxon_2])
+    taxon1 = { title: "Early Years", content_id: "early-years-content-id" }
+    taxon2 = { title: "Education", content_id: "education-content-id" }
+    publishing_api_has_taxons([taxon1, taxon2])
 
     click_link I18n.t("tag_import.start_tagging")
-    expect(link_update_1).to have_been_requested
-    expect(link_update_2).to have_been_requested
+    expect(link_update1).to have_been_requested
+    expect(link_update2).to have_been_requested
     expect_tag_mapping_statuses_to_be("Tagged")
   end
 
@@ -198,7 +198,7 @@ RSpec.feature "Tag importer", type: :feature do
     publishing_api_has_lookups(google_sheet_content_items_with_draft)
     publishing_api_has_links(content_id: "content-2-cid", links: { taxons: [] })
     publishing_api_has_links(content_id: "content-1-cid", links: { taxons: [] })
-    link_update_1 = stub_publishing_api_patch_links(
+    link_update1 = stub_publishing_api_patch_links(
       "content-1-cid",
       links: {
         taxons: %w[education-content-id],
@@ -206,12 +206,12 @@ RSpec.feature "Tag importer", type: :feature do
       bulk_publishing: true,
     )
 
-    taxon_1 = { title: "Early Years", content_id: "early-years-content-id" }
-    taxon_2 = { title: "Education", content_id: "education-content-id" }
-    publishing_api_has_taxons([taxon_1, taxon_2])
+    taxon1 = { title: "Early Years", content_id: "early-years-content-id" }
+    taxon2 = { title: "Education", content_id: "education-content-id" }
+    publishing_api_has_taxons([taxon1, taxon2])
 
     click_link I18n.t("tag_import.start_tagging")
-    expect(link_update_1).to have_been_requested
+    expect(link_update1).to have_been_requested
     expect_different_tag_mapping_statuses_to_be("Error", "Tagged")
   end
 
