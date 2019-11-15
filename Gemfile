@@ -26,9 +26,9 @@ group :development, :test do
   gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'govuk-content-schema-test-helpers'
-  gem 'govuk-lint'
   gem 'pry-byebug'
   gem 'rspec-rails'
+  gem 'rubocop-govuk'
   gem 'simplecov', require: false
   gem 'simplecov-rcov', require: false
 end
