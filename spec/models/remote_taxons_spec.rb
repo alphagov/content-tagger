@@ -6,11 +6,11 @@ RSpec.describe RemoteTaxons do
 
   describe "#search" do
     it "fetches taxons from the publishing api with pagination" do
-      taxon_1 = { title: "foo" }
-      taxon_2 = { title: "bar" }
-      taxon_3 = { title: "aha" }
+      taxon1 = { title: "foo" }
+      taxon2 = { title: "bar" }
+      taxon3 = { title: "aha" }
       publishing_api_has_taxons(
-        [taxon_1, taxon_2, taxon_3],
+        [taxon1, taxon2, taxon3],
         page: 2,
         per_page: 2,
       )
@@ -24,9 +24,9 @@ RSpec.describe RemoteTaxons do
     end
 
     it "is possible to search with a query string" do
-      taxon_1 = { title: "foo" }
+      taxon1 = { title: "foo" }
       publishing_api_has_taxons(
-        [taxon_1],
+        [taxon1],
         page: 1,
         per_page: 1,
         q: "foo",
@@ -41,11 +41,11 @@ RSpec.describe RemoteTaxons do
     end
 
     it "fetches deleted taxons from the publishing api with pagination" do
-      taxon_1 = { title: "foo" }
-      taxon_2 = { title: "bar" }
-      taxon_3 = { title: "aha" }
+      taxon1 = { title: "foo" }
+      taxon2 = { title: "bar" }
+      taxon3 = { title: "aha" }
       publishing_api_has_deleted_taxons(
-        [taxon_1, taxon_2, taxon_3],
+        [taxon1, taxon2, taxon3],
         page: 2,
         per_page: 2,
       )
@@ -59,9 +59,9 @@ RSpec.describe RemoteTaxons do
     end
 
     it "is possible to search with a query string" do
-      taxon_1 = { title: "foo" }
+      taxon1 = { title: "foo" }
       publishing_api_has_taxons(
-        [taxon_1],
+        [taxon1],
         page: 1,
         per_page: 1,
         q: "foo",

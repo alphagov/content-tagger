@@ -174,20 +174,20 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     }
   end
 
-  def single_level_child_taxons(root, child_1, child_2)
+  def single_level_child_taxons(root, child1, child2)
     {
       "base_path" => "/taxons/#{root}",
       "content_id" => root.to_s,
       "links" => {
         "child_taxons" => [
           {
-            "base_path" => "/taxons/#{child_1}",
-            "content_id" => child_1.to_s,
+            "base_path" => "/taxons/#{child1}",
+            "content_id" => child1.to_s,
             "links" => {},
           },
           {
-            "base_path" => "/taxons/#{child_2}",
-            "content_id" => child_2.to_s,
+            "base_path" => "/taxons/#{child2}",
+            "content_id" => child2.to_s,
             "links" => {},
           },
         ],

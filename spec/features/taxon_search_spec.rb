@@ -22,7 +22,7 @@ RSpec.feature "Taxon Search" do
   end
 
   def given_there_are_multiple_pages_of_taxons
-    @taxon_1 = content_item_with_details(
+    @taxon1 = content_item_with_details(
       "I Am A Taxon 1",
       other_fields: {
         content_id: "ID-1",
@@ -30,7 +30,7 @@ RSpec.feature "Taxon Search" do
         publication_state: "published",
       },
     )
-    @taxon_2 = content_item_with_details(
+    @taxon2 = content_item_with_details(
       "I Am Another Taxon 2",
       other_fields: {
         content_id: "ID-2",
@@ -38,7 +38,7 @@ RSpec.feature "Taxon Search" do
         publication_state: "published",
       },
     )
-    @taxon_3 = content_item_with_details(
+    @taxon3 = content_item_with_details(
       "I Am Yet Another Taxon 3",
       other_fields: {
         content_id: "ID-3",
@@ -48,19 +48,19 @@ RSpec.feature "Taxon Search" do
     )
 
     publishing_api_has_taxons(
-      [@taxon_1, @taxon_2, @taxon_3],
+      [@taxon1, @taxon2, @taxon3],
       page: 1,
       per_page: 2,
     )
     publishing_api_has_taxons(
-      [@taxon_1, @taxon_2, @taxon_3],
+      [@taxon1, @taxon2, @taxon3],
       page: 2,
       per_page: 2,
     )
   end
 
   def given_there_are_taxons_for_search
-    @taxon_1 = content_item_with_details(
+    @taxon1 = content_item_with_details(
       "Taxon 1",
       other_fields: {
         content_id: "ID-1",
@@ -68,7 +68,7 @@ RSpec.feature "Taxon Search" do
         publication_state: "published",
       },
     )
-    @taxon_2 = content_item_with_details(
+    @taxon2 = content_item_with_details(
       "Taxon 2",
       other_fields: {
         content_id: "ID-2",
@@ -78,14 +78,14 @@ RSpec.feature "Taxon Search" do
     )
 
     publishing_api_has_taxons(
-      [@taxon_1, @taxon_2],
+      [@taxon1, @taxon2],
       document_type: "taxon",
       page: 1,
       per_page: 2,
     )
 
     publishing_api_has_taxons(
-      [@taxon_2],
+      [@taxon2],
       document_type: "taxon",
       page: 1,
       per_page: 50,
@@ -98,10 +98,10 @@ RSpec.feature "Taxon Search" do
   end
 
   def then_i_can_see_the_first_page_of_taxons
-    expect(page).to have_text(@taxon_1[:title])
-    expect(page).to have_text(@taxon_2[:title])
+    expect(page).to have_text(@taxon1[:title])
+    expect(page).to have_text(@taxon2[:title])
 
-    expect(page).to_not have_text(@taxon_3[:title])
+    expect(page).to_not have_text(@taxon3[:title])
   end
 
   def and_i_can_see_pagination_links
@@ -132,15 +132,15 @@ RSpec.feature "Taxon Search" do
   end
 
   def then_i_can_see_the_second_page_of_taxons
-    expect(page).to have_text(@taxon_3[:title])
+    expect(page).to have_text(@taxon3[:title])
 
-    expect(page).to_not have_text(@taxon_1[:title])
-    expect(page).to_not have_text(@taxon_2[:title])
+    expect(page).to_not have_text(@taxon1[:title])
+    expect(page).to_not have_text(@taxon2[:title])
   end
 
   def then_i_can_see_all_the_taxons
-    expect(page).to have_text(@taxon_1[:title])
-    expect(page).to have_text(@taxon_2[:title])
+    expect(page).to have_text(@taxon1[:title])
+    expect(page).to have_text(@taxon2[:title])
   end
 
   def when_i_search_for_taxons
@@ -149,8 +149,8 @@ RSpec.feature "Taxon Search" do
   end
 
   def then_i_can_see_my_search_results
-    expect(page).to have_text(@taxon_2[:title])
+    expect(page).to have_text(@taxon2[:title])
 
-    expect(page).to_not have_text(@taxon_1[:title])
+    expect(page).to_not have_text(@taxon1[:title])
   end
 end

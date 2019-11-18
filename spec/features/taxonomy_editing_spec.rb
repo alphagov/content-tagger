@@ -6,7 +6,7 @@ RSpec.feature "Taxonomy editing" do
   include ContentItemHelper
 
   before do
-    @taxon_1 = taxon_with_details(
+    @taxon1 = taxon_with_details(
       "School planning",
       other_fields: {
         content_id: "ID-1",
@@ -17,7 +17,7 @@ RSpec.feature "Taxonomy editing" do
         },
       },
     )
-    @taxon_2 = taxon_with_details(
+    @taxon2 = taxon_with_details(
       "Starting and attending school (draft)",
       other_fields: {
         content_id: "ID-2",
@@ -28,7 +28,7 @@ RSpec.feature "Taxonomy editing" do
         },
       },
     )
-    @taxon_3 = taxon_with_details(
+    @taxon3 = taxon_with_details(
       "Rail",
       other_fields: {
         content_id: "ID-3",
@@ -39,7 +39,7 @@ RSpec.feature "Taxonomy editing" do
         },
       },
     )
-    @linkable_taxon_1 = {
+    @linkable_taxon1 = {
       title: "School planning",
       content_id: "ID-1",
       base_path: "/education/1",
@@ -49,7 +49,7 @@ RSpec.feature "Taxonomy editing" do
         "1" => "published",
       },
     }
-    @linkable_taxon_2 = {
+    @linkable_taxon2 = {
       title: "Starting and attending school (draft)",
       content_id: "ID-2",
       base_path: "/education/2",
@@ -59,7 +59,7 @@ RSpec.feature "Taxonomy editing" do
         "1" => "draft",
       },
     }
-    @linkable_taxon_3 = {
+    @linkable_taxon3 = {
       title: "Rail",
       content_id: "ID-3",
       base_path: "/transport/rail",
@@ -193,10 +193,10 @@ RSpec.feature "Taxonomy editing" do
 
   def given_there_are_taxons
     publishing_api_has_linkables(
-      [@linkable_taxon_1, @linkable_taxon_2, @linkable_taxon_3],
+      [@linkable_taxon1, @linkable_taxon2, @linkable_taxon3],
       document_type: "taxon",
     )
-    publishing_api_has_taxons([@taxon_1, @taxon_2, @taxon_3])
+    publishing_api_has_taxons([@taxon1, @taxon2, @taxon3])
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/ID-2")
       .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
@@ -205,24 +205,24 @@ RSpec.feature "Taxonomy editing" do
       .to_return(body: { expanded_links: { parent_taxons: [] } }.to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-1")
-      .to_return(body: @taxon_1.to_json)
+      .to_return(body: @taxon1.to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-2")
-      .to_return(body: @taxon_2.to_json)
+      .to_return(body: @taxon2.to_json)
 
     stub_request(:get, "https://publishing-api.test.gov.uk/v2/content/ID-3")
-      .to_return(body: @taxon_3.to_json)
+      .to_return(body: @taxon3.to_json)
   end
 
   def when_i_visit_the_taxon_page
     publishing_api_has_expanded_links(
-      content_id: @taxon_1[:content_id],
+      content_id: @taxon1[:content_id],
       expanded_links: {
         parent_taxons: [
           {
-            content_id: @taxon_2[:content_id],
-            base_path: @taxon_2[:base_path],
-            title: @taxon_2[:title],
+            content_id: @taxon2[:content_id],
+            base_path: @taxon2[:base_path],
+            title: @taxon2[:title],
           },
         ],
         legacy_taxons: [
@@ -243,7 +243,7 @@ RSpec.feature "Taxonomy editing" do
 
   def when_i_visit_the_draft_taxon_page
     publishing_api_has_expanded_links(
-      content_id: @taxon_2[:content_id],
+      content_id: @taxon2[:content_id],
       expanded_links: {},
     )
 
@@ -284,8 +284,8 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def and_i_select_associated_taxons
-    select @taxon_2[:title], from: "taxon_associated_taxons"
-    select @taxon_3[:title], from: "taxon_associated_taxons"
+    select @taxon2[:title], from: "taxon_associated_taxons"
+    select @taxon3[:title], from: "taxon_associated_taxons"
   end
 
   def when_i_change_the_parent_taxon_to_a_transport_branch
@@ -315,12 +315,12 @@ RSpec.feature "Taxonomy editing" do
     publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
 
     publishing_api_has_expanded_links(
-      content_id: @taxon_1[:content_id],
+      content_id: @taxon1[:content_id],
       expanded_links: {},
     )
 
     publishing_api_has_expanded_links(
-      content_id: @taxon_2[:content_id],
+      content_id: @taxon2[:content_id],
       expanded_links: {},
     )
 
