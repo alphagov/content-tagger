@@ -44,7 +44,7 @@ class TaggingSpreadsheetsController < ApplicationController
 
   def refetch
     tagging_spreadsheet.tag_mappings.delete_all
-    tagging_spreadsheet.update_attributes!(state: "uploaded")
+    tagging_spreadsheet.update!(state: "uploaded")
     InitialTaggingImport.perform_async(tagging_spreadsheet.id)
 
     redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t("tag_import.import_refetched")
