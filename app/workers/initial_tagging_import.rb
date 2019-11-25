@@ -9,9 +9,9 @@ class InitialTaggingImport
     errors = BulkTagging::FetchRemoteData.call(tagging_spreadsheet)
 
     if errors.any?
-      tagging_spreadsheet.update_attributes!(state: "errored", error_message: errors.join("\n"))
+      tagging_spreadsheet.update!(state: "errored", error_message: errors.join("\n"))
     else
-      tagging_spreadsheet.update_attributes!(state: "ready_to_import")
+      tagging_spreadsheet.update!(state: "ready_to_import")
     end
   end
 end

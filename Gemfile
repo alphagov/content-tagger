@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "5.2.3"
+gem "rails", "6.0.1"
 
 gem "bootstrap-kaminari-views", "~> 0.0.5"
 gem "govuk_app_config", "~> 2.0"
@@ -27,7 +27,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "govuk-content-schema-test-helpers"
   gem "pry-byebug"
-  gem "rspec-rails"
+  gem "rspec-rails", "~> 4.0.0.beta3"
   gem "rubocop-govuk"
   gem "simplecov", require: false
   gem "simplecov-rcov", require: false
