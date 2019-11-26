@@ -30,15 +30,6 @@ application.
 User.first.update permissions: ["signin", "GDS Editor"]
 ```
 
-Then from `govuk/govuk-puppet/development-vm`, run:
-
-```
-$ bowl content-tagger
-```
-
-If you're using the VM, the app should appear on
-[http://content-tagger.dev.gov.uk/](http://content-tagger.dev.gov.uk/).
-
 ### Running the test suite
 
 ```
