@@ -27,7 +27,7 @@ class TaggingsController < ApplicationController
         title: content_item.title,
       }
     else
-      render json: { errors: content_lookup.errors }, status: 404
+      render json: { errors: content_lookup.errors }, status: :not_found
     end
   end
 
@@ -38,7 +38,7 @@ class TaggingsController < ApplicationController
       tagging_update: Tagging::TaggingUpdateForm.from_content_item(content_item),
     }
   rescue ContentItem::ItemNotFoundError
-    render "item_not_found", status: 404
+    render "item_not_found", status: :not_found
   end
 
   def update

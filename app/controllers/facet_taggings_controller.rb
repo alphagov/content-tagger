@@ -21,7 +21,7 @@ class FacetTaggingsController < ::TaggingsController
       tagging_update: Facets::TaggingUpdateForm.from_content_item(content_item),
     }
   rescue ContentItem::ItemNotFoundError
-    render "item_not_found", status: 404
+    render "item_not_found", status: :not_found
   end
 
   def update

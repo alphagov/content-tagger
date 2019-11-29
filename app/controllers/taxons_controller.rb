@@ -51,7 +51,7 @@ class TaxonsController < ApplicationController
       format.json { render json: taxon }
     end
   rescue Taxonomy::BuildTaxon::TaxonNotFoundError
-    render "taxon_not_found", status: 404
+    render "taxon_not_found", status: :not_found
   end
 
   def visualisation_data
@@ -184,13 +184,13 @@ class TaxonsController < ApplicationController
 
   def download
     export = Taxonomy::TaxonsExport.new
-    send_data export.to_csv, filename: "#{Date.today} Taxonomy.csv"
+    send_data export.to_csv, filename: "#{Time.zone.today} Taxonomy.csv"
   end
 
   def download_tagged
     export = Taxonomy::TaxonomyExport.new(taxon.content_id)
     send_data export.to_csv,
-              filename: "#{Date.today} content tagged to #{taxon.title}.csv"
+              filename: "#{Time.zone.today} content tagged to #{taxon.title}.csv"
   end
 
 private

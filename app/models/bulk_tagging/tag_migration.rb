@@ -1,5 +1,5 @@
 module BulkTagging
-  class TagMigration < ActiveRecord::Base
+  class TagMigration < ApplicationRecord
     has_many :tag_mappings, dependent: :destroy, as: :tagging_source
     validates :source_content_id, :source_title, :source_document_type, presence: true
 

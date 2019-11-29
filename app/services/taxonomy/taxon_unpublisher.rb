@@ -20,7 +20,7 @@ module Taxonomy
       return if parent_taxon.nil?
 
       content_base_paths = tagged_content_base_paths(taxon_content_id)
-      return unless content_base_paths.present?
+      return if content_base_paths.blank?
 
       tag_migration = BulkTagging::BuildTagMigration.call(
         source_content_item: ContentItem.find!(taxon_content_id),

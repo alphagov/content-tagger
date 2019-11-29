@@ -1,4 +1,4 @@
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   has_many :content_items, class_name: "ProjectContentItem", dependent: :destroy
 
   def taxons

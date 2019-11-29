@@ -1,5 +1,5 @@
 module Taxonomy
-  class HealthWarning < ActiveRecord::Base
+  class HealthWarning < ApplicationRecord
     def to_s
       "#<Taxnomy::HealthWarning: #{message}>"
     end
