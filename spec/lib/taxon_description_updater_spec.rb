@@ -88,7 +88,7 @@ private
       "user_facing_version" => 4,
       "publication_state" => "draft",
       "lock_version" => 3,
-      "updated_at" => Time.now,
+      "updated_at" => Time.zone.now,
       "phase" => "live",
       "state_history" => {
         1 => "superseded",

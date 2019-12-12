@@ -24,7 +24,7 @@ namespace :taxonomy do
       base_path_checker.invalid_taxons.each do |taxon|
         print "\n#{taxon.content_id} #{taxon.base_path}"
 
-        next unless args[:and_fix].present?
+        next if args[:and_fix].blank?
 
         if taxon.level_one_taxon?
           puts ": skipping"

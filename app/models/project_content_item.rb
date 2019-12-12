@@ -1,4 +1,4 @@
-class ProjectContentItem < ActiveRecord::Base
+class ProjectContentItem < ApplicationRecord
   belongs_to :project, touch: true
 
   enum flag: {

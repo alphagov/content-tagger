@@ -1,5 +1,5 @@
 module BulkTagging
-  class TagMapping < ActiveRecord::Base
+  class TagMapping < ApplicationRecord
     belongs_to :tagging_source, polymorphic: true
 
     COMPLETED_STATES = %w[tagged errored].freeze

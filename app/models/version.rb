@@ -1,4 +1,4 @@
-class Version < ActiveRecord::Base
+class Version < ApplicationRecord
   scope :history, ->(content_id) { where(content_id: content_id).order(number: :desc) }
 
   before_create :increment_number

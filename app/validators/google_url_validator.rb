@@ -23,7 +23,7 @@ private
 
   def validate_parameters(uri, record)
     parameters = CGI.parse(uri.query || "")
-    unless parameters["gid"].present?
+    if parameters["gid"].blank?
       record.errors[:url] << I18n.t("errors.missing_gid")
     end
 

@@ -40,7 +40,7 @@ module BulkTagging
 
     describe ".call" do
       it "published the links for the 3 tag mapping records" do
-        allow(Time.zone).to receive(:now).and_return(Time.new(0))
+        allow(Time.zone).to receive(:now).and_return(Time.zone.local(0))
 
         expect(PublishLinksWorker).to receive(:perform_async)
           .with(tag_mapping_1.id)
@@ -52,7 +52,7 @@ module BulkTagging
         described_class.call(tagging_spreadsheet, user: user)
 
         expect(tagging_spreadsheet.last_published_by).to eq "user-123"
-        expect(tagging_spreadsheet.last_published_at).to eq Time.new(0)
+        expect(tagging_spreadsheet.last_published_at).to eq Time.zone.local(0)
       end
     end
   end
