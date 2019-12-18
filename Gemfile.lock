@@ -106,7 +106,7 @@ GEM
     faraday (0.17.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
-    gds-api-adapters (62.0.0)
+    gds-api-adapters (63.0.0)
       addressable
       link_header
       null_logger
@@ -418,7 +418,7 @@ DEPENDENCIES
   bootstrap-kaminari-views (~> 0.0.5)
   database_cleaner
   factory_bot_rails
-  gds-api-adapters (~> 62.0)
+  gds-api-adapters (~> 63.0)
   gds-sso (~> 14.2)
   govuk-content-schema-test-helpers
   govuk_admin_template (~> 6.7)
