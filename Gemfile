@@ -15,7 +15,7 @@ gem "simple_form", "~> 5.0"
 gem "uglifier", "~> 4.2"
 
 # GDS managed dependencies
-gem "gds-api-adapters", "~> 63.0"
+gem "gds-api-adapters", "~> 63.1"
 gem "gds-sso", "~> 14.2"
 gem "govuk_admin_template", "~> 6.7"
 gem "govuk_sidekiq", "~> 3.0"
