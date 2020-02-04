@@ -167,18 +167,18 @@ GEM
     json-schema (2.8.0)
       addressable (>= 2.4)
     jwt (2.2.1)
-    kaminari (1.1.1)
+    kaminari (1.2.0)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.1.1)
-      kaminari-activerecord (= 1.1.1)
-      kaminari-core (= 1.1.1)
-    kaminari-actionview (1.1.1)
+      kaminari-actionview (= 1.2.0)
+      kaminari-activerecord (= 1.2.0)
+      kaminari-core (= 1.2.0)
+    kaminari-actionview (1.2.0)
       actionview
-      kaminari-core (= 1.1.1)
-    kaminari-activerecord (1.1.1)
+      kaminari-core (= 1.2.0)
+    kaminari-activerecord (1.2.0)
       activerecord
-      kaminari-core (= 1.1.1)
-    kaminari-core (1.1.1)
+      kaminari-core (= 1.2.0)
+    kaminari-core (1.2.0)
     kgio (2.11.2)
     link_header (0.0.8)
     logstash-event (1.2.02)
@@ -427,7 +427,7 @@ DEPENDENCIES
   govuk_test
   hashdiff (~> 1.0.0)
   jquery-ui-rails (= 6.0.1)
-  kaminari (~> 1.1)
+  kaminari (~> 1.2)
   pg
   plek (~> 3.0)
   pry-byebug
