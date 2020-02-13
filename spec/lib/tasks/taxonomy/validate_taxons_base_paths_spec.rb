@@ -46,7 +46,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
     )
 
     stub_publishing_api_has_item(taxon_attributes)
-    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
+    stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect {
@@ -79,7 +79,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
     )
 
     stub_publishing_api_has_item(taxon_attributes)
-    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
+    stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect {
@@ -126,7 +126,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
     )
 
     stub_publishing_api_has_item(taxon_attributes)
-    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
+    stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
       .to_return(status: 422, body:
         {

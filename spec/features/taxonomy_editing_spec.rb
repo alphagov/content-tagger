@@ -215,7 +215,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_visit_the_taxon_page
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon1[:content_id],
       expanded_links: {
         parent_taxons: [
@@ -242,7 +242,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_visit_the_draft_taxon_page
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon2[:content_id],
       expanded_links: {},
     )
@@ -314,12 +314,12 @@ RSpec.feature "Taxonomy editing" do
 
     publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon1[:content_id],
       expanded_links: {},
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon2[:content_id],
       expanded_links: {},
     )

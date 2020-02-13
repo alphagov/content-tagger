@@ -18,7 +18,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     stub_publishing_api_has_item("content_id" => redirect_content_id, "base_path" => "/path/to/redirect")
 
     # link parent taxon to child taxon
-    publishing_api_has_expanded_links(expanded_links(taxon_content_id, parent_taxon_content_id))
+    stub_publishing_api_has_expanded_links(expanded_links(taxon_content_id, parent_taxon_content_id))
     stub_any_publishing_api_unpublish
   end
 
@@ -56,7 +56,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     end
 
     it "unpublishes a level one taxon with a redirect" do
-      publishing_api_has_expanded_links("content_id" => taxon_content_id, "expanded_links" => {})
+      stub_publishing_api_has_expanded_links("content_id" => taxon_content_id, "expanded_links" => {})
       unpublish(taxon_content_id, redirect_content_id)
       assert_publishing_api_unpublish(taxon_content_id, type: "redirect", alternative_path: "/path/to/redirect")
     end
@@ -92,7 +92,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
   context "Transition taxon" do
     it "unpublishes the Transition taxon with 'cy' locale" do
       transition_taxon_content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
-      publishing_api_has_expanded_links("content_id" => transition_taxon_content_id, "expanded_links" => {})
+      stub_publishing_api_has_expanded_links("content_id" => transition_taxon_content_id, "expanded_links" => {})
 
       unpublish(transition_taxon_content_id, redirect_content_id)
       assert_publishing_api_unpublish(transition_taxon_content_id,

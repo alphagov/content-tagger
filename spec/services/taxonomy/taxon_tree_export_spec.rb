@@ -110,7 +110,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     stub_publishing_api_has_item(level_2_taxon)
     stub_publishing_api_has_item(level_3_taxon)
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: level_1_taxon["content_id"],
       expanded_links: {
         root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
@@ -118,7 +118,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
       },
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: level_2_taxon["content_id"],
       expanded_links: {
         parent_taxons: [level_1_taxon],
@@ -126,7 +126,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
       },
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: level_3_taxon["content_id"],
       expanded_links: {
         parent_taxons: [level_2_taxon],

@@ -260,13 +260,13 @@ private
         parent_taxons: [@parent_taxon_content_id],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon_content_id,
       expanded_links: {
         parent_taxons: [@parent_taxon],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @parent_taxon_content_id,
       expanded_links: {
         child_taxons: [@taxon],
@@ -289,13 +289,13 @@ private
         child_taxons: [@child_taxon_content_id],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon_content_id,
       expanded_links: {
         child_taxons: [@child_taxon],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @child_taxon_content_id,
       expanded_links: {
         parent_taxons: [@taxon],

@@ -16,8 +16,8 @@ RSpec.describe TaxonomyHealth::ContentCountMetric do
   before :each do
     stub_publishing_api_has_item(home_page)
     stub_publishing_api_has_item(food)
-    publishing_api_has_expanded_links(home_page)
-    publishing_api_has_expanded_links(food)
+    stub_publishing_api_has_expanded_links(home_page)
+    stub_publishing_api_has_expanded_links(food)
   end
 
   it "records no failing taxons" do

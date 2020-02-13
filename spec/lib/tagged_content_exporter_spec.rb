@@ -45,7 +45,7 @@ RSpec.describe TaggedContentExporter do
           ],
         }.to_json)
 
-      publishing_api_has_expanded_links(
+      stub_publishing_api_has_expanded_links(
         "content_id" => "taxon-123",
         "expanded_links" => {
           "available_translations" => [

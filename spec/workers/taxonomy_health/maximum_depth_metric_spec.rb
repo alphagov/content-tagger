@@ -20,8 +20,8 @@ RSpec.describe TaxonomyHealth::MaximumDepthMetric do
     stub_publishing_api_has_item(fruits)
     stub_publishing_api_has_item(apples)
     stub_publishing_api_has_item(pears)
-    publishing_api_has_expanded_links(home_page)
-    publishing_api_has_expanded_links(food)
+    stub_publishing_api_has_expanded_links(home_page)
+    stub_publishing_api_has_expanded_links(food)
   end
 
   it "records no failing taxons" do

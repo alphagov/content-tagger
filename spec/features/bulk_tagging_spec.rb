@@ -71,7 +71,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       q: "browse",
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: "collection-id",
       expanded_links: {
         documents: [

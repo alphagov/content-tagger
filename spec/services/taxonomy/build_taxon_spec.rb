@@ -32,7 +32,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     before do
       stub_publishing_api_has_item(content)
-      publishing_api_has_expanded_links(
+      stub_publishing_api_has_expanded_links(
         content_id: content_id,
         expanded_links: {
           topics: [],
@@ -87,7 +87,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "without taxon parents" do
       before do
-        publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links(
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -103,7 +103,7 @@ RSpec.describe Taxonomy::BuildTaxon do
     context "with existing links" do
       let(:parent_taxon_id) { "CONTENT-ID-RTI" }
       before do
-        publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links(
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -121,7 +121,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "root taxon" do
       before do
-        publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links(
           content_id: content_id,
           expanded_links: {
             topics: [],
