@@ -1,6 +1,6 @@
 module Taxonomy
   class TaxonUnpublisher
-    include BrexitTaxon
+    include TransitionTaxon
 
     def self.call(taxon_content_id:, redirect_to_content_id:, user:, retag: true)
       new.unpublish(taxon_content_id: taxon_content_id,

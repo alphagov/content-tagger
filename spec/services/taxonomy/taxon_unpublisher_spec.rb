@@ -1,7 +1,7 @@
 require "rails_helper"
 
 include ::GdsApi::TestHelpers::PublishingApiV2
-include BrexitTaxon
+include TransitionTaxon
 
 RSpec.describe Taxonomy::TaxonUnpublisher do
   let(:taxon_content_id) { SecureRandom.uuid }

@@ -1,5 +1,5 @@
 class TaxonsController < ApplicationController
-  include BrexitTaxon
+  include TransitionTaxon
 
   VISUALISATIONS = %w[list bubbles taxonomy_tree].freeze
 

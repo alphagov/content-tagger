@@ -4,7 +4,7 @@ RSpec.describe TaxonsController, type: :controller do
   include EmailAlertApiHelper
   include PublishingApiHelper
   include ContentItemHelper
-  include BrexitTaxon
+  include TransitionTaxon
 
   let(:brexit_taxon_content_id) { BrexitTaxon::BREXIT_TAXON_CONTENT_ID }
 

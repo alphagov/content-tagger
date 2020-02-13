@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe UpdateTaxonWorker, "#perform" do
   include PublishingApiHelper
   include ContentItemHelper
-  include BrexitTaxon
+  include TransitionTaxon
 
   it "records the changes that have been made" do
     taxon = taxon_with_details(

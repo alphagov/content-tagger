@@ -1,6 +1,6 @@
 class UpdateTaxonWorker
   include Sidekiq::Worker
-  include BrexitTaxon
+  include TransitionTaxon
 
   def perform(content_id, attributes)
     previous_taxon = Taxonomy::BuildTaxon.call(content_id: content_id)

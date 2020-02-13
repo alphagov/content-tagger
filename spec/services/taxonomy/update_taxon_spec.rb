@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Taxonomy::UpdateTaxon do
   include ContentItemHelper
-  include BrexitTaxon
+  include TransitionTaxon
 
   before do
     @taxon = Taxon.new(

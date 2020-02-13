@@ -1,6 +1,6 @@
 class PublishTaxonWorker
   include Sidekiq::Worker
-  include BrexitTaxon
+  include TransitionTaxon
 
   def perform(taxon_content_id)
     Services.publishing_api.publish(taxon_content_id)
