@@ -3,7 +3,7 @@ require "gds_api/test_helpers/content_store"
 
 include Taxonomy
 include ::GdsApi::TestHelpers::ContentStore
-include ::GdsApi::TestHelpers::PublishingApiV2
+include ::GdsApi::TestHelpers::PublishingApi
 
 RSpec.describe Taxonomy::TaxonomyQuery do
   def query

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-include ::GdsApi::TestHelpers::PublishingApiV2
+include ::GdsApi::TestHelpers::PublishingApi
 include TransitionTaxon
 
 RSpec.describe Taxonomy::TaxonUnpublisher do

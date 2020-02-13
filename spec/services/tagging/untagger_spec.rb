@@ -1,6 +1,6 @@
 require "rails_helper"
 require "gds_api/test_helpers/publishing_api_v2"
-include ::GdsApi::TestHelpers::PublishingApiV2
+include ::GdsApi::TestHelpers::PublishingApi
 
 RSpec.describe Tagging::Untagger do
   before :each do
