@@ -89,13 +89,13 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     end
   end
 
-  context "Brexit taxon" do
-    it "unpublishes the Brexit taxon with 'cy' locale" do
-      brexit_content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
-      publishing_api_has_expanded_links("content_id" => brexit_content_id, "expanded_links" => {})
+  context "Transition taxon" do
+    it "unpublishes the Transition taxon with 'cy' locale" do
+      transition_taxon_content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
+      publishing_api_has_expanded_links("content_id" => transition_taxon_content_id, "expanded_links" => {})
 
-      unpublish(brexit_content_id, redirect_content_id)
-      assert_publishing_api_unpublish(brexit_content_id,
+      unpublish(transition_taxon_content_id, redirect_content_id)
+      assert_publishing_api_unpublish(transition_taxon_content_id,
                                       type: "redirect",
                                       alternative_path: "/path/to/redirect",
                                       locale: "cy")
