@@ -73,13 +73,6 @@ Rails.application.routes.draw do
 
   resources :tagging_history, only: %i[index show]
 
-  resources :facet_groups, only: :index, param: :content_id do
-    resources :facet_taggings, only: %i[show update], param: :content_id do
-      get "/lookup", action: "lookup", on: :collection
-      post "/lookup", action: "find_by_slug", on: :collection
-    end
-  end
-
   if Rails.env.development?
     mount GovukAdminTemplate::Engine, at: "/style-guide"
 
