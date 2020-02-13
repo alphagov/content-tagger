@@ -8,7 +8,7 @@ include ::GdsApi::TestHelpers::PublishingApi
 RSpec.describe DescriptionRemover do
   context "appropriate taxons are updated" do
     before do
-      content_store_has_item("/work", taxon.to_json, draft: true)
+      stub_content_store_has_item("/work", taxon.to_json, draft: true)
       stub_publishing_api_has_item(published_child_taxon)
       stub_publishing_api_has_item(published_child_taxon_with_draft)
       stub_publishing_api_has_item(draft_taxon)
