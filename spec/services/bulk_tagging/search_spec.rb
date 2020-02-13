@@ -5,7 +5,7 @@ module BulkTagging
     include ContentItemHelper
 
     before do
-      publishing_api_has_content(
+      stub_publishing_api_has_content(
         [basic_content_item("A content item")],
         q: "tax",
         page: 1,

@@ -51,7 +51,7 @@ RSpec.feature "Download taggings", type: :feature do
        },
     )
 
-    publishing_api_has_content(
+    stub_publishing_api_has_content(
       [{ "content_id" => "org-content-id", "title" => "org title" }],
       document_type: "organisation",
       fields: %w[content_id title],

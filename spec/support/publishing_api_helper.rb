@@ -37,7 +37,7 @@ module PublishingApiHelper
       search_in: %i[title base_path details.internal_name],
     }
 
-    publishing_api_has_content(
+    stub_publishing_api_has_content(
       items,
       default_options.merge(options),
     )
@@ -54,7 +54,7 @@ module PublishingApiHelper
       states: %w[published],
     }
 
-    publishing_api_has_content(taxons, default_options.merge(options))
+    stub_publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_draft_taxons(taxons, options = {})
@@ -67,7 +67,7 @@ module PublishingApiHelper
       states: %w[draft],
     }
 
-    publishing_api_has_content(taxons, default_options.merge(options))
+    stub_publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_deleted_taxons(taxons, options = {})
@@ -81,7 +81,7 @@ module PublishingApiHelper
       states: %w[unpublished],
     }
 
-    publishing_api_has_content(taxons, default_options.merge(options))
+    stub_publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_taxon_linkables(base_paths)
