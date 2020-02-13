@@ -44,22 +44,17 @@ module Facets
     def generate_links_payload
       facet_groups_content_ids = fetch_content_ids(:facet_groups)
       facet_values_content_ids = fetch_content_ids(:facet_values)
-      finder_content_ids = [FinderService::LINKED_FINDER_CONTENT_ID]
       ordered_related_items_ids = ordered_related_links
 
       if facet_values_content_ids.any?
         facet_groups_content_ids.push(facet_group_content_id)
-        ordered_related_items_ids.unshift(FinderService::LINKED_FINDER_CONTENT_ID)
       else
         facet_groups_content_ids.delete(facet_group_content_id)
-        finder_content_ids = []
-        ordered_related_items_ids.delete(FinderService::LINKED_FINDER_CONTENT_ID)
       end
 
       {
         facet_groups: facet_groups_content_ids.uniq,
         facet_values: facet_values_content_ids,
-        finder: finder_content_ids,
         ordered_related_items: ordered_related_items_ids,
       }
     end
