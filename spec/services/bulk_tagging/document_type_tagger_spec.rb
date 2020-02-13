@@ -14,9 +14,9 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
     before :each do
       stub_publishing_api_has_item(content_id: @taxon_content_id)
       stub_publishing_api_has_content([{ content_id: "c1" }, { content_id: "c2" }],
-                                 page: 1,
-                                 document_type: "document_type",
-                                 fields: %w[content_id])
+                                      page: 1,
+                                      document_type: "document_type",
+                                      fields: %w[content_id])
 
       stub_publishing_api_has_links(
         content_id: "c1",

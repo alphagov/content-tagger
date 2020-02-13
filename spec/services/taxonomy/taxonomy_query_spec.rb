@@ -95,11 +95,11 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       before :each do
         stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
         stub_content_store_has_item("/taxons/root_taxon_a",
-                               single_level_child_taxons("root_taxon_a", "child_a_1", "child_a_2").to_json,
-                               draft: true)
+                                    single_level_child_taxons("root_taxon_a", "child_a_1", "child_a_2").to_json,
+                                    draft: true)
         stub_content_store_has_item("/taxons/root_taxon_b",
-                               single_level_child_taxons("root_taxon_b", "child_b_1", "child_b_2"),
-                               draft: true)
+                                    single_level_child_taxons("root_taxon_b", "child_b_1", "child_b_2"),
+                                    draft: true)
       end
 
       it "returns root taxons in the first array" do
