@@ -305,7 +305,7 @@ private
 
   def add_tagged_content(fields:)
     content_item = basic_content_item("tagged content")
-    publishing_api_has_linked_items(
+    stub_publishing_api_has_linked_items(
       [content_item],
       content_id: @taxon_content_id,
       link_type: "taxons",

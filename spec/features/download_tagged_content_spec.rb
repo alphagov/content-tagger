@@ -35,7 +35,7 @@ RSpec.feature "Download taggings", type: :feature do
       },
     )
 
-    publishing_api_has_linked_items(
+    stub_publishing_api_has_linked_items(
       [content_item],
       content_id: @content_id,
       link_type: "taxons",
