@@ -192,7 +192,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def given_there_are_taxons
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       [@linkable_taxon1, @linkable_taxon2, @linkable_taxon3],
       document_type: "taxon",
     )

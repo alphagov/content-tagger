@@ -87,7 +87,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     stub_publishing_api_has_item(basic_content_item("Taxon 2"))
 
     # Used in the dropdown
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       [
         build_linkable(internal_name: "Taxon 1", content_id: "taxon-1"),
         build_linkable(internal_name: "Taxon 2", content_id: "taxon-2"),

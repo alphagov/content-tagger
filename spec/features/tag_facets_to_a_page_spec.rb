@@ -288,7 +288,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def publishing_api_has_facet_values_linkables(labels)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       stubbed_facet_values.select { |fv| labels.include?(fv["title"]) },
       document_type: "facet_value",
     )
