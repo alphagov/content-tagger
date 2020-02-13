@@ -159,8 +159,8 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_create_tags
-    publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
-    publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
+    stub_publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
+    stub_publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
     stub_publishing_api_has_lookups(
       "/level-one/tax-doc-1" => "tax-doc-1",
       "/level-one/tax-doc-2" => "tax-doc-2",
@@ -266,7 +266,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         ),
       ],
     )
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: "content-id",
       links: { taxons: [] },
       version: 0,

@@ -130,7 +130,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
     # Override the `links` call in stub_requests_for_show_page
     # TODO: extend stub_requests_for_show_page to make this easier
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
         parent_taxons: %w[CONTENT-ID-PARENT],
@@ -192,7 +192,7 @@ RSpec.feature "Delete Taxon", type: :feature do
       "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
     stub_publishing_api_has_item(parent_taxon)
-    publishing_api_has_links(content_id: "CONTENT-ID-PARENT")
+    stub_publishing_api_has_links(content_id: "CONTENT-ID-PARENT")
 
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
     @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
@@ -254,7 +254,7 @@ private
     #
     # Stub realistic values for links and expanded links to correctly render
     # the tree on the taxon show page
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
         parent_taxons: [@parent_taxon_content_id],
@@ -283,7 +283,7 @@ private
     #
     # Stub realistic values for links and expanded links to correctly render
     # the tree on the taxon show page
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
         child_taxons: [@child_taxon_content_id],
@@ -314,7 +314,7 @@ private
 
     stub_publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
 
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: content_item[:content_id],
       links: {
         taxons: [@taxon_content_id],

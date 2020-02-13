@@ -44,14 +44,14 @@ RSpec.feature "Bulk updating", type: :feature do
 
     stub_requests_for_show_page(@parent_taxon)
 
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @parent_content_id,
       links: {
         child_taxons: [@child_content_id],
       },
     )
 
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @child_content_id,
       links: {
         parent: [@parent_content_id],

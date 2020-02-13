@@ -17,7 +17,7 @@ module BulkTagging
 
     describe ".call" do
       it "adds the new links to the existing list of links" do
-        publishing_api_has_links(
+        stub_publishing_api_has_links(
           content_id: content_id,
           links: { taxons: %w[existing-content-id] },
           version: 10,
@@ -34,7 +34,7 @@ module BulkTagging
       end
 
       it "makes sure we don't duplicate the links" do
-        publishing_api_has_links(
+        stub_publishing_api_has_links(
           content_id: content_id,
           links: { taxons: [tag_mapping.link_content_id] },
           version: 10,
@@ -51,7 +51,7 @@ module BulkTagging
       end
 
       it "adds new links" do
-        publishing_api_has_links(
+        stub_publishing_api_has_links(
           content_id: content_id,
           links: { taxons: [] },
           version: 10,
@@ -72,7 +72,7 @@ module BulkTagging
         tagging_source.source_content_id = "source-content-id"
         tagging_source.delete_source_link = true
 
-        publishing_api_has_links(
+        stub_publishing_api_has_links(
           content_id: content_id,
           links: { taxons: %w[source-content-id] },
           version: 10,

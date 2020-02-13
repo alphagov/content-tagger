@@ -231,7 +231,7 @@ RSpec.describe "Viewing taxons" do
 
   def when_i_view_the_lowest_level_taxon
     stub_publishing_api_has_item(cox)
-    publishing_api_has_links(cox)
+    stub_publishing_api_has_links(cox)
 
     stub_publishing_api_has_expanded_links(
       content_id: cox["content_id"],

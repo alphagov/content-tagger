@@ -15,7 +15,7 @@ RSpec.describe TaggedContentExporter do
              content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
              url: "https://www.gov.uk/government/publications/great-western-franchise-2013")
 
-      publishing_api_has_links(
+      stub_publishing_api_has_links(
         content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
         links: {
           taxons: %w[

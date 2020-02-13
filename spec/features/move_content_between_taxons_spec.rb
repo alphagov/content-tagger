@@ -76,7 +76,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
     @document1 = basic_content_item("Tagged content 1")
     @document2 = basic_content_item("Tagged content 2")
 
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @source_taxon[:content_id],
       links: {},
       version: 1,
@@ -194,7 +194,7 @@ private
 
   def assert_content_items_have_been_moved_for_document(document, source, dest)
     # First we fetch existing links
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: document[:content_id],
       links: { taxons: [source[:content_id]] },
       version: 1,

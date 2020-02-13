@@ -18,14 +18,14 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
                                  document_type: "document_type",
                                  fields: %w[content_id])
 
-      publishing_api_has_links(
+      stub_publishing_api_has_links(
         content_id: "c1",
         links: {
           taxons: %w[569a9ee5-c195-4b7f-b9dc-edc17a09113f],
         },
         version: 6,
       )
-      publishing_api_has_links(
+      stub_publishing_api_has_links(
         "content_id": "c2",
         "links": {},
         "version": 10,

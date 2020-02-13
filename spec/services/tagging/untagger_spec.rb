@@ -7,7 +7,7 @@ RSpec.describe Tagging::Untagger do
     @content_id = "51ac4247-fd92-470a-a207-6b852a97f2db"
   end
   it "untags a taxon" do
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       "content_id" => @content_id,
       "version" => 5,
       "links" => {
@@ -20,7 +20,7 @@ RSpec.describe Tagging::Untagger do
     assert_publishing_api_patch_links(@content_id, "previous_version" => 5, "links" => { "taxons" => %w[bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb] })
   end
   it "retries 3 times" do
-    publishing_api_has_links(content_id: @content_id, links: { taxons: %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa] }, version: 5)
+    stub_publishing_api_has_links(content_id: @content_id, links: { taxons: %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa] }, version: 5)
 
     stub_any_publishing_api_patch_links.and_raise(GdsApi::HTTPConflict).times(2).then.to_return(body: "{}")
     expect { Tagging::Untagger.call(@content_id, %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa]) }.to_not raise_error

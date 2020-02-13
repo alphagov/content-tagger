@@ -51,8 +51,8 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
       stub_publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
 
       # each content item has links to child taxon
-      publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version: version)
-      publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version: version)
+      stub_publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version: version)
+      stub_publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version: version)
     end
 
     it "unpublishes a level one taxon with a redirect" do
