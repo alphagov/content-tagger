@@ -6,7 +6,7 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
     @taxon_content_id = "51ac4247-fd92-470a-a207-6b852a97f2db"
   end
   it "cannot find a taxon and raises an error" do
-    publishing_api_does_not_have_item(@taxon_content_id)
+    stub_publishing_api_does_not_have_item(@taxon_content_id)
     expect { BulkTagging::DocumentTypeTagger.call(taxon_content_id: @taxon_content_id, document_type: "document_type") }
             .to raise_error(GdsApi::HTTPNotFound, /not find content item with/)
   end

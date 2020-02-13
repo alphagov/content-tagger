@@ -140,7 +140,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "with an invalid taxon" do
       before do
-        publishing_api_does_not_have_item(content_id)
+        stub_publishing_api_does_not_have_item(content_id)
       end
 
       it "raises an exception" do
