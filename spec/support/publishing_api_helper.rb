@@ -122,15 +122,6 @@ module PublishingApiHelper
     tags.select { |tag| base_paths.include?(tag["base_path"]) }
   end
 
-  def stub_facet_group_lookup(content_id = "FACET-GROUP-UUID")
-    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/#{content_id}")
-    .to_return(body: {
-      content_id: content_id,
-      expanded_links: example_facet_group,
-      version: 54_321,
-    }.to_json)
-  end
-
   def stubbed_taxons
     [
       {
@@ -230,32 +221,6 @@ module PublishingApiHelper
         "label" => "Agriculture",
         "value" => "agriculture",
       },
-    }
-  end
-
-  def example_facet_group
-    {
-      "content_id" => "FACET-GROUP-UUID",
-      "title" => "Example facet group",
-      "facets" => [
-        {
-          "content_id" => "FACET-UUID",
-          "title" => "Example facet",
-          "links" => {
-            "facet_values" => [
-              {
-                "content_id" => "ANOTHER-FACET-VALUE-UUID",
-                "title" => "Aerospace",
-                "details" => {
-                  "label" => "Aerospace",
-                  "value" => "aerospace",
-                },
-              },
-              example_facet_value,
-            ],
-          },
-        },
-      ],
     }
   end
 end
