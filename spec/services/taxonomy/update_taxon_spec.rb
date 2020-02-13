@@ -129,7 +129,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
         stub_any_publishing_api_put_content
         stub_any_publishing_api_patch_links
 
-        @taxon.content_id = BrexitTaxon::BREXIT_TAXON_CONTENT_ID
+        @taxon.content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
 
         described_class.call(taxon: @taxon)
 
