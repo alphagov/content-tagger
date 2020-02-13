@@ -11,7 +11,6 @@ en:
     tag_migration: 'Bulk tag history'
     tag_importer: 'Bulk tag by upload'
     taxons: 'Edit taxonomy'
-    facet_groups: 'Facets'
   errors:
     invalid_taxon: There was a problem with your request. We have been notified of the issue and will fix it as soon as possible.
     invalid_taxon_base_path: A <a href="%{taxon_path}">taxon</a> with this slug already exists. If the taxon has been deleted, you can restore it.
