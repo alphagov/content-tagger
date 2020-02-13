@@ -21,8 +21,8 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       @rootless_parent = FactoryBot.build(:taxon_hash, title: "Rootless Parent")
       @rootless_child = FactoryBot.build(:taxon_hash, title: "Rootless Child")
 
-      publishing_api_has_item(@rootless_parent)
-      publishing_api_has_item(@rootless_child)
+      stub_publishing_api_has_item(@rootless_parent)
+      stub_publishing_api_has_item(@rootless_child)
 
       publishing_api_has_expanded_links(
         content_id: @rootless_parent["content_id"],
@@ -56,8 +56,8 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   end
 
   before :each do
-    publishing_api_has_item(home_page)
-    publishing_api_has_item(food)
+    stub_publishing_api_has_item(home_page)
+    stub_publishing_api_has_item(food)
 
     publishing_api_has_expanded_links(
       content_id: GovukTaxonomy::ROOT_CONTENT_ID,
@@ -73,7 +73,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       },
     )
 
-    publishing_api_has_item(apples)
+    stub_publishing_api_has_item(apples)
 
     publishing_api_has_expanded_links(
       content_id: apples["content_id"],

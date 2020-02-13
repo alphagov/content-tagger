@@ -94,8 +94,8 @@ RSpec.feature "Move content between Taxons", type: :feature do
     )
 
     publishing_api_has_taxons([@source_taxon, @dest_taxon])
-    publishing_api_has_item(@source_taxon)
-    publishing_api_has_item(@dest_taxon)
+    stub_publishing_api_has_item(@source_taxon)
+    stub_publishing_api_has_item(@dest_taxon)
 
     publishing_api_has_linkables(
       [@source_taxon_for_select, @dest_taxon_for_select],

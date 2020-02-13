@@ -37,7 +37,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     subject { described_class.new(taxon_id) }
 
     it "should return a ExpandedTaxonomy instance" do
-      publishing_api_has_item(content_id: taxon_id, title: "content")
+      stub_publishing_api_has_item(content_id: taxon_id, title: "content")
       expect(subject.expanded_taxon).to be_an_instance_of(ExpandedTaxonomy)
     end
   end
@@ -106,9 +106,9 @@ RSpec.describe Taxonomy::TaxonTreeExport do
   end
 
   def fake_taxonomy_tree(level_1_taxon, level_2_taxon, level_3_taxon)
-    publishing_api_has_item(level_1_taxon)
-    publishing_api_has_item(level_2_taxon)
-    publishing_api_has_item(level_3_taxon)
+    stub_publishing_api_has_item(level_1_taxon)
+    stub_publishing_api_has_item(level_2_taxon)
+    stub_publishing_api_has_item(level_3_taxon)
 
     publishing_api_has_expanded_links(
       content_id: level_1_taxon["content_id"],

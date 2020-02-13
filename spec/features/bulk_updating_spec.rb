@@ -95,8 +95,8 @@ RSpec.feature "Bulk updating", type: :feature do
 
     # We need to make a get request for each item to determine whether the taxon
     # is published or not
-    publishing_api_has_item(@parent_taxon)
-    publishing_api_has_item(@child_taxon)
+    stub_publishing_api_has_item(@parent_taxon)
+    stub_publishing_api_has_item(@child_taxon)
     stub_any_publishing_api_put_content
 
     click_button "Confirm bulk update"

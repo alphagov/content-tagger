@@ -15,11 +15,11 @@ RSpec.describe TaxonomyHealth::MaximumDepthMetric do
   let(:pears) { FactoryBot.build(:taxon_hash, title: "Pears") }
 
   before :each do
-    publishing_api_has_item(home_page)
-    publishing_api_has_item(food)
-    publishing_api_has_item(fruits)
-    publishing_api_has_item(apples)
-    publishing_api_has_item(pears)
+    stub_publishing_api_has_item(home_page)
+    stub_publishing_api_has_item(food)
+    stub_publishing_api_has_item(fruits)
+    stub_publishing_api_has_item(apples)
+    stub_publishing_api_has_item(pears)
     publishing_api_has_expanded_links(home_page)
     publishing_api_has_expanded_links(food)
   end

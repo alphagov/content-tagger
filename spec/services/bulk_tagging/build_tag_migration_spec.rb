@@ -41,8 +41,8 @@ module BulkTagging
 
     context "with 2 valid taxons and 2 content base paths" do
       before do
-        publishing_api_has_item(basic_content_item("Taxon 1", other_fields: { base_path: "/foo", content_id: "taxon-1" }))
-        publishing_api_has_item(basic_content_item("Taxon 2", other_fields: { base_path: "/ha", content_id: "taxon-2" }))
+        stub_publishing_api_has_item(basic_content_item("Taxon 1", other_fields: { base_path: "/foo", content_id: "taxon-1" }))
+        stub_publishing_api_has_item(basic_content_item("Taxon 2", other_fields: { base_path: "/ha", content_id: "taxon-2" }))
       end
 
       let(:tag_migration) do

@@ -13,9 +13,9 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
 
   before :each do
     # parent and child taxon, redirect taxon exist
-    publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: taxon_content_id))
-    publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: parent_taxon_content_id))
-    publishing_api_has_item("content_id" => redirect_content_id, "base_path" => "/path/to/redirect")
+    stub_publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: taxon_content_id))
+    stub_publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: parent_taxon_content_id))
+    stub_publishing_api_has_item("content_id" => redirect_content_id, "base_path" => "/path/to/redirect")
 
     # link parent taxon to child taxon
     publishing_api_has_expanded_links(expanded_links(taxon_content_id, parent_taxon_content_id))

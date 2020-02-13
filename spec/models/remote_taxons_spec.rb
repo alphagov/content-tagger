@@ -93,7 +93,7 @@ RSpec.describe RemoteTaxons do
     let(:child_taxon) { instance_double(Taxon, parent_content_id: parent_taxon_id) }
 
     before do
-      publishing_api_has_item(parent_taxon)
+      stub_publishing_api_has_item(parent_taxon)
       publishing_api_has_expanded_links(content_id: parent_taxon_id)
     end
 

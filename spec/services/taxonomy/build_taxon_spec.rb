@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::BuildTaxon do
     let(:taxon) { Taxonomy::BuildTaxon.call(content_id: content_id) }
 
     before do
-      publishing_api_has_item(content)
+      stub_publishing_api_has_item(content)
       publishing_api_has_expanded_links(
         content_id: content_id,
         expanded_links: {

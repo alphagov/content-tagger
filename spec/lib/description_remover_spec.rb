@@ -3,15 +3,15 @@ require "description_remover"
 require "gds_api/test_helpers/content_store"
 
 include ::GdsApi::TestHelpers::ContentStore
-include ::GdsApi::TestHelpers::PublishingApiV2
+include ::GdsApi::TestHelpers::PublishingApi
 
 RSpec.describe DescriptionRemover do
   context "appropriate taxons are updated" do
     before do
       content_store_has_item("/work", taxon.to_json, draft: true)
-      publishing_api_has_item(published_child_taxon)
-      publishing_api_has_item(published_child_taxon_with_draft)
-      publishing_api_has_item(draft_taxon)
+      stub_publishing_api_has_item(published_child_taxon)
+      stub_publishing_api_has_item(published_child_taxon_with_draft)
+      stub_publishing_api_has_item(draft_taxon)
 
       stub_any_publishing_api_put_content
       stub_any_publishing_api_publish

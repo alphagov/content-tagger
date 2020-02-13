@@ -49,7 +49,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       q: "Tax",
     )
 
-    publishing_api_has_item(document_collection)
+    stub_publishing_api_has_item(document_collection)
 
     publishing_api_has_content_items(
       [{
@@ -83,8 +83,8 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def and_a_set_of_taxons
-    publishing_api_has_item(basic_content_item("Taxon 1"))
-    publishing_api_has_item(basic_content_item("Taxon 2"))
+    stub_publishing_api_has_item(basic_content_item("Taxon 1"))
+    stub_publishing_api_has_item(basic_content_item("Taxon 2"))
 
     # Used in the dropdown
     publishing_api_has_linkables(
@@ -247,7 +247,7 @@ RSpec.feature "Bulk tagging", type: :feature do
     tag_migration.tag_mappings << tag_mapping
     tag_migration.save!
 
-    publishing_api_has_item(
+    stub_publishing_api_has_item(
       content_id: tag_migration.source_content_id,
       title: "Source content",
       document_type: "taxon",

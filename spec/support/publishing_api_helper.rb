@@ -21,7 +21,7 @@ module PublishingApiHelper
   def stub_requests_for_show_page(taxon)
     content_id = taxon.fetch("content_id")
 
-    publishing_api_has_item(taxon)
+    stub_publishing_api_has_item(taxon)
     publishing_api_has_links(content_id: content_id, links: {})
     publishing_api_has_expanded_links(content_id: content_id, expanded_links: {})
     publishing_api_has_linked_items([], content_id: content_id, link_type: "taxons")

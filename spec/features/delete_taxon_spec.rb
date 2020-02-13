@@ -181,7 +181,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def when_i_confirm_deletion
     Sidekiq::Testing.inline! do
-      @get_content_request = publishing_api_has_item(stubbed_taxons[0])
+      @get_content_request = stub_publishing_api_has_item(stubbed_taxons[0])
       @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :redirect, alternative_path: "/alpha-taxonomy/vehicle-plating" }.to_json)
       click_on "Delete and redirect"
     end
@@ -191,7 +191,7 @@ RSpec.feature "Delete Taxon", type: :feature do
     parent_taxon = taxon_with_details(
       "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
-    publishing_api_has_item(parent_taxon)
+    stub_publishing_api_has_item(parent_taxon)
     publishing_api_has_links(content_id: "CONTENT-ID-PARENT")
 
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})

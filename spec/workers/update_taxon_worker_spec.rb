@@ -15,7 +15,7 @@ RSpec.describe UpdateTaxonWorker, "#perform" do
       },
     )
 
-    publishing_api_has_item(taxon)
+    stub_publishing_api_has_item(taxon)
     publishing_api_has_expanded_links(taxon.slice(:content_id))
     stub_any_publishing_api_put_content
 
@@ -42,7 +42,7 @@ RSpec.describe UpdateTaxonWorker, "#perform" do
         publication_state: "draft",
       },
     )
-    publishing_api_has_item(taxon)
+    stub_publishing_api_has_item(taxon)
     publishing_api_has_expanded_links(taxon.slice(:content_id))
     stub_any_publishing_api_put_content
 
