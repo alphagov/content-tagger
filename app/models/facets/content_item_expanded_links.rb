@@ -3,7 +3,7 @@ module Facets
     include ActiveModel::Model
     attr_accessor :content_id, :previous_version
 
-    TAG_TYPES = %i[facet_groups facet_values].freeze
+    TAG_TYPES = %i[facet_values].freeze
 
     attr_accessor(*TAG_TYPES)
 

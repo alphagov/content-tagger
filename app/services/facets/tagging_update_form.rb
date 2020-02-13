@@ -7,7 +7,7 @@ module Facets
 
     delegate :content_id, to: :content_item
 
-    TAG_TYPES = %i[facet_groups facet_values].freeze
+    TAG_TYPES = %i[facet_values].freeze
     attr_accessor(*TAG_TYPES)
 
     def self.from_content_item(content_item)
@@ -51,14 +51,6 @@ module Facets
         :notification_message,
         "must be present when notifying subscribers",
       )
-    end
-
-    def facet_group(facet_group_content_id)
-      links.facet_groups.find { |fg| fg["content_id"] == facet_group_content_id }
-    end
-
-    def facet_groups
-      links.facet_groups.map { |fv| fv["content_id"] }
     end
 
     def facet_values

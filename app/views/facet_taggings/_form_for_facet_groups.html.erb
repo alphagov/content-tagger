@@ -1,9 +1,0 @@
-<%= f.input :facet_groups, as: :hidden, value: params[:facet_group_content_id] %>
-<% facet_group = f.object.facet_group(params[:facet_group_content_id]) -%>
-<p>
-  <% if facet_group %>
-    You are tagging this content to facet values in the '<%= facet_group['title'] %>' group.
-  <% else %>
-    This content is not currently tagged to any facets, you can search and assign them in the field below.
-  <% end %>
-</p>
