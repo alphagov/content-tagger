@@ -42,7 +42,7 @@ RSpec.feature "Download taggings", type: :feature do
       fields: Taxonomy::TaxonomyExport::COLUMNS,
     )
 
-    publishing_api_has_links_for_content_ids(
+    stub_publishing_api_has_links_for_content_ids(
       "tagged-content" =>
        {
          "links" => {
