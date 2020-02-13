@@ -1,6 +1,6 @@
 module Taxonomy
   class UpdateTaxon
-    include BrexitTaxon
+    include TransitionTaxon
 
     attr_reader :taxon
     delegate :content_id, :parent_content_id, :associated_taxons, :legacy_taxons, to: :taxon
@@ -68,7 +68,7 @@ module Taxonomy
 
     def publishing_api_put_content_request(content_id)
       Services.publishing_api.put_content(content_id, payload)
-      return unless brexit_taxon?(content_id)
+      return unless transition_taxon?(content_id)
 
       Services.publishing_api.put_content(content_id, payload("cy"))
     end

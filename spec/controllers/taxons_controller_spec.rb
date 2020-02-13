@@ -4,9 +4,9 @@ RSpec.describe TaxonsController, type: :controller do
   include EmailAlertApiHelper
   include PublishingApiHelper
   include ContentItemHelper
-  include BrexitTaxon
+  include TransitionTaxon
 
-  let(:brexit_taxon_content_id) { BrexitTaxon::BREXIT_TAXON_CONTENT_ID }
+  let(:transition_taxon_content_id) { TransitionTaxon::TRANSITION_TAXON_CONTENT_ID }
 
   describe "#index" do
     it "renders index" do
@@ -125,13 +125,13 @@ RSpec.describe TaxonsController, type: :controller do
     end
 
     it "sends additional publish request to Publishing API for the Brexit taxon with 'cy' locale" do
-      build(:taxon, publication_state: "unpublished", content_id: brexit_taxon_content_id)
+      build(:taxon, publication_state: "unpublished", content_id: transition_taxon_content_id)
       stub_any_publishing_api_publish
 
-      post :publish, params: { taxon_id: brexit_taxon_content_id }
+      post :publish, params: { taxon_id: transition_taxon_content_id }
 
-      assert_publishing_api_publish(brexit_taxon_content_id, update_type: nil)
-      assert_publishing_api_publish(brexit_taxon_content_id, update_type: nil, locale: "cy")
+      assert_publishing_api_publish(transition_taxon_content_id, update_type: nil)
+      assert_publishing_api_publish(transition_taxon_content_id, update_type: nil, locale: "cy")
     end
   end
 
@@ -211,12 +211,12 @@ RSpec.describe TaxonsController, type: :controller do
     end
 
     it "sends a request to Publishing API to delete a draft Brexit taxon with 'cy' locale" do
-      taxon = build(:taxon, publication_state: "draft", content_id: brexit_taxon_content_id)
+      taxon = build(:taxon, publication_state: "draft", content_id: transition_taxon_content_id)
       publishing_api_has_taxons([taxon])
       stub_any_publishing_api_discard_draft
 
-      delete :discard_draft, params: { taxon_id: brexit_taxon_content_id }
-      assert_publishing_api_discard_draft(brexit_taxon_content_id, locale: "cy")
+      delete :discard_draft, params: { taxon_id: transition_taxon_content_id }
+      assert_publishing_api_discard_draft(transition_taxon_content_id, locale: "cy")
     end
   end
 
