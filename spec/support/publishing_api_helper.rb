@@ -1,5 +1,4 @@
 require_relative("email_alert_api_helper")
-require "facets/remote_facet_groups_service"
 
 module PublishingApiHelper
   include EmailAlertApiHelper
