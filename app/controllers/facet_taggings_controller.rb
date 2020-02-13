@@ -1,18 +1,5 @@
 class FacetTaggingsController < ::TaggingsController
 
-  def find_by_slug
-    content_lookup = ContentLookupForm.new(lookup_params)
-
-    if content_lookup.valid?
-      redirect_to facet_group_facet_tagging_path(
-        facet_group_content_id: params[:facet_group_content_id],
-        content_id: content_lookup.content_id,
-      )
-    else
-      render :lookup, locals: { lookup: content_lookup }
-    end
-  end
-
   def show
     content_item = ContentItem.find!(params[:content_id])
 
@@ -54,11 +41,5 @@ class FacetTaggingsController < ::TaggingsController
       ),
       danger: "Somebody changed the tags before you could. Your changes have not been saved.",
     )
-  end
-
-private
-
-  def facet_tagging_params
-    params[:facets_tagging_update_form]
   end
 end
