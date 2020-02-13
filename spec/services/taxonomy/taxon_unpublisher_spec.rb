@@ -48,7 +48,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
         link_type: "taxons",
         fields: %w[base_path],
       )
-      publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
+      stub_publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
 
       # each content item has links to child taxon
       publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version: version)

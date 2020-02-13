@@ -106,7 +106,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
 
       it "raises an error with a generic message and notifies GovukError if it is not a base path conflict" do
-        publishing_api_has_lookups("")
+        stub_publishing_api_has_lookups("")
         expect(GovukError).to receive(:notify).with(error)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
@@ -115,7 +115,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
 
       it "raises an error with a specific message if it is a base path conflict" do
-        publishing_api_has_lookups(SecureRandom.uuid)
+        stub_publishing_api_has_lookups(SecureRandom.uuid)
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(SecureRandom.uuid)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,

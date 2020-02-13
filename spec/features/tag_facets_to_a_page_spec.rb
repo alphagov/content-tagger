@@ -175,7 +175,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def given_there_is_a_content_item_with_expanded_links(**expanded_links)
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/my-content-item" => "MY-CONTENT-ID",
     )
 

@@ -147,7 +147,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
 
   def and_all_content_can_be_moved_when_i_start_the_content_move
     # Lookups to fetch the content ID based on existing base paths
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       @document1[:base_path] => @document1[:content_id],
       @document2[:base_path] => @document2[:content_id],
     )
@@ -166,7 +166,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_only_published_content_can_be_moved_when_i_start_the_content_move
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       @document2[:base_path] => @document2[:content_id],
     )
 

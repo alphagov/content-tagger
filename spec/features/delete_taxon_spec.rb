@@ -312,7 +312,7 @@ private
       fields: fields,
     )
 
-    publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
+    stub_publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
 
     publishing_api_has_links(
       content_id: content_item[:content_id],

@@ -183,7 +183,7 @@ RSpec.feature "Projects", type: :feature do
   end
 
   def and_the_publishing_api_can_find_the_content_items_in_the_remote_spreadsheet
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/vat-rates" => "f838c22a-b2aa-49be-bd95-153f593293a3",
       "/passport-fees" => "8b59b474-9775-4366-97ee-97a66740411c",
     )

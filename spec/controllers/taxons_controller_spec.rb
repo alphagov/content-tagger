@@ -117,7 +117,7 @@ RSpec.describe TaxonsController, type: :controller do
       payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
       stub_publishing_api_has_item(payload.merge(content_id: taxon.content_id))
       stub_publishing_api_has_expanded_links(content_id: taxon.content_id)
-      publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
+      stub_publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
 
       post :publish, params: { taxon_id: taxon.content_id }
 

@@ -9,7 +9,7 @@ module BulkTagging
     let(:content_id) { "a-content-id" }
     let(:tag_mapping) do
       mapping = build(:tag_mapping, tagging_source: build(:tag_migration))
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         mapping.content_base_path => content_id,
       )
       mapping

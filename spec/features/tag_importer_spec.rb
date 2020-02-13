@@ -167,7 +167,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_confirming_this_will_import_taggings
-    publishing_api_has_lookups(google_sheet_content_items)
+    stub_publishing_api_has_lookups(google_sheet_content_items)
     publishing_api_has_links(content_id: "content-2-cid", links: { taxons: [] })
     publishing_api_has_links(content_id: "content-1-cid", links: { taxons: [] })
     link_update1 = stub_publishing_api_patch_links(
@@ -195,7 +195,7 @@ RSpec.feature "Tag importer", type: :feature do
   end
 
   def and_confirming_only_valid_tags_will_be_imported
-    publishing_api_has_lookups(google_sheet_content_items_with_draft)
+    stub_publishing_api_has_lookups(google_sheet_content_items_with_draft)
     publishing_api_has_links(content_id: "content-2-cid", links: { taxons: [] })
     publishing_api_has_links(content_id: "content-1-cid", links: { taxons: [] })
     link_update1 = stub_publishing_api_patch_links(

@@ -37,7 +37,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def given_a_content_item_exists
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/my-content-item" => "MY-CONTENT-ID",
     )
 

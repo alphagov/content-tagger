@@ -14,7 +14,7 @@ module BulkTagging
     describe "#content_id" do
       it "finds the content id from the base path" do
         content_id = "content-1-ID"
-        publishing_api_has_lookups(tag_mapping.content_base_path => content_id)
+        stub_publishing_api_has_lookups(tag_mapping.content_base_path => content_id)
 
         expect(tag_mapping.content_id).to eq(content_id)
       end
