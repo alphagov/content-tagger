@@ -143,7 +143,7 @@ class TaxonsController < ApplicationController
 
   def publish
     Services.publishing_api.publish(content_id)
-    if brexit_taxon?(content_id)
+    if transition_taxon?(content_id)
       Services.publishing_api.publish(content_id, nil, locale: "cy")
     end
 
@@ -175,7 +175,7 @@ class TaxonsController < ApplicationController
   def discard_draft
     Services.publishing_api.discard_draft(content_id)
 
-    if brexit_taxon?(content_id)
+    if transition_taxon?(content_id)
       Services.publishing_api.discard_draft(content_id, locale: "cy")
     end
 

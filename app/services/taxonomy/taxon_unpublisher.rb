@@ -34,7 +34,7 @@ module Taxonomy
     def unpublish_taxon(taxon_content_id, redirect_to_content_id)
       redirect_to_taxon = Services.publishing_api.get_content(redirect_to_content_id)
       publishing_api_unpublish(taxon_content_id, redirect_to_taxon["base_path"])
-      return unless brexit_taxon?(taxon_content_id)
+      return unless transition_taxon?(taxon_content_id)
 
       publishing_api_unpublish(taxon_content_id, redirect_to_taxon["base_path"], "cy")
     end
