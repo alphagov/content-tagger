@@ -1,31 +1,31 @@
 require "rails_helper"
-include GdsApi::TestHelpers::PublishingApiV2
+include GdsApi::TestHelpers::PublishingApi
 
 RSpec.describe BulkTagging::DocumentTypeTagger do
   before :each do
     @taxon_content_id = "51ac4247-fd92-470a-a207-6b852a97f2db"
   end
   it "cannot find a taxon and raises an error" do
-    publishing_api_does_not_have_item(@taxon_content_id)
+    stub_publishing_api_does_not_have_item(@taxon_content_id)
     expect { BulkTagging::DocumentTypeTagger.call(taxon_content_id: @taxon_content_id, document_type: "document_type") }
             .to raise_error(GdsApi::HTTPNotFound, /not find content item with/)
   end
   context "there is a taxon, some content and links" do
     before :each do
-      publishing_api_has_item(content_id: @taxon_content_id)
-      publishing_api_has_content([{ content_id: "c1" }, { content_id: "c2" }],
-                                 page: 1,
-                                 document_type: "document_type",
-                                 fields: %w[content_id])
+      stub_publishing_api_has_item(content_id: @taxon_content_id)
+      stub_publishing_api_has_content([{ content_id: "c1" }, { content_id: "c2" }],
+                                      page: 1,
+                                      document_type: "document_type",
+                                      fields: %w[content_id])
 
-      publishing_api_has_links(
+      stub_publishing_api_has_links(
         content_id: "c1",
         links: {
           taxons: %w[569a9ee5-c195-4b7f-b9dc-edc17a09113f],
         },
         version: 6,
       )
-      publishing_api_has_links(
+      stub_publishing_api_has_links(
         "content_id": "c2",
         "links": {},
         "version": 10,

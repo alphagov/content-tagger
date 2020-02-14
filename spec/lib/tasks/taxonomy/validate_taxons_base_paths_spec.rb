@@ -45,8 +45,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       },
     )
 
-    publishing_api_has_item(taxon_attributes)
-    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
+    stub_publishing_api_has_item(taxon_attributes)
+    stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect {
@@ -78,8 +78,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       },
     )
 
-    publishing_api_has_item(taxon_attributes)
-    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
+    stub_publishing_api_has_item(taxon_attributes)
+    stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
 
     expect {
@@ -125,8 +125,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       },
     )
 
-    publishing_api_has_item(taxon_attributes)
-    publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
+    stub_publishing_api_has_item(taxon_attributes)
+    stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
       .to_return(status: 422, body:
         {
@@ -162,7 +162,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
   # /level-one
   #   /level-one/level-two
   def content_store_has_valid_two_level_tree
-    content_store_has_item(
+    stub_content_store_has_item(
       "/",
       {
         "base_path" => "/",
@@ -180,7 +180,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/level-one",
       {
         "base_path" => "/level-one",
@@ -199,7 +199,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/level-one/level-two",
       {
         "base_path" => "/level-one/level-two",
@@ -213,7 +213,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
   # /level-one
   #   /some-other-path/level-two
   def content_store_has_tree_with_invalid_level_one_prefix
-    content_store_has_item(
+    stub_content_store_has_item(
       "/",
       {
         "base_path" => "/",
@@ -231,7 +231,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/level-one",
       {
         "base_path" => "/level-one",
@@ -250,7 +250,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/some-other-path/level-two",
       {
         "base_path" => "/some-other-path/level-two",
@@ -264,7 +264,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
   # /level-one
   #   /imported-topic/topic/level-one/level-two
   def content_store_has_tree_with_long_base_path_structure
-    content_store_has_item(
+    stub_content_store_has_item(
       "/",
       {
         "base_path" => "/",
@@ -282,7 +282,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/level-one",
       {
         "base_path" => "/level-one",
@@ -301,7 +301,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/imported-topic/topic/level-one/level-two",
       {
         "base_path" => "/imported-topic/topic/level-one/level-two",
@@ -315,7 +315,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
   # /level-one/taxon
   #   /level-one/level-two
   def content_store_has_tree_with_invalid_level_one_base_path
-    content_store_has_item(
+    stub_content_store_has_item(
       "/",
       {
         "base_path" => "/",
@@ -333,7 +333,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/level-one/taxon",
       {
         "base_path" => "/level-one/taxon",
@@ -352,7 +352,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       }.to_json, draft: true
     )
 
-    content_store_has_item(
+    stub_content_store_has_item(
       "/level-one/level-two",
       {
         "base_path" => "/level-one/level-two",

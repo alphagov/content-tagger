@@ -122,8 +122,8 @@ RSpec.describe "Viewing taxons" do
   end
 
   def given_a_taxonomy
-    publishing_api_has_item(fruits)
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_item(fruits)
+    stub_publishing_api_has_expanded_links(
       content_id: fruits["content_id"],
       expanded_links: {
         child_taxons: [
@@ -137,8 +137,8 @@ RSpec.describe "Viewing taxons" do
       },
     )
 
-    publishing_api_has_item(apples)
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_item(apples)
+    stub_publishing_api_has_expanded_links(
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
@@ -150,8 +150,8 @@ RSpec.describe "Viewing taxons" do
   end
 
   def given_a_taxonomy_with_associated_taxons
-    publishing_api_has_item(fruits)
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_item(fruits)
+    stub_publishing_api_has_expanded_links(
       content_id: fruits["content_id"],
       expanded_links: {
         child_taxons: [
@@ -161,10 +161,10 @@ RSpec.describe "Viewing taxons" do
       },
     )
 
-    publishing_api_has_item(apples)
-    publishing_api_has_item(pears)
-    publishing_api_has_item(oranges)
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_item(apples)
+    stub_publishing_api_has_item(pears)
+    stub_publishing_api_has_item(oranges)
+    stub_publishing_api_has_expanded_links(
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
@@ -176,8 +176,8 @@ RSpec.describe "Viewing taxons" do
   end
 
   def given_a_previously_published_draft_taxon
-    publishing_api_has_item(previously_published)
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_item(previously_published)
+    stub_publishing_api_has_expanded_links(
       content_id: previously_published["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
@@ -230,10 +230,10 @@ RSpec.describe "Viewing taxons" do
   end
 
   def when_i_view_the_lowest_level_taxon
-    publishing_api_has_item(cox)
-    publishing_api_has_links(cox)
+    stub_publishing_api_has_item(cox)
+    stub_publishing_api_has_links(cox)
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: cox["content_id"],
       expanded_links: {
         parent_taxons: [
@@ -246,7 +246,7 @@ RSpec.describe "Viewing taxons" do
       },
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],

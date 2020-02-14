@@ -61,7 +61,7 @@ private
   end
 
   def given_that_the_publishing_api_has_an_individual_taxon
-    publishing_api_has_item(individual_taxon)
+    stub_publishing_api_has_item(individual_taxon)
   end
 
   def given_there_are_some_link_changes_for_an_individual_taxon

@@ -29,7 +29,7 @@ Capybara.javascript_driver = :rack_test
 DatabaseCleaner.strategy = :transaction
 
 RSpec.configure do |config|
-  config.include GdsApi::TestHelpers::PublishingApiV2
+  config.include GdsApi::TestHelpers::PublishingApi
   config.include FactoryBot::Syntax::Methods
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

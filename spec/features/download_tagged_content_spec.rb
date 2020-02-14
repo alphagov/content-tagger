@@ -35,14 +35,14 @@ RSpec.feature "Download taggings", type: :feature do
       },
     )
 
-    publishing_api_has_linked_items(
+    stub_publishing_api_has_linked_items(
       [content_item],
       content_id: @content_id,
       link_type: "taxons",
       fields: Taxonomy::TaxonomyExport::COLUMNS,
     )
 
-    publishing_api_has_links_for_content_ids(
+    stub_publishing_api_has_links_for_content_ids(
       "tagged-content" =>
        {
          "links" => {
@@ -51,7 +51,7 @@ RSpec.feature "Download taggings", type: :feature do
        },
     )
 
-    publishing_api_has_content(
+    stub_publishing_api_has_content(
       [{ "content_id" => "org-content-id", "title" => "org title" }],
       document_type: "organisation",
       fields: %w[content_id title],

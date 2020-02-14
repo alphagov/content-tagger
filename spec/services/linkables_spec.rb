@@ -8,7 +8,7 @@ RSpec.describe Linkables do
 
   context "there are linkables" do
     before do
-      publishing_api_has_linkables(
+      stub_publishing_api_has_linkables(
         [
           build_linkable(
             content_id: "invalid-1",
@@ -63,7 +63,7 @@ RSpec.describe Linkables do
 
   describe ".topics" do
     it "returns an array of hashes with title and content id pairs" do
-      publishing_api_has_linkables(
+      stub_publishing_api_has_linkables(
         [
           {
             "public_updated_at" => "2016-04-07 10:34:05",
@@ -97,7 +97,7 @@ RSpec.describe Linkables do
 
   describe ".organisations" do
     it "returns an array of arrays with title and content id pairs" do
-      publishing_api_has_linkables(
+      stub_publishing_api_has_linkables(
         [
           {
             "public_updated_at" => "2014-10-15 14:35:22",

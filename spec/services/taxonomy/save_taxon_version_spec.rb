@@ -10,7 +10,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
       phase: "beta",
     )
 
-    publishing_api_does_not_have_item(taxon.content_id)
+    stub_publishing_api_does_not_have_item(taxon.content_id)
 
     described_class.call(taxon, "A new taxon")
 

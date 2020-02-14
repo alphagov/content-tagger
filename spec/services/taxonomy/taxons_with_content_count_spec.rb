@@ -9,7 +9,7 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
       stub_request(:get, "https://publishing-api.test.gov.uk/v2/expanded-links/b92079ac-f1d9-44c8-bc78-772d54377ee2")
         .to_return(body: EXPANDED_LINKS_FIXTURE.to_json)
 
-      publishing_api_has_item(
+      stub_publishing_api_has_item(
         content_id: "b92079ac-f1d9-44c8-bc78-772d54377ee2",
         title: "title",
       )

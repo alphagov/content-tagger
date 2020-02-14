@@ -115,9 +115,9 @@ RSpec.describe TaxonsController, type: :controller do
       taxon = build(:taxon, publication_state: "unpublished", content_id: SecureRandom.uuid)
       stub_publishing_api_publish(taxon.content_id, {}, status: 422)
       payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
-      publishing_api_has_item(payload.merge(content_id: taxon.content_id))
-      publishing_api_has_expanded_links(content_id: taxon.content_id)
-      publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
+      stub_publishing_api_has_item(payload.merge(content_id: taxon.content_id))
+      stub_publishing_api_has_expanded_links(content_id: taxon.content_id)
+      stub_publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
 
       post :publish, params: { taxon_id: taxon.content_id }
 
@@ -151,8 +151,8 @@ RSpec.describe TaxonsController, type: :controller do
       parent_taxon = taxon_with_details(
         "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
       )
-      publishing_api_has_item(parent_taxon)
-      publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
+      stub_publishing_api_has_item(parent_taxon)
+      stub_publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
 
       Timecop.freeze do
         payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
@@ -178,8 +178,8 @@ RSpec.describe TaxonsController, type: :controller do
           },
         }
 
-        publishing_api_has_item(payload.merge(content_id: taxon.content_id))
-        publishing_api_has_expanded_links(expanded_links.merge(content_id: taxon.content_id))
+        stub_publishing_api_has_item(payload.merge(content_id: taxon.content_id))
+        stub_publishing_api_has_expanded_links(expanded_links.merge(content_id: taxon.content_id))
         stub_publishing_api_put_content(taxon.content_id, payload)
         stub_publishing_api_patch_links(taxon.content_id, links.to_json)
 

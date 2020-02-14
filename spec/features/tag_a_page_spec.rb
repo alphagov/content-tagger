@@ -77,7 +77,7 @@ RSpec.describe "Tagging content", type: :feature do
   context "with javascript disabled", type: :feature, js: false do
     scenario "the user sets a new related link" do
       given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         example_topic["base_path"] => example_topic["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
@@ -98,7 +98,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     scenario "the user sets an invalid related link" do
       given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         example_topic["base_path"] => example_topic["content_id"],
       )
       and_i_am_on_the_page_for_the_item
@@ -111,7 +111,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     scenario "the user sets a new valid and invalid related link" do
       given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         example_topic["base_path"] => example_topic["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
@@ -126,7 +126,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     scenario "the user changes a suggested related link to be invalid" do
       given_there_is_a_content_item_with_expanded_links(suggested_ordered_related_items: [example_topic])
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         example_topic["base_path"] => example_topic["content_id"],
       )
       and_i_am_on_the_page_for_the_item
@@ -139,7 +139,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     scenario "the user removes suggested related links" do
       given_there_is_a_content_item_with_expanded_links(suggested_ordered_related_items: [example_topic])
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         example_topic["base_path"] => example_topic["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
@@ -160,7 +160,7 @@ RSpec.describe "Tagging content", type: :feature do
 
     scenario "the user does not see suggested related links when no suggested links exist" do
       given_there_is_a_content_item_with_expanded_links(ordered_related_items: [])
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         example_topic["base_path"] => example_topic["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
@@ -188,7 +188,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def given_there_is_a_content_item_with_expanded_links(**expanded_links)
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/my-content-item" => "MY-CONTENT-ID",
     )
 
@@ -217,7 +217,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   def and_i_fill_a_unknown_base_path_to_my_content_item
     # Publishing API returns nothing if the content item doesn't exist.
-    publishing_api_has_lookups({})
+    stub_publishing_api_has_lookups({})
 
     fill_in "content_lookup_form_base_path", with: "/an-unknown-content-item"
     click_on I18n.t("taggings.search")

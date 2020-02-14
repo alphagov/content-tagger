@@ -15,7 +15,7 @@ RSpec.describe NewProjectForm, "#create" do
       https://www.gov.uk/path,Title,Description
     CSV
 
-    publishing_api_has_lookups("/path" => "f838c22a-b2aa-49be-bd95-153f593293a3")
+    stub_publishing_api_has_lookups("/path" => "f838c22a-b2aa-49be-bd95-153f593293a3")
 
     form = NewProjectForm.new(valid_params)
 
@@ -59,7 +59,7 @@ RSpec.describe NewProjectForm, "#create" do
       https://www.gov.uk/path,Title,Description
     CSV
 
-    publishing_api_has_lookups("/path" => "f838c22a-b2aa-49be-bd95-153f593293a3")
+    stub_publishing_api_has_lookups("/path" => "f838c22a-b2aa-49be-bd95-153f593293a3")
 
     form = NewProjectForm.new(valid_params)
 

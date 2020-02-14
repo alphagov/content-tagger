@@ -9,7 +9,7 @@ RSpec.describe Taxonomy::LinksUpdate do
   let(:legacy_taxon_id) { SecureRandom.uuid }
 
   before :each do
-    publishing_api_has_item(content_id: content_id, title: "content")
+    stub_publishing_api_has_item(content_id: content_id, title: "content")
     stub_any_publishing_api_patch_links
   end
 

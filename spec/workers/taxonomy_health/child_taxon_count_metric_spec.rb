@@ -23,14 +23,14 @@ RSpec.describe TaxonomyHealth::ChildTaxonCountMetric do
   let(:meats) { FactoryBot.build(:taxon_hash, title: "Meats") }
 
   before :each do
-    publishing_api_has_item(home_page)
-    publishing_api_has_item(food)
-    publishing_api_has_item(fruits)
-    publishing_api_has_item(vegetables)
-    publishing_api_has_item(meats)
+    stub_publishing_api_has_item(home_page)
+    stub_publishing_api_has_item(food)
+    stub_publishing_api_has_item(fruits)
+    stub_publishing_api_has_item(vegetables)
+    stub_publishing_api_has_item(meats)
 
-    publishing_api_has_expanded_links(home_page)
-    publishing_api_has_expanded_links(food)
+    stub_publishing_api_has_expanded_links(home_page)
+    stub_publishing_api_has_expanded_links(food)
   end
 
   it "records no failing taxons" do

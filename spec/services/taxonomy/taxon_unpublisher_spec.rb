@@ -1,6 +1,6 @@
 require "rails_helper"
 
-include ::GdsApi::TestHelpers::PublishingApiV2
+include ::GdsApi::TestHelpers::PublishingApi
 include TransitionTaxon
 
 RSpec.describe Taxonomy::TaxonUnpublisher do
@@ -13,19 +13,19 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
 
   before :each do
     # parent and child taxon, redirect taxon exist
-    publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: taxon_content_id))
-    publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: parent_taxon_content_id))
-    publishing_api_has_item("content_id" => redirect_content_id, "base_path" => "/path/to/redirect")
+    stub_publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: taxon_content_id))
+    stub_publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: parent_taxon_content_id))
+    stub_publishing_api_has_item("content_id" => redirect_content_id, "base_path" => "/path/to/redirect")
 
     # link parent taxon to child taxon
-    publishing_api_has_expanded_links(expanded_links(taxon_content_id, parent_taxon_content_id))
+    stub_publishing_api_has_expanded_links(expanded_links(taxon_content_id, parent_taxon_content_id))
     stub_any_publishing_api_unpublish
   end
 
   context "the taxon is not tagged to any content items" do
     before :each do
       # no content items are tagged to child taxon
-      publishing_api_has_linked_items(
+      stub_publishing_api_has_linked_items(
         [],
         content_id: taxon_content_id,
         link_type: "taxons",
@@ -41,22 +41,22 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
   context "the taxon is tagged to two content items" do
     before :each do
       # content items are tagged to child taxon
-      publishing_api_has_linked_items(
+      stub_publishing_api_has_linked_items(
         [{ "base_path" => "/base/path1" },
          { "base_path" => "/base/path2" }],
         content_id: taxon_content_id,
         link_type: "taxons",
         fields: %w[base_path],
       )
-      publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
+      stub_publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
 
       # each content item has links to child taxon
-      publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version: version)
-      publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version: version)
+      stub_publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version: version)
+      stub_publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version: version)
     end
 
     it "unpublishes a level one taxon with a redirect" do
-      publishing_api_has_expanded_links("content_id" => taxon_content_id, "expanded_links" => {})
+      stub_publishing_api_has_expanded_links("content_id" => taxon_content_id, "expanded_links" => {})
       unpublish(taxon_content_id, redirect_content_id)
       assert_publishing_api_unpublish(taxon_content_id, type: "redirect", alternative_path: "/path/to/redirect")
     end
@@ -92,7 +92,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
   context "Transition taxon" do
     it "unpublishes the Transition taxon with 'cy' locale" do
       transition_taxon_content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
-      publishing_api_has_expanded_links("content_id" => transition_taxon_content_id, "expanded_links" => {})
+      stub_publishing_api_has_expanded_links("content_id" => transition_taxon_content_id, "expanded_links" => {})
 
       unpublish(transition_taxon_content_id, redirect_content_id)
       assert_publishing_api_unpublish(transition_taxon_content_id,
