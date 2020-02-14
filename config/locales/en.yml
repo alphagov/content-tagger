@@ -23,7 +23,6 @@ en:
       on_self: "Includes the taxon being edited - you can't set a taxon as the parent of itself."
   taggings:
     update_tags: Update tagging
-    update_facets: Update facet values
     search: Edit page
   bulk_tag:
     search_button: "Search"
