@@ -21,10 +21,10 @@ module PublishingApiHelper
   def stub_requests_for_show_page(taxon)
     content_id = taxon.fetch("content_id")
 
-    publishing_api_has_item(taxon)
-    publishing_api_has_links(content_id: content_id, links: {})
-    publishing_api_has_expanded_links(content_id: content_id, expanded_links: {})
-    publishing_api_has_linked_items([], content_id: content_id, link_type: "taxons")
+    stub_publishing_api_has_item(taxon)
+    stub_publishing_api_has_links(content_id: content_id, links: {})
+    stub_publishing_api_has_expanded_links(content_id: content_id, expanded_links: {})
+    stub_publishing_api_has_linked_items([], content_id: content_id, link_type: "taxons")
     stub_email_requests_for_show_page
   end
 
@@ -37,7 +37,7 @@ module PublishingApiHelper
       search_in: %i[title base_path details.internal_name],
     }
 
-    publishing_api_has_content(
+    stub_publishing_api_has_content(
       items,
       default_options.merge(options),
     )
@@ -54,7 +54,7 @@ module PublishingApiHelper
       states: %w[published],
     }
 
-    publishing_api_has_content(taxons, default_options.merge(options))
+    stub_publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_draft_taxons(taxons, options = {})
@@ -67,7 +67,7 @@ module PublishingApiHelper
       states: %w[draft],
     }
 
-    publishing_api_has_content(taxons, default_options.merge(options))
+    stub_publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_deleted_taxons(taxons, options = {})
@@ -81,39 +81,39 @@ module PublishingApiHelper
       states: %w[unpublished],
     }
 
-    publishing_api_has_content(taxons, default_options.merge(options))
+    stub_publishing_api_has_content(taxons, default_options.merge(options))
   end
 
   def publishing_api_has_taxon_linkables(base_paths)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_taxons, base_paths),
       document_type: "taxon",
     )
   end
 
   def publishing_api_has_topic_linkables(base_paths)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_topics, base_paths),
       document_type: "topic",
     )
   end
 
   def publishing_api_has_organisation_linkables(base_paths)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_organisations, base_paths),
       document_type: "organisation",
     )
   end
 
   def publishing_api_has_need_linkables(base_paths)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_needs, base_paths),
       document_type: "need",
     )
   end
 
   def publishing_api_has_mainstream_browse_page_linkables(base_paths)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_mainstream_browse_pages, base_paths),
       document_type: "mainstream_browse_page",
     )

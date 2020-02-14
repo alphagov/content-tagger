@@ -5,7 +5,7 @@ include ::GdsApi::TestHelpers::Search
 RSpec.describe Tagging::CommonAncestorFinder do
   context "there is one taxon" do
     def has_paths(paths)
-      publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", paths))
+      stub_publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", paths))
     end
 
     before :each do
@@ -56,14 +56,14 @@ RSpec.describe Tagging::CommonAncestorFinder do
 
   it "rejects empty content_ids" do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }, {}] }.to_json)
-    publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[1], [1, 2]]))
+    stub_publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[1], [1, 2]]))
     expect(Tagging::CommonAncestorFinder.new.find_all.force.length).to eq(1)
   end
 
   it "includes title and content_id" do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
                                                       "title" => "my title" }] }.to_json)
-    publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[1], [1, 2]]))
+    stub_publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[1], [1, 2]]))
     result_hash = Tagging::CommonAncestorFinder.new.find_all.force.first
     expect(result_hash[:title]).to eq("my title")
     expect(result_hash[:content_id]).to eq("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
@@ -71,7 +71,7 @@ RSpec.describe Tagging::CommonAncestorFinder do
 
   it "rejects empty results" do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }] }.to_json)
-    publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[]]))
+    stub_publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[]]))
     expect(Tagging::CommonAncestorFinder.new.find_all.force).to be_empty
   end
 

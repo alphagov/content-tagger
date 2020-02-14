@@ -34,7 +34,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   end
 
   def given_there_is_an_item_that_can_have_only_one_link_type
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/my-content-item" => "MY-CONTENT-ID",
     )
 

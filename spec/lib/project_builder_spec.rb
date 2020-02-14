@@ -24,13 +24,13 @@ RSpec.describe ProjectBuilder, ".call" do
   end
 
   it "creates a new project" do
-    publishing_api_has_lookups({})
+    stub_publishing_api_has_lookups({})
 
     expect { build_project }.to change { Project.count }.by(1)
   end
 
   it "creates new project content items" do
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/url_one" => SecureRandom.uuid,
       "/url_two" => SecureRandom.uuid,
     )
@@ -40,7 +40,7 @@ RSpec.describe ProjectBuilder, ".call" do
   end
 
   it "finds the content items' IDs from the Publishing API" do
-    publishing_api_has_lookups("/url_one" => "cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
+    stub_publishing_api_has_lookups("/url_one" => "cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
 
     expect { build_project(content_items: [{ url: "https://www.gov.uk/url_one" }]) }
       .to change { ProjectContentItem.count }.by(1)
@@ -56,7 +56,7 @@ RSpec.describe ProjectBuilder, ".call" do
   it "raises an error and rollbacks the transaction when attempting to import duplicate content" do
     create(:project_content_item, content_id: "cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
 
-    publishing_api_has_lookups("/url_one" => "cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
+    stub_publishing_api_has_lookups("/url_one" => "cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
 
     expect(Project.count).to eq(0)
     expect(ProjectContentItem.count).to eq(1)

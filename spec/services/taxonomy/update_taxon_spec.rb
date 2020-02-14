@@ -18,8 +18,8 @@ RSpec.describe Taxonomy::UpdateTaxon do
     parent_taxon = taxon_with_details(
       "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
-    publishing_api_has_item(parent_taxon)
-    publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
+    stub_publishing_api_has_item(parent_taxon)
+    stub_publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
   end
   let(:publish) { described_class.call(taxon: @taxon) }
 
@@ -106,7 +106,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
 
       it "raises an error with a generic message and notifies GovukError if it is not a base path conflict" do
-        publishing_api_has_lookups("")
+        stub_publishing_api_has_lookups("")
         expect(GovukError).to receive(:notify).with(error)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,
@@ -115,7 +115,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       end
 
       it "raises an error with a specific message if it is a base path conflict" do
-        publishing_api_has_lookups(SecureRandom.uuid)
+        stub_publishing_api_has_lookups(SecureRandom.uuid)
         allow(Services.publishing_api).to receive(:lookup_content_id).and_return(SecureRandom.uuid)
         expect { publish }.to raise_error(
           Taxonomy::UpdateTaxon::InvalidTaxonError,

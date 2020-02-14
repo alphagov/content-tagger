@@ -15,7 +15,7 @@ RSpec.describe ContentLookupForm do
     end
 
     it "is invalid when the path not found on GOV.UK" do
-      publishing_api_has_lookups({})
+      stub_publishing_api_has_lookups({})
 
       form = ContentLookupForm.new(base_path: "/browse")
 
@@ -23,7 +23,7 @@ RSpec.describe ContentLookupForm do
     end
 
     it "is valid when the path is an absolute_path found on GOV.UK" do
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         "/browse" => "a96c1542-..",
       )
 
@@ -33,7 +33,7 @@ RSpec.describe ContentLookupForm do
     end
 
     it "treats paths and URLs the same" do
-      publishing_api_has_lookups(
+      stub_publishing_api_has_lookups(
         "/browse" => "a96c1542-..",
       )
 

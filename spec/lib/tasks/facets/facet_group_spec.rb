@@ -4,7 +4,7 @@ require "gds_api/test_helpers/publishing_api_v2"
 require "gds_api/test_helpers/search"
 
 RSpec.describe "facets:patch_links_to_facet_group" do
-  include GdsApi::TestHelpers::PublishingApiV2
+  include GdsApi::TestHelpers::PublishingApi
   include GdsApi::TestHelpers::Search
   include ContentItemHelper
   include PublishingApiHelper

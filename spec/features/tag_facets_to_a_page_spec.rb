@@ -175,7 +175,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def given_there_is_a_content_item_with_expanded_links(**expanded_links)
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/my-content-item" => "MY-CONTENT-ID",
     )
 
@@ -288,7 +288,7 @@ RSpec.describe "Tagging content with facets", type: :feature do
   end
 
   def publishing_api_has_facet_values_linkables(labels)
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       stubbed_facet_values.select { |fv| labels.include?(fv["title"]) },
       document_type: "facet_value",
     )

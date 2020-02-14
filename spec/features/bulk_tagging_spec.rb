@@ -49,7 +49,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       q: "Tax",
     )
 
-    publishing_api_has_item(document_collection)
+    stub_publishing_api_has_item(document_collection)
 
     publishing_api_has_content_items(
       [{
@@ -71,7 +71,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       q: "browse",
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: "collection-id",
       expanded_links: {
         documents: [
@@ -83,11 +83,11 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def and_a_set_of_taxons
-    publishing_api_has_item(basic_content_item("Taxon 1"))
-    publishing_api_has_item(basic_content_item("Taxon 2"))
+    stub_publishing_api_has_item(basic_content_item("Taxon 1"))
+    stub_publishing_api_has_item(basic_content_item("Taxon 2"))
 
     # Used in the dropdown
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       [
         build_linkable(internal_name: "Taxon 1", content_id: "taxon-1"),
         build_linkable(internal_name: "Taxon 2", content_id: "taxon-2"),
@@ -159,9 +159,9 @@ RSpec.feature "Bulk tagging", type: :feature do
   end
 
   def when_i_create_tags
-    publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
-    publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
-    publishing_api_has_lookups(
+    stub_publishing_api_has_links(content_id: "tax-doc-1", links: { taxons: [] })
+    stub_publishing_api_has_links(content_id: "tax-doc-2", links: { taxons: [] })
+    stub_publishing_api_has_lookups(
       "/level-one/tax-doc-1" => "tax-doc-1",
       "/level-one/tax-doc-2" => "tax-doc-2",
     )
@@ -247,14 +247,14 @@ RSpec.feature "Bulk tagging", type: :feature do
     tag_migration.tag_mappings << tag_mapping
     tag_migration.save!
 
-    publishing_api_has_item(
+    stub_publishing_api_has_item(
       content_id: tag_migration.source_content_id,
       title: "Source content",
       document_type: "taxon",
       base_path: "/source-content",
     )
 
-    publishing_api_has_lookups(tag_mapping.content_base_path => "content-id")
+    stub_publishing_api_has_lookups(tag_mapping.content_base_path => "content-id")
     publishing_api_has_taxons(
       [
         basic_content_item(
@@ -266,7 +266,7 @@ RSpec.feature "Bulk tagging", type: :feature do
         ),
       ],
     )
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: "content-id",
       links: { taxons: [] },
       version: 0,

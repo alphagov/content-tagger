@@ -31,8 +31,8 @@ RSpec.describe Taxonomy::BuildTaxon do
     let(:taxon) { Taxonomy::BuildTaxon.call(content_id: content_id) }
 
     before do
-      publishing_api_has_item(content)
-      publishing_api_has_expanded_links(
+      stub_publishing_api_has_item(content)
+      stub_publishing_api_has_expanded_links(
         content_id: content_id,
         expanded_links: {
           topics: [],
@@ -87,7 +87,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "without taxon parents" do
       before do
-        publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links(
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -103,7 +103,7 @@ RSpec.describe Taxonomy::BuildTaxon do
     context "with existing links" do
       let(:parent_taxon_id) { "CONTENT-ID-RTI" }
       before do
-        publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links(
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -121,7 +121,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "root taxon" do
       before do
-        publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links(
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -140,7 +140,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "with an invalid taxon" do
       before do
-        publishing_api_does_not_have_item(content_id)
+        stub_publishing_api_does_not_have_item(content_id)
       end
 
       it "raises an exception" do

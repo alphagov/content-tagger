@@ -9,8 +9,8 @@ module Metrics
   RSpec.describe ContentDistributionMetrics do
     describe "#level_taggings" do
       before :each do
-        content_store_has_item("/", root_taxon.to_json, draft: true)
-        content_store_has_item("/taxons/root_taxon", child_taxons.to_json, draft: true)
+        stub_content_store_has_item("/", root_taxon.to_json, draft: true)
+        stub_content_store_has_item("/taxons/root_taxon", child_taxons.to_json, draft: true)
 
         allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[root_id]))
                                       .and_return content_items_enum(5)

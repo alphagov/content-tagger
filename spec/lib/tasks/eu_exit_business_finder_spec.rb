@@ -4,7 +4,7 @@ require "gds_api/test_helpers/publishing_api_v2"
 require "gds_api/test_helpers/search"
 
 RSpec.describe "eu_exit_business_finder:retag_documents_to_facet_values" do
-  include GdsApi::TestHelpers::PublishingApiV2
+  include GdsApi::TestHelpers::PublishingApi
   include GdsApi::TestHelpers::Search
   include PublishingApiHelper
 

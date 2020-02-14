@@ -76,12 +76,12 @@ RSpec.feature "Move content between Taxons", type: :feature do
     @document1 = basic_content_item("Tagged content 1")
     @document2 = basic_content_item("Tagged content 2")
 
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @source_taxon[:content_id],
       links: {},
       version: 1,
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @source_taxon[:content_id],
       expanded_links: {},
     )
@@ -94,10 +94,10 @@ RSpec.feature "Move content between Taxons", type: :feature do
     )
 
     publishing_api_has_taxons([@source_taxon, @dest_taxon])
-    publishing_api_has_item(@source_taxon)
-    publishing_api_has_item(@dest_taxon)
+    stub_publishing_api_has_item(@source_taxon)
+    stub_publishing_api_has_item(@dest_taxon)
 
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       [@source_taxon_for_select, @dest_taxon_for_select],
       document_type: "taxon",
     )
@@ -147,7 +147,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
 
   def and_all_content_can_be_moved_when_i_start_the_content_move
     # Lookups to fetch the content ID based on existing base paths
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       @document1[:base_path] => @document1[:content_id],
       @document2[:base_path] => @document2[:content_id],
     )
@@ -166,7 +166,7 @@ RSpec.feature "Move content between Taxons", type: :feature do
   end
 
   def and_only_published_content_can_be_moved_when_i_start_the_content_move
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       @document2[:base_path] => @document2[:content_id],
     )
 
@@ -194,7 +194,7 @@ private
 
   def assert_content_items_have_been_moved_for_document(document, source, dest)
     # First we fetch existing links
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: document[:content_id],
       links: { taxons: [source[:content_id]] },
       version: 1,

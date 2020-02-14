@@ -192,7 +192,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def given_there_are_taxons
-    publishing_api_has_linkables(
+    stub_publishing_api_has_linkables(
       [@linkable_taxon1, @linkable_taxon2, @linkable_taxon3],
       document_type: "taxon",
     )
@@ -215,7 +215,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_visit_the_taxon_page
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon1[:content_id],
       expanded_links: {
         parent_taxons: [
@@ -242,7 +242,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_visit_the_draft_taxon_page
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon2[:content_id],
       expanded_links: {},
     )
@@ -312,14 +312,14 @@ RSpec.feature "Taxonomy editing" do
     @publish_item = stub_request(:post, %r{https://publishing-api.test.gov.uk/v2/content/.*/publish})
       .to_return(status: 200, body: "", headers: {})
 
-    publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
+    stub_publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon1[:content_id],
       expanded_links: {},
     )
 
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon2[:content_id],
       expanded_links: {},
     )
@@ -453,7 +453,7 @@ RSpec.feature "Taxonomy editing" do
 
   def then_the_legacy_taxons_should_be_saved
     stub_any_publishing_api_put_content
-    publishing_api_has_lookups(
+    stub_publishing_api_has_lookups(
       "/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON",
       "/another-legacy-taxon" => "CONTENT-ID-ANOTHER-LEGACY-TAXON",
     )

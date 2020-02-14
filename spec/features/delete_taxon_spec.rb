@@ -130,7 +130,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
     # Override the `links` call in stub_requests_for_show_page
     # TODO: extend stub_requests_for_show_page to make this easier
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
         parent_taxons: %w[CONTENT-ID-PARENT],
@@ -181,7 +181,7 @@ RSpec.feature "Delete Taxon", type: :feature do
 
   def when_i_confirm_deletion
     Sidekiq::Testing.inline! do
-      @get_content_request = publishing_api_has_item(stubbed_taxons[0])
+      @get_content_request = stub_publishing_api_has_item(stubbed_taxons[0])
       @unpublish_request = stub_publishing_api_unpublish(@taxon_content_id, body: { type: :redirect, alternative_path: "/alpha-taxonomy/vehicle-plating" }.to_json)
       click_on "Delete and redirect"
     end
@@ -191,8 +191,8 @@ RSpec.feature "Delete Taxon", type: :feature do
     parent_taxon = taxon_with_details(
       "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
-    publishing_api_has_item(parent_taxon)
-    publishing_api_has_links(content_id: "CONTENT-ID-PARENT")
+    stub_publishing_api_has_item(parent_taxon)
+    stub_publishing_api_has_links(content_id: "CONTENT-ID-PARENT")
 
     @put_content_request = stub_publishing_api_put_content(@taxon_content_id, {})
     @patch_links_request = stub_publishing_api_patch_links(@taxon_content_id, {})
@@ -254,19 +254,19 @@ private
     #
     # Stub realistic values for links and expanded links to correctly render
     # the tree on the taxon show page
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
         parent_taxons: [@parent_taxon_content_id],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon_content_id,
       expanded_links: {
         parent_taxons: [@parent_taxon],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @parent_taxon_content_id,
       expanded_links: {
         child_taxons: [@taxon],
@@ -283,19 +283,19 @@ private
     #
     # Stub realistic values for links and expanded links to correctly render
     # the tree on the taxon show page
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: @taxon_content_id,
       links: {
         child_taxons: [@child_taxon_content_id],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @taxon_content_id,
       expanded_links: {
         child_taxons: [@child_taxon],
       },
     )
-    publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links(
       content_id: @child_taxon_content_id,
       expanded_links: {
         parent_taxons: [@taxon],
@@ -305,16 +305,16 @@ private
 
   def add_tagged_content(fields:)
     content_item = basic_content_item("tagged content")
-    publishing_api_has_linked_items(
+    stub_publishing_api_has_linked_items(
       [content_item],
       content_id: @taxon_content_id,
       link_type: "taxons",
       fields: fields,
     )
 
-    publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
+    stub_publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])
 
-    publishing_api_has_links(
+    stub_publishing_api_has_links(
       content_id: content_item[:content_id],
       links: {
         taxons: [@taxon_content_id],

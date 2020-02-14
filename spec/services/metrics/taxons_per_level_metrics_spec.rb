@@ -7,8 +7,8 @@ module Metrics
   RSpec.describe TaxonsPerLevelMetrics do
     describe "#count_taxons_per_level" do
       before do
-        content_store_has_item("/", root_taxon.to_json, draft: true)
-        content_store_has_item("/taxons/level_one_taxon", multi_level_child_taxons.to_json, draft: true)
+        stub_content_store_has_item("/", root_taxon.to_json, draft: true)
+        stub_content_store_has_item("/taxons/level_one_taxon", multi_level_child_taxons.to_json, draft: true)
       end
       it "sends the correct values to statsd" do
         expect(Metrics.statsd).to receive(:gauge)
