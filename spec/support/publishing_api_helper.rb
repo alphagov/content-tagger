@@ -201,26 +201,4 @@ module PublishingApiHelper
       },
     ]
   end
-
-  def stubbed_facet_values
-    [
-      {
-        "public_updated_at" => "2018-06-20 10:19:10",
-        "title" => "Agriculture",
-        "content_id" => "FACET-VALUE-UUID",
-        "publication_state" => "published",
-      },
-    ]
-  end
-
-  def example_facet_value
-    {
-      "content_id" => "EXISTING-FACET-VALUE-UUID",
-      "title" => "Agriculture",
-      "details" => {
-        "label" => "Agriculture",
-        "value" => "agriculture",
-      },
-    }
-  end
 end
