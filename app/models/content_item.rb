@@ -41,10 +41,6 @@ class ContentItem
     @link_set ||= Tagging::ContentItemExpandedLinks.find(content_id)
   end
 
-  def facets_link_set
-    @facets_link_set ||= Facets::ContentItemExpandedLinks.find(content_id)
-  end
-
   def taxons?
     link_set.taxons.present?
   end
