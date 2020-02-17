@@ -28,10 +28,6 @@ class Linkables
     @mainstream_browse_pages ||= for_nested_document_type("mainstream_browse_page")
   end
 
-  def facet_values(facet_group_content_id)
-    @facet_values ||= for_facet_group(facet_group_content_id)
-  end
-
 private
 
   def for_document_type(document_type, include_draft: true)
@@ -54,12 +50,6 @@ private
       .select { |item| item.fetch("internal_name").include?(" / ") }
 
     organise_items(present_items(items))
-  end
-
-  def for_facet_group(content_id)
-    Facets::FacetGroupPresenter.new(
-      Facets::RemoteFacetGroupsService.new.find(content_id),
-    ).grouped_facet_values
   end
 
   def present_items(items)

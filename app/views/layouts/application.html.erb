@@ -40,12 +40,6 @@
       <%= link_to t('navigation.projects'), projects_path %>
     </li>
   <% end %>
-
-  <% if user_can_administer_facet_groups? %>
-    <li class='<%= active_navigation_item.in?(%w[facet_groups]) ? 'active' : nil %>'>
-      <%= link_to t('navigation.facet_groups'), facet_groups_path %>
-    </li>
-  <% end %>
 <% end %>
 
 <%= render template: 'layouts/govuk_admin_template' %>

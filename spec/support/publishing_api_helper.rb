@@ -1,5 +1,4 @@
 require_relative("email_alert_api_helper")
-require "facets/remote_facet_groups_service"
 
 module PublishingApiHelper
   include EmailAlertApiHelper
@@ -123,15 +122,6 @@ module PublishingApiHelper
     tags.select { |tag| base_paths.include?(tag["base_path"]) }
   end
 
-  def stub_facet_group_lookup(content_id = "FACET-GROUP-UUID")
-    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/#{content_id}")
-    .to_return(body: {
-      content_id: content_id,
-      expanded_links: example_facet_group,
-      version: 54_321,
-    }.to_json)
-  end
-
   def stubbed_taxons
     [
       {
@@ -210,53 +200,5 @@ module PublishingApiHelper
         "internal_name" => "Driving and transport / Vehicle tax and SORN",
       },
     ]
-  end
-
-  def stubbed_facet_values
-    [
-      {
-        "public_updated_at" => "2018-06-20 10:19:10",
-        "title" => "Agriculture",
-        "content_id" => "FACET-VALUE-UUID",
-        "publication_state" => "published",
-      },
-    ]
-  end
-
-  def example_facet_value
-    {
-      "content_id" => "EXISTING-FACET-VALUE-UUID",
-      "title" => "Agriculture",
-      "details" => {
-        "label" => "Agriculture",
-        "value" => "agriculture",
-      },
-    }
-  end
-
-  def example_facet_group
-    {
-      "content_id" => "FACET-GROUP-UUID",
-      "title" => "Example facet group",
-      "facets" => [
-        {
-          "content_id" => "FACET-UUID",
-          "title" => "Example facet",
-          "links" => {
-            "facet_values" => [
-              {
-                "content_id" => "ANOTHER-FACET-VALUE-UUID",
-                "title" => "Aerospace",
-                "details" => {
-                  "label" => "Aerospace",
-                  "value" => "aerospace",
-                },
-              },
-              example_facet_value,
-            ],
-          },
-        },
-      ],
-    }
   end
 end

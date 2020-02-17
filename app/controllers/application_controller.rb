@@ -28,13 +28,11 @@ private
     :user_can_administer_taxonomy?,
     :user_can_manage_taxonomy?,
     :user_can_access_tagathon_tools?,
-    :user_can_administer_facet_groups?,
   )
 
   delegate :user_can_administer_taxonomy?,
            :user_can_manage_taxonomy?,
            :user_can_access_tagathon_tools?,
-           :user_can_administer_facet_groups?,
            to: :permission_checker
 
   def ensure_user_can_administer_taxonomy!
@@ -47,10 +45,6 @@ private
 
   def ensure_user_can_access_tagathon_tools!
     deny_access_to(:feature) unless user_can_access_tagathon_tools?
-  end
-
-  def ensure_user_can_administer_facet_groups!
-    deny_access_to(:feature) unless user_can_administer_facet_groups?
   end
 
   def deny_access_to(subject)

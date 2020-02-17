@@ -34,8 +34,8 @@ RSpec.feature "Navigation", type: :feature do
       when_i_visit_the_application
     end
 
-    navigation_options = ["Edit a page", "Bulk tag", "Edit taxonomy", "Tagging history", "Taxonomy Health", "Projects", "Facets"].freeze
-    navigation_paths = %w[/taggings/lookup /bulk_tag/new /taxons /tagging_history /taxonomy/health_warnings /projects /facet_groups].freeze
+    navigation_options = ["Edit a page", "Bulk tag", "Edit taxonomy", "Tagging history", "Taxonomy Health", "Projects"].freeze
+    navigation_paths = %w[/taggings/lookup /bulk_tag/new /taxons /tagging_history /taxonomy/health_warnings /projects].freeze
 
     navigation_options.zip(navigation_paths).each do |option, path|
       scenario "#{option} redirects to the correct page" do
@@ -75,7 +75,6 @@ RSpec.feature "Navigation", type: :feature do
       expect(page).not_to have_text "Tagging history"
       expect(page).not_to have_text "Taxonomy Health"
       expect(page).not_to have_text "Projects"
-      expect(page).not_to have_text "Facets"
     end
   end
 
@@ -86,7 +85,6 @@ RSpec.feature "Navigation", type: :feature do
       expect(page).not_to have_text "Edit taxonomy"
       expect(page).not_to have_text "Tagging history"
       expect(page).not_to have_text "Taxonomy Health"
-      expect(page).not_to have_text "Facets"
       expect(page).to have_text "Projects"
     end
   end
@@ -99,7 +97,6 @@ RSpec.feature "Navigation", type: :feature do
       expect(page).to have_text "Tagging history"
       expect(page).to have_text "Taxonomy Health"
       expect(page).to have_text "Projects"
-      expect(page).to have_text "Facets"
     end
   end
 
@@ -115,10 +112,6 @@ RSpec.feature "Navigation", type: :feature do
 
   def stub_get_request(option)
     stubbed_request_data = {
-      "Facets" => {
-        url: "https://publishing-api.test.gov.uk/v2/content?document_type=facet_group&order=-public_updated_at&page=1&per_page=50&q=&search_in%5B%5D=title&states%5B%5D=published",
-        body: { results: [] },
-      },
       "Tagging history" => {
         url: "https://publishing-api.test.gov.uk/v2/links/changes?link_types%5B%5D=taxons",
         body: { link_changes: [] },
