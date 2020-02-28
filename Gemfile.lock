@@ -149,7 +149,7 @@ GEM
       puma
       selenium-webdriver (>= 3.142)
       webdrivers (>= 4)
-    hashdiff (1.0.0)
+    hashdiff (1.0.1)
     hashie (3.6.0)
     http-accept (1.7.0)
     http-cookie (1.0.3)
@@ -423,7 +423,7 @@ DEPENDENCIES
   govuk_sidekiq (~> 3.0)
   govuk_taxonomy_helpers (~> 1.0.0)
   govuk_test
-  hashdiff (~> 1.0.0)
+  hashdiff (~> 1.0.1)
   jquery-ui-rails (= 6.0.1)
   kaminari (~> 1.2)
   pg
