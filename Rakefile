@@ -4,5 +4,3 @@
 require File.expand_path('config/application', __dir__)
 
 Rails.application.load_tasks
-
-task(:default).prerequisites << "lint" unless ENV.has_key?("JENKINS_URL")
