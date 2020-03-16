@@ -62,14 +62,14 @@ module Taxonomy
     end
 
     def primary_organisation_ids
-      links_for_tagged_content_ids.each_with_object({}) do |(content_id, links), result|
-        result[content_id] = links.dig("links", "primary_publishing_organisation", 0)
+      links_for_tagged_content_ids.transform_values do |links|
+        links.dig("links", "primary_publishing_organisation", 0)
       end
     end
 
     def primary_publishing_organisation_name(id)
-      @tagged_content_organisation_names_cache ||= primary_organisation_ids.compact.each_with_object({}) do |(content_id, publishing_org_id), result|
-        result[content_id] = organisations_cache[publishing_org_id]
+      @tagged_content_organisation_names_cache ||= primary_organisation_ids.compact.transform_values do |publishing_org_id|
+        organisations_cache[publishing_org_id]
       end
       @tagged_content_organisation_names_cache[id]
     end
