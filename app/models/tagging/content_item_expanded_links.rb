@@ -23,9 +23,7 @@ module Tagging
 
       links = data.fetch("expanded_links", {})
 
-      tags = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
-        current_tags[tag_type] = links.fetch(tag_type.to_s, [])
-      end
+      tags = TAG_TYPES.index_with { |tag_type| links.fetch(tag_type.to_s, []) }
 
       new(
         content_id: content_id,
