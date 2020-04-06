@@ -153,7 +153,13 @@ private
       uk_market_conformity_assessment_body
       utaac_decision
       written_statement
-    ].include?(document_type)
+    ].include?(document_type) || is_coronavirus_taxon?
+  end
+
+  def is_coronavirus_taxon?
+    # This is for the /education taxon and should be changed to whatever taxa we want to
+    # show related links for
+    document_type == "taxon" && %w(c58fdadd-7743-46d6-9629-90bb3ccc4ef0).include?(content_id)
   end
 
   def additional_temporary_blacklist
