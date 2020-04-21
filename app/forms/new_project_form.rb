@@ -7,7 +7,7 @@ class NewProjectForm
   UUID_REGEX = %r([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}).freeze
 
   validates_presence_of :name, :remote_url, :taxonomy_branch
-  validates :remote_url, format: URI.regexp(%w[http https])
+  validates :remote_url, format: URI::DEFAULT_PARSER.make_regexp(%w[http https])
   validates :taxonomy_branch, format: { with: UUID_REGEX }
 
   def taxonomy_branches_for_select
