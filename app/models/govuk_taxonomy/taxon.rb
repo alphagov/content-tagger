@@ -42,9 +42,7 @@ module GovukTaxonomy
       ancestors + [self]
     end
 
-    def count
-      tree.count
-    end
+    delegate :count, to: :tree
 
     def root?
       parent_node.nil?

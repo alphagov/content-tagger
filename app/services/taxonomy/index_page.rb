@@ -16,9 +16,7 @@ module Taxonomy
       )
     end
 
-    def taxons
-      search_results.taxons
-    end
+    delegate :taxons, to: :search_results
 
     def query
       params[:q]
