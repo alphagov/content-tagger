@@ -8,13 +8,9 @@ module Taxonomy
       @taxon = taxon
     end
 
-    def taxon_content_id
-      taxon.content_id
-    end
+    delegate :content_id, to: :taxon, prefix: true
 
-    def title
-      taxon.title
-    end
+    delegate :title, to: :taxon
 
     def taxons_for_select
       Linkables.new.taxons_including_root(exclude_ids: taxon.content_id)

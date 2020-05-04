@@ -2,10 +2,13 @@
 # If you're changing it, consider extracting to a common Gem first, eh
 module GovukTaxonomy
   class Taxon
-    extend Forwardable
     attr_reader :name, :content_id, :base_path
     attr_accessor :parent_node, :children
-    def_delegators :tree, :map, :each
+
+    delegate :map,
+             :each,
+             :count,
+             to: :tree
 
     def initialize(title:, base_path:, content_id:)
       @name = title
@@ -40,10 +43,6 @@ module GovukTaxonomy
     # @return [Array] all taxons in the path from the root of the taxonomy to this taxon
     def breadcrumb_trail
       ancestors + [self]
-    end
-
-    def count
-      tree.count
     end
 
     def root?

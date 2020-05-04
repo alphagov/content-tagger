@@ -10,9 +10,7 @@ module Taxonomy
       @visualisation = visualisation
     end
 
-    def title
-      taxon.title
-    end
+    delegate :title, to: :taxon
 
     def show_preview_link?
       draft? || draft_and_published_editions_exist?
@@ -36,9 +34,7 @@ module Taxonomy
       }.fetch(taxon.publication_state)
     end
 
-    def taxon_content_id
-      taxon.content_id
-    end
+    delegate :content_id, to: :taxon, prefix: true
 
     def taxonomy_tree
       @taxonomy_tree ||= Taxonomy::ExpandedTaxonomy.new(taxon_content_id).build
@@ -74,9 +70,7 @@ module Taxonomy
       Linkables.new.taxons(exclude_ids: taxon_content_id)
     end
 
-    def associated_taxons
-      taxonomy_tree.associated_taxons
-    end
+    delegate :associated_taxons, to: :taxonomy_tree
 
     def taxon_deletable?
       taxon.content_id != GovukTaxonomy::ROOT_CONTENT_ID

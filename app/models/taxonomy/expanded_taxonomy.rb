@@ -114,7 +114,7 @@ module Taxonomy
       @parent_expansion = expand_parent_nodes(
         start_node: root_node,
         parent: root_expanded_links.dig("expanded_links", "parent_taxons", 0),
-        )
+      )
       self
     end
 

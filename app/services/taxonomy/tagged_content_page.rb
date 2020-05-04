@@ -9,9 +9,7 @@ module Taxonomy
       @taxon = taxon
     end
 
-    def taxon_content_id
-      taxon.content_id
-    end
+    delegate :content_id, to: :taxon, prefix: true
 
     def tagged
       @tagged ||= begin
