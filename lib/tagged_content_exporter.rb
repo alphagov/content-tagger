@@ -53,7 +53,7 @@ private
   end
 
   def calculate_taxon_depth_and_path(taxon_hash, tree_data = {})
-    if taxon_hash.has_key?("links") && taxon_hash["links"].blank?
+    if taxon_hash.key?("links") && taxon_hash["links"].blank?
       tree_data[:path] = Array(taxon_hash["title"]).concat(tree_data[:path]).join(" / ")
       tree_data
     else
