@@ -4,21 +4,27 @@ RSpec.describe FlaggedContentQuery do
   describe "#items" do
     let(:project) { create(:project) }
     let!(:item_needs_help) do
-      create(:project_content_item,
-             :flagged_needs_help,
-             project: project)
+      create(
+        :project_content_item,
+        :flagged_needs_help,
+        project: project,
+      )
     end
     let!(:item_missing_topic) do
-      create(:project_content_item,
-             :flagged_missing_topic,
-             project: project,
-             suggested_tags: "Better Taxon Suggestion")
+      create(
+        :project_content_item,
+        :flagged_missing_topic,
+        project: project,
+        suggested_tags: "Better Taxon Suggestion",
+      )
     end
     let!(:item_missing_topic_with_missing_suggested_tag) do
-      create(:project_content_item,
-             :flagged_missing_topic,
-             project: project,
-             suggested_tags: "")
+      create(
+        :project_content_item,
+        :flagged_missing_topic,
+        project: project,
+        suggested_tags: "",
+      )
     end
 
     context "when querying for content items flagged with needs help" do

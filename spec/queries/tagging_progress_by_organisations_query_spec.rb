@@ -22,16 +22,20 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
       stub_search_api_totals(search_api_zeros)
       stub_search_api_tagged(search_api_zeros)
       expect(TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged)
-        .to eq("department-for-transport" => { percentage: 0.0, total: 0, tagged: 0 },
-               "high-speed-two-limited" => { percentage: 0.0, total: 0, tagged: 0 })
+        .to eq(
+          "department-for-transport" => { percentage: 0.0, total: 0, tagged: 0 },
+          "high-speed-two-limited" => { percentage: 0.0, total: 0, tagged: 0 },
+        )
     end
 
     it "returns correct values" do
       stub_search_api_totals(search_api_totals)
       stub_search_api_tagged(search_api_tagged)
       expect(TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged)
-        .to eq("department-for-transport" => { percentage: 25.0, total: 20, tagged: 5 },
-               "high-speed-two-limited" => { percentage: 56.25, total: 80, tagged: 45 })
+        .to eq(
+          "department-for-transport" => { percentage: 25.0, total: 20, tagged: 5 },
+          "high-speed-two-limited" => { percentage: 56.25, total: 80, tagged: 45 },
+        )
     end
   end
 

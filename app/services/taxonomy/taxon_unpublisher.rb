@@ -3,9 +3,12 @@ module Taxonomy
     include TransitionTaxon
 
     def self.call(taxon_content_id:, redirect_to_content_id:, user:, retag: true)
-      new.unpublish(taxon_content_id: taxon_content_id,
-                    redirect_to_content_id: redirect_to_content_id,
-                    user: user, retag: retag)
+      new.unpublish(
+        taxon_content_id: taxon_content_id,
+        redirect_to_content_id: redirect_to_content_id,
+        user: user,
+        retag: retag,
+      )
     end
 
     def unpublish(taxon_content_id:, redirect_to_content_id:, user:, retag:)

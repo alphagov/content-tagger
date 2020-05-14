@@ -13,10 +13,12 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
   context "there is a taxon, some content and links" do
     before :each do
       stub_publishing_api_has_item(content_id: @taxon_content_id)
-      stub_publishing_api_has_content([{ content_id: "c1" }, { content_id: "c2" }],
-                                      page: 1,
-                                      document_type: "document_type",
-                                      fields: %w[content_id])
+      stub_publishing_api_has_content(
+        [{ content_id: "c1" }, { content_id: "c2" }],
+        page: 1,
+        document_type: "document_type",
+        fields: %w[content_id],
+      )
 
       stub_publishing_api_has_links(
         content_id: "c1",
@@ -45,12 +47,16 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
         .to match_array([{ status: "success", message: "success", content_id: "c1", new_taxons: ["569a9ee5-c195-4b7f-b9dc-edc17a09113f", @taxon_content_id] },
                          { status: "success", message: "success", content_id: "c2", new_taxons: [@taxon_content_id] }])
 
-      assert_publishing_api_patch_links("c1",
-                                        links: { taxons: ["569a9ee5-c195-4b7f-b9dc-edc17a09113f", @taxon_content_id] },
-                                        previous_version: 6)
-      assert_publishing_api_patch_links("c2",
-                                        links: { taxons: [@taxon_content_id] },
-                                        previous_version: 10)
+      assert_publishing_api_patch_links(
+        "c1",
+        links: { taxons: ["569a9ee5-c195-4b7f-b9dc-edc17a09113f", @taxon_content_id] },
+        previous_version: 6,
+      )
+      assert_publishing_api_patch_links(
+        "c2",
+        links: { taxons: [@taxon_content_id] },
+        previous_version: 10,
+      )
     end
   end
 end

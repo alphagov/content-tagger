@@ -1,7 +1,14 @@
 module Taxonomy
   class ShowPage
-    delegate :content_id, :draft?, :published?, :unpublished?, :redirected?,
-             :draft_and_published_editions_exist?, :redirect_to, :base_path, to: :taxon
+    delegate :content_id,
+             :draft?,
+             :published?,
+             :unpublished?,
+             :redirected?,
+             :draft_and_published_editions_exist?,
+             :redirect_to,
+             :base_path,
+             to: :taxon
 
     attr_reader :taxon, :visualisation
 

@@ -5,11 +5,13 @@ RSpec.describe TaxonomyHealth::ContentCountMetric do
   include GdsApi::TestHelpers::Search
   let(:home_page) { FactoryBot.build(:taxon_hash, :home_page, expanded_links: { level_one_taxons: [food] }) }
   let(:food) do
-    FactoryBot.build(:taxon_hash,
-                     title: "Food",
-                     expanded_links: {
-                       root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
-                     })
+    FactoryBot.build(
+      :taxon_hash,
+      title: "Food",
+      expanded_links: {
+        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
+      },
+    )
   end
   let(:fruits) { FactoryBot.build(:taxon_hash, title: "Fruits") }
 

@@ -3,20 +3,22 @@ class ProjectsController < ApplicationController
   before_action :ensure_user_can_administer_taxonomy!, only: %i[confirm_delete destroy]
 
   def index
-    render :index, locals: {
-      percentage_by_organisation: tagging_progress_query.try(:percentage_tagged),
-      total_counts: tagging_progress_query.try(:total_counts),
-      projects: project_index,
-    }
+    render :index,
+           locals: {
+             percentage_by_organisation: tagging_progress_query.try(:percentage_tagged),
+             total_counts: tagging_progress_query.try(:total_counts),
+             projects: project_index,
+           }
   end
 
   def show
     query = ProjectFilterQuery.new(params, project)
-    render :show, locals: { content_items: Projects::PrepareContentItems.call(query.items),
-                            filters: ProjectFilterQuery::FILTERS,
-                            project: project,
-                            taxons: taxons,
-                            query: query }
+    render :show,
+           locals: { content_items: Projects::PrepareContentItems.call(query.items),
+                     filters: ProjectFilterQuery::FILTERS,
+                     project: project,
+                     taxons: taxons,
+                     query: query }
   end
 
   def new

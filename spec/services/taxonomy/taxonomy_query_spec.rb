@@ -17,8 +17,10 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     end
     it "returns a parent" do
       stub_publishing_api_has_expanded_links(expanded_links)
-      expect(query.parent("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")).to eq("base_path" => "/path/base",
-                                                                         "content_id" => "bbbbbbbb-bbbb-bbbbb-bbbbb-bbbbbbbbbbbb")
+      expect(query.parent("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")).to eq(
+        "base_path" => "/path/base",
+        "content_id" => "bbbbbbbb-bbbb-bbbbb-bbbbb-bbbbbbbbbbbb",
+      )
     end
   end
 
@@ -61,10 +63,14 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       expect(TaxonomyQuery.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])
     end
     it "returns content tagged to taxons" do
-      stub_search_api({ filter_taxons: %w[taxon_id_1 taxon_id_2] },
-                      [{ "content_id" => "content_id_1" }, { "content_id" => "content_id_2" }])
-      stub_search_api({ filter_taxons: %w[taxon_id_3] },
-                      [{ "content_id" => "content_id_3" }])
+      stub_search_api(
+        { filter_taxons: %w[taxon_id_1 taxon_id_2] },
+        [{ "content_id" => "content_id_1" }, { "content_id" => "content_id_2" }],
+      )
+      stub_search_api(
+        { filter_taxons: %w[taxon_id_3] },
+        [{ "content_id" => "content_id_3" }],
+      )
 
       expect(query.content_tagged_to_taxons(%w[taxon_id_1 taxon_id_2 taxon_id_3], slice_size: 2))
         .to eq(%w[content_id_1 content_id_2 content_id_3])
@@ -94,12 +100,16 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     context "there are root taxons and one level of children" do
       before :each do
         stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
-        stub_content_store_has_item("/taxons/root_taxon_a",
-                                    single_level_child_taxons("root_taxon_a", "child_a_1", "child_a_2").to_json,
-                                    draft: true)
-        stub_content_store_has_item("/taxons/root_taxon_b",
-                                    single_level_child_taxons("root_taxon_b", "child_b_1", "child_b_2"),
-                                    draft: true)
+        stub_content_store_has_item(
+          "/taxons/root_taxon_a",
+          single_level_child_taxons("root_taxon_a", "child_a_1", "child_a_2").to_json,
+          draft: true,
+        )
+        stub_content_store_has_item(
+          "/taxons/root_taxon_b",
+          single_level_child_taxons("root_taxon_b", "child_b_1", "child_b_2"),
+          draft: true,
+        )
       end
 
       it "returns root taxons in the first array" do

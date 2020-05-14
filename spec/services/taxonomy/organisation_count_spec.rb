@@ -12,13 +12,17 @@ RSpec.describe Taxonomy::OrganisationCount do
     before :each do
       stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
       stub_content_store_has_item("/taxons/level_one", single_level_child_taxons.to_json, draft: true)
-      stub_search_api({ "aggregate_primary_publishing_organisation" => %r{\d+},  "filter_taxons" => [taxon_ids.first] },
-                      search_api_body([{ slug: "organisation1", count: 1 },
-                                       { slug: "organisation2", count: 2 },
-                                       { slug: "organisation3", count: 3 }]))
-      stub_search_api({ "aggregate_primary_publishing_organisation" => %r{\d+},  "filter_taxons" => [taxon_ids.second] },
-                      search_api_body([{ slug: "organisation2", count: 4 },
-                                       { slug: "organisation1", count: 5 }]))
+      stub_search_api(
+        { "aggregate_primary_publishing_organisation" => %r{\d+}, "filter_taxons" => [taxon_ids.first] },
+        search_api_body([{ slug: "organisation1", count: 1 },
+                         { slug: "organisation2", count: 2 },
+                         { slug: "organisation3", count: 3 }]),
+      )
+      stub_search_api(
+        { "aggregate_primary_publishing_organisation" => %r{\d+}, "filter_taxons" => [taxon_ids.second] },
+        search_api_body([{ slug: "organisation2", count: 4 },
+                         { slug: "organisation1", count: 5 }]),
+      )
     end
 
     it "counts all tags to taxons per organisation" do

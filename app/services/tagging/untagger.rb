@@ -9,9 +9,11 @@ module Tagging
       existing_taxons_ids = response.dig("links", "taxons")
       version = response["version"]
 
-      Services.publishing_api.patch_links(content_id,
-                                          previous_version: version,
-                                          links: { taxons: (existing_taxons_ids - taxon_content_ids) })
+      Services.publishing_api.patch_links(
+        content_id,
+        previous_version: version,
+        links: { taxons: (existing_taxons_ids - taxon_content_ids) },
+      )
     rescue GdsApi::HTTPConflict, GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException
       retries ||= 0
       retry if (retries += 1) < 3
