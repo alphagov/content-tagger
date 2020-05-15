@@ -32,12 +32,15 @@ RSpec.describe Taxonomy::UpdateTaxon do
         publish
 
         assert_publishing_api_put_content(@taxon.content_id)
-        assert_publishing_api_patch_links(@taxon.content_id, links: {
-          root_taxon: [],
-          parent_taxons: %w[CONTENT-ID-PARENT],
-          associated_taxons: %w[1234],
-          legacy_taxons: [],
-        })
+        assert_publishing_api_patch_links(
+          @taxon.content_id,
+          links: {
+            root_taxon: [],
+            parent_taxons: %w[CONTENT-ID-PARENT],
+            associated_taxons: %w[1234],
+            legacy_taxons: [],
+          },
+        )
       end
     end
 
@@ -49,12 +52,15 @@ RSpec.describe Taxonomy::UpdateTaxon do
         stub_any_publishing_api_patch_links
 
         publish
-        assert_publishing_api_patch_links(@taxon.content_id, links: {
-          root_taxon: [],
-          parent_taxons: [],
-          associated_taxons: %w[1234],
-          legacy_taxons: [],
-        })
+        assert_publishing_api_patch_links(
+          @taxon.content_id,
+          links: {
+            root_taxon: [],
+            parent_taxons: [],
+            associated_taxons: %w[1234],
+            legacy_taxons: [],
+          },
+        )
       end
     end
 
@@ -66,12 +72,15 @@ RSpec.describe Taxonomy::UpdateTaxon do
         stub_any_publishing_api_patch_links
 
         publish
-        assert_publishing_api_patch_links(@taxon.content_id, links: {
-          root_taxon: [],
-          parent_taxons: %w[CONTENT-ID-PARENT],
-          associated_taxons: [],
-          legacy_taxons: [],
-        })
+        assert_publishing_api_patch_links(
+          @taxon.content_id,
+          links: {
+            root_taxon: [],
+            parent_taxons: %w[CONTENT-ID-PARENT],
+            associated_taxons: [],
+            legacy_taxons: [],
+          },
+        )
       end
     end
 
@@ -83,12 +92,15 @@ RSpec.describe Taxonomy::UpdateTaxon do
         stub_any_publishing_api_patch_links
 
         publish
-        assert_publishing_api_patch_links(@taxon.content_id, links: {
-          root_taxon: [],
-          parent_taxons: %w[CONTENT-ID-PARENT],
-          associated_taxons: [],
-          legacy_taxons: [],
-        })
+        assert_publishing_api_patch_links(
+          @taxon.content_id,
+          links: {
+            root_taxon: [],
+            parent_taxons: %w[CONTENT-ID-PARENT],
+            associated_taxons: [],
+            legacy_taxons: [],
+          },
+        )
       end
     end
 

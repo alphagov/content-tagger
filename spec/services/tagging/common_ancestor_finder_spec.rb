@@ -77,19 +77,23 @@ RSpec.describe Tagging::CommonAncestorFinder do
 
   it "tries again if timed out" do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }] }.to_json)
-    stub_any_publishing_api_call.to_return({ status: 504 },
-                                           { status: 504 },
-                                           status: 200,
-                                           body: Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[1], [1, 2]]).to_json)
+    stub_any_publishing_api_call.to_return(
+      { status: 504 },
+      { status: 504 },
+      status: 200,
+      body: Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", [[1], [1, 2]]).to_json,
+    )
     result_hash = Tagging::CommonAncestorFinder.new.find_all.force.first
     expect(result_hash[:content_id]).to eq("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
   end
 
   it "only tries 3 times" do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }] }.to_json)
-    stub_any_publishing_api_call.to_return({ status: 504 },
-                                           { status: 504 },
-                                           status: 504)
+    stub_any_publishing_api_call.to_return(
+      { status: 504 },
+      { status: 504 },
+      status: 504,
+    )
     expect { Tagging::CommonAncestorFinder.new.find_all.force.first }.to raise_error(GdsApi::HTTPGatewayTimeout)
   end
 end

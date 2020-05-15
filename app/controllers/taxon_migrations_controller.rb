@@ -14,12 +14,13 @@ class TaxonMigrationsController < ApplicationController
       tag_document_type: source_content_item.document_type,
     )
 
-    render :new, locals: {
-      tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
-      taxons: Linkables.new.taxons,
-      expanded_links: expanded_links,
-      source_content_item: source_content_item,
-    }
+    render :new,
+           locals: {
+             tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
+             taxons: Linkables.new.taxons,
+             expanded_links: expanded_links,
+             source_content_item: source_content_item,
+           }
   end
 
   def create

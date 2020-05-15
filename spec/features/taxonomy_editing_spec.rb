@@ -393,9 +393,10 @@ RSpec.feature "Taxonomy editing" do
       .to_return(status: 422, body: {}.to_json)
     stub_request(:post, %r{https://publishing-api.test.gov.uk/lookup-by-base-path})
       .with(body: hash_including(base_paths: ["/base-path"], with_drafts: true))
-      .to_return(status: 200, body: {
-        "/base-path" => SecureRandom.uuid,
-      }.to_json)
+      .to_return(status: 200,
+                 body: {
+                   "/base-path" => SecureRandom.uuid,
+                 }.to_json)
 
     click_on I18n.t("views.taxons.new_button")
   end

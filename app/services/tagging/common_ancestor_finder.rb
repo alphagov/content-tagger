@@ -5,8 +5,11 @@ module Tagging
     end
 
     def find_all
-      content_enum = Services.search_api.search_enum({ reject_content_store_document_type: Tagging.blacklisted_document_types,
-                                                       fields: %w[content_id title] }, page_size: 100)
+      content_enum = Services.search_api.search_enum(
+        { reject_content_store_document_type: Tagging.blacklisted_document_types,
+          fields: %w[content_id title] },
+        page_size: 100,
+      )
       filtered_content_enum = content_enum.lazy.select { |c| c.key?("content_id") }
       all_results = filtered_content_enum.map do |content_hash|
         content_id = content_hash["content_id"]

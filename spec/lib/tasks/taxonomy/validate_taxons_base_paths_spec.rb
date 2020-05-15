@@ -128,7 +128,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
     stub_publishing_api_has_item(taxon_attributes)
     stub_publishing_api_has_expanded_links(taxon_attributes.slice(:content_id))
     stub_any_publishing_api_put_content
-      .to_return(status: 422, body:
+      .to_return(status: 422,
+                 body:
         {
           error: {
             code: 422,
@@ -177,7 +178,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -196,7 +198,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -206,7 +209,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
         "content_id" => "CONTENT-ID-LEVEL-TWO",
         "title" => "Level Two",
         "links" => {},
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
   end
 
@@ -228,7 +232,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -247,7 +252,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -257,7 +263,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
         "content_id" => "CONTENT-ID-LEVEL-TWO",
         "title" => "Level Two",
         "links" => {},
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
   end
 
@@ -279,7 +286,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -298,7 +306,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -308,7 +317,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
         "content_id" => "CONTENT-ID-LEVEL-TWO",
         "title" => "Level Two",
         "links" => {},
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
   end
 
@@ -330,7 +340,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -349,7 +360,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
             },
           ],
         },
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
 
     stub_content_store_has_item(
@@ -359,7 +371,8 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
         "content_id" => "CONTENT-ID-LEVEL-TWO",
         "title" => "Level Two",
         "links" => {},
-      }.to_json, draft: true
+      }.to_json,
+      draft: true,
     )
   end
 end

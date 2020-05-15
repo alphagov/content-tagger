@@ -1,7 +1,13 @@
 module Taxonomy
   class TaggedContentPage
-    delegate :content_id, :draft?, :published?, :unpublished?, :redirected?,
-             :redirect_to, :base_path, to: :taxon
+    delegate :content_id,
+             :draft?,
+             :published?,
+             :unpublished?,
+             :redirected?,
+             :redirect_to,
+             :base_path,
+             to: :taxon
 
     attr_reader :taxon
 

@@ -3,12 +3,14 @@ require "rails_helper"
 RSpec.describe TaxonomyHealth::MaximumDepthMetric do
   let(:home_page) { FactoryBot.build(:taxon_hash, :home_page, expanded_links: { level_one_taxons: [food] }) }
   let(:food) do
-    FactoryBot.build(:taxon_hash,
-                     title: "Food",
-                     expanded_links: {
-                       child_taxons: [fruits],
-                       root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
-                     })
+    FactoryBot.build(
+      :taxon_hash,
+      title: "Food",
+      expanded_links: {
+        child_taxons: [fruits],
+        root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
+      },
+    )
   end
   let(:fruits) { FactoryBot.build(:taxon_hash, title: "Fruits", links: { child_taxons: [apples, pears] }) }
   let(:apples) { FactoryBot.build(:taxon_hash, title: "Apples") }

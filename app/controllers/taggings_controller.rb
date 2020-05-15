@@ -34,9 +34,10 @@ class TaggingsController < ApplicationController
   def show
     content_item = ContentItem.find!(params[:content_id])
 
-    render :show, locals: {
-      tagging_update: Tagging::TaggingUpdateForm.from_content_item(content_item),
-    }
+    render :show,
+           locals: {
+             tagging_update: Tagging::TaggingUpdateForm.from_content_item(content_item),
+           }
   rescue ContentItem::ItemNotFoundError
     render "item_not_found", status: :not_found
   end

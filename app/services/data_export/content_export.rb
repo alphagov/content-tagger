@@ -69,8 +69,10 @@ module DataExport
     ].freeze
 
     def content_links_enum(page_size = 1000)
-      Services.search_api.search_enum({ reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: %w[link] },
-                                      page_size: page_size).lazy.map { |h| h["link"] }
+      Services.search_api.search_enum(
+        { reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: %w[link] },
+        page_size: page_size,
+      ).lazy.map { |h| h["link"] }
     end
 
     def get_content(base_path, base_fields: CONTENT_BASE_FIELDS, taxon_fields: CONTENT_TAXON_FIELDS, ppo_fields: CONTENT_PPO_FIELDS)

@@ -22,12 +22,14 @@ RSpec.describe "Taxonomy Health Warnings" do
   end
 
   def given_a_health_warning
-    Taxonomy::HealthWarning.create(content_id: @taxon_content_id,
-                                   title: "title",
-                                   internal_name: "internal name",
-                                   path: "/path/to/taxon",
-                                   metric: "TaxonomyHealth::ContentCountMetric",
-                                   message: "Taxon fails metric")
+    Taxonomy::HealthWarning.create(
+      content_id: @taxon_content_id,
+      title: "title",
+      internal_name: "internal name",
+      path: "/path/to/taxon",
+      metric: "TaxonomyHealth::ContentCountMetric",
+      message: "Taxon fails metric",
+    )
   end
 
   def when_i_visit_the_health_warnings_page

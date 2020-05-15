@@ -18,12 +18,13 @@ class TagMigrationsController < ApplicationController
       tag_document_type: source_content_item.document_type,
     )
 
-    render :new, locals: {
-      tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
-      taxons: Linkables.new.taxons,
-      expanded_links: expanded_links,
-      source_content_item: source_content_item,
-    }
+    render :new,
+           locals: {
+             tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
+             taxons: Linkables.new.taxons,
+             expanded_links: expanded_links,
+             source_content_item: source_content_item,
+           }
   end
 
   def create
@@ -45,24 +46,27 @@ class TagMigrationsController < ApplicationController
   def show
     source_content_item = ContentItem.find!(tag_migration.source_content_id)
 
-    render :show, locals: {
-      tag_migration: tag_migration,
-      current_tagged_taxon: tag_migration.source_title,
-      aggregated_tag_mappings: presented_aggregated_tag_mappings,
-      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
-      total_tag_mappings: aggregated_tag_mappings.count,
-      progress_path: tag_migration_progress_path(tag_migration),
-      source_content_item: source_content_item,
-    }
+    render :show,
+           locals: {
+             tag_migration: tag_migration,
+             current_tagged_taxon: tag_migration.source_title,
+             aggregated_tag_mappings: presented_aggregated_tag_mappings,
+             completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+             total_tag_mappings: aggregated_tag_mappings.count,
+             progress_path: tag_migration_progress_path(tag_migration),
+             source_content_item: source_content_item,
+           }
   end
 
   def progress
-    render partial: "tag_update_progress_bar", formats: :html, locals: {
-      tag_mappings: aggregated_tag_mappings,
-      completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
-      total_tag_mappings: aggregated_tag_mappings.count,
-      progress_path: tag_migration_progress_path(tag_migration),
-    }
+    render partial: "tag_update_progress_bar",
+           formats: :html,
+           locals: {
+             tag_mappings: aggregated_tag_mappings,
+             completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
+             total_tag_mappings: aggregated_tag_mappings.count,
+             progress_path: tag_migration_progress_path(tag_migration),
+           }
   end
 
   def destroy

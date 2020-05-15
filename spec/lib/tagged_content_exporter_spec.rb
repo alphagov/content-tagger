@@ -4,16 +4,20 @@ require_relative "../../lib/tagged_content_exporter"
 RSpec.describe TaggedContentExporter do
   describe "#content_items_with_taxons" do
     it "returns the content_items" do
-      create(:user,
-             uid: "user-1234",
-             organisation_slug: "department-for-transport")
+      create(
+        :user,
+        uid: "user-1234",
+        organisation_slug: "department-for-transport",
+      )
 
       project = create(:project, taxonomy_branch: "a4038b29-b332-4f13-98b1-1c9709e216bc")
 
-      create(:project_content_item,
-             project: project,
-             content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
-             url: "https://www.gov.uk/government/publications/great-western-franchise-2013")
+      create(
+        :project_content_item,
+        project: project,
+        content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
+        url: "https://www.gov.uk/government/publications/great-western-franchise-2013",
+      )
 
       stub_publishing_api_has_links(
         content_id: "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",

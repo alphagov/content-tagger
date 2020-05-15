@@ -42,9 +42,14 @@ module Taxonomy
 
     attr_reader :taxon
     delegate(
-      :base_path, :title, :description, :internal_name, :notes_for_editors,
-      :phase, :visible_to_departmental_editors,
-      to: :taxon
+      :base_path,
+      :title,
+      :description,
+      :internal_name,
+      :notes_for_editors,
+      :phase,
+      :visible_to_departmental_editors,
+      to: :taxon,
     )
   end
 end

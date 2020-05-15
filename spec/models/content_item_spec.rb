@@ -69,15 +69,18 @@ RSpec.describe ContentItem do
   end
 
   def build_content_item(data = {})
-    item = ContentItem.new({
-      base_path: double,
-      content_id: double,
-      description: double,
-      document_type: double,
-      publishing_app: double,
-      rendering_app: "frontend",
-      title: double,
-    }.merge(data).stringify_keys, blacklist: @blacklist || {})
+    item = ContentItem.new(
+      {
+        base_path: double,
+        content_id: double,
+        description: double,
+        document_type: double,
+        publishing_app: double,
+        rendering_app: "frontend",
+        title: double,
+      }.merge(data).stringify_keys,
+      blacklist: @blacklist || {},
+    )
 
     allow(item).to receive(:taxons?)
     allow(item).to receive(:suggested_related_links?)

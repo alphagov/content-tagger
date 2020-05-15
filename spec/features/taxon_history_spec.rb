@@ -18,12 +18,13 @@ RSpec.feature "Taxon history" do
     title = "Business"
 
     @taxon = taxon_with_details(
-      title, other_fields: {
+      title,
+      other_fields: {
         description: "...",
         state_history: {
           "1" => "published",
         },
-      }
+      },
     )
   end
 

@@ -94,10 +94,12 @@ class TaxonsController < ApplicationController
       flash.now[:danger] = t("controllers.taxons.destroy_no_redirect")
       render :confirm_delete, locals: { page: Taxonomy::DeletePage.new(taxon) }
     else
-      Taxonomy::TaxonUnpublisher.call(taxon_content_id: params[:id],
-                                      redirect_to_content_id: params[:taxonomy_delete_page][:redirect_to],
-                                      user: current_user,
-                                      retag: params[:taxonomy_delete_page][:do_tag] == "1")
+      Taxonomy::TaxonUnpublisher.call(
+        taxon_content_id: params[:id],
+        redirect_to_content_id: params[:taxonomy_delete_page][:redirect_to],
+        user: current_user,
+        retag: params[:taxonomy_delete_page][:do_tag] == "1",
+      )
       redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.destroy_success")
     end
   end

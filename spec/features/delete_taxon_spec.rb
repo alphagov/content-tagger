@@ -169,10 +169,11 @@ RSpec.feature "Delete Taxon", type: :feature do
   end
 
   def then_i_see_a_list_of_taxons_to_redirect_to
-    expect(page).to have_select "Redirect to", options: [
-      "",
-      "Vehicle plating",
-    ]
+    expect(page).to have_select "Redirect to",
+                                options: [
+                                  "",
+                                  "Vehicle plating",
+                                ]
   end
 
   def when_i_choose_a_taxon_to_redirect_to(selection)

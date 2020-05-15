@@ -95,10 +95,12 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
       stub_publishing_api_has_expanded_links("content_id" => transition_taxon_content_id, "expanded_links" => {})
 
       unpublish(transition_taxon_content_id, redirect_content_id)
-      assert_publishing_api_unpublish(transition_taxon_content_id,
-                                      type: "redirect",
-                                      alternative_path: "/path/to/redirect",
-                                      locale: "cy")
+      assert_publishing_api_unpublish(
+        transition_taxon_content_id,
+        type: "redirect",
+        alternative_path: "/path/to/redirect",
+        locale: "cy",
+      )
     end
   end
 

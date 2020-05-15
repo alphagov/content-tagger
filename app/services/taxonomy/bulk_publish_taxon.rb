@@ -9,8 +9,10 @@ module Taxonomy
     end
 
     def bulk_publish
-      linked_content_item = GovukTaxonomyHelpers::LinkedContentItem.from_content_id(content_id: @root_taxon_content_id,
-                                                                                    publishing_api: Services.publishing_api)
+      linked_content_item = GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+        content_id: @root_taxon_content_id,
+        publishing_api: Services.publishing_api,
+      )
       linked_content_item.each do |taxon|
         PublishTaxonWorker.perform_async(taxon.content_id)
       end
