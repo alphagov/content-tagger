@@ -198,7 +198,7 @@ GEM
     mimemagic (0.3.4)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.0)
+    minitest (5.14.1)
     multi_json (1.14.1)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
@@ -310,7 +310,7 @@ GEM
       rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-govuk (3.10.0)
+    rubocop-govuk (3.11.0)
       rubocop (= 0.83.0)
       rubocop-rails (~> 2)
       rubocop-rake (~> 0.5.1)
