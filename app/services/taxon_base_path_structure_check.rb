@@ -12,6 +12,7 @@ class TaxonBasePathStructureCheck
 
 private
 
+  # rubocop:disable Rails/Output
   def validate_tree(taxon:, level_one_prefix: nil, n: 0) # rubocop:disable Naming/MethodParameterName
     taxon = Taxon.new(taxon, level_one_prefix: level_one_prefix)
 
@@ -31,6 +32,7 @@ private
       validate_tree(taxon: next_level_taxon, level_one_prefix: taxon.level_one_prefix, n: n + 1)
     end
   end
+  # rubocop:enable Rails/Output
 
   def taxonomy_query
     @taxonomy_query ||= Taxonomy::TaxonomyQuery.new

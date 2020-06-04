@@ -22,7 +22,6 @@ module Tagging
             common_ancestors: find_common_ancestors(taxon_paths(expanded_links_hash)),
           }
         rescue GdsApi::HTTPNotFound
-          puts("Cannot find content with id: #{content_id}")
           {}
         rescue GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException, GdsApi::HTTPBadGateway
           retries ||= 0
