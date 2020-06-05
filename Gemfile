@@ -14,7 +14,6 @@ gem "select2-rails"
 gem "simple_form"
 gem "uglifier"
 
-# GDS managed dependencies
 gem "gds-api-adapters"
 gem "gds-sso"
 gem "govuk_admin_template"
