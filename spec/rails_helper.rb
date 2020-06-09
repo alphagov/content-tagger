@@ -19,7 +19,7 @@ Dir[Rails.root.join("spec/matchers/**/*.rb")].sort.each { |f| require f }
 PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
 
 require "capybara/rails"
-require "gds_api/test_helpers/publishing_api_v2"
+require "gds_api/test_helpers/publishing_api"
 require "database_cleaner"
 require "govuk_test"
 
