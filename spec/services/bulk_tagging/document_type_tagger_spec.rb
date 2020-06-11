@@ -1,7 +1,8 @@
 require "rails_helper"
-include GdsApi::TestHelpers::PublishingApi
 
 RSpec.describe BulkTagging::DocumentTypeTagger do
+  include GdsApi::TestHelpers::PublishingApi
+
   before :each do
     @taxon_content_id = "51ac4247-fd92-470a-a207-6b852a97f2db"
   end

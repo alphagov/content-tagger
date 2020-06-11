@@ -28,7 +28,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
     subject { described_class.new(taxon_id) }
 
     it "class should instantiate with 1 argument" do
-      expect(subject).to be_an_instance_of(TaxonTreeExport)
+      expect(subject).to be_an_instance_of(Taxonomy::TaxonTreeExport)
       expect(subject.taxon_content_id).to eq(taxon_id)
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe Taxonomy::TaxonTreeExport do
 
     it "should return a ExpandedTaxonomy instance" do
       stub_publishing_api_has_item(content_id: taxon_id, title: "content")
-      expect(subject.expanded_taxon).to be_an_instance_of(ExpandedTaxonomy)
+      expect(subject.expanded_taxon).to be_an_instance_of(Taxonomy::ExpandedTaxonomy)
     end
   end
 

@@ -1,13 +1,12 @@
 require "rails_helper"
 require "gds_api/test_helpers/content_store"
 
-include Taxonomy
-include ::GdsApi::TestHelpers::ContentStore
-include ::GdsApi::TestHelpers::PublishingApi
-
 RSpec.describe Taxonomy::TaxonomyQuery do
+  include ::GdsApi::TestHelpers::ContentStore
+  include ::GdsApi::TestHelpers::PublishingApi
+
   def query
-    TaxonomyQuery.new(%w[content_id base_path])
+    Taxonomy::TaxonomyQuery.new(%w[content_id base_path])
   end
 
   describe "#parent" do
@@ -60,7 +59,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
   describe "#content_tagged_to_taxons" do
     it "returns an empty array" do
-      expect(TaxonomyQuery.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])
+      expect(Taxonomy::TaxonomyQuery.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])
     end
     it "returns content tagged to taxons" do
       stub_search_api(

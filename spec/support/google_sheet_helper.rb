@@ -1,4 +1,6 @@
 module GoogleSheetHelper
+module_function
+
   def google_sheet_url(key:, gid:)
     "https://docs.google.com/spreadsheets/d/#{key}/pub?gid=#{gid}&single=true&output=csv"
   end

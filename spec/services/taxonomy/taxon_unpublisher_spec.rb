@@ -1,9 +1,8 @@
 require "rails_helper"
 
-include ::GdsApi::TestHelpers::PublishingApi
-include TransitionTaxon
-
 RSpec.describe Taxonomy::TaxonUnpublisher do
+  include ::GdsApi::TestHelpers::PublishingApi
+
   let(:taxon_content_id) { SecureRandom.uuid }
   let(:parent_taxon_content_id) { SecureRandom.uuid }
   let(:redirect_content_id) { SecureRandom.uuid }
