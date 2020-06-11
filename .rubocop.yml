@@ -7,37 +7,5 @@ inherit_mode:
   merge:
     - Exclude
 
-AllCops:
-  TargetRubyVersion: 2.4
-  Exclude:
-    - db/**/*
-    - spec/support/google_sheet_helper.rb
-
-Metrics/AbcSize:
-  Enabled: false
-  Max: 20
-  Exclude:
-    - spec/features/**/*
-
-# Disable line length checks, and leave it to humans to decide if the
-# length is appropriate.
-Metrics/ModuleLength:
-  Enabled: false
-
 Metrics/PerceivedComplexity:
   Enabled: true
-
-Metrics/BlockLength:
-  Enabled: false
-
-Style/MixinUsage:
-  Enabled: false
-
-Rails/DynamicFindBy:
-  Enabled: false
-Rails/OutputSafety:
-  Enabled: false
-Rails/InverseOf:
-  Enabled: false
-Rails/HasManyOrHasOneDependent:
-  Enabled: false

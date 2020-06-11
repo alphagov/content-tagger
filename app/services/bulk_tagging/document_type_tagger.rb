@@ -18,13 +18,11 @@ module BulkTagging
       end
 
       Services.publishing_api.get_content_items_enum(document_type: @document_type, fields: %w[content_id]).lazy.map do |document|
-        begin
-          content_id = document.fetch("content_id")
-          new_taxons = add_taxon_link(content_id, @taxon_content_id)
-          { status: "success", message: "success", content_id: content_id, new_taxons: new_taxons }
-        rescue StandardError => e
-          { status: "error", message: e.message, content_id: content_id, new_taxons: [] }
-        end
+        content_id = document.fetch("content_id")
+        new_taxons = add_taxon_link(content_id, @taxon_content_id)
+        { status: "success", message: "success", content_id: content_id, new_taxons: new_taxons }
+      rescue StandardError => e
+        { status: "error", message: e.message, content_id: content_id, new_taxons: [] }
       end
     end
 
