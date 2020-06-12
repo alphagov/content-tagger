@@ -2,7 +2,7 @@ module ApplicationHelper
   def state_label_for(label_type:, title:)
     css_class = ["label", label_type].join(" ")
 
-    content_tag :span, class: css_class do
+    tag.span class: css_class do
       title
     end
   end
@@ -22,7 +22,7 @@ module ApplicationHelper
       'original-title': date,
     }
 
-    content_tag :time, data: data_attributes do
+    tag.time data: data_attributes do
       distance_of_time_in_words_to_now(date)
     end
   end
