@@ -2,10 +2,10 @@ require "rails_helper"
 require "gds_api/test_helpers/search"
 require "gds_api/test_helpers/content_store"
 
-include ::GdsApi::TestHelpers::Search
-include ::GdsApi::TestHelpers::ContentStore
-
 RSpec.describe Taxonomy::OrganisationCount do
+  include ::GdsApi::TestHelpers::Search
+  include ::GdsApi::TestHelpers::ContentStore
+
   describe "#organisation_counts" do
     let(:taxon_ids) { [SecureRandom.uuid, SecureRandom.uuid] }
 

@@ -2,10 +2,10 @@ require "rails_helper"
 require "description_remover"
 require "gds_api/test_helpers/content_store"
 
-include ::GdsApi::TestHelpers::ContentStore
-include ::GdsApi::TestHelpers::PublishingApi
-
 RSpec.describe DescriptionRemover do
+  include ::GdsApi::TestHelpers::ContentStore
+  include ::GdsApi::TestHelpers::PublishingApi
+
   context "appropriate taxons are updated" do
     before do
       stub_content_store_has_item("/work", taxon.to_json, draft: true)

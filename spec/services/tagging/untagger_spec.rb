@@ -1,8 +1,9 @@
 require "rails_helper"
 require "gds_api/test_helpers/publishing_api_v2"
-include ::GdsApi::TestHelpers::PublishingApi
 
 RSpec.describe Tagging::Untagger do
+  include ::GdsApi::TestHelpers::PublishingApi
+
   before :each do
     @content_id = "51ac4247-fd92-470a-a207-6b852a97f2db"
   end
