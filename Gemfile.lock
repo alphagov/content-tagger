@@ -420,34 +420,34 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   better_errors
-  bootstrap-kaminari-views (~> 0.0.5)
+  bootstrap-kaminari-views
   database_cleaner
   factory_bot_rails
-  gds-api-adapters (~> 63.5)
-  gds-sso (~> 14.3)
+  gds-api-adapters
+  gds-sso
   govuk-content-schema-test-helpers
-  govuk_admin_template (~> 6.7)
-  govuk_app_config (~> 2.1)
-  govuk_sidekiq (~> 3.0)
-  govuk_taxonomy_helpers (~> 1.0.0)
+  govuk_admin_template
+  govuk_app_config
+  govuk_sidekiq
+  govuk_taxonomy_helpers
   govuk_test
-  hashdiff (~> 1.0.1)
-  jquery-ui-rails (= 6.0.1)
-  kaminari (~> 1.2)
+  hashdiff
+  jquery-ui-rails
+  kaminari
   pg
-  plek (~> 3.0)
+  plek
   pry-byebug
   rack-proxy
   rails (= 6.0.2.2)
-  rspec-rails (~> 4.0.0)
+  rspec-rails
   rubocop-govuk
-  sass-rails (~> 6.0)
-  select2-rails (~> 3.5.9)
-  simple_form (~> 5.0)
+  sass-rails
+  select2-rails
+  simple_form
   simplecov
   simplecov-rcov
   timecop
-  uglifier (~> 4.2)
+  uglifier
   web-console
   webmock
 
