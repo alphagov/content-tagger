@@ -438,7 +438,7 @@ DEPENDENCIES
   plek
   pry-byebug
   rack-proxy
-  rails (~> 6.0.3, >= 6.0.3.2)
+  rails
   rspec-rails
   rubocop-govuk
   sass-rails
