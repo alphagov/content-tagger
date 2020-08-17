@@ -11,8 +11,8 @@ RSpec.describe Tagging::Tagger do
     CSV
   end
   it "adds tags from the spreadsheet" do
-    expect(Tagging::Tagger).to receive(:add_tags).with("aaa", %w[1 3])
-    expect(Tagging::Tagger).to receive(:add_tags).with("bbb", %w[2])
+    expect(Tagging::Tagger).to receive(:add_tags).with("aaa", %w[1 3], :taxons)
+    expect(Tagging::Tagger).to receive(:add_tags).with("bbb", %w[2], :taxons)
 
     Tagging::CsvTagger.do_tagging("http://example.com/sheet.csv")
   end

@@ -6,7 +6,7 @@ module Tagging
       grouped_tags.each do |content_id, grouped_taggings|
         taxon_ids = grouped_taggings.map { |t| t["taxon_id"] }
         yield(content_id: content_id, taxon_ids: taxon_ids) if block_given?
-        Tagging::Tagger.add_tags(content_id, grouped_taggings.map { |t| t["taxon_id"] })
+        Tagging::Tagger.add_tags(content_id, grouped_taggings.map { |t| t["taxon_id"] }, :taxons)
       end
     end
   end
