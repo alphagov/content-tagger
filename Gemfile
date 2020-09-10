@@ -30,7 +30,6 @@ group :development, :test do
   gem "rspec-rails"
   gem "rubocop-govuk"
   gem "simplecov", require: false
-  gem "simplecov-rcov", require: false
 end
 
 group :development do
