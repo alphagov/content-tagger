@@ -24,19 +24,19 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       stub_publishing_api_has_item(@rootless_parent)
       stub_publishing_api_has_item(@rootless_child)
 
-      stub_publishing_api_has_expanded_links(
+      stub_publishing_api_has_expanded_links({
         content_id: @rootless_parent["content_id"],
         expanded_links: {
           child_taxons: [@rootless_child],
         },
-      )
+      })
 
-      stub_publishing_api_has_expanded_links(
+      stub_publishing_api_has_expanded_links({
         content_id: @rootless_child["content_id"],
         expanded_links: {
           parent_taxons: [@rootless_parent],
         },
-      )
+      })
     end
 
     describe "Rootless taxonomies" do
@@ -59,43 +59,43 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
     stub_publishing_api_has_item(home_page)
     stub_publishing_api_has_item(food)
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: GovukTaxonomy::ROOT_CONTENT_ID,
       expanded_links: {
         level_one_taxons: [apples],
       },
-    )
+    })
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: food["content_id"],
       expanded_links: {
         root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
       },
-    )
+    })
 
     stub_publishing_api_has_item(apples)
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
         child_taxons: [bramley, cox],
       },
-    )
+    })
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: bramley["content_id"],
       expanded_links: {
         parent_taxons: [apples],
       },
-    )
+    })
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: cox["content_id"],
       expanded_links: {
         parent_taxons: [apples],
       },
-    )
+    })
   end
 
   describe "Ask for the Homepage" do

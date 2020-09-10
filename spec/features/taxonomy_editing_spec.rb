@@ -215,7 +215,7 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_visit_the_taxon_page
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @taxon1[:content_id],
       expanded_links: {
         parent_taxons: [
@@ -232,7 +232,7 @@ RSpec.feature "Taxonomy editing" do
           },
         ],
       },
-    )
+    })
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
@@ -242,10 +242,10 @@ RSpec.feature "Taxonomy editing" do
   end
 
   def when_i_visit_the_draft_taxon_page
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @taxon2[:content_id],
       expanded_links: {},
-    )
+    })
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)
@@ -314,15 +314,15 @@ RSpec.feature "Taxonomy editing" do
 
     stub_publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @taxon1[:content_id],
       expanded_links: {},
-    )
+    })
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @taxon2[:content_id],
       expanded_links: {},
-    )
+    })
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
       .to_return(status: 200, body: {}.to_json)

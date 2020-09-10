@@ -10,7 +10,7 @@ module GovukTaxonomy
              :count,
              to: :tree
 
-    def initialize(title:, base_path:, content_id:)
+    def initialize(title:, base_path:, content_id:, **_kwargs)
       @name = title
       @content_id = content_id
       @base_path = base_path

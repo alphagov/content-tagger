@@ -16,7 +16,7 @@ module GovukTaxonomy
   private
 
     def build_taxon(taxon_hash)
-      GovukTaxonomy::Taxon.new taxon_hash.symbolize_keys.slice(:title, :base_path, :content_id)
+      GovukTaxonomy::Taxon.new(**taxon_hash.symbolize_keys.slice(:title, :base_path, :content_id))
     end
 
     def parse_taxons(parent, item_hash, key: "expanded_links")

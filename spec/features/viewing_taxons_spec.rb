@@ -123,7 +123,7 @@ RSpec.describe "Viewing taxons" do
 
   def given_a_taxonomy
     stub_publishing_api_has_item(fruits)
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: fruits["content_id"],
       expanded_links: {
         child_taxons: [
@@ -135,23 +135,23 @@ RSpec.describe "Viewing taxons" do
         ],
         root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
       },
-    )
+    })
 
     stub_publishing_api_has_item(apples)
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
         child_taxons: [cox],
       },
-    )
+    })
 
     stub_email_requests_for_show_page
   end
 
   def given_a_taxonomy_with_associated_taxons
     stub_publishing_api_has_item(fruits)
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: fruits["content_id"],
       expanded_links: {
         child_taxons: [
@@ -159,30 +159,30 @@ RSpec.describe "Viewing taxons" do
         ],
         root_taxon: [GovukTaxonomy::ROOT_CONTENT_ID],
       },
-    )
+    })
 
     stub_publishing_api_has_item(apples)
     stub_publishing_api_has_item(pears)
     stub_publishing_api_has_item(oranges)
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
         associated_taxons: [pears, oranges],
       },
-    )
+    })
 
     stub_email_requests_for_show_page
   end
 
   def given_a_previously_published_draft_taxon
     stub_publishing_api_has_item(previously_published)
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: previously_published["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
       },
-    )
+    })
 
     stub_email_requests_for_show_page
   end
@@ -233,7 +233,7 @@ RSpec.describe "Viewing taxons" do
     stub_publishing_api_has_item(cox)
     stub_publishing_api_has_links(cox)
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: cox["content_id"],
       expanded_links: {
         parent_taxons: [
@@ -244,14 +244,14 @@ RSpec.describe "Viewing taxons" do
           ),
         ],
       },
-    )
+    })
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: apples["content_id"],
       expanded_links: {
         parent_taxons: [fruits],
       },
-    )
+    })
 
     stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/cox})
       .to_return(status: 200, body: {}.to_json)

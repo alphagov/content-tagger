@@ -81,10 +81,10 @@ RSpec.feature "Move content between Taxons", type: :feature do
       links: {},
       version: 1,
     )
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @source_taxon[:content_id],
       expanded_links: {},
-    )
+    })
 
     stub_request(
       :get,

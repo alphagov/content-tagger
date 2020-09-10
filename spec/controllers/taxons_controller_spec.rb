@@ -116,7 +116,7 @@ RSpec.describe TaxonsController, type: :controller do
       stub_publishing_api_publish(taxon.content_id, {}, status: 422)
       payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
       stub_publishing_api_has_item(payload.merge(content_id: taxon.content_id))
-      stub_publishing_api_has_expanded_links(content_id: taxon.content_id)
+      stub_publishing_api_has_expanded_links({ content_id: taxon.content_id })
       stub_publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
 
       post :publish, params: { taxon_id: taxon.content_id }
@@ -152,7 +152,7 @@ RSpec.describe TaxonsController, type: :controller do
         "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
       )
       stub_publishing_api_has_item(parent_taxon)
-      stub_publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
+      stub_publishing_api_has_expanded_links({ content_id: "CONTENT-ID-PARENT" })
 
       Timecop.freeze do
         payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)

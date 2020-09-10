@@ -32,13 +32,13 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     before do
       stub_publishing_api_has_item(content)
-      stub_publishing_api_has_expanded_links(
+      stub_publishing_api_has_expanded_links({
         content_id: content_id,
         expanded_links: {
           topics: [],
           parent_taxons: [],
         },
-      )
+      })
     end
 
     it "builds a taxon object" do
@@ -87,12 +87,12 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "without taxon parents" do
       before do
-        stub_publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links({
           content_id: content_id,
           expanded_links: {
             topics: [],
           },
-        )
+        })
       end
 
       it "has no taxon parent" do
@@ -103,7 +103,7 @@ RSpec.describe Taxonomy::BuildTaxon do
     context "with existing links" do
       let(:parent_taxon_id) { "CONTENT-ID-RTI" }
       before do
-        stub_publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links({
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -111,7 +111,7 @@ RSpec.describe Taxonomy::BuildTaxon do
               { content_id: parent_taxon_id },
             ],
           },
-        )
+        })
       end
 
       it "assigns the parent to the taxon" do
@@ -121,7 +121,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "root taxon" do
       before do
-        stub_publishing_api_has_expanded_links(
+        stub_publishing_api_has_expanded_links({
           content_id: content_id,
           expanded_links: {
             topics: [],
@@ -130,7 +130,7 @@ RSpec.describe Taxonomy::BuildTaxon do
               { content_id: GovukTaxonomy::ROOT_CONTENT_ID },
             ],
           },
-        )
+        })
       end
 
       it "sets the parent_content_id to the root taxon id" do
