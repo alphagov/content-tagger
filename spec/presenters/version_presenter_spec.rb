@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe VersionPresenter, "#changes" do
   it "returns a change hash for an attribute addition" do
-    version = Version.create(
+    version = Version.create!(
       content_id: SecureRandom.uuid,
       object_changes: [
         ["+", "title", "Business"],
@@ -19,7 +19,7 @@ RSpec.describe VersionPresenter, "#changes" do
   end
 
   it "returns a change hash for an attribute change" do
-    version = Version.create(
+    version = Version.create!(
       content_id: SecureRandom.uuid,
       object_changes: [
         ["~", "title", "Business", "Business tax"],
@@ -36,7 +36,7 @@ RSpec.describe VersionPresenter, "#changes" do
   end
 
   it "returns a change hash for an attribute deletion" do
-    version = Version.create(
+    version = Version.create!(
       content_id: SecureRandom.uuid,
       object_changes: [
         ["-", "title", "Business"],

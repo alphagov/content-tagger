@@ -1,7 +1,7 @@
 module Taxonomy
   class SaveTaxonVersion
     def self.call(*args, **kwargs)
-      new(*args, **kwargs).save
+      new(*args, **kwargs).save_version
     end
 
     def initialize(taxon, version_note, previous_taxon: nil)
@@ -10,10 +10,10 @@ module Taxonomy
       @previous_taxon = previous_taxon
     end
 
-    def save
+    def save_version
       return if no_change_to_record
 
-      Version.create(
+      Version.create!(
         content_id: content_id,
         object_changes: taxon_changes,
         note: version_note,

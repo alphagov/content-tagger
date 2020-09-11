@@ -16,7 +16,7 @@ module Taxonomy
         title: title,
         publishing_app: "content-tagger",
         rendering_app: "collections",
-        public_updated_at: Time.now.iso8601,
+        public_updated_at: Time.zone.now.iso8601,
         locale: locale,
         details: {
           internal_name: internal_name,

@@ -8,13 +8,13 @@ module BulkTagging
 
     describe "#errored?" do
       it 'should return true when any tag mapping state is "errored"' do
-        tag_mappings.first.update(state: "errored")
+        tag_mappings.first.update!(state: "errored")
 
         expect(presenter.errored?).to be_truthy
       end
 
       it 'should return false when none of the tag mappings state is not "errored"' do
-        tag_mappings.first.update(state: "tagged")
+        tag_mappings.first.update!(state: "tagged")
 
         expect(presenter.errored?).to be_falsey
       end

@@ -15,7 +15,7 @@ FactoryBot.define do
     link_type { "taxons" }
     change { "add" }
     user_uid { SecureRandom.uuid }
-    created_at { Time.current }
+    created_at { Time.zone.now }
 
     initialize_with { attributes.deep_stringify_keys }
   end
