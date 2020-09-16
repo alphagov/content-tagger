@@ -24,7 +24,7 @@ module Taxonomy
 
     def content_tagged_to_taxons(content_ids, slice_size: 50)
       content_id_hashes = content_ids.each_slice(slice_size).flat_map do |chunk|
-        Services.search_api.search_enum(filter_taxons: chunk, fields: %w[content_id]).to_a
+        Services.search_api.search_enum({ filter_taxons: chunk, fields: %w[content_id] }).to_a
       end
       content_id_hashes.map { |h| h["content_id"] }.uniq
     end

@@ -8,7 +8,7 @@ FactoryBot.define do
     taggable_navigation_document_supertype { "other" }
     user_uid { SecureRandom.uuid }
     tagged_on { 1.week.ago }
-    tagged_at { Time.current - 1.week }
+    tagged_at { Time.zone.now - 1.week }
     change { 1 }
 
     trait :guidance do

@@ -11,7 +11,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
   describe "#parent" do
     it "returns nil because the taxon is a level one taxon" do
-      stub_publishing_api_has_expanded_links("content_id" => "llllllll-llll-llll-llll-llllllllllll", "expanded_links" => {})
+      stub_publishing_api_has_expanded_links({ "content_id" => "llllllll-llll-llll-llll-llllllllllll", "expanded_links" => {} })
       expect(query.parent("llllllll-llll-llll-llll-llllllllllll")).to be_nil
     end
     it "returns a parent" do

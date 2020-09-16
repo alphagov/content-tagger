@@ -28,18 +28,18 @@ module BulkTagging
     end
 
     def mark_as_tagged
-      update(state: "tagged", publish_completed_at: Time.current)
+      update(state: "tagged", publish_completed_at: Time.zone.now)
     end
 
     def mark_as_errored
       return if errors.messages.blank?
 
-      update(
+      update!(
         state: :errored,
         messages: errors.messages.values.flatten,
       )
 
-      tagging_source.update(
+      tagging_source.update!(
         state: :errored,
         error_message: I18n.t("tag_import.errors.tag_mappings_failed"),
       )

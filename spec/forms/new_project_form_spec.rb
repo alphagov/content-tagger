@@ -19,25 +19,25 @@ RSpec.describe NewProjectForm, "#create" do
 
     form = NewProjectForm.new(valid_params)
 
-    expect(form.create).to eq(true)
+    expect(form.generate).to eq(true)
   end
 
   it "returns false when a project name is not given" do
     form = NewProjectForm.new(valid_params.except(:name))
 
-    expect(form.create).to eq(false)
+    expect(form.generate).to eq(false)
   end
 
   it "returns false when the CSV URL does not begin with http(s)" do
     form = NewProjectForm.new(valid_params.merge(remote_url: "not a URL"))
 
-    expect(form.create).to eq(false)
+    expect(form.generate).to eq(false)
   end
 
   it "returns false when a taxonomy_branch is not a UUID" do
     form = NewProjectForm.new(valid_params.merge(taxonomy_branch: "not a UUID"))
 
-    expect(form.create).to eq(false)
+    expect(form.generate).to eq(false)
   end
 
   it "returns false with an error added when the CSV fails to parse" do
@@ -47,7 +47,7 @@ RSpec.describe NewProjectForm, "#create" do
 
     form = NewProjectForm.new(valid_params)
 
-    expect(form.create).to eq(false)
+    expect(form.generate).to eq(false)
     expect(form.errors[:remote_url]).to include "Net::OpenTimeout: execution expired"
   end
 
@@ -63,7 +63,7 @@ RSpec.describe NewProjectForm, "#create" do
 
     form = NewProjectForm.new(valid_params)
 
-    expect(form.create).to eq(false)
+    expect(form.generate).to eq(false)
     expect(form.errors[:base]).to include [/project was not created/, ["https://www.gov.uk/path"]]
   end
 end

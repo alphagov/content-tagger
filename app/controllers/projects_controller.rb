@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
 
   def create
     form = NewProjectForm.new(new_project_params)
-    if form.create
+    if form.generate
       redirect_to projects_path
     else
       render :new, locals: { form: form }

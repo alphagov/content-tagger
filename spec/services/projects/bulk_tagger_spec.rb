@@ -12,7 +12,7 @@ RSpec.describe Projects::BulkTagger do
 
   describe "#commit" do
     it "enqueues the content_items for tagging asynchronously" do
-      Projects::BulkTagger.new(params).commit
+      Projects::BulkTagger.new(**params).commit
 
       expect(Projects::TagContentWorker)
         .to have_received(:perform_async)
@@ -22,7 +22,7 @@ RSpec.describe Projects::BulkTagger do
 
   describe "#result" do
     it "returns the correct datastructure" do
-      bulk_tagger = Projects::BulkTagger.new(params)
+      bulk_tagger = Projects::BulkTagger.new(**params)
       bulk_tagger.commit
       result = bulk_tagger.result
 

@@ -14,7 +14,7 @@ class ProjectBuilder
         record.content_id = content_ids[record.base_path]
 
         if record.valid?
-          record.save
+          record.save!
         else
           invalid_content_items << record
         end

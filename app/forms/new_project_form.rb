@@ -15,7 +15,7 @@ class NewProjectForm
       .reduce({}) { |memo, branch| memo.merge(branch["title"] => branch["content_id"]) }
   end
 
-  def create
+  def generate
     return false unless valid?
 
     csv = RemoteCsv.new(remote_url)

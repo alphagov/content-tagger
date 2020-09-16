@@ -57,7 +57,7 @@ module Taxonomy
       }
       params[:locale] = locale if locale
 
-      Services.publishing_api.unpublish(content_id, params)
+      Services.publishing_api.unpublish(content_id, **params)
     end
   end
 end

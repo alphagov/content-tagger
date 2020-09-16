@@ -61,8 +61,8 @@ module BulkTagging
           }
           google_sheet_data = empty_google_sheet(
             with_rows: [
-              google_sheet_row(row_data),
-              google_sheet_row(row_data),
+              google_sheet_row(**row_data),
+              google_sheet_row(**row_data),
             ],
           )
 

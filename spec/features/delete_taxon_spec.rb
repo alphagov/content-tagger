@@ -261,18 +261,18 @@ private
         parent_taxons: [@parent_taxon_content_id],
       },
     )
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @taxon_content_id,
       expanded_links: {
         parent_taxons: [@parent_taxon],
       },
-    )
-    stub_publishing_api_has_expanded_links(
+    })
+    stub_publishing_api_has_expanded_links({
       content_id: @parent_taxon_content_id,
       expanded_links: {
         child_taxons: [@taxon],
       },
-    )
+    })
   end
 
   def add_a_child_taxon
@@ -290,18 +290,18 @@ private
         child_taxons: [@child_taxon_content_id],
       },
     )
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: @taxon_content_id,
       expanded_links: {
         child_taxons: [@child_taxon],
       },
-    )
-    stub_publishing_api_has_expanded_links(
+    })
+    stub_publishing_api_has_expanded_links({
       content_id: @child_taxon_content_id,
       expanded_links: {
         parent_taxons: [@taxon],
       },
-    )
+    })
   end
 
   def add_tagged_content(fields:)

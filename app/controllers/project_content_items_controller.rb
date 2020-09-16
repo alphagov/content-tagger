@@ -30,8 +30,8 @@ class ProjectContentItemsController < ApplicationController
   end
 
   def update_flags
-    content_item.update(flag_params)
-    content_item.save
+    content_item.update!(flag_params)
+    content_item.save!
 
     respond_to do |format|
       format.js { render layout: false, locals: { content_item: content_item } }

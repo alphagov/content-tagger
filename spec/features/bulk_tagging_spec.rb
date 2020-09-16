@@ -71,7 +71,7 @@ RSpec.feature "Bulk tagging", type: :feature do
       q: "browse",
     )
 
-    stub_publishing_api_has_expanded_links(
+    stub_publishing_api_has_expanded_links({
       content_id: "collection-id",
       expanded_links: {
         documents: [
@@ -79,7 +79,7 @@ RSpec.feature "Bulk tagging", type: :feature do
           basic_content_item("Tax doc 2"),
         ],
       },
-    )
+    })
   end
 
   def and_a_set_of_taxons

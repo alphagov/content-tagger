@@ -16,7 +16,7 @@ module TaxonomyHealth
 
         next if content_count <= maximum
 
-        Taxonomy::HealthWarning.create(
+        Taxonomy::HealthWarning.create!(
           content_id: linked_content_item.content_id,
           title: linked_content_item.title,
           internal_name: linked_content_item.internal_name,

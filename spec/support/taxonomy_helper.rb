@@ -32,9 +32,9 @@ module TaxonomyHelper
     root_taxon_expanded_links = {}
 
     stub_publishing_api_has_expanded_links({ content_id: root_content_id }, with_drafts: false)
-    stub_publishing_api_has_expanded_links(content_id: root_content_id, expanded_links: draft_level_one_taxons)
+    stub_publishing_api_has_expanded_links({ content_id: root_content_id, expanded_links: draft_level_one_taxons })
     stub_publishing_api_has_item(root_taxon_content)
-    stub_publishing_api_has_expanded_links(content_id: valid_taxon_uuid, expanded_links: root_taxon_expanded_links)
+    stub_publishing_api_has_expanded_links({ content_id: valid_taxon_uuid, expanded_links: root_taxon_expanded_links })
   end
 
   def stub_tag_content(content_id, success: true)

@@ -19,7 +19,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
       "root", other_fields: { base_path: "/level-one", content_id: "CONTENT-ID-PARENT" }
     )
     stub_publishing_api_has_item(parent_taxon)
-    stub_publishing_api_has_expanded_links(content_id: "CONTENT-ID-PARENT")
+    stub_publishing_api_has_expanded_links({ content_id: "CONTENT-ID-PARENT" })
   end
   let(:publish) { described_class.call(taxon: @taxon) }
 
