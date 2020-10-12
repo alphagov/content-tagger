@@ -1,9 +1,5 @@
-if ENV["USE_COVERAGE"]
-  require "simplecov"
-  require "simplecov-rcov"
-  SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-  SimpleCov.start "rails"
-end
+require "simplecov"
+SimpleCov.start "rails"
 
 ENV["RAILS_ENV"] = "test"
 ENV["GOVUK_APP_DOMAIN"] = "test.gov.uk"
