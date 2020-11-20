@@ -107,12 +107,11 @@ GEM
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     ffi (1.13.1)
-    gds-api-adapters (63.5.1)
+    gds-api-adapters (67.0.1)
       addressable
       link_header
       null_logger
       plek (>= 1.9.0)
-      rack-cache
       rest-client (~> 2.0)
     gds-sso (16.0.0)
       multi_json (~> 1.0)
