@@ -8,5 +8,8 @@ node {
     sassLint: false,
     publishingE2ETests: true,
     brakeman: true,
+    beforeTest: {
+      sh("yarn install")
+    },
   )
 }

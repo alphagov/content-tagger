@@ -14,3 +14,6 @@
 /coverage
 
 spec/examples.txt
+
+node_modules
+yarn-error.log
