@@ -66,17 +66,16 @@ $blue-link: rgb(0, 0, 238);
     display: flex;
     flex-direction: column-reverse;
     position: relative;
-    padding: 0.5rem;
+    padding: .5rem;
     border-bottom: 2px solid $gray;
 
     &:first-child {
-      padding: 0.5rem;
+      padding: .5rem;
       padding-left: 0;
-
     }
 
     &:last-child {
-      padding: 0.5rem;
+      padding: .5rem;
       padding-right: 0;
     }
   }
@@ -85,28 +84,27 @@ $blue-link: rgb(0, 0, 238);
     display: flex;
     flex-direction: column;
     position: relative;
-    padding: 0.5rem;
+    padding: .5rem;
     border-top: 2px solid $gray;
 
     &:first-child {
-      padding: 0.5rem;
+      padding: .5rem;
       padding-left: 0;
-
     }
 
     &:last-child {
-      padding: 0.5rem;
+      padding: .5rem;
       padding-right: 0;
     }
   }
 
   .parent-expansion .taxon-depth-1 {
     margin-bottom: 1.75rem;
-    margin-top: 0.5rem;
+    margin-top: .5rem;
   }
 
   .child-expansion .taxon-depth-1 {
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem;
     margin-top: 1.75rem;
   }
 
@@ -172,11 +170,11 @@ $blue-link: rgb(0, 0, 238);
       bottom: -1rem;
       color: transparent;
       content: ".";
-      left: -0.85rem;
+      left: -.85rem;
       overflow: hidden;
       position: absolute;
-      top: 0.5rem;
-      width: 0.5rem;
+      top: .5rem;
+      width: .5rem;
     }
 
     .child-expansion .taxon-depth-#{$i}:before {
@@ -185,11 +183,11 @@ $blue-link: rgb(0, 0, 238);
       bottom: 1rem;
       color: transparent;
       content: ".";
-      left: -0.85rem;
+      left: -.85rem;
       overflow: hidden;
       position: absolute;
       top: -1.2rem;
-      width: 0.5rem;
+      width: .5rem;
     }
   }
 }

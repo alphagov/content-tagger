@@ -43,11 +43,11 @@
 }
 
 .phase-label--alpha {
-  background-color: #D53880;
+  background-color: #d53880;
 }
 
 .phase-label--beta {
-  background-color: #F47738;
+  background-color: #f47738;
 }
 
 .phase-label--live {
@@ -55,19 +55,19 @@
 }
 
 .state-label--draft {
-  background-color: #FFBF47
+  background-color: #ffbf47;
 }
 
 .state-label--published {
   background-color: $brand-success;
 }
 
-.state-label--deleted  {
+.state-label--deleted {
   background-color: $gray-light;
 }
 
-.state-label--published_with_new_draft  {
-  background-color: #2B8CC4;
+.state-label--published_with_new_draft {
+  background-color: #2b8cc4;
 }
 
 .field-with-error {

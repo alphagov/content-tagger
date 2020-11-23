@@ -11,15 +11,15 @@
     }
   }
 
-  .bulk-selectors .checkbox *  {
+  .bulk-selectors .checkbox * {
     display: none;
   }
 
   .content-list {
     .content-item {
-      padding: 20px 40px 25px 40px;
-      border: 1px solid #ccc;
-      border-width:1px 0 0 0;
+      padding: 20px 40px 25px;
+      border: 1px solid #cccccc;
+      border-width: 1px 0 0;
       float: left;
       clear: left;
       width: 100%;
@@ -56,7 +56,7 @@
       clear: left;
     }
 
-    .actions-inline>*{
+    .actions-inline > * {
       float: left;
     }
   }
@@ -64,7 +64,7 @@
   .bulk-tagger {
     form {
       padding: 20px;
-      background-color: #eee;
+      background-color: #eeeeee;
       margin-top: -21px;
 
       &.error-saving {
@@ -78,14 +78,14 @@
     }
 
     .nav.nav-tabs .active a {
-      background-color: #eee;
+      background-color: #eeeeee;
     }
   }
 }
 
 .flag-for-review {
   .add-left-border {
-    border-left: 5px solid #ccc;
+    border-left: 5px solid #cccccc;
     padding: 5px 0 10px 15px;
   }
 }
