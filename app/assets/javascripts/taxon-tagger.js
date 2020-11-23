@@ -1,3 +1,5 @@
+/* global Waypoint */
+
 (function (Modules) {
   'use strict'
 
@@ -55,10 +57,10 @@
       })
 
       // Contains all the content-item tagging forms
-      var $content_item_forms = $element.find(self.selectors.content_item_forms)
+      var $contentItemForms = $element.find(self.selectors.content_item_forms)
 
       // Individual content-item forms save on change
-      $content_item_forms.find('.select2').on(
+      $contentItemForms.find('.select2').on(
         'change',
         function (event) {
           $(this).parents('form').trigger('submit.rails')
@@ -66,7 +68,7 @@
       )
 
       // Ajax response handlers for individual content-item form submissions
-      $content_item_forms.on(
+      $contentItemForms.on(
         'ajax:success',
         function () {
           self.mark_form_as_successfully_updated($(this))
@@ -101,15 +103,15 @@
     start_bulk_tagger: function ($element) {
       var self = this
 
-      var $bulk_tagger_form = $element.find(self.selectors.bulk_tagger_form)
+      var $bulkTaggerForm = $element.find(self.selectors.bulk_tagger_form)
 
       // Ajax response handlers for bulk tag form submission
-      $bulk_tagger_form.on(
+      $bulkTaggerForm.on(
         'ajax:success',
         function (event, result) {
-          result.forEach(function (data_item) {
-            var $form = $("form[data-ref='" + data_item.content_id + "']")
-            self.mark_form_as_successfully_updated($form, data_item.taxons)
+          result.forEach(function (dataItem) {
+            var $form = $("form[data-ref='" + dataItem.content_id + "']")
+            self.mark_form_as_successfully_updated($form, dataItem.taxons)
           })
         }
       ).on(
@@ -120,35 +122,35 @@
       )
 
       // Contains all the content-item tagging forms
-      var $content_item_forms = $element.find(self.selectors.content_item_forms)
+      var $contentItemForms = $element.find(self.selectors.content_item_forms)
 
       // Aligns the content-item selection checkboxes
-      $content_item_forms.each(function (index, form) {
+      $contentItemForms.each(function (index, form) {
         var ref = $(form).attr('data-ref')
-        var top_pos = $(form).position().top - 80 + 'px'
-        $('.content-selector[value="' + ref + '"]').css('top', top_pos).css('display', 'inherit')
+        var topPos = $(form).position().top - 80 + 'px'
+        $('.content-selector[value="' + ref + '"]').css('top', topPos).css('display', 'inherit')
       })
 
       // Contains a reference to every content-item selector
-      var $content_item_checkboxes = $element.find(self.selectors.content_item_checkboxes)
+      var $contentItemCheckboxes = $element.find(self.selectors.content_item_checkboxes)
 
       // This is the display element for the count of selected items
-      var $selected_count = $element.find(self.selectors.selected_count)
+      var $selectedCount = $element.find(self.selectors.selected_count)
 
       // Select All toggle
       $element.find(self.selectors.select_all_toggle).on(
         'change',
         function () {
-          $content_item_checkboxes.prop('checked', this.checked)
-          self.update_selected_count($selected_count, $content_item_checkboxes)
+          $contentItemCheckboxes.prop('checked', this.checked)
+          self.update_selected_count($selectedCount, $contentItemCheckboxes)
         }
       )
 
       // Handler to keep track of changes to the count of selected items
-      $content_item_checkboxes.on(
+      $contentItemCheckboxes.on(
         'change',
         function () {
-          self.update_selected_count($selected_count, $content_item_checkboxes)
+          self.update_selected_count($selectedCount, $contentItemCheckboxes)
         }
       )
     },
@@ -167,27 +169,27 @@
     **/
     taxons_for_select2: function (taxons) {
       var self = this
-      var taxon_content_ids = Object.keys(taxons)
-      var root_content_id = taxon_content_ids.shift()
+      var taxonContentIds = Object.keys(taxons)
+      var rootContentId = taxonContentIds.shift()
 
-      return taxon_content_ids.reduce(function (acc, taxon_id) {
-        var ancestors = self.taxon_ancestors(taxon_id, taxons)
+      return taxonContentIds.reduce(function (acc, taxonId) {
+        var ancestors = self.taxon_ancestors(taxonId, taxons)
         ancestors.shift() // lose the first ancestor, it's common to all taxons
 
         acc.push({
-          id: taxon_id,
+          id: taxonId,
           text: ancestors.join(' > ')
         })
         return acc
       }, [{
-        id: root_content_id,
-        text: taxons[root_content_id].name
+        id: rootContentId,
+        text: taxons[rootContentId].name
       }])
     },
 
     // Returns the ancestors array of taxon names
-    taxon_ancestors: function (taxon_id, taxons) {
-      var taxon = taxons[taxon_id]
+    taxon_ancestors: function (taxonId, taxons) {
+      var taxon = taxons[taxonId]
 
       if (taxon.parent_id !== null) {
         return this.taxon_ancestors(taxon.parent_id, taxons).concat(taxon.name)
@@ -239,18 +241,18 @@
     },
 
     // Tally of the number of content-items selected for bulk-tagging
-    update_selected_count: function ($selected_count, $content_item_checkboxes) {
-      var count = this.count_of_selected_content_items($content_item_checkboxes)
-      if (count == 0) {
-        $selected_count.text('None')
+    update_selected_count: function ($selectedCount, $contentItemCheckboxes) {
+      var count = this.count_of_selected_content_items($contentItemCheckboxes)
+      if (count === 0) {
+        $selectedCount.text('None')
       } else {
-        $selected_count.text(count)
+        $selectedCount.text(count)
       }
     },
 
     // Given a $() of checkboxes, returns a count of the number of selected
-    count_of_selected_content_items: function ($content_item_checkboxes) {
-      var checkbox_to_scalar = function ($checkbox) {
+    count_of_selected_content_items: function ($contentItemCheckboxes) {
+      var checkboxToScalar = function ($checkbox) {
         return $checkbox.checked ? 1 : 0
       }
 
@@ -258,9 +260,9 @@
         return total + increment
       }
 
-      return $content_item_checkboxes
+      return $contentItemCheckboxes
         .toArray()
-        .map(checkbox_to_scalar)
+        .map(checkboxToScalar)
         .reduce(sum, 0)
     }
   }

@@ -8,7 +8,7 @@
       var selectAll = element.find('#select_all')
 
       function selectAllListener () {
-        if (selectAll != undefined) {
+        if (selectAll !== undefined) {
           selectAll.on('change', function (e) {
             var checkBoxes = $('.select-content-item:visible')
             var checked = selectAll.prop('checked')

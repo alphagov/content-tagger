@@ -15,7 +15,7 @@
       "jquery": true
     },
     "globals": [
-      "GOVUK"
+      "GOVUKAdmin"
     ]
   },
   "eslintConfig": {

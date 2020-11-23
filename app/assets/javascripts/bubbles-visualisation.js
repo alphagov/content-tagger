@@ -1,11 +1,6 @@
 (function (Modules, d3) {
   'use strict'
 
-  // Colours in RGB for the bubbles.
-  var highRGB = [247, 157, 0]
-  var lowRGB = [100, 243, 140]
-  var zeroRGB = [100, 243, 255]
-
   function initialiseSVG (svgElement, data) {
     var svg = d3.select(svgElement)
     var diameter = 1000 // This should be the width and height of the viewBox
@@ -71,9 +66,9 @@
     })
 
     nodes.attr('display', function (d) {
-      var size_in_bounds = ((d.data.size >= lowerSizeBound) &&
-                            (d.data.size < upperSizeBound))
-      return size_in_bounds ? 'block' : 'none'
+      var sizeInBounds = ((d.data.size >= lowerSizeBound) &&
+                          (d.data.size < upperSizeBound))
+      return sizeInBounds ? 'block' : 'none'
     })
   }
 

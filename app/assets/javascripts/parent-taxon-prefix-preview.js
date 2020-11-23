@@ -23,9 +23,9 @@
       }
 
       function updateBasePathPreview () {
-        getParentPathPrefix(function (path_prefix) {
-          if (path_prefix) {
-            $pathPrefixEl.html('Base path must start with <b>/' + path_prefix + '</b>')
+        getParentPathPrefix(function (pathPrefix) {
+          if (pathPrefix) {
+            $pathPrefixEl.html('Base path must start with <b>/' + pathPrefix + '</b>')
             $pathPrefixEl.removeClass('hidden')
           } else {
             $pathPrefixEl.addClass('hidden')
@@ -34,13 +34,13 @@
         })
       }
 
-      getParentPathPrefix(function (path_prefix) {
+      getParentPathPrefix(function (pathPrefix) {
         if ($taxonBasePathEl.val().length !== 0) {
           return
         }
 
-        if (path_prefix) {
-          $taxonBasePathEl.val('/' + path_prefix + '/')
+        if (pathPrefix) {
+          $taxonBasePathEl.val('/' + pathPrefix + '/')
         }
       })
 

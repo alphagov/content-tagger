@@ -54,7 +54,7 @@
       // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/regexp
       // Escape ~!@#$%^&*(){}[]`/=?+\|-_;:'",<.>
       function escapeStringForRegexp (str) {
-        return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')
+        return str.replace(/[-[\]/{}()*+?.^$|]/g, '\\$&')
       }
     }
   }

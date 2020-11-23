@@ -65,7 +65,7 @@
           $fieldErrors.hide()
         }
 
-        function onTagLookupError (error) {
+        function onTagLookupError (error) { // eslint-disable-line node/handle-callback-err
           $basePathInput.addClass('has-error')
           $fieldErrors.show()
         }
