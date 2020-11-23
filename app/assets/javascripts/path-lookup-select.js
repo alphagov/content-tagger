@@ -1,90 +1,90 @@
-(function(Modules) {
-  "use strict";
-  Modules.PathLookupSelect = function() {
-    var moduleEl, formFieldName;
+(function (Modules) {
+  'use strict'
+  Modules.PathLookupSelect = function () {
+    var moduleEl, formFieldName
 
-    this.start = function(element) {
-      moduleEl = element;
-      formFieldName = moduleEl.data('formFieldName');
+    this.start = function (element) {
+      moduleEl = element
+      formFieldName = moduleEl.data('formFieldName')
 
-      moduleEl.find("input[value='']").closest('li').remove();
+      moduleEl.find("input[value='']").closest('li').remove()
 
-      var $inputFields = moduleEl.find("input");
-      $inputFields.prop('readonly', true);
-      $inputFields.wrap('<div class="input-group"></div>');
-      $inputFields.after(buildRemoveRelaltedItemEl());
+      var $inputFields = moduleEl.find('input')
+      $inputFields.prop('readonly', true)
+      $inputFields.wrap('<div class="input-group"></div>')
+      $inputFields.after(buildRemoveRelaltedItemEl())
 
       moduleEl.append(buildAddRelatedItemEl())
     }
 
-    var buildRemoveRelaltedItemEl = function() {
-      var $buttonGroupEl = $('<span class="input-group-btn">');
-      var $buttonEl = $('<button class="btn btn-default" type="button">Remove</button>');
+    var buildRemoveRelaltedItemEl = function () {
+      var $buttonGroupEl = $('<span class="input-group-btn">')
+      var $buttonEl = $('<button class="btn btn-default" type="button">Remove</button>')
 
-      $buttonEl.on('click', function(e) {
-        $(this).closest('li').remove();
-      });
+      $buttonEl.on('click', function (e) {
+        $(this).closest('li').remove()
+      })
 
-      $buttonGroupEl.append($buttonEl);
-      return $buttonGroupEl;
+      $buttonGroupEl.append($buttonEl)
+      return $buttonGroupEl
     }
 
-    var buildAddRelatedItemEl = function() {
-      var $inputGroupEl = $('<div class="input-group">');
-      var $inputEl = $('<input type="text" class="form-control js-path-field" placeholder="URL or path">');
-      var $buttonGroupEl = $('<span class="input-group-btn"></span>');
+    var buildAddRelatedItemEl = function () {
+      var $inputGroupEl = $('<div class="input-group">')
+      var $inputEl = $('<input type="text" class="form-control js-path-field" placeholder="URL or path">')
+      var $buttonGroupEl = $('<span class="input-group-btn"></span>')
       var $buttonEl = $('<button class="btn btn-default" type="button">Add path</button>')
 
-      $inputEl.on('keypress', function(e) {
+      $inputEl.on('keypress', function (e) {
         if (e.keyCode == 13) { // Enter key
-          e.preventDefault();
-          if (this.value.length == 0) return;
-          lookupBasePath(this.value);
+          e.preventDefault()
+          if (this.value.length == 0) return
+          lookupBasePath(this.value)
         }
-      });
+      })
 
-      $buttonEl.on('click', function(e) {
-        var inputValue = moduleEl.find("input.js-path-field").val();
-        if (inputValue.length == 0) return;
-        lookupBasePath(inputValue);
-      });
+      $buttonEl.on('click', function (e) {
+        var inputValue = moduleEl.find('input.js-path-field').val()
+        if (inputValue.length == 0) return
+        lookupBasePath(inputValue)
+      })
 
-      $inputGroupEl.append($inputEl);
-      $buttonGroupEl.append($buttonEl);
-      $inputGroupEl.append($buttonGroupEl);
+      $inputGroupEl.append($inputEl)
+      $buttonGroupEl.append($buttonEl)
+      $inputGroupEl.append($buttonGroupEl)
 
-      return $inputGroupEl;
+      return $inputGroupEl
     }
 
-    var buildInputGroupEl = function(path) {
-      var $listItemEl = $('<li></li>');
-      var $inputGroupEl = $('<div class="input-group"></div>');
+    var buildInputGroupEl = function (path) {
+      var $listItemEl = $('<li></li>')
+      var $inputGroupEl = $('<div class="input-group"></div>')
       var $inputEl = $('<input />', {
         type: 'text',
         name: formFieldName,
         value: path,
         class: 'form-control',
         readonly: true
-      });
+      })
 
-      $listItemEl.append($inputGroupEl);
-      $inputGroupEl.append($inputEl);
-      $inputGroupEl.append(buildRemoveRelaltedItemEl());
+      $listItemEl.append($inputGroupEl)
+      $inputGroupEl.append($inputEl)
+      $inputGroupEl.append(buildRemoveRelaltedItemEl())
 
-      return $listItemEl;
+      return $listItemEl
     }
 
-    var lookupBasePath = function(path) {
-      $.getJSON("/taggings/lookup-urls?base_path=" + encodeURIComponent(path))
-        .done(function(contentId) {
-          moduleEl.find(".js-path-field").removeClass('field-with-error')
-          moduleEl.find(".js-add-path-error").addClass('hide')
-          moduleEl.find('ul.js-base-path-list').append(buildInputGroupEl(path));
-          moduleEl.find("input.js-path-field").val('');
-        }).fail(function(error) {
-          moduleEl.find(".js-add-path-error").removeClass('hide');
-          moduleEl.find(".js-path-field").addClass('field-with-error')
-        });
+    var lookupBasePath = function (path) {
+      $.getJSON('/taggings/lookup-urls?base_path=' + encodeURIComponent(path))
+        .done(function (contentId) {
+          moduleEl.find('.js-path-field').removeClass('field-with-error')
+          moduleEl.find('.js-add-path-error').addClass('hide')
+          moduleEl.find('ul.js-base-path-list').append(buildInputGroupEl(path))
+          moduleEl.find('input.js-path-field').val('')
+        }).fail(function (error) {
+          moduleEl.find('.js-add-path-error').removeClass('hide')
+          moduleEl.find('.js-path-field').addClass('field-with-error')
+        })
     }
-  };
-})(window.GOVUKAdmin.Modules);
+  }
+})(window.GOVUKAdmin.Modules)
