@@ -1,32 +1,31 @@
-(function(Modules) {
-  "use strict";
+/* global Cookies */
 
-  Modules.TagUpdateProgress= function() {
-    var that = this;
+(function (Modules) {
+  'use strict'
 
-    that.start = function(element) {
-      updateProgressBar();
+  Modules.TagUpdateProgress = function () {
+    var that = this
 
-      function updateProgressBar() {
-        var currentProgress = element.find('.progress-bar').attr("aria-valuenow");
-        var maxProgress = element.find('.progress-bar').attr("aria-valuemax");
+    that.start = function (element) {
+      updateProgressBar()
 
-        if ((maxProgress - currentProgress) != 0) {
-          Cookies.set('reloaded', "false", { path: window.location.pathname });
+      function updateProgressBar () {
+        var currentProgress = parseInt(element.find('.progress-bar').attr('aria-valuenow'), 10)
+        var maxProgress = parseInt(element.find('.progress-bar').attr('aria-valuemax'), 10)
 
-          var progressPath = element.find('.js-tag-update-progress').data('progress-path');
-          var updatedProgress = $.get(progressPath).done(
-            function(data) {
-              element.find('.js-tag-update-progress').replaceWith(data);
-              setTimeout(updateProgressBar, 2000);
-            }
-          );
-        }
-        else if ((maxProgress == currentProgress) && (Cookies.get('reloaded') == "false")) {
-          Cookies.set('reloaded', "true", { path: window.location.pathname });
+        if ((maxProgress - currentProgress) !== 0) {
+          Cookies.set('reloaded', 'false', { path: window.location.pathname })
+
+          var progressPath = element.find('.js-tag-update-progress').data('progress-path')
+          $.get(progressPath).done(function (data) {
+            element.find('.js-tag-update-progress').replaceWith(data)
+            setTimeout(updateProgressBar, 2000)
+          })
+        } else if ((maxProgress === currentProgress) && (Cookies.get('reloaded') === 'false')) {
+          Cookies.set('reloaded', 'true', { path: window.location.pathname })
           window.location.reload(true)
         }
       }
     }
-  };
-})(window.GOVUKAdmin.Modules);
+  }
+})(window.GOVUKAdmin.Modules)
