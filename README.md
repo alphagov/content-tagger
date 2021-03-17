@@ -6,34 +6,16 @@ bulk.
 
 ## Technical documentation
 
-This is a Ruby on Rails application. It stores some data in a
-PostgreSQL database, but for managing taxons and tagging content, it
-interacts with the Publishing API.
+This is a Ruby on Rails app, and should follow [our Rails app conventions](https://docs.publishing.service.gov.uk/manual/conventions-for-rails-applications.html).
 
-### Permissions
+You can use the [GOV.UK Docker environment](https://github.com/alphagov/govuk-docker) to run the application and its tests with all the necessary dependencies. Follow [the usage instructions](https://github.com/alphagov/govuk-docker#usage) to get started.
 
-Users need to have either the `GDS Editor` or the `Tagathon
-participant` permission to access this application.
-
- - **GDS Editor** users will have full unrestricted access to the
-   GOV.UK taxonomy and navigation tools
- - **Tagathon participant** users have restricted access to the
-   Tagathon Project bulk tagger and analytics tools
-
-### Running the application locally
-
-For the purposes of local development, it's easiest to run this in a
-Rails console locally to give yourself admin access to the
-application.
-
-```
-User.first.update permissions: ["signin", "GDS Editor"]
-```
+**Use GOV.UK Docker to run any commands that follow.**
 
 ### Running the test suite
 
 ```
-$ bundle exec rspec
+bundle exec rake
 ```
 
 ## Features
