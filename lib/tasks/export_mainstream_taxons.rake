@@ -6,6 +6,7 @@ namespace :govuk do
       answer
       guide
       simple_smart_answer
+      smart_answer
       transaction
       completed_transaction
       travel_advice_index
