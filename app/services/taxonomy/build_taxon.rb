@@ -26,6 +26,7 @@ module Taxonomy
         phase: content_item["phase"],
         internal_name: content_item["details"]["internal_name"],
         notes_for_editors: content_item["details"]["notes_for_editors"],
+        url_override: content_item["details"]["url_override"],
         parent_content_id: parent,
         associated_taxons: links.dig("associated_taxons"),
         legacy_taxons: legacy_taxon_paths,

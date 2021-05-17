@@ -25,6 +25,7 @@ RSpec.describe Taxonomy::BuildTaxon do
           internal_name: "Internal name",
           notes_for_editors: "Notes for editors",
           visible_to_departmental_editors: true,
+          url_override: "",
         },
       }
     end
@@ -79,6 +80,10 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     it "assigns the notes_for_editors correctly" do
       expect(taxon.notes_for_editors).to eq("Notes for editors")
+    end
+
+    it "assigns the url_override correctly" do
+      expect(taxon.url_override).to eq("")
     end
 
     it "assigns the visible_to_departmental_editors flag correctly" do

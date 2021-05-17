@@ -12,7 +12,7 @@ class Taxon
     :redirect_to,
     :associated_taxons,
   )
-  attr_writer :content_id, :notes_for_editors, :internal_name
+  attr_writer :content_id, :notes_for_editors, :internal_name, :url_override
   attr_reader :base_path, :path_prefix, :path_slug, :legacy_taxons
 
   include ActiveModel::Model
@@ -20,6 +20,7 @@ class Taxon
   validates :title, :internal_name, :base_path, presence: true
   validates_with CircularDependencyValidator
   validates :base_path, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/highest-level-taxon-name/taxon-name'" }
+  validates :url_override, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/prefix/slug'" }, allow_blank: true
   validates_with TaxonPathPrefixValidator
 
   def draft?
@@ -85,6 +86,10 @@ class Taxon
 
   def notes_for_editors
     @notes_for_editors || ""
+  end
+
+  def url_override
+    @url_override || ""
   end
 
   # Lets talk about this.
