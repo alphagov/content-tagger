@@ -201,6 +201,7 @@ private
     params.fetch(:taxon, {}).permit(
       :content_id,
       :base_path,
+      :url_override,
       :internal_name,
       :title,
       :description,

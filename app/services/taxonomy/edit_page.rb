@@ -19,5 +19,9 @@ module Taxonomy
     def show_visibilty_checkbox?
       taxon.parent_content_id == GovukTaxonomy::ROOT_CONTENT_ID
     end
+
+    def show_url_override_field?
+      true
+    end
   end
 end

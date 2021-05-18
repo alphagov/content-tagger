@@ -108,6 +108,8 @@ en:
       visible_to_departmental_editors_hint: 'Affects the visiblity of level one taxons only'
       associated_taxons: Associated taxons
       metadata: Taxon metadata
+      url_override: 'Override URL'
+      url_override_hint: 'Set a custom URL to overide the default base path'
     projects:
       flags:
         help-needed: 'Flagged: needs publisher review'

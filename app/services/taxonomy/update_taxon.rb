@@ -3,6 +3,7 @@ module Taxonomy
     include TransitionTaxon
 
     attr_reader :taxon
+
     delegate :content_id, :parent_content_id, :associated_taxons, :legacy_taxons, to: :taxon
 
     class InvalidTaxonError < StandardError; end

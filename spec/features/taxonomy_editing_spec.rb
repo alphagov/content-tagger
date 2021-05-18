@@ -80,6 +80,19 @@ RSpec.feature "Taxonomy editing" do
       )
       .to_return(status: 200, body: {}.to_json)
 
+    @create_item_with_url_override = stub_request(:put, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .with(
+        body: hash_including(
+          details: {
+            internal_name: "Newly created taxon",
+            notes_for_editors: "Some usage notes for this taxon.",
+            url_override: "/overide-url",
+            visible_to_departmental_editors: false,
+          },
+        ),
+      )
+        .to_return(status: 200, body: {}.to_json)
+
     @create_links = stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links*})
       .to_return(status: 200, body: {}.to_json)
 
@@ -121,6 +134,16 @@ RSpec.feature "Taxonomy editing" do
     and_i_select_associated_taxons
     and_i_submit_the_create_form
     then_a_taxon_with_associated_taxons_is_created
+  end
+
+  scenario "User creates a taxon with an override url" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_the_new_taxon_button
+    and_i_set_taxon_details
+    and_i_set_an_url_override
+    and_i_submit_the_taxon_with_with_an_url_override
+    then_a_taxon_with_an_url_override_is_created
   end
 
   scenario "User creates a taxon without a parent" do
@@ -283,6 +306,10 @@ RSpec.feature "Taxonomy editing" do
     fill_in :taxon_base_path, with: "/education/newly-created-taxon"
   end
 
+  def and_i_set_an_url_override
+    fill_in :taxon_url_override, with: "/overide-url"
+  end
+
   def and_i_select_associated_taxons
     select @taxon2[:title], from: "taxon_associated_taxons"
     select @taxon3[:title], from: "taxon_associated_taxons"
@@ -361,6 +388,37 @@ RSpec.feature "Taxonomy editing" do
     click_on I18n.t("views.taxons.new_button")
   end
 
+  def and_i_submit_the_taxon_with_with_an_url_override
+    # Before the taxon is created, we compare the old attributes with the new,
+    # to create a diff. In this instance, a previous version does not exist.
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content*})
+      .to_return(status: 404)
+    # After the taxon is created we'll be redirected to the taxon's "view" page
+    # which needs a bunch of API calls stubbed.
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/content/*})
+      .to_return(body: {
+        base_path: "/education/newly-created-taxon",
+        content_id: "ID-4",
+        document_type: "taxon",
+        details: { url_override: "/url_override" },
+        publication_state: "published",
+        phase: "live",
+        title: "Newly created taxon",
+        state_history: {
+          "1" => "published",
+        },
+      }.to_json)
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/links/*})
+      .to_return(body: {}.to_json)
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/expanded-links/*})
+      .to_return(body: { expanded_links: {} }.to_json)
+    stub_request(:get, %r{https://publishing-api.test.gov.uk/v2/linked/*})
+      .to_return(body: {}.to_json)
+    stub_email_requests_for_show_page
+
+    click_on I18n.t("views.taxons.new_button")
+  end
+
   def and_i_submit_the_taxon_with_a_taxon_with_semantic_issues_from_the_publishing_api
     fill_in :taxon_title, with: "My Taxon"
     fill_in :taxon_description, with: "Description of my taxon."
@@ -418,6 +476,12 @@ RSpec.feature "Taxonomy editing" do
   def then_a_taxon_with_associated_taxons_is_created
     expect(@create_item).to have_been_requested
     expect(@create_links_with_associated_taxons).to have_been_requested
+    expect(page).to have_content I18n.t("controllers.taxons.create_success")
+  end
+
+  def then_a_taxon_with_an_url_override_is_created
+    expect(@create_item).to have_been_requested
+    expect(@create_item_with_url_override).to have_been_requested
     expect(page).to have_content I18n.t("controllers.taxons.create_success")
   end
 
