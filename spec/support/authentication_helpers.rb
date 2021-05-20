@@ -25,8 +25,16 @@ module AuthenticationFeatureHelpers
     @stub_user ||= FactoryBot.create(:user, :gds_editor)
   end
 
+  def unreleased_feature_editor
+    @unreleased_feature_editor ||= FactoryBot.create(:user, :unreleased_feature_editor)
+  end
+
   def login_as_stub_user
     login_as stub_user
+  end
+
+  def login_as_unreleased_feature_editor
+    login_as unreleased_feature_editor
   end
 end
 
@@ -39,6 +47,10 @@ RSpec.configure do |config|
   config.include AuthenticationFeatureHelpers, type: :feature
   config.before(:each, type: :feature) do
     login_as_stub_user
+  end
+
+  config.before(:example, type: :unreleased_feature) do
+    login_as_unreleased_feature_editor
   end
 
   config.include AuthenticationFeatureHelpers, type: :request

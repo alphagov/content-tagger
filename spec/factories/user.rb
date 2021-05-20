@@ -15,5 +15,9 @@ FactoryBot.define do
     trait :tagathon_participant do
       permissions { ["signin", "Tagathon participant"] }
     end
+
+    trait :unreleased_feature_editor do
+      permissions { ["signin", "GDS Editor", "Unreleased feature"] }
+    end
   end
 end
