@@ -21,7 +21,7 @@ class TaxonsController < ApplicationController
   end
 
   def new
-    render :new, locals: { page: Taxonomy::EditPage.new(Taxon.new(taxon_params)) }
+    render :new, locals: { page: Taxonomy::EditPage.new(Taxon.new(taxon_params), url_override_permission) }
   end
 
   def create
@@ -33,11 +33,11 @@ class TaxonsController < ApplicationController
     else
       error_messages = taxon.errors.full_messages.join("; ")
       flash.now[:danger] = error_messages
-      render :new, locals: { page: Taxonomy::EditPage.new(taxon) }
+      render :new, locals: { page: Taxonomy::EditPage.new(taxon, url_override_permission) }
     end
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     flash.now[:danger] = e.message
-    render :new, locals: { page: Taxonomy::EditPage.new(taxon) }
+    render :new, locals: { page: Taxonomy::EditPage.new(taxon, url_override_permission) }
   end
 
   def show
@@ -67,7 +67,7 @@ class TaxonsController < ApplicationController
   end
 
   def edit
-    render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
+    render :edit, locals: { page: Taxonomy::EditPage.new(taxon, url_override_permission) }
   end
 
   def update
@@ -80,11 +80,11 @@ class TaxonsController < ApplicationController
     else
       error_messages = taxon.errors.full_messages.join("; ")
       flash.now[:danger] = error_messages
-      render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
+      render :edit, locals: { page: Taxonomy::EditPage.new(taxon, url_override_permission) }
     end
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     flash.now[:danger] = e.message
-    render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
+    render :edit, locals: { page: Taxonomy::EditPage.new(taxon, url_override_permission) }
   end
 
   def destroy
@@ -167,7 +167,7 @@ class TaxonsController < ApplicationController
       flash.now[:danger] = I18n.t("errors.invalid_taxon")
     end
 
-    render :edit, locals: { page: Taxonomy::EditPage.new(taxon) }
+    render :edit, locals: { page: Taxonomy::EditPage.new(taxon, url_override_permission) }
   end
 
   def confirm_discard
@@ -220,6 +220,10 @@ private
 
   def taxon
     @taxon ||= Taxonomy::BuildTaxon.call(content_id: content_id)
+  end
+
+  def url_override_permission
+    user_can_override_taxon_url?
   end
 
   helper_method :visualisation_to_render

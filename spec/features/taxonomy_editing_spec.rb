@@ -136,7 +136,7 @@ RSpec.feature "Taxonomy editing" do
     then_a_taxon_with_associated_taxons_is_created
   end
 
-  scenario "User creates a taxon with an override url" do
+  scenario "User with unreleased_feature_editor permissions creates taxon with override url", type: :unreleased_feature do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
