@@ -9,7 +9,7 @@ module Taxonomy
 
     def call
       if @parent_taxon_id == GovukTaxonomy::ROOT_CONTENT_ID
-        Services.publishing_api.patch_links(
+        Services.publishing_api_with_long_timeout.patch_links(
           @content_id,
           links: {
             root_taxon: Array(@parent_taxon_id),
@@ -20,7 +20,7 @@ module Taxonomy
         )
 
       else
-        Services.publishing_api.patch_links(
+        Services.publishing_api_with_long_timeout.patch_links(
           @content_id,
           links: {
             root_taxon: [],
