@@ -73,7 +73,7 @@ RSpec.describe Taxon do
       expect(valid_taxon).to be_valid
       expect(invalid_taxon).to_not be_valid
       expect(invalid_taxon.errors[:url_override]).to include(
-        "must be in the format '/prefix/slug'",
+        "must be in the format '/prefix/slug' or '/slug'",
       )
     end
   end

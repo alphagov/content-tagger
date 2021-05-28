@@ -20,7 +20,7 @@ class Taxon
   validates :title, :internal_name, :base_path, presence: true
   validates_with CircularDependencyValidator
   validates :base_path, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/highest-level-taxon-name/taxon-name'" }
-  validates :url_override, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/prefix/slug'" }, allow_blank: true
+  validates :url_override, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/prefix/slug' or '/slug'" }, allow_blank: true
   validates_with TaxonPathPrefixValidator
 
   def draft?
