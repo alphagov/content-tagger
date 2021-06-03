@@ -6,6 +6,7 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
       Taxon,
       title: "My Title",
       base_path: "/taxons/my-taxon",
+      url_override: "/taxons-are-fun",
       description: "This is a taxon.",
       internal_name: "Internal title",
       notes_for_editors: "Use this taxon wisely.",

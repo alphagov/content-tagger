@@ -21,6 +21,7 @@ module Taxonomy
         details: {
           internal_name: internal_name,
           notes_for_editors: notes_for_editors,
+          url_override: url_override,
           visible_to_departmental_editors: visible_to_departmental_editors,
         },
         routes: [
@@ -41,12 +42,14 @@ module Taxonomy
     end
 
     attr_reader :taxon
+
     delegate(
       :base_path,
       :title,
       :description,
       :internal_name,
       :notes_for_editors,
+      :url_override,
       :phase,
       :visible_to_departmental_editors,
       to: :taxon,

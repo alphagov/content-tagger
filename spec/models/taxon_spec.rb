@@ -46,6 +46,38 @@ RSpec.describe Taxon do
     end
   end
 
+  context "without url_override set" do
+    it "returns an empty string to comply with the schema definition" do
+      taxon = described_class.new
+
+      expect(taxon.url_override).to eq("")
+    end
+  end
+
+  context "with url_override set" do
+    it "must have the correct format" do
+      valid_taxon = described_class.new(
+        title: "Title",
+        description: "Description",
+        base_path: "/education",
+        url_override: "/guidance/education-is-fun",
+      )
+
+      invalid_taxon = described_class.new(
+        title: "Title",
+        description: "Description",
+        base_path: "/education",
+        url_override: "education-is-b@d!",
+      )
+
+      expect(valid_taxon).to be_valid
+      expect(invalid_taxon).to_not be_valid
+      expect(invalid_taxon.errors[:url_override]).to include(
+        "must be in the format '/prefix/slug' or '/slug'",
+      )
+    end
+  end
+
   it "must have a base path with at most two segments" do
     level_one_taxon = described_class.new(
       title: "Title",

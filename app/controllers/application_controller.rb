@@ -28,11 +28,13 @@ private
     :user_can_administer_taxonomy?,
     :user_can_manage_taxonomy?,
     :user_can_access_tagathon_tools?,
+    :user_can_override_taxon_url?,
   )
 
   delegate :user_can_administer_taxonomy?,
            :user_can_manage_taxonomy?,
            :user_can_access_tagathon_tools?,
+           :user_can_override_taxon_url?,
            to: :permission_checker
 
   def ensure_user_can_administer_taxonomy!

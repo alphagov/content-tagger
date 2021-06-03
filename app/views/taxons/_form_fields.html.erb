@@ -2,6 +2,16 @@
   <%= f.input :parent_content_id, collection: page.taxons_for_select, label: 'Parent',
     input_html: { class: 'js-parent-taxon form-control', include_blank: true } %>
 
+  <% if page.show_url_override_input_field? %>
+    <%= f.input :url_override, input_html: { class: 'form-control' },
+      label: I18n.t('views.taxons.url_override'),
+      hint: I18n.t('views.taxons.url_override_hint') %>
+  <% end %>
+  <% if page.show_url_override? %>
+    <label>URL override</label>
+    <p class="help-block"><%= page.url_override %></p>
+  <% end %>
+
   <%= f.input :base_path, input_html: { class: 'form-control' },
     placeholder: 'e.g. /highest-level-taxon-name/taxon-name' %>
 

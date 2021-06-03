@@ -2,6 +2,7 @@ class PermissionChecker
   GDS_EDITOR_PERMISSION = "GDS Editor".freeze
   TAGATHON_PARTICIPANT_PERMISSION = "Tagathon participant".freeze
   MANAGING_EDITOR_PERMISSION = "Managing Editor".freeze
+  UNRELEASED_FEATURE_PERMISSION = "Unreleased feature".freeze
 
   def initialize(user)
     @user = user
@@ -19,6 +20,10 @@ class PermissionChecker
     gds_editor? || managing_editor? || tagathon_participant?
   end
 
+  def user_can_override_taxon_url?
+    user_can_administer_taxonomy? && unreleased_feature_editor?
+  end
+
 private
 
   attr_reader :user
@@ -33,5 +38,9 @@ private
 
   def tagathon_participant?
     user.has_permission?(TAGATHON_PARTICIPANT_PERMISSION)
+  end
+
+  def unreleased_feature_editor?
+    user.has_permission?(UNRELEASED_FEATURE_PERMISSION)
   end
 end
