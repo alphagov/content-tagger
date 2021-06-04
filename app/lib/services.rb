@@ -12,10 +12,8 @@ module Services
   end
 
   def self.publishing_api_with_long_timeout
-    @publishing_api_with_long_timeout ||= begin
-      publishing_api.dup.tap do |client|
-        client.options[:timeout] = 15
-      end
+    @publishing_api_with_long_timeout ||= publishing_api.dup.tap do |client|
+      client.options[:timeout] = 15
     end
   end
 

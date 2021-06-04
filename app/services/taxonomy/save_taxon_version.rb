@@ -31,17 +31,15 @@ module Taxonomy
     end
 
     def taxon_changes
-      @taxon_changes ||= begin
-        TaxonDiffBuilder.new(previous_item: previous_taxon, current_item: taxon).diff
-      end
+      @taxon_changes ||= TaxonDiffBuilder.new(previous_item: previous_taxon, current_item: taxon).diff
     end
 
     def previous_taxon
       @previous_taxon ||= begin
-                            Taxonomy::BuildTaxon.call(content_id: content_id)
-                          rescue Taxonomy::BuildTaxon::TaxonNotFoundError
-                            nil
-                          end
+        Taxonomy::BuildTaxon.call(content_id: content_id)
+      rescue Taxonomy::BuildTaxon::TaxonNotFoundError
+        nil
+      end
     end
   end
 end

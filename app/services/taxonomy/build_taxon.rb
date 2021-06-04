@@ -59,12 +59,10 @@ module Taxonomy
     end
 
     def expanded_links
-      @expanded_links ||= begin
-        Services.publishing_api
+      @expanded_links ||= Services.publishing_api
           .get_expanded_links(content_id)
           .to_h
           .fetch("expanded_links", {})
-      end
     end
 
     def legacy_taxon_paths
