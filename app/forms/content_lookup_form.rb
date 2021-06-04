@@ -1,5 +1,6 @@
 class ContentLookupForm
   attr_accessor :base_path
+
   include ActiveModel::Model
 
   validates_presence_of :base_path

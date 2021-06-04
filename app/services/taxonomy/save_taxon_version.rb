@@ -23,6 +23,7 @@ module Taxonomy
   private
 
     attr_reader :version_note, :taxon
+
     delegate :content_id, to: :taxon
 
     def no_change_to_record
