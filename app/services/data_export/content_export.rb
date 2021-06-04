@@ -80,10 +80,10 @@ module DataExport
 
       # Skip this if we don't get back the content we expect, e.g. if
       # the Content Store has redirected the request
-      return {} if hash.dig("base_path") != base_path
+      return {} if hash["base_path"] != base_path
 
       # Skip anything without a content_id
-      return {} if hash.dig("content_id").nil?
+      return {} if hash["content_id"].nil?
 
       base = hash.slice(*base_fields)
       taxons = hash.dig("links", "taxons")
