@@ -3,6 +3,7 @@ module Taxonomy
     attr_reader :content_id
 
     class TaxonNotFoundError < StandardError; end
+
     class DocumentTypeError < StandardError; end
 
     def initialize(content_id:)
