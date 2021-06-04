@@ -35,11 +35,12 @@ module Tagging
   private
 
     def fetch_content_ids(tag_type)
-      if tag_type == :ordered_related_items
+      case tag_type
+      when :ordered_related_items
         related_content_items.map(&:content_id)
-      elsif tag_type == :ordered_related_items_overrides
+      when :ordered_related_items_overrides
         related_content_items_overrides.map(&:content_id)
-      elsif tag_type == :suggested_ordered_related_items
+      when :suggested_ordered_related_items
         suggested_related_content_items.map(&:content_id)
       else
         clean_input_array(params[tag_type])
