@@ -1,8 +1,6 @@
 module BulkTagging
   class QueueLinksForPublishing
-    attr_reader :tagging_source
-    attr_reader :tag_mappings
-    attr_reader :user
+    attr_reader :tagging_source, :tag_mappings, :user
 
     def self.call(tagging_source, user:)
       new(tagging_source, user: user).call

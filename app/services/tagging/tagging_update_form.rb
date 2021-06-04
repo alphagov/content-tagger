@@ -2,12 +2,12 @@ module Tagging
   # ActiveModel-compliant object that is passed into the tagging form.
   class TaggingUpdateForm
     include ActiveModel::Model
-    attr_accessor :content_item, :previous_version, :links, :related_item_errors
-
-    delegate :content_id, :allowed_tag_types, to: :content_item
 
     TAG_TYPES = ContentItemExpandedLinks::TAG_TYPES
-    attr_accessor(*TAG_TYPES)
+
+    attr_accessor :content_item, :previous_version, :links, :related_item_errors, *TAG_TYPES
+
+    delegate :content_id, :allowed_tag_types, to: :content_item
 
     def self.from_content_item(content_item)
       links = content_item.link_set

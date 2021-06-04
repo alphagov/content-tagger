@@ -2,8 +2,7 @@
 # publishing-api.
 module Tagging
   class TaggingUpdatePublisher
-    attr_reader :content_item, :params
-    attr_reader :related_item_errors, :related_item_overrides_errors, :suggested_related_item_errors
+    attr_reader :content_item, :params, :related_item_errors, :related_item_overrides_errors, :suggested_related_item_errors
 
     def initialize(content_item, params)
       @content_item = content_item
