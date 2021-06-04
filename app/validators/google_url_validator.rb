@@ -16,7 +16,7 @@ private
   end
 
   def validate_path(uri, record)
-    return if uri.path.match?(%r{spreadsheets\/d\/.+\/pub})
+    return if uri.path.match?(%r{spreadsheets/d/.+/pub})
 
     record.errors[:url] << I18n.t("errors.invalid_path")
   end
