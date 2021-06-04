@@ -1,6 +1,4 @@
 require "rails_helper"
-
-require "rails_helper"
 require "gds_api/test_helpers/content_store"
 
 RSpec.describe Metrics::ContentDistributionMetrics do
