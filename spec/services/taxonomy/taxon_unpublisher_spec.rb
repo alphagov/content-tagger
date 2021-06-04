@@ -82,7 +82,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
 
       it "does not retag content" do
         patch_request = stub_any_publishing_api_patch_links
-        unpublish(taxon_content_id, redirect_content_id, false)
+        unpublish(taxon_content_id, redirect_content_id, retag: false)
         expect(patch_request).to_not have_been_made
       end
     end
@@ -103,7 +103,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     end
   end
 
-  def unpublish(taxon_content_id, redirect_to_content_id, retag = true)
+  def unpublish(taxon_content_id, redirect_to_content_id, retag: true)
     Sidekiq::Testing.inline! do
       Taxonomy::TaxonUnpublisher.call(taxon_content_id: taxon_content_id, redirect_to_content_id: redirect_to_content_id, user: User.new, retag: retag)
     end
