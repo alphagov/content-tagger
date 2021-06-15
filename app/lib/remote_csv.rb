@@ -29,6 +29,6 @@ private
   end
 
   def response
-    Net::HTTP.get_response(URI(@csv_url))
+    RestClient.get @csv_url
   end
 end

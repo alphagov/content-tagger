@@ -15,13 +15,12 @@ module BulkTagging
     end
 
     def call
-      unless valid_response?
-        GovukError.notify(RuntimeError.new(response.body))
-        return [spreadsheet_download_error]
-      end
-
+      response
       process_spreadsheet
       errors
+    rescue RestClient::Exception => e
+      GovukError.notify(e)
+      [spreadsheet_download_error]
     end
 
   private
@@ -57,12 +56,8 @@ module BulkTagging
       I18n.t("errors.spreadsheet_download_error")
     end
 
-    def valid_response?
-      response.code == "200"
-    end
-
     def response
-      @response ||= Net::HTTP.get_response(URI(tagging_spreadsheet.url))
+      @response ||= RestClient.get tagging_spreadsheet.url
     end
 
     def sheet_data

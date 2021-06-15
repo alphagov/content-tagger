@@ -26,14 +26,14 @@ RSpec.describe RemoteCsv, "#rows_with_headers" do
 
   it "raises an error when the URI is invalid" do
     expect { RemoteCsv.new("not a URL").rows_with_headers }
-      .to raise_error RemoteCsv::ParsingError, 'URI::InvalidURIError: bad URI(is not URI?): "not a URL"'
+      .to raise_error RemoteCsv::ParsingError, 'URI::InvalidURIError: bad URI(is not URI?): "http://not a URL"'
   end
 
   it "raises an error when the connection failed" do
     stub_request(:get, csv_url).to_timeout
 
     expect { RemoteCsv.new(csv_url).rows_with_headers }
-      .to raise_error RemoteCsv::ParsingError, "Net::OpenTimeout: execution expired"
+      .to raise_error RemoteCsv::ParsingError, "RestClient::Exceptions::OpenTimeout: Timed out connecting to server"
   end
 
   it "raises an error when the CSV is malformed" do
