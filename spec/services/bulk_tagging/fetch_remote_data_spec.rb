@@ -5,19 +5,12 @@ module BulkTagging
     include GoogleSheetHelper
 
     describe ".call" do
-      let(:url) { URI(tagging_spreadsheet.url) }
+      let(:url) { tagging_spreadsheet.url }
       let(:tagging_spreadsheet) { create(:tagging_spreadsheet) }
 
       context "with a valid response" do
         before do
-          good_response = double(code: "200", body: google_sheet_fixture)
-          allow(Net::HTTP).to receive(:get_response).with(url).and_return(good_response)
-        end
-
-        it "retrieves data from the tagging spreadsheet URL" do
-          expect(Net::HTTP).to receive(:get_response).with(url)
-
-          FetchRemoteData.call(tagging_spreadsheet)
+          stub_request(:get, url).to_return(body: google_sheet_fixture, status: 200)
         end
 
         it "creates tag mappings based on the retrieved data" do
@@ -38,8 +31,7 @@ module BulkTagging
               ),
             ],
           )
-          response = double("DodgyResponse", code: "200", body: dodgy_spreadsheet_data)
-          allow(Net::HTTP).to receive(:get_response).with(url).and_return(response)
+          stub_request(:get, url).to_return(body: dodgy_spreadsheet_data, status: 200)
 
           FetchRemoteData.new(tagging_spreadsheet).call
 
@@ -66,8 +58,7 @@ module BulkTagging
             ],
           )
 
-          good_response = double(code: "200", body: google_sheet_data)
-          allow(Net::HTTP).to receive(:get_response).with(url).and_return(good_response)
+          stub_request(:get, url).to_return(body: google_sheet_data, status: 200)
         end
 
         it "saves each record per row" do
@@ -80,8 +71,7 @@ module BulkTagging
 
       context "with an invalid response" do
         before do
-          bad_response = double(code: "400", body: "<html>a long page</html>")
-          allow(Net::HTTP).to receive(:get_response).with(url).and_return(bad_response)
+          stub_request(:get, url).to_return(body: "<html>a long page</html>", status: 400)
         end
 
         it "does not create any taggings" do
