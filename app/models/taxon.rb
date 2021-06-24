@@ -1,5 +1,7 @@
 class Taxon
-  PATH_COMPONENTS_REGEX = %r{\A\/(?<prefix>[A-z0-9\-]+)(\/(?<slug>[A-z0-9\-]+))?\z}.freeze
+  # rubocop:disable Lint/MixedRegexpCaptureTypes
+  PATH_COMPONENTS_REGEX = %r{\A/(?<prefix>[A-z0-9\-]+)(/(?<slug>[A-z0-9\-]+))?\z}.freeze
+  # rubocop:enable Lint/MixedRegexpCaptureTypes
 
   attr_accessor(
     :title,

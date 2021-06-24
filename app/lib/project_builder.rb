@@ -30,6 +30,7 @@ class ProjectBuilder
     attr_accessor :conflicting_items_urls
 
     def initialize(urls)
+      super(message)
       @conflicting_items_urls = urls.pluck(:url)
     end
 

@@ -1,3 +1,9 @@
+class ProxyAccessContraint
+  def matches?(request)
+    !request.env["warden"].try(:user).nil?
+  end
+end
+
 Rails.application.routes.draw do
   root to: "application#redirect_to_home_page"
 
@@ -82,12 +88,6 @@ Rails.application.routes.draw do
 
     require "sidekiq/web"
     mount Sidekiq::Web => "/sidekiq"
-  end
-
-  class ProxyAccessContraint
-    def matches?(request)
-      !request.env["warden"].try(:user).nil?
-    end
   end
 
   mount Proxies::IframeAllowingProxy.new => Proxies::IframeAllowingProxy::PROXY_BASE_PATH, constraints: ProxyAccessContraint.new

@@ -7,7 +7,7 @@ class TaxonomiesController < ApplicationController
       format.csv do
         send_data(
           Taxonomy::CsvTreePresenter.new(taxonomy.child_expansion).present,
-          filename: taxonomy.root_node.title + ".csv",
+          filename: "#{taxonomy.root_node.title}.csv",
         )
       end
     end

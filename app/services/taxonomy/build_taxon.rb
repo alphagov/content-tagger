@@ -3,6 +3,7 @@ module Taxonomy
     attr_reader :content_id
 
     class TaxonNotFoundError < StandardError; end
+
     class DocumentTypeError < StandardError; end
 
     def initialize(content_id:)
@@ -28,7 +29,7 @@ module Taxonomy
         notes_for_editors: content_item["details"]["notes_for_editors"],
         url_override: content_item["details"]["url_override"],
         parent_content_id: parent,
-        associated_taxons: links.dig("associated_taxons"),
+        associated_taxons: links["associated_taxons"],
         legacy_taxons: legacy_taxon_paths,
         redirect_to: content_item.dig("unpublishing", "alternative_path"),
         visible_to_departmental_editors: content_item.dig("details", "visible_to_departmental_editors"),
@@ -58,12 +59,10 @@ module Taxonomy
     end
 
     def expanded_links
-      @expanded_links ||= begin
-        Services.publishing_api
+      @expanded_links ||= Services.publishing_api
           .get_expanded_links(content_id)
           .to_h
           .fetch("expanded_links", {})
-      end
     end
 
     def legacy_taxon_paths

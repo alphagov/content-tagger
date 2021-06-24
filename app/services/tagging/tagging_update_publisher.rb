@@ -2,8 +2,7 @@
 # publishing-api.
 module Tagging
   class TaggingUpdatePublisher
-    attr_reader :content_item, :params
-    attr_reader :related_item_errors, :related_item_overrides_errors, :suggested_related_item_errors
+    attr_reader :content_item, :params, :related_item_errors, :related_item_overrides_errors, :suggested_related_item_errors
 
     def initialize(content_item, params)
       @content_item = content_item
@@ -36,11 +35,12 @@ module Tagging
   private
 
     def fetch_content_ids(tag_type)
-      if tag_type == :ordered_related_items
+      case tag_type
+      when :ordered_related_items
         related_content_items.map(&:content_id)
-      elsif tag_type == :ordered_related_items_overrides
+      when :ordered_related_items_overrides
         related_content_items_overrides.map(&:content_id)
-      elsif tag_type == :suggested_ordered_related_items
+      when :suggested_ordered_related_items
         suggested_related_content_items.map(&:content_id)
       else
         clean_input_array(params[tag_type])

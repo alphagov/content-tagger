@@ -1,4 +1,4 @@
-require_relative "../support/google_sheet_helper.rb"
+require_relative "../support/google_sheet_helper"
 
 FactoryBot.define do
   factory :tagging_spreadsheet, class: BulkTagging::TaggingSpreadsheet do

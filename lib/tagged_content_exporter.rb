@@ -27,11 +27,11 @@ private
   def metadata_for_taxon(taxon_id, content_id)
     metadata = taxon_links_change(taxon_id, content_id)
 
-    user = User.find_by(uid: metadata.dig("user_uid")) || User.new
+    user = User.find_by(uid: metadata["user_uid"]) || User.new
 
     {
       url: metadata.dig("target", "base_path"),
-      user_uid: metadata.dig("user_uid"),
+      user_uid: metadata["user_uid"],
       organisation_slug: user.organisation_slug,
     }.merge(tree_data_for_taxon(taxon_id))
   end

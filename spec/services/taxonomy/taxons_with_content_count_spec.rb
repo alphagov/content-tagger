@@ -1,5 +1,55 @@
 require "rails_helper"
 
+SEARCH_RESULT_FIXTURE = {
+  results: [],
+  total: 334_263,
+  start: 0,
+  facets: {
+    taxons: {
+      options: [
+        {
+          value: {
+            slug: "b92079ac-f1d9-44c8-bc78-772d54377ee2",
+          },
+          documents: 100,
+        },
+        {
+          value: {
+            slug: "720f650a-331f-4575-9c56-376d1eaa9ca0",
+          },
+          documents: 200,
+        },
+        {
+          value: {
+            slug: "a544d48b-1e9e-47fb-b427-7a987c658c14",
+          },
+          documents: 300,
+        },
+      ],
+    },
+  },
+}.freeze
+
+EXPANDED_LINKS_FIXTURE = {
+  expanded_links: {
+    child_taxons: [
+      {
+        title: "foo",
+        content_id: "720f650a-331f-4575-9c56-376d1eaa9ca0",
+        links: {
+          child_taxons: [
+            {
+              title: "bar",
+              content_id: "a544d48b-1e9e-47fb-b427-7a987c658c14",
+              links: {},
+            },
+          ],
+        },
+      },
+    ],
+  },
+}.freeze
+
 RSpec.describe Taxonomy::TaxonsWithContentCount do
   describe "#nested_tree" do
     it "returns a nested tree structure" do
@@ -93,54 +143,4 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
       expect(size.max_size).to eq(100)
     end
   end
-
-  SEARCH_RESULT_FIXTURE = {
-    results: [],
-    total: 334_263,
-    start: 0,
-    facets: {
-      taxons: {
-        options: [
-          {
-            value: {
-              slug: "b92079ac-f1d9-44c8-bc78-772d54377ee2",
-            },
-            documents: 100,
-          },
-          {
-            value: {
-              slug: "720f650a-331f-4575-9c56-376d1eaa9ca0",
-            },
-            documents: 200,
-          },
-          {
-            value: {
-              slug: "a544d48b-1e9e-47fb-b427-7a987c658c14",
-            },
-            documents: 300,
-          },
-        ],
-      },
-    },
-  }.freeze
-
-  EXPANDED_LINKS_FIXTURE = {
-    expanded_links: {
-      child_taxons: [
-        {
-          title: "foo",
-          content_id: "720f650a-331f-4575-9c56-376d1eaa9ca0",
-          links: {
-            child_taxons: [
-              {
-                title: "bar",
-                content_id: "a544d48b-1e9e-47fb-b427-7a987c658c14",
-                links: {},
-              },
-            ],
-          },
-        },
-      ],
-    },
-  }.freeze
 end

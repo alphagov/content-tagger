@@ -30,7 +30,7 @@ module_function
   def google_sheet_content_items
     content_base_paths = parsed_google_sheet.map { |row| row["content_base_path"] }.uniq
     content_base_paths.each_with_object({}) do |base_path, hash|
-      fake_content_id = base_path.delete("/") + "-cid"
+      fake_content_id = "#{base_path.delete('/')}-cid"
       hash[base_path] = fake_content_id
     end
   end

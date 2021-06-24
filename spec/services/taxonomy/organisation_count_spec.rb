@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::OrganisationCount do
       expected_results = [["organisation1", 6, "/taxons/child", 5, "/taxons/level_one", 1],
                           ["organisation2", 6, "/taxons/child", 4, "/taxons/level_one", 2],
                           ["organisation3", 3, "/taxons/level_one", 3]]
-      expect(sheet[1..-1]).to match_array(expected_results)
+      expect(sheet[1..]).to match_array(expected_results)
       expect(results.first[:title]).to eq("taxon_title")
     end
 

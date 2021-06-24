@@ -1,5 +1,8 @@
 require "rails_helper"
 
+SHEET_KEY = "THE-KEY-123".freeze
+SHEET_GID = "123456".freeze
+
 RSpec.feature "Tag importer", type: :feature do
   include GoogleSheetHelper
   include PublishingApiHelper
@@ -69,9 +72,6 @@ RSpec.feature "Tag importer", type: :feature do
     when_i_go_to_the_tagging_spreadsheet_page
     then_i_expect_tag_mappings_to_be_grouped_by_base_path
   end
-
-  SHEET_KEY = "THE-KEY-123".freeze
-  SHEET_GID = "123456".freeze
 
   def when_i_correct_the_data_and_reimport
     given_tagging_data_is_present_in_a_google_spreadsheet

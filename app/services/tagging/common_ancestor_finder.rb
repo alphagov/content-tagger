@@ -63,7 +63,7 @@ module Tagging
       paths_with_length_one = paths_with_common_root.select { |v| v.length == 1 }
       paths_with_length_greater_than_one = paths_with_common_root.select { |n| n.length > 1 }
 
-      find_common_ancestors(paths_with_length_greater_than_one.map { |n| n[1..-1] }, common_ancestors + paths_with_length_one.flatten)
+      find_common_ancestors(paths_with_length_greater_than_one.map { |n| n[1..] }, common_ancestors + paths_with_length_one.flatten)
     end
   end
 end

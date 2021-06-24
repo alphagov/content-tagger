@@ -1,7 +1,6 @@
 module Tagging
   class ContentItemExpandedLinks
     include ActiveModel::Model
-    attr_accessor :content_id, :previous_version
 
     TAG_TYPES = %i[
       taxons
@@ -15,7 +14,7 @@ module Tagging
       meets_user_needs
     ].freeze
 
-    attr_accessor(*TAG_TYPES)
+    attr_accessor :content_id, :previous_version, *TAG_TYPES
 
     # Find the links for a content item by its content ID
     def self.find(content_id)
