@@ -84,11 +84,6 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
   end
 
-  class ProxyAccessContraint
-    def matches?(request)
-      !request.env["warden"].try(:user).nil?
-    end
-  end
-
-  mount Proxies::IframeAllowingProxy.new => Proxies::IframeAllowingProxy::PROXY_BASE_PATH, constraints: ProxyAccessContraint.new
+  mount Proxies::IframeAllowingProxy.new => Proxies::IframeAllowingProxy::PROXY_BASE_PATH,
+        constraints: ->(request) { !request.env["warden"].try(:user).nil? }
 end
