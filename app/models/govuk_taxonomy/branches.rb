@@ -1,7 +1,7 @@
 module GovukTaxonomy
   class Branches
     def branch_name_for_content_id(content_id)
-      get_content_item(content_id).dig("title")
+      get_content_item(content_id)["title"]
     end
 
     def all

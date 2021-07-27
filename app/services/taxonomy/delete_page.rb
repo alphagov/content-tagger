@@ -3,8 +3,7 @@ module Taxonomy
     include ActiveModel::Model
 
     delegate :content_id, :redirect_to, to: :taxon
-    attr_reader :do_tag
-    attr_reader :taxon
+    attr_reader :do_tag, :taxon
 
     def initialize(taxon)
       @taxon = taxon

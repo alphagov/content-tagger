@@ -4,12 +4,12 @@ module PublishingApiHelper
   include EmailAlertApiHelper
 
   def stub_empty_bulk_taxons_lookup
-    url = Plek.current.find("publishing-api") + "/v2/links/by-content-id"
+    url = "#{Plek.current.find('publishing-api')}/v2/links/by-content-id"
     stub_request(:post, url).to_return(body: {}.to_json)
   end
 
   def stub_bulk_taxons_lookup(content_ids, taxons)
-    url = Plek.current.find("publishing-api") + "/v2/links/by-content-id"
+    url = "#{Plek.current.find('publishing-api')}/v2/links/by-content-id"
     body = { content_ids: array_including(content_ids) }
     response_hash = content_ids.index_with { |_content_id| { "links" => { "taxons" => taxons } } }
     stub_request(:post, url).with(body: body).to_return(body: response_hash.to_json)

@@ -30,11 +30,7 @@ class ProjectBuilder
     attr_accessor :conflicting_items_urls
 
     def initialize(urls)
-      @conflicting_items_urls = urls.pluck(:url)
-    end
-
-    def message
-      <<~MSG
+      super <<~MSG
         The project was not created because the spreadsheet contains content
         that has already been imported to other projects.
 
@@ -42,6 +38,7 @@ class ProjectBuilder
         creating the project again. Please note that it may take Google sheets
         up to 5 minutes for the changes to be republished to the CSV format.
       MSG
+      @conflicting_items_urls = urls.pluck(:url)
     end
   end
 end

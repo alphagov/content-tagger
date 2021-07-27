@@ -17,6 +17,7 @@ class DescriptionRemover
 private
 
   attr_reader :base_path
+
   EXCLUDE_ATTRIBUTES = %w[content_store user_facing_version publication_state lock_version updated_at state_history].freeze
 
   def child_taxon_ids(base_path)
