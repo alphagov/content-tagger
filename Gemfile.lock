@@ -349,7 +349,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    select2-rails (4.0.13)
+    select2-rails (3.5.11)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -447,7 +447,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-govuk
   sassc-rails
-  select2-rails
+  select2-rails (~> 3.5.11)
   simple_form
   simplecov
   timecop
