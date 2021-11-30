@@ -7,6 +7,6 @@ class TaxonPathPrefixValidator < ActiveModel::Validator
 
     return if record.path_prefix == parent_taxon.path_prefix
 
-    record.errors[:base_path] << "must start with /#{parent_taxon.path_prefix}"
+    record.errors.add(:base_path, message: "must start with /#{parent_taxon.path_prefix}")
   end
 end

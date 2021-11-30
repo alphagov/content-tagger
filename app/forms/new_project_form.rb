@@ -30,7 +30,7 @@ class NewProjectForm
 
     true
   rescue RemoteCsv::ParsingError, ActiveModel::UnknownAttributeError => e
-    errors[:remote_url] << e.message
+    errors.add(:remote_url, message: e.message)
     false
   rescue ProjectBuilder::DuplicateContentItemsError => e
     errors[:base] << [e.message, e.conflicting_items_urls]

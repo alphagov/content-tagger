@@ -24,14 +24,14 @@ private
   def content_item_should_have_been_found!
     return true if content_id
 
-    errors[:base_path] << "No page found with this path"
+    errors.add(:base_path, message: "No page found with this path")
     false
   end
 
   def strip_host
     self.base_path = URI.parse(base_path).path
   rescue URI::InvalidURIError
-    errors[:base_path] << "This is not a valid URL or path"
+    errors.add(:base_path, message: "This is not a valid URL or path")
     false
   end
 end
