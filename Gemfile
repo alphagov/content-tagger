@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "6.1.4.1"
+gem "rails", "7.0.0"
 
 gem "bootstrap-kaminari-views"
 gem "govuk_app_config"
