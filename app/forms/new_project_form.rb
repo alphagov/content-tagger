@@ -33,7 +33,7 @@ class NewProjectForm
     errors.add(:remote_url, message: e.message)
     false
   rescue ProjectBuilder::DuplicateContentItemsError => e
-    errors[:base] << [e.message, e.conflicting_items_urls]
+    errors.add(:base, [e.message, e.conflicting_items_urls])
     false
   end
 end

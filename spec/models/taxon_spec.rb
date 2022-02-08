@@ -5,14 +5,14 @@ RSpec.describe Taxon do
     it "is not valid without a title" do
       taxon = described_class.new
       expect(taxon).to_not be_valid
-      expect(taxon.errors.keys).to include(:title)
+      expect(taxon.errors.attribute_names).to include(:title)
     end
 
     it "is not valid without a base path" do
       taxon = described_class.new(base_path: "")
 
       expect(taxon).to_not be_valid
-      expect(taxon.errors.keys).to include(:base_path)
+      expect(taxon.errors.attribute_names).to include(:base_path)
     end
 
     it "is not valid when the base path prefix does not match the parent prefix" do
