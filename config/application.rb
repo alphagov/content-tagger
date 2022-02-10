@@ -14,7 +14,7 @@ Bundler.require(*Rails.groups)
 module ContentTagger
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.0
 
     # Configure blacklisted tag types by publishing app
     config.blacklisted_tag_types = config_for(:blacklisted_tag_types)
