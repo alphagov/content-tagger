@@ -4,7 +4,7 @@
 <% page.version_history.each do |version| %>
   <div class="well well-sm">
     <p>
-      <%= version.created_at.to_s(:govuk_date) %>
+      <%= version.created_at.to_fs(:govuk_date) %>
       <span class="text-muted">(#<%= version.number %>)</span>
     </p>
 
