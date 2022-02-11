@@ -506,6 +506,7 @@ DEPENDENCIES
   select2-rails (~> 3.5.11)
   simple_form
   simplecov
+  sprockets-rails
   timecop
   uglifier
   web-console

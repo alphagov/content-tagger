@@ -12,6 +12,7 @@ gem "rack-proxy"
 gem "sassc-rails"
 gem "select2-rails", "~> 3.5.11"
 gem "simple_form"
+gem "sprockets-rails"
 gem "uglifier"
 
 gem "gds-api-adapters"
