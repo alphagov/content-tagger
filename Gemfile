@@ -10,7 +10,7 @@ gem "kaminari"
 gem "pg"
 gem "rack-proxy"
 gem "sassc-rails"
-gem "select2-rails", "~> 3.5.11"
+gem "select2-rails", "< 4" # There are unresolved visual and HTML changes with select2-rails 4
 gem "simple_form"
 gem "sprockets-rails"
 gem "uglifier"

@@ -503,7 +503,7 @@ DEPENDENCIES
   rspec-rails
   rubocop-govuk
   sassc-rails
-  select2-rails (~> 3.5.11)
+  select2-rails (< 4)
   simple_form
   simplecov
   sprockets-rails
