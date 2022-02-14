@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "6.1.4.4"
+gem "rails", "7.0.2"
 
 gem "bootstrap-kaminari-views"
 gem "govuk_app_config"
@@ -12,6 +12,7 @@ gem "rack-proxy"
 gem "sassc-rails"
 gem "select2-rails", "~> 3.5.11"
 gem "simple_form"
+gem "sprockets-rails"
 gem "uglifier"
 
 gem "gds-api-adapters"
