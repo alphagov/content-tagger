@@ -60,7 +60,7 @@ RSpec.describe Taxon do
         title: "Title",
         description: "Description",
         base_path: "/education",
-        url_override: "/guidance/education-is-fun",
+        url_override: "/guidance/something/education-is-fun",
       )
 
       invalid_taxon = described_class.new(

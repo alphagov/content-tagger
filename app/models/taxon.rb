@@ -1,5 +1,6 @@
 class Taxon
-  PATH_COMPONENTS_REGEX = %r{\A/(?<prefix>[A-z0-9\-]+)(?:/(?<slug>[A-z0-9\-]+))?\z}.freeze
+  PATH_COMPONENTS_REGEX          = %r{\A/(?<prefix>[A-z0-9\-]+)(?:/(?<slug>[A-z0-9\-]+))?\z}.freeze
+  OVERRIDE_PATH_COMPONENTS_REGEX = %r{\A/(?<prefix>[A-z0-9\-]+)(?:/(?<slug>[A-z0-9\-]+))*\z}.freeze
 
   attr_accessor(
     :title,
@@ -20,7 +21,7 @@ class Taxon
   validates :title, :internal_name, :base_path, presence: true
   validates_with CircularDependencyValidator
   validates :base_path, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/highest-level-taxon-name/taxon-name'" }
-  validates :url_override, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/prefix/slug' or '/slug'" }, allow_blank: true
+  validates :url_override, format: { with: OVERRIDE_PATH_COMPONENTS_REGEX, message: "must be in the format '/prefix/slug' or '/slug'" }, allow_blank: true
   validates_with TaxonPathPrefixValidator
 
   def draft?
