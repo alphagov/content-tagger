@@ -88,21 +88,6 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     end
   end
 
-  context "Transition taxon" do
-    it "unpublishes the Transition taxon with 'cy' locale" do
-      transition_taxon_content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
-      stub_publishing_api_has_expanded_links({ "content_id" => transition_taxon_content_id, "expanded_links" => {} })
-
-      unpublish(transition_taxon_content_id, redirect_content_id)
-      assert_publishing_api_unpublish(
-        transition_taxon_content_id,
-        type: "redirect",
-        alternative_path: "/path/to/redirect",
-        locale: "cy",
-      )
-    end
-  end
-
   def unpublish(taxon_content_id, redirect_to_content_id, retag: true)
     Sidekiq::Testing.inline! do
       Taxonomy::TaxonUnpublisher.call(taxon_content_id: taxon_content_id, redirect_to_content_id: redirect_to_content_id, user: User.new, retag: retag)
