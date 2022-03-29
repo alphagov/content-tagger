@@ -1,6 +1,5 @@
 class UpdateTaxonWorker
   include Sidekiq::Worker
-  include TransitionTaxon
 
   def perform(content_id, attributes)
     previous_taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
@@ -20,8 +19,5 @@ private
 
   def publishing_api_put_content_request(content_id, taxon)
     Services.publishing_api.put_content(content_id, payload(taxon))
-    return unless transition_taxon?(content_id)
-
-    Services.publishing_api.put_content(content_id, payload(taxon, "cy"))
   end
 end

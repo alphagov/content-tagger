@@ -1,7 +1,5 @@
 module Taxonomy
   class TaxonUnpublisher
-    include TransitionTaxon
-
     def self.call(taxon_content_id:, redirect_to_content_id:, user:, retag: true)
       new.unpublish(
         taxon_content_id: taxon_content_id,
@@ -37,9 +35,6 @@ module Taxonomy
     def unpublish_taxon(taxon_content_id, redirect_to_content_id)
       redirect_to_taxon = Services.publishing_api.get_content(redirect_to_content_id)
       publishing_api_unpublish(taxon_content_id, redirect_to_taxon["base_path"])
-      return unless transition_taxon?(taxon_content_id)
-
-      publishing_api_unpublish(taxon_content_id, redirect_to_taxon["base_path"], "cy")
     end
 
     def tagged_content_base_paths(content_id)

@@ -2,7 +2,6 @@ require "rails_helper"
 
 RSpec.describe Taxonomy::UpdateTaxon do
   include ContentItemHelper
-  include TransitionTaxon
 
   before do
     @taxon = Taxon.new(
@@ -133,20 +132,6 @@ RSpec.describe Taxonomy::UpdateTaxon do
           Taxonomy::UpdateTaxon::InvalidTaxonError,
           /<a href="(.+)">taxon<\/a> with this slug already exists/,
         )
-      end
-    end
-
-    context "with the Brexit taxon" do
-      it "publishes the document in the 'en' and 'cy' locale via the Publishing API" do
-        stub_any_publishing_api_put_content
-        stub_any_publishing_api_patch_links
-
-        @taxon.content_id = TransitionTaxon::TRANSITION_TAXON_CONTENT_ID
-
-        described_class.call(taxon: @taxon)
-
-        assert_publishing_api_put_content(@taxon.content_id, request_json_includes(locale: "en"))
-        assert_publishing_api_put_content(@taxon.content_id, request_json_includes(locale: "cy"))
       end
     end
   end
