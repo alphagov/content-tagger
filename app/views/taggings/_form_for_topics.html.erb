@@ -1,16 +1,15 @@
-<h3>Topics</h3>
+<h3>Specialist topic pages</h3>
 
 <%= f.input :topics,
     collection: linkables.topics, as: :grouped_select, group_method: :last,
-    placeholder: "Choose Topics...",
+    placeholder: "Choose specialist topic pages...",
     input_html: { multiple: true, include_blank: true, class: :select2 } %>
 
 <p class='explain'>
-  Topic pages live under <a href="https://www.gov.uk/topic">/topic</a>.
-  They contain collections of pages on GOV.UK. Example:
+  Specialist topic pages live under <a href="https://www.gov.uk/topic">/topic</a>.
+  They contain pages on GOV.UK that have been tagged to the specialist topic. Example:
   <a href="https://www.gov.uk/topic/business-tax">Business Tax</a> or
   <a href="https://www.gov.uk/topic/animal-welfare/pets">Animal Welfare / Pets</a>.
-  Publishing a page with a topic may send out an
+  Publishing a page with a specialist topic tag may send out an
   <a href="https://www.gov.uk/topic/business-tax/vat/email-signup">email alert to subscribers</a>.
-  Formerly called <i>specialist sectors</i>.
 </p>

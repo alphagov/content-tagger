@@ -16,7 +16,7 @@ default: &default
     - parent
 
   whitehall:
-    # Topics and the parent (breadcrumb) are managed in Whitehall itself. This
+    # Specialist topic pages and the parent (breadcrumb) are managed in Whitehall itself. This
     # will stay that way because Whitehall is too complex to make a half-way
     # change to a system where topics and breadcrumb are read & written from
     # the publishing-api.
