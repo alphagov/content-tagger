@@ -328,6 +328,16 @@ RSpec.describe "Tagging content", type: :feature do
         "/browse/driving/car-tax-discs",
       ],
     )
+
+    stub_publishing_api_has_content(
+      [
+        { base_path: "/already-tagged", content_id: "ID-OF-ALREADY-TAGGED" },
+        { base_path: "/topic/business-tax/pension-scheme-administration", content_id: "e1d6b771-a692-4812-a4e7-7562214286ef" },
+      ],
+      document_type: "topic",
+      per_page: 10_000,
+      fields: %w[content_id details],
+    )
   end
 
   def example_topic

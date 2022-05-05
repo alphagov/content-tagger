@@ -4,6 +4,10 @@ RSpec.describe Linkables do
   include ContentItemHelper
   include PublishingApiHelper
 
+  before(:each) do
+    stub_the_publishing_content
+  end
+
   let(:linkables) { Linkables.new }
 
   context "there are linkables" do
@@ -81,9 +85,17 @@ RSpec.describe Linkables do
             "base_path" => "/topic/redirect",
             "internal_name" => nil,
           },
+          {
+            "base_path" => "/topic/employing-people-mainstream-copy/contracts-mainstream-copy",
+            "internal_name" => "Employing People / Contracts",
+            "publication_state" => "published",
+            "content_id" => "CONTENT-ID-EMPLOYING-COPY",
+          },
         ],
         document_type: "topic",
       )
+
+      stub_the_publishing_content
 
       expected = {
         "Business tax" => [
@@ -113,5 +125,49 @@ RSpec.describe Linkables do
 
       expect(linkables.organisations).to eq [["Student Loans Company", "9a9111aa-1db8-4025-8dd2-e08ec3175e72"]]
     end
+  end
+
+  def stub_the_publishing_content
+    stub_publishing_api_has_content(
+      [
+        {
+          "public_updated_at" => "2016-04-07 10:34:05",
+          "title" => "Pension scheme administration",
+          "content_id" => "e1d6b771-a692-4812-a4e7-7562214286ef",
+          "publication_state" => "published",
+          "base_path" => "/topic/business-tax/pension-scheme-administration",
+          "internal_name" => "Business tax / Pension scheme administration",
+        },
+        {
+          "public_updated_at" => "2016-04-07 10:34:05",
+          "title" => nil,
+          "content_id" => "3535b8ad-7209-4c97-9dac-e25c25d9c27c",
+          "publication_state" => "published",
+          "base_path" => "/topic/redirect",
+          "internal_name" => nil,
+        },
+        {
+          "base_path" => "/topic/employing-people-mainstream-copy/contracts-mainstream-copy",
+          "internal_name" => "Employing People / Contracts",
+          "publication_state" => "published",
+          "content_id" => "CONTENT-ID-EMPLOYING-COPY",
+          "details" => {
+            "mainstream_browse_origin" => "notnil",
+          },
+        },
+        {
+          "base_path" => "/topic/disabilities-mainstream-copy/benefits-mainstream-copy",
+          "internal_name" => "Disabilities / Benefits",
+          "publication_state" => "draft",
+          "content_id" => "CCONTENT-ID-BENEFIT-COPY",
+          "details" => {
+            "mainstream_browse_origin" => "",
+          },
+        },
+      ],
+      document_type: "topic",
+      per_page: 10_000,
+      fields: %w[content_id details],
+    )
   end
 end

@@ -31,6 +31,16 @@ RSpec.describe "Tagging content during migration", type: :feature do
         "/needs/apply-for-a-copy-of-a-marriage-certificate",
       ],
     )
+
+    stub_publishing_api_has_content(
+      [
+        { base_path: "/already-tagged", content_id: "ID-OF-ALREADY-TAGGED" },
+        { base_path: "/topic/business-tax/pension-scheme-administration", content_id: "e1d6b771-a692-4812-a4e7-7562214286ef" },
+      ],
+      document_type: "topic",
+      per_page: 10_000,
+      fields: %w[content_id details],
+    )
   end
 
   def given_there_is_an_item_that_can_have_only_one_link_type
