@@ -39,7 +39,7 @@ private
   end
 
   def for_nested_document_type(document_type)
-    # In Topics and Browse pages, the "internal name" is generated in the
+    # In Specialist topic pages and Mainstream Browse pages, the "internal name" is generated in the
     # form: "Parent title / Child title". Because currently we only show
     # documents on child-topic pages (like /topic/animal-welfare/pets), we
     # only allow tagging to those tags in this application. That's why we
