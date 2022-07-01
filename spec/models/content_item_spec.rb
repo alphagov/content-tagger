@@ -1,13 +1,13 @@
 require "rails_helper"
 
 RSpec.describe ContentItem do
-  describe "#blacklisted_tag_types" do
-    it "includes per-app blacklisted types" do
-      configure_blacklist("blacklisted-app" => %w[foo bar])
+  describe "#denylisted_tag_types" do
+    it "includes per-app denylisted types" do
+      configure_denylist("denylisted-app" => %w[foo bar])
 
-      content_item = build_content_item(publishing_app: "blacklisted-app")
+      content_item = build_content_item(publishing_app: "denylisted-app")
 
-      expect(content_item.blacklisted_tag_types).to include(:foo, :bar)
+      expect(content_item.denylisted_tag_types).to include(:foo, :bar)
     end
 
     it "includes topics for specialist-publisher docs" do
@@ -16,7 +16,7 @@ RSpec.describe ContentItem do
         publishing_app: "specialist-publisher",
       )
 
-      expect(content_item.blacklisted_tag_types).to include(:topics)
+      expect(content_item.denylisted_tag_types).to include(:topics)
     end
 
     it "includes related items by default" do
@@ -24,7 +24,7 @@ RSpec.describe ContentItem do
         document_type: "literally-anything",
       )
 
-      expect(content_item.blacklisted_tag_types).to include(:ordered_related_items)
+      expect(content_item.denylisted_tag_types).to include(:ordered_related_items)
     end
 
     it "does not include related items for selected document types" do
@@ -32,7 +32,7 @@ RSpec.describe ContentItem do
         document_type: "guide", # or calculator, answer, etc
       )
 
-      expect(content_item.blacklisted_tag_types).not_to include(:ordered_related_items)
+      expect(content_item.denylisted_tag_types).not_to include(:ordered_related_items)
     end
 
     it "includes related item overrides if there's no taxons tagged to the item" do
@@ -40,7 +40,7 @@ RSpec.describe ContentItem do
 
       allow(content_item).to receive(:taxons?) { false }
 
-      expect(content_item.blacklisted_tag_types).to include(:ordered_related_items_overrides)
+      expect(content_item.denylisted_tag_types).to include(:ordered_related_items_overrides)
     end
 
     it "does not includes related item overrides if there's taxons tagged to the item" do
@@ -48,7 +48,7 @@ RSpec.describe ContentItem do
 
       allow(content_item).to receive(:taxons?) { true }
 
-      expect(content_item.blacklisted_tag_types).not_to include(:ordered_related_items_overrides)
+      expect(content_item.denylisted_tag_types).not_to include(:ordered_related_items_overrides)
     end
 
     it "includes suggested related items if there's no suggestions for the item" do
@@ -56,7 +56,7 @@ RSpec.describe ContentItem do
 
       allow(content_item).to receive(:suggested_related_links?) { false }
 
-      expect(content_item.blacklisted_tag_types).to include(:suggested_ordered_related_items)
+      expect(content_item.denylisted_tag_types).to include(:suggested_ordered_related_items)
     end
 
     it "does not include suggested related items if suggestions exist for the item" do
@@ -64,7 +64,7 @@ RSpec.describe ContentItem do
 
       allow(content_item).to receive(:suggested_related_links?) { true }
 
-      expect(content_item.blacklisted_tag_types).not_to include(:suggested_ordered_related_items)
+      expect(content_item.denylisted_tag_types).not_to include(:suggested_ordered_related_items)
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.describe ContentItem do
         rendering_app: "frontend",
         title: double,
       }.merge(data).stringify_keys,
-      blacklist: @blacklist || {},
+      denylist: @denylist || {},
     )
 
     allow(item).to receive(:taxons?)
@@ -88,7 +88,7 @@ RSpec.describe ContentItem do
     item
   end
 
-  def configure_blacklist(blacklist)
-    @blacklist = blacklist
+  def configure_denylist(denylist)
+    @denylist = denylist
   end
 end

@@ -6,7 +6,7 @@ module Tagging
 
     def find_all
       content_enum = Services.search_api.search_enum(
-        { reject_content_store_document_type: Tagging.blacklisted_document_types,
+        { reject_content_store_document_type: Tagging.denylisted_document_types,
           fields: %w[content_id title] },
         page_size: 100,
       )

@@ -16,8 +16,8 @@ module ContentTagger
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
-    # Configure blacklisted tag types by publishing app
-    config.blacklisted_tag_types = config_for(:blacklisted_tag_types)
+    # Configure denylisted tag types by publishing app
+    config.denylisted_tag_types = config_for(:denylisted_tag_types)
 
     config.active_record.belongs_to_required_by_default = false
   end

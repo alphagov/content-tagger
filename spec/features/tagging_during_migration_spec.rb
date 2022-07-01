@@ -40,7 +40,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
 
     stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
-        # see blacklisted_tag_types.yml for this
+        # see denylisted_tag_types.yml for this
         publishing_app: "test-app-that-can-be-tagged-to-topics-only",
         content_id: "MY-CONTENT-ID",
         base_path: "/my-content-item",
