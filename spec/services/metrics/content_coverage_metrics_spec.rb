@@ -4,9 +4,9 @@ module Metrics
   RSpec.describe ContentCoverageMetrics do
     describe "#record_all" do
       before do
-        blacklist = %w[taxon redirect]
+        denylist = %w[taxon redirect]
         allow(Tagging)
-          .to receive(:blacklisted_document_types).and_return(blacklist)
+          .to receive(:denylisted_document_types).and_return(denylist)
 
         stub_request(:get, "#{Plek.find('search')}/search.json")
           .with(
@@ -22,7 +22,7 @@ module Metrics
             query: {
               count: 0,
               debug: "include_withdrawn",
-              reject_content_store_document_type: blacklist,
+              reject_content_store_document_type: denylist,
             },
           ).to_return(body: JSON.dump(total: 500))
 
@@ -34,7 +34,7 @@ module Metrics
               count: 0,
               debug: "include_withdrawn",
               filter_part_of_taxonomy_tree: level_one_taxons.map { |x| x[:content_id] },
-              reject_content_store_document_type: blacklist,
+              reject_content_store_document_type: denylist,
             },
           ).to_return(body: JSON.dump(total: 400))
 

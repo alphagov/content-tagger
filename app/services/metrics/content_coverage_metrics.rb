@@ -40,7 +40,7 @@ module Metrics
     def items_in_scope_count
       @items_in_scope_count ||= Services.search_api.search(
         count: 0,
-        reject_content_store_document_type: Tagging.blacklisted_document_types,
+        reject_content_store_document_type: Tagging.denylisted_document_types,
         debug: "include_withdrawn",
       ).to_h.fetch("total")
     end
@@ -49,7 +49,7 @@ module Metrics
       @tagged_items_in_scope_count ||= Services.search_api.search(
         count: 0,
         filter_part_of_taxonomy_tree: root_taxon_content_ids,
-        reject_content_store_document_type: Tagging.blacklisted_document_types,
+        reject_content_store_document_type: Tagging.denylisted_document_types,
         debug: "include_withdrawn",
       ).to_h.fetch("total")
     end

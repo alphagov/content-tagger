@@ -12,8 +12,8 @@ class ContentItem
 
   attr_writer :link_set
 
-  def initialize(data, blacklist: Rails.configuration.blacklisted_tag_types)
-    @blacklist = blacklist
+  def initialize(data, denylist: Rails.configuration.denylisted_tag_types)
+    @denylist = denylist
     @content_id = data.fetch("content_id")
     @title = data.fetch("title")
     @base_path = data.fetch("base_path")
@@ -49,27 +49,27 @@ class ContentItem
     link_set.suggested_ordered_related_items.present?
   end
 
-  def blacklisted_tag_types
-    document_blacklist = Array(blacklist[publishing_app]).map(&:to_sym)
-    document_blacklist += additional_temporary_blacklist
+  def denylisted_tag_types
+    document_denylist = Array(denylist[publishing_app]).map(&:to_sym)
+    document_denylist += additional_temporary_denylist
 
     unless related_links_are_renderable?
-      document_blacklist += [:ordered_related_items]
+      document_denylist += [:ordered_related_items]
     end
 
     unless taxons?
-      document_blacklist += [:ordered_related_items_overrides]
+      document_denylist += [:ordered_related_items_overrides]
     end
 
     unless suggested_related_links?
-      document_blacklist += [:suggested_ordered_related_items]
+      document_denylist += [:suggested_ordered_related_items]
     end
 
-    document_blacklist
+    document_denylist
   end
 
   def allowed_tag_types
-    Tagging::ContentItemExpandedLinks::TAG_TYPES - blacklisted_tag_types
+    Tagging::ContentItemExpandedLinks::TAG_TYPES - denylisted_tag_types
   end
 
   class ItemNotFoundError < StandardError
@@ -77,7 +77,7 @@ class ContentItem
 
 private
 
-  attr_accessor :blacklist
+  attr_accessor :denylist
 
   def related_links_are_renderable?
     %w[
@@ -156,7 +156,7 @@ private
     ].include?(document_type)
   end
 
-  def additional_temporary_blacklist
+  def additional_temporary_denylist
     publishing_app == "specialist-publisher" && document_type == "finder" ? [:topics] : []
   end
 end

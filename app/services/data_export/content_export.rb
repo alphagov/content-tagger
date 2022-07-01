@@ -3,7 +3,7 @@ module DataExport
     CONTENT_BASE_FIELDS = %w[base_path content_id document_type first_published_at locale publishing_app title description details].freeze
     CONTENT_TAXON_FIELDS = %w[title content_id].freeze
     CONTENT_PPO_FIELDS = %w[title].freeze
-    BLACKLIST_DOCUMENT_TYPES = %w[
+    DENYLIST_DOCUMENT_TYPES = %w[
       staff_update
       coming_soon
       travel_advice
@@ -70,7 +70,7 @@ module DataExport
 
     def content_links_enum(page_size = 1000)
       Services.search_api.search_enum(
-        { reject_content_store_document_type: BLACKLIST_DOCUMENT_TYPES, fields: %w[link] },
+        { reject_content_store_document_type: DENYLIST_DOCUMENT_TYPES, fields: %w[link] },
         page_size: page_size,
       ).lazy.map { |h| h["link"] }
     end
@@ -100,7 +100,7 @@ module DataExport
       {}
     end
 
-    def blacklisted_content_stats(document_types = ContentExport::BLACKLIST_DOCUMENT_TYPES)
+    def denylisted_content_stats(document_types = ContentExport::DENYLIST_DOCUMENT_TYPES)
       filtered_aggregates = document_aggregates.keep_if do |aggregate|
         document_types.include?(aggregate.dig("value", "slug"))
       end

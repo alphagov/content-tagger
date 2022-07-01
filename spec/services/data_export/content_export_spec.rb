@@ -65,8 +65,8 @@ module DataExport
       end
     end
 
-    describe "#blacklisted_content_stats" do
-      it "returns the number of documents in that were blacklisted in content export" do
+    describe "#denylisted_content_stats" do
+      it "returns the number of documents in that were denylisted in content export" do
         result_hash = {
           "aggregates" => {
             "content_store_document_type" => {
@@ -97,7 +97,7 @@ module DataExport
           .with(query: hash_including("aggregate_content_store_document_type" => "10000"))
           .to_return(body: result_hash.to_json)
 
-        expect(ContentExport.new.blacklisted_content_stats(%w[taxon redirect]))
+        expect(ContentExport.new.denylisted_content_stats(%w[taxon redirect]))
           .to eq([{ document_type: "redirect", count: 3 }, { document_type: "taxon", count: 1 }])
       end
     end
