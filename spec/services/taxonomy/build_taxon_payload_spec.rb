@@ -19,7 +19,7 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
     let(:payload) { described_class.call(taxon: taxon) }
 
     it "generates a valid payload" do
-      expect(payload).to be_valid_against_schema("taxon")
+      expect(payload).to be_valid_against_publisher_schema("taxon")
     end
 
     it "assigns the expected rendering app" do
