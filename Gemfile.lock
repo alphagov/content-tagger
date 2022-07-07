@@ -142,8 +142,6 @@ GEM
       warden-oauth2 (~> 0.0.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    govuk-content-schema-test-helpers (1.6.1)
-      json-schema (~> 2.8.0)
     govuk_admin_template (6.9.2)
       bootstrap-sass (~> 3.4)
       jquery-rails (~> 4.3)
@@ -157,6 +155,8 @@ GEM
       sentry-ruby (~> 5.3)
       statsd-ruby (~> 1.5)
       unicorn (~> 6.1)
+    govuk_schemas (4.3.0)
+      json-schema (~> 2.8.0)
     govuk_sidekiq (5.0.0)
       gds-api-adapters (>= 19.1.0)
       govuk_app_config (>= 1.1)
@@ -464,9 +464,9 @@ DEPENDENCIES
   factory_bot_rails
   gds-api-adapters
   gds-sso
-  govuk-content-schema-test-helpers
   govuk_admin_template
   govuk_app_config
+  govuk_schemas
   govuk_sidekiq
   govuk_taxonomy_helpers
   govuk_test

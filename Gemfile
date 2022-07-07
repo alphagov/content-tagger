@@ -26,7 +26,7 @@ gem "plek"
 group :development, :test do
   gem "awesome_print"
   gem "factory_bot_rails"
-  gem "govuk-content-schema-test-helpers"
+  gem "govuk_schemas"
   gem "pry-byebug"
   gem "rspec-rails"
   gem "rubocop-govuk"
