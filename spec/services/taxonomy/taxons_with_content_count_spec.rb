@@ -131,6 +131,10 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
       allow(size).to receive(:nested_tree).and_return(tree)
 
       expect(size.max_size).to eq(300)
+
+      taxonomy_size = Taxonomy::TaxonsWithContentCountPresenter.new(size)
+      expect(taxonomy_size.bar_width_percentage(100)).to be(10)
+      expect(taxonomy_size.bar_width_percentage(300)).to be(30)
     end
 
     it "returns the max size of the tree for no children" do
@@ -145,6 +149,13 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
       allow(size).to receive(:nested_tree).and_return(tree)
 
       expect(size.max_size).to eq(100)
+    end
+
+    it "returns 0% bar width when max_size is 0" do
+      size = Taxonomy::TaxonsWithContentCount.new(content_item)
+      allow(size).to receive(:max_size).and_return(0)
+
+      expect(size.max_size).to eq(0)
     end
   end
 end
