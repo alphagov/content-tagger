@@ -40,6 +40,7 @@ end
 
 group :test do
   gem "database_cleaner"
+  gem "fakefs", require: "fakefs/safe"
   gem "govuk_test"
   gem "timecop"
   gem "webmock"

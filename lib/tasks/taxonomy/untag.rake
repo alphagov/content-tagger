@@ -4,8 +4,7 @@ namespace :taxonomy do
   task :untag, %i[content_id untag] => :environment do |_, args|
     taxon_content_id = args[:content_id]
     if taxon_content_id.nil?
-      puts "Please supply the content id of the taxon to untag."
-      return
+      abort "Please supply the content id of the taxon to untag."
     end
 
     GdsApi::Base.default_options = { timeout: 30 }
