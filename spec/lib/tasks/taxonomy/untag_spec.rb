@@ -19,9 +19,10 @@ RSpec.describe "taxonomy:untag", type: :task do
     expect(untagger).not_to receive(:call)
     stub_const("Tagging::Untagger", untagger)
 
-    begin
-      expect { rake("taxonomy:untag") }.to raise_exception(SystemExit)
-    rescue SystemExit # rubocop:disable Lint/SuppressedException
-    end
+    untagger = double(Tagging::Untagger)
+    expect(untagger).not_to receive(:call)
+    stub_const("Tagging::Untagger", untagger)
+
+    rake("taxonomy:untag")
   end
 end
