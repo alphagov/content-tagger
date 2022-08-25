@@ -33,8 +33,6 @@ document_types:
   - placeholder_ministerial_role
   - placeholder_person
   - placeholder_policy_area
-  - placeholder_topical_event
-  - placeholder_world_location_news_page
   - policy_area
   - publication_scheme
   - redirect
