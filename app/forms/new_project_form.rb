@@ -4,7 +4,7 @@ class NewProjectForm
   attr_accessor :name, :remote_url, :taxonomy_branch, :bulk_tagging_enabled
   alias_method :bulk_tagging_enabled?, :bulk_tagging_enabled
 
-  UUID_REGEX = %r([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}).freeze
+  UUID_REGEX = %r([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})
 
   validates_presence_of :name, :remote_url, :taxonomy_branch
   validates :remote_url, format: URI::DEFAULT_PARSER.make_regexp(%w[http https])
