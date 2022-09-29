@@ -1,7 +1,7 @@
 module Taxonomy
   class SaveTaxonVersion
-    def self.call(*args, **kwargs)
-      new(*args, **kwargs).save_version
+    def self.call(...)
+      new(...).save_version
     end
 
     def initialize(taxon, version_note, previous_taxon: nil)
