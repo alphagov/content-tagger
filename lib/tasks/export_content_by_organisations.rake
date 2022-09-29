@@ -18,8 +18,10 @@ namespace :govuk do
       puts organisation_slug
 
       content_items_enum = Services.search_api.search_enum(
-        fields: fields.join(","),
-        filter_primary_publishing_organisation: organisation_slug,
+        {
+          fields: fields.join(","),
+          filter_primary_publishing_organisation: organisation_slug,
+        },
       )
 
       print "- saving items to CSV"
