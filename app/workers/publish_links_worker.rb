@@ -25,7 +25,7 @@ class PublishLinksWorker
       attempts = 0
       begin
         attempts += 1
-        BulkTagging::PublishLinks.call(tag_mapping: tag_mapping)
+        BulkTagging::PublishLinks.call(tag_mapping:)
         tag_mapping.mark_as_tagged
       rescue GdsApi::HTTPConflict => e
         # If multiple jobs reference the same content_id then some will fail

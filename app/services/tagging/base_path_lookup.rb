@@ -7,7 +7,7 @@ module Tagging
 
       base_paths = base_paths_or_urls.map { |ri| URI.parse(ri).path }
       content_id_by_path = Services.publishing_api.lookup_content_ids(
-        base_paths: base_paths,
+        base_paths:,
       )
 
       base_paths.map { |path| RelatedContentItem.new(content_id_by_path[path], path) }

@@ -10,13 +10,13 @@ class BulkTagsController < ApplicationController
   end
 
   def results
-    render :new, locals: { search_results: search_response, query: query }
+    render :new, locals: { search_results: search_response, query: }
   end
 
 private
 
   def search_response
-    @search_response ||= BulkTagging::Search.call(query: query, page: page)
+    @search_response ||= BulkTagging::Search.call(query:, page:)
   end
 
   def page

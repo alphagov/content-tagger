@@ -50,8 +50,8 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
       stub_publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
 
       # each content item has links to child taxon
-      stub_publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version: version)
-      stub_publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version: version)
+      stub_publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version:)
+      stub_publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version:)
     end
 
     it "unpublishes a level one taxon with a redirect" do
@@ -90,7 +90,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
 
   def unpublish(taxon_content_id, redirect_to_content_id, retag: true)
     Sidekiq::Testing.inline! do
-      Taxonomy::TaxonUnpublisher.call(taxon_content_id: taxon_content_id, redirect_to_content_id: redirect_to_content_id, user: User.new, retag: retag)
+      Taxonomy::TaxonUnpublisher.call(taxon_content_id:, redirect_to_content_id:, user: User.new, retag:)
     end
   end
 

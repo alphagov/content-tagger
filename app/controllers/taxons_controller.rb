@@ -26,7 +26,7 @@ class TaxonsController < ApplicationController
     taxon = Taxon.new taxon_params
 
     if taxon.valid?
-      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:internal_change_note])
+      Taxonomy::UpdateTaxon.call(taxon:, version_note: params[:internal_change_note])
       redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.create_success")
     else
       error_messages = taxon.errors.full_messages.join("; ")
@@ -72,7 +72,7 @@ class TaxonsController < ApplicationController
     taxon = Taxon.new taxon_params
 
     if taxon.valid?
-      Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: params[:internal_change_note])
+      Taxonomy::UpdateTaxon.call(taxon:, version_note: params[:internal_change_note])
 
       redirect_to taxon_path(taxon.content_id)
     else
@@ -107,7 +107,7 @@ class TaxonsController < ApplicationController
   end
 
   def restore
-    Taxonomy::UpdateTaxon.call(taxon: taxon, version_note: "Restore")
+    Taxonomy::UpdateTaxon.call(taxon:, version_note: "Restore")
     redirect_to taxon_path(taxon.content_id), success: t("controllers.taxons.restore_success")
   rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
     redirect_to trash_taxons_path, danger: e.message
@@ -118,7 +118,7 @@ class TaxonsController < ApplicationController
   end
 
   def confirm_publish
-    render :confirm_publish, locals: { taxon: taxon }
+    render :confirm_publish, locals: { taxon: }
   end
 
   def confirm_bulk_publish
@@ -166,7 +166,7 @@ class TaxonsController < ApplicationController
   end
 
   def confirm_discard
-    render :confirm_discard, locals: { taxon: taxon }
+    render :confirm_discard, locals: { taxon: }
   end
 
   def discard_draft
@@ -209,7 +209,7 @@ private
   end
 
   def taxon
-    @taxon ||= Taxonomy::BuildTaxon.call(content_id: content_id)
+    @taxon ||= Taxonomy::BuildTaxon.call(content_id:)
   end
 
   def url_override_permission

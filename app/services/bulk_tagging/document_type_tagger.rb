@@ -1,7 +1,7 @@
 module BulkTagging
   class DocumentTypeTagger
     def self.call(taxon_content_id:, document_type:)
-      new(taxon_content_id: taxon_content_id, document_type: document_type).call
+      new(taxon_content_id:, document_type:).call
     end
 
     def initialize(taxon_content_id:, document_type:)
@@ -20,9 +20,9 @@ module BulkTagging
       Services.publishing_api.get_content_items_enum(document_type: @document_type, fields: %w[content_id]).lazy.map do |document|
         content_id = document.fetch("content_id")
         new_taxons = add_taxon_link(content_id, @taxon_content_id)
-        { status: "success", message: "success", content_id: content_id, new_taxons: new_taxons }
+        { status: "success", message: "success", content_id:, new_taxons: }
       rescue StandardError => e
-        { status: "error", message: e.message, content_id: content_id, new_taxons: [] }
+        { status: "error", message: e.message, content_id:, new_taxons: [] }
       end
     end
 

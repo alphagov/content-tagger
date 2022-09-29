@@ -16,9 +16,9 @@ class ProjectsController < ApplicationController
     render :show,
            locals: { content_items: Projects::PrepareContentItems.call(query.items),
                      filters: ProjectFilterQuery::FILTERS,
-                     project: project,
-                     taxons: taxons,
-                     query: query }
+                     project:,
+                     taxons:,
+                     query: }
   end
 
   def new
@@ -30,12 +30,12 @@ class ProjectsController < ApplicationController
     if form.generate
       redirect_to projects_path
     else
-      render :new, locals: { form: form }
+      render :new, locals: { form: }
     end
   end
 
   def confirm_delete
-    render :confirm_delete, locals: { project: project }
+    render :confirm_delete, locals: { project: }
   end
 
   def destroy

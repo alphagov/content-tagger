@@ -2,11 +2,11 @@ class UpdateTaxonWorker
   include Sidekiq::Worker
 
   def perform(content_id, attributes)
-    previous_taxon = Taxonomy::BuildTaxon.call(content_id: content_id)
+    previous_taxon = Taxonomy::BuildTaxon.call(content_id:)
     updated_taxon = previous_taxon.clone
     updated_taxon.assign_attributes(attributes)
 
-    Taxonomy::SaveTaxonVersion.call(updated_taxon, "Bulk update", previous_taxon: previous_taxon)
+    Taxonomy::SaveTaxonVersion.call(updated_taxon, "Bulk update", previous_taxon:)
 
     publishing_api_put_content_request(content_id, updated_taxon)
   end
@@ -14,7 +14,7 @@ class UpdateTaxonWorker
 private
 
   def payload(taxon, locale = "en")
-    Taxonomy::BuildTaxonPayload.call(taxon: taxon, locale: locale)
+    Taxonomy::BuildTaxonPayload.call(taxon:, locale:)
   end
 
   def publishing_api_put_content_request(content_id, taxon)

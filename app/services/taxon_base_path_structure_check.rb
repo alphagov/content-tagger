@@ -14,7 +14,7 @@ private
 
   # rubocop:disable Rails/Output
   def validate_tree(taxon:, level_one_prefix: nil, n: 0) # rubocop:disable Naming/MethodParameterName
-    taxon = Taxon.new(taxon, level_one_prefix: level_one_prefix)
+    taxon = Taxon.new(taxon, level_one_prefix:)
 
     spacer = n.positive? ? "#{' ' * n * 2} ├── " : ""
     if taxon.valid?

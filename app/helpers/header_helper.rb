@@ -6,8 +6,8 @@ module HeaderHelper
     active_item = breadcrumbs.pop
 
     locals = {
-      title: title,
-      breadcrumbs: breadcrumbs,
+      title:,
+      breadcrumbs:,
       page_title: page_title || title,
       active_item: active_item.try(:title) || active_item,
     }

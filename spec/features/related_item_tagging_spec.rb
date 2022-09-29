@@ -25,7 +25,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   def then_the_publishing_api_is_sent(**links)
     body = {
-      links: links,
+      links:,
       previous_version: 54_321,
     }
 
@@ -62,7 +62,7 @@ RSpec.describe "Tagging content", type: :feature do
   def given_we_can_populate_the_dropdowns_with_content_from_publishing_api
     # In this test we don't care about empty dropdowns
     %w[topic taxon organisation mainstream_browse_page need].each do |document_type|
-      stub_publishing_api_has_linkables([], document_type: document_type)
+      stub_publishing_api_has_linkables([], document_type:)
     end
   end
 

@@ -14,7 +14,7 @@ module Taxonomy
       return if no_change_to_record
 
       Version.create!(
-        content_id: content_id,
+        content_id:,
         object_changes: taxon_changes,
         note: version_note,
       )
@@ -36,7 +36,7 @@ module Taxonomy
 
     def previous_taxon
       @previous_taxon ||= begin
-        Taxonomy::BuildTaxon.call(content_id: content_id)
+        Taxonomy::BuildTaxon.call(content_id:)
       rescue Taxonomy::BuildTaxon::TaxonNotFoundError
         nil
       end

@@ -205,7 +205,7 @@ RSpec.describe "Tagging content", type: :feature do
     stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
-        expanded_links: expanded_links,
+        expanded_links:,
         version: 54_321,
       }.to_json)
   end
@@ -290,7 +290,7 @@ RSpec.describe "Tagging content", type: :feature do
 
   def then_the_publishing_api_is_sent(**links)
     body = {
-      links: links,
+      links:,
       previous_version: 54_321,
     }
 

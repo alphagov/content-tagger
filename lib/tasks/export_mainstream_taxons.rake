@@ -21,7 +21,7 @@ namespace :govuk do
     ]
 
     content_items_enum = Services.search_api.search_enum(
-      fields: fields,
+      fields:,
       filter_content_store_document_type: content_types,
     )
 

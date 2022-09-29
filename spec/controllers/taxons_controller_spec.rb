@@ -111,7 +111,7 @@ RSpec.describe TaxonsController, type: :controller do
     it "responds with a specific error when the base path is already used" do
       taxon = build(:taxon, publication_state: "unpublished", content_id: SecureRandom.uuid)
       stub_publishing_api_publish(taxon.content_id, {}, status: 422)
-      payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+      payload = Taxonomy::BuildTaxonPayload.call(taxon:)
       stub_publishing_api_has_item(payload.merge(content_id: taxon.content_id))
       stub_publishing_api_has_expanded_links({ content_id: taxon.content_id })
       stub_publishing_api_has_lookups(taxon.base_path => SecureRandom.uuid)
@@ -142,7 +142,7 @@ RSpec.describe TaxonsController, type: :controller do
       stub_publishing_api_has_expanded_links({ content_id: "CONTENT-ID-PARENT" })
 
       Timecop.freeze do
-        payload = Taxonomy::BuildTaxonPayload.call(taxon: taxon)
+        payload = Taxonomy::BuildTaxonPayload.call(taxon:)
         links = {
           links: {
             root_taxon: [],
@@ -198,7 +198,7 @@ RSpec.describe TaxonsController, type: :controller do
 
   def stub_taxon_show_page(content_id)
     stub_requests_for_show_page(
-      content_item_with_details("Foo", other_fields: { content_id: content_id, document_type: "taxon" }),
+      content_item_with_details("Foo", other_fields: { content_id:, document_type: "taxon" }),
     )
   end
 end

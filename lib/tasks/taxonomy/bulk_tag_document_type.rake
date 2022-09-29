@@ -15,7 +15,7 @@ namespace :taxonomy do
     fd = IO.sysopen("/dev/tty", "w")
     io_stream = IO.new(fd, "w")
 
-    results = BulkTagging::DocumentTypeTagger.call(taxon_content_id: taxon_content_id, document_type: document_type).map do |result|
+    results = BulkTagging::DocumentTypeTagger.call(taxon_content_id:, document_type:).map do |result|
       io_stream.puts(result)
       result
     end

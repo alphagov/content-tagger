@@ -13,7 +13,7 @@ module BulkTagging
     end
 
     def self.call(query:, page:, document_type: default_document_types)
-      new(query: query, document_type: document_type, page: page).call
+      new(query:, document_type:, page:).call
     end
 
     def call
@@ -24,8 +24,8 @@ module BulkTagging
 
     def gds_response
       Services.publishing_api.get_content_items(
-        document_type: document_type,
-        page: page,
+        document_type:,
+        page:,
         q: query,
         fields: %i[content_id document_type title base_path],
         search_in: %i[title base_path details.internal_name],

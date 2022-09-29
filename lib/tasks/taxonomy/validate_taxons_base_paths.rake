@@ -12,7 +12,7 @@ namespace :taxonomy do
     #   ...
     # ]
     level_one_taxons = Taxonomy::TaxonomyQuery.new.level_one_taxons
-    base_path_checker = TaxonBasePathStructureCheck.new(level_one_taxons: level_one_taxons)
+    base_path_checker = TaxonBasePathStructureCheck.new(level_one_taxons:)
     base_path_checker.validate
 
     if base_path_checker.invalid_taxons.any?

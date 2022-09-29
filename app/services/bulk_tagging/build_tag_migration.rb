@@ -12,9 +12,9 @@ module BulkTagging
 
     def self.call(source_content_item:, taxon_content_ids:, content_base_paths:)
       new(
-        source_content_item: source_content_item,
-        taxon_content_ids: taxon_content_ids,
-        content_base_paths: content_base_paths,
+        source_content_item:,
+        taxon_content_ids:,
+        content_base_paths:,
       ).call
     end
 
@@ -56,8 +56,8 @@ module BulkTagging
     def create_tag_mappings_for_taxon(taxon)
       content_base_paths.each do |content_base_path|
         tag_mapping = BulkTagging::BuildTagMapping.call(
-          taxon: taxon,
-          content_base_path: content_base_path,
+          taxon:,
+          content_base_path:,
         )
 
         tag_migration.tag_mappings << tag_mapping

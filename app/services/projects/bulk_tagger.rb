@@ -15,7 +15,7 @@ module Projects
 
     def result
       @content_ids.reduce([]) do |acc, content_id|
-        acc << { content_id: content_id, taxons: @taxon_content_ids }
+        acc << { content_id:, taxons: @taxon_content_ids }
       end
     end
   end

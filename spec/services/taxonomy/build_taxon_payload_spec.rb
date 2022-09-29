@@ -16,7 +16,7 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
   end
 
   describe ".call" do
-    let(:payload) { described_class.call(taxon: taxon) }
+    let(:payload) { described_class.call(taxon:) }
 
     it "generates a valid payload" do
       expect(payload).to be_valid_against_publisher_schema("taxon")
@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
     end
 
     context "non-'en' locale" do
-      let(:payload) { described_class.call(taxon: taxon, locale: "fr") }
+      let(:payload) { described_class.call(taxon:, locale: "fr") }
 
       it "sets locale to non-'en' locale" do
         expect(payload[:locale]).to eq("fr")

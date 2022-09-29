@@ -163,7 +163,7 @@ RSpec.describe Taxon do
 
       @taxon = Taxon.new(
         visible_to_departmental_editors: "true",
-        state_history: state_history,
+        state_history:,
         publication_state: "published",
       )
     end
@@ -208,7 +208,7 @@ RSpec.describe Taxon do
 
         taxon = Taxon.new(
           visible_to_departmental_editors: "true",
-          state_history: state_history,
+          state_history:,
           publication_state: "published",
         )
         expect(taxon.draft_and_published_editions_exist?).to eq(false)
@@ -221,7 +221,7 @@ RSpec.describe Taxon do
 
         taxon = Taxon.new(
           visible_to_departmental_editors: "true",
-          state_history: state_history,
+          state_history:,
           publication_state: "draft",
         )
         expect(taxon.draft_and_published_editions_exist?).to eq(false)

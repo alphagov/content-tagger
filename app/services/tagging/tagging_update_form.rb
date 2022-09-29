@@ -28,8 +28,8 @@ module Tagging
       end
 
       new(
-        links: links,
-        content_item: content_item,
+        links:,
+        content_item:,
         previous_version: links.previous_version,
         related_item_errors: {},
         **tag_values,

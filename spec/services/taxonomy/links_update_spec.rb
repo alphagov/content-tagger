@@ -8,13 +8,13 @@ RSpec.describe Taxonomy::LinksUpdate do
   let(:associated_id) { SecureRandom.uuid }
 
   before :each do
-    stub_publishing_api_has_item(content_id: content_id, title: "content")
+    stub_publishing_api_has_item(content_id:, title: "content")
     stub_any_publishing_api_patch_links
   end
 
   it "updates a taxon with a new non-root taxon" do
     described_class.new(
-      content_id: content_id,
+      content_id:,
       parent_taxon_id: parent_id,
       associated_taxon_ids: [associated_id],
     ).call
@@ -31,7 +31,7 @@ RSpec.describe Taxonomy::LinksUpdate do
 
   it "updates a parent taxon with a root taxon" do
     described_class.new(
-      content_id: content_id,
+      content_id:,
       parent_taxon_id: GovukTaxonomy::ROOT_CONTENT_ID,
       associated_taxon_ids: [associated_id],
     ).call

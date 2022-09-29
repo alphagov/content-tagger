@@ -41,7 +41,7 @@ module Metrics
         stub_publishing_api_has_expanded_links({
           content_id: GovukTaxonomy::ROOT_CONTENT_ID,
           expanded_links: {
-            level_one_taxons: level_one_taxons,
+            level_one_taxons:,
           },
         })
         stub_publishing_api_has_expanded_links(

@@ -56,7 +56,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
 
       post(
         project_bulk_update_path(project),
-        params: params,
+        params:,
       )
 
       expect(response.code).to eql "200"

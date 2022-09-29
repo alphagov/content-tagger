@@ -13,22 +13,22 @@ module Taxonomy
         base_path: path(locale),
         document_type: "taxon",
         schema_name: "taxon",
-        title: title,
+        title:,
         publishing_app: "content-tagger",
         rendering_app: "collections",
         public_updated_at: Time.zone.now.iso8601,
-        locale: locale,
+        locale:,
         details: {
-          internal_name: internal_name,
-          notes_for_editors: notes_for_editors,
-          url_override: url_override,
-          visible_to_departmental_editors: visible_to_departmental_editors,
+          internal_name:,
+          notes_for_editors:,
+          url_override:,
+          visible_to_departmental_editors:,
         },
         routes: [
           { path: path(locale), type: "exact" },
         ],
         update_type: "major",
-        phase: phase,
+        phase:,
       }
       payload[:description] = description if locale == "en"
 

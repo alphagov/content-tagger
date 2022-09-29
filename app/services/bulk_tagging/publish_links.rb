@@ -3,7 +3,7 @@ module BulkTagging
     attr_reader :tag_mapping
 
     def self.call(tag_mapping:)
-      new(tag_mapping: tag_mapping).publish
+      new(tag_mapping:).publish
     end
 
     def initialize(tag_mapping:)
@@ -14,7 +14,7 @@ module BulkTagging
       Services.publishing_api.patch_links(
         tag_mapping.content_id,
         links: updated_links,
-        previous_version: previous_version,
+        previous_version:,
         bulk_publishing: true,
       )
     end

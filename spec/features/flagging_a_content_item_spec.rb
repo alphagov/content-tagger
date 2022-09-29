@@ -49,15 +49,15 @@ RSpec.describe "flagging a content item" do
 
   def given_there_is_a_project_with_flagged_content_items
     project = create(:project)
-    create(:project_content_item, :flagged_needs_help, project: project)
-    create(:project_content_item, :flagged_missing_topic, project: project)
+    create(:project_content_item, :flagged_needs_help, project:)
+    create(:project_content_item, :flagged_missing_topic, project:)
     stub_empty_bulk_taxons_lookup
     stub_draft_taxonomy_branch
   end
 
   def given_there_is_a_project_with_a_flagged_content_item
     project = create(:project)
-    create(:project_content_item, :flagged_needs_help, project: project)
+    create(:project_content_item, :flagged_needs_help, project:)
     stub_empty_bulk_taxons_lookup
     stub_draft_taxonomy_branch
   end

@@ -22,9 +22,9 @@ class NewProjectForm
     ProjectBuilder.call(
       content_item_attributes: csv.rows_with_headers,
       project_attributes: {
-        name: name,
-        taxonomy_branch: taxonomy_branch,
-        bulk_tagging_enabled: bulk_tagging_enabled,
+        name:,
+        taxonomy_branch:,
+        bulk_tagging_enabled:,
       },
     )
 

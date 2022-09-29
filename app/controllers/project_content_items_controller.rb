@@ -22,10 +22,10 @@ class ProjectContentItemsController < ApplicationController
   end
 
   def flags
-    locals = { project: project, content_item: content_item }
+    locals = { project:, content_item: }
 
     respond_to do |format|
-      format.js { render layout: false, locals: locals }
+      format.js { render layout: false, locals: }
     end
   end
 
@@ -34,7 +34,7 @@ class ProjectContentItemsController < ApplicationController
     content_item.save!
 
     respond_to do |format|
-      format.js { render layout: false, locals: { content_item: content_item } }
+      format.js { render layout: false, locals: { content_item: } }
     end
   end
 

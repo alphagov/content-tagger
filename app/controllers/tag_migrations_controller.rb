@@ -22,8 +22,8 @@ class TagMigrationsController < ApplicationController
            locals: {
              tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
              taxons: Linkables.new.taxons,
-             expanded_links: expanded_links,
-             source_content_item: source_content_item,
+             expanded_links:,
+             source_content_item:,
            }
   end
 
@@ -31,7 +31,7 @@ class TagMigrationsController < ApplicationController
     source_content_item = ContentItem.find!(params[:bulk_tagging_tag_migration][:source_content_id])
 
     tag_migration = BulkTagging::BuildTagMigration.call(
-      source_content_item: source_content_item,
+      source_content_item:,
       taxon_content_ids: params[:taxons],
       content_base_paths: params[:content_base_paths],
     )
@@ -48,13 +48,13 @@ class TagMigrationsController < ApplicationController
 
     render :show,
            locals: {
-             tag_migration: tag_migration,
+             tag_migration:,
              current_tagged_taxon: tag_migration.source_title,
              aggregated_tag_mappings: presented_aggregated_tag_mappings,
              completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
              total_tag_mappings: aggregated_tag_mappings.count,
              progress_path: tag_migration_progress_path(tag_migration),
-             source_content_item: source_content_item,
+             source_content_item:,
            }
   end
 

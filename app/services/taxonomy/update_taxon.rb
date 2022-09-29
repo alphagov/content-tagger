@@ -12,7 +12,7 @@ module Taxonomy
     end
 
     def self.call(taxon:, validate: true, version_note: nil)
-      new(taxon: taxon, version_note: version_note).publish(validate: validate)
+      new(taxon:, version_note:).publish(validate:)
     end
 
     def publish(validate: true)
@@ -27,7 +27,7 @@ module Taxonomy
       publishing_api_put_content_request(content_id)
 
       Taxonomy::LinksUpdate.new(
-        content_id: content_id,
+        content_id:,
         parent_taxon_id: parent_content_id,
         associated_taxon_ids: associated_taxons,
       ).call
@@ -42,7 +42,7 @@ module Taxonomy
 
       if existing_content_id.present? && existing_content_id != taxon.content_id
         taxon_path = Rails.application.routes.url_helpers.taxon_path(existing_content_id)
-        error_message = I18n.t("errors.invalid_taxon_base_path", taxon_path: taxon_path)
+        error_message = I18n.t("errors.invalid_taxon_base_path", taxon_path:)
         raise(InvalidTaxonError, ActionController::Base.helpers.sanitize(error_message))
       else
         GovukError.notify(e)
@@ -53,7 +53,7 @@ module Taxonomy
   private
 
     def payload(locale = "en")
-      Taxonomy::BuildTaxonPayload.call(taxon: taxon, locale: locale)
+      Taxonomy::BuildTaxonPayload.call(taxon:, locale:)
     end
 
     def publishing_api_put_content_request(content_id)
