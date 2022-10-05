@@ -15,23 +15,15 @@ namespace :travel_advice do
       links = Services.publishing_api.get_links(edition["content_id"])["links"]
       next unless links && links["ordered_related_items"]
 
-      p "Updating links for item #{edition['content_id']}"
+      index_of_link = links["ordered_related_items"].index(take_out)
 
-      begin
-        index_of_link = links["ordered_related_items"].index(take_out)
+      links["ordered_related_items"][index_of_link] = swap_in if index_of_link
 
-        links["ordered_related_items"][index_of_link] = swap_in if index_of_link
-
-        Services.publishing_api.patch_links(
-          edition["content_id"],
-          links: links,
-          bulk_publishing: true,
-        )
-      rescue GdsApi::TimedOutException => e
-        p "Problem attempting to update for content item #{edition['content_id']}"
-        pp e
-        next
-      end
+      Services.publishing_api.patch_links(
+        edition["content_id"],
+        links: links,
+        bulk_publishing: true,
+      )
     end
   end
 end
