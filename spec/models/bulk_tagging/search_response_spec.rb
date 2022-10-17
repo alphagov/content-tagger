@@ -4,7 +4,7 @@ module BulkTagging
 
     context "with a successful response" do
       let(:gds_api_response) do
-        double(
+        instance_double(
           GdsApi::Response,
           code: 200,
           to_hash: {

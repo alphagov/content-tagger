@@ -67,7 +67,8 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
       )
 
       size = described_class.new(
-        double(
+        instance_double(
+          Taxon,
           content_id: "b92079ac-f1d9-44c8-bc78-772d54377ee2",
           title: "title",
         ),
@@ -98,7 +99,8 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
 
   describe "#max_size" do
     let(:content_item) do
-      double(
+      instance_double(
+        ContentItem,
         content_id: "b92079ac-f1d9-44c8-bc78-772d54377ee2",
         title: "title",
       )
