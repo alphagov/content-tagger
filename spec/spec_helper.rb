@@ -11,7 +11,6 @@ require "govuk_sidekiq/testing"
 require "webmock/rspec"
 require "capybara/rails"
 require "gds_api/test_helpers/publishing_api"
-require "database_cleaner"
 require "govuk_test"
 require "govuk_schemas/rspec_matchers"
 
@@ -21,8 +20,8 @@ Dir[Rails.root.join("spec/matchers/**/*.rb")].sort.each { |f| require f }
 GovukTest.configure
 WebMock.disable_net_connect!(allow_localhost: true)
 ActiveRecord::Migration.maintain_test_schema!
-DatabaseCleaner.strategy = :transaction
 Rails.application.load_tasks
+Rails.application.load_seed
 
 RSpec.configure do |config|
   config.include GdsApi::TestHelpers::PublishingApi
@@ -42,22 +41,6 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.use_transactional_fixtures = false
+  config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
-
-  config.before(:each) do
-    User.create!(permissions: ["signin", "GDS Editor"])
-    DatabaseCleaner.start
-    WebMock.reset!
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-
-  config.around(:each, js: true) do |example|
-    DatabaseCleaner.strategy = :truncation
-    example.run
-    DatabaseCleaner.strategy = :transaction
-  end
 end
