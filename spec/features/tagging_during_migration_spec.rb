@@ -1,4 +1,4 @@
-RSpec.describe "Tagging content during migration", type: :feature do
+RSpec.describe "Tagging content during migration" do
   include PublishingApiHelper
 
   before do

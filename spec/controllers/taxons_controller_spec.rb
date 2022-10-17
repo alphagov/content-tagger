@@ -1,4 +1,4 @@
-RSpec.describe TaxonsController, type: :controller do
+RSpec.describe TaxonsController do
   include EmailAlertApiHelper
   include PublishingApiHelper
   include ContentItemHelper

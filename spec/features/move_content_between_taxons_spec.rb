@@ -1,4 +1,4 @@
-RSpec.feature "Move content between Taxons", type: :feature do
+RSpec.feature "Move content between Taxons" do
   include ContentItemHelper
   include EmailAlertApiHelper
   include PublishingApiHelper

@@ -1,4 +1,4 @@
-RSpec.describe "Tagging content", type: :feature do
+RSpec.describe "Tagging content" do
   include PublishingApiHelper
 
   before do

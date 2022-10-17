@@ -1,4 +1,4 @@
-RSpec.feature "Bulk tagging", type: :feature do
+RSpec.feature "Bulk tagging" do
   include ContentItemHelper
   include PublishingApiHelper
 

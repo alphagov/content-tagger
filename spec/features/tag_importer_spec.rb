@@ -1,4 +1,4 @@
-RSpec.feature "Tag importer", type: :feature do
+RSpec.feature "Tag importer" do
   include GoogleSheetHelper
   include PublishingApiHelper
 

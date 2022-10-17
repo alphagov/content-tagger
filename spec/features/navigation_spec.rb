@@ -1,4 +1,4 @@
-RSpec.feature "Navigation", type: :feature do
+RSpec.feature "Navigation" do
   include TaxonomyHelper
   include PublishingApiHelper
 

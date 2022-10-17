@@ -1,4 +1,4 @@
-RSpec.feature "Tagging History", type: :feature do
+RSpec.feature "Tagging History" do
   include ContentItemHelper
   include PublishingApiHelper
 
