@@ -39,7 +39,7 @@ RSpec.describe "Tagging content", type: :feature do
       "/my-content-item" => "MY-CONTENT-ID",
     )
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
+    stub_request(:get, "#{Plek.find('publishing-api')}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         publishing_app: "a-migrated-app",
         rendering_app: "frontend",
@@ -49,7 +49,7 @@ RSpec.describe "Tagging content", type: :feature do
         title: "This Is A Content Item",
       }.to_json)
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
+    stub_request(:get, "#{Plek.find('publishing-api')}/v2/expanded-links/MY-CONTENT-ID?generate=true")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links: {},
@@ -69,7 +69,7 @@ RSpec.describe "Tagging content", type: :feature do
       .with(body: { "base_paths" => ["/pay-vat"] })
       .to_return(body: { "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6" }.to_json)
 
-    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{Plek.find('publishing-api')}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
     all(".related-item-path")[0].set("/pay-vat")

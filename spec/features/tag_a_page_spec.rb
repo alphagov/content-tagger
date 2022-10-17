@@ -190,7 +190,7 @@ RSpec.describe "Tagging content", type: :feature do
       "/my-content-item" => "MY-CONTENT-ID",
     )
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
+    stub_request(:get, "#{Plek.find('publishing-api')}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         publishing_app: "a-migrated-app",
         rendering_app: "frontend",
@@ -200,7 +200,7 @@ RSpec.describe "Tagging content", type: :feature do
         title: "This Is A Content Item",
       }.to_json)
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
+    stub_request(:get, "#{Plek.find('publishing-api')}/v2/expanded-links/MY-CONTENT-ID?generate=true")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links:,
@@ -222,7 +222,7 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def when_i_fill_in_related_items(values)
-    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{Plek.find('publishing-api')}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
     fields = all(".related-item input")
@@ -267,14 +267,14 @@ RSpec.describe "Tagging content", type: :feature do
   end
 
   def when_i_select_an_additional_topic(selection)
-    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{Plek.find('publishing-api')}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
     select selection, from: "Topics"
   end
 
   def and_somebody_else_makes_a_change
-    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{Plek.find('publishing-api')}/v2/links/MY-CONTENT-ID")
       .to_return(status: 409)
   end
 

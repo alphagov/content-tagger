@@ -18,8 +18,6 @@ require "govuk_schemas/rspec_matchers"
 Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 Dir[Rails.root.join("spec/matchers/**/*.rb")].sort.each { |f| require f }
 
-PUBLISHING_API = "https://publishing-api.test.gov.uk".freeze
-
 GovukTest.configure
 WebMock.disable_net_connect!(allow_localhost: true)
 ActiveRecord::Migration.maintain_test_schema!
