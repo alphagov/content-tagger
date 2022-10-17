@@ -1,5 +1,5 @@
 RSpec.describe Taxon do
-  context "validations" do
+  describe "validations" do
     it "is not valid without a title" do
       taxon = described_class.new
       expect(taxon).not_to be_valid

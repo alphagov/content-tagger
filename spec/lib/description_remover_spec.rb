@@ -5,34 +5,32 @@ RSpec.describe DescriptionRemover do
   include ::GdsApi::TestHelpers::ContentStore
   include ::GdsApi::TestHelpers::PublishingApi
 
-  context "appropriate taxons are updated" do
-    before do
-      stub_content_store_has_item("/work", taxon.to_json, draft: true)
-      stub_publishing_api_has_item(published_child_taxon)
-      stub_publishing_api_has_item(published_child_taxon_with_draft)
-      stub_publishing_api_has_item(draft_taxon)
+  before do
+    stub_content_store_has_item("/work", taxon.to_json, draft: true)
+    stub_publishing_api_has_item(published_child_taxon)
+    stub_publishing_api_has_item(published_child_taxon_with_draft)
+    stub_publishing_api_has_item(draft_taxon)
 
-      stub_any_publishing_api_put_content
-      stub_any_publishing_api_publish
-    end
+    stub_any_publishing_api_put_content
+    stub_any_publishing_api_publish
+  end
 
-    it "asserts taxon has draft saved and published" do
-      expect { described_class.call("/work") }.to output.to_stdout
-      assert_put_content("pub-taxon", content_id: "pub-taxon", title: "taxon-a", phase: "live", base_path: "/work/taxon_a")
-      assert_publishing_api_publish("pub-taxon")
-    end
+  it "asserts taxon has draft saved and published" do
+    expect { described_class.call("/work") }.to output.to_stdout
+    assert_put_content("pub-taxon", content_id: "pub-taxon", title: "taxon-a", phase: "live", base_path: "/work/taxon_a")
+    assert_publishing_api_publish("pub-taxon")
+  end
 
-    it "asserts taxon is not saved or published as it has a draft" do
-      expect { described_class.call("/work") }.to output.to_stdout
-      assert_no_put_content("pub-and-draft-taxon")
-      assert_no_publish("pub-and-draft-taxon")
-    end
+  it "asserts taxon is not saved or published as it has a draft" do
+    expect { described_class.call("/work") }.to output.to_stdout
+    assert_no_put_content("pub-and-draft-taxon")
+    assert_no_publish("pub-and-draft-taxon")
+  end
 
-    it "asserts taxon is not published as it is only a draft" do
-      expect { described_class.call("/work") }.to output.to_stdout
-      assert_no_put_content("draft-taxon")
-      assert_no_publish("draft-taxon")
-    end
+  it "asserts taxon is not published as it is only a draft" do
+    expect { described_class.call("/work") }.to output.to_stdout
+    assert_no_put_content("draft-taxon")
+    assert_no_publish("draft-taxon")
   end
 
   def taxon

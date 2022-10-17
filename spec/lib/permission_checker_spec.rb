@@ -65,7 +65,7 @@ RSpec.describe PermissionChecker do
     it { is_expected.not_to have_permission(:user_can_manage_taxonomy?) }
     it { is_expected.not_to have_permission(:user_can_override_taxon_url?) }
 
-    context "AND gds_editor permissions" do
+    context "and gds_editor permissions" do
       before do
         allow(user)
           .to receive(:has_permission?)

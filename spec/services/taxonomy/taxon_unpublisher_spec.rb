@@ -19,7 +19,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     stub_any_publishing_api_unpublish
   end
 
-  context "the taxon is not tagged to any content items" do
+  context "when the taxon is not tagged to any content items" do
     before do
       # no content items are tagged to child taxon
       stub_publishing_api_has_linked_items(
@@ -36,7 +36,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     end
   end
 
-  context "the taxon is tagged to two content items" do
+  context "when the taxon is tagged to two content items" do
     before do
       # content items are tagged to child taxon
       stub_publishing_api_has_linked_items(

@@ -91,7 +91,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
   end
 
   describe "#taxons_per_level" do
-    context "there are no root taxons" do
+    context "when there are no root taxons" do
       before do
         allow(Services.content_store).to receive(:content_item).with("/").and_return no_taxons
       end
@@ -101,7 +101,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       end
     end
 
-    context "there are root taxons and one level of children" do
+    context "when there are root taxons and one level of children" do
       before do
         stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
         stub_content_store_has_item(
@@ -131,7 +131,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       end
     end
 
-    context "there are root taxons and two levels of children" do
+    context "when there are root taxons and two levels of children" do
       before do
         stub_content_store_has_item("/", root_taxon.to_json, draft: true)
         stub_content_store_has_item("/taxons/root_taxon", multi_level_child_taxons.to_json, draft: true)

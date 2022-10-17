@@ -11,7 +11,7 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
             .to raise_error(GdsApi::HTTPNotFound, /not find content item with/)
   end
 
-  context "there is a taxon, some content and links" do
+  context "when there is a taxon, some content and links" do
     before do
       stub_publishing_api_has_item(content_id: @taxon_content_id)
       stub_publishing_api_has_content(

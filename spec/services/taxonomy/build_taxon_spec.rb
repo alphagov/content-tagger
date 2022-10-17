@@ -124,7 +124,7 @@ RSpec.describe Taxonomy::BuildTaxon do
       end
     end
 
-    context "root taxon" do
+    context "with the root taxon" do
       before do
         stub_publishing_api_has_expanded_links({
           content_id:,

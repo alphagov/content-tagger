@@ -28,7 +28,7 @@ RSpec.describe Taxonomy::BuildTaxonPayload do
       expect(payload[:locale]).to eq("en")
     end
 
-    context "non-'en' locale" do
+    context "when the locale is not 'en'" do
       let(:payload) { described_class.call(taxon:, locale: "fr") }
 
       it "sets locale to non-'en' locale" do

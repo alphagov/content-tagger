@@ -1,22 +1,20 @@
 module BulkTagging
   RSpec.describe TaggingSpreadsheet do
     describe "#state" do
-      context "valid states" do
-        it "can be in an imported state" do
-          expect(build(:tagging_spreadsheet, state: :imported)).to be_valid
-        end
+      it "can be in an imported state" do
+        expect(build(:tagging_spreadsheet, state: :imported)).to be_valid
+      end
 
-        it "can be in a ready to import state" do
-          expect(build(:tagging_spreadsheet, state: :ready_to_import)).to be_valid
-        end
+      it "can be in a ready to import state" do
+        expect(build(:tagging_spreadsheet, state: :ready_to_import)).to be_valid
+      end
 
-        it "can be in an error state" do
-          expect(build(:tagging_spreadsheet, state: :errored)).to be_valid
-        end
+      it "can be in an error state" do
+        expect(build(:tagging_spreadsheet, state: :errored)).to be_valid
+      end
 
-        it "can be in an uploaded state" do
-          expect(build(:tagging_spreadsheet, state: :uploaded)).to be_valid
-        end
+      it "can be in an uploaded state" do
+        expect(build(:tagging_spreadsheet, state: :uploaded)).to be_valid
       end
     end
 

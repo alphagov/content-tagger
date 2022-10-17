@@ -6,14 +6,14 @@ RSpec.describe Proxies::IframeAllowingProxy do
   end
 
   describe "#rewrite_response" do
-    context "there is no content-type" do
+    context "when there is no content-type" do
       it "renders the original page" do
         body = ['<tag>href="/absolute/path"</tag>']
         expect(@proxy.rewrite_response([@status, @headers, body])[-1]).to eq(body)
       end
     end
 
-    context "the page contains html" do
+    context "when the page contains html" do
       before do
         @headers["content-type"] = ["text/html; charset=utf-8"]
       end
@@ -49,7 +49,7 @@ RSpec.describe Proxies::IframeAllowingProxy do
       end
     end
 
-    context "the page contains a pdf" do
+    context "when the page contains a pdf" do
       before do
         @headers["content-type"] = ["application/x-pdf"]
       end

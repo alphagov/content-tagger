@@ -3,7 +3,7 @@ require "gds_api/test_helpers/search"
 RSpec.describe Tagging::CommonAncestorFinder do
   include ::GdsApi::TestHelpers::Search
 
-  context "there is one taxon" do
+  context "when there is one taxon" do
     def has_paths(paths)
       stub_publishing_api_has_expanded_links(Support::TaxonHelper.expanded_link_hash("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", paths))
     end

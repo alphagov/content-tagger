@@ -4,7 +4,7 @@ RSpec.describe Linkables do
 
   let(:linkables) { described_class.new }
 
-  context "there are linkables" do
+  context "when there are linkables" do
     before do
       stub_publishing_api_has_linkables(
         [

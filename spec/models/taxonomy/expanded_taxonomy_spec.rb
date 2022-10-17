@@ -57,7 +57,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
     })
   end
 
-  context "A child and parent taxon, not attached to the root taxon" do
+  context "when there is a child and parent taxon, not attached to the root taxon" do
     before do
       @rootless_parent = FactoryBot.build(:taxon_hash, title: "Rootless Parent")
       @rootless_child = FactoryBot.build(:taxon_hash, title: "Rootless Child")
@@ -97,7 +97,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
     end
   end
 
-  describe "Ask for the Homepage" do
+  describe "when expanding the root content ID" do
     before do
       @taxonomy = described_class.new(GovukTaxonomy::ROOT_CONTENT_ID).build
     end
@@ -183,7 +183,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       end
     end
 
-    context "given a circular dependency between taxons" do
+    context "when there is a circular dependency between taxons" do
       let(:bramley) do
         FactoryBot.build(:taxon_hash, title: "Bramley", links: { parent_taxons: [apples], child_taxons: [apples] })
       end
