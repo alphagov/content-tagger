@@ -14,9 +14,7 @@ module BulkTagging
     end
 
     it "returns instances of Taxons" do
-      search_results.taxons.each do |taxon|
-        expect(taxon).to be_a(Taxon)
-      end
+      expect(search_results.taxons).to all(be_a(Taxon))
     end
 
     it "knows about the current page" do

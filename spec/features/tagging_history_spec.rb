@@ -124,10 +124,8 @@ private
   end
 
   def then_i_see_the_user_and_organisation
-    page.all("tbody tr").each do |tr|
-      expect(tr).to have_text("Foo")
-      expect(tr).to have_text("Bar baz")
-    end
+    expect(page.all("tbody tr")).to all(have_text("Foo"))
+    expect(page.all("tbody tr")).to all(have_text("Bar baz"))
   end
 
   def then_i_see_the_link_changes_for_the_individual_taxon
