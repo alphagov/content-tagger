@@ -8,8 +8,14 @@ RSpec.describe PublishLinksWorker do
 
     context "with valid links" do
       before do
-        allow_any_instance_of(BulkTagging::TagMapping).to receive(:valid?)
-          .and_return(true)
+        mapping_double = instance_double(
+          BulkTagging::TagMapping,
+          valid?: true,
+          errors: [],
+          mark_as_errored: nil,
+          mark_as_tagged: nil,
+        )
+        allow(BulkTagging::TagMapping).to receive(:find_by_id).and_return(mapping_double)
       end
 
       it "calls the links publisher service when there is a tag mapping" do
@@ -24,8 +30,14 @@ RSpec.describe PublishLinksWorker do
       let!(:tag_mapping) { create(:tag_mapping) }
 
       before do
-        allow_any_instance_of(BulkTagging::TagMapping).to receive(:valid?)
-          .and_return(false)
+        mapping_double = instance_double(
+          BulkTagging::TagMapping,
+          valid?: false,
+          errors: [],
+          mark_as_errored: nil,
+          mark_as_tagged: nil,
+        )
+        allow(BulkTagging::TagMapping).to receive(:find_by_id).and_return(mapping_double)
       end
 
       it "does not call the publishing API and marks the taggings as errored" do

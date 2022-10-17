@@ -42,7 +42,9 @@ RSpec.describe NewProjectForm do
     end
 
     it "returns false with an error added when the CSV fails to parse" do
-      allow_any_instance_of(RemoteCsv)
+      remote_csv_double = instance_double(RemoteCsv)
+      allow(RemoteCsv).to receive(:new).and_return(remote_csv_double)
+      allow(remote_csv_double)
         .to receive(:rows_with_headers)
         .and_raise(RemoteCsv::ParsingError.new(Net::OpenTimeout.new("execution expired")))
 
@@ -71,16 +73,13 @@ RSpec.describe NewProjectForm do
 
   describe "#taxonomy_branches_for_select" do
     before do
-      allow_any_instance_of(GovukTaxonomy::Branches)
-        .to receive(:all)
-        .and_return(
-          [
-            {
-              "title" => "Title",
-              "content_id" => "content_id",
-            },
-          ],
-        )
+      branches_double = instance_double(GovukTaxonomy::Branches, all: [
+        {
+          "title" => "Title",
+          "content_id" => "content_id",
+        },
+      ])
+      allow(GovukTaxonomy::Branches).to receive(:new).and_return(branches_double)
     end
 
     it "returns a hash of title => id" do
