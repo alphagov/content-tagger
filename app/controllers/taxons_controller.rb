@@ -201,7 +201,6 @@ private
       :notes_for_editors,
       :parent_content_id,
       associated_taxons: [],
-      legacy_taxons: [],
     )
   end
 

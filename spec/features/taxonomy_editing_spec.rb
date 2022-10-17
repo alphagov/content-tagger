@@ -103,7 +103,6 @@ RSpec.feature "Taxonomy editing" do
             root_taxon: [],
             parent_taxons: %w[ID-1],
             associated_taxons: array_including("ID-2", "ID-3"),
-            legacy_taxons: [],
           },
         },
       )
@@ -238,12 +237,6 @@ RSpec.feature "Taxonomy editing" do
             content_id: @taxon2[:content_id],
             base_path: @taxon2[:base_path],
             title: @taxon2[:title],
-          },
-        ],
-        legacy_taxons: [
-          {
-            content_id: "CONTENT-ID-LEGACY-TAXON",
-            base_path: "/legacy-taxon",
           },
         ],
       },

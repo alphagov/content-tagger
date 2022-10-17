@@ -1,10 +1,9 @@
 module Taxonomy
   class LinksUpdate
-    def initialize(content_id:, parent_taxon_id: nil, associated_taxon_ids: [], legacy_taxon_ids: [])
+    def initialize(content_id:, parent_taxon_id: nil, associated_taxon_ids: [])
       @content_id = content_id
       @parent_taxon_id = parent_taxon_id.presence
       @associated_taxon_ids = Array(associated_taxon_ids).select(&:present?)
-      @legacy_taxon_ids = Array(legacy_taxon_ids).select(&:present?)
     end
 
     def call
@@ -15,7 +14,6 @@ module Taxonomy
             root_taxon: Array(@parent_taxon_id),
             parent_taxons: [],
             associated_taxons: @associated_taxon_ids,
-            legacy_taxons: @legacy_taxon_ids,
           },
         )
 
@@ -26,7 +24,6 @@ module Taxonomy
             root_taxon: [],
             parent_taxons: Array(@parent_taxon_id),
             associated_taxons: @associated_taxon_ids,
-            legacy_taxons: @legacy_taxon_ids,
           },
         )
       end
