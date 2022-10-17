@@ -2,25 +2,25 @@ module DataExport
   RSpec.describe ContentExport do
     describe "#get_content" do
       it "returns empty hash if there is no content for the base path" do
-        expect(Services.content_store).to receive(:content_item).with("/base_path").and_raise GdsApi::ContentStore::ItemNotFound.new(404)
+        allow(Services.content_store).to receive(:content_item).with("/base_path").and_raise GdsApi::ContentStore::ItemNotFound.new(404)
         expect(described_class.new.get_content("/base_path")).to eq({})
       end
 
       it "returns simple content" do
-        expect(Services.content_store).to receive(:content_item).with("/base_path").and_return content_no_taxon
+        allow(Services.content_store).to receive(:content_item).with("/base_path").and_return content_no_taxon
         expect(described_class.new.get_content("/base_path", base_fields: %w[base_path content_id]))
           .to eq("base_path" => "/base_path", "content_id" => "d282d35a-2bd2-4e14-a7a6-a04e6b10520f")
       end
 
       it "returns taxons" do
-        expect(Services.content_store).to receive(:content_item).with("/base_path").and_return content_with_taxons
+        allow(Services.content_store).to receive(:content_item).with("/base_path").and_return content_with_taxons
         expect(described_class.new.get_content("/base_path", taxon_fields: %w[content_id])["taxons"])
           .to eq([{ "content_id" => "237b2e72-c465-42fe-9293-8b6af21713c0" },
                   { "content_id" => "8da62d85-47c0-42df-94c4-eaaeac329671" }])
       end
 
       it "returns the primary publishing organistations" do
-        expect(Services.content_store).to receive(:content_item).with("/base_path").and_return content_with_ppo
+        allow(Services.content_store).to receive(:content_item).with("/base_path").and_return content_with_ppo
         expect(described_class.new.get_content("/base_path", ppo_fields: %w[title])["primary_publishing_organisation"])
           .to eq("title" => "title1")
       end

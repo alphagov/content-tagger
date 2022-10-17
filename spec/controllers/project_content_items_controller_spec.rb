@@ -48,7 +48,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
     end
 
     it "responds with a 200 code if content items are queued for update successfully" do
-      expect(Projects::BulkTagger)
+      allow(Projects::BulkTagger)
         .to receive(:new)
         .with(taxons: [valid_taxon_uuid, valid_taxon_uuid], content_items: project.content_items.map(&:id).map(&:to_s))
         .and_return(tagger_service)
