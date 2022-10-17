@@ -21,7 +21,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     it "generates a valid links payload using ordered_related_items and overrides" do
       stub_content_id_lookup("/my-page" => content_id)
 
-      publisher = Tagging::TaggingUpdatePublisher.new(
+      publisher = described_class.new(
         stubbed_content_item,
         taxons: %w[0ffd5e18-af20-4413-a215-8511cf7628b5],
         ordered_related_items: ["/my-page"],
@@ -43,12 +43,12 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     it "is not valid if the provided base path does not exist" do
       stub_content_id_lookup("/my-page" => nil)
 
-      response = Tagging::TaggingUpdatePublisher.new(
+      response = described_class.new(
         stubbed_content_item,
         ordered_related_items: ["/my-page"],
       )
 
-      expect(response.save_to_publishing_api).to eql(false)
+      expect(response.save_to_publishing_api).to be(false)
       expect(response.related_item_errors).to eql("/my-page" => "Not a known URL on GOV.UK")
     end
 

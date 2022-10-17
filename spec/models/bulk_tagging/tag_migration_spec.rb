@@ -22,7 +22,7 @@ module BulkTagging
         expect(tag_migration.deleted_at).to be_nil
 
         tag_migration.mark_as_deleted
-        expect(tag_migration.deleted_at).to_not be_nil
+        expect(tag_migration.deleted_at).not_to be_nil
       end
     end
   end

@@ -15,25 +15,25 @@ RSpec.describe NewProjectForm, "#create" do
 
     stub_publishing_api_has_lookups("/path" => "f838c22a-b2aa-49be-bd95-153f593293a3")
 
-    form = NewProjectForm.new(valid_params)
+    form = described_class.new(valid_params)
 
     expect(form.generate).to eq(true)
   end
 
   it "returns false when a project name is not given" do
-    form = NewProjectForm.new(valid_params.except(:name))
+    form = described_class.new(valid_params.except(:name))
 
     expect(form.generate).to eq(false)
   end
 
   it "returns false when the CSV URL does not begin with http(s)" do
-    form = NewProjectForm.new(valid_params.merge(remote_url: "not a URL"))
+    form = described_class.new(valid_params.merge(remote_url: "not a URL"))
 
     expect(form.generate).to eq(false)
   end
 
   it "returns false when a taxonomy_branch is not a UUID" do
-    form = NewProjectForm.new(valid_params.merge(taxonomy_branch: "not a UUID"))
+    form = described_class.new(valid_params.merge(taxonomy_branch: "not a UUID"))
 
     expect(form.generate).to eq(false)
   end
@@ -43,7 +43,7 @@ RSpec.describe NewProjectForm, "#create" do
       .to receive(:rows_with_headers)
       .and_raise(RemoteCsv::ParsingError.new(Net::OpenTimeout.new("execution expired")))
 
-    form = NewProjectForm.new(valid_params)
+    form = described_class.new(valid_params)
 
     expect(form.generate).to eq(false)
     expect(form.errors[:remote_url]).to include "Net::OpenTimeout: execution expired"
@@ -59,7 +59,7 @@ RSpec.describe NewProjectForm, "#create" do
 
     stub_publishing_api_has_lookups("/path" => "f838c22a-b2aa-49be-bd95-153f593293a3")
 
-    form = NewProjectForm.new(valid_params)
+    form = described_class.new(valid_params)
 
     expect(form.generate).to eq(false)
     expect(form.errors[:base]).to include [/project was not created/, ["https://www.gov.uk/path"]]
@@ -83,7 +83,7 @@ RSpec.describe NewProjectForm, "#taxonomy_branches_for_select" do
   end
 
   it "returns a hash of title => id" do
-    result = NewProjectForm.new.taxonomy_branches_for_select
+    result = described_class.new.taxonomy_branches_for_select
     expect(result["Title"]).to eq "content_id"
   end
 end

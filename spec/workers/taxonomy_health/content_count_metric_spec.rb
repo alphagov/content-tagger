@@ -14,7 +14,7 @@ RSpec.describe TaxonomyHealth::ContentCountMetric do
   end
   let(:fruits) { FactoryBot.build(:taxon_hash, title: "Fruits") }
 
-  before :each do
+  before do
     stub_publishing_api_has_item(home_page)
     stub_publishing_api_has_item(food)
     stub_publishing_api_has_expanded_links(home_page)
@@ -24,13 +24,13 @@ RSpec.describe TaxonomyHealth::ContentCountMetric do
   it "records no failing taxons" do
     allow(Taxonomy::ContentCounter).to receive(:count).with(home_page["content_id"]).and_return(0)
     allow(Taxonomy::ContentCounter).to receive(:count).with(food["content_id"]).and_return(1)
-    expect { TaxonomyHealth::ContentCountMetric.new.perform(maximum: 5) }.to_not(change { Taxonomy::HealthWarning.count })
+    expect { described_class.new.perform(maximum: 5) }.not_to(change(Taxonomy::HealthWarning, :count))
   end
 
   it "records a failing taxon" do
     allow(Taxonomy::ContentCounter).to receive(:count).with(home_page["content_id"]).and_return(0)
     allow(Taxonomy::ContentCounter).to receive(:count).with(food["content_id"]).and_return(10)
-    expect { TaxonomyHealth::ContentCountMetric.new.perform(maximum: 5) }.to(change { Taxonomy::HealthWarning.count }.by(1))
+    expect { described_class.new.perform(maximum: 5) }.to(change(Taxonomy::HealthWarning, :count).by(1))
     expect(Taxonomy::HealthWarning.last.content_id).to eq(food["content_id"])
   end
 end

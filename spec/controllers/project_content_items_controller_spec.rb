@@ -3,6 +3,7 @@ RSpec.describe ProjectContentItemsController, type: :request do
 
   describe "#update" do
     before { create(:project, :with_content_item) }
+
     let(:project) { Project.first }
     let(:content_item) { project.content_items.first }
 

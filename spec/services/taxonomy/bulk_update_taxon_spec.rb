@@ -14,7 +14,7 @@ RSpec.describe Taxonomy::BulkPublishTaxon do
     it "spawns a worker for each id" do
       expect(PublishTaxonWorker).to receive(:perform_async).with("id1")
       expect(PublishTaxonWorker).to receive(:perform_async).with("id2")
-      Taxonomy::BulkPublishTaxon.call(@root_taxon_id)
+      described_class.call(@root_taxon_id)
     end
   end
 end

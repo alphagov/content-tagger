@@ -7,7 +7,7 @@ RSpec.describe VersionPresenter, "#changes" do
       ],
     )
 
-    changes = VersionPresenter.new(version).changes
+    changes = described_class.new(version).changes
 
     expect(changes).to eq(
       [
@@ -24,7 +24,7 @@ RSpec.describe VersionPresenter, "#changes" do
       ],
     )
 
-    changes = VersionPresenter.new(version).changes
+    changes = described_class.new(version).changes
 
     expect(changes).to eq(
       [
@@ -41,7 +41,7 @@ RSpec.describe VersionPresenter, "#changes" do
       ],
     )
 
-    changes = VersionPresenter.new(version).changes
+    changes = described_class.new(version).changes
 
     expect(changes).to eq(
       [

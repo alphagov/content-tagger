@@ -36,7 +36,7 @@ RSpec.describe ContentItem do
     it "includes related item overrides if there's no taxons tagged to the item" do
       content_item = build_content_item
 
-      allow(content_item).to receive(:taxons?) { false }
+      allow(content_item).to receive(:taxons?).and_return(false)
 
       expect(content_item.denylisted_tag_types).to include(:ordered_related_items_overrides)
     end
@@ -44,7 +44,7 @@ RSpec.describe ContentItem do
     it "does not includes related item overrides if there's taxons tagged to the item" do
       content_item = build_content_item
 
-      allow(content_item).to receive(:taxons?) { true }
+      allow(content_item).to receive(:taxons?).and_return(true)
 
       expect(content_item.denylisted_tag_types).not_to include(:ordered_related_items_overrides)
     end
@@ -52,7 +52,7 @@ RSpec.describe ContentItem do
     it "includes suggested related items if there's no suggestions for the item" do
       content_item = build_content_item
 
-      allow(content_item).to receive(:suggested_related_links?) { false }
+      allow(content_item).to receive(:suggested_related_links?).and_return(false)
 
       expect(content_item.denylisted_tag_types).to include(:suggested_ordered_related_items)
     end
@@ -60,7 +60,7 @@ RSpec.describe ContentItem do
     it "does not include suggested related items if suggestions exist for the item" do
       content_item = build_content_item
 
-      allow(content_item).to receive(:suggested_related_links?) { true }
+      allow(content_item).to receive(:suggested_related_links?).and_return(true)
 
       expect(content_item.denylisted_tag_types).not_to include(:suggested_ordered_related_items)
     end

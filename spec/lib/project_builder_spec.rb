@@ -24,7 +24,7 @@ RSpec.describe ProjectBuilder, ".call" do
   it "creates a new project" do
     stub_publishing_api_has_lookups({})
 
-    expect { build_project }.to change { Project.count }.by(1)
+    expect { build_project }.to change(Project, :count).by(1)
   end
 
   it "creates new project content items" do
@@ -34,14 +34,14 @@ RSpec.describe ProjectBuilder, ".call" do
     )
 
     expect { build_project(content_items: [{ url: "https://www.gov.uk/url_one" }, { url: "https://www.gov.uk/url_two" }]) }
-      .to change { ProjectContentItem.count }.by(2)
+      .to change(ProjectContentItem, :count).by(2)
   end
 
   it "finds the content items' IDs from the Publishing API" do
     stub_publishing_api_has_lookups("/url_one" => "cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
 
     expect { build_project(content_items: [{ url: "https://www.gov.uk/url_one" }]) }
-      .to change { ProjectContentItem.count }.by(1)
+      .to change(ProjectContentItem, :count).by(1)
 
     expect(ProjectContentItem.last.content_id).to eq("cbccfe81-8cff-4e0f-ad6f-d3631623a9a7")
   end

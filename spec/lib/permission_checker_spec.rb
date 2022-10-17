@@ -1,5 +1,6 @@
 RSpec.describe PermissionChecker do
   subject { described_class.new(user) }
+
   let(:user) { instance_double(User, has_permission?: false) }
 
   context "when the current_user has no special permissions" do

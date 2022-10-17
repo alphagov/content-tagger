@@ -8,7 +8,7 @@ RSpec.describe Taxonomy::OrganisationCount do
   describe "#organisation_counts" do
     let(:taxon_ids) { [SecureRandom.uuid, SecureRandom.uuid] }
 
-    before :each do
+    before do
       stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
       stub_content_store_has_item("/taxons/level_one", single_level_child_taxons.to_json, draft: true)
       stub_search_api(
@@ -25,7 +25,7 @@ RSpec.describe Taxonomy::OrganisationCount do
     end
 
     it "counts all tags to taxons per organisation" do
-      results = Taxonomy::OrganisationCount.new.all_taggings_per_organisation
+      results = described_class.new.all_taggings_per_organisation
       sheet = results.first[:sheet]
       expected_results = [["organisation1", 6, "/taxons/child", 5, "/taxons/level_one", 1],
                           ["organisation2", 6, "/taxons/child", 4, "/taxons/level_one", 2],

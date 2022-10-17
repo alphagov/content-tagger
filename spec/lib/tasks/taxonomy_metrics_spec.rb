@@ -4,7 +4,7 @@ RSpec.describe "metrics:taxonomy", type: :task do
   include RakeTaskHelper
   include ::GdsApi::TestHelpers::Search
 
-  before :each do
+  before do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }], "total" => 1 }.to_json)
   end
 

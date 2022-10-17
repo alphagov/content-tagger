@@ -1,23 +1,23 @@
 RSpec.describe ContentLookupForm do
   describe "#valid?" do
     it "is not valid when path is empty" do
-      form = ContentLookupForm.new(base_path: "")
+      form = described_class.new(base_path: "")
 
-      expect(form).to_not be_valid
+      expect(form).not_to be_valid
     end
 
     it "is not valid when path is an invalid URL" do
-      form = ContentLookupForm.new(base_path: "Some Weird URL")
+      form = described_class.new(base_path: "Some Weird URL")
 
-      expect(form).to_not be_valid
+      expect(form).not_to be_valid
     end
 
     it "is invalid when the path not found on GOV.UK" do
       stub_publishing_api_has_lookups({})
 
-      form = ContentLookupForm.new(base_path: "/browse")
+      form = described_class.new(base_path: "/browse")
 
-      expect(form).to_not be_valid
+      expect(form).not_to be_valid
     end
 
     it "is valid when the path is an absolute_path found on GOV.UK" do
@@ -25,7 +25,7 @@ RSpec.describe ContentLookupForm do
         "/browse" => "a96c1542-..",
       )
 
-      form = ContentLookupForm.new(base_path: "/browse")
+      form = described_class.new(base_path: "/browse")
 
       expect(form).to be_valid
     end
@@ -35,7 +35,7 @@ RSpec.describe ContentLookupForm do
         "/browse" => "a96c1542-..",
       )
 
-      form = ContentLookupForm.new(base_path: "http://gov.uk/browse")
+      form = described_class.new(base_path: "http://gov.uk/browse")
 
       expect(form).to be_valid
     end

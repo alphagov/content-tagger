@@ -26,7 +26,7 @@ module BulkTagging
         expect(tagging_spreadsheet.deleted_at).to be_nil
 
         tagging_spreadsheet.mark_as_deleted
-        expect(tagging_spreadsheet.deleted_at).to_not be_nil
+        expect(tagging_spreadsheet.deleted_at).not_to be_nil
       end
     end
 
@@ -48,10 +48,10 @@ module BulkTagging
 
       it "returns the expected aggregated tag mappings" do
         expect(@aggregated_tag_mappings.first.content_base_path).to eql("/a/path")
-        expect(@aggregated_tag_mappings.first.tag_mappings.count).to eql(2)
+        expect(@aggregated_tag_mappings.first.tag_mappings.count).to be(2)
 
         expect(@aggregated_tag_mappings.last.content_base_path).to eql("/b/path")
-        expect(@aggregated_tag_mappings.last.tag_mappings.count).to eql(1)
+        expect(@aggregated_tag_mappings.last.tag_mappings.count).to be(1)
       end
     end
   end

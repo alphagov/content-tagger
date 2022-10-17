@@ -27,7 +27,8 @@ RSpec.describe Taxonomy::BuildTaxon do
         },
       }
     end
-    let(:taxon) { Taxonomy::BuildTaxon.call(content_id:) }
+
+    let(:taxon) { described_class.call(content_id:) }
 
     before do
       stub_publishing_api_has_item(content)
@@ -105,6 +106,7 @@ RSpec.describe Taxonomy::BuildTaxon do
 
     context "with existing links" do
       let(:parent_taxon_id) { "CONTENT-ID-RTI" }
+
       before do
         stub_publishing_api_has_expanded_links({
           content_id:,

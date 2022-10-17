@@ -18,9 +18,9 @@ module BulkTagging
       end
     end
 
-    context "#messages" do
+    describe "#messages" do
       it "serializes the messages as an array" do
-        expect { subject.messages = ["a message"] }.to_not raise_error
+        expect { subject.messages = ["a message"] }.not_to raise_error
       end
 
       it "doesn't allow other types in the messages field" do
@@ -32,11 +32,11 @@ module BulkTagging
 
     describe "#mark_as_tagged" do
       it "marks a number of tag mappings as tagged" do
-        expect { tag_mapping.mark_as_tagged }.to(change { tag_mapping.state }.to("tagged"))
+        expect { tag_mapping.mark_as_tagged }.to(change(tag_mapping, :state).to("tagged"))
       end
 
       it "adds a publish_completed_at date" do
-        expect { tag_mapping.mark_as_tagged }.to(change { tag_mapping.publish_completed_at })
+        expect { tag_mapping.mark_as_tagged }.to(change(tag_mapping, :publish_completed_at))
       end
     end
 
@@ -44,17 +44,17 @@ module BulkTagging
       context "when the links update is valid" do
         it "doesn't change the tag mapping state" do
           expect { tag_mapping.mark_as_errored }
-            .to_not(change { tag_mapping.state })
+            .not_to(change(tag_mapping, :state))
         end
 
         it "doesn't change the tag mapping messages" do
           expect { tag_mapping.mark_as_errored }
-            .to_not(change { tag_mapping.messages })
+            .not_to(change(tag_mapping, :messages))
         end
 
         it "doesn't change the state of the tagging source" do
           expect { tag_mapping.mark_as_errored }
-            .to_not(change { tag_mapping.tagging_source })
+            .not_to(change(tag_mapping, :tagging_source))
         end
       end
 
@@ -66,13 +66,13 @@ module BulkTagging
 
         it "updates the tag mapping state" do
           expect { tag_mapping.mark_as_errored }
-            .to change { tag_mapping.state }
+            .to change(tag_mapping, :state)
             .to("errored")
         end
 
         it "assigns the error messages to the record" do
           expect { tag_mapping.mark_as_errored }
-            .to change { tag_mapping.messages }
+            .to change(tag_mapping, :messages)
             .to(["Broken.", "Rubbish."])
         end
 

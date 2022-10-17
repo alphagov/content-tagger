@@ -2,14 +2,14 @@ RSpec.describe Taxon do
   context "validations" do
     it "is not valid without a title" do
       taxon = described_class.new
-      expect(taxon).to_not be_valid
+      expect(taxon).not_to be_valid
       expect(taxon.errors.attribute_names).to include(:title)
     end
 
     it "is not valid without a base path" do
       taxon = described_class.new(base_path: "")
 
-      expect(taxon).to_not be_valid
+      expect(taxon).not_to be_valid
       expect(taxon.errors.attribute_names).to include(:base_path)
     end
 
@@ -23,7 +23,7 @@ RSpec.describe Taxon do
         parent_content_id: parent_taxon.content_id,
       )
 
-      expect(child_taxon).to_not be_valid
+      expect(child_taxon).not_to be_valid
       expect(child_taxon.errors[:base_path]).to include("must start with /level-one")
     end
   end
@@ -69,7 +69,7 @@ RSpec.describe Taxon do
       )
 
       expect(valid_taxon).to be_valid
-      expect(invalid_taxon).to_not be_valid
+      expect(invalid_taxon).not_to be_valid
       expect(invalid_taxon.errors[:url_override]).to include(
         "must be in the format '/prefix/slug' or '/slug'",
       )
@@ -98,7 +98,7 @@ RSpec.describe Taxon do
     aggregate_failures do
       expect(level_one_taxon).to be_valid
       expect(level_two_taxon).to be_valid
-      expect(invalid_taxon).to_not be_valid
+      expect(invalid_taxon).not_to be_valid
       expect(invalid_taxon.errors[:base_path]).to include(
         "must be in the format '/highest-level-taxon-name/taxon-name'",
       )
@@ -132,17 +132,17 @@ RSpec.describe Taxon do
 
   describe "#visible_to_departmental_editors" do
     it "defaults to false if it's not set" do
-      taxon = Taxon.new
+      taxon = described_class.new
       expect(taxon.visible_to_departmental_editors).to be false
     end
 
     it "can be set through the initializer by value" do
-      taxon = Taxon.new(visible_to_departmental_editors: true)
+      taxon = described_class.new(visible_to_departmental_editors: true)
       expect(taxon.visible_to_departmental_editors).to be true
     end
 
     it "can be set through the initializer by string" do
-      taxon = Taxon.new(visible_to_departmental_editors: "true")
+      taxon = described_class.new(visible_to_departmental_editors: "true")
       expect(taxon.visible_to_departmental_editors).to be true
     end
   end
@@ -159,7 +159,7 @@ RSpec.describe Taxon do
         "1" => "superseded",
       }
 
-      @taxon = Taxon.new(
+      @taxon = described_class.new(
         visible_to_departmental_editors: "true",
         state_history:,
         publication_state: "published",
@@ -204,7 +204,7 @@ RSpec.describe Taxon do
           "1" => "superseded",
         }
 
-        taxon = Taxon.new(
+        taxon = described_class.new(
           visible_to_departmental_editors: "true",
           state_history:,
           publication_state: "published",
@@ -217,7 +217,7 @@ RSpec.describe Taxon do
           "1" => "draft",
         }
 
-        taxon = Taxon.new(
+        taxon = described_class.new(
           visible_to_departmental_editors: "true",
           state_history:,
           publication_state: "draft",

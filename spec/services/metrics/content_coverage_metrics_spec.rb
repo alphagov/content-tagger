@@ -56,7 +56,7 @@ module Metrics
       it "sends the correct values to statsd" do
         allow(Metrics.statsd).to receive(:gauge)
 
-        Metrics::ContentCoverageMetrics.new.record_all
+        described_class.new.record_all
 
         expect(Metrics.statsd).to have_received(:gauge)
                                     .with("all_govuk_items", 1000)

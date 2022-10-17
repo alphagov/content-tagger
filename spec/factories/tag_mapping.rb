@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :tag_mapping, class: BulkTagging::TagMapping do
+  factory :tag_mapping, class: "BulkTagging::TagMapping" do
     link_title { "A taxon title" }
     content_base_path { "a/base/path" }
     link_content_id { "a-content-id" }

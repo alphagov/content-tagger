@@ -1,7 +1,7 @@
 RSpec.describe Tagging::Tagger do
   subject { described_class }
 
-  before :each do
+  before do
     @content_id = "64aadc14-9bca-40d9-abb4-4f21f9792a05"
   end
 
@@ -24,7 +24,7 @@ RSpec.describe Tagging::Tagger do
       stub_publishing_api_has_links(content_id: @content_id, links: { taxons: %w[aaa bbb] }, version: 5)
 
       stub_any_publishing_api_patch_links.and_raise(GdsApi::HTTPConflict).times(2).then.to_return(body: "{}")
-      expect { subject.add_tags(@content_id, %w[ccc], :taxons) }.to_not raise_error
+      expect { subject.add_tags(@content_id, %w[ccc], :taxons) }.not_to raise_error
 
       stub_any_publishing_api_patch_links.and_raise(GdsApi::HTTPConflict).times(3).then.to_return(body: "{}")
       expect { subject.add_tags(@content_id, %w[ccc], :taxons) }.to raise_error(GdsApi::HTTPConflict)

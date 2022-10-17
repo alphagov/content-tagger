@@ -4,7 +4,7 @@ RSpec.describe Metrics::ContentDistributionMetrics do
   include ::GdsApi::TestHelpers::ContentStore
 
   describe "#level_taggings" do
-    before :each do
+    before do
       stub_content_store_has_item("/", root_taxon.to_json, draft: true)
       stub_content_store_has_item("/taxons/root_taxon", child_taxons.to_json, draft: true)
 
@@ -15,6 +15,7 @@ RSpec.describe Metrics::ContentDistributionMetrics do
       allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[second_level_id_1 second_level_id_2]))
                                     .and_return content_items_enum(3)
     end
+
     it "calls gauges with number of content tagged to each level" do
       expect(Metrics.statsd).to receive(:gauge).with("level_1.content_tagged", 5)
       expect(Metrics.statsd).to receive(:gauge).with("level_1.level", 1)
@@ -25,6 +26,7 @@ RSpec.describe Metrics::ContentDistributionMetrics do
 
       described_class.new.count_content_per_level
     end
+
     it "calls gauges with the average tagging depth" do
       expect(Metrics.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
 

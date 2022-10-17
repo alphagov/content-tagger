@@ -96,7 +96,7 @@ RSpec.describe RemoteTaxons do
     end
 
     it "returns the parent taxon for a given taxon" do
-      is_expected.to have_attributes(
+      expect(subject).to have_attributes(
         base_path: parent_taxon[:base_path],
         content_id: parent_taxon[:content_id],
         title: parent_taxon[:title],

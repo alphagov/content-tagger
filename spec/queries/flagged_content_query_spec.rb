@@ -32,7 +32,7 @@ RSpec.describe FlaggedContentQuery do
           taxonomy_branch: project.taxonomy_branch,
         }
 
-        expect(FlaggedContentQuery.new(params).items).to include(item_needs_help)
+        expect(described_class.new(params).items).to include(item_needs_help)
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe FlaggedContentQuery do
           taxonomy_branch: project.taxonomy_branch,
         }
 
-        expect(FlaggedContentQuery.new(params).items).to include(item_missing_topic)
+        expect(described_class.new(params).items).to include(item_missing_topic)
       end
 
       it "does not return content items with missing suggested tags" do
@@ -52,7 +52,7 @@ RSpec.describe FlaggedContentQuery do
           taxonomy_branch: project.taxonomy_branch,
         }
 
-        expect(FlaggedContentQuery.new(params).items).to_not include(item_missing_topic_with_missing_suggested_tag)
+        expect(described_class.new(params).items).not_to include(item_missing_topic_with_missing_suggested_tag)
       end
     end
   end

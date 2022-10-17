@@ -99,7 +99,7 @@ RSpec.feature "Taxon Search" do
     expect(page).to have_text(@taxon1[:title])
     expect(page).to have_text(@taxon2[:title])
 
-    expect(page).to_not have_text(@taxon3[:title])
+    expect(page).not_to have_text(@taxon3[:title])
   end
 
   def and_i_can_see_pagination_links
@@ -111,7 +111,7 @@ RSpec.feature "Taxon Search" do
     expect(page_links).to include("2")
 
     # There is no 3rd page
-    expect(page_links).to_not include("3")
+    expect(page_links).not_to include("3")
 
     # We start on the first page
     expect(find("li.page.active").text).to eq("1")
@@ -132,8 +132,8 @@ RSpec.feature "Taxon Search" do
   def then_i_can_see_the_second_page_of_taxons
     expect(page).to have_text(@taxon3[:title])
 
-    expect(page).to_not have_text(@taxon1[:title])
-    expect(page).to_not have_text(@taxon2[:title])
+    expect(page).not_to have_text(@taxon1[:title])
+    expect(page).not_to have_text(@taxon2[:title])
   end
 
   def then_i_can_see_all_the_taxons
@@ -149,6 +149,6 @@ RSpec.feature "Taxon Search" do
   def then_i_can_see_my_search_results
     expect(page).to have_text(@taxon2[:title])
 
-    expect(page).to_not have_text(@taxon1[:title])
+    expect(page).not_to have_text(@taxon1[:title])
   end
 end

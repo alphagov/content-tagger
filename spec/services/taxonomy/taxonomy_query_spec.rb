@@ -13,6 +13,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       stub_publishing_api_has_expanded_links({ "content_id" => "llllllll-llll-llll-llll-llllllllllll", "expanded_links" => {} })
       expect(query.parent("llllllll-llll-llll-llll-llllllllllll")).to be_nil
     end
+
     it "returns a parent" do
       stub_publishing_api_has_expanded_links(expanded_links)
       expect(query.parent("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")).to eq(
@@ -41,12 +42,14 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       stub_content_store_has_item("/taxons/root_taxon", no_taxons.to_json, draft: true)
       expect(query.child_taxons("/taxons/root_taxon")).to be_empty
     end
+
     it "returns an single level of taxons" do
       stub_content_store_has_item("/taxons/root_taxon", single_level_child_taxons("rrrr", "aaaa", "bbbb").to_json, draft: true)
       expect(query.child_taxons("/taxons/root_taxon"))
         .to match_array [{ "content_id" => "aaaa", "base_path" => "/taxons/aaaa", "parent_content_id" => "rrrr" },
                          { "content_id" => "bbbb", "base_path" => "/taxons/bbbb", "parent_content_id" => "rrrr" }]
     end
+
     it "returns multiple levels of taxons" do
       stub_content_store_has_item("/taxons/root_taxon", multi_level_child_taxons.to_json, draft: true)
       expect(query.child_taxons("/taxons/root_taxon"))
@@ -58,8 +61,9 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
   describe "#content_tagged_to_taxons" do
     it "returns an empty array" do
-      expect(Taxonomy::TaxonomyQuery.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])
+      expect(described_class.new.content_tagged_to_taxons([], slice_size: 50)).to eq([])
     end
+
     it "returns content tagged to taxons" do
       stub_search_api(
         { filter_taxons: %w[taxon_id_1 taxon_id_2] },
@@ -73,6 +77,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
       expect(query.content_tagged_to_taxons(%w[taxon_id_1 taxon_id_2 taxon_id_3], slice_size: 2))
         .to eq(%w[content_id_1 content_id_2 content_id_3])
     end
+
     it "removes duplicates" do
       stub_search_api({}, [{ "content_id" => "content_id_1" }, { "content_id" => "content_id_1" }])
       expect(query.content_tagged_to_taxons(%w[id])).to eq(%w[content_id_1])
@@ -87,16 +92,17 @@ RSpec.describe Taxonomy::TaxonomyQuery do
 
   describe "#taxons_per_level" do
     context "there are no root taxons" do
-      before :each do
+      before do
         allow(Services.content_store).to receive(:content_item).with("/").and_return no_taxons
       end
+
       it "returns an empty taxonomy" do
         expect(query.taxons_per_level).to be_empty
       end
     end
 
     context "there are root taxons and one level of children" do
-      before :each do
+      before do
         stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
         stub_content_store_has_item(
           "/taxons/root_taxon_a",
@@ -126,10 +132,11 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     end
 
     context "there are root taxons and two levels of children" do
-      before :each do
+      before do
         stub_content_store_has_item("/", root_taxon.to_json, draft: true)
         stub_content_store_has_item("/taxons/root_taxon", multi_level_child_taxons.to_json, draft: true)
       end
+
       it "returns three levels" do
         expect(query.taxons_per_level.size).to eq(3)
       end

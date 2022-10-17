@@ -1,7 +1,7 @@
 RSpec.describe PublishLinksWorker do
   describe "#perform" do
     it "does not call the links publisher when the tag mapping was not found" do
-      expect(BulkTagging::PublishLinks).to_not receive(:call)
+      expect(BulkTagging::PublishLinks).not_to receive(:call)
 
       described_class.new.perform(1)
     end
@@ -12,7 +12,7 @@ RSpec.describe PublishLinksWorker do
           .and_return(true)
       end
 
-      it "it calls the links publisher service when there is a tag mapping" do
+      it "calls the links publisher service when there is a tag mapping" do
         tag_mapping = create(:tag_mapping)
         expect(BulkTagging::PublishLinks).to receive(:call)
 
@@ -29,7 +29,7 @@ RSpec.describe PublishLinksWorker do
       end
 
       it "does not call the publishing API and marks the taggings as errored" do
-        expect(BulkTagging::PublishLinks).to_not receive(:call)
+        expect(BulkTagging::PublishLinks).not_to receive(:call)
 
         described_class.new.perform(tag_mapping.id)
       end

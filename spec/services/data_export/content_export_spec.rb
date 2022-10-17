@@ -3,22 +3,25 @@ module DataExport
     describe "#get_content" do
       it "returns empty hash if there is no content for the base path" do
         expect(Services.content_store).to receive(:content_item).with("/base_path").and_raise GdsApi::ContentStore::ItemNotFound.new(404)
-        expect(ContentExport.new.get_content("/base_path")).to eq({})
+        expect(described_class.new.get_content("/base_path")).to eq({})
       end
+
       it "returns simple content" do
         expect(Services.content_store).to receive(:content_item).with("/base_path").and_return content_no_taxon
-        expect(ContentExport.new.get_content("/base_path", base_fields: %w[base_path content_id]))
+        expect(described_class.new.get_content("/base_path", base_fields: %w[base_path content_id]))
           .to eq("base_path" => "/base_path", "content_id" => "d282d35a-2bd2-4e14-a7a6-a04e6b10520f")
       end
+
       it "returns taxons" do
         expect(Services.content_store).to receive(:content_item).with("/base_path").and_return content_with_taxons
-        expect(ContentExport.new.get_content("/base_path", taxon_fields: %w[content_id])["taxons"])
+        expect(described_class.new.get_content("/base_path", taxon_fields: %w[content_id])["taxons"])
           .to eq([{ "content_id" => "237b2e72-c465-42fe-9293-8b6af21713c0" },
                   { "content_id" => "8da62d85-47c0-42df-94c4-eaaeac329671" }])
       end
+
       it "returns the primary publishing organistations" do
         expect(Services.content_store).to receive(:content_item).with("/base_path").and_return content_with_ppo
-        expect(ContentExport.new.get_content("/base_path", ppo_fields: %w[title])["primary_publishing_organisation"])
+        expect(described_class.new.get_content("/base_path", ppo_fields: %w[title])["primary_publishing_organisation"])
           .to eq("title" => "title1")
       end
 
@@ -59,7 +62,7 @@ module DataExport
       it "returns content links in an enumerator" do
         stub_request(:get, Regexp.new(Plek.new.find("search")))
           .to_return(body: { "results" => [{ "link" => "/first/path" }, { "link" => "/second/path" }] }.to_json)
-        expect(ContentExport.new.content_links_enum.to_a).to eq(["/first/path", "/second/path"])
+        expect(described_class.new.content_links_enum.to_a).to eq(["/first/path", "/second/path"])
       end
     end
 
@@ -95,7 +98,7 @@ module DataExport
           .with(query: hash_including("aggregate_content_store_document_type" => "10000"))
           .to_return(body: result_hash.to_json)
 
-        expect(ContentExport.new.denylisted_content_stats(%w[taxon redirect]))
+        expect(described_class.new.denylisted_content_stats(%w[taxon redirect]))
           .to eq([{ document_type: "redirect", count: 3 }, { document_type: "taxon", count: 1 }])
       end
     end

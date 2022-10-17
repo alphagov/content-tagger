@@ -18,7 +18,7 @@ RSpec.describe UpdateTaxonWorker, "#perform" do
 
     expect(Version.count).to eq(0)
 
-    UpdateTaxonWorker.new.perform(taxon["content_id"], base_path: "/transport")
+    described_class.new.perform(taxon["content_id"], base_path: "/transport")
 
     expect(Version.count).to eq(1)
     expect(Version.last).to have_attributes(

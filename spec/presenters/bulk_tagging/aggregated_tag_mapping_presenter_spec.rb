@@ -5,16 +5,16 @@ module BulkTagging
     let(:presenter) { described_class.new(aggregated_tag_mapping) }
 
     describe "#errored?" do
-      it 'should return true when any tag mapping state is "errored"' do
+      it 'returns true when any tag mapping state is "errored"' do
         tag_mappings.first.update!(state: "errored")
 
-        expect(presenter.errored?).to be_truthy
+        expect(presenter).to be_errored
       end
 
-      it 'should return false when none of the tag mappings state is not "errored"' do
+      it 'returns false when none of the tag mappings state is not "errored"' do
         tag_mappings.first.update!(state: "tagged")
 
-        expect(presenter.errored?).to be_falsey
+        expect(presenter).not_to be_errored
       end
     end
   end

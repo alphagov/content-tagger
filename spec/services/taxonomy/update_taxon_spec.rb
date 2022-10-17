@@ -18,6 +18,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
     stub_publishing_api_has_item(parent_taxon)
     stub_publishing_api_has_expanded_links({ content_id: "CONTENT-ID-PARENT" })
   end
+
   let(:publish) { described_class.call(taxon: @taxon) }
 
   describe ".call" do

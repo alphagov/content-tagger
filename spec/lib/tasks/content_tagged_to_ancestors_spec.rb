@@ -10,7 +10,7 @@ RSpec.describe "content:tagged_to_ancestor", type: :task do
                                            ))
   end
 
-  before :each do
+  before do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }] }.to_json)
   end
 

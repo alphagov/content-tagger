@@ -66,7 +66,7 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
         title: "title",
       )
 
-      size = Taxonomy::TaxonsWithContentCount.new(
+      size = described_class.new(
         double(
           content_id: "b92079ac-f1d9-44c8-bc78-772d54377ee2",
           title: "title",
@@ -125,7 +125,7 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
         ],
       }
 
-      size = Taxonomy::TaxonsWithContentCount.new(content_item)
+      size = described_class.new(content_item)
       allow(size).to receive(:nested_tree).and_return(tree)
 
       expect(size.max_size).to eq(300)
@@ -143,14 +143,14 @@ RSpec.describe Taxonomy::TaxonsWithContentCount do
         children: [],
       }
 
-      size = Taxonomy::TaxonsWithContentCount.new(content_item)
+      size = described_class.new(content_item)
       allow(size).to receive(:nested_tree).and_return(tree)
 
       expect(size.max_size).to eq(100)
     end
 
     it "returns 0% bar width when max_size is 0" do
-      size = Taxonomy::TaxonsWithContentCount.new(content_item)
+      size = described_class.new(content_item)
       allow(size).to receive(:max_size).and_return(0)
 
       expect(size.max_size).to eq(0)
