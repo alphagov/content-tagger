@@ -139,7 +139,7 @@ RSpec.describe TaxonsController, type: :controller do
       stub_publishing_api_has_item(parent_taxon)
       stub_publishing_api_has_expanded_links({ content_id: "CONTENT-ID-PARENT" })
 
-      Timecop.freeze do
+      freeze_time do
         payload = Taxonomy::BuildTaxonPayload.call(taxon:)
         links = {
           links: {

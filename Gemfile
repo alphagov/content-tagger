@@ -41,6 +41,5 @@ end
 group :test do
   gem "fakefs", require: "fakefs/safe"
   gem "govuk_test"
-  gem "timecop"
   gem "webmock"
 end
