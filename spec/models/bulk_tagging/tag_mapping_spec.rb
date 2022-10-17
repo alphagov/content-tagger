@@ -20,11 +20,13 @@ module BulkTagging
 
     describe "#messages" do
       it "serializes the messages as an array" do
-        expect { subject.messages = ["a message"] }.not_to raise_error
+        instance = described_class.new
+        expect { instance.messages = ["a message"] }.not_to raise_error
       end
 
       it "doesn't allow other types in the messages field" do
-        expect { subject.messages = "a message" }.to raise_error(
+        instance = described_class.new
+        expect { instance.messages = "a message" }.to raise_error(
           ActiveRecord::SerializationTypeMismatch,
         )
       end

@@ -58,8 +58,6 @@ RSpec.describe RemoteTaxons do
   end
 
   describe "#parent_for_taxon" do
-    subject { described_class.new.parent_for_taxon(child_taxon) }
-
     let(:parent_taxon_id) { SecureRandom.uuid }
     let(:parent_taxon) do
       taxon_with_details(
@@ -79,7 +77,8 @@ RSpec.describe RemoteTaxons do
     end
 
     it "returns the parent taxon for a given taxon" do
-      expect(subject).to have_attributes(
+      instance = described_class.new.parent_for_taxon(child_taxon)
+      expect(instance).to have_attributes(
         base_path: parent_taxon[:base_path],
         content_id: parent_taxon[:content_id],
         title: parent_taxon[:title],
