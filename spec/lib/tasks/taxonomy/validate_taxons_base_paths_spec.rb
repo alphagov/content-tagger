@@ -65,7 +65,7 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
     )
   end
 
-  it "optionally fixes paths that do not have the correct level one prefix" do
+  it "optionally fixes paths that do not have the correct level two prefix" do
     content_store_has_tree_with_long_base_path_structure
 
     taxon_attributes = taxon_with_details(
