@@ -148,7 +148,7 @@ RSpec.describe Taxon do
   end
 
   describe "publishing history of taxon" do
-    before do
+    let(:taxon) do
       state_history = {
         "4" => "superseded",
         "5" => "superseded",
@@ -159,7 +159,7 @@ RSpec.describe Taxon do
         "1" => "superseded",
       }
 
-      @taxon = described_class.new(
+      described_class.new(
         visible_to_departmental_editors: "true",
         state_history:,
         publication_state: "published",
@@ -177,7 +177,7 @@ RSpec.describe Taxon do
         draft
       ]
 
-      expect(@taxon.ordered_publication_state_history).to eq(expected_order)
+      expect(taxon.ordered_publication_state_history).to eq(expected_order)
     end
 
     it "gets the lastest two publication states" do
@@ -186,12 +186,12 @@ RSpec.describe Taxon do
         draft
       ]
 
-      expect(@taxon.lastest_two_publication_states).to eq(expected_states)
+      expect(taxon.lastest_two_publication_states).to eq(expected_states)
     end
 
     describe "#draft_and_published_editions_exist?" do
       it "returns true if a draft taxon has been previously published" do
-        expect(@taxon.draft_and_published_editions_exist?).to eq(true)
+        expect(taxon.draft_and_published_editions_exist?).to eq(true)
       end
 
       it "returns false the taxon is published" do

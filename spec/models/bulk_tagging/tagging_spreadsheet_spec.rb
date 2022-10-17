@@ -29,27 +29,30 @@ module BulkTagging
     end
 
     describe "#aggregated_tag_mappings" do
-      before do
-        @tagging_spreadsheet = build(:tagging_spreadsheet)
-        @tagging_spreadsheet.tag_mappings << build(:tag_mapping, content_base_path: "/a/path", link_content_id: "a-content-id-1", link_title: "Education")
-        @tagging_spreadsheet.tag_mappings << build(:tag_mapping, content_base_path: "/a/path", link_content_id: "a-content-id-2", link_title: "Early Years")
-        @tagging_spreadsheet.tag_mappings << build(:tag_mapping, content_base_path: "/b/path", link_content_id: "a-content-id-2", link_title: "Early Years")
-        @tagging_spreadsheet.save!
-
-        @aggregated_tag_mappings = @tagging_spreadsheet.aggregated_tag_mappings
+      let(:tagging_spreadsheet) do
+        build(:tagging_spreadsheet).tap do |ts|
+          ts.tag_mappings << build(:tag_mapping, content_base_path: "/a/path", link_content_id: "a-content-id-1", link_title: "Education")
+          ts.tag_mappings << build(:tag_mapping, content_base_path: "/a/path", link_content_id: "a-content-id-2", link_title: "Early Years")
+          ts.tag_mappings << build(:tag_mapping, content_base_path: "/b/path", link_content_id: "a-content-id-2", link_title: "Early Years")
+          ts.save!
+        end
       end
 
       it "returns an array of AggregatedTagMappings" do
-        expect(@aggregated_tag_mappings.class).to eql(Array)
-        expect(@aggregated_tag_mappings.first.class).to eql(AggregatedTagMapping)
+        mappings = tagging_spreadsheet.aggregated_tag_mappings
+
+        expect(mappings.class).to eql(Array)
+        expect(mappings.first.class).to eql(AggregatedTagMapping)
       end
 
       it "returns the expected aggregated tag mappings" do
-        expect(@aggregated_tag_mappings.first.content_base_path).to eql("/a/path")
-        expect(@aggregated_tag_mappings.first.tag_mappings.count).to be(2)
+        mappings = tagging_spreadsheet.aggregated_tag_mappings
 
-        expect(@aggregated_tag_mappings.last.content_base_path).to eql("/b/path")
-        expect(@aggregated_tag_mappings.last.tag_mappings.count).to be(1)
+        expect(mappings.first.content_base_path).to eql("/a/path")
+        expect(mappings.first.tag_mappings.count).to be(2)
+
+        expect(mappings.last.content_base_path).to eql("/b/path")
+        expect(mappings.last.tag_mappings.count).to be(1)
       end
     end
   end
