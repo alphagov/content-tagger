@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::LevelOneTaxonsRetrieval do
   let(:child_contents) { Array.new(2) { { "content_id" => SecureRandom.uuid } } }
 

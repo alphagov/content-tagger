@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe TaxonsController, type: :controller do
   include EmailAlertApiHelper
   include PublishingApiHelper

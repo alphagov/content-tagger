@@ -1,4 +1,3 @@
-require "rails_helper"
 require "gds_api/test_helpers/publishing_api"
 
 RSpec.describe Tagging::Untagger do

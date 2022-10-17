@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Proxies::IframeAllowingProxy do
   before :each do
     @proxy = Proxies::IframeAllowingProxy.new

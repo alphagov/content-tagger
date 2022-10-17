@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
   it "saves a new version when the taxon is new" do
     taxon = Taxon.new(

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe TaxonSearchResults do
     let(:search_response) do

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.feature "Draft taxonomy" do
   include PublishingApiHelper
   include ContentItemHelper

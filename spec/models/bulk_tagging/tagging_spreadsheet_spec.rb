@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe TaggingSpreadsheet do
     describe "#state" do

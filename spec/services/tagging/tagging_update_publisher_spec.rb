@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Tagging::TaggingUpdatePublisher do
   describe "#save_to_publishing_api" do
     before do

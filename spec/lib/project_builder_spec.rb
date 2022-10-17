@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe ProjectBuilder, ".call" do
   let(:project_name) { "project_name" }
   let(:taxonomy_branch_content_id) { SecureRandom.uuid }

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::BulkPublishTaxon do
   before do
     item = GovukTaxonomyHelpers::LinkedContentItem.new(title: "item1", base_path: "/item1", content_id: "id1")

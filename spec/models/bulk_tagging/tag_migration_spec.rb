@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe TagMigration do
     describe "#state" do

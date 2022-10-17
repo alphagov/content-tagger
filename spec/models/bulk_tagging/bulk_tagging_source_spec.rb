@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe BulkTaggingSource do
     describe "#source_names" do

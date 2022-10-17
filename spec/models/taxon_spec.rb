@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxon do
   context "validations" do
     it "is not valid without a title" do

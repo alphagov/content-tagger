@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Linkables do
   include ContentItemHelper
   include PublishingApiHelper

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "taxonomy:health_checks" do
   include RakeTaskHelper
   include ActiveJob::TestHelper

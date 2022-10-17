@@ -1,4 +1,3 @@
-require "rails_helper"
 require "gds_api/test_helpers/search"
 
 RSpec.describe "govuk:export_content_by_organisations", type: :task do

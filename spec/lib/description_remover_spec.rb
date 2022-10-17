@@ -1,4 +1,3 @@
-require "rails_helper"
 require "description_remover"
 require "gds_api/test_helpers/content_store"
 

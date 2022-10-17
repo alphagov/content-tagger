@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe BuildTagMapping do
     let(:taxon) { build(:taxon) }

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe VersionPresenter, "#changes" do
   it "returns a change hash for an attribute addition" do
     version = Version.create!(

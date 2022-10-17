@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.feature "Delete Taxon", type: :feature do
   include ContentItemHelper
   include PublishingApiHelper

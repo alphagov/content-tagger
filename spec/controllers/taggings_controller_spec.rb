@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe TaggingsController, type: :controller do
   describe "#show" do
     it "renders 404 for unknown content items" do

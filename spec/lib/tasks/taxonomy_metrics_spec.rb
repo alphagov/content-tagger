@@ -1,4 +1,3 @@
-require "rails_helper"
 require "gds_api/test_helpers/search"
 
 RSpec.describe "metrics:taxonomy", type: :task do

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe ContentItem do
   describe "#denylisted_tag_types" do
     it "includes per-app denylisted types" do

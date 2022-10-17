@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe TaxonomyHealth::MaximumDepthMetric do
   let(:home_page) { FactoryBot.build(:taxon_hash, :home_page, expanded_links: { level_one_taxons: [food] }) }
   let(:food) do

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe QueueLinksForPublishing do
     let(:tagging_spreadsheet) do

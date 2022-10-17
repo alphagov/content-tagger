@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::UpdateTaxon do
   include ContentItemHelper
 

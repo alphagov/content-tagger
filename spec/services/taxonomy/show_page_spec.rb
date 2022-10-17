@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::ShowPage do
   describe "#publication_state_name" do
     it "shows when a taxon is published" do

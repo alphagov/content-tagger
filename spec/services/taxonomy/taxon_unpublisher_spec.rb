@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::TaxonUnpublisher do
   include ::GdsApi::TestHelpers::PublishingApi
 

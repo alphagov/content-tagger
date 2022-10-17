@@ -1,4 +1,3 @@
-require "rails_helper"
 require_relative "../../lib/tagged_content_exporter"
 
 RSpec.describe TaggedContentExporter do

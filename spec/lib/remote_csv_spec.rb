@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe RemoteCsv, "#rows_with_headers" do
   let(:csv_url) { "http://example.com/sheet.csv" }
 

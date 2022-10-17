@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe TaxonBasePathStructureCheck::Taxon, "#valid_base_path" do
   it "produces a base path for an imported-browse top level page" do
     klass = described_class.new(

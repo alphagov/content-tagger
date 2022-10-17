@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe AggregatedTagMappingPresenter do
     let!(:tag_mappings) { [create(:tag_mapping), create(:tag_mapping)] }

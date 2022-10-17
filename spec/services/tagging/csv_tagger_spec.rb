@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Tagging::Tagger do
   subject { described_class }
   before :each do

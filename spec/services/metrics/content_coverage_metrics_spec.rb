@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module Metrics
   RSpec.describe ContentCoverageMetrics do
     describe "#record_all" do

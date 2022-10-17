@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module Metrics
   RSpec.describe SuperfluousTaggingsMetrics do
     describe "#count" do

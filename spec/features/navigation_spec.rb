@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.feature "Navigation", type: :feature do
   include TaxonomyHelper
   include PublishingApiHelper

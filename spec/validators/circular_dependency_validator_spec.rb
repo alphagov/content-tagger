@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe CircularDependencyValidator do
   it "errors if the parent contain the record" do
     record = build(

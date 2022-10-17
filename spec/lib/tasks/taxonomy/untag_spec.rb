@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "taxonomy:untag", type: :task do
   include RakeTaskHelper
 

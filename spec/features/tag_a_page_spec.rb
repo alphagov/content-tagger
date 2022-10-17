@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "Tagging content", type: :feature do
   include PublishingApiHelper
 

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe PermissionChecker do
   subject { described_class.new(user) }
   let(:user) { instance_double(User, has_permission?: false) }

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe TaggingSpreadsheetPresenter do
     let(:tagging_spreadsheet) { TaggingSpreadsheet.new }

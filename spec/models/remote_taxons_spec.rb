@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe RemoteTaxons do
   include ContentItemHelper
   include PublishingApiHelper
