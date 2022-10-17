@@ -1,6 +1,6 @@
 require "gds_api/test_helpers/search"
 
-RSpec.describe "govuk:export_content_by_organisations", type: :task do
+RSpec.describe "govuk:export_mainstream_taxons", type: :task do
   include RakeTaskHelper
   include ::GdsApi::TestHelpers::Search
 
@@ -18,7 +18,8 @@ RSpec.describe "govuk:export_content_by_organisations", type: :task do
 
     FakeFS do
       FileUtils.mkdir_p("tmp")
-      rake("govuk:export_mainstream_taxons", "department-for-transport")
+      expect { rake("govuk:export_mainstream_taxons", "department-for-transport") }
+        .to output.to_stdout
       expect(open("tmp/mainstream.csv").read.length).to be > 0
     end
   end

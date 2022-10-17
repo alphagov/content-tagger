@@ -29,7 +29,8 @@ RSpec.describe "govuk:export_content_by_organisations", type: :task do
     )
 
     FakeFS do
-      rake("govuk:export_content_by_organisations", "department-for-transport")
+      expect { rake("govuk:export_content_by_organisations", "department-for-transport") }
+        .to output.to_stdout
       expect(open("department-for-transport.csv").read.length).to be > 0
     end
   end

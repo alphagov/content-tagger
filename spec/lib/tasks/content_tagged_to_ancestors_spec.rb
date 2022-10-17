@@ -33,6 +33,6 @@ RSpec.describe "content:tagged_to_ancestor", type: :task do
     expect(untagger).to receive(:call)
     stub_const("Tagging::Untagger", untagger)
 
-    rake("content:tagged_to_ancestor", "untag")
+    expect { rake("content:tagged_to_ancestor", "untag") }.to output.to_stdout
   end
 end
