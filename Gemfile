@@ -20,7 +20,6 @@ gem "gds-api-adapters"
 gem "gds-sso"
 gem "govuk_admin_template"
 gem "govuk_sidekiq"
-gem "govuk_taxonomy_helpers"
 gem "plek"
 
 group :development, :test do
