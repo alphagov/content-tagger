@@ -324,8 +324,6 @@ RSpec.feature "Taxonomy editing" do
     @publish_item = stub_request(:post, %r{https://publishing-api.test.gov.uk/v2/content/.*/publish})
       .to_return(status: 200, body: "", headers: {})
 
-    stub_publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
-
     stub_publishing_api_has_expanded_links({
       content_id: @taxon1[:content_id],
       expanded_links: {},
