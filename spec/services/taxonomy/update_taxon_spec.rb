@@ -37,7 +37,6 @@ RSpec.describe Taxonomy::UpdateTaxon do
             root_taxon: [],
             parent_taxons: %w[CONTENT-ID-PARENT],
             associated_taxons: %w[1234],
-            legacy_taxons: [],
           },
         )
       end
@@ -57,7 +56,6 @@ RSpec.describe Taxonomy::UpdateTaxon do
             root_taxon: [],
             parent_taxons: [],
             associated_taxons: %w[1234],
-            legacy_taxons: [],
           },
         )
       end
@@ -77,7 +75,6 @@ RSpec.describe Taxonomy::UpdateTaxon do
             root_taxon: [],
             parent_taxons: %w[CONTENT-ID-PARENT],
             associated_taxons: [],
-            legacy_taxons: [],
           },
         )
       end
@@ -97,7 +94,6 @@ RSpec.describe Taxonomy::UpdateTaxon do
             root_taxon: [],
             parent_taxons: %w[CONTENT-ID-PARENT],
             associated_taxons: [],
-            legacy_taxons: [],
           },
         )
       end

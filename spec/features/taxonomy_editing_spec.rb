@@ -103,7 +103,6 @@ RSpec.feature "Taxonomy editing" do
             root_taxon: [],
             parent_taxons: %w[ID-1],
             associated_taxons: array_including("ID-2", "ID-3"),
-            legacy_taxons: [],
           },
         },
       )
@@ -206,14 +205,6 @@ RSpec.feature "Taxonomy editing" do
     then_the_base_path_shows_as_invalid
   end
 
-  scenario "User links to a legacy taxon" do
-    given_there_are_taxons
-    when_i_visit_the_taxon_page
-    and_i_click_on_the_edit_taxon_button
-    when_i_add_an_additional_legacy_taxon
-    then_the_legacy_taxons_should_be_saved
-  end
-
   def given_there_are_taxons
     stub_publishing_api_has_linkables(
       [@linkable_taxon1, @linkable_taxon2, @linkable_taxon3],
@@ -246,12 +237,6 @@ RSpec.feature "Taxonomy editing" do
             content_id: @taxon2[:content_id],
             base_path: @taxon2[:base_path],
             title: @taxon2[:title],
-          },
-        ],
-        legacy_taxons: [
-          {
-            content_id: "CONTENT-ID-LEGACY-TAXON",
-            base_path: "/legacy-taxon",
           },
         ],
       },
@@ -338,8 +323,6 @@ RSpec.feature "Taxonomy editing" do
 
     @publish_item = stub_request(:post, %r{https://publishing-api.test.gov.uk/v2/content/.*/publish})
       .to_return(status: 200, body: "", headers: {})
-
-    stub_publishing_api_has_lookups("/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON")
 
     stub_publishing_api_has_expanded_links({
       content_id: @taxon1[:content_id],
@@ -508,33 +491,5 @@ RSpec.feature "Taxonomy editing" do
 
   def parent_taxon_json
     '[{ "internal_name": "foo", "content_id": "bar", "publication_state": "baz" }]'
-  end
-
-  def when_i_add_an_additional_legacy_taxon
-    legacy_taxon_fields = all(:xpath, "//input[@name='taxon[legacy_taxons][]']")
-    expect(legacy_taxon_fields[0].value).to eq "/legacy-taxon"
-    legacy_taxon_fields[1].set("/another-legacy-taxon")
-  end
-
-  def then_the_legacy_taxons_should_be_saved
-    stub_any_publishing_api_put_content
-    stub_publishing_api_has_lookups(
-      "/legacy-taxon" => "CONTENT-ID-LEGACY-TAXON",
-      "/another-legacy-taxon" => "CONTENT-ID-ANOTHER-LEGACY-TAXON",
-    )
-
-    links_update_request = stub_publishing_api_patch_links(
-      "ID-1",
-      links: {
-        root_taxon: [],
-        parent_taxons: %w[ID-2],
-        associated_taxons: [],
-        legacy_taxons: %w[CONTENT-ID-LEGACY-TAXON CONTENT-ID-ANOTHER-LEGACY-TAXON],
-      },
-    )
-
-    find(".submit-button").click
-
-    expect(links_update_request).to have_been_requested
   end
 end

@@ -30,7 +30,6 @@ module Taxonomy
         url_override: content_item["details"]["url_override"],
         parent_content_id: parent,
         associated_taxons: links["associated_taxons"],
-        legacy_taxons: legacy_taxon_paths,
         redirect_to: content_item.dig("unpublishing", "alternative_path"),
         visible_to_departmental_editors: content_item.dig("details", "visible_to_departmental_editors"),
       )
@@ -63,10 +62,6 @@ module Taxonomy
           .get_expanded_links(content_id)
           .to_h
           .fetch("expanded_links", {})
-    end
-
-    def legacy_taxon_paths
-      expanded_links.fetch("legacy_taxons", []).map { |v| v["base_path"] }
     end
   end
 end
