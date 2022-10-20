@@ -16,7 +16,7 @@ RSpec.describe ProjectBuilder, ".call" do
     ProjectBuilder.call(
       content_item_attributes: content_items,
       project_attributes: {
-        name: name,
+        name:,
         taxonomy_branch: branch,
         bulk_tagging_enabled: bulk_tagging,
       },

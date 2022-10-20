@@ -12,16 +12,16 @@ module PublishingApiHelper
     url = "#{Plek.current.find('publishing-api')}/v2/links/by-content-id"
     body = { content_ids: array_including(content_ids) }
     response_hash = content_ids.index_with { |_content_id| { "links" => { "taxons" => taxons } } }
-    stub_request(:post, url).with(body: body).to_return(body: response_hash.to_json)
+    stub_request(:post, url).with(body:).to_return(body: response_hash.to_json)
   end
 
   def stub_requests_for_show_page(taxon)
     content_id = taxon.fetch("content_id")
 
     stub_publishing_api_has_item(taxon)
-    stub_publishing_api_has_links(content_id: content_id, links: {})
-    stub_publishing_api_has_expanded_links({ content_id: content_id, expanded_links: {} })
-    stub_publishing_api_has_linked_items([], content_id: content_id, link_type: "taxons")
+    stub_publishing_api_has_links(content_id:, links: {})
+    stub_publishing_api_has_expanded_links({ content_id:, expanded_links: {} })
+    stub_publishing_api_has_linked_items([], content_id:, link_type: "taxons")
     stub_email_requests_for_show_page
   end
 

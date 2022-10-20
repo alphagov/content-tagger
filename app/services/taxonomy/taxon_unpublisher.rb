@@ -2,10 +2,10 @@ module Taxonomy
   class TaxonUnpublisher
     def self.call(taxon_content_id:, redirect_to_content_id:, user:, retag: true)
       new.unpublish(
-        taxon_content_id: taxon_content_id,
-        redirect_to_content_id: redirect_to_content_id,
-        user: user,
-        retag: retag,
+        taxon_content_id:,
+        redirect_to_content_id:,
+        user:,
+        retag:,
       )
     end
 
@@ -26,10 +26,10 @@ module Taxonomy
       tag_migration = BulkTagging::BuildTagMigration.call(
         source_content_item: ContentItem.find!(taxon_content_id),
         taxon_content_ids: [parent_taxon["content_id"]],
-        content_base_paths: content_base_paths,
+        content_base_paths:,
       )
       tag_migration.save!
-      BulkTagging::QueueLinksForPublishing.call(tag_migration, user: user)
+      BulkTagging::QueueLinksForPublishing.call(tag_migration, user:)
     end
 
     def unpublish_taxon(taxon_content_id, redirect_to_content_id)

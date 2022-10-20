@@ -40,7 +40,7 @@ module TaxonomyHealth
         path: linked_content_item.base_path,
         metric: self.class.to_s,
         value: children_count,
-        message: message,
+        message:,
       )
     end
   end

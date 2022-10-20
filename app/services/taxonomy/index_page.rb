@@ -11,7 +11,7 @@ module Taxonomy
       remote_taxons.search(
         page: params[:page],
         per_page: params[:per_page],
-        query: query,
+        query:,
         states: [state],
       )
     end

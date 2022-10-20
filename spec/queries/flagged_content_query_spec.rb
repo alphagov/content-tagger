@@ -7,14 +7,14 @@ RSpec.describe FlaggedContentQuery do
       create(
         :project_content_item,
         :flagged_needs_help,
-        project: project,
+        project:,
       )
     end
     let!(:item_missing_topic) do
       create(
         :project_content_item,
         :flagged_missing_topic,
-        project: project,
+        project:,
         suggested_tags: "Better Taxon Suggestion",
       )
     end
@@ -22,7 +22,7 @@ RSpec.describe FlaggedContentQuery do
       create(
         :project_content_item,
         :flagged_missing_topic,
-        project: project,
+        project:,
         suggested_tags: "",
       )
     end

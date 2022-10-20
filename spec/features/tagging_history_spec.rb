@@ -156,7 +156,7 @@ private
 
   def stub_link_changes_request(link_changes, params = { link_types: %w[taxons] })
     stub_request(:get, "#{PUBLISHING_API}/v2/links/changes?#{params.to_query}")
-      .to_return(body: { link_changes: link_changes }.to_json)
+      .to_return(body: { link_changes: }.to_json)
   end
 
   def link_changes_with_user_data

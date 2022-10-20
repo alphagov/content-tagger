@@ -18,8 +18,8 @@ class TaxonMigrationsController < ApplicationController
            locals: {
              tag_migration: BulkTagging::TagMigration.new(source_content_id: source_content_item.content_id),
              taxons: Linkables.new.taxons,
-             expanded_links: expanded_links,
-             source_content_item: source_content_item,
+             expanded_links:,
+             source_content_item:,
            }
   end
 
@@ -27,7 +27,7 @@ class TaxonMigrationsController < ApplicationController
     source_content_item = ContentItem.find!(params[:bulk_tagging_tag_migration][:source_content_id])
 
     tag_migration = BulkTagging::BuildTagMigration.call(
-      source_content_item: source_content_item,
+      source_content_item:,
       taxon_content_ids: params[:taxons],
       content_base_paths: params[:content_base_paths],
     )

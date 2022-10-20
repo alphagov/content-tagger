@@ -6,10 +6,10 @@ RSpec.describe Taxonomy::BuildTaxon do
     let(:content_id) { SecureRandom.uuid }
     let(:content) do
       {
-        content_id: content_id,
+        content_id:,
         title: "A title",
         description: "A description",
-        document_type: document_type,
+        document_type:,
         base_path: "/foo/bar",
         publication_state: "State",
         state_history: {
@@ -29,12 +29,12 @@ RSpec.describe Taxonomy::BuildTaxon do
         },
       }
     end
-    let(:taxon) { Taxonomy::BuildTaxon.call(content_id: content_id) }
+    let(:taxon) { Taxonomy::BuildTaxon.call(content_id:) }
 
     before do
       stub_publishing_api_has_item(content)
       stub_publishing_api_has_expanded_links({
-        content_id: content_id,
+        content_id:,
         expanded_links: {
           topics: [],
           parent_taxons: [],
@@ -93,7 +93,7 @@ RSpec.describe Taxonomy::BuildTaxon do
     context "without taxon parents" do
       before do
         stub_publishing_api_has_expanded_links({
-          content_id: content_id,
+          content_id:,
           expanded_links: {
             topics: [],
           },
@@ -109,7 +109,7 @@ RSpec.describe Taxonomy::BuildTaxon do
       let(:parent_taxon_id) { "CONTENT-ID-RTI" }
       before do
         stub_publishing_api_has_expanded_links({
-          content_id: content_id,
+          content_id:,
           expanded_links: {
             topics: [],
             parent_taxons: [
@@ -127,7 +127,7 @@ RSpec.describe Taxonomy::BuildTaxon do
     context "root taxon" do
       before do
         stub_publishing_api_has_expanded_links({
-          content_id: content_id,
+          content_id:,
           expanded_links: {
             topics: [],
             parent_taxons: [],

@@ -36,7 +36,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
     content_id = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 
     previous_fields = {
-      content_id: content_id,
+      content_id:,
       title: "Tourism",
       description: "Send me a postcard",
       base_path: "/tourism",
@@ -49,7 +49,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
     }
 
     current_taxon = Taxon.new(
-      content_id: content_id,
+      content_id:,
       base_path: "/business/tourism",
       title: "Tourism",
       internal_name: "Tourism [internal]",
@@ -72,7 +72,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
 
     expect(Version.count).to eq(1)
     expect(Version.last).to have_attributes(
-      content_id: content_id,
+      content_id:,
       note: "An update note",
       object_changes: [
         ["~", "associated_taxons", %w[mmmmmmmm-mmmm-mmmm-mmmm-mmmmmmmmmmmm], nil],
@@ -86,7 +86,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
     content_id = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 
     previous_fields = {
-      content_id: content_id,
+      content_id:,
       title: "Business Tourism",
       description: "Send me a postcard",
       base_path: "/business/tourism",
@@ -99,7 +99,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
     }
 
     current_taxon = Taxon.new(
-      content_id: content_id,
+      content_id:,
       base_path: "/business/tourism",
       title: "Business Tourism",
       internal_name: "Business Tourism [internal]",
@@ -120,7 +120,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
     content_id = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 
     previous_fields = {
-      content_id: content_id,
+      content_id:,
       title: "Business",
       description: "Business as usual",
       base_path: "/business",
@@ -133,7 +133,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
     }
 
     current_taxon = Taxon.new(
-      content_id: content_id,
+      content_id:,
       base_path: "/business",
       title: "Business",
       internal_name: "Business [internal]",
@@ -149,7 +149,7 @@ RSpec.describe Taxonomy::SaveTaxonVersion, ".call" do
 
     expect(Version.count).to eq(1)
     expect(Version.last).to have_attributes(
-      content_id: content_id,
+      content_id:,
       note: "Restoring a taxon",
       object_changes: [],
     )

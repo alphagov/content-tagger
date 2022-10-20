@@ -18,12 +18,12 @@ module BulkTagging
     describe ".call" do
       it "adds the new links to the existing list of links" do
         stub_publishing_api_has_links(
-          content_id: content_id,
+          content_id:,
           links: { taxons: %w[existing-content-id] },
           version: 10,
         )
 
-        described_class.new(tag_mapping: tag_mapping).publish
+        described_class.new(tag_mapping:).publish
 
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
@@ -35,12 +35,12 @@ module BulkTagging
 
       it "makes sure we don't duplicate the links" do
         stub_publishing_api_has_links(
-          content_id: content_id,
+          content_id:,
           links: { taxons: [tag_mapping.link_content_id] },
           version: 10,
         )
 
-        described_class.new(tag_mapping: tag_mapping).publish
+        described_class.new(tag_mapping:).publish
 
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
@@ -52,12 +52,12 @@ module BulkTagging
 
       it "adds new links" do
         stub_publishing_api_has_links(
-          content_id: content_id,
+          content_id:,
           links: { taxons: [] },
           version: 10,
         )
 
-        described_class.new(tag_mapping: tag_mapping).publish
+        described_class.new(tag_mapping:).publish
 
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,
@@ -73,12 +73,12 @@ module BulkTagging
         tagging_source.delete_source_link = true
 
         stub_publishing_api_has_links(
-          content_id: content_id,
+          content_id:,
           links: { taxons: %w[source-content-id] },
           version: 10,
         )
 
-        described_class.new(tag_mapping: tag_mapping).publish
+        described_class.new(tag_mapping:).publish
 
         expect(Services.publishing_api).to have_received(:patch_links).with(
           tag_mapping.content_id,

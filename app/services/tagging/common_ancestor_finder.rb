@@ -17,8 +17,8 @@ module Tagging
         begin
           expanded_links_hash = Services.publishing_api.get_expanded_links(content_id).to_h
           {
-            content_id: content_id,
-            title: title,
+            content_id:,
+            title:,
             common_ancestors: find_common_ancestors(taxon_paths(expanded_links_hash)),
           }
         rescue GdsApi::HTTPNotFound

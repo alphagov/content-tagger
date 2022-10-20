@@ -49,7 +49,7 @@ module BulkTagging
         expect(PublishLinksWorker).to receive(:perform_async)
           .with(tag_mapping_3.id)
 
-        described_class.call(tagging_spreadsheet, user: user)
+        described_class.call(tagging_spreadsheet, user:)
 
         expect(tagging_spreadsheet.last_published_by).to eq "user-123"
         expect(tagging_spreadsheet.last_published_at).to eq Time.zone.local(0)

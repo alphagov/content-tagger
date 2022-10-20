@@ -8,7 +8,7 @@ class ContentLookupForm
 
   def content_id
     @content_id ||= Services.statsd.time "base_path_lookup" do
-      Services.publishing_api.lookup_content_id(base_path: base_path, with_drafts: true)
+      Services.publishing_api.lookup_content_id(base_path:, with_drafts: true)
     end
   end
 

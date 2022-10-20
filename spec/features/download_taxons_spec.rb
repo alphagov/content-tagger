@@ -16,7 +16,7 @@ RSpec.feature "Download taggings", type: :feature do
 
     taxon = content_item_with_details(
       "My Taxon",
-      other_fields: { content_id: content_id, description: "Foo" },
+      other_fields: { content_id:, description: "Foo" },
     )
 
     stub_requests_for_show_page(taxon)

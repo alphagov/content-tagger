@@ -11,14 +11,14 @@ module Taxonomy
     end
 
     def self.call(content_id:)
-      new(content_id: content_id).build
+      new(content_id:).build
     end
 
     def build
       validate_taxon_response!
 
       Taxon.new(
-        content_id: content_id,
+        content_id:,
         title: content_item["title"],
         description: content_item["description"],
         base_path: content_item["base_path"],

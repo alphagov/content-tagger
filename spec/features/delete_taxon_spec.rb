@@ -310,7 +310,7 @@ private
       [content_item],
       content_id: @taxon_content_id,
       link_type: "taxons",
-      fields: fields,
+      fields:,
     )
 
     stub_publishing_api_has_lookups(content_item[:base_path] => content_item[:content_id])

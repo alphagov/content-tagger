@@ -25,7 +25,7 @@ module Tagging
       tags = TAG_TYPES.index_with { |tag_type| links.fetch(tag_type.to_s, []) }
 
       new(
-        content_id: content_id,
+        content_id:,
         previous_version: data.fetch("version", 0),
         **tags,
       )

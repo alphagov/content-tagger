@@ -71,7 +71,7 @@ module DataExport
     def content_links_enum(page_size = 1000)
       Services.search_api.search_enum(
         { reject_content_store_document_type: DENYLIST_DOCUMENT_TYPES, fields: %w[link] },
-        page_size: page_size,
+        page_size:,
       ).lazy.map { |h| h["link"] }
     end
 

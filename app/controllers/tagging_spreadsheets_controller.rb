@@ -19,14 +19,14 @@ class TaggingSpreadsheetsController < ApplicationController
       InitialTaggingImport.perform_async(tagging_spreadsheet.id)
       redirect_to tagging_spreadsheet_path(tagging_spreadsheet), success: I18n.t("tag_import.import_created")
     else
-      render :new, locals: { tagging_spreadsheet: tagging_spreadsheet }
+      render :new, locals: { tagging_spreadsheet: }
     end
   end
 
   def show
     render :show,
            locals: {
-             tagging_spreadsheet: tagging_spreadsheet,
+             tagging_spreadsheet:,
              aggregated_tag_mappings: presented_aggregated_tag_mappings,
              completed_tag_mappings: aggregated_tag_mappings.count(&:completed?),
              total_tag_mappings: aggregated_tag_mappings.count,

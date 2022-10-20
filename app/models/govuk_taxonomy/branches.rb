@@ -19,7 +19,7 @@ module GovukTaxonomy
 
     def get_expanded_links_hash(content_id, with_drafts:)
       Services.publishing_api
-        .get_expanded_links(content_id, with_drafts: with_drafts)
+        .get_expanded_links(content_id, with_drafts:)
         .to_h
     end
 

@@ -9,7 +9,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     let(:content_id) { "2797b5f2-7154-411e-9282-7756b78b22d6" }
 
     let(:stubbed_content_item) do
-      double(content_id: content_id, allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items])
+      double(content_id:, allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items])
     end
 
     it "converts base paths of related items into content IDs" do
@@ -55,7 +55,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     end
 
     def expect_links_to_have_been_published(links)
-      expect(stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links/*}).with(body: { links: links, previous_version: 0 }.to_json)).to have_been_made
+      expect(stub_request(:patch, %r{https://publishing-api.test.gov.uk/v2/links/*}).with(body: { links:, previous_version: 0 }.to_json)).to have_been_made
     end
 
     def update_taggings_with_params(controller_params)

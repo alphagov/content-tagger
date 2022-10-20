@@ -2,7 +2,7 @@
 class RemoteTaxons
   def search(page: 1, per_page: 50, query: "", states: %w[published])
     BulkTagging::TaxonSearchResults.new(
-      taxon_content_items(page: page, per_page: per_page, query: query, states: states),
+      taxon_content_items(page:, per_page:, query:, states:),
     )
   end
 

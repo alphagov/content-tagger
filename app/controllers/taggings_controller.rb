@@ -59,7 +59,7 @@ class TaggingsController < ApplicationController
       tagging_update.update_attributes_from_form(params[:tagging_tagging_update_form])
 
       flash.now[:danger] = "This form contains errors. Please correct them and try again."
-      render :show, locals: { tagging_update: tagging_update }
+      render :show, locals: { tagging_update: }
     end
   rescue GdsApi::HTTPConflict
     redirect_back(

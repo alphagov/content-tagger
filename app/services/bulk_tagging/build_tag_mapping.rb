@@ -8,12 +8,12 @@ module BulkTagging
     end
 
     def self.call(taxon:, content_base_path:)
-      new(taxon: taxon, content_base_path: content_base_path).call
+      new(taxon:, content_base_path:).call
     end
 
     def call
       TagMapping.new(
-        content_base_path: content_base_path,
+        content_base_path:,
         link_title: taxon.title,
         link_content_id: taxon.content_id,
         link_type: "taxons",

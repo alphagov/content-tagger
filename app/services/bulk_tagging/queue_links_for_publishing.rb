@@ -3,7 +3,7 @@ module BulkTagging
     attr_reader :tagging_source, :tag_mappings, :user
 
     def self.call(tagging_source, user:)
-      new(tagging_source, user: user).call
+      new(tagging_source, user:).call
     end
 
     def initialize(tagging_source, user:)

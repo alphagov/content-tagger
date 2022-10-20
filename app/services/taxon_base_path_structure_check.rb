@@ -14,7 +14,7 @@ private
 
   # rubocop:disable Rails/Output
   def validate_tree(taxon:, level_one_prefix: nil, n: 0) # rubocop:disable Naming/MethodParameterName
-    taxon = Taxon.new(taxon, level_one_prefix: level_one_prefix)
+    taxon = Taxon.new(taxon, level_one_prefix:)
 
     spacer = n.positive? ? "#{' ' * n * 2} ├── " : ""
     if taxon.valid?
@@ -39,7 +39,7 @@ private
   end
 
   class Taxon
-    LEVEL_ONE_URL_REGEX = %r{^/([A-z0-9\-]+)$}.freeze
+    LEVEL_ONE_URL_REGEX = %r{^/([A-z0-9\-]+)$}
 
     def initialize(taxon, level_one_prefix:)
       @taxon = taxon

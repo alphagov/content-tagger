@@ -6,7 +6,7 @@ module ContentItemHelper
     content_item_with_details(
       title,
       other_fields: other_fields.merge(document_type: "taxon"),
-      unpublished: unpublished,
+      unpublished:,
     )
   end
 
@@ -21,14 +21,14 @@ module ContentItemHelper
     basic_content_item(
       title,
       other_fields: other_fields_with_details,
-      unpublished: unpublished,
+      unpublished:,
     )
   end
 
   def basic_content_item(title, other_fields: {}, unpublished: false)
     content_item = ActiveSupport::HashWithIndifferentAccess.new(
       content_id: title.parameterize,
-      title: title,
+      title:,
       base_path: title.parameterize.prepend("/level-one/"),
       document_type: "guidance",
       publication_state: "published",

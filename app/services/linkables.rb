@@ -5,7 +5,7 @@ class Linkables
   end
 
   def taxons(exclude_ids: [], include_draft: true)
-    @taxons ||= for_document_type("taxon", include_draft: include_draft).tap do |items|
+    @taxons ||= for_document_type("taxon", include_draft:).tap do |items|
       if Array(exclude_ids).present?
         items.delete_if { |item| item.second.in? Array(exclude_ids) }
       end
@@ -13,7 +13,7 @@ class Linkables
   end
 
   def taxons_including_root(exclude_ids: [])
-    [[GovukTaxonomy::TITLE, GovukTaxonomy::ROOT_CONTENT_ID]] + taxons(exclude_ids: exclude_ids)
+    [[GovukTaxonomy::TITLE, GovukTaxonomy::ROOT_CONTENT_ID]] + taxons(exclude_ids:)
   end
 
   def organisations
@@ -69,7 +69,7 @@ private
 
   def get_tags_of_type(document_type)
     items = Services.statsd.time "linkables.#{document_type}" do
-      Services.publishing_api.get_linkables(document_type: document_type)
+      Services.publishing_api.get_linkables(document_type:)
     end
 
     # We only are interested in linkables that have an internal name and not
