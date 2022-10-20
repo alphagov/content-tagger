@@ -52,7 +52,7 @@ RSpec.describe Taxonomy::OrganisationCount do
     end
 
     def stub_search_api(query_hash, json_body)
-      stub_request(:get, Regexp.new(Plek.new.find("search")))
+      stub_request(:get, Regexp.new(Plek.new.find("search-api")))
         .with(query: hash_including(query_hash))
         .to_return(body: json_body.to_json)
     end

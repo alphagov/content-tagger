@@ -39,7 +39,7 @@ module Taxonomy
           },
         }
 
-        stub_request(:get, "https://search.test.gov.uk/search.json?count=0&facet_taxons=4000")
+        stub_request(:get, "https://search-api.test.gov.uk/search.json?count=0&facet_taxons=4000")
             .to_return(body: document_counts.to_json)
 
         presented = described_class.new(root_node).present
