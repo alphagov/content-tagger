@@ -1,6 +1,4 @@
-RSpec.describe Tagging::Tagger do
-  subject { described_class }
-
+RSpec.describe Tagging::CsvTagger do
   before do
     stub_request(:get, "http://example.com/sheet.csv").to_return(body: <<~CSV)
       content_id,taxon_id
@@ -11,16 +9,16 @@ RSpec.describe Tagging::Tagger do
   end
 
   it "adds tags from the spreadsheet" do
-    expect(described_class).to receive(:add_tags).with("aaa", %w[1 3], :taxons)
-    expect(described_class).to receive(:add_tags).with("bbb", %w[2], :taxons)
+    expect(Tagging::Tagger).to receive(:add_tags).with("aaa", %w[1 3], :taxons)
+    expect(Tagging::Tagger).to receive(:add_tags).with("bbb", %w[2], :taxons)
 
-    Tagging::CsvTagger.do_tagging("http://example.com/sheet.csv")
+    described_class.do_tagging("http://example.com/sheet.csv")
   end
 
   it "returns groups in a block" do
-    allow(described_class).to receive(:add_tags)
+    allow(Tagging::Tagger).to receive(:add_tags)
     log = []
-    Tagging::CsvTagger.do_tagging("http://example.com/sheet.csv") do |b|
+    described_class.do_tagging("http://example.com/sheet.csv") do |b|
       log << b
     end
     expect(log).to match_array([{ content_id: "aaa", taxon_ids: %w[1 3] },
