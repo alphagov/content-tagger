@@ -35,7 +35,7 @@ module Services
 
   def self.search_api
     @search_api ||= GdsApi::Search.new(
-      Plek.new.find("search"),
+      Plek.new.find("search-api"),
     )
   end
 end

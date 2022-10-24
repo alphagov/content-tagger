@@ -332,7 +332,7 @@ RSpec.describe "Viewing taxons" do
       },
     }
 
-    stub_request(:get, "https://search.test.gov.uk/search.json").with(query: { "count" => 0, "facet_taxons" => 4000 })
+    stub_request(:get, "https://search-api.test.gov.uk/search.json").with(query: { "count" => 0, "facet_taxons" => 4000 })
         .to_return(body: document_counts.to_json)
     click_link I18n.t("views.taxons.download_csv")
     expect(page.response_headers["Content-Type"]).to match(/csv/)
