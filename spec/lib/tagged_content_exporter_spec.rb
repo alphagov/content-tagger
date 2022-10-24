@@ -92,7 +92,7 @@ RSpec.describe TaggedContentExporter do
       ]
 
       expect(
-        TaggedContentExporter
+        described_class
           .new(ProjectContentItem.all)
           .content_items_with_taxons,
       ).to eq(expected_content_items)

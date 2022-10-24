@@ -315,7 +315,7 @@ RSpec.describe "Viewing taxons" do
   def then_i_do_not_see_the_number_of_email_subscribers
     expect(page).to have_content "email subscribers"
     expect(page).to have_content "?"
-    expect(page).to_not have_content "24601"
+    expect(page).not_to have_content "24601"
   end
 
   def and_i_can_download_the_taxonomy_in_csv_form

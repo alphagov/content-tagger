@@ -26,7 +26,7 @@ RSpec.feature "Navigation" do
     then_i_can_see_the_full_set_of_navigation_options
   end
 
-  context "Clicking navigation option" do
+  context "when clicking navigation option" do
     before do
       given_i_am_logged_in_as_a_gds_editor
       when_i_visit_the_application

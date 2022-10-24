@@ -239,7 +239,7 @@ RSpec.describe "Tagging content" do
   end
 
   def then_the_suggested_related_items_component_should_not_be_shown
-    expect(page).to_not have_content "Suggested related content items"
+    expect(page).not_to have_content "Suggested related content items"
   end
 
   def then_i_am_on_the_page_for_an_item

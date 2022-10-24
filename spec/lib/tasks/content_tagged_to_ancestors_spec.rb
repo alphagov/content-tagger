@@ -10,7 +10,7 @@ RSpec.describe "content:tagged_to_ancestor", type: :task do
                                            ))
   end
 
-  before :each do
+  before do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }] }.to_json)
   end
 
@@ -29,9 +29,7 @@ RSpec.describe "content:tagged_to_ancestor", type: :task do
   it "optionally invokes untagger" do
     has_paths [[1, 2, 3, 4], [1, 2, 3]]
 
-    untagger = double(Tagging::Untagger)
-    expect(untagger).to receive(:call)
-    stub_const("Tagging::Untagger", untagger)
+    expect(Tagging::Untagger).to receive(:call)
 
     expect { rake("content:tagged_to_ancestor", "untag") }.to output.to_stdout
   end

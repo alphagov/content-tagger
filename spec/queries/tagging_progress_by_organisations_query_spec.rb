@@ -13,13 +13,13 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
     it "returns an empty table when nothing is returned" do
       stub_search_api_totals(search_api_empty)
       stub_search_api_tagged(search_api_empty)
-      expect(TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged).to be_empty
+      expect(described_class.new(organisations).percentage_tagged).to be_empty
     end
 
     it "returns zeros when there are no documents" do
       stub_search_api_totals(search_api_zeros)
       stub_search_api_tagged(search_api_zeros)
-      expect(TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged)
+      expect(described_class.new(organisations).percentage_tagged)
         .to eq(
           "department-for-transport" => { percentage: 0.0, total: 0, tagged: 0 },
           "high-speed-two-limited" => { percentage: 0.0, total: 0, tagged: 0 },
@@ -29,7 +29,7 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
     it "returns correct values" do
       stub_search_api_totals(search_api_totals)
       stub_search_api_tagged(search_api_tagged)
-      expect(TaggingProgressByOrganisationsQuery.new(organisations).percentage_tagged)
+      expect(described_class.new(organisations).percentage_tagged)
         .to eq(
           "department-for-transport" => { percentage: 25.0, total: 20, tagged: 5 },
           "high-speed-two-limited" => { percentage: 56.25, total: 80, tagged: 45 },
@@ -41,19 +41,19 @@ RSpec.describe TaggingProgressByOrganisationsQuery do
     it "returns an empty hash when nothing is returned" do
       stub_search_api_totals(search_api_empty)
       stub_search_api_tagged(search_api_empty)
-      expect(TaggingProgressByOrganisationsQuery.new(organisations).total_counts).to be_empty
+      expect(described_class.new(organisations).total_counts).to be_empty
     end
 
     it "returns zeros when there are no documents" do
       stub_search_api_totals(search_api_zeros)
       stub_search_api_tagged(search_api_zeros)
-      expect(TaggingProgressByOrganisationsQuery.new(organisations).total_counts).to eq(percentage: 0.0, total: 0, tagged: 0)
+      expect(described_class.new(organisations).total_counts).to eq(percentage: 0.0, total: 0, tagged: 0)
     end
 
     it "returns correct totals" do
       stub_search_api_totals(search_api_totals)
       stub_search_api_tagged(search_api_tagged)
-      expect(TaggingProgressByOrganisationsQuery.new(organisations).total_counts)
+      expect(described_class.new(organisations).total_counts)
         .to eq(percentage: 50.0, total: 100, tagged: 50)
     end
   end

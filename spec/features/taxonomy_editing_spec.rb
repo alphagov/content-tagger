@@ -107,7 +107,7 @@ RSpec.feature "Taxonomy editing" do
       .to_return(status: 200, body: {}.to_json)
   end
 
-  scenario "User creates a taxon with a parent" do
+  scenario "User creates a taxon" do
     given_there_are_taxons
     when_i_visit_the_taxonomy_page
     and_i_click_on_the_new_taxon_button
@@ -141,15 +141,6 @@ RSpec.feature "Taxonomy editing" do
     and_i_set_an_url_override
     and_i_submit_the_taxon_with_with_an_url_override
     then_a_taxon_with_an_url_override_is_created
-  end
-
-  scenario "User creates a taxon without a parent" do
-    given_there_are_taxons
-    when_i_visit_the_taxonomy_page
-    and_i_click_on_the_new_taxon_button
-    and_i_set_taxon_details
-    and_i_submit_the_create_form
-    then_a_taxon_is_created
   end
 
   scenario "User attempts to create a taxon that isn't semantically valid" do

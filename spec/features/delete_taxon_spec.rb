@@ -161,7 +161,7 @@ RSpec.feature "Delete Taxon" do
 
   def then_i_see_a_basic_prompt_to_delete
     expect(page).to have_text('You are about to delete "Taxon 1"')
-    expect(page).to_not have_text("Before you delete this taxon, make sure you've")
+    expect(page).not_to have_text("Before you delete this taxon, make sure you've")
     expect(page).to have_link("Cancel")
     expect(page).to have_button("Delete and redirect")
   end
@@ -238,7 +238,7 @@ RSpec.feature "Delete Taxon" do
   end
 
   def and_no_content_is_tagged_to_the_parent
-    expect(@patch_links_request).to_not have_been_made
+    expect(@patch_links_request).not_to have_been_made
   end
 
 private

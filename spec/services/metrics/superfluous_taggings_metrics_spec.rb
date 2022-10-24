@@ -8,7 +8,7 @@ module Metrics
 
         allow(Metrics.statsd).to receive(:gauge)
 
-        Metrics::SuperfluousTaggingsMetrics.new.count
+        described_class.new.count
 
         expect(Metrics.statsd).to have_received(:gauge)
                                     .with("superfluous_tagging_count", 3)

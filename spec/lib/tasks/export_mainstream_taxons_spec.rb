@@ -4,7 +4,7 @@ RSpec.describe "govuk:export_mainstream_taxons", type: :task do
   include RakeTaskHelper
   include ::GdsApi::TestHelpers::Search
 
-  before :each do
+  before do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "1b99def9-7eaa-4fb4-a0d0-ea76f0c5c370",
                                                       "primary_publishing_organisation" => "department-for-transport",
                                                       "organisations" => [{

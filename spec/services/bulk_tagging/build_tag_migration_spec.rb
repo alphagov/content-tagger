@@ -67,7 +67,7 @@ module BulkTagging
         expect(tag_migration.state).to eq("ready_to_import")
       end
 
-      it "it builds 4 tag mappings" do
+      it "builds 4 tag mappings" do
         expect(tag_migration.tag_mappings.length).to eq(4)
       end
 

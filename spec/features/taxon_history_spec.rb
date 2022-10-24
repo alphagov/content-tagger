@@ -74,6 +74,6 @@ RSpec.feature "Taxon history" do
   end
 
   def and_there_will_not_be_an_empty_associated_taxon_change
-    expect(page).to_not have_content 'associated_taxons nil → [""]'
+    expect(page).not_to have_content 'associated_taxons nil → [""]'
   end
 end

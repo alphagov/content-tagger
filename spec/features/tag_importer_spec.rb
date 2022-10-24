@@ -230,7 +230,7 @@ RSpec.feature "Tag importer" do
   end
 
   def and_refetch_the_tags
-    expect { click_link I18n.t("tag_import.refresh") }.to(change { BulkTagging::TagMapping.count }.by(1))
+    expect { click_link I18n.t("tag_import.refresh") }.to(change(BulkTagging::TagMapping, :count).by(1))
   end
 
   def then_i_should_see_an_updated_preview
@@ -241,7 +241,7 @@ RSpec.feature "Tag importer" do
     visit tagging_spreadsheets_path
     delete_button = first("table tbody a", text: I18n.t("tag_import.delete"))
 
-    expect { delete_button.click }.to_not(change { BulkTagging::TaggingSpreadsheet.count })
+    expect { delete_button.click }.not_to(change(BulkTagging::TaggingSpreadsheet, :count))
   end
 
   def then_it_is_no_longer_available
@@ -251,7 +251,7 @@ RSpec.feature "Tag importer" do
 
   def and_it_has_been_marked_as_deleted
     tagging_spreadsheet = BulkTagging::TaggingSpreadsheet.first
-    expect(tagging_spreadsheet.deleted_at).to_not be_nil
+    expect(tagging_spreadsheet.deleted_at).not_to be_nil
   end
 
   def then_i_can_see_it_is_ready_for_importing

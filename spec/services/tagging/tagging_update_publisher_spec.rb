@@ -7,7 +7,11 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     let(:content_id) { "2797b5f2-7154-411e-9282-7756b78b22d6" }
 
     let(:stubbed_content_item) do
-      double(content_id:, allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items])
+      instance_double(
+        ContentItem,
+        content_id:,
+        allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items],
+      )
     end
 
     it "converts base paths of related items into content IDs" do
@@ -21,7 +25,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     it "generates a valid links payload using ordered_related_items and overrides" do
       stub_content_id_lookup("/my-page" => content_id)
 
-      publisher = Tagging::TaggingUpdatePublisher.new(
+      publisher = described_class.new(
         stubbed_content_item,
         taxons: %w[0ffd5e18-af20-4413-a215-8511cf7628b5],
         ordered_related_items: ["/my-page"],
@@ -43,12 +47,12 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
     it "is not valid if the provided base path does not exist" do
       stub_content_id_lookup("/my-page" => nil)
 
-      response = Tagging::TaggingUpdatePublisher.new(
+      response = described_class.new(
         stubbed_content_item,
         ordered_related_items: ["/my-page"],
       )
 
-      expect(response.save_to_publishing_api).to eql(false)
+      expect(response.save_to_publishing_api).to be(false)
       expect(response.related_item_errors).to eql("/my-page" => "Not a known URL on GOV.UK")
     end
 

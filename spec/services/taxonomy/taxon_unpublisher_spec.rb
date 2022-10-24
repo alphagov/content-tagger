@@ -8,7 +8,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
   let(:tagged_content_id2) { SecureRandom.uuid }
   let(:version) { 10 }
 
-  before :each do
+  before do
     # parent and child taxon, redirect taxon exist
     stub_publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: taxon_content_id))
     stub_publishing_api_has_item(FactoryBot.build(:taxon_hash, content_id: parent_taxon_content_id))
@@ -19,8 +19,8 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     stub_any_publishing_api_unpublish
   end
 
-  context "the taxon is not tagged to any content items" do
-    before :each do
+  context "when the taxon is not tagged to any content items" do
+    before do
       # no content items are tagged to child taxon
       stub_publishing_api_has_linked_items(
         [],
@@ -29,14 +29,15 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
         fields: %w[base_path],
       )
     end
+
     it "does not perform a tag migration" do
-      expect(BulkTagging::BuildTagMigration).to receive(:call).never
+      expect(BulkTagging::BuildTagMigration).not_to receive(:call)
       unpublish(taxon_content_id, redirect_content_id)
     end
   end
 
-  context "the taxon is tagged to two content items" do
-    before :each do
+  context "when the taxon is tagged to two content items" do
+    before do
       # content items are tagged to child taxon
       stub_publishing_api_has_linked_items(
         [{ "base_path" => "/base/path1" },
@@ -59,15 +60,8 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
     end
 
     describe "tag to parent" do
-      before :each do
+      before do
         stub_any_publishing_api_unpublish
-      end
-      it "retags content to the parent" do
-        patch_request1 = stub_publishing_api_patch_links(tagged_content_id1, hash_including(links: { taxons: [taxon_content_id, parent_taxon_content_id] }, previous_version: version))
-        patch_request2 = stub_publishing_api_patch_links(tagged_content_id2, hash_including(links: { taxons: [taxon_content_id, parent_taxon_content_id] }, previous_version: version))
-        unpublish(taxon_content_id, redirect_content_id)
-        expect(patch_request1).to have_been_made
-        expect(patch_request2).to have_been_made
       end
 
       it "retags content to the parent" do
@@ -81,7 +75,7 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
       it "does not retag content" do
         patch_request = stub_any_publishing_api_patch_links
         unpublish(taxon_content_id, redirect_content_id, retag: false)
-        expect(patch_request).to_not have_been_made
+        expect(patch_request).not_to have_been_made
       end
     end
   end

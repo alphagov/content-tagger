@@ -38,16 +38,16 @@ module BulkTagging
     end
 
     describe "errored?" do
-      it 'should return true when state is "errored"' do
+      it 'returns true when state is "errored"' do
         tagging_spreadsheet.state = "errored"
 
-        expect(presenter.errored?).to be_truthy
+        expect(presenter).to be_errored
       end
 
-      it 'should return false when state is not "errored"' do
+      it 'returns false when state is not "errored"' do
         tagging_spreadsheet.state = "tagged"
 
-        expect(presenter.errored?).to be_falsey
+        expect(presenter).not_to be_errored
       end
     end
   end

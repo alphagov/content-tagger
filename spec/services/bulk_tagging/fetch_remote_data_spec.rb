@@ -12,7 +12,7 @@ module BulkTagging
         end
 
         it "creates tag mappings based on the retrieved data" do
-          FetchRemoteData.call(tagging_spreadsheet)
+          described_class.call(tagging_spreadsheet)
 
           expect(TagMapping.all.map(&:content_base_path)).to eq(%w[/content-1/ /content-2/])
           expect(TagMapping.all.map(&:link_type)).to eq(%w[taxons taxons])
@@ -31,7 +31,7 @@ module BulkTagging
           )
           stub_request(:get, url).to_return(body: dodgy_spreadsheet_data, status: 200)
 
-          FetchRemoteData.new(tagging_spreadsheet).call
+          described_class.new(tagging_spreadsheet).call
 
           tag_mapping = TagMapping.first
           expect(tag_mapping.content_base_path).to eq "/content-1/"
@@ -60,7 +60,7 @@ module BulkTagging
         end
 
         it "saves each record per row" do
-          FetchRemoteData.call(tagging_spreadsheet)
+          described_class.call(tagging_spreadsheet)
 
           expect(TagMapping.count).to eq(2)
           expect(TagMapping.all.map(&:content_base_path)).to eq(%w[/content-1/ /content-1/])
@@ -74,7 +74,7 @@ module BulkTagging
 
         it "does not create any taggings" do
           expect { described_class.call(tagging_spreadsheet) }
-            .to_not(change { tagging_spreadsheet.tag_mappings })
+            .not_to(change(tagging_spreadsheet, :tag_mappings))
         end
 
         it "returns the error message" do

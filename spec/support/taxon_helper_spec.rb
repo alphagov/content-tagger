@@ -3,7 +3,7 @@ require_relative("taxon_helper")
 RSpec.describe Support::TaxonHelper do
   describe "#expanded_link_hash" do
     it "has a correct helper" do
-      result = Support::TaxonHelper.expanded_link_hash("a", [%w[b], %w[f e d c]])
+      result = described_class.expanded_link_hash("a", [%w[b], %w[f e d c]])
       expected_hash = {
         "content_id" => "a",
         "expanded_links" => {

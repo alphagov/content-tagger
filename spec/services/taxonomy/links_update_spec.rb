@@ -5,7 +5,7 @@ RSpec.describe Taxonomy::LinksUpdate do
   let(:parent_id) { SecureRandom.uuid }
   let(:associated_id) { SecureRandom.uuid }
 
-  before :each do
+  before do
     stub_publishing_api_has_item(content_id:, title: "content")
     stub_any_publishing_api_patch_links
   end

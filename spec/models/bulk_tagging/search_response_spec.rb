@@ -4,7 +4,7 @@ module BulkTagging
 
     context "with a successful response" do
       let(:gds_api_response) do
-        double(
+        instance_double(
           GdsApi::Response,
           code: 200,
           to_hash: {
@@ -24,9 +24,7 @@ module BulkTagging
 
       it "includes content item search results" do
         expect(search_response.results.length).to eq(2)
-        search_response.results.each do |result|
-          expect(result).to be_a(ContentItem)
-        end
+        expect(search_response.results).to all(be_a(ContentItem))
       end
 
       it "knows the total number of pages" do

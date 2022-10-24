@@ -14,46 +14,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   let(:bramley) { FactoryBot.build(:taxon_hash, title: "Bramley") }
   let(:cox) { FactoryBot.build(:taxon_hash, title: "Cox") }
 
-  context "A child and parent taxon, not attached to the root taxon" do
-    before :each do
-      @rootless_parent = FactoryBot.build(:taxon_hash, title: "Rootless Parent")
-      @rootless_child = FactoryBot.build(:taxon_hash, title: "Rootless Child")
-
-      stub_publishing_api_has_item(@rootless_parent)
-      stub_publishing_api_has_item(@rootless_child)
-
-      stub_publishing_api_has_expanded_links({
-        content_id: @rootless_parent["content_id"],
-        expanded_links: {
-          child_taxons: [@rootless_child],
-        },
-      })
-
-      stub_publishing_api_has_expanded_links({
-        content_id: @rootless_child["content_id"],
-        expanded_links: {
-          parent_taxons: [@rootless_parent],
-        },
-      })
-    end
-
-    describe "Rootless taxonomies" do
-      describe 'Build a taxonomy where the selected ("root") taxon is the child' do
-        it "Only contains the parent taxon" do
-          taxonomy = Taxonomy::ExpandedTaxonomy.new(@rootless_child["content_id"]).build
-          expect(taxonomy.parent_expansion.children.map(&:content_id)).to eq([@rootless_parent["content_id"]])
-        end
-      end
-      describe 'Build a taxonomy where the selected ("root") taxon is the parent' do
-        it "has no parents" do
-          taxonomy = Taxonomy::ExpandedTaxonomy.new(@rootless_parent["content_id"]).build
-          expect(taxonomy.parent_expansion.children).to be_empty
-        end
-      end
-    end
-  end
-
-  before :each do
+  before do
     stub_publishing_api_has_item(home_page)
     stub_publishing_api_has_item(food)
 
@@ -96,29 +57,71 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
     })
   end
 
-  describe "Ask for the Homepage" do
-    before :each do
-      @taxonomy = Taxonomy::ExpandedTaxonomy.new(GovukTaxonomy::ROOT_CONTENT_ID).build
+  context "when there is a child and parent taxon, not attached to the root taxon" do
+    let(:rootless_parent) { FactoryBot.build(:taxon_hash, title: "Rootless Parent") }
+    let(:rootless_child) { FactoryBot.build(:taxon_hash, title: "Rootless Child") }
+
+    before do
+      stub_publishing_api_has_item(rootless_parent)
+      stub_publishing_api_has_item(rootless_child)
+
+      stub_publishing_api_has_expanded_links({
+        content_id: rootless_parent["content_id"],
+        expanded_links: {
+          child_taxons: [rootless_child],
+        },
+      })
+
+      stub_publishing_api_has_expanded_links({
+        content_id: rootless_child["content_id"],
+        expanded_links: {
+          parent_taxons: [rootless_parent],
+        },
+      })
     end
+
+    describe "Rootless taxonomies" do
+      describe 'Build a taxonomy where the selected ("root") taxon is the child' do
+        it "Only contains the parent taxon" do
+          taxonomy = described_class.new(rootless_child["content_id"]).build
+          expect(taxonomy.parent_expansion.children.map(&:content_id)).to eq([rootless_parent["content_id"]])
+        end
+      end
+
+      describe 'Build a taxonomy where the selected ("root") taxon is the parent' do
+        it "has no parents" do
+          taxonomy = described_class.new(rootless_parent["content_id"]).build
+          expect(taxonomy.parent_expansion.children).to be_empty
+        end
+      end
+    end
+  end
+
+  describe "when expanding the root content ID" do
+    let(:taxonomy) { described_class.new(GovukTaxonomy::ROOT_CONTENT_ID).build }
+
     it "has no parent children" do
-      expect(@taxonomy.parent_expansion.children).to be_empty
+      expect(taxonomy.parent_expansion.children).to be_empty
     end
+
     it "has apples as direct children" do
-      expect(@taxonomy.child_expansion.children.count).to eq(1)
-      expect(@taxonomy.child_expansion.children.first.internal_name).to eq("i-Apples")
+      expect(taxonomy.child_expansion.children.count).to eq(1)
+      expect(taxonomy.child_expansion.children.first.internal_name).to eq("i-Apples")
     end
+
     it "has bramley and cox as grand children" do
-      expect(@taxonomy.child_expansion.children.first.children.count).to eq(2)
-      expect(@taxonomy.child_expansion.children.first.children.map(&:internal_name)).to match_array(%w[i-Bramley i-Cox])
+      expect(taxonomy.child_expansion.children.first.children.count).to eq(2)
+      expect(taxonomy.child_expansion.children.first.children.map(&:internal_name)).to match_array(%w[i-Bramley i-Cox])
     end
+
     it "has the correct name for the home page taxon" do
-      expect(@taxonomy.root_node.internal_name).to eq("GOV.UK homepage")
+      expect(taxonomy.root_node.internal_name).to eq("GOV.UK homepage")
     end
   end
 
   describe "#build" do
     it "returns a representation of the taxonomy, with both parent and child taxons expanded" do
-      taxonomy = Taxonomy::ExpandedTaxonomy.new(apples["content_id"]).build
+      taxonomy = described_class.new(apples["content_id"]).build
 
       expect(taxonomy.root_node.internal_name).to eq "i-Apples"
       expect(taxonomy.parent_expansion.map(&:internal_name)).to eq [
@@ -139,7 +142,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
 
   describe "#immediate_parents" do
     it "returns immediate parents of the root node" do
-      taxonomy = Taxonomy::ExpandedTaxonomy.new(apples["content_id"]).build
+      taxonomy = described_class.new(apples["content_id"]).build
 
       expect(taxonomy.immediate_parents.map(&:internal_name)).to eq %w[
         i-Fruits
@@ -149,7 +152,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
 
   describe "#immediate_children" do
     it "returns immediate children of the root node" do
-      taxonomy = Taxonomy::ExpandedTaxonomy.new(apples["content_id"]).build
+      taxonomy = described_class.new(apples["content_id"]).build
 
       expect(taxonomy.immediate_children.map(&:internal_name)).to eq %w[
         i-Bramley
@@ -159,7 +162,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   end
 
   describe "#child_expansion" do
-    let(:taxonomy) { Taxonomy::ExpandedTaxonomy.new(apples["content_id"]) }
+    let(:taxonomy) { described_class.new(apples["content_id"]) }
 
     context "when the expansion hasn't been built yet" do
       it "raises an error" do
@@ -178,7 +181,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
       end
     end
 
-    context "given a circular dependency between taxons" do
+    context "when there is a circular dependency between taxons" do
       let(:bramley) do
         FactoryBot.build(:taxon_hash, title: "Bramley", links: { parent_taxons: [apples], child_taxons: [apples] })
       end
@@ -198,7 +201,7 @@ RSpec.describe Taxonomy::ExpandedTaxonomy do
   end
 
   describe "#parent_expansion" do
-    let(:taxonomy) { Taxonomy::ExpandedTaxonomy.new(apples["content_id"]) }
+    let(:taxonomy) { described_class.new(apples["content_id"]) }
 
     context "when the expansion hasn't been built yet" do
       it "raises an error" do

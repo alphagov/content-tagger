@@ -4,11 +4,11 @@ RSpec.describe "metrics:taxonomy", type: :task do
   include RakeTaskHelper
   include ::GdsApi::TestHelpers::Search
 
-  before :each do
+  before do
     stub_any_search.to_return(body: { "results" => [{ "content_id" => "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa" }], "total" => 1 }.to_json)
   end
 
-  context "count_content_per_level" do
+  describe "count_content_per_level" do
     it "writes to stdout" do
       stub_request(:get, "https://draft-content-store.test.gov.uk/content/")
        .to_return(status: 200, body: "{}", headers: {})
@@ -19,7 +19,7 @@ RSpec.describe "metrics:taxonomy", type: :task do
     end
   end
 
-  context "record_content_coverage_metrics" do
+  describe "record_content_coverage_metrics" do
     it "writes to stdout" do
       stub_request(:get, "https://draft-content-store.test.gov.uk/content/")
        .to_return(status: 200, body: "{}", headers: {})
@@ -32,7 +32,7 @@ RSpec.describe "metrics:taxonomy", type: :task do
     end
   end
 
-  context "record_number_of_superfluous_taggings_metrics" do
+  describe "record_number_of_superfluous_taggings_metrics" do
     it "writes to stdout" do
       stub_request(:get, "https://draft-content-store.test.gov.uk/content/")
        .to_return(status: 200, body: "{}", headers: {})

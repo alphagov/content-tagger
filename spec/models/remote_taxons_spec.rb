@@ -55,28 +55,9 @@ RSpec.describe RemoteTaxons do
       taxon = result.taxons.first
       expect(taxon.title).to eq("aha")
     end
-
-    it "is possible to search with a query string" do
-      taxon1 = { title: "foo" }
-      publishing_api_has_taxons(
-        [taxon1],
-        page: 1,
-        per_page: 1,
-        q: "foo",
-      )
-      result = described_class.new.search(
-        page: 1,
-        per_page: 1,
-        query: "foo",
-      )
-
-      expect(result.taxons.length).to eq(1)
-    end
   end
 
   describe "#parent_for_taxon" do
-    subject { described_class.new.parent_for_taxon(child_taxon) }
-
     let(:parent_taxon_id) { SecureRandom.uuid }
     let(:parent_taxon) do
       taxon_with_details(
@@ -96,7 +77,8 @@ RSpec.describe RemoteTaxons do
     end
 
     it "returns the parent taxon for a given taxon" do
-      is_expected.to have_attributes(
+      instance = described_class.new.parent_for_taxon(child_taxon)
+      expect(instance).to have_attributes(
         base_path: parent_taxon[:base_path],
         content_id: parent_taxon[:content_id],
         title: parent_taxon[:title],

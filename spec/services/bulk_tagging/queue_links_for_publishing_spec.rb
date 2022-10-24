@@ -7,7 +7,7 @@ module BulkTagging
         tag_mappings: [tag_mapping_1, tag_mapping_2, tag_mapping_3],
       )
     end
-    let(:user) { double(uid: "user-123") }
+    let(:user) { instance_double(User, uid: "user-123") }
     let(:tag_mapping_1) do
       create(
         :tag_mapping,

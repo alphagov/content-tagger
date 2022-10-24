@@ -1,8 +1,8 @@
 RSpec.describe Taxonomy::UpdateTaxon do
   include ContentItemHelper
 
-  before do
-    @taxon = Taxon.new(
+  let(:taxon) do
+    Taxon.new(
       title: "A Title",
       document_type: "taxon",
       description: "Description",
@@ -10,6 +10,11 @@ RSpec.describe Taxonomy::UpdateTaxon do
       parent_content_id: "CONTENT-ID-PARENT",
       associated_taxons: %w[1234],
     )
+  end
+
+  let(:publish) { described_class.call(taxon:) }
+
+  before do
     allow(Taxonomy::SaveTaxonVersion).to receive(:call)
 
     parent_taxon = taxon_with_details(
@@ -18,7 +23,6 @@ RSpec.describe Taxonomy::UpdateTaxon do
     stub_publishing_api_has_item(parent_taxon)
     stub_publishing_api_has_expanded_links({ content_id: "CONTENT-ID-PARENT" })
   end
-  let(:publish) { described_class.call(taxon: @taxon) }
 
   describe ".call" do
     context "with a valid taxon form" do
@@ -28,9 +32,9 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
 
-        assert_publishing_api_put_content(@taxon.content_id)
+        assert_publishing_api_put_content(taxon.content_id)
         assert_publishing_api_patch_links(
-          @taxon.content_id,
+          taxon.content_id,
           links: {
             root_taxon: [],
             parent_taxons: %w[CONTENT-ID-PARENT],
@@ -41,7 +45,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
     end
 
     context "when the taxon has no parent" do
-      before { @taxon.parent_content_id = "" }
+      before { taxon.parent_content_id = "" }
 
       it "patches the links hash with an empty array" do
         stub_any_publishing_api_put_content
@@ -49,7 +53,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
         assert_publishing_api_patch_links(
-          @taxon.content_id,
+          taxon.content_id,
           links: {
             root_taxon: [],
             parent_taxons: [],
@@ -60,7 +64,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
     end
 
     context "when the taxon has no associated taxons" do
-      before { @taxon.associated_taxons = [] }
+      before { taxon.associated_taxons = [] }
 
       it "patches the links hash with an empty array" do
         stub_any_publishing_api_put_content
@@ -68,7 +72,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
         assert_publishing_api_patch_links(
-          @taxon.content_id,
+          taxon.content_id,
           links: {
             root_taxon: [],
             parent_taxons: %w[CONTENT-ID-PARENT],
@@ -79,7 +83,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
     end
 
     context "when the taxon has nil for associated taxons" do
-      before { @taxon.associated_taxons = nil }
+      before { taxon.associated_taxons = nil }
 
       it "patches the links hash with an empty array" do
         stub_any_publishing_api_put_content
@@ -87,7 +91,7 @@ RSpec.describe Taxonomy::UpdateTaxon do
 
         publish
         assert_publishing_api_patch_links(
-          @taxon.content_id,
+          taxon.content_id,
           links: {
             root_taxon: [],
             parent_taxons: %w[CONTENT-ID-PARENT],
