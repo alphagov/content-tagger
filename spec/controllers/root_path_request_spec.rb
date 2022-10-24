@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "Root Path", type: :request do
   describe "as a GDS Editor" do
     it "redirects to 'Edit a page'" do

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe FlaggedContentQuery do
   describe "#items" do
     let(:project) { create(:project) }

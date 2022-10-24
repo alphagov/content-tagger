@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::EditPage do
   describe "#show_visibilty_checkbox?" do
     it "is true when Taxon is a level one taxon" do

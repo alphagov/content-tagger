@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "Reporting missing taxons to the IA team" do
   include TaxonomyHelper
 

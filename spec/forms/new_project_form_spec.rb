@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe NewProjectForm, "#create" do
   let(:valid_params) do
     {

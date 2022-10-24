@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "Viewing taxons" do
   include ContentItemHelper
   include EmailAlertApiHelper

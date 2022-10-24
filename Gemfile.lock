@@ -102,12 +102,6 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    database_cleaner (2.0.1)
-      database_cleaner-active_record (~> 2.0.0)
-    database_cleaner-active_record (2.0.1)
-      activerecord (>= 5.a)
-      database_cleaner-core (~> 2.0.0)
-    database_cleaner-core (2.0.1)
     diff-lcs (1.5.0)
     docile (1.4.0)
     domain_name (0.5.20190701)
@@ -422,7 +416,6 @@ GEM
     statsd-ruby (1.5.0)
     thor (1.2.1)
     tilt (2.0.10)
-    timecop (0.9.5)
     timeout (0.3.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
@@ -467,7 +460,6 @@ DEPENDENCIES
   awesome_print
   better_errors
   bootstrap-kaminari-views
-  database_cleaner
   factory_bot_rails
   fakefs
   gds-api-adapters
@@ -494,7 +486,6 @@ DEPENDENCIES
   simple_form
   simplecov
   sprockets-rails
-  timecop
   uglifier
   web-console
   webmock

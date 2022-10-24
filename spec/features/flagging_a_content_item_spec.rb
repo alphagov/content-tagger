@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "flagging a content item" do
   include TaxonomyHelper
   include PublishingApiHelper

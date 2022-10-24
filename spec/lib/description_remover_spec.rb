@@ -1,4 +1,3 @@
-require "rails_helper"
 require "description_remover"
 require "gds_api/test_helpers/content_store"
 
@@ -15,21 +14,22 @@ RSpec.describe DescriptionRemover do
 
       stub_any_publishing_api_put_content
       stub_any_publishing_api_publish
-
-      DescriptionRemover.call("/work")
     end
 
     it "asserts taxon has draft saved and published" do
+      expect { described_class.call("/work") }.to output.to_stdout
       assert_put_content("pub-taxon", content_id: "pub-taxon", title: "taxon-a", phase: "live", base_path: "/work/taxon_a")
       assert_publishing_api_publish("pub-taxon")
     end
 
     it "asserts taxon is not saved or published as it has a draft" do
+      expect { described_class.call("/work") }.to output.to_stdout
       assert_no_put_content("pub-and-draft-taxon")
       assert_no_publish("pub-and-draft-taxon")
     end
 
     it "asserts taxon is not published as it is only a draft" do
+      expect { described_class.call("/work") }.to output.to_stdout
       assert_no_put_content("draft-taxon")
       assert_no_publish("draft-taxon")
     end

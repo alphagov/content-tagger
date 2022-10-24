@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe UpdateTaxonWorker, "#perform" do
   include PublishingApiHelper
   include ContentItemHelper

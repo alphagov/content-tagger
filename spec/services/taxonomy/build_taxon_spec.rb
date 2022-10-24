@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::BuildTaxon do
   describe ".call(content_id:)" do
     let(:document_type) { "taxon" }

@@ -1,5 +1,4 @@
 require_relative("taxon_helper")
-require "rails_helper"
 
 RSpec.describe Support::TaxonHelper do
   describe "#expanded_link_hash" do

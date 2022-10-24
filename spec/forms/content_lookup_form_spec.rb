@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe ContentLookupForm do
   describe "#valid?" do
     it "is not valid when path is empty" do

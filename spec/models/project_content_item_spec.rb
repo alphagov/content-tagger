@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe ProjectContentItem do
   let(:proxy_path) { Proxies::IframeAllowingProxy::PROXY_BASE_PATH.chomp("/") }
 

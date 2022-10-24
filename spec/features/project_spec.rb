@@ -1,6 +1,4 @@
-require "rails_helper"
-
-RSpec.feature "Projects", type: :feature do
+RSpec.feature "Projects" do
   include TaxonomyHelper
   include PublishingApiHelper
 

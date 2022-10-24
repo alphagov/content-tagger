@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe ContentIdValidator do
   let(:record) { build_stubbed(:tag_mapping) }
 

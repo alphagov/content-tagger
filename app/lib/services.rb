@@ -18,11 +18,11 @@ module Services
   end
 
   def self.content_store
-    @content_store ||= GdsApi::ContentStore.new(Plek.current.find("draft-content-store"))
+    @content_store ||= GdsApi::ContentStore.new(Plek.find("draft-content-store"))
   end
 
   def self.live_content_store
-    @live_content_store ||= GdsApi::ContentStore.new(Plek.current.find("content-store"))
+    @live_content_store ||= GdsApi::ContentStore.new(Plek.find("content-store"))
   end
 
   def self.statsd

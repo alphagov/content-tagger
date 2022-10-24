@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe TagMapping do
     let(:tag_mapping) { build(:tag_mapping) }

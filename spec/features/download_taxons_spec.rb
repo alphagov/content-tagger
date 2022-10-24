@@ -1,6 +1,4 @@
-require "rails_helper"
-
-RSpec.feature "Download taggings", type: :feature do
+RSpec.feature "Download taggings" do
   include ContentItemHelper
   include PublishingApiHelper
 

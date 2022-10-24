@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module DataExport
   RSpec.describe ContentExport do
     describe "#get_content" do

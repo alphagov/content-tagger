@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe PublishLinksWorker do
   describe "#perform" do
     it "does not call the links publisher when the tag mapping was not found" do

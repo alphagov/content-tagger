@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "taxonomy:untag", type: :task do
   include RakeTaskHelper
 
@@ -11,7 +9,8 @@ RSpec.describe "taxonomy:untag", type: :task do
     expect(untagger).to receive(:call).with("bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb", %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa])
     stub_const("Tagging::Untagger", untagger)
 
-    rake("taxonomy:untag", %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa untag])
+    expect { rake("taxonomy:untag", %w[aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa untag]) }
+      .to output.to_stdout
   end
 
   it "does nothing if no arguments are given" do
@@ -23,6 +22,6 @@ RSpec.describe "taxonomy:untag", type: :task do
     expect(untagger).not_to receive(:call)
     stub_const("Tagging::Untagger", untagger)
 
-    rake("taxonomy:untag")
+    expect { rake("taxonomy:untag") }.to output.to_stderr
   end
 end

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe "Taxonomy Health Warnings" do
   include ContentItemHelper
   include PublishingApiHelper

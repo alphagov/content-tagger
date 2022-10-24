@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module BulkTagging
   RSpec.describe TagMigrationPresenter do
     let(:tag_migration) { TagMigration.new }

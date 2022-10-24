@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Version, ".history" do
   it "returns the the version history in descending order" do
     content_id = SecureRandom.uuid

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.feature "Taxon Search" do
   include PublishingApiHelper
   include ContentItemHelper

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Projects::BulkTagger do
   let(:params) { { content_items: content_item_ids, taxons: } }
   let(:content_item_ids) { content_items.map(&:id) }

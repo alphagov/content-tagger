@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe TaxonomyHealth::ChildTaxonCountMetric do
   let(:home_page) do
     FactoryBot.build(

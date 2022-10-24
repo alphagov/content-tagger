@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.feature "Taxon history" do
   include ContentItemHelper
   include EmailAlertApiHelper

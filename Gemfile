@@ -29,7 +29,7 @@ group :development, :test do
   gem "govuk_schemas"
   gem "pry-byebug"
   gem "rspec-rails"
-  gem "rubocop-govuk"
+  gem "rubocop-govuk", require: false
   gem "simplecov", require: false
 end
 
@@ -39,9 +39,7 @@ group :development do
 end
 
 group :test do
-  gem "database_cleaner"
   gem "fakefs", require: "fakefs/safe"
   gem "govuk_test"
-  gem "timecop"
   gem "webmock"
 end

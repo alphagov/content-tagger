@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe LinkTypeValidator do
   it "validates incorrect link types" do
     record = build_stubbed(:tag_mapping, link_type: "organisations")

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe Taxonomy::TaxonsWithContentCount do
   let(:search_result_fixture) do
     {

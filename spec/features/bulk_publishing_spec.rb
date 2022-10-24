@@ -1,6 +1,4 @@
-require "rails_helper"
-
-RSpec.feature "Bulk publishing", type: :feature do
+RSpec.feature "Bulk publishing" do
   include ContentItemHelper
   include PublishingApiHelper
 

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe BulkTagging::DocumentTypeTagger do
   include GdsApi::TestHelpers::PublishingApi
 

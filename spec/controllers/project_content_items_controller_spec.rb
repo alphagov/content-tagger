@@ -1,5 +1,3 @@
-require "rails_helper"
-
 RSpec.describe ProjectContentItemsController, type: :request do
   include TaxonomyHelper
 

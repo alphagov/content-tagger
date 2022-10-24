@@ -1,6 +1,4 @@
-require "rails_helper"
-
-RSpec.describe "Tagging content during migration", type: :feature do
+RSpec.describe "Tagging content during migration" do
   include PublishingApiHelper
 
   before do
@@ -38,7 +36,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
       "/my-content-item" => "MY-CONTENT-ID",
     )
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/content/MY-CONTENT-ID")
+    stub_request(:get, "#{Plek.find('publishing-api')}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         # see denylisted_tag_types.yml for this
         publishing_app: "test-app-that-can-be-tagged-to-topics-only",
@@ -48,7 +46,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
         title: "This Is A Content Item",
       }.to_json)
 
-    stub_request(:get, "#{PUBLISHING_API}/v2/expanded-links/MY-CONTENT-ID?generate=true")
+    stub_request(:get, "#{Plek.find('publishing-api')}/v2/expanded-links/MY-CONTENT-ID?generate=true")
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links: {
@@ -73,7 +71,7 @@ RSpec.describe "Tagging content during migration", type: :feature do
   end
 
   def and_i_submit_the_form
-    @tagging_request = stub_request(:patch, "#{PUBLISHING_API}/v2/links/MY-CONTENT-ID")
+    @tagging_request = stub_request(:patch, "#{Plek.find('publishing-api')}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
     click_on I18n.t("taggings.update_tags")

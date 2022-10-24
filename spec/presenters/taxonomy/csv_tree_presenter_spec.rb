@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module Taxonomy
   RSpec.describe CsvTreePresenter do
     include ContentItemHelper
