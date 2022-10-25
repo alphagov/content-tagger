@@ -1,12 +1,12 @@
 #!/usr/bin/env groovy
 
-library("govuk")
+library("govuk@remove-master-branch-quirk")
 
 node {
   govuk.setEnvar("PUBLISHING_E2E_TESTS_COMMAND", "test-content-tagger")
   govuk.buildProject(
     publishingE2ETests: true,
-    brakeman: true,
+    brakeman: true
   )
 
   // Run against the PostgreSQL 13 Docker instance on GOV.UK CI
