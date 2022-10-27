@@ -52,8 +52,7 @@ module DataExport
         {
           "base_path" => "/base_path",
           "content_id" => "d282d35a-2bd2-4e14-a7a6-a04e6b10520f",
-          "links" => {
-          },
+          "links" => {},
         }
       end
     end

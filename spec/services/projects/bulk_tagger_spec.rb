@@ -1,7 +1,7 @@
 RSpec.describe Projects::BulkTagger do
   let(:params) { { content_items: content_item_ids, taxons: } }
   let(:content_item_ids) { content_items.map(&:id) }
-  let(:content_items) { Array.new(1) { create(:project_content_item) } }
+  let(:content_items) { create_list(:project_content_item, 1) }
   let(:taxons) { Array.new(3) { SecureRandom.uuid } }
 
   before do
