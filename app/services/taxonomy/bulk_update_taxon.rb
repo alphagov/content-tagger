@@ -14,11 +14,10 @@ module Taxonomy
   private
 
     def nested_tree
-      GovukTaxonomyHelpers::LinkedContentItem
-        .from_content_id(
-          content_id: @root_taxon_content_id,
-          publishing_api: Services.publishing_api,
-        )
+      LinkedContentItem.from_content_id(
+        content_id: @root_taxon_content_id,
+        publishing_api: Services.publishing_api,
+      )
     end
   end
 end

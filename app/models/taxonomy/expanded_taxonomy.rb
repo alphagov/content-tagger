@@ -86,7 +86,7 @@ module Taxonomy
       if content_item["content_id"] == GovukTaxonomy::ROOT_CONTENT_ID
         home_page_linked_content_item
       else
-        GovukTaxonomyHelpers::LinkedContentItem.new(
+        LinkedContentItem.new(
           internal_name: content_item.dig("details", "internal_name"),
           title: content_item.fetch("title"),
           base_path: content_item.fetch("base_path"),
@@ -96,7 +96,7 @@ module Taxonomy
     end
 
     def home_page_linked_content_item
-      GovukTaxonomyHelpers::LinkedContentItem.new(
+      LinkedContentItem.new(
         internal_name: GovukTaxonomy::TITLE,
         title: GovukTaxonomy::TITLE,
         base_path: "/",
@@ -119,7 +119,7 @@ module Taxonomy
     end
 
     def build_child_expansion
-      @child_expansion = GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+      @child_expansion = LinkedContentItem.from_content_id(
         content_id: @content_id,
         publishing_api: Services.publishing_api,
       )
@@ -134,7 +134,7 @@ module Taxonomy
     def build_child_expansion_for_home_page
       @child_expansion = home_page_linked_content_item.tap do |node|
         LevelOneTaxonsRetrieval.new.get.each do |level_one_taxon|
-          node << GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+          node << LinkedContentItem.from_content_id(
             content_id: level_one_taxon["content_id"],
             publishing_api: Services.publishing_api,
           )

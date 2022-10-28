@@ -160,7 +160,6 @@ GEM
       sidekiq (>= 5, < 6)
       sidekiq-logging-json (~> 0.0)
       sidekiq-statsd (>= 2.1)
-    govuk_taxonomy_helpers (1.0.0)
     govuk_test (3.0.1)
       brakeman (>= 5.0.2)
       capybara (>= 3.36)
@@ -468,7 +467,6 @@ DEPENDENCIES
   govuk_app_config
   govuk_schemas
   govuk_sidekiq
-  govuk_taxonomy_helpers
   govuk_test
   hashdiff
   jquery-ui-rails

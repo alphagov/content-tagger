@@ -6,7 +6,7 @@ module Taxonomy
 
     def nested_tree
       @nested_tree ||= process_linked_content_item_tree(
-        GovukTaxonomyHelpers::LinkedContentItem.from_content_id(
+        LinkedContentItem.from_content_id(
           content_id: @root_taxon.content_id,
           publishing_api: Services.publishing_api,
         ),
