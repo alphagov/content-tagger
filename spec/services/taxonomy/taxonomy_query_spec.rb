@@ -84,7 +84,7 @@ RSpec.describe Taxonomy::TaxonomyQuery do
     end
 
     def stub_search_api(query_hash, return_values)
-      stub_request(:get, Regexp.new(Plek.new.find("search-api")))
+      stub_request(:get, Regexp.new(Plek.find("search-api")))
         .with(query: hash_including(query_hash))
         .to_return(body: { "results" => return_values }.to_json)
     end

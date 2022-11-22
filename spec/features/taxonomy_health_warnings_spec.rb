@@ -41,7 +41,7 @@ RSpec.describe "Taxonomy Health Warnings" do
   end
 
   def then_i_see_a_link_to_the_metrics_dashboard
-    Plek.new.stubs(:external_url_for).with("grafana").returns("http://grafana")
+    Plek.stubs(:external_url_for).with("grafana").returns("http://grafana")
 
     expect(page).to have_link("View taxonomy metrics dashboard", href: "http://grafana")
   end
