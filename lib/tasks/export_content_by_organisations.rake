@@ -2,7 +2,7 @@ namespace :govuk do
   # bundle exec rake govuk:export_content_by_organisations[uk-border-agency,border-force]
   desc "Export content by organisations as CSV"
   task export_content_by_organisations: [:environment] do |_, args|
-    website_root = Plek.new.website_root
+    website_root = Plek.website_root
 
     fields = %w[
       link

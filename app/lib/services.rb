@@ -5,7 +5,7 @@ require "gds_api/content_store"
 module Services
   def self.publishing_api
     @publishing_api ||= GdsApi::PublishingApi.new(
-      Plek.new.find("publishing-api"),
+      Plek.find("publishing-api"),
       disable_cache: true,
       bearer_token: ENV["PUBLISHING_API_BEARER_TOKEN"] || "example",
     )
@@ -35,7 +35,7 @@ module Services
 
   def self.search_api
     @search_api ||= GdsApi::Search.new(
-      Plek.new.find("search-api"),
+      Plek.find("search-api"),
     )
   end
 end

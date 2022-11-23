@@ -59,14 +59,14 @@ private
 
   def website_url(base_path, draft: false)
     if draft
-      Plek.new.external_url_for("draft-origin") + base_path
+      Plek.external_url_for("draft-origin") + base_path
     else
-      Plek.new.website_root + base_path
+      Plek.website_root + base_path
     end
   end
 
   def similar_search_results_url(base_path)
-    Plek.new.external_url_for("search-admin") +
+    Plek.external_url_for("search-admin") +
       "/similar-search-results/result?base_path=#{base_path}"
   end
 
