@@ -467,6 +467,7 @@ DEPENDENCIES
   hashdiff
   jquery-ui-rails
   kaminari
+  mail (~> 2.7.1)
   pg
   plek
   pry-byebug
