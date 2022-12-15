@@ -7,7 +7,7 @@ gem "govuk_app_config"
 gem "hashdiff"
 gem "jquery-ui-rails"
 gem "kaminari"
-gem "mail", "~> 2.7.1"  # TODO: remove once https://github.com/mikel/mail/issues/1489 is fixed.
+gem "mail", "~> 2.8.0"  # TODO: remove once https://github.com/mikel/mail/issues/1489 is fixed.
 gem "pg"
 gem "rack-proxy"
 gem "sassc-rails"
