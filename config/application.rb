@@ -19,6 +19,10 @@ module ContentTagger
     # Configure denylisted tag types by publishing app
     config.denylisted_tag_types = config_for(:denylisted_tag_types)
 
+    # Set asset path to be application specific so that we can put all GOV.UK
+    # assets into an S3 bucket and distinguish app by path.
+    config.assets.prefix = "/assets/content-tagger"
+
     config.active_record.belongs_to_required_by_default = false
   end
 end
