@@ -1,9 +1,14 @@
 .dockerignore
 .git
-.gitignore
 .github
+.gitignore
 Dockerfile
 Jenkinsfile
+Procfile
 README.md
+coverage
 docs
+log
+node_modules
+spec
 tmp

@@ -77,6 +77,8 @@ GEM
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
     bindex (0.8.1)
+    bootsnap (1.15.0)
+      msgpack (~> 1.2)
     bootstrap-kaminari-views (0.0.5)
       kaminari (>= 0.13)
       rails (>= 3.1)
@@ -211,6 +213,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.1)
     minitest (5.17.0)
+    msgpack (1.6.0)
     multi_xml (0.6.0)
     net-imap (0.3.1)
       net-protocol
@@ -453,6 +456,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   better_errors
+  bootsnap
   bootstrap-kaminari-views
   factory_bot_rails
   fakefs
