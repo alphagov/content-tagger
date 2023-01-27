@@ -7,7 +7,7 @@ module Taxonomy
 
     def bulk_update
       nested_tree.each do |taxon|
-        UpdateTaxonWorker.perform_async(taxon.content_id, @attributes)
+        UpdateTaxonWorker.perform_async(taxon.content_id, @attributes.stringify_keys)
       end
     end
 

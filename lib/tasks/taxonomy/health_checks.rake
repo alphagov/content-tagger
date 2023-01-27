@@ -7,7 +7,7 @@ namespace :taxonomy do
     ContentTagger::Application.config_for(:health_checks)["metrics"].each do |metric|
       puts %(Name: #{metric[:name]}; Arguments: #{(metric[:arguments] || []).map { |k, v| "#{k}: #{v}" }.join(', ')})
       klazz = "TaxonomyHealth::#{metric[:class]}".constantize
-      klazz.perform_async(metric[:arguments])
+      klazz.perform_async(metric[:arguments].stringify_keys)
     end
   end
 end
