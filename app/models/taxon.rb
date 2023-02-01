@@ -1,6 +1,6 @@
 class Taxon
-  PATH_COMPONENTS_REGEX          = %r{\A/(?<prefix>[A-z0-9\-]+)(?:/(?<slug>[A-z0-9\-]+))?\z}
-  OVERRIDE_PATH_COMPONENTS_REGEX = %r{\A/(?<prefix>[A-z0-9\-]+)(?:/(?<slug>[A-z0-9\-]+))*\z}
+  PATH_COMPONENTS_REGEX          = %r{\A/(?<prefix>[A-z0-9-]+)(?:/(?<slug>[A-z0-9-]+))?\z}
+  OVERRIDE_PATH_COMPONENTS_REGEX = %r{\A/(?<prefix>[A-z0-9-]+)(?:/(?<slug>[A-z0-9-]+))*\z}
 
   attr_accessor(
     :title,
