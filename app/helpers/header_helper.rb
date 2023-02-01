@@ -12,7 +12,7 @@ module HeaderHelper
       active_item: active_item.try(:title) || active_item,
     }
 
-    render layout: "shared/header", locals: locals do
+    render(layout: "shared/header", locals:) do
       yield if block_given?
     end
   end

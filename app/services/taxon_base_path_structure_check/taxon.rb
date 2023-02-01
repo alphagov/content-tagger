@@ -1,5 +1,5 @@
 class TaxonBasePathStructureCheck::Taxon
-  LEVEL_ONE_URL_REGEX = %r{^/([A-z0-9\-]+)$}
+  LEVEL_ONE_URL_REGEX = %r{^/([A-z0-9-]+)$}
 
   def initialize(taxon, level_one_prefix:)
     @taxon = taxon
