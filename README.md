@@ -16,6 +16,21 @@ You can use the [GOV.UK Docker environment](https://github.com/alphagov/govuk-do
 bundle exec rake
 ```
 
+## Further documentation
+
+### User account types and access permissions
+
+The Signon permissions system is used to define 4 roles.
+
+ - Users with the `signin` permission have a basic level of read only
+   access to some functionality.
+ - Users with the `Tagathon participant` permission should have access
+   to the Projects section of the application, but not much outside of
+   that.
+ - Users with the `Managing Editor` permission should be able to view
+   the Topic Taxonomy, and move content between taxons.
+ - Users with the `GDS Editor` have access to all functionality.
+
 ## Licence
 
 [MIT License](LICENCE)
