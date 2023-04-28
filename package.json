@@ -30,7 +30,7 @@
     "postcss": "^8.4.23",
     "standardx": "^7.0.0",
     "stylelint": "^15.6.0",
-    "stylelint-config-gds": "^0.2.0"
+    "stylelint-config-gds": "^0.3.0"
   },
   "packageManager": "yarn@3.4.1"
 }
