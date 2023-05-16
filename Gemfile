@@ -9,6 +9,7 @@ gem "hashdiff"
 gem "jquery-ui-rails"
 gem "kaminari"
 gem "pg"
+gem "prometheus-client"
 gem "rack-proxy"
 gem "sassc-rails"
 gem "select2-rails", "< 4" # There are unresolved visual and HTML changes with select2-rails 4

@@ -257,6 +257,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.5.3)
     plek (5.0.0)
+    prometheus-client (4.1.0)
     prometheus_exporter (2.0.8)
       webrick
     pry (0.14.1)
@@ -475,6 +476,7 @@ DEPENDENCIES
   kaminari
   pg
   plek
+  prometheus-client
   pry-byebug
   rack-proxy
   rails (= 7.0.4.3)
