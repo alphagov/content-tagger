@@ -3,6 +3,9 @@ require "gds_api/test_helpers/content_store"
 RSpec.describe Metrics::TaxonsPerLevelMetrics do
   include ::GdsApi::TestHelpers::ContentStore
 
+  let(:registry) { Prometheus::Client::Registry.new }
+  let(:metrics) { described_class.new(registry) }
+
   describe "#count_taxons_per_level" do
     before do
       stub_content_store_has_item("/", root_taxon.to_json, draft: true)
@@ -10,13 +13,13 @@ RSpec.describe Metrics::TaxonsPerLevelMetrics do
     end
 
     it "sends the correct values to statsd" do
-      expect(Metrics.statsd).to receive(:gauge)
-                                    .with("level_1.number_of_taxons", 1)
-      expect(Metrics.statsd).to receive(:gauge)
-                                    .with("level_2.number_of_taxons", 1)
-      expect(Metrics.statsd).to receive(:gauge)
-                                    .with("level_3.number_of_taxons", 2)
-      described_class.new.count_taxons_per_level
+      described_class.new(registry).count_taxons_per_level
+
+      expect(registry.get(:number_of_taxons).values).to eq({
+        { level: "1" } => 1.0,
+        { level: "2" } => 1.0,
+        { level: "3" } => 2.0,
+      })
     end
 
     def multi_level_child_taxons
