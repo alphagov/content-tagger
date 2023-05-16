@@ -3,6 +3,9 @@ require "gds_api/test_helpers/content_store"
 RSpec.describe Metrics::ContentDistributionMetrics do
   include ::GdsApi::TestHelpers::ContentStore
 
+  let(:registry) { Prometheus::Client::Registry.new }
+  let(:metrics) { described_class.new(registry) }
+
   describe "#level_taggings" do
     before do
       stub_content_store_has_item("/", root_taxon.to_json, draft: true)
@@ -17,20 +20,19 @@ RSpec.describe Metrics::ContentDistributionMetrics do
     end
 
     it "calls gauges with number of content tagged to each level" do
-      expect(Metrics.statsd).to receive(:gauge).with("level_1.content_tagged", 5)
-      expect(Metrics.statsd).to receive(:gauge).with("level_1.level", 1)
-      expect(Metrics.statsd).to receive(:gauge).with("level_2.content_tagged", 12)
-      expect(Metrics.statsd).to receive(:gauge).with("level_2.level", 2)
-      expect(Metrics.statsd).to receive(:gauge).with("level_3.content_tagged", 3)
-      expect(Metrics.statsd).to receive(:gauge).with("level_3.level", 3)
+      described_class.new(registry).count_content_per_level
 
-      described_class.new.count_content_per_level
+      expect(registry.get(:content_distribution).values).to eq({
+        { level: "1" } => 5.0,
+        { level: "2" } => 12.0,
+        { level: "3" } => 3.0,
+      })
     end
 
     it "calls gauges with the average tagging depth" do
-      expect(Metrics.statsd).to receive(:gauge).with("average_tagging_depth", 1.9)
+      described_class.new(registry).average_tagging_depth
 
-      described_class.new.average_tagging_depth
+      expect(registry.get(:average_tagging_depth).values).to eq({ {} => 1.9 })
     end
 
     def content_items_enum(elements)

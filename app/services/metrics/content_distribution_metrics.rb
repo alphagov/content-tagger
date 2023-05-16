@@ -2,10 +2,14 @@ require_relative "../metrics"
 
 module Metrics
   class ContentDistributionMetrics
+    def initialize(registry)
+      @content_distribution_gauge = registry.gauge(:content_distribution, docstring: "Content distribution metrics", labels: %i[level])
+      @average_tagging_depth_gauge = registry.gauge(:average_tagging_depth, docstring: "Average tagging depth")
+    end
+
     def count_content_per_level
       counts_by_level.to_enum.with_index(1).each do |count, level|
-        gauge("level_#{level}.content_tagged", count)
-        gauge("level_#{level}.level", level)
+        @content_distribution_gauge.set(count, labels: { level: })
       end
     end
 
@@ -14,7 +18,7 @@ module Metrics
       avg_depth = counts_by_level.to_enum.with_index(1).reduce(0.0) do |result, (count, level)|
         result + (count.to_f / sum) * level
       end
-      gauge("average_tagging_depth", avg_depth)
+      @average_tagging_depth_gauge.set(avg_depth)
     end
 
   private
@@ -24,10 +28,6 @@ module Metrics
         taxon_contend_ids = taxons.map { |h| h["content_id"] }
         Taxonomy::TaxonomyQuery.new.content_tagged_to_taxons(taxon_contend_ids).size
       end
-    end
-
-    def gauge(stat, value)
-      Metrics.statsd.gauge(stat, value)
     end
   end
 end
