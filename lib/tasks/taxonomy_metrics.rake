@@ -11,7 +11,10 @@ namespace :metrics do
       m.count_content_per_level
       m.average_tagging_depth
 
-      Prometheus::Client::Push.new(job: "content_tagger_count_content_per_level").add(registry)
+      Prometheus::Client::Push.new(
+        job: "content_tagger_count_content_per_level",
+        gateway: PROMETHEUS_PUSHGATEWAY_URL,
+      ).add(registry)
     end
 
     desc "Record number of taxons per level in the Topic Taxonomy"
@@ -19,7 +22,10 @@ namespace :metrics do
       registry = Prometheus::Client.registry
 
       Metrics::TaxonsPerLevelMetrics.new(registry).count_taxons_per_level
-      Prometheus::Client::Push.new("content_tagger_taxons_per_level").add(registry)
+      Prometheus::Client::Push.new(
+        job: "content_tagger_taxons_per_level",
+        gateway: PROMETHEUS_PUSHGATEWAY_URL,
+      ).add(registry)
     end
 
     desc "Record metrics on content coverage for the Topic Taxonomy"
@@ -27,7 +33,10 @@ namespace :metrics do
       registry = Prometheus::Client.registry
 
       Metrics::ContentCoverageMetrics.new(registry).record_all
-      Prometheus::Client::Push.new(job: "content_tagger_content_coverage").add(registry)
+      Prometheus::Client::Push.new(
+        job: "content_tagger_content_coverage",
+        gateway: PROMETHEUS_PUSHGATEWAY_URL,
+      ).add(registry)
     end
 
     desc "Record number of superfluous taggings"
@@ -47,7 +56,10 @@ namespace :metrics do
 
       Metrics::ContentCoverageMetrics.new(registry).record_all
 
-      Prometheus::Client::Push.new(job: "content_tagger_taxonomy_metrics").add(registry)
+      Prometheus::Client::Push.new(
+        job: "content_tagger_taxonomy_metrics",
+        gateway: PROMETHEUS_PUSHGATEWAY_URL,
+      ).add(registry)
     end
   end
 end
