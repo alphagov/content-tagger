@@ -16,7 +16,7 @@ class ProjectContentItemsController < ApplicationController
   end
 
   def bulk_update
-    tagger = Projects::BulkTagger.new(bulk_params)
+    tagger = Projects::BulkTagger.new(**bulk_params)
     tagger.commit
     render json: tagger.result
   end
