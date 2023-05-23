@@ -1,5 +1,8 @@
 module Metrics
   RSpec.describe ContentCoverageMetrics do
+    let(:registry) { Prometheus::Client::Registry.new }
+    let(:metrics) { described_class.new(registry) }
+
     describe "#record_all" do
       before do
         denylist = %w[taxon redirect]
@@ -54,21 +57,11 @@ module Metrics
       end
 
       it "sends the correct values to statsd" do
-        allow(Metrics.statsd).to receive(:gauge)
+        described_class.new(registry).record_all
 
-        described_class.new.record_all
-
-        expect(Metrics.statsd).to have_received(:gauge)
-                                    .with("all_govuk_items", 1000)
-
-        expect(Metrics.statsd).to have_received(:gauge)
-                                    .with("items_in_scope", 500)
-
-        expect(Metrics.statsd).to have_received(:gauge)
-                                    .with("tagged_items_in_scope", 400)
-
-        expect(Metrics.statsd).to have_received(:gauge)
-                                    .with("untagged_items_in_scope", 100)
+        expect(registry.get(:all_govuk_items).values).to eq({ {} => 1000.0 })
+        expect(registry.get(:items_in_scope).values).to eq({ {} => 500.0 })
+        expect(registry.get(:tagged_items_in_scope).values).to eq({ {} => 400.0 })
       end
     end
   end

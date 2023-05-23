@@ -2,30 +2,28 @@ require_relative "../metrics"
 
 module Metrics
   class ContentCoverageMetrics
+    def initialize(registry)
+      @all_govuk_items_gauge = registry.gauge(:all_govuk_items, docstring: "Total number of GOV.UK items")
+      @items_in_scope_gauge = registry.gauge(:items_in_scope, docstring: "Total number of taggable items")
+      @tagged_items_in_scope_gauge = registry.gauge(:tagged_items_in_scope, docstring: "Total number of tagged items")
+    end
+
     def record_all
       all_govuk_items
       average_tagging_depth
       tagged_items_in_scope
-      untagged_items_in_scope
     end
 
     def all_govuk_items
-      gauge("all_govuk_items", all_govuk_items_count)
+      @all_govuk_items_gauge.set(all_govuk_items_count)
     end
 
     def average_tagging_depth
-      gauge("items_in_scope", items_in_scope_count)
+      @items_in_scope_gauge.set(items_in_scope_count)
     end
 
     def tagged_items_in_scope
-      gauge("tagged_items_in_scope", tagged_items_in_scope_count)
-    end
-
-    def untagged_items_in_scope
-      gauge(
-        "untagged_items_in_scope",
-        items_in_scope_count - tagged_items_in_scope_count,
-      )
+      @tagged_items_in_scope_gauge.set(tagged_items_in_scope_count)
     end
 
   private
@@ -58,10 +56,6 @@ module Metrics
       GovukTaxonomy::Branches.new.all.map do |root_taxon|
         root_taxon["content_id"]
       end
-    end
-
-    def gauge(stat, value)
-      Metrics.statsd.gauge(stat, value)
     end
   end
 end
