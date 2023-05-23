@@ -5,7 +5,7 @@ module Metrics
     def initialize(registry)
       @all_govuk_items_gauge = registry.gauge(:all_govuk_items, docstring: "Total number of GOV.UK items")
       @items_in_scope_gauge = registry.gauge(:items_in_scope, docstring: "Total number of taggable items")
-      @tagged_items_in_scope_gague = registry.gauge(:tagged_items_in_scope, docstring: "Total number of tagged items")
+      @tagged_items_in_scope_gauge = registry.gauge(:tagged_items_in_scope, docstring: "Total number of tagged items")
     end
 
     def record_all
@@ -23,7 +23,7 @@ module Metrics
     end
 
     def tagged_items_in_scope
-      @tagged_items_in_scope_gague.set(tagged_items_in_scope_count)
+      @tagged_items_in_scope_gauge.set(tagged_items_in_scope_count)
     end
 
   private
