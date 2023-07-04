@@ -1,6 +1,6 @@
 module BulkTagging
   RSpec.describe AggregatedTagMappingPresenter do
-    let!(:tag_mappings) { [create(:tag_mapping), create(:tag_mapping)] }
+    let!(:tag_mappings) { create_list :tag_mapping, 2 }
     let(:aggregated_tag_mapping) { TaggingSpreadsheet.first.aggregated_tag_mappings.first }
     let(:presenter) { described_class.new(aggregated_tag_mapping) }
 
