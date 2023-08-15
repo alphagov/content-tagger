@@ -29,8 +29,8 @@ $blue-link: rgb(0, 0, 238);
     border-bottom: 2px solid $gray;
   }
 
-  .taxon-focus--has-parents:before,
-  .taxon-focus--has-children:after {
+  .taxon-focus--has-parents::before,
+  .taxon-focus--has-children::after {
     border-left: 2px solid $gray;
     color: transparent;
     content: ".";
@@ -41,11 +41,11 @@ $blue-link: rgb(0, 0, 238);
     width: 0;
   }
 
-  .taxon-focus--has-parents:before {
+  .taxon-focus--has-parents::before {
     top: 0;
   }
 
-  .taxon-focus--has-children:after {
+  .taxon-focus--has-children::after {
     bottom: 0;
   }
 
@@ -108,8 +108,8 @@ $blue-link: rgb(0, 0, 238);
     margin-top: 1.75rem;
   }
 
-  .parent-expansion:before,
-  .child-expansion:before {
+  .parent-expansion::before,
+  .child-expansion::before {
     border-left: 2px solid $gray;
     color: transparent;
     content: ".";
@@ -120,30 +120,30 @@ $blue-link: rgb(0, 0, 238);
     width: 0;
   }
 
-  .parent-expansion:before {
+  .parent-expansion::before {
     bottom: 0;
   }
 
-  .child-expansion:before {
+  .child-expansion::before {
     top: 0;
   }
 
-  .parent-expansion:first-child:before {
+  .parent-expansion:first-child::before {
     left: 0;
   }
 
-  .parent-expansion:last-child:before {
+  .parent-expansion:last-child::before {
     border-left: none;
     border-right: 2px solid $gray;
     left: 0;
     width: 100%;
   }
 
-  .child-expansion:first-child:before {
+  .child-expansion:first-child::before {
     left: 0;
   }
 
-  .child-expansion:last-child:before {
+  .child-expansion:last-child::before {
     border-left: none;
     border-right: 2px solid $gray;
     left: 0;
