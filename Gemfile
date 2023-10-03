@@ -26,6 +26,7 @@ gem "plek"
 
 group :development, :test do
   gem "awesome_print"
+  gem "erb_lint", require: false
   gem "factory_bot_rails"
   gem "govuk_schemas"
   gem "pry-byebug"
