@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "7.1.0"
+gem "rails", "7.1.1"
 
 gem "bootsnap", require: false
 gem "bootstrap-kaminari-views"
