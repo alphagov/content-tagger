@@ -145,14 +145,12 @@ RSpec.describe "taxonomy:validate_taxons_base_paths" do
       travel_to "2018-02-28T16:23:32+00:00" do
         rake "taxonomy:validate_taxons_base_paths", "and_fix"
       end
-    }.to output(<<~LOG).to_stdout_from_any_process
+    }.to output(<<~'LOG').to_stdout_from_any_process
       ✅ /level-one
       ❌    ├── /some-other-path/level-two
       ------------------------------------
       The following taxons did not match the taxon URL structure. Attempting to fix this...
-      CONTENT-ID-LEVEL-TWO /some-other-path/level-two: #<GdsApi::HTTPUnprocessableEntity: URL: https://publishing-api.test.gov.uk/v2/content/CONTENT-ID-LEVEL-TWO
-      Response body:
-      {"error":{"code":422,"message":"base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en","fields":{"base":["base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en"]}}}>
+      CONTENT-ID-LEVEL-TWO /some-other-path/level-two: #<GdsApi::HTTPUnprocessableEntity:"URL: https://publishing-api.test.gov.uk/v2/content/CONTENT-ID-LEVEL-TWO\nResponse body:\n{\"error\":{\"code\":422,\"message\":\"base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en\",\"fields\":{\"base\":[\"base path=/transport conflicts with content_id=a4038b29-b332-4f13-98b1-1c9709e216bc and locale=en\"]}}}">
     LOG
   end
 
