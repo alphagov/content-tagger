@@ -41,6 +41,6 @@ end
 
 group :test do
   gem "fakefs", require: "fakefs/safe"
-  gem "govuk_test"
+  gem "govuk_test", ">= 4.0.2"
   gem "webmock"
 end
