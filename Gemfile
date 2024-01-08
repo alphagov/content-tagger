@@ -44,3 +44,5 @@ group :test do
   gem "govuk_test"
   gem "webmock"
 end
+
+gem "httparty", "~> 0.21.0"

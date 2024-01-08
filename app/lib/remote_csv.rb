@@ -29,6 +29,6 @@ private
   end
 
   def response
-    RestClient.get @csv_url
+    HTTParty.get @csv_url
   end
 end
