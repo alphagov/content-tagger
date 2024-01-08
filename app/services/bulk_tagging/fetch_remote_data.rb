@@ -57,9 +57,9 @@ module BulkTagging
     end
 
     def response
-      separate = HTTParty.get tagging_spreadsheet.url
-      if separate.code == 200
-        @response = separate
+      response = HTTParty.get tagging_spreadsheet.url
+      if response.code == 200
+        @response = response
       else
         raise StandardError, "error code from httparty"
       end
