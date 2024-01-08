@@ -18,7 +18,7 @@ module BulkTagging
       response
       process_spreadsheet
       errors
-    rescue RestClient::Exception => e
+    rescue StandardError => e
       GovukError.notify(e)
       [spreadsheet_download_error]
     end
@@ -57,7 +57,12 @@ module BulkTagging
     end
 
     def response
-      @response ||= RestClient.get tagging_spreadsheet.url
+      separate = HTTParty.get tagging_spreadsheet.url
+      if separate.code == 200
+        @response = separate
+      else
+        raise StandardError, "error code from httparty"
+      end
     end
 
     def sheet_data
