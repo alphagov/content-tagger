@@ -122,7 +122,7 @@ RSpec.feature "Tag importer" do
 
     first_row = rows.first
 
-    BulkTagging::TagMapping.all.each do |tag_mapping|
+    BulkTagging::TagMapping.find_each do |tag_mapping|
       expect(page).to have_content(tag_mapping.content_base_path, count: 1)
       expect(first_row.text).to include(tag_mapping.link_title)
     end
