@@ -1,9 +1,5 @@
 # Used by Tagging & Bulk Tagging to populate the available tags.
 class Linkables
-  def topics
-    @topics ||= for_nested_document_type("topic")
-  end
-
   def taxons(exclude_ids: [], include_draft: true)
     @taxons ||= for_document_type("taxon", include_draft:).tap do |items|
       if Array(exclude_ids).present?
