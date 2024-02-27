@@ -88,13 +88,6 @@ module PublishingApiHelper
     )
   end
 
-  def publishing_api_has_topic_linkables(base_paths)
-    stub_publishing_api_has_linkables(
-      select_by_base_path(stubbed_topics, base_paths),
-      document_type: "topic",
-    )
-  end
-
   def publishing_api_has_organisation_linkables(base_paths)
     stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_organisations, base_paths),
@@ -137,27 +130,6 @@ module PublishingApiHelper
         "publication_state" => "draft",
         "base_path" => "/alpha-taxonomy/vehicle-weights-explained",
         "internal_name" => "Vehicle weights explained",
-      },
-    ]
-  end
-
-  def stubbed_topics
-    [
-      {
-        "public_updated_at" => "2016-04-06 16:25:37.238",
-        "title" => "ID OF ALREADY TAGGED",
-        "content_id" => "ID-OF-ALREADY-TAGGED",
-        "publication_state" => "published",
-        "base_path" => "/topic/id-of-already-tagged",
-        "internal_name" => "Test / Id of already tagged",
-      },
-      {
-        "public_updated_at" => "2016-04-07 10:34:05",
-        "title" => "Pension scheme administration",
-        "content_id" => "e1d6b771-a692-4812-a4e7-7562214286ef",
-        "publication_state" => "published",
-        "base_path" => "/topic/business-tax/pension-scheme-administration",
-        "internal_name" => "Business tax / Pension scheme administration",
       },
     ]
   end
