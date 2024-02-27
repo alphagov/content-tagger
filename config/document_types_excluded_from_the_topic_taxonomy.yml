@@ -48,7 +48,6 @@ document_types:
   - special_route
   - staff_update
   - taxon
-  - topic
   - topical_event
   - topical_event_about_page
   - travel_advice
