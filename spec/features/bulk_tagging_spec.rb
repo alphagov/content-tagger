@@ -51,16 +51,6 @@ RSpec.feature "Bulk tagging" do
 
     publishing_api_has_content_items(
       [{
-        content_id: "topic-id",
-        title: "A Topic",
-        base_path: "/a-topic",
-        document_type: "topic",
-      }],
-      q: "topic",
-    )
-
-    publishing_api_has_content_items(
-      [{
         content_id: "browse-page-id",
         title: "A Mainstream Browse Page",
         base_path: "/a-maintstream-browse-page",
@@ -97,10 +87,6 @@ RSpec.feature "Bulk tagging" do
 
   def when_i_search_for_the_collection
     visit new_bulk_tag_path
-
-    fill_in "bulk_tag_query", with: "topic"
-    click_button I18n.t("bulk_tag.search_button")
-    expect(page).to have_text("A Topic")
 
     fill_in "bulk_tag_query", with: "browse"
     click_button I18n.t("bulk_tag.search_button")
