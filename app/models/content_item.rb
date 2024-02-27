@@ -51,7 +51,6 @@ class ContentItem
 
   def denylisted_tag_types
     document_denylist = Array(denylist[publishing_app]).map(&:to_sym)
-    document_denylist += additional_temporary_denylist
 
     unless related_links_are_renderable?
       document_denylist += [:ordered_related_items]
@@ -154,9 +153,5 @@ private
       utaac_decision
       written_statement
     ].include?(document_type)
-  end
-
-  def additional_temporary_denylist
-    publishing_app == "specialist-publisher" && document_type == "finder" ? [:topics] : []
   end
 end

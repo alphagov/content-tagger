@@ -9,14 +9,6 @@ RSpec.describe ContentItem do
       expect(content_item.denylisted_tag_types).to include(:foo, :bar)
     end
 
-    it "includes topics for specialist-publisher docs" do
-      content_item = build_content_item(
-        data: { document_type: "finder", publishing_app: "specialist-publisher" },
-      )
-
-      expect(content_item.denylisted_tag_types).to include(:topics)
-    end
-
     it "includes related items by default" do
       content_item = build_content_item(
         data: { document_type: "literally-anything" },
