@@ -3,7 +3,6 @@ module BulkTagging
     def source_name_to_content_key_map
       {
         document_collection: "documents",
-        topic: "children",
         mainstream_browse_page: "children",
         taxon: "taxon",
       }

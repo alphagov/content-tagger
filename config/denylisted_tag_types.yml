@@ -16,15 +16,14 @@ default: &default
     - parent
 
   whitehall:
-    # Specialist topic pages and the parent (breadcrumb) are managed in Whitehall itself. This
+    # The parent (breadcrumb) is managed in Whitehall itself. This
     # will stay that way because Whitehall is too complex to make a half-way
-    # change to a system where topics and breadcrumb are read & written from
+    # change to a system where breadcrumb is read & written from
     # the publishing-api.
     #
     # Whitehall does send this information to the publishing-api so it can still
     # be used as a source of information.
     - parent
-    - topics
 
     # Organisation tagging is done in Whitehall, because its data model is too
     # much intertwined with organisations to make it read/write this tag from
@@ -54,7 +53,7 @@ development:
 
 test:
   <<: *default
-  test-app-that-can-be-tagged-to-topics-only:
+  test-app-that-can-be-tagged-to-taxons-only:
     - mainstream_browse_pages
     - meets_user_needs
     - ordered_related_items
@@ -62,7 +61,6 @@ test:
     - suggested_ordered_related_items
     - organisations
     - parent
-    - taxons
 
 production:
   <<: *default

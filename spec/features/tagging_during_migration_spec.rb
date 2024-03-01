@@ -18,10 +18,10 @@ RSpec.describe "Tagging content during migration" do
   end
 
   def given_we_can_populate_the_dropdowns_with_content_from_publishing_api
-    publishing_api_has_topic_linkables(
+    publishing_api_has_taxon_linkables(
       [
-        "/topic/id-of-already-tagged",
-        "/topic/business-tax/pension-scheme-administration",
+        "/alpha-taxonomy/vehicle-weights-explained",
+        "/alpha-taxonomy/vehicle-plating",
       ],
     )
     publishing_api_has_need_linkables(
@@ -39,7 +39,7 @@ RSpec.describe "Tagging content during migration" do
     stub_request(:get, "#{Plek.find('publishing-api')}/v2/content/MY-CONTENT-ID")
       .to_return(body: {
         # see denylisted_tag_types.yml for this
-        publishing_app: "test-app-that-can-be-tagged-to-topics-only",
+        publishing_app: "test-app-that-can-be-tagged-to-taxons-only",
         content_id: "MY-CONTENT-ID",
         base_path: "/my-content-item",
         document_type: "mainstream_browse_page",
@@ -50,7 +50,7 @@ RSpec.describe "Tagging content during migration" do
       .to_return(body: {
         content_id: "MY-CONTENT-ID",
         expanded_links: {
-          topics: [{ "content_id": "ID-OF-ALREADY-TAGGED" }],
+          taxons: [{ "content_id": "4b5e77f7-69e5-45a9-9061-348cdce876fb" }],
           mainstream_browse_pages: [{ "content_id": "ID-OF-ALREADY-TAGGED-BROWSE-PAGE" }],
         },
         version: 54_321,
@@ -67,7 +67,7 @@ RSpec.describe "Tagging content during migration" do
   end
 
   def when_i_add_an_additional_tag
-    select "Business tax / Pension scheme administration", from: "Topics"
+    select "Vehicle plating", from: "Taxons"
   end
 
   def and_i_submit_the_form
@@ -80,7 +80,7 @@ RSpec.describe "Tagging content during migration" do
   def then_only_that_link_type_is_sent_to_the_publishing_api
     body = {
       links: {
-        topics: %w[e1d6b771-a692-4812-a4e7-7562214286ef ID-OF-ALREADY-TAGGED],
+        taxons: %w[17f91fdf-a36f-48f0-989c-a056d56876ee 4b5e77f7-69e5-45a9-9061-348cdce876fb],
       },
       previous_version: 54_321,
     }

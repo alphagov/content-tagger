@@ -35,7 +35,6 @@ RSpec.describe Taxonomy::BuildTaxon do
       stub_publishing_api_has_expanded_links({
         content_id:,
         expanded_links: {
-          topics: [],
           parent_taxons: [],
         },
       })
@@ -93,9 +92,7 @@ RSpec.describe Taxonomy::BuildTaxon do
       before do
         stub_publishing_api_has_expanded_links({
           content_id:,
-          expanded_links: {
-            topics: [],
-          },
+          expanded_links: {},
         })
       end
 
@@ -111,7 +108,6 @@ RSpec.describe Taxonomy::BuildTaxon do
         stub_publishing_api_has_expanded_links({
           content_id:,
           expanded_links: {
-            topics: [],
             parent_taxons: [
               { content_id: parent_taxon_id },
             ],
@@ -129,7 +125,6 @@ RSpec.describe Taxonomy::BuildTaxon do
         stub_publishing_api_has_expanded_links({
           content_id:,
           expanded_links: {
-            topics: [],
             parent_taxons: [],
             root_taxon: [
               { content_id: GovukTaxonomy::ROOT_CONTENT_ID },

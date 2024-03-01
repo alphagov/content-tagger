@@ -62,40 +62,6 @@ RSpec.describe Linkables do
     end
   end
 
-  describe ".topics" do
-    it "returns an array of hashes with title and content id pairs" do
-      stub_publishing_api_has_linkables(
-        [
-          {
-            "public_updated_at" => "2016-04-07 10:34:05",
-            "title" => "Pension scheme administration",
-            "content_id" => "e1d6b771-a692-4812-a4e7-7562214286ef",
-            "publication_state" => "published",
-            "base_path" => "/topic/business-tax/pension-scheme-administration",
-            "internal_name" => "Business tax / Pension scheme administration",
-          },
-          {
-            "public_updated_at" => "2016-04-07 10:34:05",
-            "title" => nil,
-            "content_id" => "3535b8ad-7209-4c97-9dac-e25c25d9c27c",
-            "publication_state" => "published",
-            "base_path" => "/topic/redirect",
-            "internal_name" => nil,
-          },
-        ],
-        document_type: "topic",
-      )
-
-      expected = {
-        "Business tax" => [
-          ["Business tax / Pension scheme administration", "e1d6b771-a692-4812-a4e7-7562214286ef"],
-        ],
-      }
-
-      expect(linkables.topics).to eq expected
-    end
-  end
-
   describe ".organisations" do
     it "returns an array of arrays with title and content id pairs" do
       stub_publishing_api_has_linkables(

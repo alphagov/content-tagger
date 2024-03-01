@@ -9,7 +9,6 @@ module Tagging
       suggested_ordered_related_items
       mainstream_browse_pages
       parent
-      topics
       organisations
       meets_user_needs
     ].freeze

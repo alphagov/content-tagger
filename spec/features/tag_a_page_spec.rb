@@ -7,7 +7,7 @@ RSpec.describe "Tagging content" do
 
   scenario "User looks up and tags a content item" do
     given_there_is_a_content_item_with_expanded_links(
-      topics: [example_topic],
+      taxons: [example_linked_content],
     )
 
     when_i_visit_edit_a_page
@@ -16,15 +16,15 @@ RSpec.describe "Tagging content" do
     and_the_expected_navigation_link_is_highlighted
     and_i_see_the_taxon_form
 
-    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
+    when_i_select_an_additional_taxon("Vehicle plating")
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
-      taxons: [],
+      taxons: ["17f91fdf-a36f-48f0-989c-a056d56876ee", example_linked_content["content_id"]],
       ordered_related_items: [],
+      ordered_related_items_overrides: [],
       mainstream_browse_pages: [],
       parent: [],
-      topics: ["e1d6b771-a692-4812-a4e7-7562214286ef", example_topic["content_id"]],
       organisations: [],
       meets_user_needs: [],
     )
@@ -34,25 +34,26 @@ RSpec.describe "Tagging content" do
     given_there_is_a_content_item_with_no_expanded_links
     and_i_am_on_the_page_for_the_item
 
-    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
+    when_i_select_an_additional_taxon("Vehicle plating")
     and_i_submit_the_form
 
     then_the_publishing_api_is_sent(
-      taxons: [],
+      taxons: %w[17f91fdf-a36f-48f0-989c-a056d56876ee],
       ordered_related_items: [],
       mainstream_browse_pages: [],
       parent: [],
-      topics: %w[e1d6b771-a692-4812-a4e7-7562214286ef],
       organisations: [],
       meets_user_needs: [],
     )
   end
 
   scenario "User makes a conflicting change" do
-    given_there_is_a_content_item_with_expanded_links(topics: [example_topic])
+    given_there_is_a_content_item_with_expanded_links(
+      taxons: [example_linked_content],
+    )
     and_i_am_on_the_page_for_the_item
 
-    when_i_select_an_additional_topic("Business tax / Pension scheme administration")
+    when_i_select_an_additional_taxon("Vehicle plating")
     and_somebody_else_makes_a_change
     and_i_submit_the_form
 
@@ -66,7 +67,9 @@ RSpec.describe "Tagging content" do
   end
 
   scenario "User inputs a correct basepath directly in the URL" do
-    given_there_is_a_content_item_with_expanded_links(topics: [example_topic])
+    given_there_is_a_content_item_with_expanded_links(
+      taxons: [example_linked_content],
+    )
     when_i_type_its_basepath_in_the_url_directly
     then_i_am_on_the_page_for_the_item
     and_the_expected_navigation_link_is_highlighted
@@ -74,9 +77,11 @@ RSpec.describe "Tagging content" do
 
   context "with javascript disabled", type: :feature, js: false do
     scenario "the user sets a new related link" do
-      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
+      given_there_is_a_content_item_with_expanded_links(
+        ordered_related_items: [example_linked_content],
+      )
       stub_publishing_api_has_lookups(
-        example_topic["base_path"] => example_topic["content_id"],
+        example_linked_content["base_path"] => example_linked_content["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
       and_i_am_on_the_page_for_the_item
@@ -85,19 +90,20 @@ RSpec.describe "Tagging content" do
 
       then_the_publishing_api_is_sent(
         taxons: [],
-        ordered_related_items: [example_topic["content_id"], "a484eaea-eeb6-48fa-92a7-b67c6cd414f6"],
+        ordered_related_items: [example_linked_content["content_id"], "a484eaea-eeb6-48fa-92a7-b67c6cd414f6"],
         mainstream_browse_pages: [],
         parent: [],
-        topics: [],
         organisations: [],
         meets_user_needs: [],
       )
     end
 
     scenario "the user sets an invalid related link" do
-      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
+      given_there_is_a_content_item_with_expanded_links(
+        ordered_related_items: [example_linked_content],
+      )
       stub_publishing_api_has_lookups(
-        example_topic["base_path"] => example_topic["content_id"],
+        example_linked_content["base_path"] => example_linked_content["content_id"],
       )
       and_i_am_on_the_page_for_the_item
       when_i_fill_in_related_items(2 => "/pay-cat")
@@ -108,9 +114,11 @@ RSpec.describe "Tagging content" do
     end
 
     scenario "the user sets a new valid and invalid related link" do
-      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [example_topic])
+      given_there_is_a_content_item_with_expanded_links(
+        ordered_related_items: [example_linked_content],
+      )
       stub_publishing_api_has_lookups(
-        example_topic["base_path"] => example_topic["content_id"],
+        example_linked_content["base_path"] => example_linked_content["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
       and_i_am_on_the_page_for_the_item
@@ -123,9 +131,11 @@ RSpec.describe "Tagging content" do
     end
 
     scenario "the user changes a suggested related link to be invalid" do
-      given_there_is_a_content_item_with_expanded_links(suggested_ordered_related_items: [example_topic])
+      given_there_is_a_content_item_with_expanded_links(
+        suggested_ordered_related_items: [example_linked_content],
+      )
       stub_publishing_api_has_lookups(
-        example_topic["base_path"] => example_topic["content_id"],
+        example_linked_content["base_path"] => example_linked_content["content_id"],
       )
       and_i_am_on_the_page_for_the_item
       when_i_fill_in_related_items(6 => "/pay-cat")
@@ -136,9 +146,11 @@ RSpec.describe "Tagging content" do
     end
 
     scenario "the user removes suggested related links" do
-      given_there_is_a_content_item_with_expanded_links(suggested_ordered_related_items: [example_topic])
+      given_there_is_a_content_item_with_expanded_links(
+        suggested_ordered_related_items: [example_linked_content],
+      )
       stub_publishing_api_has_lookups(
-        example_topic["base_path"] => example_topic["content_id"],
+        example_linked_content["base_path"] => example_linked_content["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
       and_i_am_on_the_page_for_the_item
@@ -150,7 +162,6 @@ RSpec.describe "Tagging content" do
         suggested_ordered_related_items: [],
         mainstream_browse_pages: [],
         parent: [],
-        topics: [],
         organisations: [],
         meets_user_needs: [],
       )
@@ -159,7 +170,7 @@ RSpec.describe "Tagging content" do
     scenario "the user does not see suggested related links when no suggested links exist" do
       given_there_is_a_content_item_with_expanded_links(ordered_related_items: [])
       stub_publishing_api_has_lookups(
-        example_topic["base_path"] => example_topic["content_id"],
+        example_linked_content["base_path"] => example_linked_content["content_id"],
         "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
       )
       and_i_am_on_the_page_for_the_item
@@ -266,11 +277,11 @@ RSpec.describe "Tagging content" do
     expect(page).to have_content "Not a known URL on GOV.UK"
   end
 
-  def when_i_select_an_additional_topic(selection)
+  def when_i_select_an_additional_taxon(selection)
     @tagging_request = stub_request(:patch, "#{Plek.find('publishing-api')}/v2/links/MY-CONTENT-ID")
       .to_return(status: 200)
 
-    select selection, from: "Topics"
+    select selection, from: "Taxons"
   end
 
   def and_somebody_else_makes_a_change
@@ -296,16 +307,10 @@ RSpec.describe "Tagging content" do
   end
 
   def given_we_can_populate_the_dropdowns_with_content_from_publishing_api
-    publishing_api_has_topic_linkables(
-      [
-        "/topic/id-of-already-tagged",
-        "/topic/business-tax/pension-scheme-administration",
-      ],
-    )
-
     publishing_api_has_taxon_linkables(
       [
         "/alpha-taxonomy/vehicle-plating",
+        "/alpha-taxonomy/vehicle-weights-explained",
       ],
     )
 
@@ -328,9 +333,9 @@ RSpec.describe "Tagging content" do
     )
   end
 
-  def example_topic
+  def example_linked_content
     {
-      "content_id" => "ID-OF-ALREADY-TAGGED",
+      "content_id" => "4b5e77f7-69e5-45a9-9061-348cdce876fb",
       "base_path" => "/already-tagged",
       "title" => "Already tagged",
     }
