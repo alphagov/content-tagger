@@ -7,6 +7,12 @@
 //= require_self
 //= require jquery.waypoints.min.js
 
+//= require govuk_publishing_components/dependencies
+//= require govuk_publishing_components/analytics
+
 $(document).ready(function () {
   $('.select2:not(.tagging_project):not(.bulk_tagger)').select2({ allowClear: true })
 })
+
+window.GOVUK.approveAllCookieTypes()
+window.GOVUK.cookie('cookies_preferences_set', 'true', { days: 365 })
