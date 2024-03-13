@@ -1,4 +1,8 @@
 <% content_for :head do %>
+  <meta name="govuk:components_gem_version" content="<%= GovukPublishingComponents::VERSION %>" />
+  <%= javascript_include_tag "domain-config" %>
+  <%= javascript_include_tag "govuk_publishing_components/load-analytics" %>
+
   <%= stylesheet_link_tag "application", media: "all" %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>

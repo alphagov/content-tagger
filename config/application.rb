@@ -19,6 +19,8 @@ module ContentTagger
     # Configure denylisted tag types by publishing app
     config.denylisted_tag_types = config_for(:denylisted_tag_types)
 
+    config.assets.css_compressor = nil
+
     config.active_record.belongs_to_required_by_default = false
 
     # Set asset path to be application specific so that we can put all GOV.UK
