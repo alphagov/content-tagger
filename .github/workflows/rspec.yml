@@ -46,8 +46,11 @@ jobs:
       - name: Setup Node
         uses: alphagov/govuk-infrastructure/.github/actions/setup-node@main
 
+      # - name: Precompile assets
+        # uses: alphagov/govuk-infrastructure/.github/actions/precompile-rails-assets@main
+
       - name: Precompile assets
-        uses: alphagov/govuk-infrastructure/.github/actions/precompile-rails-assets@main
+        run: bundle exec rails assets:clobber assets:precompile -v
 
       - name: Initialize database
         env:
