@@ -21,6 +21,7 @@ gem "uglifier"
 gem "gds-api-adapters"
 gem "gds-sso"
 gem "govuk_admin_template"
+gem "govuk_publishing_components"
 gem "govuk_sidekiq"
 gem "plek"
 
