@@ -50,11 +50,9 @@
         GOVUKAdmin.redirect(link.attr('href'))
       }
 
-      // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-      // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/regexp
-      // Escape ~!@#$%^&*(){}[]`/=?+\|-_;:'",<.>
       function escapeStringForRegexp (str) {
-        return str.replace(/[-[\]/{}()*+?.^$|]/g, '\\$&')
+        // https://github.com/tc39/proposal-regex-escaping
+        return str.replace(/[\\^$*+?.()|[\]{}]/g, '\\$&')
       }
     }
   }
