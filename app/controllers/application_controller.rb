@@ -50,7 +50,7 @@ private
   end
 
   def deny_access_to(subject)
-    raise PermissionDeniedError, "Sorry, you are not authorised to access this #{subject}."
+    raise GDS::SSO::PermissionDeniedError, "Sorry, you are not authorised to access this #{subject}."
   end
 
   def permission_checker
