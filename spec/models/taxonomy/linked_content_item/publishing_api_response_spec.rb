@@ -36,7 +36,7 @@ module Taxonomy
       }
     end
 
-    let(:publishing_api) { instance_double("GdsApi::PublishingApi") }
+    let(:publishing_api) { instance_double(GdsApi::PublishingApi) }
 
     before do
       allow(publishing_api).to receive(:get_content).with("64aadc14-9bca-40d9-abb4-4f21f9792a05").and_return(content_item)
@@ -428,7 +428,7 @@ module Taxonomy
         )
 
         expect(homepage_taxon.title).to eq("GOV.UK homepage")
-        expect(homepage_taxon.parent).to eq(nil)
+        expect(homepage_taxon.parent).to be_nil
         expect(homepage_taxon.children.map(&:title)).to eq(%w[Transport])
         expect(homepage_taxon.descendants.map(&:title)).to eq(["Transport", "Transport child"])
         expect(homepage_taxon.children.first.children.first.title).to eq("Transport child")

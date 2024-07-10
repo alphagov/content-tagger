@@ -28,7 +28,7 @@ RSpec.feature "Bulk tagging" do
     then_i_see_an_error_about_content_items
   end
 
-  scenario "Creating tags shows progress", js: true do
+  scenario "Creating tags shows progress", :js do
     given_a_tag_migration_exists
     when_i_go_to_the_tag_migration_page_and_create_tags
     then_i_can_see_a_progress_bar

@@ -4,11 +4,11 @@ module BulkTagging
       create(
         :tagging_spreadsheet,
         state: "uploaded",
-        tag_mappings: [tag_mapping_1, tag_mapping_2, tag_mapping_3],
+        tag_mappings: [tag_mapping_one, tag_mapping_two, tag_mapping_three],
       )
     end
     let(:user) { instance_double(User, uid: "user-123") }
-    let(:tag_mapping_1) do
+    let(:tag_mapping_one) do
       create(
         :tag_mapping,
         content_base_path: "/content-1",
@@ -17,7 +17,7 @@ module BulkTagging
         link_type: "organisations",
       )
     end
-    let(:tag_mapping_2) do
+    let(:tag_mapping_two) do
       create(
         :tag_mapping,
         content_base_path: "/content-1",
@@ -26,7 +26,7 @@ module BulkTagging
         link_type: "taxons",
       )
     end
-    let(:tag_mapping_3) do
+    let(:tag_mapping_three) do
       create(
         :tag_mapping,
         content_base_path: "/content-2",
@@ -41,11 +41,11 @@ module BulkTagging
         allow(Time.zone).to receive(:now).and_return(Time.zone.local(0))
 
         expect(PublishLinksWorker).to receive(:perform_async)
-          .with(tag_mapping_1.id)
+          .with(tag_mapping_one.id)
         expect(PublishLinksWorker).to receive(:perform_async)
-          .with(tag_mapping_2.id)
+          .with(tag_mapping_two.id)
         expect(PublishLinksWorker).to receive(:perform_async)
-          .with(tag_mapping_3.id)
+          .with(tag_mapping_three.id)
 
         described_class.call(tagging_spreadsheet, user:)
 

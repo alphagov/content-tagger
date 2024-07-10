@@ -177,7 +177,7 @@ RSpec.feature "Taxonomy editing" do
     and_my_taxon_is_not_published
   end
 
-  scenario "Taxon base path preview when changing parent taxon", js: true do
+  scenario "Taxon base path preview when changing parent taxon", :js do
     given_there_are_taxons
     when_i_visit_the_taxon_page
     and_i_click_on_the_edit_taxon_button

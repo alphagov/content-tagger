@@ -21,7 +21,6 @@ RSpec.describe Tagging::CsvTagger do
     described_class.do_tagging("http://example.com/sheet.csv") do |b|
       log << b
     end
-    expect(log).to match_array([{ content_id: "aaa", taxon_ids: %w[1 3] },
-                                { content_id: "bbb", taxon_ids: %w[2] }])
+    expect(log).to contain_exactly({ content_id: "aaa", taxon_ids: %w[1 3] }, { content_id: "bbb", taxon_ids: %w[2] })
   end
 end

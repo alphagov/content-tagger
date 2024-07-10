@@ -37,16 +37,14 @@ RSpec.describe BulkTagging::DocumentTypeTagger do
       stub_any_publishing_api_patch_links.to_return(status: 404)
 
       expect(described_class.call(taxon_content_id:, document_type: "document_type").force)
-        .to match_array([{ status: "error", message: /Response body/, content_id: "c1", new_taxons: [] },
-                         { status: "error", message: /Response body/, content_id: "c2", new_taxons: [] }])
+        .to contain_exactly({ status: "error", message: /Response body/, content_id: "c1", new_taxons: [] }, { status: "error", message: /Response body/, content_id: "c2", new_taxons: [] })
     end
 
     it "tags two content items" do
       stub_any_publishing_api_patch_links
 
       expect(described_class.call(taxon_content_id:, document_type: "document_type").force)
-        .to match_array([{ status: "success", message: "success", content_id: "c1", new_taxons: ["569a9ee5-c195-4b7f-b9dc-edc17a09113f", taxon_content_id] },
-                         { status: "success", message: "success", content_id: "c2", new_taxons: [taxon_content_id] }])
+        .to contain_exactly({ status: "success", message: "success", content_id: "c1", new_taxons: ["569a9ee5-c195-4b7f-b9dc-edc17a09113f", taxon_content_id] }, { status: "success", message: "success", content_id: "c2", new_taxons: [taxon_content_id] })
 
       assert_publishing_api_patch_links(
         "c1",

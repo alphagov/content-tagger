@@ -2,7 +2,7 @@ RSpec.describe "flagging a content item" do
   include TaxonomyHelper
   include PublishingApiHelper
 
-  scenario "flagging a content_item as 'I need help'", js: true do
+  scenario "flagging a content_item as 'I need help'", :js do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_flag_the_first_content_item_as_i_need_help
@@ -13,7 +13,7 @@ RSpec.describe "flagging a content item" do
     and_the_need_help_comment_should_be_displayed
   end
 
-  scenario "flagging a content item and suggesting a new term", js: true do
+  scenario "flagging a content item and suggesting a new term", :js do
     given_there_is_a_project_with_a_content_item
     when_i_visit_the_project_page
     and_i_flag_the_first_content_item_as_missing_a_relevant_topic

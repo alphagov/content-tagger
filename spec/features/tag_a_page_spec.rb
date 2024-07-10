@@ -75,7 +75,7 @@ RSpec.describe "Tagging content" do
     and_the_expected_navigation_link_is_highlighted
   end
 
-  context "with javascript disabled", type: :feature, js: false do
+  context "with javascript disabled", js: false, type: :feature do
     scenario "the user sets a new related link" do
       given_there_is_a_content_item_with_expanded_links(
         ordered_related_items: [example_linked_content],
