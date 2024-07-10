@@ -4,8 +4,8 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
   let(:taxon_content_id) { SecureRandom.uuid }
   let(:parent_taxon_content_id) { SecureRandom.uuid }
   let(:redirect_content_id) { SecureRandom.uuid }
-  let(:tagged_content_id1) { SecureRandom.uuid }
-  let(:tagged_content_id2) { SecureRandom.uuid }
+  let(:tagged_content_id_one) { SecureRandom.uuid }
+  let(:tagged_content_id_two) { SecureRandom.uuid }
   let(:version) { 10 }
 
   before do
@@ -46,11 +46,11 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
         link_type: "taxons",
         fields: %w[base_path],
       )
-      stub_publishing_api_has_lookups("/base/path1" => tagged_content_id1, "/base/path2" => tagged_content_id2)
+      stub_publishing_api_has_lookups("/base/path1" => tagged_content_id_one, "/base/path2" => tagged_content_id_two)
 
       # each content item has links to child taxon
-      stub_publishing_api_has_links(content_id: tagged_content_id1, links: { taxons: [taxon_content_id] }, version:)
-      stub_publishing_api_has_links(content_id: tagged_content_id2, links: { taxons: [taxon_content_id] }, version:)
+      stub_publishing_api_has_links(content_id: tagged_content_id_one, links: { taxons: [taxon_content_id] }, version:)
+      stub_publishing_api_has_links(content_id: tagged_content_id_two, links: { taxons: [taxon_content_id] }, version:)
     end
 
     it "unpublishes a level one taxon with a redirect" do
@@ -65,8 +65,8 @@ RSpec.describe Taxonomy::TaxonUnpublisher do
       end
 
       it "retags content to the parent" do
-        patch_request1 = stub_publishing_api_patch_links(tagged_content_id1, hash_including(links: { taxons: [taxon_content_id, parent_taxon_content_id] }, previous_version: version))
-        patch_request2 = stub_publishing_api_patch_links(tagged_content_id2, hash_including(links: { taxons: [taxon_content_id, parent_taxon_content_id] }, previous_version: version))
+        patch_request1 = stub_publishing_api_patch_links(tagged_content_id_one, hash_including(links: { taxons: [taxon_content_id, parent_taxon_content_id] }, previous_version: version))
+        patch_request2 = stub_publishing_api_patch_links(tagged_content_id_two, hash_including(links: { taxons: [taxon_content_id, parent_taxon_content_id] }, previous_version: version))
         unpublish(taxon_content_id, redirect_content_id)
         expect(patch_request1).to have_been_made
         expect(patch_request2).to have_been_made

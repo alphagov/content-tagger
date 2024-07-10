@@ -33,31 +33,31 @@ RSpec.describe Tagging::CommonAncestorFinder do
     it "has two paths, one common ancestor, returns the common ancestor" do
       has_paths [[1, 2, 3, 4], [1, 2, 3]]
       result = described_class.new.find_all
-      expect(result.first[:common_ancestors]).to match_array([3])
+      expect(result.first[:common_ancestors]).to contain_exactly(3)
     end
 
     it "has three paths, one common ancestor, returns the common ancestor" do
       has_paths [[1, 2, 3, 4], [1, 2, 3], [1, 2, 5]]
       result = described_class.new.find_all
-      expect(result.first[:common_ancestors]).to match_array([3])
+      expect(result.first[:common_ancestors]).to contain_exactly(3)
     end
 
     it "has five paths, two common ancestors, returns the common ancestors" do
       has_paths [[1, 2, 3, 4], [1, 2, 3], [1, 2, 5], [1, 2, 5, 9], [1, 2, 5, 11]]
       result = described_class.new.find_all
-      expect(result.first[:common_ancestors]).to match_array([3, 5])
+      expect(result.first[:common_ancestors]).to contain_exactly(3, 5)
     end
 
     it "has four paths, three common ancestors, returns all ancestors" do
       has_paths [[1], [1, 2, 3], [1, 2], [1, 2, 3, 4]]
       result = described_class.new.find_all
-      expect(result.first[:common_ancestors]).to match_array([1, 2, 3])
+      expect(result.first[:common_ancestors]).to contain_exactly(1, 2, 3)
     end
 
     it "has separate branches, returns all ancestors" do
       has_paths [[1], [1, 2, 3], [5, 6], [5, 6, 7]]
       result = described_class.new.find_all
-      expect(result.first[:common_ancestors]).to match_array([1, 6])
+      expect(result.first[:common_ancestors]).to contain_exactly(1, 6)
     end
   end
 

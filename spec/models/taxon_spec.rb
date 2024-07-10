@@ -191,7 +191,7 @@ RSpec.describe Taxon do
 
     describe "#draft_and_published_editions_exist?" do
       it "returns true if a draft taxon has been previously published" do
-        expect(taxon.draft_and_published_editions_exist?).to eq(true)
+        expect(taxon.draft_and_published_editions_exist?).to be(true)
       end
 
       it "returns false the taxon is published" do
@@ -209,7 +209,7 @@ RSpec.describe Taxon do
           state_history:,
           publication_state: "published",
         )
-        expect(taxon.draft_and_published_editions_exist?).to eq(false)
+        expect(taxon.draft_and_published_editions_exist?).to be(false)
       end
 
       it "returns false if a taxon has never been published" do
@@ -222,7 +222,7 @@ RSpec.describe Taxon do
           state_history:,
           publication_state: "draft",
         )
-        expect(taxon.draft_and_published_editions_exist?).to eq(false)
+        expect(taxon.draft_and_published_editions_exist?).to be(false)
       end
     end
   end
