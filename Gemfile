@@ -16,7 +16,7 @@ gem "select2-rails", "< 4" # There are unresolved visual and HTML changes with s
 gem "sentry-sidekiq"
 gem "simple_form"
 gem "sprockets-rails"
-gem "uglifier"
+gem "terser"
 
 gem "gds-api-adapters"
 gem "gds-sso"
