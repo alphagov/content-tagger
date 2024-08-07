@@ -4,6 +4,7 @@ gem "rails", "7.1.3.4"
 
 gem "bootsnap", require: false
 gem "bootstrap-kaminari-views"
+gem "dartsass-rails"
 gem "govuk_app_config"
 gem "hashdiff"
 gem "jquery-ui-rails"
@@ -11,7 +12,6 @@ gem "kaminari"
 gem "pg"
 gem "prometheus-client"
 gem "rack-proxy"
-gem "sassc-rails"
 gem "select2-rails", "< 4" # There are unresolved visual and HTML changes with select2-rails 4
 gem "sentry-sidekiq"
 gem "simple_form"
