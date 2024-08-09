@@ -10,7 +10,7 @@
       var $templateTag = $fieldset.find('.related-item-template > li').first()
       var $fieldErrors = $fieldset.find('.related-item-error-message')
 
-      $fieldset.on('click', '.select2-search-choice-close', removeItem)
+      $fieldset.on('click', '.js-remove-related', removeItem)
       $basePathInput.on('keypress', lookUpBasePathOnEnterPress)
       $lookupButton.on('click', lookUpBasePath)
 
