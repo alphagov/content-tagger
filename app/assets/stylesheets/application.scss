@@ -86,3 +86,24 @@
 .nav.nav-tabs {
   margin-bottom: 20px;
 }
+
+@font-face {
+  font-family: "Glyphicons Halflings";
+  src: url("bootstrap/glyphicons-halflings-regular.eot");
+  src: url("bootstrap/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),url("bootstrap/glyphicons-halflings-regular.woff2") format("woff2"),url("bootstrap/glyphicons-halflings-regular.woff") format("woff"),url("bootstrap/glyphicons-halflings-regular.ttf") format("truetype"),url("bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg")
+}
+
+.sortable-list .glyphicon.remove-icon {
+  float: left;
+  margin-left: -20px;
+  margin-right: 10px;
+}
+
+// overrides for select2 as it doesn't compile properly in dart-sass, uses image-url
+.select2-container .select2-choice .select2-arrow {
+  background: url("select2.png") no-repeat 0 1px;
+}
+
+.select2-search-choice-close {
+    background: url("select2.png") right top no-repeat;
+}
