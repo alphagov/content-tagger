@@ -21,29 +21,29 @@
         </div>
       <% end %>
 
-      <%= f.input :name, input_html: { class: 'form-control' },
-                  label: 'Name',
-                  hint: 'Name of the new project.' %>
+      <%= f.input :name, input_html: { class: "form-control" },
+                  label: "Name",
+                  hint: "Name of the new project." %>
 
-      <%= f.input :taxonomy_branch, input_html: { class: 'form-control' },
-                  label: 'Branch of GOV.UK taxonomy',
+      <%= f.input :taxonomy_branch, input_html: { class: "form-control" },
+                  label: "Branch of GOV.UK taxonomy",
                   collection: form.taxonomy_branches_for_select %>
 
-      <%= f.input :remote_url, input_html: { class: 'form-control' },
-                  label: 'Spreadsheet URL',
-                  hint: 'Spreadsheet URL with the contents of the project. Required columns: url, title and description.' %>
+      <%= f.input :remote_url, input_html: { class: "form-control" },
+                  label: "Spreadsheet URL",
+                  hint: "Spreadsheet URL with the contents of the project. Required columns: url, title and description." %>
 
-      <%= f.input :bulk_tagging_enabled, input_html: { class: 'form-control' },
-                  label: 'Bulk tagging',
-                  hint: 'Enable the bulk tagging interface for this project?',
+      <%= f.input :bulk_tagging_enabled, input_html: { class: "form-control" },
+                  label: "Bulk tagging",
+                  hint: "Enable the bulk tagging interface for this project?",
                   as: :boolean,
                   checked_value: true %>
 
-      <%= f.submit 'New Project', class: "btn btn-lg btn-success" %>
+      <%= f.submit "New Project", class: "btn btn-lg btn-success" %>
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= render 'shared/help',
+    <%= render "shared/help",
       example_spreadsheet: "https://docs.google.com/spreadsheets/d/1R9Qkg4CmvnQ1WDmT6mqZm7_5kIOstRsnhIDmv0Eop40/pub?gid=0" %>
   </div>
 </div>

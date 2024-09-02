@@ -1,7 +1,7 @@
-<%= display_header title: I18n.t('views.taxons.new_title'),
-  breadcrumbs: [:taxons, I18n.t('views.taxons.new_breadcrumb')] %>
+<%= display_header title: I18n.t("views.taxons.new_title"),
+  breadcrumbs: [:taxons, I18n.t("views.taxons.new_breadcrumb")] %>
 
 <%= simple_form_for page.taxon, url: taxons_path do |f| %>
-  <%= render 'form_fields', f: f, page: page %>
-  <%= f.submit I18n.t('views.taxons.new_button'), class: "btn btn-lg btn-success" %>
+  <%= render "form_fields", f: f, page: page %>
+  <%= f.submit I18n.t("views.taxons.new_button"), class: "btn btn-lg btn-success" %>
 <% end %>

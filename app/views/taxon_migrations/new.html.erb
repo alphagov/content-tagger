@@ -2,15 +2,15 @@
   title: "Move content from #{source_content_item.document_type.humanize.downcase} '#{source_content_item.title}'",
   breadcrumbs: [
     link_to(source_content_item.title, taxon_path(source_content_item.content_id)),
-    "Move content from '#{source_content_item.title}'"
-  ]
+    "Move content from '#{source_content_item.title}'",
+  ],
 ) %>
 
 <%= simple_form_for tag_migration, url: taxon_migrations_path, method: :post do |f| %>
   <%= render(
-    'shared/tag_migration_form',
+    "shared/tag_migration_form",
     f: f,
     taxons: taxons,
-    expanded_links: expanded_links
+    expanded_links: expanded_links,
   ) %>
 <% end %>

@@ -1,6 +1,6 @@
-<%= display_header title: t('bulk_tagging.title'), breadcrumbs: [t('navigation.bulk_tag')] do %>
-  <%= link_to t('navigation.tag_importer'), tagging_spreadsheets_path, class: 'btn btn-default' %>
-  <%= link_to t('navigation.tag_migration'), tag_migrations_path, class: 'btn btn-default' %>
+<%= display_header title: t("bulk_tagging.title"), breadcrumbs: [t("navigation.bulk_tag")] do %>
+  <%= link_to t("navigation.tag_importer"), tagging_spreadsheets_path, class: "btn btn-default" %>
+  <%= link_to t("navigation.tag_migration"), tag_migrations_path, class: "btn btn-default" %>
 <% end %>
 
 <div class="lead">
@@ -11,17 +11,17 @@
 <%= simple_form_for :bulk_tag, url: search_results_for_bulk_tag_path, method: :get do |f| %>
   <div class="form-group">
     <%= f.input :query, label: false,
-      input_html: { class: 'form-control', value: query }
+      input_html: { class: "form-control", value: query }
     %>
 
-    <%= f.submit t('bulk_tag.search_button'), class: "btn btn-md btn-success" %>
+    <%= f.submit t("bulk_tag.search_button"), class: "btn btn-md btn-success" %>
   </div>
 <% end %>
 
 <% if search_results.results.any? %>
-  <%= render 'search_results', results: search_results.results %>
+  <%= render "search_results", results: search_results.results %>
 <% elsif query.present? %>
   <p class="no-content no-content-bordered">No search results for '<%= query %>'</p>
 <% end %>
 
-<%= paginate search_results, theme: 'twitter-bootstrap-3' %>
+<%= paginate search_results, theme: "twitter-bootstrap-3" %>

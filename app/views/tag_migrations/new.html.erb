@@ -1,18 +1,18 @@
 <%= display_header(
-  title: t('views.tag_migrations.new.title',
+  title: t("views.tag_migrations.new.title",
            taxon: source_content_item.title,
            type: source_content_item.document_type.humanize.downcase),
   breadcrumbs: [
-    link_to(t('navigation.bulk_tag'), new_bulk_tag_path),
-    "Retag content from '#{source_content_item.title}'"
-  ]
+    link_to(t("navigation.bulk_tag"), new_bulk_tag_path),
+    "Retag content from '#{source_content_item.title}'",
+  ],
 ) %>
 
 <%= simple_form_for tag_migration, url: tag_migrations_path, method: :post do |f| %>
   <%= render(
-    'shared/tag_migration_form',
+    "shared/tag_migration_form",
     f: f,
     taxons: taxons,
-    expanded_links: expanded_links
+    expanded_links: expanded_links,
   ) %>
 <% end %>

@@ -19,7 +19,7 @@
     </div>
   <% end %>
 
-  <div class="related-item value <%= tagging_update.get_errors_for(link_type)[base_path] ? 'has-error' : '' %>">
+  <div class="related-item value <%= tagging_update.get_errors_for(link_type)[base_path] ? "has-error" : "" %>">
     <%= text_field_tag "tagging_tagging_update_form[#{link_type.to_s}][]",
                        base_path,
                        class: "form-control related-item-path" %>

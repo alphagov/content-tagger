@@ -1,16 +1,16 @@
 <div class='content-item'>
-  <%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true, html: { data: { ref: content_item.id }, class: 'js-content-item-form content-item-form' } do |f| %>
+  <%= simple_form_for content_item, url: project_content_item_path(content_item.project, content_item), remote: true, html: { data: { ref: content_item.id }, class: "js-content-item-form content-item-form" } do |f| %>
     <%= token_tag %>
 
     <% if content_item.needs_help? %>
       <%= render partial: "danger_label_with_text", locals: {
-        label_text: I18n.t('views.projects.flags.help-needed'),
+        label_text: I18n.t("views.projects.flags.help-needed"),
         additional_text_label: "Comment",
         additional_text: content_item.need_help_comment,
       } %>
     <% elsif content_item.missing_topic? %>
       <%= render partial: "danger_label_with_text", locals: {
-        label_text: I18n.t('views.projects.flags.missing-topic'),
+        label_text: I18n.t("views.projects.flags.missing-topic"),
         additional_text_label: "Suggested topic",
         additional_text: content_item.suggested_tags,
       } %>
@@ -19,7 +19,7 @@
     <% end %>
 
     <h4>
-      <%= link_to content_item.title, content_item.url, data: {proxy_iframe: 'enabled', modal_url: content_item.proxied_url, toggle: 'modal', target: '#iframe_modal_id'} %>
+      <%= link_to content_item.title, content_item.url, data: {proxy_iframe: "enabled", modal_url: content_item.proxied_url, toggle: "modal", target: "#iframe_modal_id"} %>
     </h4>
 
     <p><%= content_item.description %></p>
@@ -28,10 +28,10 @@
       label: false,
       input_html: {
         class: [:select2, :tagging_project, :js_bulk_tagger_input],
-        autocomplete: 'off',
+        autocomplete: "off",
         data: { taxons: content_item.taxons },
-        value: '',
-        disabled: 'disabled'
+        value: "",
+        disabled: "disabled",
       } %>
   <% end %>
 
@@ -40,9 +40,9 @@
       &nbsp;
     </p>
     <div class='actions actions-inline'>
-      <%= button_to 'Done', mark_done_project_content_item_path(content_item.project, content_item), class: 'btn btn-primary', form_class: 'js-mark-as-done', remote: true %>
+      <%= button_to "Done", mark_done_project_content_item_path(content_item.project, content_item), class: "btn btn-primary", form_class: "js-mark-as-done", remote: true %>
       <% unless content_item.flag? %>
-        <%= link_to I18n.t('views.projects.flag_for_review'), flags_project_content_item_path(content_item.project, content_item), class: 'btn btn-link', remote: true, data: { toggle: "modal", target: '#flags-modal' } %>
+        <%= link_to I18n.t("views.projects.flag_for_review"), flags_project_content_item_path(content_item.project, content_item), class: "btn btn-link", remote: true, data: { toggle: "modal", target: "#flags-modal" } %>
       <% end %>
     </div>
   <% end %>

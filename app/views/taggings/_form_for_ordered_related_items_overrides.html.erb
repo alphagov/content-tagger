@@ -5,7 +5,7 @@
             data-module="related-content-tagger">
     <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
       <% tagging_update.ordered_related_items_overrides.each do |base_path| %>
-        <%= render 'tagging_entry',
+        <%= render "tagging_entry",
           base_path: base_path,
           is_template: false,
           link_type: :ordered_related_items_overrides,
@@ -15,8 +15,8 @@
 
     <% # Hidden, empty tag used by JS to asynchronously render the related item template %>
     <div class="related-item-template hide">
-      <%= render 'tagging_entry',
-        base_path: '',
+      <%= render "tagging_entry",
+        base_path: "",
         is_template: true,
         link_type: :ordered_related_items_overrides,
         tagging_update: tagging_update

@@ -1,37 +1,37 @@
-<%= display_header title: t("views.taxons.#{params[:action]}.title"), breadcrumbs: ['Taxons'] do %>
-  <%= link_to taxon_path(GovukTaxonomy::ROOT_CONTENT_ID), class: 'btn btn-md btn-default' do %>
+<%= display_header title: t("views.taxons.#{params[:action]}.title"), breadcrumbs: %w[Taxons] do %>
+  <%= link_to taxon_path(GovukTaxonomy::ROOT_CONTENT_ID), class: "btn btn-md btn-default" do %>
     View homepage taxon
   <% end %>
 
   <% if user_can_administer_taxonomy? %>
-    <%= link_to new_taxon_path, class: 'btn btn-default' do %>
+    <%= link_to new_taxon_path, class: "btn btn-default" do %>
       <i class="glyphicon glyphicon-plus"></i>
-        <%= I18n.t('views.taxons.add_taxon') %>
+        <%= I18n.t("views.taxons.add_taxon") %>
       </i>
     <% end %>
   <% end %>
 
-  <%= link_to download_taxons_path, class: 'btn btn-md btn-default' do %>
+  <%= link_to download_taxons_path, class: "btn btn-md btn-default" do %>
     <i class="glyphicon glyphicon-download-alt"></i>
     Download published taxons as CSV
   <% end %>
 <% end %>
 
 <ul class="nav nav-tabs">
-  <li role="presentation" class="<%= current_page?(taxons_path) ? "active" : nil%>"><%= link_to "Published", taxons_path(q: page.query) %></li>
-  <li role="presentation" class="<%= current_page?(drafts_taxons_path) ? "active" : nil%>"><%= link_to "Draft", drafts_taxons_path(q: page.query) %></li>
-  <li role="presentation" class="<%= current_page?(trash_taxons_path) ? "active" : nil%>"><%= link_to "Deleted", trash_taxons_path(q: page.query) %></li>
+  <li role="presentation" class="<%= current_page?(taxons_path) ? "active" : nil %>"><%= link_to "Published", taxons_path(q: page.query) %></li>
+  <li role="presentation" class="<%= current_page?(drafts_taxons_path) ? "active" : nil %>"><%= link_to "Draft", drafts_taxons_path(q: page.query) %></li>
+  <li role="presentation" class="<%= current_page?(trash_taxons_path) ? "active" : nil %>"><%= link_to "Deleted", trash_taxons_path(q: page.query) %></li>
 </ul>
 
-<%= simple_form_for :taxon_search, url: '', method: :get do |f| %>
+<%= simple_form_for :taxon_search, url: "", method: :get do |f| %>
   <div class="form-group">
     <%= f.input :query,
       input_html: {
         type: :text,
-        class: 'form-control input-lg',
+        class: "form-control input-lg",
         value: page.query,
-        name: 'q',
-        placeholder: t("views.taxons.index.search_placeholder")
+        name: "q",
+        placeholder: t("views.taxons.index.search_placeholder"),
       },
       label: false %>
     <%= f.submit "Search", class: "btn btn-lg btn-success" %>
@@ -55,11 +55,11 @@
           <span class="text-muted"><%= taxon.base_path %></span>
         </td>
         <td>
-          <%= link_to I18n.t('views.taxons.view'), taxon_path(taxon.content_id) %>
+          <%= link_to I18n.t("views.taxons.view"), taxon_path(taxon.content_id) %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= paginate page.search_results, theme: 'twitter-bootstrap-3' %>
+<%= paginate page.search_results, theme: "twitter-bootstrap-3" %>

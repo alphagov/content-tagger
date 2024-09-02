@@ -7,7 +7,7 @@
       <% aggregated_tagging.links.each do |tag_link| %>
         <%= link_to tag_link.link_title, taxon_path(tag_link.link_content_id) %> (<%= tag_link.link_type %>)
         <br />
-      <% end%>
+      <% end %>
 
       <% if aggregated_tagging.errored? %>
         <hr />

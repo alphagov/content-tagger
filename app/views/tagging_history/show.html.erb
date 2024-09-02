@@ -16,14 +16,14 @@
       <th>User</th>
     </tr>
 
-    <%= render partial: 'shared/table_filter' %>
+    <%= render partial: "shared/table_filter" %>
     </thead>
 
     <tbody>
     <% link_changes.changes.each do |link_change| %>
       <tr>
         <td><%= time_ago_in_words(link_change[:created_at]) %> ago</td>
-        <td class="<%= link_change[:change] == 'remove' ? 'bg-danger' : 'bg-success' %>">
+        <td class="<%= link_change[:change] == "remove" ? "bg-danger" : "bg-success" %>">
           <% if link_change[:change] == 'remove' %>
             Untagged
           <% else %>

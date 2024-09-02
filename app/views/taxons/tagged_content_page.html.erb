@@ -5,7 +5,7 @@
 
 <% unless page.unpublished? %>
   <% if user_can_administer_taxonomy? %>
-    <%= link_to taxon_download_tagged_path(page.taxon_content_id), class: 'btn btn-default' do %>
+    <%= link_to taxon_download_tagged_path(page.taxon_content_id), class: "btn btn-default" do %>
       <i class="glyphicon glyphicon-download-alt"></i>
       Download as CSV
     <% end %>
@@ -14,12 +14,12 @@
   <% if user_can_manage_taxonomy? %>
     <%= link_to "Move content",
                 new_taxon_migration_path(source_content_id: page.taxon_content_id),
-                class: 'btn btn-md btn-default' %>
+                class: "btn btn-md btn-default" %>
   <% end %>
 
-  <%= link_to I18n.t('views.taxons.tagging_history'),
+  <%= link_to I18n.t("views.taxons.tagging_history"),
               tagging_history_path(page.taxon_content_id),
-              class: "btn btn-default"%>
+              class: "btn btn-default" %>
 
   <div class="panel panel-default add-top-margin">
     <div class="panel-body">
@@ -31,7 +31,7 @@
   </div>
 
   <% if page.tagged.any? %>
-    <%= render 'tagged_content', tagged: page.tagged %>
+    <%= render "tagged_content", tagged: page.tagged %>
   <% else %>
     <p class="no-content no-content-bordered add-top-margin">
       No content tagged to this taxon

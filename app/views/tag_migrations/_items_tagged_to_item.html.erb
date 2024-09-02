@@ -3,26 +3,26 @@
     <tr class="table-header">
       <th data-module="select-all">
         Select all
-        <%= check_box_tag 'select_all', nil, false %>
+        <%= check_box_tag "select_all", nil, false %>
       </th>
       <th>Page</th>
       <th></th>
     </tr>
 
-    <%= render partial: 'shared/table_filter' %>
+    <%= render partial: "shared/table_filter" %>
   </thead>
   <tbody>
     <% expanded_links.each do |expanded_link| %>
       <tr>
         <td>
-          <%= check_box_tag 'content_base_paths[]',
-            expanded_link.base_path, false, class: 'select-content-item' %>
+          <%= check_box_tag "content_base_paths[]",
+            expanded_link.base_path, false, class: "select-content-item" %>
         </td>
         <td>
           <%= expanded_link.title %>
           <%- if expanded_link.draft? %><%= expanded_link_label(expanded_link) %><%- end %>
         </td>
-        <td><%= link_to 'View on site', website_url(expanded_link.base_path, draft: expanded_link.draft?) %></td>
+        <td><%= link_to "View on site", website_url(expanded_link.base_path, draft: expanded_link.draft?) %></td>
       </tr>
     <% end %>
   </tbody>

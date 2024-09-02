@@ -4,7 +4,7 @@
 <%= simple_form_for page.taxon, url: taxon_path(page.taxon_content_id), method: :patch do |f| %>
   <%= f.hidden_field :content_id, value: page.taxon_content_id %>
 
-  <%= render 'form_fields', f: f, page: page %>
+  <%= render "form_fields", f: f, page: page %>
 
   <%= f.submit "Save draft", class: "btn btn-lg btn-success submit-button" %>
 <% end %>

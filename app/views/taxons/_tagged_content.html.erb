@@ -8,7 +8,7 @@
         <th></th>
       </tr>
 
-      <%= render partial: 'shared/table_filter' %>
+      <%= render partial: "shared/table_filter" %>
     </thead>
 
     <tbody>
@@ -20,8 +20,8 @@
             <td>
               <%=
               link_to(
-                t('views.taxons.edit_tagging'),
-                tagging_url(content_item["content_id"])
+                t("views.taxons.edit_tagging"),
+                tagging_url(content_item["content_id"]),
               )
               %>
             </td>
@@ -29,9 +29,9 @@
           <td>
             <%=
               link_to(
-                t('views.taxons.view_similar'),
-                similar_search_results_url(content_item['base_path']),
-                target: 'blank'
+                t("views.taxons.view_similar"),
+                similar_search_results_url(content_item["base_path"]),
+                target: "blank",
               )
             %>
           </td>

@@ -1,5 +1,5 @@
-<%= display_header title: t('navigation.tagging_title'),
-  breadcrumbs: [t('navigation.tagging_content')] %>
+<%= display_header title: t("navigation.tagging_title"),
+  breadcrumbs: [t("navigation.tagging_content")] %>
 
 <div class="lead">
   Enter the URL or path of a GOV.UK page to edit its tagging or related links.
@@ -10,12 +10,12 @@
     <%= f.input :base_path,
       label: false,
       required: false,
-      input_html: { class: 'form-control' }
+      input_html: { class: "form-control" }
     %>
 
     For example: <%= link_to "https://www.gov.uk/pay-vat", "/taggings/lookup/pay-vat" %>
     or <%= link_to "/bank-holidays", "/taggings/lookup/bank-holidays" %>
   </div>
 
-  <%= submit_tag I18n.t('taggings.search'), class: 'btn btn-success btn-md' %>
+  <%= submit_tag I18n.t("taggings.search"), class: "btn btn-success btn-md" %>
 <% end %>

@@ -5,7 +5,7 @@
             data-module="related-content-tagger">
     <ul class="sortable-list select2-choices ui-sortable sortable-inputs">
       <% tagging_update.suggested_ordered_related_items.each do |base_path| %>
-        <%= render 'tagging_entry',
+        <%= render "tagging_entry",
                    base_path: base_path,
                    is_template: false,
                    link_type: :suggested_ordered_related_items,

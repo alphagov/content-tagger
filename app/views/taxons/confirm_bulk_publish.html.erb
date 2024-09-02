@@ -7,12 +7,12 @@
   topics appear to everyone on GOV.UK.
 </div>
 
-<%= render 'taxonomy_tree', page: page %>
+<%= render "taxonomy_tree", page: page %>
 
 <div class="confirmation-box">
   <%= button_to "Confirm publish",
   taxon_bulk_publish_path(page.taxon_content_id),
-  class: 'btn btn-lg btn-success' %>
+  class: "btn btn-lg btn-success" %>
 
 
   <%= link_to "Cancel", taxon_path(page.taxon_content_id), class: "cancel-link" %>

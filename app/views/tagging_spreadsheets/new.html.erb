@@ -1,8 +1,8 @@
-<%= display_header title: I18n.t('tag_import.upload_sheet'),
+<%= display_header title: I18n.t("tag_import.upload_sheet"),
   breadcrumbs: [
-    link_to(I18n.t('navigation.bulk_tag'), new_bulk_tag_path),
-    link_to(I18n.t('navigation.tag_importer'), tagging_spreadsheets_path),
-    I18n.t('tag_import.upload_sheet')
+    link_to(I18n.t("navigation.bulk_tag"), new_bulk_tag_path),
+    link_to(I18n.t("navigation.tag_importer"), tagging_spreadsheets_path),
+    I18n.t("tag_import.upload_sheet"),
   ] %>
 
 <div class="row">
@@ -10,15 +10,15 @@
     <%= simple_form_for tagging_spreadsheet, url: tagging_spreadsheets_path do |f| %>
       <div class="form-group">
         <%= f.input :url,
-          input_html: { type: :text, class: 'form-control' },
-          label: I18n.t('tag_import.sheet_url') %>
-        <%= f.input :description, input_html: { class: 'form-control' } %>
+          input_html: { type: :text, class: "form-control" },
+          label: I18n.t("tag_import.sheet_url") %>
+        <%= f.input :description, input_html: { class: "form-control" } %>
 
-        <%= f.submit I18n.t('tag_import.upload'), class: "btn btn-lg btn-success" %>
+        <%= f.submit I18n.t("tag_import.upload"), class: "btn btn-lg btn-success" %>
       </div>
     <% end %>
   </div>
   <div class="col-md-4">
-    <%= render 'shared/help', example_spreadsheet: "https://docs.google.com/spreadsheets/d/1CkmNClwusFBfhMRcE2wEO96RgAi85WrukdQKRDlVuos/pub" %>
+    <%= render "shared/help", example_spreadsheet: "https://docs.google.com/spreadsheets/d/1CkmNClwusFBfhMRcE2wEO96RgAi85WrukdQKRDlVuos/pub" %>
   </div>
 </div>

@@ -1,9 +1,9 @@
 <%= display_header title: tagging_spreadsheet.description, breadcrumbs: [:tagging_spreadsheets, "Preview"] do %>
-  <%= link_to I18n.t('tag_import.refresh'), tagging_spreadsheet_refetch_path(tagging_spreadsheet), method: :post, class: "btn btn-md btn-default" %>
+  <%= link_to I18n.t("tag_import.refresh"), tagging_spreadsheet_refetch_path(tagging_spreadsheet), method: :post, class: "btn btn-md btn-default" %>
 <% end %>
 
   <p>
-    <%= link_to I18n.t('tag_import.start_tagging'), tagging_spreadsheet_publish_tags_path(tagging_spreadsheet), method: :post, class: "btn btn-lg btn-success" %>
+    <%= link_to I18n.t("tag_import.start_tagging"), tagging_spreadsheet_publish_tags_path(tagging_spreadsheet), method: :post, class: "btn btn-lg btn-success" %>
   </p>
 
 <% if tagging_spreadsheet.state == "errored" %>
@@ -13,7 +13,7 @@
   </p>
 <% end %>
 <div class='view-on-site'>
-  <%= link_to "View on Google Docs", tagging_spreadsheet.url, target: "_blank" %>
+  <%= link_to "View on Google Docs", tagging_spreadsheet.url, target: "_blank", rel: "noopener" %>
 </div>
 
 <%= render "tag_update_preview",

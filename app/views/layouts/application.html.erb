@@ -4,46 +4,46 @@
   <%= javascript_include_tag "govuk_publishing_components/load-analytics" %>
 
   <%= stylesheet_link_tag "application", media: "all" %>
-  <%= javascript_include_tag 'application' %>
+  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 <% end %>
 
 <% content_for :navbar_items do %>
   <% if user_can_administer_taxonomy? %>
-    <li class='<%= active_navigation_item == 'taggings' ? 'active' : nil %>'>
-      <%= link_to t('navigation.tagging_content'), lookup_taggings_path %>
+    <li class='<%= active_navigation_item == "taggings" ? "active" : nil %>'>
+      <%= link_to t("navigation.tagging_content"), lookup_taggings_path %>
     </li>
   <% end %>
 
   <% if user_can_administer_taxonomy? %>
-    <li class='<%= active_navigation_item.in?(%w[bulk_tags tag_migrations tagging_spreadsheets]) ? 'active' : nil %>'>
-      <%= link_to t('navigation.bulk_tag'), new_bulk_tag_path %>
+    <li class='<%= active_navigation_item.in?(%w[bulk_tags tag_migrations tagging_spreadsheets]) ? "active" : nil %>'>
+      <%= link_to t("navigation.bulk_tag"), new_bulk_tag_path %>
     </li>
   <% end %>
 
   <% if user_can_administer_taxonomy? %>
-    <li class='<%= active_navigation_item.in?(%w[taxons taxon_migrations branches]) ? 'active' : nil %>'>
-      <%= link_to t('navigation.taxons'), taxons_path %>
+    <li class='<%= active_navigation_item.in?(%w[taxons taxon_migrations branches]) ? "active" : nil %>'>
+      <%= link_to t("navigation.taxons"), taxons_path %>
     </li>
   <% end %>
 
   <% if user_can_administer_taxonomy? %>
-    <li class='<%= active_navigation_item.in?(%w[tagging_history]) ? 'active' : nil %>'>
-      <%= link_to t('navigation.tagging_history'), tagging_history_index_path %>
+    <li class='<%= active_navigation_item.in?(%w[tagging_history]) ? "active" : nil %>'>
+      <%= link_to t("navigation.tagging_history"), tagging_history_index_path %>
     </li>
   <% end %>
 
   <% if user_can_administer_taxonomy? %>
-    <li class='<%= active_navigation_item.in?(%w[health_warnings]) ? 'active' : nil %>'>
-      <%= link_to t('navigation.taxonomy_health'), taxonomy_health_warnings_path %>
+    <li class='<%= active_navigation_item.in?(%w[health_warnings]) ? "active" : nil %>'>
+      <%= link_to t("navigation.taxonomy_health"), taxonomy_health_warnings_path %>
     </li>
   <% end %>
 
   <% if user_can_access_tagathon_tools? %>
-    <li class='<%= active_navigation_item.in?(%w[projects project_content_items]) ? 'active' : nil %>'>
-      <%= link_to t('navigation.projects'), projects_path %>
+    <li class='<%= active_navigation_item.in?(%w[projects project_content_items]) ? "active" : nil %>'>
+      <%= link_to t("navigation.projects"), projects_path %>
     </li>
   <% end %>
 <% end %>
 
-<%= render template: 'layouts/govuk_admin_template' %>
+<%= render template: "layouts/govuk_admin_template" %>

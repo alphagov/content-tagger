@@ -1,12 +1,12 @@
 <%= form_tag(tagging_history_index_path, method: "get") do %>
   <div class="input-group add-top-margin" style="min-width: 30em;">
     <%= select_tag :users,
-                   options_from_collection_for_select(User.all, 'uid', 'name', params[:users]),
+                   options_from_collection_for_select(User.all, "uid", "name", params[:users]),
                    multiple: true,
                    placeholder: "Filter by user",
-                   class: ['select2', 'form-control'] %>
+                   class: %w[select2 form-control] %>
     <span class="input-group-btn">
-      <%= submit_tag "Filter", class: 'btn btn-default' %>
+      <%= submit_tag "Filter", class: "btn btn-default" %>
     </span>
   </div>
 <% end %>

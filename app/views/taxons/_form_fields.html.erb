@@ -1,51 +1,51 @@
 <div data-module="parent-taxon-prefix-preview">
-  <%= f.input :parent_content_id, collection: page.taxons_for_select, label: 'Parent',
-    input_html: { class: 'js-parent-taxon form-control', include_blank: true } %>
+  <%= f.input :parent_content_id, collection: page.taxons_for_select, label: "Parent",
+    input_html: { class: "js-parent-taxon form-control", include_blank: true } %>
 
   <% if page.show_url_override_input_field? %>
-    <%= f.input :url_override, input_html: { class: 'form-control' },
-      label: I18n.t('views.taxons.url_override'),
-      hint: I18n.t('views.taxons.url_override_hint') %>
+    <%= f.input :url_override, input_html: { class: "form-control" },
+      label: I18n.t("views.taxons.url_override"),
+      hint: I18n.t("views.taxons.url_override_hint") %>
   <% end %>
   <% if page.show_url_override? %>
     <label>URL override</label>
     <p class="help-block"><%= page.url_override %></p>
   <% end %>
 
-  <%= f.input :base_path, input_html: { class: 'form-control' },
-    placeholder: 'e.g. /highest-level-taxon-name/taxon-name' %>
+  <%= f.input :base_path, input_html: { class: "form-control" },
+    placeholder: "e.g. /highest-level-taxon-name/taxon-name" %>
 
   <div class="alert alert-warning js-path-prefix-hint hidden"></div>
 </div>
 
-<%= f.input :internal_name, input_html: { class: 'form-control' },
-  label: I18n.t('views.taxons.internal_name'),
-  hint: I18n.t('views.taxons.internal_name_hint') %>
+<%= f.input :internal_name, input_html: { class: "form-control" },
+  label: I18n.t("views.taxons.internal_name"),
+  hint: I18n.t("views.taxons.internal_name_hint") %>
 
-<%= f.input :title, input_html: { class: 'form-control' },
-  label: I18n.t('views.taxons.external_name'),
-  hint: I18n.t('views.taxons.displayed_on_govuk') %>
+<%= f.input :title, input_html: { class: "form-control" },
+  label: I18n.t("views.taxons.external_name"),
+  hint: I18n.t("views.taxons.displayed_on_govuk") %>
 
 <%= f.input :description,
   as: :text,
-  hint: I18n.t('views.taxons.displayed_on_govuk'),
-  input_html: { class: 'form-control' } %>
+  hint: I18n.t("views.taxons.displayed_on_govuk"),
+  input_html: { class: "form-control" } %>
 
 <% if page.show_visibilty_checkbox? %>
   <%= f.input :visible_to_departmental_editors,
     as: :boolean,
-    input_html: { class: 'form-control' },
-    checked_value: 'true',
-    label: I18n.t('views.taxons.visible_to_departmental_editors'),
-    hint: I18n.t('views.taxons.visible_to_departmental_editors_hint')  %>
+    input_html: { class: "form-control" },
+    checked_value: "true",
+    label: I18n.t("views.taxons.visible_to_departmental_editors"),
+    hint: I18n.t("views.taxons.visible_to_departmental_editors_hint") %>
 <% end %>
 
 <%= f.input :phase,
       collection: %w[alpha beta live],
-      selected: page.taxon.phase || 'live',
-      input_html: { class: 'form-control' } %>
+      selected: page.taxon.phase || "live",
+      input_html: { class: "form-control" } %>
 
-<%= f.input :notes_for_editors, as: :text, input_html: { class: 'form-control' } %>
+<%= f.input :notes_for_editors, as: :text, input_html: { class: "form-control" } %>
 
 <%= f.input :associated_taxons,
     collection: page.taxons_for_select,
@@ -57,6 +57,6 @@
 
 <div class="form-group">
   <label class="control-label" for="version_note">Internal change note</label>
-  <%= text_area_tag :internal_change_note, nil, class: 'form-control' %>
+  <%= text_area_tag :internal_change_note, nil, class: "form-control" %>
   <p class="help-block">Displayed in Content Tagger</p>
 </div>
