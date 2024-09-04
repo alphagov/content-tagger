@@ -4,36 +4,36 @@
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <h4 class="modal-title">Flag '<%= content_item.title %>' for review</h4>
     </div>
-    <%= form_for content_item, url: update_flags_project_content_item_path(project, content_item), method: :post, remote: true, html: { data: { module: 'radio-toggle' } } do |f| %>
+    <%= form_for content_item, url: update_flags_project_content_item_path(project, content_item), method: :post, remote: true, html: { data: { module: "radio-toggle" } } do |f| %>
 
     <div class="modal-body flag-for-review">
       <div class='radio'>
         <label>
-          <%= f.radio_button :flag, "needs_help", required: true, data: { target: 'need-help-comment' } %>
+          <%= f.radio_button :flag, "needs_help", required: true, data: { target: "need-help-comment" } %>
           I need help tagging this
         </label>
       </div>
 
       <div id='need-help-comment' class='form-group add-top-margin add-left-border'>
         <%= f.label :need_help_comment, "Comment (optional)" %>
-        <%= f.text_field :need_help_comment, class: 'form-control input-md-4' %>
+        <%= f.text_field :need_help_comment, class: "form-control input-md-4" %>
       </div>
 
       <div class='radio'>
         <label>
-          <%= f.radio_button :flag, "missing_topic", data: { target: 'suggested-tags' } %>
+          <%= f.radio_button :flag, "missing_topic", data: { target: "suggested-tags" } %>
           There's no relevant topic for this
         </label>
       </div>
 
       <div id='suggested-tags' class='form-group add-top-margin add-left-border'>
         <%= f.label :suggested_tags, "Suggest a new topic (optional)" %>
-        <%= f.text_field :suggested_tags, class: 'form-control input-md-4' %>
+        <%= f.text_field :suggested_tags, class: "form-control input-md-4" %>
       </div>
     </div>
 
     <div class='modal-footer'>
-      <%= f.submit "Continue", class: 'btn btn-success add-right-margin' %>
+      <%= f.submit "Continue", class: "btn btn-success add-right-margin" %>
       <button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
     </div>
     <% end %>

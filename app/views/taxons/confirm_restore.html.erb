@@ -1,11 +1,11 @@
-<h1><%= t('views.taxons.confirm_restore_title') %> "<%= page.title %>"</h1>
+<h1><%= t("views.taxons.confirm_restore_title") %> "<%= page.title %>"</h1>
 
-<div class="lead"><%= t('views.taxons.confirm_restore_redirect') %></div>
+<div class="lead"><%= t("views.taxons.confirm_restore_redirect") %></div>
 
 <div class="confirmation-box">
   <%= button_to "Confirm restore",
   taxon_restore_path(page.taxon_content_id),
-  class: 'btn btn-lg btn-success' %>
+  class: "btn btn-lg btn-success" %>
 
   <%= link_to "Cancel", taxon_path(page.taxon_content_id), class: "cancel-link" %>
 </div>

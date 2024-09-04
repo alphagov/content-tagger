@@ -2,7 +2,7 @@
 <div class="js-tag-update-progress" data-progress-path="<%= progress_path %>">
 
   <div class="progress">
-    <div class="progress-bar <%= 'progress-bar-striped active' unless percentage_complete == 100 %>"
+    <div class="progress-bar <%= "progress-bar-striped active" unless percentage_complete == 100 %>"
       role="progressbar"
       aria-valuenow="<%= completed_tag_mappings %>"
       aria-valuemin="0"
@@ -14,7 +14,7 @@
 
   <div class="progress-counter">
     <p>
-      <%= I18n.t('views.tag_update_progress_bar', completed: completed_tag_mappings, total: total_tag_mappings)%>
+      <%= I18n.t("views.tag_update_progress_bar", completed: completed_tag_mappings, total: total_tag_mappings) %>
     </p>
   </div>
 

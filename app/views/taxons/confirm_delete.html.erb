@@ -1,14 +1,14 @@
-<h1><%= t('views.taxons.confirm_deletion_title') %> "<%= page.taxon.title %>"</h1>
+<h1><%= t("views.taxons.confirm_deletion_title") %> "<%= page.taxon.title %>"</h1>
 
-<div class="lead"><%= t('views.taxons.confirm_deletion_restore') %></div>
+<div class="lead"><%= t("views.taxons.confirm_deletion_restore") %></div>
 
 <% if page.tagged.any? || page.children.any? %>
 <div class="alert alert-warning clearfix" role="warning">
   <p>
-    <%= t('views.taxons.delete_warning_1') %>
+    <%= t("views.taxons.delete_warning_1") %>
     <ul>
-      <li><%= t('views.taxons.delete_warning_2') %></li>
-      <li><%= t('views.taxons.delete_warning_3') %></li>
+      <li><%= t("views.taxons.delete_warning_2") %></li>
+      <li><%= t("views.taxons.delete_warning_3") %></li>
     </ul>
   </p>
 </div>
@@ -17,15 +17,15 @@
 <%= simple_form_for page, url: taxon_path(page.taxon.content_id), method: :delete do |f| %>
   <%= f.input :redirect_to, collection: page.taxons_for_select,
     input_html: { class: :select2, multiple: false, include_blank: true } %>
-  <%= f.input :do_tag, as: :boolean, value: true, label: 'Tag content to parent?' %>
-  <%= f.button :button, class: 'btn btn-md btn-danger' do %>
+  <%= f.input :do_tag, as: :boolean, value: true, label: "Tag content to parent?" %>
+  <%= f.button :button, class: "btn btn-md btn-danger" do %>
     <span class="glyphicon glyphicon-trash"></span>
-    <span><%= t('views.taxons.confirm_deletion') %></span>
+    <span><%= t("views.taxons.confirm_deletion") %></span>
   <% end %>
 
-  <%= link_to taxon_path(page.taxon.content_id), class: 'btn btn-md btn-default' do %>
+  <%= link_to taxon_path(page.taxon.content_id), class: "btn btn-md btn-default" do %>
     <span>
-      <%= t('views.taxons.cancel_button') %>
+      <%= t("views.taxons.cancel_button") %>
     </span>
   <% end %>
 <% end %>
@@ -38,7 +38,7 @@
        <th>Taxon</th>
      </tr>
 
-     <%= render 'shared/table_filter' %>
+     <%= render "shared/table_filter" %>
    </thead>
 
    <tbody>
@@ -53,5 +53,5 @@
 
 <% if page.tagged.any? %>
   <h2>Tagged content</h2>
-  <%= render 'tagged_content', tagged: page.tagged %>
+  <%= render "tagged_content", tagged: page.tagged %>
 <% end %>

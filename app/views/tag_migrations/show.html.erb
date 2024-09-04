@@ -1,20 +1,21 @@
-<%= display_header title: t('views.tag_migrations.show.title', taxon: source_content_item.title, type: source_content_item.document_type.humanize.downcase),
+<%= display_header title: t("views.tag_migrations.show.title", taxon: source_content_item.title, type: source_content_item.document_type.humanize.downcase),
     breadcrumbs: [
-    link_to(t('navigation.bulk_tag'), new_bulk_tag_path),
-    link_to(t('navigation.tag_migration'), tag_migrations_path),
-    tag_migration.source_description ] do %>
+      link_to(t("navigation.bulk_tag"), new_bulk_tag_path),
+      link_to(t("navigation.tag_migration"), tag_migrations_path),
+      tag_migration.source_description,
+    ] do %>
 <% end %>
 
 <% if tag_migration.should_delete_source_link? %>
   <%= content_tag(
     :p,
-    I18n.t('views.tag_migrations.move_message', taxon_name: current_tagged_taxon),
-    class: 'alert alert-danger'
+    I18n.t("views.tag_migrations.move_message", taxon_name: current_tagged_taxon),
+    class: "alert alert-danger",
   ) %>
 <% end %>
 
 <% if tag_migration.ready_to_import? %>
-  <%= link_to t('bulk_tagging.start_tagging'),
+  <%= link_to t("bulk_tagging.start_tagging"),
     tag_migration_publish_tags_path(tag_migration),
     method: :post,
     class: "btn btn-lg btn-success" %>

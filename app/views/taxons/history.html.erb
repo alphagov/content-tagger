@@ -1,5 +1,5 @@
 <%= display_header title: page.title,
-      breadcrumbs: [:taxons, link_to(page.taxon.title, taxon_path(page.taxon.content_id)), 'History'] %>
+      breadcrumbs: [:taxons, link_to(page.taxon.title, taxon_path(page.taxon.content_id)), "History"] %>
 
 <% page.version_history.each do |version| %>
   <div class="well well-sm">

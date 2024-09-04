@@ -1,5 +1,5 @@
 $('#flags-modal')
-  .html("<%= escape_javascript(render partial: 'flags', locals: local_assigns) %>")
+  .html("<%= escape_javascript(render partial: "flags", locals: local_assigns) %>")
   .promise()
   .done(function () {
     var radioToggle = new GOVUKAdmin.Modules.RadioToggle;

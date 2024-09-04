@@ -24,21 +24,35 @@
       "warning_code": 4,
       "fingerprint": "cebddc2d284fc2066c8b68b5212906cea4b93c9e015826350b21ef0417918c60",
       "check_name": "LinkToHref",
-      "message": "Potentially unsafe model attribute in link_to href",
+      "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/projects/_content_item.html.erb",
       "line": 22,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to((Unresolved Model).new.title, (Unresolved Model).new.url, :data => ({ :proxy_iframe => \"enabled\", :modal_url => (Unresolved Model).new.proxied_url, :toggle => \"modal\", :target => \"#iframe_modal_id\" }))",
-      "render_path": [{"type":"template","name":"projects/show","line":48,"file":"app/views/projects/show.html.erb"}],
+      "render_path": [
+        {
+          "type": "template",
+          "name": "projects/show",
+          "line": 48,
+          "file": "app/views/projects/show.html.erb",
+          "rendered": {
+            "name": "projects/_content_item",
+            "file": "app/views/projects/_content_item.html.erb"
+          }
+        }
+      ],
       "location": {
         "type": "template",
         "template": "projects/_content_item"
       },
       "user_input": "(Unresolved Model).new.url",
       "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
       "note": "Safe because we control the URLs in the database."
     }
   ],
-  "updated": "2018-08-02 08:11:26 +0100",
-  "brakeman_version": "4.3.1"
+  "updated": "2024-09-04 10:33:57 +0000",
+  "brakeman_version": "6.1.2"
 }

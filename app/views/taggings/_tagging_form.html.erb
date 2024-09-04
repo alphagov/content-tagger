@@ -1,4 +1,4 @@
-<%= simple_form_for tagging_update, url: tagging_path, method: 'put' do |f| %>
+<%= simple_form_for tagging_update, url: tagging_path, method: "put" do |f| %>
   <%= f.hidden_field :content_id %>
   <%= f.hidden_field :previous_version %>
 
@@ -7,12 +7,12 @@
       <%= render "form_for_#{tag_type}", {
         f: f,
         linkables: tagging_update.linkables,
-        tagging_update: tagging_update
+        tagging_update: tagging_update,
       } %>
     </div>
   <% end %>
 
   <hr/>
 
-  <%= f.submit I18n.t('taggings.update_tags'), class: "btn btn-lg btn-success" %>
+  <%= f.submit I18n.t("taggings.update_tags"), class: "btn btn-lg btn-success" %>
 <% end %>

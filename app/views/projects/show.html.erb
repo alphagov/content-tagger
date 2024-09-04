@@ -1,10 +1,10 @@
 <%= display_header title: project.name, breadcrumbs: [:projects, project.name] do %>
   <% if user_can_administer_taxonomy? %>
-    <%= link_to 'Delete', project_confirm_delete_path(project), class: 'btn btn-danger' %>
+    <%= link_to "Delete", project_confirm_delete_path(project), class: "btn btn-danger" %>
   <% end %>
 <% end %>
 
-<%= render partial: 'shared/iframe_proxy_modal' %>
+<%= render partial: "shared/iframe_proxy_modal" %>
 <div id="flags-modal" class="modal" tabindex="-1" role="dialog"></div>
 
 <div class="row tagathon-project">
@@ -19,7 +19,7 @@
              value="<%= query.params[:title_search] %>"
              placeholder="Filter by title...">
 
-      <% filters.each do |filter_option|  %>
+      <% filters.each do |filter_option| %>
         <div class="radio">
           <label>
             <input type="radio"
@@ -45,7 +45,7 @@
       <% end %>
 
       <div class='content-list'>
-        <%= render partial: 'content_item', collection: content_items, cached: true %>
+        <%= render partial: "content_item", collection: content_items, cached: true %>
       </div>
     <% else %>
       <p class="no-content">No pages found!</p>

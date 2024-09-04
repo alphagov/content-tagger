@@ -1,8 +1,8 @@
-<%= display_header title: t('navigation.tag_migration'), breadcrumbs: [
-  link_to(t('navigation.bulk_tag'), new_bulk_tag_path), t('navigation.tag_migration')] %>
+<%= display_header title: t("navigation.tag_migration"), breadcrumbs: [
+      link_to(t("navigation.bulk_tag"), new_bulk_tag_path), t("navigation.tag_migration")] %>
 
 <% if tag_migrations.any? %>
-  <%= render 'bulk_tagging_history_table', tag_migrations: tag_migrations %>
+  <%= render "bulk_tagging_history_table", tag_migrations: tag_migrations %>
 <% else %>
   <p class="no-content no-content-bordered">Nothing to see here yet.</p>
 <% end %>

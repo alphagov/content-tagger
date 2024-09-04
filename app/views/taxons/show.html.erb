@@ -61,19 +61,19 @@
 
 <% unless page.unpublished? %>
   <p>
-    <%= link_to I18n.t('views.taxons.tagged_content'),
+    <%= link_to I18n.t("views.taxons.tagged_content"),
                 taxon_tagged_content_path(page.taxon_content_id) %>
   </p>
 <% end %>
 
 <p>
-  <%= link_to 'View taxon change history', taxon_history_path(page.taxon_content_id) %>
+  <%= link_to "View taxon change history", taxon_history_path(page.taxon_content_id) %>
 </p>
 
 <p>
   <%= link_to taxonomy_path(page.taxon_content_id, format: :csv), class: "btn btn-default" do %>
     <i class="glyphicon glyphicon-download-alt"></i>
-    <%= I18n.t('views.taxons.download_csv') %>
+    <%= I18n.t("views.taxons.download_csv") %>
   <% end %>
 </p>
 
@@ -92,14 +92,14 @@
 
         <% unless page.unpublished? %>
           <p>
-            <%= link_to I18n.t('views.taxons.edit'),
+            <%= link_to I18n.t("views.taxons.edit"),
                         edit_taxon_path(page.taxon_content_id),
                         class: "btn btn-default" %>
           </p>
         <% end %>
 
         <p>
-          <%= link_to I18n.t('views.taxons.add_child'),
+          <%= link_to I18n.t("views.taxons.add_child"),
           new_taxon_path(taxon: { parent_content_id: page.content_id }),
           class: "btn btn-default" %>
         </p>
@@ -108,25 +108,25 @@
           <p>
             <%= link_to "Unpublish",
                         taxon_confirm_delete_path(page.taxon_content_id),
-                        class: 'btn btn-danger add-top-margin' %>
+                        class: "btn btn-danger add-top-margin" %>
           </p>
         <% elsif page.draft? %>
           <p>
             <%= link_to "Publish",
                         taxon_confirm_publish_path(page.taxon_content_id),
-                        class: 'btn btn-default' %>
+                        class: "btn btn-default" %>
           </p>
 
           <p>
             <%= link_to "Discard draft",
                         taxon_confirm_discard_path(page.taxon_content_id),
-                        class: 'btn btn-danger add-top-margin' %>
+                        class: "btn btn-danger add-top-margin" %>
           </p>
         <% elsif page.unpublished? %>
           <p>
             <%= link_to "Restore to draft",
                         taxon_confirm_restore_path(page.taxon_content_id),
-                        class: 'btn btn-warning' %>
+                        class: "btn btn-warning" %>
           </p>
         <% end %>
       </li>
@@ -141,14 +141,14 @@
           <p>
             <%= link_to "Change phase for this taxon and its children",
                         taxon_confirm_bulk_update_path(page.taxon_content_id),
-                        class: 'btn btn-default' %>
+                        class: "btn btn-default" %>
           </p>
         <% end %>
 
         <p>
           <%= link_to "Publish tree",
                       taxon_confirm_bulk_publish_path(page.taxon_content_id),
-                      class: 'btn btn-default' %>
+                      class: "btn btn-default" %>
         </p>
       </li>
       <% end %>
@@ -161,7 +161,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">
         <h2 class="panel-title">
-          <%= t('views.taxons.associated_taxons') %>
+          <%= t("views.taxons.associated_taxons") %>
         </h2>
       </div>
 
@@ -186,7 +186,7 @@
        aria-label="Taxonomy visualisations">
     <% TaxonsController::VISUALISATIONS.each do |viz| %>
       <a href="<%= taxon_path(params[:id], viz: viz) %>"
-         class="btn <%= viz == page.visualisation ? 'btn-primary' : 'btn-default' %>"
+         class="btn <%= viz == page.visualisation ? "btn-primary" : "btn-default" %>"
          role="button">
         <%= viz.titlecase %>
       </a>

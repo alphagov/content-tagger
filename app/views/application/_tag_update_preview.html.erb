@@ -7,7 +7,7 @@
         locals: {
           completed_tag_mappings: completed_tag_mappings,
           total_tag_mappings: total_tag_mappings,
-          progress_path: progress_path
+          progress_path: progress_path,
         } %>
     <% end %>
   </div>
@@ -21,11 +21,11 @@
         <th></th>
       </tr>
 
-      <%= render partial: 'shared/table_filter' %>
+      <%= render partial: "shared/table_filter" %>
     </thead>
 
     <tbody>
-      <%= render partial: 'aggregated_tag_mappings',
+      <%= render partial: "aggregated_tag_mappings",
         locals: { aggregated_tag_mappings: aggregated_tag_mappings } %>
     </tbody>
   </table>

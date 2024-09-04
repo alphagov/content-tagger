@@ -1,12 +1,12 @@
 <%= display_header(
-      title: t('navigation.tag_importer'),
+      title: t("navigation.tag_importer"),
       breadcrumbs: [
-        link_to(I18n.t('navigation.bulk_tag'), new_bulk_tag_path),
-        t('navigation.tag_importer')
-      ]
+        link_to(I18n.t("navigation.bulk_tag"), new_bulk_tag_path),
+        t("navigation.tag_importer"),
+      ],
     ) do %>
 
-  <%= link_to I18n.t('tag_import.upload_sheet'), new_tagging_spreadsheet_path, class: 'btn btn-default' %>
+  <%= link_to I18n.t("tag_import.upload_sheet"), new_tagging_spreadsheet_path, class: "btn btn-default" %>
 <% end %>
 
 <table class="table queries-list table-bordered table-striped" data-module="filterable-table">
@@ -19,7 +19,7 @@
       <th></th>
       <th></th>
     </tr>
-    <%= render partial: 'shared/table_filter' %>
+    <%= render partial: "shared/table_filter" %>
   </thead>
   <tbody>
     <% page.spreadsheets.each do |spreadsheet| %>
@@ -28,7 +28,7 @@
           <%=
             state_label_for(
               label_type: spreadsheet.label_type,
-              title: spreadsheet.state_title
+              title: spreadsheet.state_title,
             )
           %>
         </td>
@@ -39,13 +39,13 @@
           <%= time_tag_for(spreadsheet.created_at) %>
         </td>
         <td>
-          <%= spreadsheet.added_by.present? ? spreadsheet.added_by.name : "unknown user"  %>
+          <%= spreadsheet.added_by.present? ? spreadsheet.added_by.name : "unknown user" %>
         </td>
         <td>
           <%= link_to "View", tagging_spreadsheet_path(spreadsheet) %>
         </td>
         <td>
-          <%= link_to I18n.t('tag_import.delete'),
+          <%= link_to I18n.t("tag_import.delete"),
             tagging_spreadsheet_path(spreadsheet),
             method: :delete,
             class: "btn btn-danger btn-sm" %>

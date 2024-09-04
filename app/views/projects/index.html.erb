@@ -1,5 +1,5 @@
-<%= display_header title: "Tagging Projects", breadcrumbs: ["Projects"] do %>
-  <%= link_to new_project_path, class: 'btn btn-default' do %>
+<%= display_header title: "Tagging Projects", breadcrumbs: %w[Projects] do %>
+  <%= link_to new_project_path, class: "btn btn-default" do %>
     <i class="glyphicon glyphicon-plus"></i>Add new project
   <% end %>
 <% end %>
@@ -27,7 +27,7 @@
     </thead>
 
     <tbody>
-      <%= render partial: 'project', collection: branch_projects, cached: true %>
+      <%= render partial: "project", collection: branch_projects, cached: true %>
     </tbody>
   </table>
 <% end %>
@@ -57,7 +57,7 @@
 
 </form>
 
-<% if percentage_by_organisation.present?%>
+<% if percentage_by_organisation.present? %>
   <table class="table queries-list table-bordered table-striped" id="tagging-progress">
     <thead>
       <tr class="table-header">

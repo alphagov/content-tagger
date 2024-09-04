@@ -1,4 +1,4 @@
-<%= form_tag(taxon_bulk_update_path, class: 'form-inline confirmation-box') do %>
+<%= form_tag(taxon_bulk_update_path, class: "form-inline confirmation-box") do %>
   <header class="heading-with-actions">
     <h1><%= page.title %></h1>
   </header>
@@ -6,7 +6,7 @@
   <div class="lead">
     <p>
       You are about to update the phase of this taxon and its children to
-      <%= select_tag 'taxon_phase', options_for_select(%w[alpha beta live], page.taxon.phase), class: 'form-control' %>.
+      <%= select_tag "taxon_phase", options_for_select(%w[alpha beta live], page.taxon.phase), class: "form-control" %>.
     </p>
 
     <p>
@@ -14,8 +14,8 @@
     </p>
   </div>
 
-  <%= submit_tag "Confirm bulk update", class: 'btn btn-lg btn-success' %>
+  <%= submit_tag "Confirm bulk update", class: "btn btn-lg btn-success" %>
   <%= link_to "Cancel", taxon_path(page.taxon_content_id), class: "cancel-link" %>
 
-  <%= render 'taxonomy_tree', page: page, hide_parents: true %>
+  <%= render "taxonomy_tree", page: page, hide_parents: true %>
 <% end %>

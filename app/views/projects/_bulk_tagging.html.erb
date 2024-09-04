@@ -6,13 +6,13 @@
     <li class='active'><a href='#'>Edit selected</a></li>
   </ul>
 
-  <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true, html: { class: 'js-bulk-tagger-form' } do |f| %>
+  <%= simple_form_for :bulk_tagging, url: project_bulk_update_path(project), remote: true, html: { class: "js-bulk-tagger-form" } do |f| %>
     <div><span class='js-selected-count'>None</span> selected</div>
 
     <%= f.input :taxons,
-      placeholder: 'Tags',
+      placeholder: "Tags",
       label: false,
-      input_html: { class: [:select2, :bulk_tagger, :js_bulk_tagger_input], autocomplete: 'off' }
+      input_html: { class: [:select2, :bulk_tagger, :js_bulk_tagger_input], autocomplete: "off" }
     %>
 
     <div class='bulk-selectors'>
@@ -20,10 +20,10 @@
         collection: content_items,
         as: :check_boxes,
         include_hidden: false,
-        class: 'content-selector js-content-selector'
+        class: "content-selector js-content-selector"
       %>
     </div>
 
-    <%= f.submit 'Apply' %>
+    <%= f.submit "Apply" %>
   <% end %>
 </div>
