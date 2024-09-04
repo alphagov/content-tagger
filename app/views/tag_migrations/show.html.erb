@@ -1,8 +1,9 @@
 <%= display_header title: t("views.tag_migrations.show.title", taxon: source_content_item.title, type: source_content_item.document_type.humanize.downcase),
     breadcrumbs: [
       link_to(t("navigation.bulk_tag"), new_bulk_tag_path),
-    link_to(t("navigation.tag_migration"), tag_migrations_path),
-    tag_migration.source_description ] do %>
+      link_to(t("navigation.tag_migration"), tag_migrations_path),
+      tag_migration.source_description,
+    ] do %>
 <% end %>
 
 <% if tag_migration.should_delete_source_link? %>
