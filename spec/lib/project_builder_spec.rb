@@ -10,7 +10,6 @@ RSpec.describe ProjectBuilder do
     content_items: content_item_attributes,
     bulk_tagging: bulk_tagging_enabled
   )
-
     ProjectBuilder.call(
       content_item_attributes: content_items,
       project_attributes: {
