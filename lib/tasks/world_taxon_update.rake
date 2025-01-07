@@ -5,7 +5,7 @@
 # For accessibility reasons, taxon titles need to be more unique. Having multiple versions of pages for different
 # countries all titled e.g. 'Trade and invest' goes against WCAG guidelines.
 
-ROOT_CONTENT_ID = "91b8ef20-74e7-4552-880c-50e6d73c2ff9".freeze
+WORLD_ROOT_CONTENT_ID = "91b8ef20-74e7-4552-880c-50e6d73c2ff9".freeze
 
 namespace :worldwide do
   desc "Update worldwide taxon titles (external name) to include the name of the country they relate to"
@@ -21,7 +21,7 @@ namespace :worldwide do
 
     # Build a taxonomy tree with the grandparent
     # (common ancestor e.g. /world/all - Help and services around the world) as the root
-    taxonomy = Taxonomy::ExpandedTaxonomy.new(ROOT_CONTENT_ID).build.child_expansion
+    taxonomy = Taxonomy::ExpandedTaxonomy.new(WORLD_ROOT_CONTENT_ID).build.child_expansion
     log_rake_progress(log_file, "Taxonomy has size #{taxonomy.tree.size}")
 
     taxonomy.tree.each do |linked_item|
@@ -37,73 +37,75 @@ namespace :worldwide do
       if new_title
         new_taxon = Taxonomy::BuildTaxon.call(content_id: linked_item.content_id)
         new_taxon.title = new_title
+
         # Save the taxon with the new title
         Taxonomy::UpdateTaxon.call(taxon: new_taxon)
         message = "Updated taxon #{linked_item.title} to #{new_title}"
       end
       log_rake_progress(log_file, message)
       total_taxon_updates += 1
-    rescue InvalidTaxonError => e
-      log_rake_progress(log_file, "An error occurred while processing taxon #{linked_item.internal_name}: #{e.message}")
+    rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
+      log_rake_error(log_file, "An error occurred while processing taxon #{linked_item.internal_name}: #{e.message}")
     end
 
     # Need to publish all the drafts we have created above (if latest edition is published)
     # - Draft editions are updated straight away.
     puts("Publishing all updated taxons")
-    Taxonomy::BulkPublishTaxon.call(ROOT_CONTENT_ID)
+    Taxonomy::BulkPublishTaxon.call(WORLD_ROOT_CONTENT_ID)
     log_rake_progress(log_file, "Total number of taxons updated - #{total_taxon_updates}")
   rescue GdsApi::HTTPConflict, GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException => e
-    log_rake_progress(log_file, "An error occurred while publishing taxons: #{e.full_message}")
+    log_rake_error(log_file, "An error occurred while publishing taxons: #{e.full_message}")
   rescue StandardError => e
-    log_rake_progress(log_file, "An error occurred while publishing taxons: #{e.full_message}")
+    log_rake_error(log_file, "An error occurred while publishing taxons: #{e.full_message}")
   ensure
     log_file&.close
   end
 
   # Necessary for testing before release to revert all changed titles back to their original state
   desc "Revert worldwide taxon titles (external name) to original text (remove the name of the country they relate to)"
-  task remove_country_name_from_title: :environment do
-    puts("Reverting worldwide taxon titles to remove country name")
-    taxonomy = Taxonomy::ExpandedTaxonomy.new(ROOT_CONTENT_ID).build.child_expansion
+  task :remove_country_name_from_title, %i[log_file_path] => :environment do |_, _args|
+    log_file = nil
+    if args[:log_file_path]
+      log_file = File.open(args[:log_file_path], "w")
+      log_rake_progress(log_file, "Reverting worldwide taxon titles to remove country name from their title")
+    end
+
+    taxonomy = Taxonomy::ExpandedTaxonomy.new(WORLD_ROOT_CONTENT_ID).build.child_expansion
 
     taxonomy.tree.each do |linked_item|
-      next if linked_item.content_id == ROOT_CONTENT_ID || linked_item.internal_name.include?("(GENERIC)")
+      next if skip_tree_item?(log_file, linked_item)
 
       title = linked_item.title
-      puts "Internal name = #{title}"
-
-      next if title.start_with?("UK help and services in ") || title.start_with?("Living in") || title.start_with?("Travelling to")
-
       suffix_index = nil
       if title.start_with?("Coming to the UK from")
-        puts "removing - ...from COUNTRY_NAME from #{title}"
+        log_rake_progress(log_file, "removing - ...from COUNTRY_NAME from #{title}")
         suffix_index = title.index(" from ")
-      elsif title.start_with?("Trade and invest with")
-        puts "removing - ...with COUNTRY_NAME from #{title}"
-        suffix_index = title.index(" with ")
+      elsif title.start_with?("Trade and invest:")
+        log_rake_progress(log_file, "removing - ...: COUNTRY_NAME from #{title}")
+        suffix_index = title.index(": ")
       elsif title.include?(" in ")
-        puts "removing - ...in COUNTRY_NAME from #{title}"
+        log_rake_progress(log_file, "removing - ...in COUNTRY_NAME from #{title}")
         suffix_index = title.index(" in ")
       end
 
       next unless suffix_index
 
       new_title = title[0..(suffix_index - 1)]
-      puts "New title = #{new_title}"
+      log_rake_progress(log_file, "New title = #{new_title}")
 
       new_taxon = Taxonomy::BuildTaxon.call(content_id: linked_item.content_id)
       new_taxon.title = new_title
 
       Taxonomy::UpdateTaxon.call(taxon: new_taxon)
-    rescue InvalidTaxonError => e
-      puts("An error occurred while processing taxon #{internal_name}: #{e.message}")
+    rescue Taxonomy::UpdateTaxon::InvalidTaxonError => e
+      log_rake_error(log_file, "An error occurred while processing taxon #{internal_name}: #{e.message}")
     end
 
-    Taxonomy::BulkPublishTaxon.call(ROOT_CONTENT_ID)
+    Taxonomy::BulkPublishTaxon.call(WORLD_ROOT_CONTENT_ID)
   rescue GdsApi::HTTPConflict, GdsApi::HTTPGatewayTimeout, GdsApi::TimedOutException => e
-    puts("An error occurred while publishing taxons: #{e.message}")
+    log_rake_error(log_file, "An error occurred while publishing taxons: #{e.message}")
   rescue StandardError => e
-    puts("An error occurred while publishing taxons: #{e.message}")
+    log_rake_error(log_file, "An error occurred while publishing taxons: #{e.message}")
   end
 end
 
@@ -114,11 +116,16 @@ def log_rake_progress(log_file, message)
   puts(message)
 end
 
+def log_rake_error(log_file, message)
+  log_file&.puts(message)
+  warn(message)
+end
+
 def create_new_taxon_title(internal_name)
   # -------------
   # Adding the appropriate suffix as follows:
   # Coming to the UK from COUNTRY_NAME
-  # Trade and invest with COUNTRY_NAME
+  # Trade and invest: COUNTRY_NAME
   # -------------
   # Birth, death and marriage abroad in COUNTRY_NAME
   # British embassy or high commission in COUNTRY_NAME
@@ -133,8 +140,8 @@ def create_new_taxon_title(internal_name)
     message = "adding - ...from COUNTRY_NAME"
     new_title = internal_name.gsub("(", "from ")
   elsif internal_name.start_with?("Trade and invest")
-    message = "adding - ...with COUNTRY_NAME"
-    new_title = internal_name.gsub("(", "with ")
+    message = "adding - ...: COUNTRY_NAME"
+    new_title = internal_name.gsub(" (", ": ")
   else
     message = "adding - ...in COUNTRY_NAME"
     new_title = internal_name.gsub("(", "in ")
@@ -145,7 +152,8 @@ end
 
 def skip_tree_item?(log_file, linked_item)
   # Tree includes root (world/all) - skip that
-  if linked_item.content_id == ROOT_CONTENT_ID
+  if linked_item.content_id == WORLD_ROOT_CONTENT_ID
+    log_rake_progress(log_file, "Skipping world root taxon")
     return true
   end
 
@@ -154,7 +162,7 @@ def skip_tree_item?(log_file, linked_item)
   # or if the taxon is a GENERIC (template) version
   if linked_item.internal_name.start_with?("UK help and services in ") || linked_item.internal_name.start_with?("Living in ") ||
       linked_item.internal_name.start_with?("Travelling to ") || linked_item.internal_name.include?("(GENERIC)")
-    log_rake_progress(log_file, "Skipping #{linked_item.internal_name} as it already includes the country name")
+    log_rake_progress(log_file, "Skipping #{linked_item.internal_name}")
     return true
   end
 
