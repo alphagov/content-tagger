@@ -10,15 +10,33 @@ WORLD_ROOT_CONTENT_ID = "91b8ef20-74e7-4552-880c-50e6d73c2ff9".freeze
 namespace :worldwide do
   desc "Update worldwide taxon titles (external name) to include the name of the country they relate to"
 
-  task :add_country_name_to_title, %i[log_file_path] => :environment do |_, args|
+  task :create_title_adding_country_name, %i[log_file_path] => :environment do |_, args|
+    log_file = nil
     log_file_path = args[:log_file_path]
-    WorldTaxonUpdateHelper.new.add_country_names(log_file_path)
+    if log_file_path
+      log_file = File.open(log_file_path, "w")
+    end
+
+    WorldTaxonUpdateHelper.new(log_file).add_country_names
+  rescue StandardError => e
+    warn e.full_message
+  ensure
+    log_file&.close
   end
 
   # Necessary for testing before release to revert all changed titles back to their original state
   desc "Revert worldwide taxon titles (external name) to original text (remove the name of the country they relate to)"
   task :remove_country_name_from_title, %i[log_file_path] => :environment do |_, _args|
+    log_file = nil
     log_file_path = args[:log_file_path]
-    WorldTaxonUpdateHelper.new.remove_country_names(log_file_path)
+    if log_file_path
+      log_file = File.open(log_file_path, "w")
+    end
+
+    WorldTaxonUpdateHelper.new(log_file).remove_country_names
+  rescue StandardError => e
+    warn e.full_message
+  ensure
+    log_file&.close
   end
 end
