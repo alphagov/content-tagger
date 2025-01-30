@@ -5,12 +5,13 @@
 # For accessibility reasons, taxon titles need to be more unique. Having multiple versions of pages for different
 # countries all titled e.g. 'Trade and invest' goes against WCAG guidelines.
 
+require "world_taxon_update_helper"
 WORLD_ROOT_CONTENT_ID = "91b8ef20-74e7-4552-880c-50e6d73c2ff9".freeze
 
 namespace :worldwide do
   desc "Update worldwide taxon titles (external name) to include the name of the country they relate to"
 
-  task :create_title_adding_country_name, %i[log_file_path] => :environment do |_, args|
+  task :add_country_name_to_title, %i[log_file_path] => :environment do |_, args|
     log_file = nil
     log_file_path = args[:log_file_path]
     if log_file_path
@@ -26,7 +27,7 @@ namespace :worldwide do
 
   # Necessary for testing before release to revert all changed titles back to their original state
   desc "Revert worldwide taxon titles (external name) to original text (remove the name of the country they relate to)"
-  task :remove_country_name_from_title, %i[log_file_path] => :environment do |_, _args|
+  task :remove_country_name_from_title, %i[log_file_path] => :environment do |_, args|
     log_file = nil
     log_file_path = args[:log_file_path]
     if log_file_path
