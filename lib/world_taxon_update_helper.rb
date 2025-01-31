@@ -76,6 +76,7 @@ class WorldTaxonUpdateHelper
 
     log_rake_progress("Publishing all updated taxons")
     Taxonomy::BulkPublishTaxon.call(WORLD_ROOT_CONTENT_ID)
+    log_rake_progress("Total number of taxons updated - #{total_taxon_updates}")
   rescue StandardError => e
     log_rake_error("An error occurred while publishing taxons: #{e.full_message}")
   end
