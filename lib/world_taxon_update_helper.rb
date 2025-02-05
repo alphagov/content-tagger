@@ -59,7 +59,10 @@ class WorldTaxonUpdateHelper
       title = linked_item.title
       new_title = create_title_removing_country_name(title)
 
-      next if title == new_title
+      if new_title == title
+        log_rake_progress("No change to title: #{title}")
+        next
+      end
 
       new_taxon = Taxonomy::BuildTaxon.call(content_id: linked_item.content_id)
       new_taxon.title = new_title
@@ -177,6 +180,11 @@ private
     if linked_item.internal_name.start_with?("UK help and services in ", "Living in ", "Travelling to ") \
       || linked_item.internal_name.include?("(GENERIC)")
       log_rake_progress("Skipping #{linked_item.internal_name}")
+      return true
+    end
+
+    unless linked_item.internal_name.include?("(")
+      log_rake_error("Error - no country name in internal name: #{internal_name}")
       return true
     end
 
