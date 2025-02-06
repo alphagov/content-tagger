@@ -172,6 +172,18 @@ RSpec.describe WorldTaxonUpdateHelper do
 
       expect { described_class.new(log_file).add_country_names }.to output(/Skipping Doing a thing \(GENERIC\)/).to_stdout
     end
+
+    it "logs an error if the internal name does not include the bracket for (COUNTRY_NAME)" do
+      linked_item_missing_bracket = Taxonomy::LinkedContentItem.new(
+        base_path: "/root/taxon_2",
+        content_id: "id6",
+        title: "Coming to the UK",
+        internal_name: "Coming to the UK",
+      )
+      allow_item_as_expanded_taxonomy_double(linked_item_missing_bracket)
+
+      expect { described_class.new(log_file).add_country_names }.to output(/Error - no country name in internal name:/).to_stderr
+    end
   end
 
   describe "remove_country_name_from_title" do
