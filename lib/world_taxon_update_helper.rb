@@ -21,7 +21,10 @@ class WorldTaxonUpdateHelper
       next if skip_tree_item?(linked_item)
 
       new_title = create_title_adding_country_name(linked_item.internal_name)
-      next if new_title == linked_item.title
+      if new_title == linked_item.title
+        log_rake_progress("No change to title: #{linked_item.title} with internal name: #{linked_item.internal_name}")
+        next
+      end
 
       # Fetch the taxon and update accordingly
       new_taxon = Taxonomy::BuildTaxon.call(content_id: linked_item.content_id)
@@ -60,7 +63,7 @@ class WorldTaxonUpdateHelper
       new_title = create_title_removing_country_name(title)
 
       if new_title == title
-        log_rake_progress("No change to title: #{title}")
+        log_rake_progress("No change to title: #{title} with internal name: #{linked_item.internal_name}")
         next
       end
 
@@ -184,7 +187,7 @@ private
     end
 
     unless linked_item.internal_name.include?("(")
-      log_rake_error("Error - no country name in internal name: #{internal_name}")
+      log_rake_error("Error - no country name in internal name: #{linked_item.internal_name}")
       return true
     end
 
