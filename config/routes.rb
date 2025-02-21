@@ -78,9 +78,10 @@ Rails.application.routes.draw do
 
   resources :tagging_history, only: %i[index show]
 
-  if Rails.env.development?
-    mount GovukAdminTemplate::Engine, at: "/style-guide"
+  mount GovukAdminTemplate::Engine, at: "/style-guide"
+  mount GovukPublishingComponents::Engine, at: "/component-guide"
 
+  if Rails.env.development?
     require "sidekiq/web"
     mount Sidekiq::Web => "/sidekiq"
   end
