@@ -25,7 +25,7 @@ RSpec.describe RemoteCsv do
 
     it "raises an error when the URI is invalid" do
       expect { described_class.new("not a URL").rows_with_headers }
-        .to raise_error RemoteCsv::ParsingError, 'URI::InvalidURIError: bad URI(is not URI?): "not a URL"'
+        .to raise_error RemoteCsv::ParsingError, 'URI::InvalidURIError: bad URI (is not URI?): "not a URL"'
     end
 
     it "raises an error when the connection failed" do
