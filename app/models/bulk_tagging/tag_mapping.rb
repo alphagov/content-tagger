@@ -10,7 +10,7 @@ module BulkTagging
     scope :by_link_title, -> { order(link_title: :asc) }
     scope :by_state, -> { order(state: :asc) }
 
-    serialize :messages, Array
+    serialize :messages, coder: YAML, type: Array
 
     validates(
       :state,
