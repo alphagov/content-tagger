@@ -1,7 +1,7 @@
 class ProjectContentItem < ApplicationRecord
   belongs_to :project, touch: true
 
-  enum flag: {
+  enum :flag, {
     needs_help: 1,
     missing_topic: 2,
   }
