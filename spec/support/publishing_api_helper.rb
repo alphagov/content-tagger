@@ -95,13 +95,6 @@ module PublishingApiHelper
     )
   end
 
-  def publishing_api_has_need_linkables(base_paths)
-    stub_publishing_api_has_linkables(
-      select_by_base_path(stubbed_needs, base_paths),
-      document_type: "need",
-    )
-  end
-
   def publishing_api_has_mainstream_browse_page_linkables(base_paths)
     stub_publishing_api_has_linkables(
       select_by_base_path(stubbed_mainstream_browse_pages, base_paths),
@@ -143,18 +136,6 @@ module PublishingApiHelper
         "publication_state" => "published",
         "base_path" => "/government/organisations/student-loans-company",
         "internal_name" => "Student Loans Company",
-      },
-    ]
-  end
-
-  def stubbed_needs
-    [
-      {
-        "title" => "As a user, I need to apply for a copy of a marriage certificate, so that I can prove identity and have a record of the marriage, or research my family history (100569)",
-        "content_id" => "29e9fb40-69af-4c4c-bd56-02e3c825a63b",
-        "publication_state" => "published",
-        "base_path" => "/needs/apply-for-a-copy-of-a-marriage-certificate",
-        "internal_name" => "As a user, I need to apply for a copy of a marriage certificate, so that I can prove identity and have a record of the marriage, or research my family history (100569)",
       },
     ]
   end

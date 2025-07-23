@@ -10,7 +10,6 @@ module Tagging
       mainstream_browse_pages
       parent
       organisations
-      meets_user_needs
     ].freeze
 
     attr_accessor :content_id, :previous_version, *TAG_TYPES
