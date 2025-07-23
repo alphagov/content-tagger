@@ -26,7 +26,6 @@ RSpec.describe "Tagging content" do
       mainstream_browse_pages: [],
       parent: [],
       organisations: [],
-      meets_user_needs: [],
     )
   end
 
@@ -43,7 +42,6 @@ RSpec.describe "Tagging content" do
       mainstream_browse_pages: [],
       parent: [],
       organisations: [],
-      meets_user_needs: [],
     )
   end
 
@@ -94,7 +92,6 @@ RSpec.describe "Tagging content" do
         mainstream_browse_pages: [],
         parent: [],
         organisations: [],
-        meets_user_needs: [],
       )
     end
 
@@ -163,7 +160,6 @@ RSpec.describe "Tagging content" do
         mainstream_browse_pages: [],
         parent: [],
         organisations: [],
-        meets_user_needs: [],
       )
     end
 
@@ -317,12 +313,6 @@ RSpec.describe "Tagging content" do
     publishing_api_has_organisation_linkables(
       [
         "/government/organisations/student-loans-company",
-      ],
-    )
-
-    publishing_api_has_need_linkables(
-      [
-        "/needs/apply-for-a-copy-of-a-marriage-certificate",
       ],
     )
 
