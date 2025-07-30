@@ -16,10 +16,6 @@ class Linkables
     @organisations ||= for_document_type("organisation")
   end
 
-  def needs
-    @needs ||= for_document_type("need", include_draft: false)
-  end
-
   def mainstream_browse_pages
     @mainstream_browse_pages ||= for_nested_document_type("mainstream_browse_page")
   end
