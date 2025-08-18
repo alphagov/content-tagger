@@ -36,7 +36,7 @@ RSpec.describe Metrics::ContentDistributionMetrics do
     end
 
     def content_items_enum(elements)
-      (Array.new(elements) { { "content_id" => SecureRandom.uuid } }).to_enum
+      Array.new(elements) { { "content_id" => SecureRandom.uuid } }.to_enum
     end
 
     def root_taxon
