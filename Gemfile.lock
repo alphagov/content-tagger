@@ -121,7 +121,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    csv (3.3.3)
+    csv (3.3.5)
     dartsass-rails (0.5.1)
       railties (>= 6.0.0)
       sass-embedded (~> 1.63)
@@ -235,7 +235,7 @@ GEM
     http-accept (1.7.0)
     http-cookie (1.0.8)
       domain_name (~> 0.5)
-    httparty (0.23.1)
+    httparty (0.23.2)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -777,7 +777,7 @@ DEPENDENCIES
   govuk_sidekiq
   govuk_test
   hashdiff
-  httparty (~> 0.23.1)
+  httparty (~> 0.23.2)
   jquery-ui-rails
   kaminari
   pg
