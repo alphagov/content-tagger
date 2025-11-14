@@ -57,7 +57,6 @@ test:
     - mainstream_browse_pages
     - ordered_related_items
     - ordered_related_items_overrides
-    - suggested_ordered_related_items
     - organisations
     - parent
 

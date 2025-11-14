@@ -40,22 +40,6 @@ RSpec.describe ContentItem do
 
       expect(content_item.denylisted_tag_types).not_to include(:ordered_related_items_overrides)
     end
-
-    it "includes suggested related items if there's no suggestions for the item" do
-      content_item = build_content_item
-
-      allow(content_item).to receive(:suggested_related_links?).and_return(false)
-
-      expect(content_item.denylisted_tag_types).to include(:suggested_ordered_related_items)
-    end
-
-    it "does not include suggested related items if suggestions exist for the item" do
-      content_item = build_content_item
-
-      allow(content_item).to receive(:suggested_related_links?).and_return(true)
-
-      expect(content_item.denylisted_tag_types).not_to include(:suggested_ordered_related_items)
-    end
   end
 
   def build_content_item(data: {}, denylist: {})
@@ -73,7 +57,6 @@ RSpec.describe ContentItem do
     )
 
     allow(item).to receive(:taxons?)
-    allow(item).to receive(:suggested_related_links?)
 
     item
   end

@@ -10,16 +10,16 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
       instance_double(
         ContentItem,
         content_id:,
-        allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items],
+        allowed_tag_types: %i[ordered_related_items ordered_related_items_overrides],
       )
     end
 
     it "converts base paths of related items into content IDs" do
       stub_content_id_lookup("/my-page" => content_id)
 
-      update_taggings_with_params(ordered_related_items: ["/my-page"], ordered_related_items_overrides: ["/my-page"], suggested_ordered_related_items: ["/my-page"])
+      update_taggings_with_params(ordered_related_items: ["/my-page"], ordered_related_items_overrides: ["/my-page"])
 
-      expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [content_id], suggested_ordered_related_items: [content_id])
+      expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [content_id])
     end
 
     it "generates a valid links payload using ordered_related_items and overrides" do
@@ -30,7 +30,6 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
         taxons: %w[0ffd5e18-af20-4413-a215-8511cf7628b5],
         ordered_related_items: ["/my-page"],
         ordered_related_items_overrides: ["/my-page"],
-        suggested_ordered_related_items: ["/my-page"],
       )
 
       expect(links: publisher.generate_links_payload).to be_valid_against_links_schema("publication")
@@ -41,7 +40,7 @@ RSpec.describe Tagging::TaggingUpdatePublisher do
 
       update_taggings_with_params(ordered_related_items: ["https://www.gov.uk/my-page"])
 
-      expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [], suggested_ordered_related_items: [])
+      expect_links_to_have_been_published(ordered_related_items: [content_id], ordered_related_items_overrides: [])
     end
 
     it "is not valid if the provided base path does not exist" do

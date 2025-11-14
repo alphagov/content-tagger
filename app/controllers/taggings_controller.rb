@@ -55,7 +55,6 @@ class TaggingsController < ApplicationController
       tagging_update = Tagging::TaggingUpdateForm.from_content_item(content_item)
       tagging_update.add_errors_for(:ordered_related_items, publisher.related_item_errors)
       tagging_update.add_errors_for(:ordered_related_items_overrides, publisher.related_item_overrides_errors)
-      tagging_update.add_errors_for(:suggested_ordered_related_items, publisher.suggested_related_item_errors)
       tagging_update.update_attributes_from_form(params[:tagging_tagging_update_form])
 
       flash.now[:danger] = "This form contains errors. Please correct them and try again."

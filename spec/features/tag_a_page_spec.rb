@@ -126,53 +126,6 @@ RSpec.describe "Tagging content" do
       and_i_see_the_url_is_invalid
       and_the_related_items_should_be_prefilled_with(2 => "/pay-vat", 3 => "/pay-cat")
     end
-
-    scenario "the user changes a suggested related link to be invalid" do
-      given_there_is_a_content_item_with_expanded_links(
-        suggested_ordered_related_items: [example_linked_content],
-      )
-      stub_publishing_api_has_lookups(
-        example_linked_content["base_path"] => example_linked_content["content_id"],
-      )
-      and_i_am_on_the_page_for_the_item
-      when_i_fill_in_related_items(6 => "/pay-cat")
-      and_i_submit_the_form
-
-      then_i_am_on_the_page_for_the_item
-      and_i_see_the_url_is_invalid
-    end
-
-    scenario "the user removes suggested related links" do
-      given_there_is_a_content_item_with_expanded_links(
-        suggested_ordered_related_items: [example_linked_content],
-      )
-      stub_publishing_api_has_lookups(
-        example_linked_content["base_path"] => example_linked_content["content_id"],
-        "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
-      )
-      and_i_am_on_the_page_for_the_item
-      when_i_fill_in_related_items(6 => "")
-      and_i_submit_the_form
-      then_the_publishing_api_is_sent(
-        taxons: [],
-        ordered_related_items: [],
-        suggested_ordered_related_items: [],
-        mainstream_browse_pages: [],
-        parent: [],
-        organisations: [],
-      )
-    end
-
-    scenario "the user does not see suggested related links when no suggested links exist" do
-      given_there_is_a_content_item_with_expanded_links(ordered_related_items: [])
-      stub_publishing_api_has_lookups(
-        example_linked_content["base_path"] => example_linked_content["content_id"],
-        "/pay-vat" => "a484eaea-eeb6-48fa-92a7-b67c6cd414f6",
-      )
-      and_i_am_on_the_page_for_the_item
-
-      then_the_suggested_related_items_component_should_not_be_shown
-    end
   end
 
   def when_i_visit_edit_a_page
@@ -243,10 +196,6 @@ RSpec.describe "Tagging content" do
     values.each do |i, value|
       expect(fields[i].value).to eq(value)
     end
-  end
-
-  def then_the_suggested_related_items_component_should_not_be_shown
-    expect(page).not_to have_content "Suggested related content items"
   end
 
   def then_i_am_on_the_page_for_an_item

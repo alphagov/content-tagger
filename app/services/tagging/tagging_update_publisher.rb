@@ -2,14 +2,13 @@
 # publishing-api.
 module Tagging
   class TaggingUpdatePublisher
-    attr_reader :content_item, :params, :related_item_errors, :related_item_overrides_errors, :suggested_related_item_errors
+    attr_reader :content_item, :params, :related_item_errors, :related_item_overrides_errors
 
     def initialize(content_item, params)
       @content_item = content_item
       @params = params
       @related_item_errors = {}
       @related_item_overrides_errors = {}
-      @suggested_related_item_errors = {}
     end
 
     def save_to_publishing_api
@@ -40,8 +39,6 @@ module Tagging
         related_content_items.map(&:content_id)
       when :ordered_related_items_overrides
         related_content_items_overrides.map(&:content_id)
-      when :suggested_ordered_related_items
-        suggested_related_content_items.map(&:content_id)
       else
         clean_input_array(params[tag_type])
       end
@@ -60,13 +57,7 @@ module Tagging
         @related_item_overrides_errors[related_item.base_path] = "Not a known URL on GOV.UK"
       end
 
-      suggested_related_content_items.each do |related_item|
-        next if related_item.content_id
-
-        @suggested_related_item_errors[related_item.base_path] = "Not a known URL on GOV.UK"
-      end
-
-      @related_item_errors.none? && @related_item_overrides_errors.none? && @suggested_related_item_errors.none?
+      @related_item_errors.none? && @related_item_overrides_errors.none?
     end
 
     def related_content_items
@@ -75,10 +66,6 @@ module Tagging
 
     def related_content_items_overrides
       get_base_paths(:ordered_related_items_overrides)
-    end
-
-    def suggested_related_content_items
-      get_base_paths(:suggested_ordered_related_items)
     end
 
     def get_base_paths(link_type)
@@ -90,8 +77,7 @@ module Tagging
     def base_paths_content_items
       @base_paths_content_items ||= begin
         fields = %i[ordered_related_items
-                    ordered_related_items_overrides
-                    suggested_ordered_related_items]
+                    ordered_related_items_overrides]
         base_paths = fields.flat_map { |f| clean_input_array(params[f]) }.uniq
         BasePathLookup.find_by_base_paths(base_paths)
       end

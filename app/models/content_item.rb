@@ -45,10 +45,6 @@ class ContentItem
     link_set.taxons.present?
   end
 
-  def suggested_related_links?
-    link_set.suggested_ordered_related_items.present?
-  end
-
   def denylisted_tag_types
     document_denylist = Array(denylist[publishing_app]).map(&:to_sym)
 
@@ -58,10 +54,6 @@ class ContentItem
 
     unless taxons?
       document_denylist += [:ordered_related_items_overrides]
-    end
-
-    unless suggested_related_links?
-      document_denylist += [:suggested_ordered_related_items]
     end
 
     document_denylist
