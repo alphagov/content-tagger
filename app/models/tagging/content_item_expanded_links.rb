@@ -6,7 +6,6 @@ module Tagging
       taxons
       ordered_related_items
       ordered_related_items_overrides
-      suggested_ordered_related_items
       mainstream_browse_pages
       parent
       organisations
