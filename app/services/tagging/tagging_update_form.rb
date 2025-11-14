@@ -15,14 +15,14 @@ module Tagging
       tag_values = TAG_TYPES.each_with_object({}) do |tag_type, current_tags|
         current_tags[tag_type] = links.send(tag_type).map { |links_hash| links_hash["content_id"] }
 
-        next unless tag_type.in? %i[ordered_related_items ordered_related_items_overrides suggested_ordered_related_items]
+        next unless tag_type.in? %i[ordered_related_items ordered_related_items_overrides]
 
         base_paths = links.send(tag_type).map { |links_hash| links_hash["base_path"] }
 
         # The number of extra empty form fields to add to a link section when the link
         # section shows an individual form input for each value. This allows users to
         # append new links to the end of the existing list.
-        empty_entries = tag_type == :suggested_ordered_related_items ? [] : [""] * 5
+        empty_entries = [""] * 5
 
         current_tags[tag_type] = base_paths + empty_entries
       end
@@ -49,7 +49,7 @@ module Tagging
     end
 
     def title_for_related_link(base_path)
-      items = links.ordered_related_items + links.ordered_related_items_overrides + links.suggested_ordered_related_items
+      items = links.ordered_related_items + links.ordered_related_items_overrides
       link = items.find { |related_item| related_item.fetch("base_path") == base_path }
 
       if link.nil?
