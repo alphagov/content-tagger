@@ -152,10 +152,10 @@ GEM
       logger
     faraday-net_http (3.4.1)
       net-http (>= 0.5.0)
-    ffi (1.17.0)
-    ffi (1.17.0-aarch64-linux-gnu)
-    ffi (1.17.0-arm64-darwin)
-    ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.2)
+    ffi (1.17.2-aarch64-linux-gnu)
+    ffi (1.17.2-arm64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
     gds-api-adapters (101.2.0)
       addressable
       link_header
