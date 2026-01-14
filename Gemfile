@@ -6,7 +6,7 @@ gem "bootsnap", require: false
 gem "bootstrap-kaminari-views"
 gem "dartsass-rails"
 gem "erb_lint", require: false
-gem "govuk_app_config", "~> 9.22.3"
+gem "govuk_app_config", "~> 9.23.0"
 gem "hashdiff"
 gem "jquery-ui-rails"
 gem "kaminari"
