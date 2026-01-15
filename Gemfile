@@ -47,4 +47,4 @@ group :test do
   gem "webmock"
 end
 
-gem "httparty", "~> 0.24.0"
+gem "httparty", "~> 0.24.2"
