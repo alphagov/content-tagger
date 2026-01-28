@@ -40,7 +40,7 @@ module Taxonomy
       search_api_result
         .dig("aggregates", "primary_publishing_organisation", "options")
         .each_with_object({}) do |result, total|
-        total[result.dig("value", "slug")] = result["documents"]
+          total[result.dig("value", "slug")] = result["documents"]
       end
     end
 
