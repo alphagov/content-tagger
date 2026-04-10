@@ -22,7 +22,7 @@ Bundler.require(*Rails.groups)
 module ContentTagger
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 8.0
+    config.load_defaults 8.1
 
     # Configure denylisted tag types by publishing app
     config.denylisted_tag_types = config_for(:denylisted_tag_types)
