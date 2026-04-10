@@ -13,7 +13,7 @@ gem "kaminari"
 gem "pg"
 gem "prometheus-client"
 gem "rack-proxy"
-gem "select2-rails", "< 4" # There are unresolved visual and HTML changes with select2-rails 4
+gem "select2-rails", "< 5" # There are unresolved visual and HTML changes with select2-rails 4
 gem "sentry-sidekiq"
 gem "simple_form"
 gem "sprockets-rails"

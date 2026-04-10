@@ -684,7 +684,7 @@ GEM
     sassc (2.4.0)
       ffi (~> 1.9)
     securerandom (0.4.1)
-    select2-rails (3.5.11)
+    select2-rails (4.0.13)
     selenium-webdriver (4.32.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -800,7 +800,7 @@ DEPENDENCIES
   rails (= 8.0.3)
   rspec-rails
   rubocop-govuk
-  select2-rails (< 4)
+  select2-rails (< 5)
   sentry-sidekiq
   simple_form
   simplecov
