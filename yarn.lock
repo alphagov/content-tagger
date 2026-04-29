@@ -569,7 +569,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "content-tagger@workspace:."
   dependencies:
-    postcss: ^8.5.10
+    postcss: ^8.5.12
     standardx: ^7.0.0
     stylelint: ^17.9.0
     stylelint-config-gds: ^2.0.0
@@ -2836,7 +2836,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.10, postcss@npm:^8.5.9":
+"postcss@npm:^8.5.12":
+  version: 8.5.12
+  resolution: "postcss@npm:8.5.12"
+  dependencies:
+    nanoid: ^3.3.11
+    picocolors: ^1.1.1
+    source-map-js: ^1.2.1
+  checksum: e11818908d9f1693438bd7c6e3af99431552f5c9b3f400ebe76af3f25bd1b1efb26bc4c13533f3dcff45540a66ad4e84c62e06491f88003bbfa4ef35b6175f55
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.5.9":
   version: 8.5.10
   resolution: "postcss@npm:8.5.10"
   dependencies:
