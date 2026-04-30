@@ -571,7 +571,7 @@ __metadata:
   dependencies:
     postcss: ^8.5.10
     standardx: ^7.0.0
-    stylelint: ^17.9.0
+    stylelint: ^17.9.1
     stylelint-config-gds: ^2.0.0
   languageName: unknown
   linkType: soft
@@ -3580,9 +3580,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylelint@npm:^17.9.0":
-  version: 17.9.0
-  resolution: "stylelint@npm:17.9.0"
+"stylelint@npm:^17.9.1":
+  version: 17.9.1
+  resolution: "stylelint@npm:17.9.1"
   dependencies:
     "@csstools/css-calc": ^3.2.0
     "@csstools/css-parser-algorithms": ^4.0.0
@@ -3622,7 +3622,7 @@ __metadata:
     write-file-atomic: ^7.0.1
   bin:
     stylelint: bin/stylelint.mjs
-  checksum: 0f2d34a21c46781a4fb0e8b3224c8a498c9bbc36845b73f8e597136e908fb34b61d48c0bf1e00225c86a203c35e030fa373f719b9fffaf8730ae48a72c2c7321
+  checksum: bd54561c60c44b5ed6a73ecc6a6b8bff3b4d847c52ee886b6691bc7f06500289d9b7a64d450ddf5829e4d4bb190a2593491f88a9525450ef1a6a3b68aff1986c
   languageName: node
   linkType: hard
 
