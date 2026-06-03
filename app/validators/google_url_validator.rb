@@ -22,12 +22,14 @@ private
   end
 
   def validate_parameters(uri, record)
-    parameters = CGI.parse(uri.query || "")
+    parameters = Rack::Utils.parse_nested_query(uri.query.to_s)
+    output_values = Array(parameters["output"])
+
     if parameters["gid"].blank?
       record.errors.add(:url, I18n.t("errors.missing_gid"))
     end
 
-    unless parameters["output"].present? && parameters["output"].include?("csv")
+    unless output_values.include?("csv")
       record.errors.add(:url, I18n.t("errors.missing_output"))
     end
   end
