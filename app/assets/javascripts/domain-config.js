@@ -7,7 +7,7 @@ window.GOVUK.vars.extraDomains = [
       'content-tagger.publishing.service.gov.uk'
     ],
     initialiseGA4: true,
-    id: 'GTM-W573BJPG',
+    id: 'GTM-5T5SVMQX',
     gaProperty: 'UA-26179049-6'
   },
   {
@@ -16,7 +16,7 @@ window.GOVUK.vars.extraDomains = [
       'content-tagger.integration.publishing.service.gov.uk'
     ],
     initialiseGA4: true,
-    id: 'GTM-W573BJPG',
+    id: 'GTM-5T5SVMQX',
     auth: '2jaYNm4QqCxqsb10EcYo5w',
     preview: 'env-18',
     gaProperty: 'UA-26179049-6'
