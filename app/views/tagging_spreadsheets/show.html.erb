@@ -13,7 +13,7 @@
   </p>
 <% end %>
 <div class='view-on-site'>
-  <%= link_to "View on Google Docs", tagging_spreadsheet.url, target: "_blank", rel: "noopener" %>
+  <%= link_to "View on Google Docs", safe_href(tagging_spreadsheet.url), target: "_blank", rel: "noopener" %>
 </div>
 
 <%= render "tag_update_preview",

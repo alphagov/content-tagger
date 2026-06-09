@@ -13,7 +13,7 @@
   <% project_content_items.each do |project_content_item| %>
     <tr>
       <td><%= project_content_item.suggested_tags %></td>
-      <td><%= link_to project_content_item.title, project_content_item.url %></td>
+      <td><%= link_to project_content_item.title, safe_href(project_content_item.url) %></td>
       <td><%= project_content_item.updated_at.to_fs(:govuk_date) %></td>
     </tr>
   <% end %>

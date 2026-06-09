@@ -26,4 +26,13 @@ module ApplicationHelper
       distance_of_time_in_words_to_now(date)
     end
   end
+
+  def safe_href(url)
+    return "#" if url.blank?
+
+    uri = URI.parse(url.to_s.strip)
+    %w[http https].include?(uri.scheme) ? uri.to_s : "#"
+  rescue URI::InvalidURIError
+    "#"
+  end
 end
