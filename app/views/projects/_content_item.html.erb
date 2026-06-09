@@ -19,7 +19,7 @@
     <% end %>
 
     <h4>
-      <%= link_to content_item.title, content_item.url, data: {proxy_iframe: "enabled", modal_url: content_item.proxied_url, toggle: "modal", target: "#iframe_modal_id"} %>
+      <%= link_to content_item.title, safe_href(content_item.url), data: {proxy_iframe: "enabled", modal_url: content_item.proxied_url, toggle: "modal", target: "#iframe_modal_id"} %>
     </h4>
 
     <p><%= content_item.description %></p>
