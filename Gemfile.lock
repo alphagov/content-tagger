@@ -680,7 +680,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (~> 1.81)
     ruby-progressbar (1.13.0)
-    rubyzip (3.2.2)
+    rubyzip (3.4.0)
     sass-embedded (1.77.8)
       google-protobuf (~> 4.26)
       rake (>= 13)
