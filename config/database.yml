@@ -6,12 +6,12 @@ default: &default
 
 development:
   <<: *default
-  database: content_tagger_development
+  database: content-tagger
   url: <%= ENV["DATABASE_URL"] %>
 
 test:
   <<: *default
-  database: content_tagger_test
+  database: content-tagger-test
   url: <%= ENV["TEST_DATABASE_URL"] %>
 
 # In production the `DATABASE_URL` environment variable is automatically used.
