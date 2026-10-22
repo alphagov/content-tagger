@@ -78,12 +78,12 @@ Rails.application.routes.draw do
 
   resources :tagging_history, only: %i[index show]
 
-  mount GovukAdminTemplate::Engine, at: "/style-guide"
-  mount GovukPublishingComponents::Engine, at: "/component-guide"
-
   if Rails.env.development?
     require "sidekiq/web"
     mount Sidekiq::Web => "/sidekiq"
+    # In future, it might be useful to enable these in integration but gated behind signon (as Whitehall have)
+    mount GovukAdminTemplate::Engine, at: "/style-guide"
+    mount GovukPublishingComponents::Engine, at: "/component-guide"
   end
 
   mount Proxies::IframeAllowingProxy.new => Proxies::IframeAllowingProxy::PROXY_BASE_PATH,
