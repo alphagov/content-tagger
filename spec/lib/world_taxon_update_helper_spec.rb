@@ -13,7 +13,7 @@ RSpec.describe WorldTaxonUpdateHelper do
   end
   let(:parent_item_uk_help) do
     Taxonomy::LinkedContentItem.new(
-      base_path: "/root/taxon_a",
+      base_path: "/root/taxon-a",
       content_id: "id2",
       title: "UK help and services in Porpoise Spit",
       internal_name: "UK help and services in Porpoise Spit",
@@ -21,7 +21,7 @@ RSpec.describe WorldTaxonUpdateHelper do
   end
   let(:child_item_coming_to) do
     Taxonomy::LinkedContentItem.new(
-      base_path: "/root/taxon_1",
+      base_path: "/root/taxon-1",
       content_id: "id3",
       title: "Coming to the UK",
       internal_name: "Coming to the UK (Porpoise Spit)",
@@ -29,7 +29,7 @@ RSpec.describe WorldTaxonUpdateHelper do
   end
   let(:child_item_trade_invest) do
     Taxonomy::LinkedContentItem.new(
-      base_path: "/root/taxon_2",
+      base_path: "/root/taxon-2",
       content_id: "id4",
       title: "Trade and invest",
       internal_name: "Trade and invest (Porpoise Spit)",
@@ -37,7 +37,7 @@ RSpec.describe WorldTaxonUpdateHelper do
   end
   let(:child_item_birth_death) do
     Taxonomy::LinkedContentItem.new(
-      base_path: "/root/taxon_3",
+      base_path: "/root/taxon-3",
       content_id: "id5",
       title: "Birth, death and marriage abroad",
       internal_name: "Birth, death and marriage abroad (Porpoise Spit)",
@@ -175,7 +175,7 @@ RSpec.describe WorldTaxonUpdateHelper do
 
     it "logs an error if the internal name does not include the bracket for (COUNTRY_NAME)" do
       linked_item_missing_bracket = Taxonomy::LinkedContentItem.new(
-        base_path: "/root/taxon_2",
+        base_path: "/root/taxon-2",
         content_id: "id6",
         title: "Coming to the UK",
         internal_name: "Coming to the UK",
@@ -190,7 +190,7 @@ RSpec.describe WorldTaxonUpdateHelper do
     # Set up the already processed taxons we will need to revert (e.g. titles including the COUNTRY_NAME)
     let(:retitled_child_item_coming_to) do
       Taxonomy::LinkedContentItem.new(
-        base_path: "/root/taxon_1",
+        base_path: "/root/taxon-1",
         content_id: "id3",
         title: "Coming to the UK from Porpoise Spit",
         internal_name: "Coming to the UK (Porpoise Spit)",
@@ -198,7 +198,7 @@ RSpec.describe WorldTaxonUpdateHelper do
     end
     let(:retitled_child_item_trade_invest) do
       Taxonomy::LinkedContentItem.new(
-        base_path: "/root/taxon_2",
+        base_path: "/root/taxon-2",
         content_id: "id4",
         title: "Trade and invest: Porpoise Spit",
         internal_name: "Trade and invest (Porpoise Spit)",
@@ -206,7 +206,7 @@ RSpec.describe WorldTaxonUpdateHelper do
     end
     let(:retitled_child_item_birth_death) do
       Taxonomy::LinkedContentItem.new(
-        base_path: "/root/taxon_3",
+        base_path: "/root/taxon-3",
         content_id: "id5",
         title: "Birth, death and marriage abroad in Porpoise Spit",
         internal_name: "Birth, death and marriage abroad (Porpoise Spit)",

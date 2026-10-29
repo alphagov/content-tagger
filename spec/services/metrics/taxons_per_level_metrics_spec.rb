@@ -9,7 +9,7 @@ RSpec.describe Metrics::TaxonsPerLevelMetrics do
   describe "#count_taxons_per_level" do
     before do
       stub_content_store_has_item("/", root_taxon.to_json, draft: true)
-      stub_content_store_has_item("/taxons/level_one_taxon", multi_level_child_taxons.to_json, draft: true)
+      stub_content_store_has_item("/taxons/level-one-taxon", multi_level_child_taxons.to_json, draft: true)
     end
 
     it "sends the correct values to statsd" do
@@ -24,22 +24,22 @@ RSpec.describe Metrics::TaxonsPerLevelMetrics do
 
     def multi_level_child_taxons
       {
-        "base_path" => "/taxons/root_taxon",
+        "base_path" => "/taxons/root-taxon",
         "content_id" => "rrrr",
         "links" => {
           "child_taxons" => [
             {
-              "base_path" => "/root_taxon/taxon_a",
+              "base_path" => "/root-taxon/taxon-a",
               "content_id" => "aaaa",
               "links" => {
                 "child_taxons" => [
                   {
-                    "base_path" => "/root_taxon/taxon_1",
+                    "base_path" => "/root-taxon/taxon-1",
                     "content_id" => "aaaa_1111",
                     "links" => {},
                   },
                   {
-                    "base_path" => "/root_taxon/taxon_2",
+                    "base_path" => "/root-taxon/taxon-2",
                     "content_id" => "aaaa_2222",
                     "links" => {},
                   },
@@ -56,7 +56,7 @@ RSpec.describe Metrics::TaxonsPerLevelMetrics do
         "links" => {
           "level_one_taxons" => [
             {
-              "base_path" => "/taxons/level_one_taxon",
+              "base_path" => "/taxons/level-one-taxon",
               "content_id" => "rrrr",
             },
           ],
