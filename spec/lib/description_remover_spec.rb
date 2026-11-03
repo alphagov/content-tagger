@@ -17,7 +17,7 @@ RSpec.describe DescriptionRemover do
 
   it "asserts taxon has draft saved and published" do
     expect { described_class.call("/work") }.to output.to_stdout
-    assert_put_content("pub-taxon", content_id: "pub-taxon", title: "taxon-a", phase: "live", base_path: "/work/taxon_a")
+    assert_put_content("pub-taxon", content_id: "pub-taxon", title: "taxon-a", phase: "live", base_path: "/work/taxon-a")
     assert_publishing_api_publish("pub-taxon")
   end
 
@@ -58,7 +58,7 @@ RSpec.describe DescriptionRemover do
       "phase" => "live",
       "title" => "taxon-a",
       "description" => "taxons-a-description",
-      "base_path" => "/work/taxon_a",
+      "base_path" => "/work/taxon-a",
       "content_id" => "pub-taxon",
       "state_history" => {
         "1" => "superseded",
@@ -77,7 +77,7 @@ RSpec.describe DescriptionRemover do
       "updated_at" => Time.zone.now,
       "phase" => "live",
       "title" => "taxon-b",
-      "base_path" => "/work/taxon_b",
+      "base_path" => "/work/taxon-b",
       "content_id" => "pub-and-draft-taxon",
       "state_history" => {
         "1" => "published",
@@ -96,7 +96,7 @@ RSpec.describe DescriptionRemover do
       "updated_at" => Time.zone.now,
       "phase" => "live",
       "title" => "taxon-c",
-      "base_path" => "/work/taxon_c",
+      "base_path" => "/work/taxon-c",
       "content_id" => "draft-taxon",
       "state_history" => {
         "1" => "draft",

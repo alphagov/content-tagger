@@ -9,7 +9,7 @@ RSpec.describe Metrics::ContentDistributionMetrics do
   describe "#level_taggings" do
     before do
       stub_content_store_has_item("/", root_taxon.to_json, draft: true)
-      stub_content_store_has_item("/taxons/root_taxon", child_taxons.to_json, draft: true)
+      stub_content_store_has_item("/taxons/root-taxon", child_taxons.to_json, draft: true)
 
       allow(Services.search_api).to receive(:search_enum).with(include(filter_taxons: %w[root_id]))
                                     .and_return content_items_enum(5)
@@ -44,7 +44,7 @@ RSpec.describe Metrics::ContentDistributionMetrics do
         "links" => {
           "level_one_taxons" => [
             {
-              "base_path" => "/taxons/root_taxon",
+              "base_path" => "/taxons/root-taxon",
             },
           ],
         },

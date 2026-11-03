@@ -10,7 +10,7 @@ RSpec.describe Taxonomy::OrganisationCount do
 
     before do
       stub_content_store_has_item("/", level_one_taxons.to_json, draft: true)
-      stub_content_store_has_item("/taxons/level_one", single_level_child_taxons.to_json, draft: true)
+      stub_content_store_has_item("/taxons/level-one", single_level_child_taxons.to_json, draft: true)
       stub_search_api(
         { "aggregate_primary_publishing_organisation" => %r{\d+}, "filter_taxons" => [taxon_ids.first] },
         search_api_body([{ slug: "organisation1", count: 1 },
@@ -27,9 +27,9 @@ RSpec.describe Taxonomy::OrganisationCount do
     it "counts all tags to taxons per organisation" do
       results = described_class.new.all_taggings_per_organisation
       sheet = results.first[:sheet]
-      expected_results = [["organisation1", 6, "/taxons/child", 5, "/taxons/level_one", 1],
-                          ["organisation2", 6, "/taxons/child", 4, "/taxons/level_one", 2],
-                          ["organisation3", 3, "/taxons/level_one", 3]]
+      expected_results = [["organisation1", 6, "/taxons/child", 5, "/taxons/level-one", 1],
+                          ["organisation2", 6, "/taxons/child", 4, "/taxons/level-one", 2],
+                          ["organisation3", 3, "/taxons/level-one", 3]]
       expect(sheet[1..]).to match_array(expected_results)
       expect(results.first[:title]).to eq("taxon_title")
     end
@@ -59,7 +59,7 @@ RSpec.describe Taxonomy::OrganisationCount do
 
     def single_level_child_taxons
       {
-        "base_path" => "/taxons/level_one",
+        "base_path" => "/taxons/level-one",
         "content_id" => taxon_ids.first,
         "links" => {
           "child_taxons" => [
@@ -80,7 +80,7 @@ RSpec.describe Taxonomy::OrganisationCount do
         "links" => {
           "level_one_taxons" => [
             {
-              "base_path" => "/taxons/level_one",
+              "base_path" => "/taxons/level-one",
               "content_id" => taxon_ids.first,
               "title" => "taxon_title",
             },
