@@ -194,6 +194,34 @@ RSpec.describe TaxonsController do
     end
   end
 
+  describe "#choose_layout" do
+    let(:test_strategy) { Flipflop::FeatureSet.current.test! }
+
+    context "when the design system feature flag is false (default)" do
+      it "renders using the application layout" do
+        get :index
+
+        expect(response).to render_template(layout: "application")
+      end
+    end
+
+    context "when the design sytem feature flag is true" do
+      before do
+        test_strategy.switch!(:design_system, true)
+      end
+
+      after do
+        test_strategy.switch!(:design_system, false)
+      end
+
+      it "renders using the design system layout" do
+        get :index
+
+        expect(response).to render_template(layout: "design_system")
+      end
+    end
+  end
+
   def stub_taxon_show_page(content_id)
     stub_requests_for_show_page(
       content_item_with_details("Foo", other_fields: { content_id:, document_type: "taxon" }),

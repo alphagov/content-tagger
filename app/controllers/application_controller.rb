@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_authenticated_user_header
 
+  layout :choose_layout
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -76,5 +78,13 @@ private
 
   def set_authenticated_user_header
     GdsApi::GovukHeaders.set_header(:x_govuk_authenticated_user, current_user.uid)
+  end
+
+  def choose_layout
+    if Flipflop.design_system?
+      "design_system"
+    else
+      "application"
+    end
   end
 end
