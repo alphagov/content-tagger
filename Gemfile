@@ -6,6 +6,7 @@ gem "bootsnap", require: false
 gem "bootstrap-kaminari-views"
 gem "dartsass-rails"
 gem "erb_lint", require: false
+gem "flipflop"
 gem "govuk_app_config", "~> 9.27.0"
 gem "hashdiff"
 gem "jquery-ui-rails"
@@ -31,6 +32,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "govuk_schemas"
   gem "pry-byebug"
+  gem "rails-controller-testing"
   gem "rspec-rails"
   gem "rubocop-govuk", require: false
   gem "simplecov", require: false
