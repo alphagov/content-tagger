@@ -163,6 +163,9 @@ GEM
     ffi (1.17.2-aarch64-linux-gnu)
     ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-linux-gnu)
+    flipflop (2.8.0)
+      activesupport (>= 4.0)
+      terminal-table (>= 1.8)
     gds-api-adapters (103.5.0)
       addressable
       link_header
@@ -594,6 +597,10 @@ GEM
       activesupport (= 8.1.4.1)
       bundler (>= 1.15.0)
       railties (= 8.1.4.1)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
@@ -744,6 +751,8 @@ GEM
       sprockets (>= 3.0.0)
     statsd-ruby (1.5.0)
     strscan (3.1.8)
+    terminal-table (4.0.0)
+      unicode-display_width (>= 1.1.1, < 4)
     terser (1.2.8)
       execjs (>= 0.3.0, < 3)
     thor (1.5.0)
@@ -794,6 +803,7 @@ DEPENDENCIES
   erb_lint
   factory_bot_rails
   fakefs
+  flipflop
   gds-api-adapters
   gds-sso
   govuk_admin_template
@@ -812,6 +822,7 @@ DEPENDENCIES
   pry-byebug
   rack-proxy
   rails (= 8.1.4.1)
+  rails-controller-testing
   rspec-rails
   rubocop-govuk
   select2-rails (< 5)
