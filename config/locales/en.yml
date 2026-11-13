@@ -109,7 +109,8 @@ en:
       associated_taxons: Associated taxons
       metadata: Taxon metadata
       url_override: 'Override URL'
-      url_override_hint: 'Set a custom URL to overide the default base path'
+      url_override_hint: 'Set a custom URL to override the default base path'
+      base_path_hint: ''
     projects:
       flags:
         help-needed: 'Flagged: needs publisher review'
