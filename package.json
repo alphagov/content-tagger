@@ -24,12 +24,12 @@
     }
   },
   "stylelint": {
-    "extends": "stylelint-config-gds/scss"
+    "extends": "stylelint-config-gds/scss.js"
   },
   "devDependencies": {
     "postcss": "^8.5.32",
     "standardx": "^7.0.0",
-    "stylelint": "^17.16.0",
+    "stylelint": "^18.0.0",
     "stylelint-config-gds": "^3.0.0"
   },
   "packageManager": "yarn@3.4.1"
