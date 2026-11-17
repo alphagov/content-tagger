@@ -110,7 +110,7 @@ en:
       metadata: Taxon metadata
       url_override: 'Override URL'
       url_override_hint: 'Set a custom URL to override the default base path'
-      base_path_hint: ''
+      base_path_hint: 'Base paths must only contain lowercase letters, numbers, -, ., or /'
     projects:
       flags:
         help-needed: 'Flagged: needs publisher review'
