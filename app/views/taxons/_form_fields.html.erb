@@ -13,6 +13,7 @@
   <% end %>
 
   <%= f.input :base_path, input_html: { class: "form-control" },
+    hint: I18n.t("views.taxons.base_path_hint"),
     placeholder: "e.g. /highest-level-taxon-name/taxon-name" %>
 
   <div class="alert alert-warning js-path-prefix-hint hidden"></div>

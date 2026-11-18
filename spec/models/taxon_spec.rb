@@ -6,25 +6,34 @@ RSpec.describe Taxon do
       expect(taxon.errors.attribute_names).to include(:title)
     end
 
-    it "is not valid without a base path" do
-      taxon = described_class.new(base_path: "")
+    context "without a valid base path" do
+      it "is not valid without a base path" do
+        taxon = described_class.new(base_path: "")
 
-      expect(taxon).not_to be_valid
-      expect(taxon.errors.attribute_names).to include(:base_path)
-    end
+        expect(taxon).not_to be_valid
+        expect(taxon.errors.attribute_names).to include(:base_path)
+      end
 
-    it "is not valid when the base path prefix does not match the parent prefix" do
-      parent_taxon = FactoryBot.build(:taxon, base_path: "/level-one/level-two")
-      allow(Taxonomy::BuildTaxon).to receive(:call).and_return(parent_taxon)
+      it "is not valid if the base path ends with a ." do
+        taxon = described_class.new(base_path: "/government/thing.")
 
-      child_taxon = FactoryBot.build(
-        :taxon,
-        base_path: "/foo/level-two",
-        parent_content_id: parent_taxon.content_id,
-      )
+        expect(taxon).not_to be_valid
+        expect(taxon.errors.attribute_names).to include(:base_path)
+      end
 
-      expect(child_taxon).not_to be_valid
-      expect(child_taxon.errors[:base_path]).to include("must start with /level-one")
+      it "is not valid when the base path prefix does not match the parent prefix" do
+        parent_taxon = FactoryBot.build(:taxon, base_path: "/level-one/level-two")
+        allow(Taxonomy::BuildTaxon).to receive(:call).and_return(parent_taxon)
+
+        child_taxon = FactoryBot.build(
+          :taxon,
+          base_path: "/foo/level-two",
+          parent_content_id: parent_taxon.content_id,
+        )
+
+        expect(child_taxon).not_to be_valid
+        expect(child_taxon.errors[:base_path]).to include("must start with /level-one")
+      end
     end
   end
 

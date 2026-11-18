@@ -116,11 +116,25 @@ RSpec.feature "Taxonomy editing" do
     then_a_taxon_is_created
   end
 
+  scenario "User is given base path instructions for new taxons" do
+    given_there_are_taxons
+    when_i_visit_the_taxonomy_page
+    and_i_click_on_the_new_taxon_button
+    then_i_can_see_a_base_path_help_message
+  end
+
   scenario "User creates a child taxon from a parent" do
     given_there_are_taxons
     when_i_visit_the_taxon_page
     and_i_click_on_the_add_a_child_taxon_button
     then_the_parent_is_correctly_prefilled
+  end
+
+  scenario "User is given base path instructions for child taxons" do
+    given_there_are_taxons
+    when_i_visit_the_taxon_page
+    and_i_click_on_the_add_a_child_taxon_button
+    then_i_can_see_a_base_path_help_message
   end
 
   scenario "User creates a taxon with associated taxons" do
@@ -437,6 +451,10 @@ RSpec.feature "Taxonomy editing" do
 
   def then_i_can_see_a_specific_error_message
     expect(page).to have_selector(".alert", text: /a taxon with this slug already exists/i)
+  end
+
+  def then_i_can_see_a_base_path_help_message
+    expect(page).to have_content I18n.t("views.taxons.base_path_hint")
   end
 
   def then_a_taxon_is_created

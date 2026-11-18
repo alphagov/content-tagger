@@ -1,5 +1,5 @@
 class Taxon
-  PATH_COMPONENTS_REGEX          = %r{\A/(?<prefix>[A-z0-9-]+)(?:/(?<slug>[A-z0-9-]+))?\z}
+  PATH_COMPONENTS_REGEX          = %r{\A/(?<prefix>[a-z0-9.-]+)(?:/(?<slug>[a-z0-9.-]+))?\z}
   OVERRIDE_PATH_COMPONENTS_REGEX = %r{\A/(?<prefix>[A-z0-9-]+)(?:/(?<slug>[A-z0-9-]+))*\z}
 
   attr_accessor(
@@ -20,7 +20,7 @@ class Taxon
 
   validates :title, :internal_name, :base_path, presence: true
   validates_with CircularDependencyValidator
-  validates :base_path, format: { with: PATH_COMPONENTS_REGEX, message: "must be in the format '/highest-level-taxon-name/taxon-name'" }
+  validate :base_path_is_valid
   validates :url_override, format: { with: OVERRIDE_PATH_COMPONENTS_REGEX, message: "must be in the format '/prefix/slug' or '/slug'" }, allow_blank: true
   validates_with TaxonPathPrefixValidator
 
@@ -66,11 +66,10 @@ class Taxon
     @base_path = base_path
 
     path_components = PATH_COMPONENTS_REGEX.match(base_path)
-
-    return if path_components.nil?
-
-    @path_prefix = path_components["prefix"]
-    @path_slug = path_components["slug"]
+    unless path_components.nil?
+      @path_prefix = path_components["prefix"]
+      @path_slug = path_components["slug"]
+    end
   end
 
   def link_type
@@ -102,5 +101,31 @@ class Taxon
 
   def visible_to_departmental_editors
     @visible_to_departmental_editors || false
+  end
+
+private
+
+  def base_path_is_valid
+    if base_path.nil?
+      errors.add(:base_path, "can't be nil")
+      return
+    end
+
+    gds_path_validator = GdsApi::Validators::BasePathValidator.new(base_path)
+    unless gds_path_validator.valid?
+      gds_path_validator.errors.each_value do |message|
+        errors.add(:base_path, message)
+      end
+
+      return
+    end
+
+    # if PATH_COMPONENTS_REGEX.match(base_path).nil?
+    unless PATH_COMPONENTS_REGEX.match?(base_path)
+      errors.add(
+        :base_path,
+        "must be in the format '/highest-level-taxon-name/taxon-name'",
+      )
+    end
   end
 end
