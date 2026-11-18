@@ -21,6 +21,13 @@ RSpec.describe Taxon do
         expect(taxon.errors.attribute_names).to include(:base_path)
       end
 
+      it "is not valid if the base path includes a run of / and or . characters" do
+        taxon = described_class.new(base_path: "/government/thing//../")
+
+        expect(taxon).not_to be_valid
+        expect(taxon.errors.attribute_names).to include(:base_path)
+      end
+
       it "is not valid when the base path prefix does not match the parent prefix" do
         parent_taxon = FactoryBot.build(:taxon, base_path: "/level-one/level-two")
         allow(Taxonomy::BuildTaxon).to receive(:call).and_return(parent_taxon)
