@@ -7,7 +7,7 @@ gem "bootstrap-kaminari-views"
 gem "dartsass-rails"
 gem "erb_lint", require: false
 gem "flipflop"
-gem "govuk_app_config", "~> 9.28.0"
+gem "govuk_app_config", "~> 10.1.0"
 gem "hashdiff"
 gem "jquery-ui-rails"
 gem "kaminari"
