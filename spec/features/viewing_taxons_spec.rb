@@ -75,6 +75,13 @@ RSpec.describe "Viewing taxons" do
     and_i_can_download_the_taxonomy_in_csv_form
   end
 
+  scenario "Viewing a taxon's content ID" do
+    given_a_taxonomy
+    given_im_ignoring_tagged_content_for_now
+    when_i_view_the_root_taxon
+    then_i_see_the_taxon_content_id
+  end
+
   scenario "Viewing tagged content of a taxon" do
     given_a_taxonomy
     and_the_root_taxon_has_content_tagged_to_it
@@ -305,6 +312,10 @@ RSpec.describe "Viewing taxons" do
 
   def then_i_see_the_taxon_hierarchy_in_chevrons
     expect(page).to have_content "Fruits > Apples > Cox"
+  end
+
+  def then_i_see_the_taxon_content_id
+    expect(page).to have_css("samp", text: apples["content_id"])
   end
 
   def then_i_see_the_number_of_email_subscribers
